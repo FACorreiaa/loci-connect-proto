@@ -1,0 +1,250 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "proto/user.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "UserService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {},
+  "definitions": {
+    "commonResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "error": {
+          "type": "string"
+        }
+      },
+      "title": "Generic response wrapper for API responses"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "userGetUserProfileResponse": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "$ref": "#/definitions/userUserProfile"
+        }
+      },
+      "title": "GetUserProfileResponse for user profile retrieval"
+    },
+    "userUpdateProfileParams": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "phoneNumber": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "profileImageUrl": {
+          "type": "string"
+        },
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "age": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "aboutYou": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "interests": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "badges": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "UpdateProfileParams for updating user profile"
+    },
+    "userUserProfile": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "phoneNumber": {
+          "type": "string"
+        },
+        "age": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "aboutYou": {
+          "type": "string"
+        },
+        "bio": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "joinedDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "interests": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "badges": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "stats": {
+          "$ref": "#/definitions/userUserStats"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "profileImageUrl": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "emailVerifiedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastLoginAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "theme": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "title": "UserProfile represents a user's profile"
+    },
+    "userUserStats": {
+      "type": "object",
+      "properties": {
+        "placesVisited": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "reviewsWritten": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "listsCreated": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "followers": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "following": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "UserStats contains user statistics"
+    }
+  }
+}

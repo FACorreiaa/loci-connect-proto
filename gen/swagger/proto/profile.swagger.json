@@ -1,0 +1,516 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "proto/profile.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "ProfileService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {},
+  "definitions": {
+    "commonRangeFilter": {
+      "type": "object",
+      "properties": {
+        "min": {
+          "type": "number",
+          "format": "double"
+        },
+        "max": {
+          "type": "number",
+          "format": "double"
+        }
+      },
+      "title": "Range filter for numeric values"
+    },
+    "commonResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "error": {
+          "type": "string"
+        }
+      },
+      "title": "Generic response wrapper for API responses"
+    },
+    "interestInterest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source": {
+          "type": "string"
+        }
+      },
+      "title": "Interest represents an interest tag"
+    },
+    "interestTags": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "tagType": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "title": "Tags represents a tag"
+    },
+    "profileAccommodationPreferences": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "userPreferenceId": {
+          "type": "string"
+        },
+        "accommodationType": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "starRating": {
+          "$ref": "#/definitions/commonRangeFilter"
+        },
+        "priceRangePerNight": {
+          "$ref": "#/definitions/commonRangeFilter"
+        },
+        "amenities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "roomType": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "chainPreference": {
+          "type": "string"
+        },
+        "cancellationPolicy": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "bookingFlexibility": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "title": "AccommodationPreferences represents accommodation-specific filters"
+    },
+    "profileActivityPreferences": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "userPreferenceId": {
+          "type": "string"
+        },
+        "activityCategories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "physicalActivityLevel": {
+          "type": "string"
+        },
+        "indoorOutdoorPreference": {
+          "type": "string"
+        },
+        "culturalImmersionLevel": {
+          "type": "string"
+        },
+        "mustSeeVsHiddenGems": {
+          "type": "string"
+        },
+        "educationalPreference": {
+          "type": "boolean"
+        },
+        "photographyOpportunities": {
+          "type": "boolean"
+        },
+        "seasonSpecificActivities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "avoidCrowds": {
+          "type": "boolean"
+        },
+        "localEventsInterest": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "title": "ActivityPreferences represents activity-specific filters"
+    },
+    "profileDayPreference": {
+      "type": "string",
+      "enum": [
+        "DAY_PREFERENCE_UNSPECIFIED",
+        "DAY_PREFERENCE_ANY",
+        "DAY_PREFERENCE_DAY",
+        "DAY_PREFERENCE_NIGHT"
+      ],
+      "default": "DAY_PREFERENCE_UNSPECIFIED",
+      "title": "Enums for preferences"
+    },
+    "profileDiningPreferences": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "userPreferenceId": {
+          "type": "string"
+        },
+        "cuisineTypes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "mealTypes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "serviceStyle": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "priceRangePerPerson": {
+          "$ref": "#/definitions/commonRangeFilter"
+        },
+        "dietaryNeeds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "allergenFree": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "michelinRated": {
+          "type": "boolean"
+        },
+        "localRecommendations": {
+          "type": "boolean"
+        },
+        "chainVsLocal": {
+          "type": "string"
+        },
+        "organicPreference": {
+          "type": "boolean"
+        },
+        "outdoorSeatingPreferred": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "title": "DiningPreferences represents dining-specific filters"
+    },
+    "profileGetUserPreferenceProfilesResponse": {
+      "type": "object",
+      "properties": {
+        "profiles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/profileUserPreferenceProfile"
+          }
+        }
+      },
+      "title": "GetUserPreferenceProfilesResponse for preference profiles retrieval"
+    },
+    "profileItineraryPreferences": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "userPreferenceId": {
+          "type": "string"
+        },
+        "planningStyle": {
+          "type": "string"
+        },
+        "preferredPace": {
+          "type": "string"
+        },
+        "timeFlexibility": {
+          "type": "string"
+        },
+        "morningVsEvening": {
+          "type": "string"
+        },
+        "weekendVsWeekday": {
+          "type": "string"
+        },
+        "preferredSeasons": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "avoidPeakSeason": {
+          "type": "boolean"
+        },
+        "adventureVsRelaxation": {
+          "type": "string"
+        },
+        "spontaneousVsPlanned": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "title": "ItineraryPreferences represents itinerary planning-specific filters"
+    },
+    "profileSearchPace": {
+      "type": "string",
+      "enum": [
+        "SEARCH_PACE_UNSPECIFIED",
+        "SEARCH_PACE_ANY",
+        "SEARCH_PACE_RELAXED",
+        "SEARCH_PACE_MODERATE",
+        "SEARCH_PACE_FAST"
+      ],
+      "default": "SEARCH_PACE_UNSPECIFIED"
+    },
+    "profileTransportPreference": {
+      "type": "string",
+      "enum": [
+        "TRANSPORT_PREFERENCE_UNSPECIFIED",
+        "TRANSPORT_PREFERENCE_ANY",
+        "TRANSPORT_PREFERENCE_WALK",
+        "TRANSPORT_PREFERENCE_PUBLIC",
+        "TRANSPORT_PREFERENCE_CAR"
+      ],
+      "default": "TRANSPORT_PREFERENCE_UNSPECIFIED"
+    },
+    "profileUserPreferenceProfile": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        },
+        "profileName": {
+          "type": "string"
+        },
+        "isDefault": {
+          "type": "boolean"
+        },
+        "searchRadiusKm": {
+          "type": "number",
+          "format": "double"
+        },
+        "preferredTime": {
+          "$ref": "#/definitions/profileDayPreference"
+        },
+        "budgetLevel": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "preferredPace": {
+          "$ref": "#/definitions/profileSearchPace"
+        },
+        "preferAccessiblePois": {
+          "type": "boolean"
+        },
+        "preferOutdoorSeating": {
+          "type": "boolean"
+        },
+        "preferDogFriendly": {
+          "type": "boolean"
+        },
+        "preferredVibes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "preferredTransport": {
+          "$ref": "#/definitions/profileTransportPreference"
+        },
+        "dietaryNeeds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "interests": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/interestInterest"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/interestTags"
+          }
+        },
+        "userLatitude": {
+          "type": "number",
+          "format": "double"
+        },
+        "userLongitude": {
+          "type": "number",
+          "format": "double"
+        },
+        "accommodationPreferences": {
+          "$ref": "#/definitions/profileAccommodationPreferences"
+        },
+        "diningPreferences": {
+          "$ref": "#/definitions/profileDiningPreferences"
+        },
+        "activityPreferences": {
+          "$ref": "#/definitions/profileActivityPreferences"
+        },
+        "itineraryPreferences": {
+          "$ref": "#/definitions/profileItineraryPreferences"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "title": "UserPreferenceProfile represents a user's preference profile"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}

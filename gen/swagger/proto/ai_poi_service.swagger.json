@@ -1,0 +1,196 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "proto/ai_poi_service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "AiPoiService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {},
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1ApiVersion": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      }
+    },
+    "v1FeatureFlag": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        }
+      }
+    },
+    "v1GetFeatureFlagsResponse": {
+      "type": "object",
+      "properties": {
+        "flags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1FeatureFlag"
+          }
+        },
+        "experiments": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "A/B test assignments"
+        }
+      }
+    },
+    "v1GetServiceInfoResponse": {
+      "type": "object",
+      "properties": {
+        "serviceInfo": {
+          "$ref": "#/definitions/v1ServiceInfo"
+        },
+        "endpoints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1ServiceEndpoint"
+          }
+        },
+        "versions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1ApiVersion"
+          }
+        }
+      }
+    },
+    "v1HealthCheckResponse": {
+      "type": "object",
+      "properties": {
+        "healthy": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "v1RateLimitInfo": {
+      "type": "object",
+      "properties": {
+        "requestsPerMinute": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "burstLimit": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1ServiceEndpoint": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "method": {
+          "type": "string",
+          "title": "HTTP method for REST endpoints"
+        },
+        "description": {
+          "type": "string"
+        },
+        "requiresAuth": {
+          "type": "boolean"
+        },
+        "requiredPermissions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "rateLimit": {
+          "$ref": "#/definitions/v1RateLimitInfo"
+        }
+      }
+    },
+    "v1ServiceInfo": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "buildTime": {
+          "type": "string"
+        },
+        "gitCommit": {
+          "type": "string"
+        },
+        "environment": {
+          "type": "string",
+          "title": "\"development\", \"staging\", \"production\""
+        },
+        "configuration": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

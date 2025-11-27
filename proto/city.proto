@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+package loci.city;
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/city;city";
+
+
+import "buf/validate/validate.proto";
+
+// CityDetail represents a city
+message CityDetail {
+  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string name = 2 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string country = 3 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  optional string state_province = 4 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+  string ai_summary = 5 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
+  optional double center_latitude = 6 [(buf.validate.field).double = {gte: -90, lte: 90}];
+  optional double center_longitude = 7 [(buf.validate.field).double = {gte: -180, lte: 180}];
+}
+
+// GeneralCityData contains general information about a city
+message GeneralCityData {
+  string city = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string country = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  optional string state_province = 3 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+  string description = 4 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
+  optional double center_latitude = 5 [(buf.validate.field).double = {gte: -90, lte: 90}];
+  optional double center_longitude = 6 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  string population = 7 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string area = 8 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string timezone = 9 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string language = 10 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string weather = 11 [(buf.validate.field).string = {min_len: 1, max_len: 500}];
+  string attractions = 12 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
+  string history = 13 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
+}
+
+// GetCityRequest for retrieving city details
+message GetCityRequest {
+  oneof identifier {
+    option (buf.validate.oneof).required = true;
+    string city_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+    string city_name = 2 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  }
+}
+
+// GetCityResponse for city details retrieval
+message GetCityResponse {
+  CityDetail city = 1;
+}
+
+// SearchCitiesRequest for searching cities
+message SearchCitiesRequest {
+  string query = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  optional int32 limit = 2 [(buf.validate.field).int32 = {gte: 1, lte: 100}];
+}
+
+// SearchCitiesResponse for city search results
+message SearchCitiesResponse {
+  repeated CityDetail cities = 1;
+}
+
+// CityService defines city-related RPCs
+service CityService {
+  rpc GetCity(GetCityRequest) returns (GetCityResponse);
+  rpc SearchCities(SearchCitiesRequest) returns (SearchCitiesResponse);
+}

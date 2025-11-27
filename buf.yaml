@@ -1,0 +1,22 @@
+version: v2
+modules:
+  - path: .
+    name: buf.build/loci/loci-proto
+lint:
+  use:
+    - STANDARD
+  except:
+    - PACKAGE_VERSION_SUFFIX
+    - PACKAGE_DIRECTORY_MATCH
+    - ENUM_VALUE_PREFIX
+    - PACKAGE_SAME_DIRECTORY
+    - DIRECTORY_SAME_PACKAGE
+    - RPC_REQUEST_STANDARD_NAME
+    - RPC_RESPONSE_STANDARD_NAME
+    - RPC_REQUEST_RESPONSE_UNIQUE
+breaking:
+  use:
+    - FILE
+deps:
+  - buf.build/bufbuild/protovalidate
+  - buf.build/protocolbuffers/wellknowntypes:v21.12

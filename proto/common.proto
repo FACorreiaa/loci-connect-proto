@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package loci.common;
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/common;common";
+
+
+import "buf/validate/validate.proto";
+
+// Generic response wrapper for API responses
+message Response {
+  bool success = 1;
+  optional string message = 2 [(buf.validate.field).string = {min_len: 1, max_len: 500}
+  ];
+  optional string error = 3 [(buf.validate.field).string = {min_len: 1, max_len: 500}
+  ];
+}
+
+// Generic error response
+message ErrorResponse {
+  string code = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string message = 2 [(buf.validate.field).string = {min_len: 1, max_len: 500}];
+  map<string, string> details = 3 [(buf.validate.field).map = {
+    keys: {string: {min_len: 1}},
+    values: {string: {min_len: 1}
+    }
+  }];
+}
+
+// Pagination request parameters
+message PaginationRequest {
+  int32 page = 1 [(buf.validate.field).int32 = {gte: 1}];
+  int32 page_size = 2 [(buf.validate.field).int32 = {gte: 1, lte: 100}];
+  optional string sort_by = 3 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+  optional string sort_order = 4 [(buf.validate.field).string = {in: ["asc", "desc"]}
+  ];
+}
+
+// Pagination metadata
+message PaginationMetadata {
+  int32 total_records = 1 [(buf.validate.field).int32 = {gte: 0}];
+  int32 page = 2 [(buf.validate.field).int32 = {gte: 0}];
+  int32 page_size = 3 [(buf.validate.field).int32 = {gte: 0}];
+  int32 total_pages = 4 [(buf.validate.field).int32 = {gte: 0}];
+  bool has_more = 5;
+}
+
+// Geographic point
+message GeoPoint {
+  double latitude = 1 [(buf.validate.field).double = {gte: -90, lte: 90}];
+  double longitude = 2 [(buf.validate.field).double = {gte: -180, lte: 180}];
+}
+
+// Range filter for numeric values
+message RangeFilter {
+  optional double min = 1;
+  optional double max = 2;
+}

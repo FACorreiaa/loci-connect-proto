@@ -1,0 +1,725 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "proto/review.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "ReviewService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {},
+  "definitions": {
+    "commonPaginationMetadata": {
+      "type": "object",
+      "properties": {
+        "totalRecords": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "totalPages": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "hasMore": {
+          "type": "boolean"
+        }
+      },
+      "title": "Pagination metadata"
+    },
+    "commonPaginationRequest": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "sortBy": {
+          "type": "string"
+        },
+        "sortOrder": {
+          "type": "string"
+        }
+      },
+      "title": "Pagination request parameters"
+    },
+    "commonResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "error": {
+          "type": "string"
+        }
+      },
+      "title": "Generic response wrapper for API responses"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1BusinessResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "businessUserId": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "responderName": {
+          "type": "string"
+        },
+        "responderTitle": {
+          "type": "string"
+        }
+      },
+      "title": "Business response to a review"
+    },
+    "v1CreateReviewResponse": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "$ref": "#/definitions/commonResponse"
+        },
+        "review": {
+          "$ref": "#/definitions/v1Review"
+        }
+      }
+    },
+    "v1DeleteReviewResponse": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "$ref": "#/definitions/commonResponse"
+        }
+      }
+    },
+    "v1GetPOIReviewsResponse": {
+      "type": "object",
+      "properties": {
+        "reviews": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Review"
+          }
+        },
+        "pagination": {
+          "$ref": "#/definitions/commonPaginationMetadata"
+        },
+        "statistics": {
+          "$ref": "#/definitions/v1ReviewStatistics"
+        }
+      }
+    },
+    "v1GetReviewResponse": {
+      "type": "object",
+      "properties": {
+        "review": {
+          "$ref": "#/definitions/v1Review"
+        },
+        "canEdit": {
+          "type": "boolean"
+        },
+        "canDelete": {
+          "type": "boolean"
+        }
+      }
+    },
+    "v1GetReviewStatisticsResponse": {
+      "type": "object",
+      "properties": {
+        "statistics": {
+          "$ref": "#/definitions/v1ReviewStatistics"
+        }
+      }
+    },
+    "v1GetUserReviewsResponse": {
+      "type": "object",
+      "properties": {
+        "reviews": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Review"
+          }
+        },
+        "pagination": {
+          "$ref": "#/definitions/commonPaginationMetadata"
+        },
+        "statistics": {
+          "$ref": "#/definitions/v1UserReviewStatistics"
+        }
+      }
+    },
+    "v1LanguageCount": {
+      "type": "object",
+      "properties": {
+        "languageCode": {
+          "type": "string"
+        },
+        "languageName": {
+          "type": "string"
+        },
+        "count": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "percentage": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "v1LanguageDistribution": {
+      "type": "object",
+      "properties": {
+        "languages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1LanguageCount"
+          }
+        }
+      },
+      "title": "Language distribution of reviews"
+    },
+    "v1LikeReviewResponse": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "$ref": "#/definitions/commonResponse"
+        },
+        "newHelpfulCount": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1MonthlyReviewData": {
+      "type": "object",
+      "properties": {
+        "year": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "month": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "reviewCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "averageRating": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "v1RatingBreakdown": {
+      "type": "object",
+      "properties": {
+        "oneStar": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "twoStar": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "threeStar": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "fourStar": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "fiveStar": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1RecentReviewTrends": {
+      "type": "object",
+      "properties": {
+        "ratingTrend": {
+          "type": "number",
+          "format": "double",
+          "title": "Positive/negative trend"
+        },
+        "reviewsLast30Days": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "averageRatingLast30Days": {
+          "type": "number",
+          "format": "double"
+        },
+        "ratingChangePercentage": {
+          "type": "number",
+          "format": "double"
+        },
+        "monthlyData": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1MonthlyReviewData"
+          }
+        }
+      },
+      "title": "Review trends over time"
+    },
+    "v1ReportReviewResponse": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "$ref": "#/definitions/commonResponse"
+        }
+      }
+    },
+    "v1Review": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        },
+        "poiId": {
+          "type": "string"
+        },
+        "rating": {
+          "type": "number",
+          "format": "double",
+          "title": "1.0 - 5.0"
+        },
+        "title": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "photos": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Photo URLs"
+        },
+        "status": {
+          "$ref": "#/definitions/v1ReviewStatus"
+        },
+        "visitDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "helpfulCount": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of helpful votes",
+          "title": "Review metadata"
+        },
+        "reportCount": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Number of reports"
+        },
+        "isVerified": {
+          "type": "boolean",
+          "title": "Verified reviewer"
+        },
+        "language": {
+          "type": "string",
+          "title": "ISO 639-1 language code"
+        },
+        "aspects": {
+          "$ref": "#/definitions/v1ReviewAspects",
+          "title": "Review aspects (detailed ratings)"
+        },
+        "reviewer": {
+          "$ref": "#/definitions/v1ReviewerInfo",
+          "title": "User information (public)"
+        },
+        "businessResponse": {
+          "$ref": "#/definitions/v1BusinessResponse",
+          "title": "Response from business owner"
+        }
+      },
+      "title": "Core review entity"
+    },
+    "v1ReviewAspectAverages": {
+      "type": "object",
+      "properties": {
+        "serviceAverage": {
+          "type": "number",
+          "format": "double"
+        },
+        "qualityAverage": {
+          "type": "number",
+          "format": "double"
+        },
+        "valueAverage": {
+          "type": "number",
+          "format": "double"
+        },
+        "atmosphereAverage": {
+          "type": "number",
+          "format": "double"
+        },
+        "cleanlinessAverage": {
+          "type": "number",
+          "format": "double"
+        },
+        "locationAverage": {
+          "type": "number",
+          "format": "double"
+        },
+        "foodAverage": {
+          "type": "number",
+          "format": "double"
+        },
+        "roomAverage": {
+          "type": "number",
+          "format": "double"
+        },
+        "amenitiesAverage": {
+          "type": "number",
+          "format": "double"
+        },
+        "staffAverage": {
+          "type": "number",
+          "format": "double"
+        }
+      },
+      "title": "Average ratings for review aspects"
+    },
+    "v1ReviewAspects": {
+      "type": "object",
+      "properties": {
+        "serviceRating": {
+          "type": "number",
+          "format": "double",
+          "title": "1.0 - 5.0"
+        },
+        "qualityRating": {
+          "type": "number",
+          "format": "double"
+        },
+        "valueRating": {
+          "type": "number",
+          "format": "double"
+        },
+        "atmosphereRating": {
+          "type": "number",
+          "format": "double"
+        },
+        "cleanlinessRating": {
+          "type": "number",
+          "format": "double"
+        },
+        "locationRating": {
+          "type": "number",
+          "format": "double"
+        },
+        "foodRating": {
+          "type": "number",
+          "format": "double",
+          "title": "Restaurant-specific"
+        },
+        "roomRating": {
+          "type": "number",
+          "format": "double",
+          "title": "Hotel-specific"
+        },
+        "amenitiesRating": {
+          "type": "number",
+          "format": "double"
+        },
+        "staffRating": {
+          "type": "number",
+          "format": "double"
+        }
+      },
+      "title": "Detailed aspects of a review"
+    },
+    "v1ReviewFilter": {
+      "type": "object",
+      "properties": {
+        "ratingFilters": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "format": "double"
+          },
+          "title": "Filter by specific ratings"
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "languages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "verifiedOnly": {
+          "type": "boolean"
+        },
+        "withPhotosOnly": {
+          "type": "boolean"
+        },
+        "keywords": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "sortBy": {
+          "$ref": "#/definitions/v1ReviewSortBy"
+        },
+        "sortDirection": {
+          "$ref": "#/definitions/v1SortDirection"
+        }
+      },
+      "title": "Review filter options"
+    },
+    "v1ReviewSortBy": {
+      "type": "string",
+      "enum": [
+        "REVIEW_SORT_BY_UNSPECIFIED",
+        "REVIEW_SORT_BY_DATE",
+        "REVIEW_SORT_BY_RATING",
+        "REVIEW_SORT_BY_HELPFUL",
+        "REVIEW_SORT_BY_RELEVANCE"
+      ],
+      "default": "REVIEW_SORT_BY_UNSPECIFIED",
+      "description": "- REVIEW_SORT_BY_DATE: Most recent first\n - REVIEW_SORT_BY_RATING: Highest rating first\n - REVIEW_SORT_BY_HELPFUL: Most helpful first\n - REVIEW_SORT_BY_RELEVANCE: Algorithm-determined relevance",
+      "title": "Sort options for reviews"
+    },
+    "v1ReviewStatistics": {
+      "type": "object",
+      "properties": {
+        "poiId": {
+          "type": "string"
+        },
+        "overallRating": {
+          "type": "number",
+          "format": "double"
+        },
+        "totalReviews": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "ratingBreakdown": {
+          "$ref": "#/definitions/v1RatingBreakdown"
+        },
+        "aspectAverages": {
+          "$ref": "#/definitions/v1ReviewAspectAverages"
+        },
+        "trends": {
+          "$ref": "#/definitions/v1RecentReviewTrends"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1ReviewTag"
+          },
+          "title": "Most mentioned tags/keywords"
+        },
+        "languageDistribution": {
+          "$ref": "#/definitions/v1LanguageDistribution"
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "title": "Review statistics for a POI"
+    },
+    "v1ReviewStatus": {
+      "type": "string",
+      "enum": [
+        "REVIEW_STATUS_UNSPECIFIED",
+        "REVIEW_STATUS_PENDING",
+        "REVIEW_STATUS_PUBLISHED",
+        "REVIEW_STATUS_HIDDEN",
+        "REVIEW_STATUS_DELETED",
+        "REVIEW_STATUS_FLAGGED"
+      ],
+      "default": "REVIEW_STATUS_UNSPECIFIED",
+      "description": "- REVIEW_STATUS_PENDING: Awaiting moderation\n - REVIEW_STATUS_PUBLISHED: Live and visible\n - REVIEW_STATUS_HIDDEN: Hidden by moderator\n - REVIEW_STATUS_DELETED: Deleted by user or admin\n - REVIEW_STATUS_FLAGGED: Flagged for review",
+      "title": "Review status"
+    },
+    "v1ReviewTag": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "type": "string"
+        },
+        "count": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "sentimentScore": {
+          "type": "number",
+          "format": "double",
+          "title": "-1.0 to 1.0"
+        },
+        "category": {
+          "type": "string",
+          "title": "\"positive\", \"negative\", \"neutral\""
+        }
+      },
+      "title": "Review tags/keywords"
+    },
+    "v1ReviewerInfo": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "avatarUrl": {
+          "type": "string"
+        },
+        "reviewCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "isVerified": {
+          "type": "boolean"
+        },
+        "level": {
+          "type": "string",
+          "title": "\"Bronze\", \"Silver\", \"Gold\", \"Platinum\""
+        },
+        "memberSince": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "title": "Public reviewer information"
+    },
+    "v1SortDirection": {
+      "type": "string",
+      "enum": [
+        "SORT_DIRECTION_UNSPECIFIED",
+        "SORT_DIRECTION_ASC",
+        "SORT_DIRECTION_DESC"
+      ],
+      "default": "SORT_DIRECTION_UNSPECIFIED"
+    },
+    "v1UpdateReviewResponse": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "$ref": "#/definitions/commonResponse"
+        },
+        "review": {
+          "$ref": "#/definitions/v1Review"
+        }
+      }
+    },
+    "v1UserReviewStatistics": {
+      "type": "object",
+      "properties": {
+        "totalReviews": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "averageRatingGiven": {
+          "type": "number",
+          "format": "double"
+        },
+        "helpfulVotesReceived": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "reviewerLevel": {
+          "type": "string"
+        },
+        "topCategoriesReviewed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

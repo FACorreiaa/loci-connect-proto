@@ -1,0 +1,337 @@
+syntax = "proto3";
+
+package loci.chat;
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/chat;chat";
+
+
+import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+import "proto/common.proto";
+import "proto/city.proto";
+import "proto/poi.proto";
+import "proto/profile.proto";
+
+// Enums for chat types
+enum MessageRole {
+  MESSAGE_ROLE_UNSPECIFIED = 0;
+  MESSAGE_ROLE_USER = 1;
+  MESSAGE_ROLE_ASSISTANT = 2;
+  MESSAGE_ROLE_SYSTEM = 3;
+}
+
+enum MessageType {
+  MESSAGE_TYPE_UNSPECIFIED = 0;
+  MESSAGE_TYPE_INITIAL_REQUEST = 1;
+  MESSAGE_TYPE_MODIFICATION_REQUEST = 2;
+  MESSAGE_TYPE_RESPONSE = 3;
+  MESSAGE_TYPE_CLARIFICATION = 4;
+  MESSAGE_TYPE_ITINERARY_RESPONSE = 5;
+  MESSAGE_TYPE_ERROR = 6;
+}
+
+enum SessionStatus {
+  SESSION_STATUS_UNSPECIFIED = 0;
+  SESSION_STATUS_ACTIVE = 1;
+  SESSION_STATUS_EXPIRED = 2;
+  SESSION_STATUS_CLOSED = 3;
+}
+
+enum IntentType {
+  INTENT_TYPE_UNSPECIFIED = 0;
+  INTENT_TYPE_INITIAL_REQUEST = 1;
+  INTENT_TYPE_ADD_POI = 2;
+  INTENT_TYPE_REMOVE_POI = 3;
+  INTENT_TYPE_MODIFY_ITINERARY = 4;
+  INTENT_TYPE_CHANGE_PREFERENCES = 5;
+  INTENT_TYPE_ASK_QUESTION = 6;
+  INTENT_TYPE_CLARIFICATION = 7;
+  INTENT_TYPE_PROVIDE_FEEDBACK = 8;
+  INTENT_TYPE_CHIT_CHAT = 9;
+  INTENT_TYPE_GET_POI_DETAILS = 10;
+  INTENT_TYPE_FIND_HOTELS = 11;
+  INTENT_TYPE_FIND_RESTAURANTS = 12;
+  INTENT_TYPE_REPLACE_POI = 13;
+  INTENT_TYPE_CHANGE_DATE = 14;
+  INTENT_TYPE_CHANGE_LOCATION = 15;
+  INTENT_TYPE_SORT_ITINERARY = 16;
+}
+
+enum DomainType {
+  DOMAIN_TYPE_UNSPECIFIED = 0;
+  DOMAIN_TYPE_GENERAL = 1;
+  DOMAIN_TYPE_ACCOMMODATION = 2;
+  DOMAIN_TYPE_DINING = 3;
+  DOMAIN_TYPE_ACTIVITIES = 4;
+  DOMAIN_TYPE_ITINERARY = 5;
+  DOMAIN_TYPE_TRANSPORT = 6;
+}
+
+// LlmInteraction represents an interaction with the LLM
+message LlmInteraction {
+  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string session_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string user_id = 3 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string profile_id = 4 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  optional string city_name = 5 [(buf.validate.field).string = {min_len: 1, max_len: 200}
+  ];
+  string prompt = 6 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
+  bytes request_payload = 7 [(buf.validate.field).bytes = {min_len: 1}];
+  string response_text = 8 [(buf.validate.field).string = {min_len: 1, max_len: 16000}];
+  bytes response_payload = 9 [(buf.validate.field).bytes = {min_len: 1}];
+  string model_used = 10 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  int32 prompt_tokens = 11 [(buf.validate.field).int32 = {gte: 0}];
+  int32 completion_tokens = 12 [(buf.validate.field).int32 = {gte: 0}];
+  int32 total_tokens = 13 [(buf.validate.field).int32 = {gte: 0}];
+  int32 latency_ms = 14 [(buf.validate.field).int32 = {gte: 0}];
+  google.protobuf.Timestamp timestamp = 15 [(buf.validate.field).required = true];
+  optional double latitude = 16 [(buf.validate.field).double = {gte: -90, lte: 90}];
+  optional double longitude = 17 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  optional double distance = 18 [(buf.validate.field).double = {gte: 0}];
+}
+
+// ConversationMessage represents a single message in a conversation
+message ConversationMessage {
+  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  MessageRole role = 2 [(buf.validate.field).enum = {defined_only: true}];
+  string content = 3 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
+  MessageType message_type = 4 [(buf.validate.field).enum = {defined_only: true}];
+  google.protobuf.Timestamp timestamp = 5 [(buf.validate.field).required = true];
+  optional MessageMetadata metadata = 6;
+}
+
+// MessageMetadata contains additional metadata for messages
+message MessageMetadata {
+  optional string llm_interaction_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+  int32 modified_poi_count = 2 [(buf.validate.field).int32 = {gte: 0}];
+  optional string request_type = 3 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+}
+
+// ModificationRecord represents a modification in the session
+message ModificationRecord {
+  string type = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string description = 2 [(buf.validate.field).string = {min_len: 1, max_len: 1000}];
+  google.protobuf.Timestamp timestamp = 3 [(buf.validate.field).required = true];
+  bool applied = 4;
+}
+
+// SessionContext contains context information for a session
+message SessionContext {
+  string city_name = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string last_city_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  optional loci.profile.UserPreferenceProfile user_preferences = 3;
+  repeated string active_interests = 4 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  repeated string active_tags = 5 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  string conversation_summary = 6 [(buf.validate.field).string = {max_len: 4000}
+  ];
+  repeated ModificationRecord modification_history = 7;
+}
+
+// AIItineraryResponse represents an AI-generated itinerary response
+message AIItineraryResponse {
+  string itinerary_name = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string overall_description = 2 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
+  repeated loci.poi.POIDetailedInfo points_of_interest = 3;
+  repeated loci.poi.POIDetailedInfo restaurants = 4;
+  repeated loci.poi.POIDetailedInfo bars = 5;
+}
+
+// AiCityResponse represents a complete AI city response
+message AiCityResponse {
+  loci.city.GeneralCityData general_city_data = 1 [(buf.validate.field).required = true];
+  repeated loci.poi.POIDetailedInfo points_of_interest = 2;
+  AIItineraryResponse itinerary_response = 3;
+  string session_id = 4 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+}
+
+// SessionPerformanceMetrics contains performance metrics
+message SessionPerformanceMetrics {
+  int32 avg_response_time_ms = 1 [(buf.validate.field).int32 = {gte: 0}];
+  int32 total_tokens = 2 [(buf.validate.field).int32 = {gte: 0}];
+  int32 prompt_tokens = 3 [(buf.validate.field).int32 = {gte: 0}];
+  int32 completion_tokens = 4 [(buf.validate.field).int32 = {gte: 0}];
+  repeated string models_used = 5;
+  int32 total_latency_ms = 6 [(buf.validate.field).int32 = {gte: 0}];
+}
+
+// SessionContentMetrics contains content metrics
+message SessionContentMetrics {
+  int32 total_pois = 1 [(buf.validate.field).int32 = {gte: 0}];
+  int32 total_hotels = 2 [(buf.validate.field).int32 = {gte: 0}];
+  int32 total_restaurants = 3 [(buf.validate.field).int32 = {gte: 0}];
+  repeated string cities_covered = 4 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 200}];
+  bool has_itinerary = 5;
+  int32 complexity_score = 6 [(buf.validate.field).int32 = {gte: 0}];
+  repeated string dominant_categories = 7 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 200}];
+}
+
+// SessionEngagementMetrics contains engagement metrics
+message SessionEngagementMetrics {
+  int32 message_count = 1 [(buf.validate.field).int32 = {gte: 0}];
+  int64 conversation_duration_seconds = 2 [(buf.validate.field).int64 = {gte: 0}];
+  int32 user_message_count = 3 [(buf.validate.field).int32 = {gte: 0}];
+  int32 assistant_message_count = 4 [(buf.validate.field).int32 = {gte: 0}];
+  int32 avg_message_length = 5 [(buf.validate.field).int32 = {gte: 0}];
+  optional google.protobuf.Timestamp peak_activity_time = 6;
+  string engagement_level = 7 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+}
+
+// ChatSession represents a chat session
+message ChatSession {
+  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string user_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string profile_id = 3 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string city_name = 4 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  optional AiCityResponse current_itinerary = 5;
+  repeated ConversationMessage conversation_history = 6;
+  SessionContext session_context = 7 [(buf.validate.field).required = true];
+  google.protobuf.Timestamp created_at = 8 [(buf.validate.field).required = true];
+  google.protobuf.Timestamp updated_at = 9 [(buf.validate.field).required = true];
+  google.protobuf.Timestamp expires_at = 10 [(buf.validate.field).required = true];
+  SessionStatus status = 11 [(buf.validate.field).enum = {defined_only: true}];
+  SessionPerformanceMetrics performance_metrics = 12;
+  SessionContentMetrics content_metrics = 13;
+  SessionEngagementMetrics engagement_metrics = 14;
+}
+
+// ChatRequest for sending a message
+message ChatRequest {
+  optional string session_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}
+  ];
+  string message = 2 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
+  optional string city_name = 3 [(buf.validate.field).string = {min_len: 1, max_len: 200}
+  ];
+}
+
+// ChatResponse for chat response
+message ChatResponse {
+  string session_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string message = 2 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
+  optional AiCityResponse updated_itinerary = 3;
+  bool is_new_session = 4;
+  bool requires_clarification = 5;
+  repeated string suggested_actions = 6 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 200}];
+}
+
+// StreamEvent represents a streaming event
+message StreamEvent {
+  string type = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string message = 2 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
+  bytes data = 3;
+  optional string error = 4 [(buf.validate.field).string = {min_len: 1, max_len: 500}
+  ];
+  google.protobuf.Timestamp timestamp = 5 [(buf.validate.field).required = true];
+  string event_id = 6 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  bool is_final = 7;
+  optional NavigationData navigation = 8;
+}
+
+// NavigationData contains navigation information
+message NavigationData {
+  string url = 1 [(buf.validate.field).string = {min_len: 1, max_len: 2048}];
+  string route_type = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  map<string, string> query_params = 3 [(buf.validate.field).map = {
+    keys: {string: {min_len: 1}},
+    values: {string: {min_len: 1}
+    }
+  }];
+}
+
+// StartChatRequest for starting a new chat session
+message StartChatRequest {
+  string city_name = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  DomainType context_type = 2 [(buf.validate.field).enum = {defined_only: true}];
+  optional string initial_message = 3 [(buf.validate.field).string = {min_len: 1, max_len: 4000}
+  ];
+}
+
+// ContinueChatRequest for continuing a chat session
+message ContinueChatRequest {
+  string session_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string message = 2 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
+  optional string city_name = 3 [(buf.validate.field).string = {min_len: 1, max_len: 200}
+  ];
+  DomainType context_type = 4 [(buf.validate.field).enum = {defined_only: true}];
+}
+
+// GetChatSessionRequest for retrieving a chat session
+message GetChatSessionRequest {
+  string session_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+}
+
+// GetChatSessionResponse for chat session retrieval
+message GetChatSessionResponse {
+  ChatSession session = 1;
+}
+
+// GetChatSessionsRequest for retrieving multiple chat sessions
+message GetChatSessionsRequest {
+  optional string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+  loci.common.PaginationRequest pagination = 2 [(buf.validate.field).required = true];
+}
+
+// GetChatSessionsResponse for chat sessions retrieval
+message GetChatSessionsResponse {
+  repeated ChatSession sessions = 1;
+  loci.common.PaginationMetadata pagination = 2;
+}
+
+// RecentInteraction represents a recent user interaction
+message RecentInteraction {
+  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string user_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string city_name = 3 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  optional string city_id = 4 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+  string prompt = 5 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
+  optional string response_text = 6 [(buf.validate.field).string = {min_len: 1, max_len: 4000}
+  ];
+  string model_used = 7 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  int32 latency_ms = 8 [(buf.validate.field).int32 = {gte: 0}];
+  google.protobuf.Timestamp created_at = 9 [(buf.validate.field).required = true];
+  repeated loci.poi.POIDetailedInfo pois = 10;
+  repeated loci.poi.HotelDetailedInfo hotels = 11;
+  repeated loci.poi.RestaurantDetailedInfo restaurants = 12;
+}
+
+// CityInteractions groups interactions for a specific city
+message CityInteractions {
+  string city_name = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string session_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  repeated RecentInteraction interactions = 3;
+  int32 poi_count = 4 [(buf.validate.field).int32 = {gte: 0}];
+  google.protobuf.Timestamp last_activity = 5 [(buf.validate.field).required = true];
+  repeated string session_ids = 6;
+  string title = 7 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  optional int32 total_favorites = 8 [(buf.validate.field).int32 = {gte: 0}];
+  optional int32 total_itineraries = 9 [(buf.validate.field).int32 = {gte: 0}];
+}
+
+// GetRecentInteractionsRequest for retrieving recent interactions
+message GetRecentInteractionsRequest {
+  optional string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+  loci.common.PaginationRequest pagination = 2 [(buf.validate.field).required = true];
+}
+
+// GetRecentInteractionsResponse for recent interactions retrieval
+message GetRecentInteractionsResponse {
+  repeated CityInteractions cities = 1;
+  loci.common.PaginationMetadata pagination = 2;
+}
+
+// ChatService defines chat-related RPCs
+service ChatService {
+  rpc StartChat(StartChatRequest) returns (ChatResponse);
+  rpc ContinueChat(ContinueChatRequest) returns (ChatResponse);
+  rpc GetChatSession(GetChatSessionRequest) returns (GetChatSessionResponse);
+  rpc GetChatSessions(GetChatSessionsRequest) returns (GetChatSessionsResponse);
+  rpc GetRecentInteractions(GetRecentInteractionsRequest) returns (GetRecentInteractionsResponse);
+  rpc EndSession(GetChatSessionRequest) returns (loci.common.Response);
+  
+  // Streaming RPC for real-time chat responses
+  rpc StreamChat(ChatRequest) returns (stream StreamEvent);
+}

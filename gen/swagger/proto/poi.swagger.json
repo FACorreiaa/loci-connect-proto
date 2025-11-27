@@ -1,0 +1,206 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "proto/poi.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "POIService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {},
+  "definitions": {
+    "commonPaginationMetadata": {
+      "type": "object",
+      "properties": {
+        "totalRecords": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "totalPages": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "hasMore": {
+          "type": "boolean"
+        }
+      },
+      "title": "Pagination metadata"
+    },
+    "locipoiPOIDetailedInfo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "cityId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "descriptionPoi": {
+          "type": "string"
+        },
+        "distance": {
+          "type": "number",
+          "format": "double"
+        },
+        "latitude": {
+          "type": "number",
+          "format": "double"
+        },
+        "longitude": {
+          "type": "number",
+          "format": "double"
+        },
+        "category": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "rating": {
+          "type": "number",
+          "format": "double"
+        },
+        "address": {
+          "type": "string"
+        },
+        "phoneNumber": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        },
+        "openingHours": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "priceRange": {
+          "type": "string"
+        },
+        "priceLevel": {
+          "type": "string"
+        },
+        "reviews": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "llmInteractionId": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "priority": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "cuisineType": {
+          "type": "string",
+          "title": "For restaurants"
+        },
+        "starRating": {
+          "type": "string",
+          "title": "For hotels"
+        },
+        "amenities": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        }
+      },
+      "title": "POIDetailedInfo represents a point of interest"
+    },
+    "poiGetPOIResponse": {
+      "type": "object",
+      "properties": {
+        "poi": {
+          "$ref": "#/definitions/locipoiPOIDetailedInfo"
+        }
+      },
+      "title": "GetPOIResponse for POI details retrieval"
+    },
+    "poiSearchPOIResponse": {
+      "type": "object",
+      "properties": {
+        "pois": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/locipoiPOIDetailedInfo"
+          }
+        },
+        "pagination": {
+          "$ref": "#/definitions/commonPaginationMetadata"
+        }
+      },
+      "title": "SearchPOIResponse for POI search results"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}

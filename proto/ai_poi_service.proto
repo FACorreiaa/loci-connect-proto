@@ -1,0 +1,159 @@
+syntax = "proto3";
+
+package ai_poi.v1;
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/ai_poi/v1;ai_poiv1";
+
+import "buf/validate/validate.proto";
+
+
+// Main AI POI API Gateway Service
+// This service can act as a unified entry point to all sub-services
+service AiPoiService {
+  // Health check
+  rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse);
+  
+  // Get service information
+  rpc GetServiceInfo(GetServiceInfoRequest) returns (GetServiceInfoResponse);
+  
+  // Get feature flags for the user
+  rpc GetFeatureFlags(GetFeatureFlagsRequest) returns (GetFeatureFlagsResponse);
+}
+
+// Health check request
+message HealthCheckRequest {
+  string service = 1 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ]; // Specific service to check, empty for all
+}
+
+// Service information
+message GetServiceInfoRequest {
+  bool include_endpoints = 1;
+  bool include_version_info = 2;
+}
+
+message GetServiceInfoResponse {
+  ServiceInfo service_info = 1;
+  repeated ServiceEndpoint endpoints = 2;
+  repeated ApiVersion versions = 3;
+}
+
+message ServiceInfo {
+  string name = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string version = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string description = 3 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 1000}
+  ];
+  string build_time = 4 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ];
+  string git_commit = 5 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ];
+  string environment = 6 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {in: ["development", "staging", "production"]}
+  ]; // "development", "staging", "production"
+  map<string, string> configuration = 7 [(buf.validate.field).map = {
+    keys: {string: {min_len: 1}},
+    values: {
+      ignore: IGNORE_IF_ZERO_VALUE,
+      string: {min_len: 1}
+    }
+  }];
+}
+
+message ServiceEndpoint {
+  string name = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string path = 2 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string method = 3 [(buf.validate.field).string = {min_len: 1, max_len: 20}]; // HTTP method for REST endpoints
+  string description = 4 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 1000}
+  ];
+  bool requires_auth = 5;
+  repeated string required_permissions = 6 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  RateLimitInfo rate_limit = 7;
+}
+
+// Feature flags
+message GetFeatureFlagsRequest {
+  string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string client_version = 2 [(buf.validate.field).string = {min_len: 1, max_len: 50}];
+  string platform = 3 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {in: ["web", "ios", "android"]}
+  ]; // "web", "ios", "android"
+  map<string, string> user_attributes = 4 [(buf.validate.field).map = {
+    keys: {string: {min_len: 1}},
+    values: {
+      ignore: IGNORE_IF_ZERO_VALUE,
+      string: {min_len: 1}
+    }
+  }];
+}
+
+message GetFeatureFlagsResponse {
+  repeated FeatureFlag flags = 1;
+  map<string, string> experiments = 2 [(buf.validate.field).map = {
+    keys: {string: {min_len: 1}},
+    values: {
+      ignore: IGNORE_IF_ZERO_VALUE,
+      string: {min_len: 1}
+    }
+  }]; // A/B test assignments
+}
+
+// Service dependencies and their health status
+message ServiceDependencies {
+  ComponentHealth database = 1;
+  ComponentHealth redis_cache = 2;
+  ComponentHealth ai_service = 3;
+  ComponentHealth external_apis = 4;
+  ComponentHealth file_storage = 5;
+}
+
+message ComponentHealth {
+  string name = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string status = 2 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {in: ["healthy", "degraded", "unhealthy"]}
+  ]; // "healthy", "degraded", "unhealthy"
+  string message = 3 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 500}
+  ];
+  double response_time_ms = 4 [(buf.validate.field).double = {gte: 0}];
+  map<string, string> metrics = 5 [(buf.validate.field).map = {
+    keys: {string: {min_len: 1}},
+    values: {
+      ignore: IGNORE_IF_ZERO_VALUE,
+      string: {min_len: 1}
+    }
+  }];
+}
+
+message HealthCheckResponse {
+  bool healthy = 1;
+  string message = 2;
+}
+
+message ApiVersion {
+  string version = 1;
+  string status = 2;
+}
+
+message RateLimitInfo {
+  int32 requests_per_minute = 1 [(buf.validate.field).int32 = {gte: 0}];
+  int32 burst_limit = 2 [(buf.validate.field).int32 = {gte: 0}];
+}
+
+message FeatureFlag {
+  string name = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  bool enabled = 2;
+}

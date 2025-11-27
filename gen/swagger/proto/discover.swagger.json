@@ -1,0 +1,1225 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "proto/discover.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "DiscoverService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {},
+  "definitions": {
+    "chatAIItineraryResponse": {
+      "type": "object",
+      "properties": {
+        "itineraryName": {
+          "type": "string"
+        },
+        "overallDescription": {
+          "type": "string"
+        },
+        "pointsOfInterest": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/locipoiPOIDetailedInfo"
+          }
+        },
+        "restaurants": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/locipoiPOIDetailedInfo"
+          }
+        },
+        "bars": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/locipoiPOIDetailedInfo"
+          }
+        }
+      },
+      "title": "AIItineraryResponse represents an AI-generated itinerary response"
+    },
+    "chatAiCityResponse": {
+      "type": "object",
+      "properties": {
+        "generalCityData": {
+          "$ref": "#/definitions/cityGeneralCityData"
+        },
+        "pointsOfInterest": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/locipoiPOIDetailedInfo"
+          }
+        },
+        "itineraryResponse": {
+          "$ref": "#/definitions/chatAIItineraryResponse"
+        },
+        "sessionId": {
+          "type": "string"
+        }
+      },
+      "title": "AiCityResponse represents a complete AI city response"
+    },
+    "chatChatSession": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        },
+        "profileId": {
+          "type": "string"
+        },
+        "cityName": {
+          "type": "string"
+        },
+        "currentItinerary": {
+          "$ref": "#/definitions/chatAiCityResponse"
+        },
+        "conversationHistory": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/chatConversationMessage"
+          }
+        },
+        "sessionContext": {
+          "$ref": "#/definitions/chatSessionContext"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "status": {
+          "$ref": "#/definitions/chatSessionStatus"
+        },
+        "performanceMetrics": {
+          "$ref": "#/definitions/chatSessionPerformanceMetrics"
+        },
+        "contentMetrics": {
+          "$ref": "#/definitions/chatSessionContentMetrics"
+        },
+        "engagementMetrics": {
+          "$ref": "#/definitions/chatSessionEngagementMetrics"
+        }
+      },
+      "title": "ChatSession represents a chat session"
+    },
+    "chatConversationMessage": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "role": {
+          "$ref": "#/definitions/chatMessageRole"
+        },
+        "content": {
+          "type": "string"
+        },
+        "messageType": {
+          "$ref": "#/definitions/chatMessageType"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "metadata": {
+          "$ref": "#/definitions/chatMessageMetadata"
+        }
+      },
+      "title": "ConversationMessage represents a single message in a conversation"
+    },
+    "chatMessageMetadata": {
+      "type": "object",
+      "properties": {
+        "llmInteractionId": {
+          "type": "string"
+        },
+        "modifiedPoiCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "requestType": {
+          "type": "string"
+        }
+      },
+      "title": "MessageMetadata contains additional metadata for messages"
+    },
+    "chatMessageRole": {
+      "type": "string",
+      "enum": [
+        "MESSAGE_ROLE_UNSPECIFIED",
+        "MESSAGE_ROLE_USER",
+        "MESSAGE_ROLE_ASSISTANT",
+        "MESSAGE_ROLE_SYSTEM"
+      ],
+      "default": "MESSAGE_ROLE_UNSPECIFIED",
+      "title": "Enums for chat types"
+    },
+    "chatMessageType": {
+      "type": "string",
+      "enum": [
+        "MESSAGE_TYPE_UNSPECIFIED",
+        "MESSAGE_TYPE_INITIAL_REQUEST",
+        "MESSAGE_TYPE_MODIFICATION_REQUEST",
+        "MESSAGE_TYPE_RESPONSE",
+        "MESSAGE_TYPE_CLARIFICATION",
+        "MESSAGE_TYPE_ITINERARY_RESPONSE",
+        "MESSAGE_TYPE_ERROR"
+      ],
+      "default": "MESSAGE_TYPE_UNSPECIFIED"
+    },
+    "chatModificationRecord": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "applied": {
+          "type": "boolean"
+        }
+      },
+      "title": "ModificationRecord represents a modification in the session"
+    },
+    "chatSessionContentMetrics": {
+      "type": "object",
+      "properties": {
+        "totalPois": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "totalHotels": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "totalRestaurants": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "citiesCovered": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "hasItinerary": {
+          "type": "boolean"
+        },
+        "complexityScore": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "dominantCategories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "SessionContentMetrics contains content metrics"
+    },
+    "chatSessionContext": {
+      "type": "object",
+      "properties": {
+        "cityName": {
+          "type": "string"
+        },
+        "lastCityId": {
+          "type": "string"
+        },
+        "userPreferences": {
+          "$ref": "#/definitions/profileUserPreferenceProfile"
+        },
+        "activeInterests": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "activeTags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "conversationSummary": {
+          "type": "string"
+        },
+        "modificationHistory": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/chatModificationRecord"
+          }
+        }
+      },
+      "title": "SessionContext contains context information for a session"
+    },
+    "chatSessionEngagementMetrics": {
+      "type": "object",
+      "properties": {
+        "messageCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "conversationDurationSeconds": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userMessageCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "assistantMessageCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "avgMessageLength": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "peakActivityTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "engagementLevel": {
+          "type": "string"
+        }
+      },
+      "title": "SessionEngagementMetrics contains engagement metrics"
+    },
+    "chatSessionPerformanceMetrics": {
+      "type": "object",
+      "properties": {
+        "avgResponseTimeMs": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "totalTokens": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "promptTokens": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "completionTokens": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "modelsUsed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "totalLatencyMs": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "SessionPerformanceMetrics contains performance metrics"
+    },
+    "chatSessionStatus": {
+      "type": "string",
+      "enum": [
+        "SESSION_STATUS_UNSPECIFIED",
+        "SESSION_STATUS_ACTIVE",
+        "SESSION_STATUS_EXPIRED",
+        "SESSION_STATUS_CLOSED"
+      ],
+      "default": "SESSION_STATUS_UNSPECIFIED"
+    },
+    "cityGeneralCityData": {
+      "type": "object",
+      "properties": {
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "stateProvince": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "centerLatitude": {
+          "type": "number",
+          "format": "double"
+        },
+        "centerLongitude": {
+          "type": "number",
+          "format": "double"
+        },
+        "population": {
+          "type": "string"
+        },
+        "area": {
+          "type": "string"
+        },
+        "timezone": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "weather": {
+          "type": "string"
+        },
+        "attractions": {
+          "type": "string"
+        },
+        "history": {
+          "type": "string"
+        }
+      },
+      "title": "GeneralCityData contains general information about a city"
+    },
+    "commonPaginationMetadata": {
+      "type": "object",
+      "properties": {
+        "totalRecords": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "totalPages": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "hasMore": {
+          "type": "boolean"
+        }
+      },
+      "title": "Pagination metadata"
+    },
+    "commonPaginationRequest": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "sortBy": {
+          "type": "string"
+        },
+        "sortOrder": {
+          "type": "string"
+        }
+      },
+      "title": "Pagination request parameters"
+    },
+    "commonRangeFilter": {
+      "type": "object",
+      "properties": {
+        "min": {
+          "type": "number",
+          "format": "double"
+        },
+        "max": {
+          "type": "number",
+          "format": "double"
+        }
+      },
+      "title": "Range filter for numeric values"
+    },
+    "discoverDiscoverPageData": {
+      "type": "object",
+      "properties": {
+        "trending": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/discoverTrendingDiscovery"
+          }
+        },
+        "featured": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/discoverFeaturedCollection"
+          }
+        },
+        "recentDiscoveries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/chatChatSession"
+          }
+        }
+      },
+      "title": "DiscoverPageData contains all data needed for the discover page"
+    },
+    "discoverDiscoverResult": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "latitude": {
+          "type": "number",
+          "format": "double"
+        },
+        "longitude": {
+          "type": "number",
+          "format": "double"
+        },
+        "category": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        },
+        "phoneNumber": {
+          "type": "string"
+        },
+        "openingHours": {
+          "type": "string"
+        },
+        "priceLevel": {
+          "type": "string"
+        },
+        "rating": {
+          "type": "number",
+          "format": "double"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "cuisineType": {
+          "type": "string"
+        },
+        "starRating": {
+          "type": "string"
+        }
+      },
+      "title": "DiscoverResult represents a single discovery result (POI)"
+    },
+    "discoverFeaturedCollection": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "itemCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "emoji": {
+          "type": "string"
+        }
+      },
+      "title": "FeaturedCollection represents a featured collection of POIs"
+    },
+    "discoverGetCategoryResultsResponse": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/discoverDiscoverResult"
+          }
+        },
+        "pagination": {
+          "$ref": "#/definitions/commonPaginationMetadata"
+        }
+      },
+      "title": "GetCategoryResultsResponse for category results retrieval"
+    },
+    "discoverGetDiscoverPageResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/discoverDiscoverPageData"
+        }
+      },
+      "title": "GetDiscoverPageResponse for discover page data retrieval"
+    },
+    "discoverGetFeaturedResponse": {
+      "type": "object",
+      "properties": {
+        "featured": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/discoverFeaturedCollection"
+          }
+        }
+      },
+      "title": "GetFeaturedResponse for featured collections retrieval"
+    },
+    "discoverGetRecentDiscoveriesResponse": {
+      "type": "object",
+      "properties": {
+        "sessions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/chatChatSession"
+          }
+        },
+        "pagination": {
+          "$ref": "#/definitions/commonPaginationMetadata"
+        }
+      },
+      "title": "GetRecentDiscoveriesResponse for recent discoveries retrieval"
+    },
+    "discoverGetTrendingResponse": {
+      "type": "object",
+      "properties": {
+        "trending": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/discoverTrendingDiscovery"
+          }
+        }
+      },
+      "title": "GetTrendingResponse for trending discoveries retrieval"
+    },
+    "discoverTrendingDiscovery": {
+      "type": "object",
+      "properties": {
+        "cityName": {
+          "type": "string"
+        },
+        "searchCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "emoji": {
+          "type": "string"
+        }
+      },
+      "title": "TrendingDiscovery represents a trending discovery/search"
+    },
+    "interestInterest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source": {
+          "type": "string"
+        }
+      },
+      "title": "Interest represents an interest tag"
+    },
+    "interestTags": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "tagType": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "title": "Tags represents a tag"
+    },
+    "locipoiPOIDetailedInfo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "cityId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "descriptionPoi": {
+          "type": "string"
+        },
+        "distance": {
+          "type": "number",
+          "format": "double"
+        },
+        "latitude": {
+          "type": "number",
+          "format": "double"
+        },
+        "longitude": {
+          "type": "number",
+          "format": "double"
+        },
+        "category": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "rating": {
+          "type": "number",
+          "format": "double"
+        },
+        "address": {
+          "type": "string"
+        },
+        "phoneNumber": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        },
+        "openingHours": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "priceRange": {
+          "type": "string"
+        },
+        "priceLevel": {
+          "type": "string"
+        },
+        "reviews": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "llmInteractionId": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "priority": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "cuisineType": {
+          "type": "string",
+          "title": "For restaurants"
+        },
+        "starRating": {
+          "type": "string",
+          "title": "For hotels"
+        },
+        "amenities": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        }
+      },
+      "title": "POIDetailedInfo represents a point of interest"
+    },
+    "profileAccommodationPreferences": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "userPreferenceId": {
+          "type": "string"
+        },
+        "accommodationType": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "starRating": {
+          "$ref": "#/definitions/commonRangeFilter"
+        },
+        "priceRangePerNight": {
+          "$ref": "#/definitions/commonRangeFilter"
+        },
+        "amenities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "roomType": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "chainPreference": {
+          "type": "string"
+        },
+        "cancellationPolicy": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "bookingFlexibility": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "title": "AccommodationPreferences represents accommodation-specific filters"
+    },
+    "profileActivityPreferences": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "userPreferenceId": {
+          "type": "string"
+        },
+        "activityCategories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "physicalActivityLevel": {
+          "type": "string"
+        },
+        "indoorOutdoorPreference": {
+          "type": "string"
+        },
+        "culturalImmersionLevel": {
+          "type": "string"
+        },
+        "mustSeeVsHiddenGems": {
+          "type": "string"
+        },
+        "educationalPreference": {
+          "type": "boolean"
+        },
+        "photographyOpportunities": {
+          "type": "boolean"
+        },
+        "seasonSpecificActivities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "avoidCrowds": {
+          "type": "boolean"
+        },
+        "localEventsInterest": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "title": "ActivityPreferences represents activity-specific filters"
+    },
+    "profileDayPreference": {
+      "type": "string",
+      "enum": [
+        "DAY_PREFERENCE_UNSPECIFIED",
+        "DAY_PREFERENCE_ANY",
+        "DAY_PREFERENCE_DAY",
+        "DAY_PREFERENCE_NIGHT"
+      ],
+      "default": "DAY_PREFERENCE_UNSPECIFIED",
+      "title": "Enums for preferences"
+    },
+    "profileDiningPreferences": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "userPreferenceId": {
+          "type": "string"
+        },
+        "cuisineTypes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "mealTypes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "serviceStyle": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "priceRangePerPerson": {
+          "$ref": "#/definitions/commonRangeFilter"
+        },
+        "dietaryNeeds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "allergenFree": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "michelinRated": {
+          "type": "boolean"
+        },
+        "localRecommendations": {
+          "type": "boolean"
+        },
+        "chainVsLocal": {
+          "type": "string"
+        },
+        "organicPreference": {
+          "type": "boolean"
+        },
+        "outdoorSeatingPreferred": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "title": "DiningPreferences represents dining-specific filters"
+    },
+    "profileItineraryPreferences": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "userPreferenceId": {
+          "type": "string"
+        },
+        "planningStyle": {
+          "type": "string"
+        },
+        "preferredPace": {
+          "type": "string"
+        },
+        "timeFlexibility": {
+          "type": "string"
+        },
+        "morningVsEvening": {
+          "type": "string"
+        },
+        "weekendVsWeekday": {
+          "type": "string"
+        },
+        "preferredSeasons": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "avoidPeakSeason": {
+          "type": "boolean"
+        },
+        "adventureVsRelaxation": {
+          "type": "string"
+        },
+        "spontaneousVsPlanned": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "title": "ItineraryPreferences represents itinerary planning-specific filters"
+    },
+    "profileSearchPace": {
+      "type": "string",
+      "enum": [
+        "SEARCH_PACE_UNSPECIFIED",
+        "SEARCH_PACE_ANY",
+        "SEARCH_PACE_RELAXED",
+        "SEARCH_PACE_MODERATE",
+        "SEARCH_PACE_FAST"
+      ],
+      "default": "SEARCH_PACE_UNSPECIFIED"
+    },
+    "profileTransportPreference": {
+      "type": "string",
+      "enum": [
+        "TRANSPORT_PREFERENCE_UNSPECIFIED",
+        "TRANSPORT_PREFERENCE_ANY",
+        "TRANSPORT_PREFERENCE_WALK",
+        "TRANSPORT_PREFERENCE_PUBLIC",
+        "TRANSPORT_PREFERENCE_CAR"
+      ],
+      "default": "TRANSPORT_PREFERENCE_UNSPECIFIED"
+    },
+    "profileUserPreferenceProfile": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        },
+        "profileName": {
+          "type": "string"
+        },
+        "isDefault": {
+          "type": "boolean"
+        },
+        "searchRadiusKm": {
+          "type": "number",
+          "format": "double"
+        },
+        "preferredTime": {
+          "$ref": "#/definitions/profileDayPreference"
+        },
+        "budgetLevel": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "preferredPace": {
+          "$ref": "#/definitions/profileSearchPace"
+        },
+        "preferAccessiblePois": {
+          "type": "boolean"
+        },
+        "preferOutdoorSeating": {
+          "type": "boolean"
+        },
+        "preferDogFriendly": {
+          "type": "boolean"
+        },
+        "preferredVibes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "preferredTransport": {
+          "$ref": "#/definitions/profileTransportPreference"
+        },
+        "dietaryNeeds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "interests": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/interestInterest"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/interestTags"
+          }
+        },
+        "userLatitude": {
+          "type": "number",
+          "format": "double"
+        },
+        "userLongitude": {
+          "type": "number",
+          "format": "double"
+        },
+        "accommodationPreferences": {
+          "$ref": "#/definitions/profileAccommodationPreferences"
+        },
+        "diningPreferences": {
+          "$ref": "#/definitions/profileDiningPreferences"
+        },
+        "activityPreferences": {
+          "$ref": "#/definitions/profileActivityPreferences"
+        },
+        "itineraryPreferences": {
+          "$ref": "#/definitions/profileItineraryPreferences"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "title": "UserPreferenceProfile represents a user's preference profile"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,234 @@
+syntax = "proto3";
+
+package loci.itinerary;
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/itinerary;itinerary";
+
+
+import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+import "proto/common.proto";
+import "proto/poi.proto";
+
+// ContentType defines the type of content in a list item
+enum ContentType {
+  CONTENT_TYPE_UNSPECIFIED = 0;
+  CONTENT_TYPE_POI = 1;
+  CONTENT_TYPE_RESTAURANT = 2;
+  CONTENT_TYPE_HOTEL = 3;
+  CONTENT_TYPE_ITINERARY = 4;
+}
+
+// List represents a list or itinerary
+message List {
+  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string user_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string name = 3 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string description = 4 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
+  string image_url = 5 [(buf.validate.field).string = {min_len: 1, max_len: 2048}
+  ];
+  bool is_public = 6;
+  bool is_itinerary = 7;
+  optional string parent_list_id = 8 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+  string city_id = 9 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  int32 view_count = 10 [(buf.validate.field).int32 = {gte: 0}];
+  int32 save_count = 11 [(buf.validate.field).int32 = {gte: 0}];
+  google.protobuf.Timestamp created_at = 12 [(buf.validate.field).required = true];
+  google.protobuf.Timestamp updated_at = 13 [(buf.validate.field).required = true];
+}
+
+// ListItem represents an item in a list
+message ListItem {
+  string list_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string item_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string poi_id = 3 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  ContentType content_type = 4 [(buf.validate.field).enum = {defined_only: true}];
+  int32 position = 5 [(buf.validate.field).int32 = {gte: 0}];
+  string notes = 6 [(buf.validate.field).string = {max_len: 4000}
+  ];
+  optional int32 day_number = 7 [(buf.validate.field).int32 = {gte: 1}];
+  optional google.protobuf.Timestamp time_slot = 8;
+  optional int32 duration = 9 [(buf.validate.field).int32 = {gte: 0}];
+  google.protobuf.Timestamp created_at = 10 [(buf.validate.field).required = true];
+  google.protobuf.Timestamp updated_at = 11 [(buf.validate.field).required = true];
+  optional string source_llm_interaction_id = 12 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+  string item_ai_description = 13 [(buf.validate.field).string = {max_len: 4000}
+  ];
+}
+
+// ListItemWithContent combines a ListItem with its content details
+message ListItemWithContent {
+  ListItem list_item = 1 [(buf.validate.field).required = true];
+  optional loci.poi.POIDetailedInfo poi = 2;
+  optional loci.poi.RestaurantDetailedInfo restaurant = 3;
+  optional loci.poi.HotelDetailedInfo hotel = 4;
+  optional UserSavedItinerary itinerary = 5;
+}
+
+// ListWithDetailedItems combines a List with its items and content
+message ListWithDetailedItems {
+  List list = 1 [(buf.validate.field).required = true];
+  repeated ListItemWithContent items = 2;
+}
+
+// UserSavedItinerary represents a saved itinerary
+message UserSavedItinerary {
+  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string user_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  optional string source_llm_interaction_id = 3 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+  optional string session_id = 4 [(buf.validate.field).string = {min_len: 1, max_len: 200}
+  ];
+  optional string primary_city_id = 5 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+  string title = 6 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  optional string description = 7 [(buf.validate.field).string = {min_len: 1, max_len: 4000}
+  ];
+  string markdown_content = 8 [(buf.validate.field).string = {min_len: 1}];
+  repeated string tags = 9 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  optional int32 estimated_duration_days = 10 [(buf.validate.field).int32 = {gte: 1}];
+  optional int32 estimated_cost_level = 11 [(buf.validate.field).int32 = {gte: 0, lte: 10}];
+  bool is_public = 12;
+  google.protobuf.Timestamp created_at = 13 [(buf.validate.field).required = true];
+  google.protobuf.Timestamp updated_at = 14 [(buf.validate.field).required = true];
+}
+
+// CreateListRequest for creating a new list
+message CreateListRequest {
+  string name = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string description = 2 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
+  optional string city_id = 3 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+  bool is_itinerary = 4;
+  bool is_public = 5;
+}
+
+// UpdateListRequest for updating a list
+message UpdateListRequest {
+  string list_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  optional string name = 2 [(buf.validate.field).string = {min_len: 1, max_len: 200}
+  ];
+  optional string description = 3 [(buf.validate.field).string = {min_len: 1, max_len: 4000}
+  ];
+  optional string image_url = 4 [(buf.validate.field).string = {min_len: 1, max_len: 2048}
+  ];
+  optional bool is_public = 5;
+  optional string city_id = 6 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+}
+
+// AddListItemRequest for adding an item to a list
+message AddListItemRequest {
+  string list_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string item_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  ContentType content_type = 3 [(buf.validate.field).enum = {defined_only: true}];
+  int32 position = 4 [(buf.validate.field).int32 = {gte: 0}];
+  string notes = 5 [(buf.validate.field).string = {max_len: 4000}
+  ];
+  optional int32 day_number = 6 [(buf.validate.field).int32 = {gte: 1}];
+  optional google.protobuf.Timestamp time_slot = 7;
+  optional int32 duration_minutes = 8 [(buf.validate.field).int32 = {gte: 0}];
+  optional string source_llm_interaction_id = 9 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+  string item_ai_description = 10 [(buf.validate.field).string = {max_len: 4000}
+  ];
+}
+
+// UpdateListItemRequest for updating a list item
+message UpdateListItemRequest {
+  string list_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string item_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  optional ContentType content_type = 3 [(buf.validate.field).enum = {defined_only: true}
+  ];
+  optional int32 position = 4 [(buf.validate.field).int32 = {gte: 0}];
+  optional string notes = 5 [(buf.validate.field).string = {max_len: 4000}
+  ];
+  optional int32 day_number = 6 [(buf.validate.field).int32 = {gte: 1}];
+  optional google.protobuf.Timestamp time_slot = 7;
+  optional int32 duration_minutes = 8 [(buf.validate.field).int32 = {gte: 0}];
+  optional string source_llm_interaction_id = 9 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+  optional string item_ai_description = 10 [(buf.validate.field).string = {max_len: 4000}
+  ];
+}
+
+// UpdateItineraryRequest for updating an itinerary
+message UpdateItineraryRequest {
+  string itinerary_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  optional string title = 2 [(buf.validate.field).string = {min_len: 1, max_len: 200}
+  ];
+  optional string description = 3 [(buf.validate.field).string = {min_len: 1, max_len: 4000}
+  ];
+  repeated string tags = 4 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  optional int32 estimated_duration_days = 5 [(buf.validate.field).int32 = {gte: 1}];
+  optional int32 estimated_cost_level = 6 [(buf.validate.field).int32 = {gte: 0, lte: 10}];
+  optional bool is_public = 7;
+  optional string markdown_content = 8 [(buf.validate.field).string = {min_len: 1}
+  ];
+}
+
+// BookmarkRequest for bookmarking an itinerary
+message BookmarkRequest {
+  optional string llm_interaction_id = 1;
+  optional string session_id = 2;
+  optional string primary_city_id = 3;
+  string primary_city_name = 4 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string title = 5 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  optional string description = 6 [(buf.validate.field).string = {min_len: 1, max_len: 4000}
+  ];
+  repeated string tags = 7 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  optional bool is_public = 8;
+}
+
+// GetListRequest for retrieving a list
+message GetListRequest {
+  string list_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  optional bool include_items = 2;
+}
+
+// GetListResponse for list retrieval
+message GetListResponse {
+  ListWithDetailedItems list = 1;
+}
+
+// GetUserListsRequest for retrieving user's lists
+message GetUserListsRequest {
+  optional string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+  optional bool itineraries_only = 2;
+  loci.common.PaginationRequest pagination = 3 [(buf.validate.field).required = true];
+}
+
+// GetUserListsResponse for user lists retrieval
+message GetUserListsResponse {
+  repeated List lists = 1;
+  loci.common.PaginationMetadata pagination = 2;
+}
+
+// GetUserItinerariesRequest for retrieving user's itineraries
+message GetUserItinerariesRequest {
+  optional string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+  loci.common.PaginationRequest pagination = 2 [(buf.validate.field).required = true];
+}
+
+// GetUserItinerariesResponse for user itineraries retrieval
+message GetUserItinerariesResponse {
+  repeated UserSavedItinerary itineraries = 1;
+  loci.common.PaginationMetadata pagination = 2;
+}
+
+// ItineraryService defines itinerary-related RPCs
+service ItineraryService {
+  rpc CreateList(CreateListRequest) returns (loci.common.Response);
+  rpc UpdateList(UpdateListRequest) returns (loci.common.Response);
+  rpc GetList(GetListRequest) returns (GetListResponse);
+  rpc GetUserLists(GetUserListsRequest) returns (GetUserListsResponse);
+  rpc AddListItem(AddListItemRequest) returns (loci.common.Response);
+  rpc UpdateListItem(UpdateListItemRequest) returns (loci.common.Response);
+  rpc GetUserItineraries(GetUserItinerariesRequest) returns (GetUserItinerariesResponse);
+  rpc UpdateItinerary(UpdateItineraryRequest) returns (loci.common.Response);
+  rpc BookmarkItinerary(BookmarkRequest) returns (loci.common.Response);
+}

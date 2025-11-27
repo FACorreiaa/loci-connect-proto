@@ -1,0 +1,406 @@
+syntax = "proto3";
+
+package ai_poi.list.v1;
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/ai_poi/list/v1;listv1";
+
+import "google/protobuf/timestamp.proto";
+import "buf/validate/validate.proto";
+
+
+// ListService provides list and itinerary management functionality
+service ListService {
+  // List management
+  rpc CreateList(CreateListRequest) returns (CreateListResponse);
+  rpc GetLists(GetListsRequest) returns (GetListsResponse);
+  rpc GetList(GetListRequest) returns (GetListResponse);
+  rpc UpdateList(UpdateListRequest) returns (UpdateListResponse);
+  rpc DeleteList(DeleteListRequest) returns (DeleteListResponse);
+  
+  // Itinerary management (lists that are itineraries)
+  rpc CreateItinerary(CreateItineraryRequest) returns (CreateItineraryResponse);
+  
+  // List item management
+  rpc AddListItem(AddListItemRequest) returns (AddListItemResponse);
+  rpc UpdateListItem(UpdateListItemRequest) returns (UpdateListItemResponse);
+  rpc RemoveListItem(RemoveListItemRequest) returns (RemoveListItemResponse);
+  rpc GetListItems(GetListItemsRequest) returns (GetListItemsResponse);
+  
+  // Get items by content type
+  rpc GetListRestaurants(GetListRestaurantsRequest) returns (GetListRestaurantsResponse);
+  rpc GetListHotels(GetListHotelsRequest) returns (GetListHotelsResponse);
+  rpc GetListItineraries(GetListItinerariesRequest) returns (GetListItinerariesResponse);
+  
+  // Public list management
+  rpc SavePublicList(SavePublicListRequest) returns (SavePublicListResponse);
+  rpc UnsaveList(UnsaveListRequest) returns (UnsaveListResponse);
+  rpc GetSavedLists(GetSavedListsRequest) returns (GetSavedListsResponse);
+  rpc SearchPublicLists(SearchPublicListsRequest) returns (SearchPublicListsResponse);
+}
+
+// Content types for list items
+enum ContentType {
+  CONTENT_TYPE_UNSPECIFIED = 0;
+  CONTENT_TYPE_POI = 1;
+  CONTENT_TYPE_RESTAURANT = 2;
+  CONTENT_TYPE_HOTEL = 3;
+  CONTENT_TYPE_ITINERARY = 4;
+}
+
+// Core list entity
+message List {
+  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string user_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string name = 3 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string description = 4 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
+  string image_url = 5 [(buf.validate.field).string = {max_len: 2048}
+  ];
+  bool is_public = 6;
+  bool is_itinerary = 7;
+  string parent_list_id = 8 [(buf.validate.field).string = {max_len: 100}
+  ];
+  string city_id = 9 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  int32 view_count = 10 [(buf.validate.field).int32 = {gte: 0}];
+  int32 save_count = 11 [(buf.validate.field).int32 = {gte: 0}];
+  int32 item_count = 12 [(buf.validate.field).int32 = {gte: 0}];
+  google.protobuf.Timestamp created_at = 13 [(buf.validate.field).required = true];
+  google.protobuf.Timestamp updated_at = 14 [(buf.validate.field).required = true];
+}
+
+// List item entity
+message ListItem {
+  string list_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string item_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string poi_id = 3 [(buf.validate.field).string = {min_len: 1, max_len: 100}]; // For backward compatibility with POI-only items
+  ContentType content_type = 4 [(buf.validate.field).enum = {defined_only: true}];
+  int32 position = 5 [(buf.validate.field).int32 = {gte: 0}];
+  string notes = 6 [(buf.validate.field).string = {max_len: 4000}
+  ];
+  int32 day_number = 7 [(buf.validate.field).int32 = {gte: 0}];
+  google.protobuf.Timestamp time_slot = 8;
+  int32 duration = 9 [(buf.validate.field).int32 = {gte: 0}]; // Duration in minutes
+  google.protobuf.Timestamp created_at = 10 [(buf.validate.field).required = true];
+  google.protobuf.Timestamp updated_at = 11 [(buf.validate.field).required = true];
+  string source_llm_interaction_id = 12 [(buf.validate.field).string = {max_len: 100}
+  ];
+  string item_ai_description = 13 [(buf.validate.field).string = {max_len: 4000}
+  ];
+}
+
+// List with its items
+message ListWithItems {
+  List list = 1;
+  repeated ListItem items = 2;
+}
+
+// List item with detailed content
+message ListItemWithContent {
+  ListItem list_item = 1;
+  POIDetailedInfo poi = 2;
+  RestaurantDetailedInfo restaurant = 3;
+  HotelDetailedInfo hotel = 4;
+  UserSavedItinerary itinerary = 5;
+}
+
+// List with detailed items
+message ListWithDetailedItems {
+  List list = 1;
+  repeated ListItemWithContent items = 2;
+}
+
+// POI detailed info (simplified from poi.proto)
+message POIDetailedInfo {
+  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string name = 2 [(buf.validate.field).string = {min_len: 1, max_len: 300}];
+  double latitude = 3 [(buf.validate.field).double = {gte: -90, lte: 90}];
+  double longitude = 4 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  string category = 5 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string description = 6 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
+  double rating = 7 [(buf.validate.field).double = {gte: 0, lte: 5}];
+  int32 review_count = 8 [(buf.validate.field).int32 = {gte: 0}];
+  string price_range = 9 [(buf.validate.field).string = {max_len: 50}
+  ];
+  string address = 10 [(buf.validate.field).string = {min_len: 1, max_len: 500}];
+  string phone = 11 [(buf.validate.field).string = {max_len: 50}
+  ];
+  string website = 12 [(buf.validate.field).string = {max_len: 2048}
+  ];
+  repeated string photos = 13 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 2048}];
+}
+
+// Restaurant detailed info
+message RestaurantDetailedInfo {
+  POIDetailedInfo poi = 1 [(buf.validate.field).required = true];
+  string cuisine_type = 2 [(buf.validate.field).string = {max_len: 100}
+  ];
+  repeated string dietary_options = 3 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  string dress_code = 4 [(buf.validate.field).string = {max_len: 100}
+  ];
+  bool reservations_required = 5;
+}
+
+// Hotel detailed info
+message HotelDetailedInfo {
+  POIDetailedInfo poi = 1 [(buf.validate.field).required = true];
+  int32 star_rating = 2 [(buf.validate.field).int32 = {gte: 0, lte: 5}];
+  repeated string room_types = 3 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  repeated string amenities = 4 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  string check_in_time = 5 [(buf.validate.field).string = {max_len: 50}
+  ];
+  string check_out_time = 6 [(buf.validate.field).string = {max_len: 50}
+  ];
+}
+
+// User saved itinerary
+message UserSavedItinerary {
+  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string user_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string session_id = 3 [(buf.validate.field).string = {max_len: 200}
+  ];
+  string title = 4 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string description = 5 [(buf.validate.field).string = {max_len: 4000}
+  ];
+  string itinerary_data = 6 [(buf.validate.field).string = {min_len: 1}]; // JSON string
+  google.protobuf.Timestamp created_at = 7 [(buf.validate.field).required = true];
+  google.protobuf.Timestamp updated_at = 8 [(buf.validate.field).required = true];
+}
+
+// Request/Response messages
+
+// List management
+message CreateListRequest {
+  string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string name = 2 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string description = 3 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
+  string city_id = 4 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  bool is_itinerary = 5;
+  bool is_public = 6;
+}
+
+message CreateListResponse {
+  bool success = 1;
+  string message = 2;
+  List list = 3;
+}
+
+message GetListsRequest {
+  string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  int32 limit = 2 [(buf.validate.field).int32 = {gte: 1, lte: 200}];
+  int32 offset = 3 [(buf.validate.field).int32 = {gte: 0}];
+  bool include_items = 4;
+}
+
+message GetListsResponse {
+  repeated ListWithItems lists = 1;
+  int32 total_count = 2;
+}
+
+message GetListRequest {
+  string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string list_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  bool include_detailed_items = 3;
+}
+
+message GetListResponse {
+  ListWithDetailedItems list = 1;
+}
+
+message UpdateListRequest {
+  string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string list_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string name = 3 [(buf.validate.field).string = {max_len: 200}
+  ];
+  string description = 4 [(buf.validate.field).string = {max_len: 4000}
+  ];
+  string image_url = 5 [(buf.validate.field).string = {max_len: 2048}
+  ];
+  bool is_public = 6;
+  string city_id = 7 [(buf.validate.field).string = {max_len: 100}
+  ];
+}
+
+message UpdateListResponse {
+  bool success = 1;
+  string message = 2;
+  List list = 3;
+}
+
+message DeleteListRequest {
+  string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string list_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+}
+
+message DeleteListResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// Itinerary creation
+message CreateItineraryRequest {
+  string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string parent_list_id = 2 [(buf.validate.field).string = {max_len: 100}
+  ];
+  string name = 3 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string description = 4 [(buf.validate.field).string = {max_len: 4000}
+  ];
+  bool is_public = 5;
+}
+
+message CreateItineraryResponse {
+  bool success = 1;
+  string message = 2;
+  List itinerary = 3;
+}
+
+// List item management
+message AddListItemRequest {
+  string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string list_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string item_id = 3 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  ContentType content_type = 4 [(buf.validate.field).enum = {defined_only: true}];
+  int32 position = 5 [(buf.validate.field).int32 = {gte: 0}];
+  string notes = 6 [(buf.validate.field).string = {max_len: 4000}
+  ];
+  int32 day_number = 7 [(buf.validate.field).int32 = {gte: 0}];
+  google.protobuf.Timestamp time_slot = 8;
+  int32 duration_minutes = 9 [(buf.validate.field).int32 = {gte: 0}];
+  string source_llm_interaction_id = 10 [(buf.validate.field).string = {max_len: 100}
+  ];
+  string item_ai_description = 11 [(buf.validate.field).string = {max_len: 4000}
+  ];
+}
+
+message AddListItemResponse {
+  bool success = 1;
+  string message = 2;
+  ListItem item = 3;
+}
+
+message UpdateListItemRequest {
+  string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string list_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string item_id = 3 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  ContentType content_type = 4 [(buf.validate.field).enum = {defined_only: true}];
+  int32 position = 5 [(buf.validate.field).int32 = {gte: 0}];
+  string notes = 6 [(buf.validate.field).string = {max_len: 4000}
+  ];
+  int32 day_number = 7 [(buf.validate.field).int32 = {gte: 0}];
+  google.protobuf.Timestamp time_slot = 8;
+  int32 duration_minutes = 9 [(buf.validate.field).int32 = {gte: 0}];
+  string source_llm_interaction_id = 10 [(buf.validate.field).string = {max_len: 100}
+  ];
+  string item_ai_description = 11 [(buf.validate.field).string = {max_len: 4000}
+  ];
+}
+
+message UpdateListItemResponse {
+  bool success = 1;
+  string message = 2;
+  ListItem item = 3;
+}
+
+message RemoveListItemRequest {
+  string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string list_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string item_id = 3 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  ContentType content_type = 4 [(buf.validate.field).enum = {defined_only: true}];
+}
+
+message RemoveListItemResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message GetListItemsRequest {
+  string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string list_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  bool include_content_details = 3;
+}
+
+message GetListItemsResponse {
+  repeated ListItemWithContent items = 1;
+  int32 total_count = 2;
+}
+
+// Content-specific item requests
+message GetListRestaurantsRequest {
+  string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string list_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+}
+
+message GetListRestaurantsResponse {
+  repeated RestaurantDetailedInfo restaurants = 1;
+}
+
+message GetListHotelsRequest {
+  string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string list_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+}
+
+message GetListHotelsResponse {
+  repeated HotelDetailedInfo hotels = 1;
+}
+
+message GetListItinerariesRequest {
+  string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string list_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+}
+
+message GetListItinerariesResponse {
+  repeated UserSavedItinerary itineraries = 1;
+}
+
+// Public list management
+message SavePublicListRequest {
+  string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string list_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+}
+
+message SavePublicListResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message UnsaveListRequest {
+  string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string list_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+}
+
+message UnsaveListResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message GetSavedListsRequest {
+  string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  int32 limit = 2 [(buf.validate.field).int32 = {gte: 1, lte: 200}];
+  int32 offset = 3 [(buf.validate.field).int32 = {gte: 0}];
+}
+
+message GetSavedListsResponse {
+  repeated ListWithItems lists = 1;
+  int32 total_count = 2;
+}
+
+message SearchPublicListsRequest {
+  string query = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string city_id = 2 [(buf.validate.field).string = {max_len: 100}
+  ];
+  repeated string categories = 3;
+  int32 limit = 4 [(buf.validate.field).int32 = {gte: 1, lte: 200}];
+  int32 offset = 5 [(buf.validate.field).int32 = {gte: 0}];
+  string sort_by = 6 [(buf.validate.field).string = {in: ["popularity", "recent", "name"]}
+  ]; // "popularity", "recent", "name"
+}
+
+message SearchPublicListsResponse {
+  repeated ListWithItems lists = 1;
+  int32 total_count = 2;
+  SearchMetadata metadata = 3;
+}
+
+message SearchMetadata {
+  double query_time_ms = 1;
+  string search_method = 2;
+  map<string, string> filters_applied = 3;
+}
