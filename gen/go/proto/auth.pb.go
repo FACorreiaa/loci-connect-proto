@@ -113,7 +113,7 @@ func (x *UserAuth) GetUpdatedAt() *timestamppb.Timestamp {
 type LoginRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
-	Password      []byte                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -155,11 +155,11 @@ func (x *LoginRequest) GetEmail() string {
 	return ""
 }
 
-func (x *LoginRequest) GetPassword() []byte {
+func (x *LoginRequest) GetPassword() string {
 	if x != nil {
 		return x.Password
 	}
-	return nil
+	return ""
 }
 
 // LoginResponse after successful login
@@ -252,7 +252,7 @@ type RegisterRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
 	Email         string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
-	Password      []byte                 `protobuf:"bytes,3,opt,name=password,proto3" json:"password,omitempty"`
+	Password      string                 `protobuf:"bytes,3,opt,name=password,proto3" json:"password,omitempty"`
 	Role          *string                `protobuf:"bytes,4,opt,name=role,proto3,oneof" json:"role,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -302,11 +302,11 @@ func (x *RegisterRequest) GetEmail() string {
 	return ""
 }
 
-func (x *RegisterRequest) GetPassword() []byte {
+func (x *RegisterRequest) GetPassword() string {
 	if x != nil {
 		return x.Password
 	}
-	return nil
+	return ""
 }
 
 func (x *RegisterRequest) GetRole() string {
@@ -532,7 +532,7 @@ func (x *ValidateSessionResponse) GetEmail() string {
 type ChangePasswordRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	OldPassword   string                 `protobuf:"bytes,1,opt,name=old_password,json=oldPassword,proto3" json:"old_password,omitempty"`
-	NewPassword   []byte                 `protobuf:"bytes,2,opt,name=new_password,json=newPassword,proto3" json:"new_password,omitempty"`
+	NewPassword   string                 `protobuf:"bytes,2,opt,name=new_password,json=newPassword,proto3" json:"new_password,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -574,11 +574,11 @@ func (x *ChangePasswordRequest) GetOldPassword() string {
 	return ""
 }
 
-func (x *ChangePasswordRequest) GetNewPassword() []byte {
+func (x *ChangePasswordRequest) GetNewPassword() string {
 	if x != nil {
 		return x.NewPassword
 	}
-	return nil
+	return ""
 }
 
 // ChangeEmailRequest for changing email
@@ -862,10 +862,11 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\tcreatedAt\x12A\n" +
 	"\n" +
-	"updated_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\tupdatedAt\"d\n" +
+	"updated_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\tupdatedAt\"U\n" +
 	"\fLoginRequest\x12\x1d\n" +
-	"\x05email\x18\x01 \x01(\tB\a\xbaH\x04r\x02`\x01R\x05email\x125\n" +
-	"\bpassword\x18\x02 \x01(\fB\x19\xbaH\x16z\x14\"\x12[a-zA-Z0-9!]{3,25}R\bpassword\"\x8b\x02\n" +
+	"\x05email\x18\x01 \x01(\tB\a\xbaH\x04r\x02`\x01R\x05email\x12&\n" +
+	"\bpassword\x18\x02 \x01(\tB\n" +
+	"\xbaH\ar\x05\x10\b\x18\xc8\x01R\bpassword\"\x8b\x02\n" +
 	"\rLoginResponse\x12*\n" +
 	"\faccess_token\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x10R\vaccessToken\x12,\n" +
 	"\rrefresh_token\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x10R\frefreshToken\x12$\n" +
@@ -873,11 +874,12 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\xbaH\ar\x05\x10\x01\x18\xf4\x03R\amessage\x12\"\n" +
 	"\auser_id\x18\x04 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x127\n" +
 	"\busername\x18\x05 \x01(\tB\x1b\xbaH\x18r\x16\x10\x01\x18d2\x10^[a-zA-Z0-9_-]+$R\busername\x12\x1d\n" +
-	"\x05email\x18\x06 \x01(\tB\a\xbaH\x04r\x02`\x01R\x05email\"\xcd\x01\n" +
+	"\x05email\x18\x06 \x01(\tB\a\xbaH\x04r\x02`\x01R\x05email\"\xbe\x01\n" +
 	"\x0fRegisterRequest\x127\n" +
 	"\busername\x18\x01 \x01(\tB\x1b\xbaH\x18r\x16\x10\x03\x18d2\x10^[a-zA-Z0-9_-]+$R\busername\x12\x1d\n" +
-	"\x05email\x18\x02 \x01(\tB\a\xbaH\x04r\x02`\x01R\x05email\x125\n" +
-	"\bpassword\x18\x03 \x01(\fB\x19\xbaH\x16z\x14\"\x12[a-zA-Z0-9!]{3,25}R\bpassword\x12\"\n" +
+	"\x05email\x18\x02 \x01(\tB\a\xbaH\x04r\x02`\x01R\x05email\x12&\n" +
+	"\bpassword\x18\x03 \x01(\tB\n" +
+	"\xbaH\ar\x05\x10\b\x18\xc8\x01R\bpassword\x12\"\n" +
 	"\x04role\x18\x04 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dH\x00R\x04role\x88\x01\x01B\a\n" +
 	"\x05_role\"C\n" +
 	"\x13RefreshTokenRequest\x12,\n" +
@@ -897,11 +899,12 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\n" +
 	"\b_user_idB\v\n" +
 	"\t_usernameB\b\n" +
-	"\x06_email\"\x84\x01\n" +
+	"\x06_email\"u\n" +
 	"\x15ChangePasswordRequest\x12-\n" +
 	"\fold_password\x18\x01 \x01(\tB\n" +
-	"\xbaH\ar\x05\x10\b\x18\xc8\x01R\voldPassword\x12<\n" +
-	"\fnew_password\x18\x02 \x01(\fB\x19\xbaH\x16z\x14\"\x12[a-zA-Z0-9!]{3,25}R\vnewPassword\"b\n" +
+	"\xbaH\ar\x05\x10\b\x18\xc8\x01R\voldPassword\x12-\n" +
+	"\fnew_password\x18\x02 \x01(\tB\n" +
+	"\xbaH\ar\x05\x10\b\x18\xc8\x01R\vnewPassword\"b\n" +
 	"\x12ChangeEmailRequest\x12&\n" +
 	"\bpassword\x18\x01 \x01(\tB\n" +
 	"\xbaH\ar\x05\x10\b\x18\xc8\x01R\bpassword\x12$\n" +

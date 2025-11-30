@@ -26,7 +26,12 @@ message UserAuth {
 // LoginRequest for user login
 message LoginRequest {
   string email = 1 [(buf.validate.field).string.email = true];
-  bytes password = 2 [(buf.validate.field).bytes.pattern = "[a-zA-Z0-9!]{3,25}"];
+  string password = 2 [
+    (buf.validate.field).string = {
+      min_len: 8,
+      max_len: 200
+    }
+  ];
 }
 
 // LoginResponse after successful login
@@ -51,7 +56,12 @@ message RegisterRequest {
     pattern: "^[a-zA-Z0-9_-]+$"  // Alphanumeric, underscore, hyphen only
   }];
   string email = 2 [(buf.validate.field).string.email = true];
-  bytes password = 3 [(buf.validate.field).bytes.pattern = "[a-zA-Z0-9!]{3,25}"];
+  string password = 3 [
+    (buf.validate.field).string = {
+      min_len: 8,
+      max_len: 200
+    }
+  ];
   optional string role = 4 [(buf.validate.field).string = {min_len: 1, max_len: 100}
   ];
 }
@@ -89,7 +99,12 @@ message ValidateSessionResponse {
 // ChangePasswordRequest for changing password
 message ChangePasswordRequest {
   string old_password = 1 [(buf.validate.field).string = {min_len: 8, max_len: 200}];
-  bytes new_password = 2 [(buf.validate.field).bytes.pattern = "[a-zA-Z0-9!]{3,25}"];
+  string new_password = 2 [
+    (buf.validate.field).string = {
+      min_len: 8,
+      max_len: 200
+    }
+  ];
 }
 
 // ChangeEmailRequest for changing email

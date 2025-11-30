@@ -68,9 +68,9 @@ public object RegisterRequestKt {
     }
 
     /**
-     * `bytes password = 3 [json_name = "password", (.buf.validate.field) = { ... }`
+     * `string password = 3 [json_name = "password", (.buf.validate.field) = { ... }`
      */
-    public var password: com.google.protobuf.ByteString
+    public var password: kotlin.String
       @kotlin.jvm.JvmName("getPassword")
         get() = _builder.password
       @kotlin.jvm.JvmName("setPassword")
@@ -78,7 +78,7 @@ public object RegisterRequestKt {
         _builder.password = value
       }
     /**
-     * `bytes password = 3 [json_name = "password", (.buf.validate.field) = { ... }`
+     * `string password = 3 [json_name = "password", (.buf.validate.field) = { ... }`
      */
     public fun clearPassword() {
       _builder.clearPassword()
