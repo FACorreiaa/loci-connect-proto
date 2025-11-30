@@ -83,6 +83,57 @@ public object LoginResponseKt {
     public fun clearMessage() {
       _builder.clearMessage()
     }
+
+    /**
+     * `string user_id = 4 [json_name = "userId", (.buf.validate.field) = { ... }`
+     */
+    public var userId: kotlin.String
+      @kotlin.jvm.JvmName("getUserId")
+        get() = _builder.userId
+      @kotlin.jvm.JvmName("setUserId")
+        set(value) {
+        _builder.userId = value
+      }
+    /**
+     * `string user_id = 4 [json_name = "userId", (.buf.validate.field) = { ... }`
+     */
+    public fun clearUserId() {
+      _builder.clearUserId()
+    }
+
+    /**
+     * `string username = 5 [json_name = "username", (.buf.validate.field) = { ... }`
+     */
+    public var username: kotlin.String
+      @kotlin.jvm.JvmName("getUsername")
+        get() = _builder.username
+      @kotlin.jvm.JvmName("setUsername")
+        set(value) {
+        _builder.username = value
+      }
+    /**
+     * `string username = 5 [json_name = "username", (.buf.validate.field) = { ... }`
+     */
+    public fun clearUsername() {
+      _builder.clearUsername()
+    }
+
+    /**
+     * `string email = 6 [json_name = "email", (.buf.validate.field) = { ... }`
+     */
+    public var email: kotlin.String
+      @kotlin.jvm.JvmName("getEmail")
+        get() = _builder.email
+      @kotlin.jvm.JvmName("setEmail")
+        set(value) {
+        _builder.email = value
+      }
+    /**
+     * `string email = 6 [json_name = "email", (.buf.validate.field) = { ... }`
+     */
+    public fun clearEmail() {
+      _builder.clearEmail()
+    }
   }
 }
 @kotlin.jvm.JvmSynthetic

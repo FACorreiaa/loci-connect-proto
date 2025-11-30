@@ -12,7 +12,11 @@ import "proto/common.proto";
 // UserAuth represents the core user entity
 message UserAuth {
   string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  string username = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string username = 2 [(buf.validate.field).string = {
+    min_len: 1,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"  // Alphanumeric, underscore, hyphen only
+  }];
   string email = 3 [(buf.validate.field).string.email = true];
   string role = 4 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   google.protobuf.Timestamp created_at = 5 [(buf.validate.field).required = true];
@@ -22,7 +26,7 @@ message UserAuth {
 // LoginRequest for user login
 message LoginRequest {
   string email = 1 [(buf.validate.field).string.email = true];
-  string password = 2 [(buf.validate.field).string = {min_len: 8, max_len: 200}];
+  bytes password = 2 [(buf.validate.field).bytes.pattern = "[a-zA-Z0-9!]{3,25}"];
 }
 
 // LoginResponse after successful login
@@ -30,13 +34,24 @@ message LoginResponse {
   string access_token = 1 [(buf.validate.field).string = {min_len: 16}];
   string refresh_token = 2 [(buf.validate.field).string = {min_len: 16}];
   string message = 3 [(buf.validate.field).string = {min_len: 1, max_len: 500}];
+  string user_id = 4 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string username = 5 [(buf.validate.field).string = {
+    min_len: 1,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"  // Alphanumeric, underscore, hyphen only
+  }];
+  string email = 6 [(buf.validate.field).string.email = true];
 }
 
 // RegisterRequest for user registration
 message RegisterRequest {
-  string username = 1 [(buf.validate.field).string = {min_len: 3, max_len: 100}];
+  string username = 1 [(buf.validate.field).string = {
+    min_len: 3,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"  // Alphanumeric, underscore, hyphen only
+  }];
   string email = 2 [(buf.validate.field).string.email = true];
-  string password = 3 [(buf.validate.field).string = {min_len: 8, max_len: 200}];
+  bytes password = 3 [(buf.validate.field).bytes.pattern = "[a-zA-Z0-9!]{3,25}"];
   optional string role = 4 [(buf.validate.field).string = {min_len: 1, max_len: 100}
   ];
 }
@@ -62,8 +77,11 @@ message ValidateSessionResponse {
   bool valid = 1;
   optional string user_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}
   ];
-  optional string username = 3 [(buf.validate.field).string = {min_len: 1, max_len: 100}
-  ];
+  optional string username = 3 [(buf.validate.field).string = {
+    min_len: 1,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"  // Alphanumeric, underscore, hyphen only
+  }];
   optional string email = 4 [(buf.validate.field).string.email = true
   ];
 }
@@ -71,7 +89,7 @@ message ValidateSessionResponse {
 // ChangePasswordRequest for changing password
 message ChangePasswordRequest {
   string old_password = 1 [(buf.validate.field).string = {min_len: 8, max_len: 200}];
-  string new_password = 2 [(buf.validate.field).string = {min_len: 8, max_len: 200}];
+  bytes new_password = 2 [(buf.validate.field).bytes.pattern = "[a-zA-Z0-9!]{3,25}"];
 }
 
 // ChangeEmailRequest for changing email
@@ -88,14 +106,22 @@ message LogoutRequest {
 // Session represents session data
 message Session {
   string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
-  string username = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string username = 2 [(buf.validate.field).string = {
+    min_len: 1,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"  // Alphanumeric, underscore, hyphen only
+  }];
   string email = 3 [(buf.validate.field).string.email = true];
 }
 
 // Claims represents JWT claims
 message Claims {
   string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  string username = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string username = 2 [(buf.validate.field).string = {
+    min_len: 1,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"  // Alphanumeric, underscore, hyphen only
+  }];
   string email = 3 [(buf.validate.field).string.email = true];
   string role = 4 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   optional string subscription_plan = 5 [(buf.validate.field).string = {min_len: 1, max_len: 100}

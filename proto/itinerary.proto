@@ -87,7 +87,10 @@ message UserSavedItinerary {
   optional string description = 7 [(buf.validate.field).string = {min_len: 1, max_len: 4000}
   ];
   string markdown_content = 8 [(buf.validate.field).string = {min_len: 1}];
-  repeated string tags = 9 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  repeated string tags = 9 [(buf.validate.field).repeated = {
+    max_items: 30,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
   optional int32 estimated_duration_days = 10 [(buf.validate.field).int32 = {gte: 1}];
   optional int32 estimated_cost_level = 11 [(buf.validate.field).int32 = {gte: 0, lte: 10}];
   bool is_public = 12;
@@ -161,7 +164,10 @@ message UpdateItineraryRequest {
   ];
   optional string description = 3 [(buf.validate.field).string = {min_len: 1, max_len: 4000}
   ];
-  repeated string tags = 4 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  repeated string tags = 4 [(buf.validate.field).repeated = {
+    max_items: 30,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
   optional int32 estimated_duration_days = 5 [(buf.validate.field).int32 = {gte: 1}];
   optional int32 estimated_cost_level = 6 [(buf.validate.field).int32 = {gte: 0, lte: 10}];
   optional bool is_public = 7;
@@ -178,7 +184,10 @@ message BookmarkRequest {
   string title = 5 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   optional string description = 6 [(buf.validate.field).string = {min_len: 1, max_len: 4000}
   ];
-  repeated string tags = 7 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  repeated string tags = 7 [(buf.validate.field).repeated = {
+    max_items: 30,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
   optional bool is_public = 8;
 }
 

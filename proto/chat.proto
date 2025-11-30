@@ -76,9 +76,15 @@ message LlmInteraction {
   optional string city_name = 5 [(buf.validate.field).string = {min_len: 1, max_len: 200}
   ];
   string prompt = 6 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
-  bytes request_payload = 7 [(buf.validate.field).bytes = {min_len: 1}];
+  bytes request_payload = 7 [(buf.validate.field).bytes = {
+    min_len: 1,
+    max_len: 1048576  // 1MB limit
+  }];
   string response_text = 8 [(buf.validate.field).string = {min_len: 1, max_len: 16000}];
-  bytes response_payload = 9 [(buf.validate.field).bytes = {min_len: 1}];
+  bytes response_payload = 9 [(buf.validate.field).bytes = {
+    min_len: 1,
+    max_len: 2097152  // 2MB limit
+  }];
   string model_used = 10 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   int32 prompt_tokens = 11 [(buf.validate.field).int32 = {gte: 0}];
   int32 completion_tokens = 12 [(buf.validate.field).int32 = {gte: 0}];
@@ -122,8 +128,14 @@ message SessionContext {
   string city_name = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   string last_city_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   optional loci.profile.UserPreferenceProfile user_preferences = 3;
-  repeated string active_interests = 4 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
-  repeated string active_tags = 5 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  repeated string active_interests = 4 [(buf.validate.field).repeated = {
+    max_items: 50,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
+  repeated string active_tags = 5 [(buf.validate.field).repeated = {
+    max_items: 30,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
   string conversation_summary = 6 [(buf.validate.field).string = {max_len: 4000}
   ];
   repeated ModificationRecord modification_history = 7;
@@ -152,7 +164,10 @@ message SessionPerformanceMetrics {
   int32 total_tokens = 2 [(buf.validate.field).int32 = {gte: 0}];
   int32 prompt_tokens = 3 [(buf.validate.field).int32 = {gte: 0}];
   int32 completion_tokens = 4 [(buf.validate.field).int32 = {gte: 0}];
-  repeated string models_used = 5;
+  repeated string models_used = 5 [(buf.validate.field).repeated = {
+    max_items: 10,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
   int32 total_latency_ms = 6 [(buf.validate.field).int32 = {gte: 0}];
 }
 
@@ -161,10 +176,16 @@ message SessionContentMetrics {
   int32 total_pois = 1 [(buf.validate.field).int32 = {gte: 0}];
   int32 total_hotels = 2 [(buf.validate.field).int32 = {gte: 0}];
   int32 total_restaurants = 3 [(buf.validate.field).int32 = {gte: 0}];
-  repeated string cities_covered = 4 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 200}];
+  repeated string cities_covered = 4 [(buf.validate.field).repeated = {
+    max_items: 20,
+    items: {string: {min_len: 1, max_len: 200}}
+  }];
   bool has_itinerary = 5;
   int32 complexity_score = 6 [(buf.validate.field).int32 = {gte: 0}];
-  repeated string dominant_categories = 7 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 200}];
+  repeated string dominant_categories = 7 [(buf.validate.field).repeated = {
+    max_items: 10,
+    items: {string: {min_len: 1, max_len: 200}}
+  }];
 }
 
 // SessionEngagementMetrics contains engagement metrics
@@ -212,14 +233,19 @@ message ChatResponse {
   optional AiCityResponse updated_itinerary = 3;
   bool is_new_session = 4;
   bool requires_clarification = 5;
-  repeated string suggested_actions = 6 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 200}];
+  repeated string suggested_actions = 6 [(buf.validate.field).repeated = {
+    max_items: 10,
+    items: {string: {min_len: 1, max_len: 200}}
+  }];
 }
 
 // StreamEvent represents a streaming event
 message StreamEvent {
   string type = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   string message = 2 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
-  bytes data = 3;
+  bytes data = 3 [(buf.validate.field).bytes = {
+    max_len: 1048576  // 1MB limit
+  }];
   optional string error = 4 [(buf.validate.field).string = {min_len: 1, max_len: 500}
   ];
   google.protobuf.Timestamp timestamp = 5 [(buf.validate.field).required = true];
@@ -230,7 +256,11 @@ message StreamEvent {
 
 // NavigationData contains navigation information
 message NavigationData {
-  string url = 1 [(buf.validate.field).string = {min_len: 1, max_len: 2048}];
+  string url = 1 [(buf.validate.field).string = {
+    min_len: 1,
+    max_len: 2048,
+    uri: true  // URL validation
+  }];
   string route_type = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   map<string, string> query_params = 3 [(buf.validate.field).map = {
     keys: {string: {min_len: 1}},
@@ -304,7 +334,10 @@ message CityInteractions {
   repeated RecentInteraction interactions = 3;
   int32 poi_count = 4 [(buf.validate.field).int32 = {gte: 0}];
   google.protobuf.Timestamp last_activity = 5 [(buf.validate.field).required = true];
-  repeated string session_ids = 6;
+  repeated string session_ids = 6 [(buf.validate.field).repeated = {
+    max_items: 50,
+    items: {string: {min_len: 1, max_len: 200}}
+  }];
   string title = 7 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   optional int32 total_favorites = 8 [(buf.validate.field).int32 = {gte: 0}];
   optional int32 total_itineraries = 9 [(buf.validate.field).int32 = {gte: 0}];

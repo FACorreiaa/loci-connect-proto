@@ -47,7 +47,10 @@ message Review {
   double rating = 4 [(buf.validate.field).double = {gte: 1, lte: 5}]; // 1.0 - 5.0
   string title = 5 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   string content = 6 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
-  repeated string photos = 7 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 2048}]; // Photo URLs
+  repeated string photos = 7 [(buf.validate.field).repeated = {
+    max_items: 10,
+    items: {string: {min_len: 1, max_len: 2048, uri: true}}
+  }]; // Photo URLs
   ReviewStatus status = 8 [(buf.validate.field).enum = {defined_only: true}];
   google.protobuf.Timestamp visit_date = 9;
   google.protobuf.Timestamp created_at = 10 [(buf.validate.field).required = true];
@@ -57,7 +60,11 @@ message Review {
   int32 helpful_count = 12 [(buf.validate.field).int32 = {gte: 0}]; // Number of helpful votes
   int32 report_count = 13 [(buf.validate.field).int32 = {gte: 0}]; // Number of reports
   bool is_verified = 14; // Verified reviewer
-  string language = 15 [(buf.validate.field).string = {min_len: 2, max_len: 10}]; // ISO 639-1 language code
+  string language = 15 [(buf.validate.field).string = {
+    min_len: 2,
+    max_len: 10,
+    pattern: "^[a-z]{2}(-[A-Z]{2})?$"  // ISO 639-1 format (e.g., en, en-US)
+  }]; // ISO 639-1 language code
   
   // Review aspects (detailed ratings)
   ReviewAspects aspects = 16;
@@ -87,28 +94,30 @@ enum SortDirection {
 
 // Detailed aspects of a review
 message ReviewAspects {
-  double service_rating = 1 [(buf.validate.field).double = {gte: 0, lte: 5}]; // 1.0 - 5.0
-  double quality_rating = 2 [(buf.validate.field).double = {gte: 0, lte: 5}];
-  double value_rating = 3 [(buf.validate.field).double = {gte: 0, lte: 5}];
-  double atmosphere_rating = 4 [(buf.validate.field).double = {gte: 0, lte: 5}];
-  double cleanliness_rating = 5 [(buf.validate.field).double = {gte: 0, lte: 5}];
-  double location_rating = 6 [(buf.validate.field).double = {gte: 0, lte: 5}];
-  
+  double service_rating = 1 [(buf.validate.field).double = {gte: 1, lte: 5}]; // 1.0 - 5.0
+  double quality_rating = 2 [(buf.validate.field).double = {gte: 1, lte: 5}];
+  double value_rating = 3 [(buf.validate.field).double = {gte: 1, lte: 5}];
+  double atmosphere_rating = 4 [(buf.validate.field).double = {gte: 1, lte: 5}];
+  double cleanliness_rating = 5 [(buf.validate.field).double = {gte: 1, lte: 5}];
+  double location_rating = 6 [(buf.validate.field).double = {gte: 1, lte: 5}];
+
   // Restaurant-specific
-  double food_rating = 7 [(buf.validate.field).double = {gte: 0, lte: 5}];
-  
+  double food_rating = 7 [(buf.validate.field).double = {gte: 1, lte: 5}];
+
   // Hotel-specific
-  double room_rating = 8 [(buf.validate.field).double = {gte: 0, lte: 5}];
-  double amenities_rating = 9 [(buf.validate.field).double = {gte: 0, lte: 5}];
-  double staff_rating = 10 [(buf.validate.field).double = {gte: 0, lte: 5}];
+  double room_rating = 8 [(buf.validate.field).double = {gte: 1, lte: 5}];
+  double amenities_rating = 9 [(buf.validate.field).double = {gte: 1, lte: 5}];
+  double staff_rating = 10 [(buf.validate.field).double = {gte: 1, lte: 5}];
 }
 
 // Public reviewer information
 message ReviewerInfo {
   string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   string display_name = 2 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
-  string avatar_url = 3 [(buf.validate.field).string = {max_len: 2048}
-  ];
+  string avatar_url = 3 [(buf.validate.field).string = {
+    max_len: 2048,
+    uri: true  // URL validation
+  }];
   int32 review_count = 4 [(buf.validate.field).int32 = {gte: 0}];
   bool is_verified = 5;
   string level = 6 [(buf.validate.field).string = {min_len: 1, max_len: 50}]; // "Bronze", "Silver", "Gold", "Platinum"
@@ -198,13 +207,22 @@ message LanguageCount {
 
 // Review filter options
 message ReviewFilter {
-  repeated double rating_filters = 1 [(buf.validate.field).repeated.items.double = {gte: 1, lte: 5}]; // Filter by specific ratings
+  repeated double rating_filters = 1 [(buf.validate.field).repeated = {
+    max_items: 5,
+    items: {double: {gte: 1, lte: 5}}
+  }]; // Filter by specific ratings
   google.protobuf.Timestamp start_date = 2;
   google.protobuf.Timestamp end_date = 3;
-  repeated string languages = 4 [(buf.validate.field).repeated.items.string = {min_len: 2, max_len: 10}];
+  repeated string languages = 4 [(buf.validate.field).repeated = {
+    max_items: 10,
+    items: {string: {min_len: 2, max_len: 10, pattern: "^[a-z]{2}(-[A-Z]{2})?$"}}
+  }];
   bool verified_only = 5;
   bool with_photos_only = 6;
-  repeated string keywords = 7 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  repeated string keywords = 7 [(buf.validate.field).repeated = {
+    max_items: 20,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
   ReviewSortBy sort_by = 8;
   SortDirection sort_direction = 9;
 }
@@ -225,10 +243,17 @@ message CreateReviewRequest {
   double rating = 3 [(buf.validate.field).double = {gte: 1, lte: 5}];
   string title = 4 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   string content = 5 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
-  repeated string photo_urls = 6 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 2048}];
+  repeated string photo_urls = 6 [(buf.validate.field).repeated = {
+    max_items: 10,
+    items: {string: {min_len: 1, max_len: 2048, uri: true}}
+  }];
   google.protobuf.Timestamp visit_date = 7;
   ReviewAspects aspects = 8;
-  string language = 9 [(buf.validate.field).string = {min_len: 2, max_len: 10}];
+  string language = 9 [(buf.validate.field).string = {
+    min_len: 2,
+    max_len: 10,
+    pattern: "^[a-z]{2}(-[A-Z]{2})?$"  // ISO 639-1 format (e.g., en, en-US)
+  }];
 }
 
 message CreateReviewResponse {
@@ -268,7 +293,10 @@ message UpdateReviewRequest {
   double rating = 3 [(buf.validate.field).double = {gte: 1, lte: 5}];
   string title = 4 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   string content = 5 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
-  repeated string photo_urls = 6 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 2048}];
+  repeated string photo_urls = 6 [(buf.validate.field).repeated = {
+    max_items: 10,
+    items: {string: {min_len: 1, max_len: 2048, uri: true}}
+  }];
   google.protobuf.Timestamp visit_date = 7;
   ReviewAspects aspects = 8;
 }

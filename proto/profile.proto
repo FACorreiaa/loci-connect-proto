@@ -38,14 +38,26 @@ enum TransportPreference {
 message AccommodationPreferences {
   string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   string user_preference_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  repeated string accommodation_type = 3 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  repeated string accommodation_type = 3 [(buf.validate.field).repeated = {
+    max_items: 10,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
   optional loci.common.RangeFilter star_rating = 4;
   optional loci.common.RangeFilter price_range_per_night = 5;
-  repeated string amenities = 6 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
-  repeated string room_type = 7 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  repeated string amenities = 6 [(buf.validate.field).repeated = {
+    max_items: 30,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
+  repeated string room_type = 7 [(buf.validate.field).repeated = {
+    max_items: 10,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
   optional string chain_preference = 8 [(buf.validate.field).string = {min_len: 1, max_len: 100}
   ];
-  repeated string cancellation_policy = 9 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  repeated string cancellation_policy = 9 [(buf.validate.field).repeated = {
+    max_items: 5,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
   optional string booking_flexibility = 10 [(buf.validate.field).string = {min_len: 1, max_len: 100}
   ];
   google.protobuf.Timestamp created_at = 11 [(buf.validate.field).required = true];
@@ -56,12 +68,27 @@ message AccommodationPreferences {
 message DiningPreferences {
   string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   string user_preference_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  repeated string cuisine_types = 3 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
-  repeated string meal_types = 4 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
-  repeated string service_style = 5 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  repeated string cuisine_types = 3 [(buf.validate.field).repeated = {
+    max_items: 20,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
+  repeated string meal_types = 4 [(buf.validate.field).repeated = {
+    max_items: 10,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
+  repeated string service_style = 5 [(buf.validate.field).repeated = {
+    max_items: 10,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
   optional loci.common.RangeFilter price_range_per_person = 6;
-  repeated string dietary_needs = 7 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
-  repeated string allergen_free = 8 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  repeated string dietary_needs = 7 [(buf.validate.field).repeated = {
+    max_items: 20,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
+  repeated string allergen_free = 8 [(buf.validate.field).repeated = {
+    max_items: 20,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
   bool michelin_rated = 9;
   bool local_recommendations = 10;
   optional string chain_vs_local = 11 [(buf.validate.field).string = {min_len: 1, max_len: 100}
@@ -76,7 +103,10 @@ message DiningPreferences {
 message ActivityPreferences {
   string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   string user_preference_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  repeated string activity_categories = 3 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  repeated string activity_categories = 3 [(buf.validate.field).repeated = {
+    max_items: 20,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
   optional string physical_activity_level = 4 [(buf.validate.field).string = {min_len: 1, max_len: 100}
   ];
   optional string indoor_outdoor_preference = 5 [(buf.validate.field).string = {min_len: 1, max_len: 100}
@@ -87,9 +117,15 @@ message ActivityPreferences {
   ];
   bool educational_preference = 8;
   bool photography_opportunities = 9;
-  repeated string season_specific_activities = 10 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  repeated string season_specific_activities = 10 [(buf.validate.field).repeated = {
+    max_items: 20,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
   bool avoid_crowds = 11;
-  repeated string local_events_interest = 12 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  repeated string local_events_interest = 12 [(buf.validate.field).repeated = {
+    max_items: 20,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
   google.protobuf.Timestamp created_at = 13 [(buf.validate.field).required = true];
   google.protobuf.Timestamp updated_at = 14 [(buf.validate.field).required = true];
 }
@@ -108,7 +144,10 @@ message ItineraryPreferences {
   ];
   optional string weekend_vs_weekday = 7 [(buf.validate.field).string = {min_len: 1, max_len: 100}
   ];
-  repeated string preferred_seasons = 8 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 50}];
+  repeated string preferred_seasons = 8 [(buf.validate.field).repeated = {
+    max_items: 4,
+    items: {string: {min_len: 1, max_len: 50}}
+  }];
   bool avoid_peak_season = 9;
   optional string adventure_vs_relaxation = 10 [(buf.validate.field).string = {min_len: 1, max_len: 100}
   ];
@@ -131,9 +170,15 @@ message UserPreferenceProfile {
   bool prefer_accessible_pois = 9;
   bool prefer_outdoor_seating = 10;
   bool prefer_dog_friendly = 11;
-  repeated string preferred_vibes = 12 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  repeated string preferred_vibes = 12 [(buf.validate.field).repeated = {
+    max_items: 20,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
   TransportPreference preferred_transport = 13 [(buf.validate.field).enum = {defined_only: true}];
-  repeated string dietary_needs = 14 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  repeated string dietary_needs = 14 [(buf.validate.field).repeated = {
+    max_items: 20,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
   repeated loci.interest.Interest interests = 15;
   repeated loci.interest.Tags tags = 16;
   optional double user_latitude = 17 [(buf.validate.field).double = {gte: -90, lte: 90}];
@@ -159,12 +204,24 @@ message CreateUserPreferenceProfileRequest {
   optional bool prefer_accessible_pois = 7;
   optional bool prefer_outdoor_seating = 8;
   optional bool prefer_dog_friendly = 9;
-  repeated string preferred_vibes = 10 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  repeated string preferred_vibes = 10 [(buf.validate.field).repeated = {
+    max_items: 20,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
   optional TransportPreference preferred_transport = 11 [(buf.validate.field).enum = {defined_only: true}
   ];
-  repeated string dietary_needs = 12 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
-  repeated string tag_ids = 13 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
-  repeated string interest_ids = 14 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  repeated string dietary_needs = 12 [(buf.validate.field).repeated = {
+    max_items: 20,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
+  repeated string tag_ids = 13 [(buf.validate.field).repeated = {
+    max_items: 30,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
+  repeated string interest_ids = 14 [(buf.validate.field).repeated = {
+    max_items: 50,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
   optional AccommodationPreferences accommodation_preferences = 15;
   optional DiningPreferences dining_preferences = 16;
   optional ActivityPreferences activity_preferences = 17;
@@ -186,12 +243,24 @@ message UpdateUserPreferenceProfileRequest {
   optional bool prefer_accessible_pois = 8;
   optional bool prefer_outdoor_seating = 9;
   optional bool prefer_dog_friendly = 10;
-  repeated string preferred_vibes = 11 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  repeated string preferred_vibes = 11 [(buf.validate.field).repeated = {
+    max_items: 20,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
   optional TransportPreference preferred_transport = 12 [(buf.validate.field).enum = {defined_only: true}
   ];
-  repeated string dietary_needs = 13 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
-  repeated string tag_ids = 14 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
-  repeated string interest_ids = 15 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  repeated string dietary_needs = 13 [(buf.validate.field).repeated = {
+    max_items: 20,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
+  repeated string tag_ids = 14 [(buf.validate.field).repeated = {
+    max_items: 30,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
+  repeated string interest_ids = 15 [(buf.validate.field).repeated = {
+    max_items: 50,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
   optional AccommodationPreferences accommodation_preferences = 16;
   optional DiningPreferences dining_preferences = 17;
   optional ActivityPreferences activity_preferences = 18;

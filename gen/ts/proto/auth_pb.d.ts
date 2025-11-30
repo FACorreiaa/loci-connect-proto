@@ -67,9 +67,9 @@ export declare type LoginRequest = Message<"loci.auth.LoginRequest"> & {
   email: string;
 
   /**
-   * @generated from field: string password = 2;
+   * @generated from field: bytes password = 2;
    */
-  password: string;
+  password: Uint8Array;
 };
 
 /**
@@ -98,6 +98,21 @@ export declare type LoginResponse = Message<"loci.auth.LoginResponse"> & {
    * @generated from field: string message = 3;
    */
   message: string;
+
+  /**
+   * @generated from field: string user_id = 4;
+   */
+  userId: string;
+
+  /**
+   * @generated from field: string username = 5;
+   */
+  username: string;
+
+  /**
+   * @generated from field: string email = 6;
+   */
+  email: string;
 };
 
 /**
@@ -123,9 +138,9 @@ export declare type RegisterRequest = Message<"loci.auth.RegisterRequest"> & {
   email: string;
 
   /**
-   * @generated from field: string password = 3;
+   * @generated from field: bytes password = 3;
    */
-  password: string;
+  password: Uint8Array;
 
   /**
    * @generated from field: optional string role = 4;
@@ -243,9 +258,9 @@ export declare type ChangePasswordRequest = Message<"loci.auth.ChangePasswordReq
   oldPassword: string;
 
   /**
-   * @generated from field: string new_password = 2;
+   * @generated from field: bytes new_password = 2;
    */
-  newPassword: string;
+  newPassword: Uint8Array;
 };
 
 /**

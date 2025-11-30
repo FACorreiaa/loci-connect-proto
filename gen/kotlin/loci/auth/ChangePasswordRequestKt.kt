@@ -51,9 +51,9 @@ public object ChangePasswordRequestKt {
     }
 
     /**
-     * `string new_password = 2 [json_name = "newPassword", (.buf.validate.field) = { ... }`
+     * `bytes new_password = 2 [json_name = "newPassword", (.buf.validate.field) = { ... }`
      */
-    public var newPassword: kotlin.String
+    public var newPassword: com.google.protobuf.ByteString
       @kotlin.jvm.JvmName("getNewPassword")
         get() = _builder.newPassword
       @kotlin.jvm.JvmName("setNewPassword")
@@ -61,7 +61,7 @@ public object ChangePasswordRequestKt {
         _builder.newPassword = value
       }
     /**
-     * `string new_password = 2 [json_name = "newPassword", (.buf.validate.field) = { ... }`
+     * `bytes new_password = 2 [json_name = "newPassword", (.buf.validate.field) = { ... }`
      */
     public fun clearNewPassword() {
       _builder.clearNewPassword()

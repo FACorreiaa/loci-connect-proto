@@ -108,7 +108,7 @@ public object SessionPerformanceMetricsKt {
     @kotlin.OptIn(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)
     public class ModelsUsedProxy private constructor() : com.google.protobuf.kotlin.DslProxy()
     /**
-     * `repeated string models_used = 5 [json_name = "modelsUsed"];`
+     * `repeated string models_used = 5 [json_name = "modelsUsed", (.buf.validate.field) = { ... }`
      * @return A list containing the modelsUsed.
      */
     public val modelsUsed: com.google.protobuf.kotlin.DslList<kotlin.String, ModelsUsedProxy>
@@ -117,7 +117,7 @@ public object SessionPerformanceMetricsKt {
         _builder.modelsUsedList
       )
     /**
-     * `repeated string models_used = 5 [json_name = "modelsUsed"];`
+     * `repeated string models_used = 5 [json_name = "modelsUsed", (.buf.validate.field) = { ... }`
      * @param value The modelsUsed to add.
      */
     @kotlin.jvm.JvmSynthetic
@@ -126,7 +126,7 @@ public object SessionPerformanceMetricsKt {
       _builder.addModelsUsed(value)
     }
     /**
-     * `repeated string models_used = 5 [json_name = "modelsUsed"];`
+     * `repeated string models_used = 5 [json_name = "modelsUsed", (.buf.validate.field) = { ... }`
      * @param value The modelsUsed to add.
      */
     @kotlin.jvm.JvmSynthetic
@@ -136,7 +136,7 @@ public object SessionPerformanceMetricsKt {
       add(value)
     }
     /**
-     * `repeated string models_used = 5 [json_name = "modelsUsed"];`
+     * `repeated string models_used = 5 [json_name = "modelsUsed", (.buf.validate.field) = { ... }`
      * @param values The modelsUsed to add.
      */
     @kotlin.jvm.JvmSynthetic
@@ -145,7 +145,7 @@ public object SessionPerformanceMetricsKt {
       _builder.addAllModelsUsed(values)
     }
     /**
-     * `repeated string models_used = 5 [json_name = "modelsUsed"];`
+     * `repeated string models_used = 5 [json_name = "modelsUsed", (.buf.validate.field) = { ... }`
      * @param values The modelsUsed to add.
      */
     @kotlin.jvm.JvmSynthetic
@@ -155,7 +155,7 @@ public object SessionPerformanceMetricsKt {
       addAll(values)
     }
     /**
-     * `repeated string models_used = 5 [json_name = "modelsUsed"];`
+     * `repeated string models_used = 5 [json_name = "modelsUsed", (.buf.validate.field) = { ... }`
      * @param index The index to set the value at.
      * @param value The modelsUsed to set.
      */
@@ -164,7 +164,7 @@ public object SessionPerformanceMetricsKt {
     public operator fun com.google.protobuf.kotlin.DslList<kotlin.String, ModelsUsedProxy>.set(index: kotlin.Int, value: kotlin.String) {
       _builder.setModelsUsed(index, value)
     }/**
-     * `repeated string models_used = 5 [json_name = "modelsUsed"];`
+     * `repeated string models_used = 5 [json_name = "modelsUsed", (.buf.validate.field) = { ... }`
      */
     @kotlin.jvm.JvmSynthetic
 @kotlin.jvm.JvmName("setModelsUsed")

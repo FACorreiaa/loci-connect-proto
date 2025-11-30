@@ -125,7 +125,10 @@ message POIDetailedInfo {
   ];
   string website = 12 [(buf.validate.field).string = {max_len: 2048}
   ];
-  repeated string photos = 13 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 2048}];
+  repeated string photos = 13 [(buf.validate.field).repeated = {
+    max_items: 20,
+    items: {string: {min_len: 1, max_len: 2048, uri: true}}
+  }];
 }
 
 // Restaurant detailed info
@@ -133,7 +136,10 @@ message RestaurantDetailedInfo {
   POIDetailedInfo poi = 1 [(buf.validate.field).required = true];
   string cuisine_type = 2 [(buf.validate.field).string = {max_len: 100}
   ];
-  repeated string dietary_options = 3 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  repeated string dietary_options = 3 [(buf.validate.field).repeated = {
+    max_items: 20,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
   string dress_code = 4 [(buf.validate.field).string = {max_len: 100}
   ];
   bool reservations_required = 5;
@@ -143,8 +149,14 @@ message RestaurantDetailedInfo {
 message HotelDetailedInfo {
   POIDetailedInfo poi = 1 [(buf.validate.field).required = true];
   int32 star_rating = 2 [(buf.validate.field).int32 = {gte: 0, lte: 5}];
-  repeated string room_types = 3 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
-  repeated string amenities = 4 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
+  repeated string room_types = 3 [(buf.validate.field).repeated = {
+    max_items: 10,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
+  repeated string amenities = 4 [(buf.validate.field).repeated = {
+    max_items: 30,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
   string check_in_time = 5 [(buf.validate.field).string = {max_len: 50}
   ];
   string check_out_time = 6 [(buf.validate.field).string = {max_len: 50}
@@ -179,7 +191,7 @@ message CreateListRequest {
 
 message CreateListResponse {
   bool success = 1;
-  string message = 2;
+  string message = 2 [(buf.validate.field).string = {max_len: 500}];
   List list = 3;
 }
 
@@ -221,7 +233,7 @@ message UpdateListRequest {
 
 message UpdateListResponse {
   bool success = 1;
-  string message = 2;
+  string message = 2 [(buf.validate.field).string = {max_len: 500}];
   List list = 3;
 }
 
@@ -232,7 +244,7 @@ message DeleteListRequest {
 
 message DeleteListResponse {
   bool success = 1;
-  string message = 2;
+  string message = 2 [(buf.validate.field).string = {max_len: 500}];
 }
 
 // Itinerary creation
@@ -248,7 +260,7 @@ message CreateItineraryRequest {
 
 message CreateItineraryResponse {
   bool success = 1;
-  string message = 2;
+  string message = 2 [(buf.validate.field).string = {max_len: 500}];
   List itinerary = 3;
 }
 
@@ -272,7 +284,7 @@ message AddListItemRequest {
 
 message AddListItemResponse {
   bool success = 1;
-  string message = 2;
+  string message = 2 [(buf.validate.field).string = {max_len: 500}];
   ListItem item = 3;
 }
 
@@ -295,7 +307,7 @@ message UpdateListItemRequest {
 
 message UpdateListItemResponse {
   bool success = 1;
-  string message = 2;
+  string message = 2 [(buf.validate.field).string = {max_len: 500}];
   ListItem item = 3;
 }
 
@@ -308,7 +320,7 @@ message RemoveListItemRequest {
 
 message RemoveListItemResponse {
   bool success = 1;
-  string message = 2;
+  string message = 2 [(buf.validate.field).string = {max_len: 500}];
 }
 
 message GetListItemsRequest {
@@ -358,7 +370,7 @@ message SavePublicListRequest {
 
 message SavePublicListResponse {
   bool success = 1;
-  string message = 2;
+  string message = 2 [(buf.validate.field).string = {max_len: 500}];
 }
 
 message UnsaveListRequest {
@@ -368,7 +380,7 @@ message UnsaveListRequest {
 
 message UnsaveListResponse {
   bool success = 1;
-  string message = 2;
+  string message = 2 [(buf.validate.field).string = {max_len: 500}];
 }
 
 message GetSavedListsRequest {

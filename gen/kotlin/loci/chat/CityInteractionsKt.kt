@@ -189,7 +189,7 @@ public object CityInteractionsKt {
     @kotlin.OptIn(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)
     public class SessionIdsProxy private constructor() : com.google.protobuf.kotlin.DslProxy()
     /**
-     * `repeated string session_ids = 6 [json_name = "sessionIds"];`
+     * `repeated string session_ids = 6 [json_name = "sessionIds", (.buf.validate.field) = { ... }`
      * @return A list containing the sessionIds.
      */
     public val sessionIds: com.google.protobuf.kotlin.DslList<kotlin.String, SessionIdsProxy>
@@ -198,7 +198,7 @@ public object CityInteractionsKt {
         _builder.sessionIdsList
       )
     /**
-     * `repeated string session_ids = 6 [json_name = "sessionIds"];`
+     * `repeated string session_ids = 6 [json_name = "sessionIds", (.buf.validate.field) = { ... }`
      * @param value The sessionIds to add.
      */
     @kotlin.jvm.JvmSynthetic
@@ -207,7 +207,7 @@ public object CityInteractionsKt {
       _builder.addSessionIds(value)
     }
     /**
-     * `repeated string session_ids = 6 [json_name = "sessionIds"];`
+     * `repeated string session_ids = 6 [json_name = "sessionIds", (.buf.validate.field) = { ... }`
      * @param value The sessionIds to add.
      */
     @kotlin.jvm.JvmSynthetic
@@ -217,7 +217,7 @@ public object CityInteractionsKt {
       add(value)
     }
     /**
-     * `repeated string session_ids = 6 [json_name = "sessionIds"];`
+     * `repeated string session_ids = 6 [json_name = "sessionIds", (.buf.validate.field) = { ... }`
      * @param values The sessionIds to add.
      */
     @kotlin.jvm.JvmSynthetic
@@ -226,7 +226,7 @@ public object CityInteractionsKt {
       _builder.addAllSessionIds(values)
     }
     /**
-     * `repeated string session_ids = 6 [json_name = "sessionIds"];`
+     * `repeated string session_ids = 6 [json_name = "sessionIds", (.buf.validate.field) = { ... }`
      * @param values The sessionIds to add.
      */
     @kotlin.jvm.JvmSynthetic
@@ -236,7 +236,7 @@ public object CityInteractionsKt {
       addAll(values)
     }
     /**
-     * `repeated string session_ids = 6 [json_name = "sessionIds"];`
+     * `repeated string session_ids = 6 [json_name = "sessionIds", (.buf.validate.field) = { ... }`
      * @param index The index to set the value at.
      * @param value The sessionIds to set.
      */
@@ -245,7 +245,7 @@ public object CityInteractionsKt {
     public operator fun com.google.protobuf.kotlin.DslList<kotlin.String, SessionIdsProxy>.set(index: kotlin.Int, value: kotlin.String) {
       _builder.setSessionIds(index, value)
     }/**
-     * `repeated string session_ids = 6 [json_name = "sessionIds"];`
+     * `repeated string session_ids = 6 [json_name = "sessionIds", (.buf.validate.field) = { ... }`
      */
     @kotlin.jvm.JvmSynthetic
 @kotlin.jvm.JvmName("setSessionIds")

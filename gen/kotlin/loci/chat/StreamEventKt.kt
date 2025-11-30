@@ -68,7 +68,7 @@ public object StreamEventKt {
     }
 
     /**
-     * `bytes data = 3 [json_name = "data"];`
+     * `bytes data = 3 [json_name = "data", (.buf.validate.field) = { ... }`
      */
     public var data: com.google.protobuf.ByteString
       @kotlin.jvm.JvmName("getData")
@@ -78,7 +78,7 @@ public object StreamEventKt {
         _builder.data = value
       }
     /**
-     * `bytes data = 3 [json_name = "data"];`
+     * `bytes data = 3 [json_name = "data", (.buf.validate.field) = { ... }`
      */
     public fun clearData() {
       _builder.clearData()

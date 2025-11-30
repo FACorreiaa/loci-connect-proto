@@ -33,16 +33,28 @@ message DiscoverResult {
   string category = 5 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   string description = 6 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
   string address = 7 [(buf.validate.field).string = {min_len: 1, max_len: 500}];
-  optional string website = 8 [(buf.validate.field).string = {min_len: 1, max_len: 2048}
-  ];
-  optional string phone_number = 9 [(buf.validate.field).string = {min_len: 1, max_len: 50}
-  ];
+  optional string website = 8 [(buf.validate.field).string = {
+    min_len: 1,
+    max_len: 2048,
+    uri: true  // URL validation
+  }];
+  optional string phone_number = 9 [(buf.validate.field).string = {
+    min_len: 1,
+    max_len: 50,
+    pattern: "^\\+?[1-9]\\d{1,14}$"  // E.164 international phone format
+  }];
   optional string opening_hours = 10 [(buf.validate.field).string = {min_len: 1, max_len: 500}
   ];
   string price_level = 11 [(buf.validate.field).string = {min_len: 1, max_len: 50}];
   double rating = 12 [(buf.validate.field).double = {gte: 0, lte: 5}];
-  repeated string tags = 13 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 100}];
-  repeated string images = 14 [(buf.validate.field).repeated.items.string = {min_len: 1, max_len: 2048}];
+  repeated string tags = 13 [(buf.validate.field).repeated = {
+    max_items: 30,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
+  repeated string images = 14 [(buf.validate.field).repeated = {
+    max_items: 20,
+    items: {string: {min_len: 1, max_len: 2048, uri: true}}
+  }];
   optional string cuisine_type = 15 [(buf.validate.field).string = {min_len: 1, max_len: 100}
   ];
   optional string star_rating = 16 [(buf.validate.field).string = {min_len: 1, max_len: 20}
