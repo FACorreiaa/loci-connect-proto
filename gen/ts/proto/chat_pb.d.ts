@@ -583,6 +583,11 @@ export declare type ChatRequest = Message<"loci.chat.ChatRequest"> & {
    * @generated from field: optional string city_name = 3;
    */
   cityName?: string;
+
+  /**
+   * @generated from field: optional loci.chat.UserLocation user_location = 4;
+   */
+  userLocation?: UserLocation;
 };
 
 /**
@@ -716,25 +721,51 @@ export declare type NavigationData = Message<"loci.chat.NavigationData"> & {
 export declare const NavigationDataSchema: GenMessage<NavigationData>;
 
 /**
+ * @generated from message loci.chat.UserLocation
+ */
+export declare type UserLocation = Message<"loci.chat.UserLocation"> & {
+  /**
+   * @generated from field: optional double latitude = 1;
+   */
+  latitude?: number;
+
+  /**
+   * @generated from field: optional double longitude = 2;
+   */
+  longitude?: number;
+};
+
+/**
+ * Describes the message loci.chat.UserLocation.
+ * Use `create(UserLocationSchema)` to create a new message.
+ */
+export declare const UserLocationSchema: GenMessage<UserLocation>;
+
+/**
  * StartChatRequest for starting a new chat session
  *
  * @generated from message loci.chat.StartChatRequest
  */
 export declare type StartChatRequest = Message<"loci.chat.StartChatRequest"> & {
   /**
-   * @generated from field: string city_name = 1;
+   * @generated from field: optional string city_name = 1;
    */
-  cityName: string;
+  cityName?: string;
 
   /**
-   * @generated from field: loci.chat.DomainType context_type = 2;
+   * @generated from field: optional loci.chat.DomainType context_type = 2;
    */
-  contextType: DomainType;
+  contextType?: DomainType;
 
   /**
-   * @generated from field: optional string initial_message = 3;
+   * @generated from field: string initial_message = 3;
    */
-  initialMessage?: string;
+  initialMessage: string;
+
+  /**
+   * @generated from field: optional loci.chat.UserLocation user_location = 4;
+   */
+  userLocation?: UserLocation;
 };
 
 /**

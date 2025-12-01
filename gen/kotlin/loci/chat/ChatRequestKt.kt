@@ -97,9 +97,39 @@ public object ChatRequestKt {
     public fun hasCityName(): kotlin.Boolean {
       return _builder.hasCityName()
     }
+
+    /**
+     * `optional .loci.chat.UserLocation user_location = 4 [json_name = "userLocation"];`
+     */
+    public var userLocation: loci.chat.Chat.UserLocation
+      @kotlin.jvm.JvmName("getUserLocation")
+        get() = _builder.userLocation
+      @kotlin.jvm.JvmName("setUserLocation")
+        set(value) {
+        _builder.userLocation = value
+      }
+    /**
+     * `optional .loci.chat.UserLocation user_location = 4 [json_name = "userLocation"];`
+     */
+    public fun clearUserLocation() {
+      _builder.clearUserLocation()
+    }
+    /**
+     * `optional .loci.chat.UserLocation user_location = 4 [json_name = "userLocation"];`
+     * @return Whether the userLocation field is set.
+     */
+    public fun hasUserLocation(): kotlin.Boolean {
+      return _builder.hasUserLocation()
+    }
+
+    public val ChatRequestKt.Dsl.userLocationOrNull: loci.chat.Chat.UserLocation?
+      get() = _builder.userLocationOrNull
   }
 }
 @kotlin.jvm.JvmSynthetic
 public inline fun loci.chat.Chat.ChatRequest.copy(block: `loci.chat`.ChatRequestKt.Dsl.() -> kotlin.Unit): loci.chat.Chat.ChatRequest =
   `loci.chat`.ChatRequestKt.Dsl._create(this.toBuilder()).apply { block() }._build()
+
+public val loci.chat.Chat.ChatRequestOrBuilder.userLocationOrNull: loci.chat.Chat.UserLocation?
+  get() = if (hasUserLocation()) getUserLocation() else null
 

@@ -683,6 +683,10 @@
                   <a href="#loci.chat.StreamEvent"><span class="badge">M</span>StreamEvent</a>
                 </li>
               
+                <li>
+                  <a href="#loci.chat.UserLocation"><span class="badge">M</span>UserLocation</a>
+                </li>
+              
               
                 <li>
                   <a href="#loci.chat.DomainType"><span class="badge">E</span>DomainType</a>
@@ -6006,6 +6010,13 @@
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>user_location</td>
+                  <td><a href="#loci.chat.UserLocation">UserLocation</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -7209,20 +7220,27 @@
                 <tr>
                   <td>city_name</td>
                   <td><a href="#string">string</a></td>
-                  <td></td>
+                  <td>optional</td>
                   <td><p> </p></td>
                 </tr>
               
                 <tr>
                   <td>context_type</td>
                   <td><a href="#loci.chat.DomainType">DomainType</a></td>
-                  <td></td>
+                  <td>optional</td>
                   <td><p> </p></td>
                 </tr>
               
                 <tr>
                   <td>initial_message</td>
                   <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>user_location</td>
+                  <td><a href="#loci.chat.UserLocation">UserLocation</a></td>
                   <td>optional</td>
                   <td><p> </p></td>
                 </tr>
@@ -7296,6 +7314,37 @@
                 <tr>
                   <td>navigation</td>
                   <td><a href="#loci.chat.NavigationData">NavigationData</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.UserLocation">UserLocation</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>latitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>longitude</td>
+                  <td><a href="#double">double</a></td>
                   <td>optional</td>
                   <td><p> </p></td>
                 </tr>

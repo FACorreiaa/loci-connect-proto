@@ -34,7 +34,7 @@ public object StartChatRequestKt {
     internal fun _build(): loci.chat.Chat.StartChatRequest = _builder.build()
 
     /**
-     * `string city_name = 1 [json_name = "cityName", (.buf.validate.field) = { ... }`
+     * `optional string city_name = 1 [json_name = "cityName", (.buf.validate.field) = { ... }`
      */
     public var cityName: kotlin.String
       @kotlin.jvm.JvmName("getCityName")
@@ -44,14 +44,21 @@ public object StartChatRequestKt {
         _builder.cityName = value
       }
     /**
-     * `string city_name = 1 [json_name = "cityName", (.buf.validate.field) = { ... }`
+     * `optional string city_name = 1 [json_name = "cityName", (.buf.validate.field) = { ... }`
      */
     public fun clearCityName() {
       _builder.clearCityName()
     }
+    /**
+     * `optional string city_name = 1 [json_name = "cityName", (.buf.validate.field) = { ... }`
+     * @return Whether the cityName field is set.
+     */
+    public fun hasCityName(): kotlin.Boolean {
+      return _builder.hasCityName()
+    }
 
     /**
-     * `.loci.chat.DomainType context_type = 2 [json_name = "contextType", (.buf.validate.field) = { ... }`
+     * `optional .loci.chat.DomainType context_type = 2 [json_name = "contextType", (.buf.validate.field) = { ... }`
      */
     public var contextType: loci.chat.Chat.DomainType
       @kotlin.jvm.JvmName("getContextType")
@@ -68,14 +75,21 @@ public object StartChatRequestKt {
         _builder.contextTypeValue = value
       }
     /**
-     * `.loci.chat.DomainType context_type = 2 [json_name = "contextType", (.buf.validate.field) = { ... }`
+     * `optional .loci.chat.DomainType context_type = 2 [json_name = "contextType", (.buf.validate.field) = { ... }`
      */
     public fun clearContextType() {
       _builder.clearContextType()
     }
+    /**
+     * `optional .loci.chat.DomainType context_type = 2 [json_name = "contextType", (.buf.validate.field) = { ... }`
+     * @return Whether the contextType field is set.
+     */
+    public fun hasContextType(): kotlin.Boolean {
+      return _builder.hasContextType()
+    }
 
     /**
-     * `optional string initial_message = 3 [json_name = "initialMessage", (.buf.validate.field) = { ... }`
+     * `string initial_message = 3 [json_name = "initialMessage", (.buf.validate.field) = { ... }`
      */
     public var initialMessage: kotlin.String
       @kotlin.jvm.JvmName("getInitialMessage")
@@ -85,21 +99,44 @@ public object StartChatRequestKt {
         _builder.initialMessage = value
       }
     /**
-     * `optional string initial_message = 3 [json_name = "initialMessage", (.buf.validate.field) = { ... }`
+     * `string initial_message = 3 [json_name = "initialMessage", (.buf.validate.field) = { ... }`
      */
     public fun clearInitialMessage() {
       _builder.clearInitialMessage()
     }
+
     /**
-     * `optional string initial_message = 3 [json_name = "initialMessage", (.buf.validate.field) = { ... }`
-     * @return Whether the initialMessage field is set.
+     * `optional .loci.chat.UserLocation user_location = 4 [json_name = "userLocation"];`
      */
-    public fun hasInitialMessage(): kotlin.Boolean {
-      return _builder.hasInitialMessage()
+    public var userLocation: loci.chat.Chat.UserLocation
+      @kotlin.jvm.JvmName("getUserLocation")
+        get() = _builder.userLocation
+      @kotlin.jvm.JvmName("setUserLocation")
+        set(value) {
+        _builder.userLocation = value
+      }
+    /**
+     * `optional .loci.chat.UserLocation user_location = 4 [json_name = "userLocation"];`
+     */
+    public fun clearUserLocation() {
+      _builder.clearUserLocation()
     }
+    /**
+     * `optional .loci.chat.UserLocation user_location = 4 [json_name = "userLocation"];`
+     * @return Whether the userLocation field is set.
+     */
+    public fun hasUserLocation(): kotlin.Boolean {
+      return _builder.hasUserLocation()
+    }
+
+    public val StartChatRequestKt.Dsl.userLocationOrNull: loci.chat.Chat.UserLocation?
+      get() = _builder.userLocationOrNull
   }
 }
 @kotlin.jvm.JvmSynthetic
 public inline fun loci.chat.Chat.StartChatRequest.copy(block: `loci.chat`.StartChatRequestKt.Dsl.() -> kotlin.Unit): loci.chat.Chat.StartChatRequest =
   `loci.chat`.StartChatRequestKt.Dsl._create(this.toBuilder()).apply { block() }._build()
+
+public val loci.chat.Chat.StartChatRequestOrBuilder.userLocationOrNull: loci.chat.Chat.UserLocation?
+  get() = if (hasUserLocation()) getUserLocation() else null
 
