@@ -588,6 +588,11 @@ export declare type ChatRequest = Message<"loci.chat.ChatRequest"> & {
    * @generated from field: optional loci.chat.UserLocation user_location = 4;
    */
   userLocation?: UserLocation;
+
+  /**
+   * @generated from field: optional string profile_id = 5;
+   */
+  profileId?: string;
 };
 
 /**
@@ -766,6 +771,11 @@ export declare type StartChatRequest = Message<"loci.chat.StartChatRequest"> & {
    * @generated from field: optional loci.chat.UserLocation user_location = 4;
    */
   userLocation?: UserLocation;
+
+  /**
+   * @generated from field: optional string profile_id = 5;
+   */
+  profileId?: string;
 };
 
 /**

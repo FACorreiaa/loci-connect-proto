@@ -225,6 +225,7 @@ message ChatRequest {
   optional string city_name = 3 [(buf.validate.field).string = {min_len: 1, max_len: 200}
   ];
   optional UserLocation user_location = 4;
+  optional string profile_id = 5 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
 }
 
 // ChatResponse for chat response
@@ -282,6 +283,7 @@ message StartChatRequest {
   string initial_message = 3 [(buf.validate.field).string = {min_len: 1, max_len: 4000}
   ];
   optional UserLocation user_location = 4;
+  optional string profile_id = 5 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
 }
 
 // ContinueChatRequest for continuing a chat session

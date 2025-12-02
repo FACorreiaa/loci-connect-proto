@@ -124,6 +124,30 @@ public object ChatRequestKt {
 
     public val ChatRequestKt.Dsl.userLocationOrNull: loci.chat.Chat.UserLocation?
       get() = _builder.userLocationOrNull
+
+    /**
+     * `optional string profile_id = 5 [json_name = "profileId", (.buf.validate.field) = { ... }`
+     */
+    public var profileId: kotlin.String
+      @kotlin.jvm.JvmName("getProfileId")
+        get() = _builder.profileId
+      @kotlin.jvm.JvmName("setProfileId")
+        set(value) {
+        _builder.profileId = value
+      }
+    /**
+     * `optional string profile_id = 5 [json_name = "profileId", (.buf.validate.field) = { ... }`
+     */
+    public fun clearProfileId() {
+      _builder.clearProfileId()
+    }
+    /**
+     * `optional string profile_id = 5 [json_name = "profileId", (.buf.validate.field) = { ... }`
+     * @return Whether the profileId field is set.
+     */
+    public fun hasProfileId(): kotlin.Boolean {
+      return _builder.hasProfileId()
+    }
   }
 }
 @kotlin.jvm.JvmSynthetic

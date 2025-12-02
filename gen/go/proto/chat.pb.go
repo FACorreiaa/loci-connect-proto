@@ -1407,6 +1407,7 @@ type ChatRequest struct {
 	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 	CityName      *string                `protobuf:"bytes,3,opt,name=city_name,json=cityName,proto3,oneof" json:"city_name,omitempty"`
 	UserLocation  *UserLocation          `protobuf:"bytes,4,opt,name=user_location,json=userLocation,proto3,oneof" json:"user_location,omitempty"`
+	ProfileId     *string                `protobuf:"bytes,5,opt,name=profile_id,json=profileId,proto3,oneof" json:"profile_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1467,6 +1468,13 @@ func (x *ChatRequest) GetUserLocation() *UserLocation {
 		return x.UserLocation
 	}
 	return nil
+}
+
+func (x *ChatRequest) GetProfileId() string {
+	if x != nil && x.ProfileId != nil {
+		return *x.ProfileId
+	}
+	return ""
 }
 
 // ChatResponse for chat response
@@ -1775,6 +1783,7 @@ type StartChatRequest struct {
 	ContextType    *DomainType            `protobuf:"varint,2,opt,name=context_type,json=contextType,proto3,enum=loci.chat.DomainType,oneof" json:"context_type,omitempty"`
 	InitialMessage string                 `protobuf:"bytes,3,opt,name=initial_message,json=initialMessage,proto3" json:"initial_message,omitempty"`
 	UserLocation   *UserLocation          `protobuf:"bytes,4,opt,name=user_location,json=userLocation,proto3,oneof" json:"user_location,omitempty"`
+	ProfileId      *string                `protobuf:"bytes,5,opt,name=profile_id,json=profileId,proto3,oneof" json:"profile_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -1835,6 +1844,13 @@ func (x *StartChatRequest) GetUserLocation() *UserLocation {
 		return x.UserLocation
 	}
 	return nil
+}
+
+func (x *StartChatRequest) GetProfileId() string {
+	if x != nil && x.ProfileId != nil {
+		return *x.ProfileId
+	}
+	return ""
 }
 
 // ContinueChatRequest for continuing a chat session
@@ -2590,7 +2606,7 @@ const file_proto_chat_proto_rawDesc = "" +
 	"\x13performance_metrics\x18\f \x01(\v2$.loci.chat.SessionPerformanceMetricsR\x12performanceMetrics\x12I\n" +
 	"\x0fcontent_metrics\x18\r \x01(\v2 .loci.chat.SessionContentMetricsR\x0econtentMetrics\x12R\n" +
 	"\x12engagement_metrics\x18\x0e \x01(\v2#.loci.chat.SessionEngagementMetricsR\x11engagementMetricsB\x14\n" +
-	"\x12_current_itinerary\"\x83\x02\n" +
+	"\x12_current_itinerary\"\xc1\x02\n" +
 	"\vChatRequest\x12.\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\tB\n" +
@@ -2599,11 +2615,14 @@ const file_proto_chat_proto_rawDesc = "" +
 	"\xbaH\ar\x05\x10\x01\x18\xa0\x1fR\amessage\x12,\n" +
 	"\tcity_name\x18\x03 \x01(\tB\n" +
 	"\xbaH\ar\x05\x10\x01\x18\xc8\x01H\x01R\bcityName\x88\x01\x01\x12A\n" +
-	"\ruser_location\x18\x04 \x01(\v2\x17.loci.chat.UserLocationH\x02R\fuserLocation\x88\x01\x01B\r\n" +
+	"\ruser_location\x18\x04 \x01(\v2\x17.loci.chat.UserLocationH\x02R\fuserLocation\x88\x01\x01\x12-\n" +
+	"\n" +
+	"profile_id\x18\x05 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dH\x03R\tprofileId\x88\x01\x01B\r\n" +
 	"\v_session_idB\f\n" +
 	"\n" +
 	"_city_nameB\x10\n" +
-	"\x0e_user_location\"\xdf\x02\n" +
+	"\x0e_user_locationB\r\n" +
+	"\v_profile_id\"\xdf\x02\n" +
 	"\fChatResponse\x12)\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\tB\n" +
@@ -2646,18 +2665,21 @@ const file_proto_chat_proto_rawDesc = "" +
 	"\tlongitude\x18\x02 \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x80f@)\x00\x00\x00\x00\x00\x80f\xc0H\x01R\tlongitude\x88\x01\x01B\v\n" +
 	"\t_latitudeB\f\n" +
 	"\n" +
-	"_longitude\"\xb2\x02\n" +
+	"_longitude\"\xf0\x02\n" +
 	"\x10StartChatRequest\x12,\n" +
 	"\tcity_name\x18\x01 \x01(\tB\n" +
 	"\xbaH\ar\x05\x10\x01\x18\xc8\x01H\x00R\bcityName\x88\x01\x01\x12G\n" +
 	"\fcontext_type\x18\x02 \x01(\x0e2\x15.loci.chat.DomainTypeB\b\xbaH\x05\x82\x01\x02\x10\x01H\x01R\vcontextType\x88\x01\x01\x123\n" +
 	"\x0finitial_message\x18\x03 \x01(\tB\n" +
 	"\xbaH\ar\x05\x10\x01\x18\xa0\x1fR\x0einitialMessage\x12A\n" +
-	"\ruser_location\x18\x04 \x01(\v2\x17.loci.chat.UserLocationH\x02R\fuserLocation\x88\x01\x01B\f\n" +
+	"\ruser_location\x18\x04 \x01(\v2\x17.loci.chat.UserLocationH\x02R\fuserLocation\x88\x01\x01\x12-\n" +
+	"\n" +
+	"profile_id\x18\x05 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dH\x03R\tprofileId\x88\x01\x01B\f\n" +
 	"\n" +
 	"_city_nameB\x0f\n" +
 	"\r_context_typeB\x10\n" +
-	"\x0e_user_location\"\xe6\x01\n" +
+	"\x0e_user_locationB\r\n" +
+	"\v_profile_id\"\xe6\x01\n" +
 	"\x13ContinueChatRequest\x12)\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\tB\n" +
