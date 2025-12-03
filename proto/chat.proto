@@ -222,7 +222,7 @@ message ChatRequest {
   optional string session_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}
   ];
   string message = 2 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
-  optional string city_name = 3 [(buf.validate.field).string = {min_len: 1, max_len: 200}
+  optional string city_name = 3 [(buf.validate.field).string = {max_len: 200}
   ];
   optional UserLocation user_location = 4;
   optional string profile_id = 5 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
@@ -278,7 +278,7 @@ message UserLocation {
 }
 // StartChatRequest for starting a new chat session
 message StartChatRequest {
-  optional string city_name = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  optional string city_name = 1 [(buf.validate.field).string = {max_len: 200}];
   optional DomainType context_type = 2 [(buf.validate.field).enum = {defined_only: true}];
   string initial_message = 3 [(buf.validate.field).string = {min_len: 1, max_len: 4000}
   ];
@@ -290,7 +290,7 @@ message StartChatRequest {
 message ContinueChatRequest {
   string session_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   string message = 2 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
-  optional string city_name = 3 [(buf.validate.field).string = {min_len: 1, max_len: 200}
+  optional string city_name = 3 [(buf.validate.field).string = {max_len: 200}
   ];
   DomainType context_type = 4 [(buf.validate.field).enum = {defined_only: true}];
 }
