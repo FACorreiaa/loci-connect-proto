@@ -9,9 +9,6 @@ import com.connectrpc.ResponseMessage
 import com.connectrpc.ServerOnlyStreamInterface
 import loci.common.Common
 
-/**
- *  ChatService defines chat-related RPCs
- */
 public interface ChatServiceClientInterface {
   public suspend fun startChat(request: Chat.StartChatRequest, headers: Headers = emptyMap()): ResponseMessage<Chat.ChatResponse>
 
@@ -24,6 +21,15 @@ public interface ChatServiceClientInterface {
   public suspend fun getRecentInteractions(request: Chat.GetRecentInteractionsRequest, headers: Headers = emptyMap()): ResponseMessage<Chat.GetRecentInteractionsResponse>
 
   public suspend fun endSession(request: Chat.GetChatSessionRequest, headers: Headers = emptyMap()): ResponseMessage<Common.Response>
+
+  /**
+   *  Bookmarking RPCs
+   */
+  public suspend fun bookmarkPOI(request: Chat.BookmarkRequest, headers: Headers = emptyMap()): ResponseMessage<Chat.BookmarkResponse>
+
+  public suspend fun bookmarkItinerary(request: Chat.BookmarkRequest, headers: Headers = emptyMap()): ResponseMessage<Chat.BookmarkResponse>
+
+  public suspend fun removeBookmark(request: Chat.BookmarkRequest, headers: Headers = emptyMap()): ResponseMessage<Chat.BookmarkResponse>
 
   /**
    *  Streaming RPC for real-time chat responses

@@ -588,6 +588,14 @@
                 </li>
               
                 <li>
+                  <a href="#loci.chat.BookmarkRequest"><span class="badge">M</span>BookmarkRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.BookmarkResponse"><span class="badge">M</span>BookmarkResponse</a>
+                </li>
+              
+                <li>
                   <a href="#loci.chat.ChatRequest"><span class="badge">M</span>ChatRequest</a>
                 </li>
               
@@ -609,6 +617,10 @@
               
                 <li>
                   <a href="#loci.chat.ConversationMessage"><span class="badge">M</span>ConversationMessage</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.GetBookmarksRequest"><span class="badge">M</span>GetBookmarksRequest</a>
                 </li>
               
                 <li>
@@ -5979,6 +5991,131 @@
 
         
       
+        <h3 id="loci.chat.BookmarkRequest">BookmarkRequest</h3>
+        <p>BookmarkRequest for bookmarking items</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>title</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>tags</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>is_public</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>session_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>llm_interaction_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>primary_city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>primary_city_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>poi_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>Specific IDs for items </p></td>
+                </tr>
+              
+                <tr>
+                  <td>itinerary_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.BookmarkResponse">BookmarkResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>success</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>message</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.chat.ChatRequest">ChatRequest</h3>
         <p>ChatRequest for sending a message</p>
 
@@ -6379,6 +6516,37 @@
                   <td>metadata</td>
                   <td><a href="#loci.chat.MessageMetadata">MessageMetadata</a></td>
                   <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.GetBookmarksRequest">GetBookmarksRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>user_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>pagination</td>
+                  <td><a href="#loci.common.PaginationRequest">loci.common.PaginationRequest</a></td>
+                  <td></td>
                   <td><p> </p></td>
                 </tr>
               
@@ -7666,7 +7834,7 @@
 
       
         <h3 id="loci.chat.ChatService">ChatService</h3>
-        <p>ChatService defines chat-related RPCs</p>
+        <p></p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
@@ -7712,6 +7880,27 @@
                 <td>EndSession</td>
                 <td><a href="#loci.chat.GetChatSessionRequest">GetChatSessionRequest</a></td>
                 <td><a href="#loci.common.Response">.loci.common.Response</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BookmarkPOI</td>
+                <td><a href="#loci.chat.BookmarkRequest">BookmarkRequest</a></td>
+                <td><a href="#loci.chat.BookmarkResponse">BookmarkResponse</a></td>
+                <td><p>Bookmarking RPCs</p></td>
+              </tr>
+            
+              <tr>
+                <td>BookmarkItinerary</td>
+                <td><a href="#loci.chat.BookmarkRequest">BookmarkRequest</a></td>
+                <td><a href="#loci.chat.BookmarkResponse">BookmarkResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>RemoveBookmark</td>
+                <td><a href="#loci.chat.BookmarkRequest">BookmarkRequest</a></td>
+                <td><a href="#loci.chat.BookmarkResponse">BookmarkResponse</a></td>
                 <td><p></p></td>
               </tr>
             

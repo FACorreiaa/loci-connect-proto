@@ -364,8 +364,35 @@ message GetRecentInteractionsResponse {
   repeated CityInteractions cities = 1;
   loci.common.PaginationMetadata pagination = 2;
 }
+// BookmarkRequest for bookmarking items
+message BookmarkRequest {
+  string title = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string description = 2 [(buf.validate.field).string = {max_len: 1000}];
+  repeated string tags = 3 [(buf.validate.field).repeated = {
+    max_items: 10,
+    items: {string: {min_len: 1, max_len: 50}}
+  }];
+  bool is_public = 4;
+  optional string session_id = 5 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  optional string llm_interaction_id = 6 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  optional string primary_city_name = 7 [(buf.validate.field).string = {max_len: 200}];
+  optional string primary_city_id = 8 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  // Specific IDs for items
+  optional string poi_id = 9 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  optional string itinerary_id = 10 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+}
 
-// ChatService defines chat-related RPCs
+message BookmarkResponse {
+  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  bool success = 2;
+  string message = 3;
+}
+
+message GetBookmarksRequest {
+  optional string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  loci.common.PaginationRequest pagination = 2 [(buf.validate.field).required = true];
+}
+
 service ChatService {
   rpc StartChat(StartChatRequest) returns (ChatResponse);
   rpc ContinueChat(ContinueChatRequest) returns (ChatResponse);
@@ -373,6 +400,11 @@ service ChatService {
   rpc GetChatSessions(GetChatSessionsRequest) returns (GetChatSessionsResponse);
   rpc GetRecentInteractions(GetRecentInteractionsRequest) returns (GetRecentInteractionsResponse);
   rpc EndSession(GetChatSessionRequest) returns (loci.common.Response);
+
+  // Bookmarking RPCs
+  rpc BookmarkPOI(BookmarkRequest) returns (BookmarkResponse);
+  rpc BookmarkItinerary(BookmarkRequest) returns (BookmarkResponse);
+  rpc RemoveBookmark(BookmarkRequest) returns (BookmarkResponse);
 
   // Streaming RPC for real-time chat responses
   rpc StreamChat(ChatRequest) returns (stream StreamEvent);

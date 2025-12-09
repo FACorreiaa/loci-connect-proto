@@ -1077,6 +1077,118 @@ export declare type GetRecentInteractionsResponse = Message<"loci.chat.GetRecent
 export declare const GetRecentInteractionsResponseSchema: GenMessage<GetRecentInteractionsResponse>;
 
 /**
+ * BookmarkRequest for bookmarking items
+ *
+ * @generated from message loci.chat.BookmarkRequest
+ */
+export declare type BookmarkRequest = Message<"loci.chat.BookmarkRequest"> & {
+  /**
+   * @generated from field: string title = 1;
+   */
+  title: string;
+
+  /**
+   * @generated from field: string description = 2;
+   */
+  description: string;
+
+  /**
+   * @generated from field: repeated string tags = 3;
+   */
+  tags: string[];
+
+  /**
+   * @generated from field: bool is_public = 4;
+   */
+  isPublic: boolean;
+
+  /**
+   * @generated from field: optional string session_id = 5;
+   */
+  sessionId?: string;
+
+  /**
+   * @generated from field: optional string llm_interaction_id = 6;
+   */
+  llmInteractionId?: string;
+
+  /**
+   * @generated from field: optional string primary_city_name = 7;
+   */
+  primaryCityName?: string;
+
+  /**
+   * @generated from field: optional string primary_city_id = 8;
+   */
+  primaryCityId?: string;
+
+  /**
+   * Specific IDs for items
+   *
+   * @generated from field: optional string poi_id = 9;
+   */
+  poiId?: string;
+
+  /**
+   * @generated from field: optional string itinerary_id = 10;
+   */
+  itineraryId?: string;
+};
+
+/**
+ * Describes the message loci.chat.BookmarkRequest.
+ * Use `create(BookmarkRequestSchema)` to create a new message.
+ */
+export declare const BookmarkRequestSchema: GenMessage<BookmarkRequest>;
+
+/**
+ * @generated from message loci.chat.BookmarkResponse
+ */
+export declare type BookmarkResponse = Message<"loci.chat.BookmarkResponse"> & {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * @generated from field: bool success = 2;
+   */
+  success: boolean;
+
+  /**
+   * @generated from field: string message = 3;
+   */
+  message: string;
+};
+
+/**
+ * Describes the message loci.chat.BookmarkResponse.
+ * Use `create(BookmarkResponseSchema)` to create a new message.
+ */
+export declare const BookmarkResponseSchema: GenMessage<BookmarkResponse>;
+
+/**
+ * @generated from message loci.chat.GetBookmarksRequest
+ */
+export declare type GetBookmarksRequest = Message<"loci.chat.GetBookmarksRequest"> & {
+  /**
+   * @generated from field: optional string user_id = 1;
+   */
+  userId?: string;
+
+  /**
+   * @generated from field: loci.common.PaginationRequest pagination = 2;
+   */
+  pagination?: PaginationRequest;
+};
+
+/**
+ * Describes the message loci.chat.GetBookmarksRequest.
+ * Use `create(GetBookmarksRequestSchema)` to create a new message.
+ */
+export declare const GetBookmarksRequestSchema: GenMessage<GetBookmarksRequest>;
+
+/**
  * Enums for chat types
  *
  * @generated from enum loci.chat.MessageRole
@@ -1324,8 +1436,6 @@ export enum DomainType {
 export declare const DomainTypeSchema: GenEnum<DomainType>;
 
 /**
- * ChatService defines chat-related RPCs
- *
  * @generated from service loci.chat.ChatService
  */
 export declare const ChatService: GenService<{
@@ -1376,6 +1486,32 @@ export declare const ChatService: GenService<{
     methodKind: "unary";
     input: typeof GetChatSessionRequestSchema;
     output: typeof ResponseSchema;
+  },
+  /**
+   * Bookmarking RPCs
+   *
+   * @generated from rpc loci.chat.ChatService.BookmarkPOI
+   */
+  bookmarkPOI: {
+    methodKind: "unary";
+    input: typeof BookmarkRequestSchema;
+    output: typeof BookmarkResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.chat.ChatService.BookmarkItinerary
+   */
+  bookmarkItinerary: {
+    methodKind: "unary";
+    input: typeof BookmarkRequestSchema;
+    output: typeof BookmarkResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.chat.ChatService.RemoveBookmark
+   */
+  removeBookmark: {
+    methodKind: "unary";
+    input: typeof BookmarkRequestSchema;
+    output: typeof BookmarkResponseSchema;
   },
   /**
    * Streaming RPC for real-time chat responses

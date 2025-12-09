@@ -12,9 +12,6 @@ import com.connectrpc.ServerOnlyStreamInterface
 import com.connectrpc.StreamType
 import loci.common.Common
 
-/**
- *  ChatService defines chat-related RPCs
- */
 public class ChatServiceClient(
   private val client: ProtocolClientInterface,
 ) : ChatServiceClientInterface {
@@ -85,6 +82,45 @@ public class ChatServiceClient(
     "loci.chat.ChatService/EndSession",
       loci.chat.Chat.GetChatSessionRequest::class,
       loci.common.Common.Response::class,
+      StreamType.UNARY,
+    ),
+  )
+
+
+  /**
+   *  Bookmarking RPCs
+   */
+  override suspend fun bookmarkPOI(request: Chat.BookmarkRequest, headers: Headers): ResponseMessage<Chat.BookmarkResponse> = client.unary(
+    request,
+    headers,
+    MethodSpec(
+    "loci.chat.ChatService/BookmarkPOI",
+      loci.chat.Chat.BookmarkRequest::class,
+      loci.chat.Chat.BookmarkResponse::class,
+      StreamType.UNARY,
+    ),
+  )
+
+
+  override suspend fun bookmarkItinerary(request: Chat.BookmarkRequest, headers: Headers): ResponseMessage<Chat.BookmarkResponse> = client.unary(
+    request,
+    headers,
+    MethodSpec(
+    "loci.chat.ChatService/BookmarkItinerary",
+      loci.chat.Chat.BookmarkRequest::class,
+      loci.chat.Chat.BookmarkResponse::class,
+      StreamType.UNARY,
+    ),
+  )
+
+
+  override suspend fun removeBookmark(request: Chat.BookmarkRequest, headers: Headers): ResponseMessage<Chat.BookmarkResponse> = client.unary(
+    request,
+    headers,
+    MethodSpec(
+    "loci.chat.ChatService/RemoveBookmark",
+      loci.chat.Chat.BookmarkRequest::class,
+      loci.chat.Chat.BookmarkResponse::class,
       StreamType.UNARY,
     ),
   )
