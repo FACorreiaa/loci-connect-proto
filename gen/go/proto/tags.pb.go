@@ -758,7 +758,7 @@ var File_proto_tags_proto protoreflect.FileDescriptor
 
 const file_proto_tags_proto_rawDesc = "" +
 	"\n" +
-	"\x10proto/tags.proto\x12\floci.tags.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xbe\x02\n" +
+	"\x10proto/tags.proto\x12\x0eai_poi.tags.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xbe\x02\n" +
 	"\vPersonalTag\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x12\n" +
@@ -787,22 +787,22 @@ const file_proto_tags_proto_rawDesc = "" +
 	"\a_sourceB\r\n" +
 	"\v_updated_at\")\n" +
 	"\x0eGetTagsRequest\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\tR\x06userId\"8\n" +
-	"\x0fGetTagsResponse\x12%\n" +
-	"\x04tags\x18\x01 \x03(\v2\x11.loci.tags.v1.TagR\x04tags\"?\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\":\n" +
+	"\x0fGetTagsResponse\x12'\n" +
+	"\x04tags\x18\x01 \x03(\v2\x13.ai_poi.tags.v1.TagR\x04tags\"?\n" +
 	"\rGetTagRequest\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x15\n" +
-	"\x06tag_id\x18\x02 \x01(\tR\x05tagId\"5\n" +
-	"\x0eGetTagResponse\x12#\n" +
-	"\x03tag\x18\x01 \x01(\v2\x11.loci.tags.v1.TagR\x03tag\"\x94\x01\n" +
+	"\x06tag_id\x18\x02 \x01(\tR\x05tagId\"7\n" +
+	"\x0eGetTagResponse\x12%\n" +
+	"\x03tag\x18\x01 \x01(\v2\x13.ai_poi.tags.v1.TagR\x03tag\"\x94\x01\n" +
 	"\x10CreateTagRequest\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
 	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x19\n" +
 	"\btag_type\x18\x04 \x01(\tR\atagType\x12\x16\n" +
-	"\x06active\x18\x05 \x01(\bR\x06active\"@\n" +
-	"\x11CreateTagResponse\x12+\n" +
-	"\x03tag\x18\x01 \x01(\v2\x19.loci.tags.v1.PersonalTagR\x03tag\"\xab\x01\n" +
+	"\x06active\x18\x05 \x01(\bR\x06active\"B\n" +
+	"\x11CreateTagResponse\x12-\n" +
+	"\x03tag\x18\x01 \x01(\v2\x1b.ai_poi.tags.v1.PersonalTagR\x03tag\"\xab\x01\n" +
 	"\x10UpdateTagRequest\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x15\n" +
 	"\x06tag_id\x18\x02 \x01(\tR\x05tagId\x12\x12\n" +
@@ -816,13 +816,13 @@ const file_proto_tags_proto_rawDesc = "" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x15\n" +
 	"\x06tag_id\x18\x02 \x01(\tR\x05tagId\"-\n" +
 	"\x11DeleteTagResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess2\x84\x03\n" +
-	"\vTagsService\x12F\n" +
-	"\aGetTags\x12\x1c.loci.tags.v1.GetTagsRequest\x1a\x1d.loci.tags.v1.GetTagsResponse\x12C\n" +
-	"\x06GetTag\x12\x1b.loci.tags.v1.GetTagRequest\x1a\x1c.loci.tags.v1.GetTagResponse\x12L\n" +
-	"\tCreateTag\x12\x1e.loci.tags.v1.CreateTagRequest\x1a\x1f.loci.tags.v1.CreateTagResponse\x12L\n" +
-	"\tUpdateTag\x12\x1e.loci.tags.v1.UpdateTagRequest\x1a\x1f.loci.tags.v1.UpdateTagResponse\x12L\n" +
-	"\tDeleteTag\x12\x1e.loci.tags.v1.DeleteTagRequest\x1a\x1f.loci.tags.v1.DeleteTagResponseBEZCgithub.com/FACorreiaa/loci-connect-proto/gen/go/loci/tags/v1;tagsv1b\x06proto3"
+	"\asuccess\x18\x01 \x01(\bR\asuccess2\x98\x03\n" +
+	"\vTagsService\x12J\n" +
+	"\aGetTags\x12\x1e.ai_poi.tags.v1.GetTagsRequest\x1a\x1f.ai_poi.tags.v1.GetTagsResponse\x12G\n" +
+	"\x06GetTag\x12\x1d.ai_poi.tags.v1.GetTagRequest\x1a\x1e.ai_poi.tags.v1.GetTagResponse\x12P\n" +
+	"\tCreateTag\x12 .ai_poi.tags.v1.CreateTagRequest\x1a!.ai_poi.tags.v1.CreateTagResponse\x12P\n" +
+	"\tUpdateTag\x12 .ai_poi.tags.v1.UpdateTagRequest\x1a!.ai_poi.tags.v1.UpdateTagResponse\x12P\n" +
+	"\tDeleteTag\x12 .ai_poi.tags.v1.DeleteTagRequest\x1a!.ai_poi.tags.v1.DeleteTagResponseBGZEgithub.com/FACorreiaa/loci-connect-proto/gen/go/ai_poi/tags/v1;tagsv1b\x06proto3"
 
 var (
 	file_proto_tags_proto_rawDescOnce sync.Once
@@ -838,38 +838,38 @@ func file_proto_tags_proto_rawDescGZIP() []byte {
 
 var file_proto_tags_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_proto_tags_proto_goTypes = []any{
-	(*PersonalTag)(nil),           // 0: loci.tags.v1.PersonalTag
-	(*Tag)(nil),                   // 1: loci.tags.v1.Tag
-	(*GetTagsRequest)(nil),        // 2: loci.tags.v1.GetTagsRequest
-	(*GetTagsResponse)(nil),       // 3: loci.tags.v1.GetTagsResponse
-	(*GetTagRequest)(nil),         // 4: loci.tags.v1.GetTagRequest
-	(*GetTagResponse)(nil),        // 5: loci.tags.v1.GetTagResponse
-	(*CreateTagRequest)(nil),      // 6: loci.tags.v1.CreateTagRequest
-	(*CreateTagResponse)(nil),     // 7: loci.tags.v1.CreateTagResponse
-	(*UpdateTagRequest)(nil),      // 8: loci.tags.v1.UpdateTagRequest
-	(*UpdateTagResponse)(nil),     // 9: loci.tags.v1.UpdateTagResponse
-	(*DeleteTagRequest)(nil),      // 10: loci.tags.v1.DeleteTagRequest
-	(*DeleteTagResponse)(nil),     // 11: loci.tags.v1.DeleteTagResponse
+	(*PersonalTag)(nil),           // 0: ai_poi.tags.v1.PersonalTag
+	(*Tag)(nil),                   // 1: ai_poi.tags.v1.Tag
+	(*GetTagsRequest)(nil),        // 2: ai_poi.tags.v1.GetTagsRequest
+	(*GetTagsResponse)(nil),       // 3: ai_poi.tags.v1.GetTagsResponse
+	(*GetTagRequest)(nil),         // 4: ai_poi.tags.v1.GetTagRequest
+	(*GetTagResponse)(nil),        // 5: ai_poi.tags.v1.GetTagResponse
+	(*CreateTagRequest)(nil),      // 6: ai_poi.tags.v1.CreateTagRequest
+	(*CreateTagResponse)(nil),     // 7: ai_poi.tags.v1.CreateTagResponse
+	(*UpdateTagRequest)(nil),      // 8: ai_poi.tags.v1.UpdateTagRequest
+	(*UpdateTagResponse)(nil),     // 9: ai_poi.tags.v1.UpdateTagResponse
+	(*DeleteTagRequest)(nil),      // 10: ai_poi.tags.v1.DeleteTagRequest
+	(*DeleteTagResponse)(nil),     // 11: ai_poi.tags.v1.DeleteTagResponse
 	(*timestamppb.Timestamp)(nil), // 12: google.protobuf.Timestamp
 }
 var file_proto_tags_proto_depIdxs = []int32{
-	12, // 0: loci.tags.v1.PersonalTag.created_at:type_name -> google.protobuf.Timestamp
-	12, // 1: loci.tags.v1.PersonalTag.updated_at:type_name -> google.protobuf.Timestamp
-	12, // 2: loci.tags.v1.Tag.created_at:type_name -> google.protobuf.Timestamp
-	12, // 3: loci.tags.v1.Tag.updated_at:type_name -> google.protobuf.Timestamp
-	1,  // 4: loci.tags.v1.GetTagsResponse.tags:type_name -> loci.tags.v1.Tag
-	1,  // 5: loci.tags.v1.GetTagResponse.tag:type_name -> loci.tags.v1.Tag
-	0,  // 6: loci.tags.v1.CreateTagResponse.tag:type_name -> loci.tags.v1.PersonalTag
-	2,  // 7: loci.tags.v1.TagsService.GetTags:input_type -> loci.tags.v1.GetTagsRequest
-	4,  // 8: loci.tags.v1.TagsService.GetTag:input_type -> loci.tags.v1.GetTagRequest
-	6,  // 9: loci.tags.v1.TagsService.CreateTag:input_type -> loci.tags.v1.CreateTagRequest
-	8,  // 10: loci.tags.v1.TagsService.UpdateTag:input_type -> loci.tags.v1.UpdateTagRequest
-	10, // 11: loci.tags.v1.TagsService.DeleteTag:input_type -> loci.tags.v1.DeleteTagRequest
-	3,  // 12: loci.tags.v1.TagsService.GetTags:output_type -> loci.tags.v1.GetTagsResponse
-	5,  // 13: loci.tags.v1.TagsService.GetTag:output_type -> loci.tags.v1.GetTagResponse
-	7,  // 14: loci.tags.v1.TagsService.CreateTag:output_type -> loci.tags.v1.CreateTagResponse
-	9,  // 15: loci.tags.v1.TagsService.UpdateTag:output_type -> loci.tags.v1.UpdateTagResponse
-	11, // 16: loci.tags.v1.TagsService.DeleteTag:output_type -> loci.tags.v1.DeleteTagResponse
+	12, // 0: ai_poi.tags.v1.PersonalTag.created_at:type_name -> google.protobuf.Timestamp
+	12, // 1: ai_poi.tags.v1.PersonalTag.updated_at:type_name -> google.protobuf.Timestamp
+	12, // 2: ai_poi.tags.v1.Tag.created_at:type_name -> google.protobuf.Timestamp
+	12, // 3: ai_poi.tags.v1.Tag.updated_at:type_name -> google.protobuf.Timestamp
+	1,  // 4: ai_poi.tags.v1.GetTagsResponse.tags:type_name -> ai_poi.tags.v1.Tag
+	1,  // 5: ai_poi.tags.v1.GetTagResponse.tag:type_name -> ai_poi.tags.v1.Tag
+	0,  // 6: ai_poi.tags.v1.CreateTagResponse.tag:type_name -> ai_poi.tags.v1.PersonalTag
+	2,  // 7: ai_poi.tags.v1.TagsService.GetTags:input_type -> ai_poi.tags.v1.GetTagsRequest
+	4,  // 8: ai_poi.tags.v1.TagsService.GetTag:input_type -> ai_poi.tags.v1.GetTagRequest
+	6,  // 9: ai_poi.tags.v1.TagsService.CreateTag:input_type -> ai_poi.tags.v1.CreateTagRequest
+	8,  // 10: ai_poi.tags.v1.TagsService.UpdateTag:input_type -> ai_poi.tags.v1.UpdateTagRequest
+	10, // 11: ai_poi.tags.v1.TagsService.DeleteTag:input_type -> ai_poi.tags.v1.DeleteTagRequest
+	3,  // 12: ai_poi.tags.v1.TagsService.GetTags:output_type -> ai_poi.tags.v1.GetTagsResponse
+	5,  // 13: ai_poi.tags.v1.TagsService.GetTag:output_type -> ai_poi.tags.v1.GetTagResponse
+	7,  // 14: ai_poi.tags.v1.TagsService.CreateTag:output_type -> ai_poi.tags.v1.CreateTagResponse
+	9,  // 15: ai_poi.tags.v1.TagsService.UpdateTag:output_type -> ai_poi.tags.v1.UpdateTagResponse
+	11, // 16: ai_poi.tags.v1.TagsService.DeleteTag:output_type -> ai_poi.tags.v1.DeleteTagResponse
 	12, // [12:17] is the sub-list for method output_type
 	7,  // [7:12] is the sub-list for method input_type
 	7,  // [7:7] is the sub-list for extension type_name

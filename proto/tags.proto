@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-package loci.tags.v1;
+package ai_poi.tags.v1;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/tags/v1;tagsv1";
+option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/ai_poi/tags/v1;tagsv1";
 
 // Service definition matching your tagsService interface
 service TagsService {
