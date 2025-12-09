@@ -1,0 +1,107 @@
+syntax = "proto3";
+
+package loci.tags.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/tags/v1;tagsv1";
+
+// Service definition matching your tagsService interface
+service TagsService {
+  // GetTags retrieves all tags for a specific user
+  rpc GetTags(GetTagsRequest) returns (GetTagsResponse);
+
+  // GetTag retrieves a specific tag by ID
+  rpc GetTag(GetTagRequest) returns (GetTagResponse);
+
+  // CreateTag creates a new personal tag
+  rpc CreateTag(CreateTagRequest) returns (CreateTagResponse);
+
+  // UpdateTag updates an existing tag
+  // Note: Renamed from "Update" to "UpdateTag" for RPC clarity
+  rpc UpdateTag(UpdateTagRequest) returns (UpdateTagResponse);
+
+  // DeleteTag deletes a specific tag
+  rpc DeleteTag(DeleteTagRequest) returns (DeleteTagResponse);
+}
+
+// --- Data Models ---
+
+// Matches locitypes.PersonalTag
+message PersonalTag {
+  string id = 1;                     // UUID
+  string user_id = 2;                // UUID
+  string name = 3;
+  string tag_type = 4;
+  optional string description = 5;   // *string in Go
+  string source = 6;
+  google.protobuf.Timestamp created_at = 7;
+  optional google.protobuf.Timestamp updated_at = 8; // *time.Time in Go
+}
+
+// Matches locitypes.Tags
+message Tag {
+  string id = 1;                     // UUID
+  string name = 2;
+  string tag_type = 3;
+  optional string description = 4;   // *string
+  optional string source = 5;        // *string
+  bool active = 6;                   // *bool (proto defaults false, use wrapper if nil distinction needed)
+  google.protobuf.Timestamp created_at = 7;
+  optional google.protobuf.Timestamp updated_at = 8; // *time.Time
+}
+
+// --- Request & Response Messages ---
+
+message GetTagsRequest {
+  string user_id = 1; // UUID
+}
+
+message GetTagsResponse {
+  repeated Tag tags = 1;
+}
+
+message GetTagRequest {
+  string user_id = 1; // UUID
+  string tag_id = 2;  // UUID
+}
+
+message GetTagResponse {
+  Tag tag = 1;
+}
+
+// Matches locitypes.CreatePersonalTagParams
+message CreateTagRequest {
+  string user_id = 1; // UUID (passed as arg in interface)
+  string name = 2;
+  string description = 3;
+  string tag_type = 4;
+  bool active = 5;    // *bool in params
+}
+
+message CreateTagResponse {
+  PersonalTag tag = 1;
+}
+
+// Matches locitypes.UpdatePersonalTagParams
+message UpdateTagRequest {
+  string user_id = 1; // UUID
+  string tag_id = 2;  // UUID
+  string name = 3;
+  string description = 4;
+  string tag_type = 5;
+  bool active = 6;
+}
+
+message UpdateTagResponse {
+  bool success = 1;
+}
+
+message DeleteTagRequest {
+  string user_id = 1; // UUID
+  string tag_id = 2;  // UUID
+}
+
+message DeleteTagResponse {
+  bool success = 1;
+}

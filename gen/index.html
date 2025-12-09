@@ -1569,6 +1569,69 @@
         
           
           <li>
+            <a href="#proto%2ftags.proto">proto/tags.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#loci.tags.v1.CreateTagRequest"><span class="badge">M</span>CreateTagRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.tags.v1.CreateTagResponse"><span class="badge">M</span>CreateTagResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.tags.v1.DeleteTagRequest"><span class="badge">M</span>DeleteTagRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.tags.v1.DeleteTagResponse"><span class="badge">M</span>DeleteTagResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.tags.v1.GetTagRequest"><span class="badge">M</span>GetTagRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.tags.v1.GetTagResponse"><span class="badge">M</span>GetTagResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.tags.v1.GetTagsRequest"><span class="badge">M</span>GetTagsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.tags.v1.GetTagsResponse"><span class="badge">M</span>GetTagsResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.tags.v1.PersonalTag"><span class="badge">M</span>PersonalTag</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.tags.v1.Tag"><span class="badge">M</span>Tag</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.tags.v1.UpdateTagRequest"><span class="badge">M</span>UpdateTagRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.tags.v1.UpdateTagResponse"><span class="badge">M</span>UpdateTagResponse</a>
+                </li>
+              
+              
+              
+              
+                <li>
+                  <a href="#loci.tags.v1.TagsService"><span class="badge">S</span>TagsService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#proto%2fuser.proto">proto/user.proto</a>
             <ul>
               
@@ -17507,6 +17570,531 @@ Number of helpful votes </p></td>
                 <td><a href="#ai_poi.statistics.v1.GetSystemAnalyticsRequest">GetSystemAnalyticsRequest</a></td>
                 <td><a href="#ai_poi.statistics.v1.GetSystemAnalyticsResponse">GetSystemAnalyticsResponse</a></td>
                 <td><p>Get system-wide analytics (admin)</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="proto/tags.proto">proto/tags.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="loci.tags.v1.CreateTagRequest">CreateTagRequest</h3>
+        <p>Matches locitypes.CreatePersonalTagParams</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>user_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>UUID (passed as arg in interface) </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>tag_type</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>active</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>bool in params </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.tags.v1.CreateTagResponse">CreateTagResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>tag</td>
+                  <td><a href="#loci.tags.v1.PersonalTag">PersonalTag</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.tags.v1.DeleteTagRequest">DeleteTagRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>user_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>UUID </p></td>
+                </tr>
+              
+                <tr>
+                  <td>tag_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>UUID </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.tags.v1.DeleteTagResponse">DeleteTagResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>success</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.tags.v1.GetTagRequest">GetTagRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>user_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>UUID </p></td>
+                </tr>
+              
+                <tr>
+                  <td>tag_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>UUID </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.tags.v1.GetTagResponse">GetTagResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>tag</td>
+                  <td><a href="#loci.tags.v1.Tag">Tag</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.tags.v1.GetTagsRequest">GetTagsRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>user_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>UUID </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.tags.v1.GetTagsResponse">GetTagsResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>tags</td>
+                  <td><a href="#loci.tags.v1.Tag">Tag</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.tags.v1.PersonalTag">PersonalTag</h3>
+        <p>Matches locitypes.PersonalTag</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>UUID </p></td>
+                </tr>
+              
+                <tr>
+                  <td>user_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>UUID </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>tag_type</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>string in Go </p></td>
+                </tr>
+              
+                <tr>
+                  <td>source</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>updated_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td>optional</td>
+                  <td><p>time.Time in Go </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.tags.v1.Tag">Tag</h3>
+        <p>Matches locitypes.Tags</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>UUID </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>tag_type</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>string </p></td>
+                </tr>
+              
+                <tr>
+                  <td>source</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>string </p></td>
+                </tr>
+              
+                <tr>
+                  <td>active</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>bool (proto defaults false, use wrapper if nil distinction needed) </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>updated_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td>optional</td>
+                  <td><p>time.Time </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.tags.v1.UpdateTagRequest">UpdateTagRequest</h3>
+        <p>Matches locitypes.UpdatePersonalTagParams</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>user_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>UUID </p></td>
+                </tr>
+              
+                <tr>
+                  <td>tag_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>UUID </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>tag_type</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>active</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.tags.v1.UpdateTagResponse">UpdateTagResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>success</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+
+      
+
+      
+        <h3 id="loci.tags.v1.TagsService">TagsService</h3>
+        <p>Service definition matching your tagsService interface</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>GetTags</td>
+                <td><a href="#loci.tags.v1.GetTagsRequest">GetTagsRequest</a></td>
+                <td><a href="#loci.tags.v1.GetTagsResponse">GetTagsResponse</a></td>
+                <td><p>GetTags retrieves all tags for a specific user</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetTag</td>
+                <td><a href="#loci.tags.v1.GetTagRequest">GetTagRequest</a></td>
+                <td><a href="#loci.tags.v1.GetTagResponse">GetTagResponse</a></td>
+                <td><p>GetTag retrieves a specific tag by ID</p></td>
+              </tr>
+            
+              <tr>
+                <td>CreateTag</td>
+                <td><a href="#loci.tags.v1.CreateTagRequest">CreateTagRequest</a></td>
+                <td><a href="#loci.tags.v1.CreateTagResponse">CreateTagResponse</a></td>
+                <td><p>CreateTag creates a new personal tag</p></td>
+              </tr>
+            
+              <tr>
+                <td>UpdateTag</td>
+                <td><a href="#loci.tags.v1.UpdateTagRequest">UpdateTagRequest</a></td>
+                <td><a href="#loci.tags.v1.UpdateTagResponse">UpdateTagResponse</a></td>
+                <td><p>UpdateTag updates an existing tag
+Note: Renamed from &#34;Update&#34; to &#34;UpdateTag&#34; for RPC clarity</p></td>
+              </tr>
+            
+              <tr>
+                <td>DeleteTag</td>
+                <td><a href="#loci.tags.v1.DeleteTagRequest">DeleteTagRequest</a></td>
+                <td><a href="#loci.tags.v1.DeleteTagResponse">DeleteTagResponse</a></td>
+                <td><p>DeleteTag deletes a specific tag</p></td>
               </tr>
             
           </tbody>
