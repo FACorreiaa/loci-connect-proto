@@ -508,6 +508,11 @@ export declare type LandingPageUserStats = Message<"ai_poi.statistics.v1.Landing
    * @generated from field: ai_poi.statistics.v1.AchievementBadges badges = 8;
    */
   badges?: AchievementBadges;
+
+  /**
+   * @generated from field: int32 cities_explored = 9;
+   */
+  citiesExplored: number;
 };
 
 /**

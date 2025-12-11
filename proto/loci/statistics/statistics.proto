@@ -144,6 +144,7 @@ message LandingPageUserStats {
   repeated RecentInteraction recent_interactions = 6;
   PersonalizedRecommendations recommendations = 7;
   AchievementBadges badges = 8;
+  int32 cities_explored = 9 [(buf.validate.field).int32 = {gte: 0}];
 }
 
 // Recent user interactions

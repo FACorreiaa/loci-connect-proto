@@ -295,6 +295,23 @@ public object LandingPageUserStatsKt {
 
     public val LandingPageUserStatsKt.Dsl.badgesOrNull: ai_poi.statistics.v1.Statistics.AchievementBadges?
       get() = _builder.badgesOrNull
+
+    /**
+     * `int32 cities_explored = 9 [json_name = "citiesExplored", (.buf.validate.field) = { ... }`
+     */
+    public var citiesExplored: kotlin.Int
+      @kotlin.jvm.JvmName("getCitiesExplored")
+        get() = _builder.citiesExplored
+      @kotlin.jvm.JvmName("setCitiesExplored")
+        set(value) {
+        _builder.citiesExplored = value
+      }
+    /**
+     * `int32 cities_explored = 9 [json_name = "citiesExplored", (.buf.validate.field) = { ... }`
+     */
+    public fun clearCitiesExplored() {
+      _builder.clearCitiesExplored()
+    }
   }
 }
 @kotlin.jvm.JvmSynthetic

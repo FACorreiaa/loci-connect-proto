@@ -954,6 +954,7 @@ type LandingPageUserStats struct {
 	RecentInteractions          []*RecentInteraction         `protobuf:"bytes,6,rep,name=recent_interactions,json=recentInteractions,proto3" json:"recent_interactions,omitempty"`
 	Recommendations             *PersonalizedRecommendations `protobuf:"bytes,7,opt,name=recommendations,proto3" json:"recommendations,omitempty"`
 	Badges                      *AchievementBadges           `protobuf:"bytes,8,opt,name=badges,proto3" json:"badges,omitempty"`
+	CitiesExplored              int32                        `protobuf:"varint,9,opt,name=cities_explored,json=citiesExplored,proto3" json:"cities_explored,omitempty"`
 	unknownFields               protoimpl.UnknownFields
 	sizeCache                   protoimpl.SizeCache
 }
@@ -1042,6 +1043,13 @@ func (x *LandingPageUserStats) GetBadges() *AchievementBadges {
 		return x.Badges
 	}
 	return nil
+}
+
+func (x *LandingPageUserStats) GetCitiesExplored() int32 {
+	if x != nil {
+		return x.CitiesExplored
+	}
+	return 0
 }
 
 // Recent user interactions
@@ -3309,7 +3317,7 @@ const file_proto_loci_statistics_statistics_proto_rawDesc = "" +
 	"\x04year\x18\x01 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x04year\x12\x1f\n" +
 	"\x05month\x18\x02 \x01(\x05B\t\xbaH\x06\x1a\x04\x18\f(\x01R\x05month\x12.\n" +
 	"\x0etotal_activity\x18\x03 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\rtotalActivity\x12+\n" +
-	"\x11growth_percentage\x18\x04 \x01(\x01R\x10growthPercentage\"\xb1\x04\n" +
+	"\x11growth_percentage\x18\x04 \x01(\x01R\x10growthPercentage\"\xe3\x04\n" +
 	"\x14LandingPageUserStats\x12\"\n" +
 	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x125\n" +
 	"\x12searches_this_week\x18\x02 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x10searchesThisWeek\x12>\n" +
@@ -3318,7 +3326,8 @@ const file_proto_loci_statistics_statistics_proto_rawDesc = "" +
 	"\x18recently_searched_cities\x18\x05 \x03(\tR\x16recentlySearchedCities\x12X\n" +
 	"\x13recent_interactions\x18\x06 \x03(\v2'.ai_poi.statistics.v1.RecentInteractionR\x12recentInteractions\x12[\n" +
 	"\x0frecommendations\x18\a \x01(\v21.ai_poi.statistics.v1.PersonalizedRecommendationsR\x0frecommendations\x12?\n" +
-	"\x06badges\x18\b \x01(\v2'.ai_poi.statistics.v1.AchievementBadgesR\x06badges\"\xef\x02\n" +
+	"\x06badges\x18\b \x01(\v2'.ai_poi.statistics.v1.AchievementBadgesR\x06badges\x120\n" +
+	"\x0fcities_explored\x18\t \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x0ecitiesExplored\"\xef\x02\n" +
 	"\x11RecentInteraction\x12\x1d\n" +
 	"\x04type\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x182R\x04type\x12,\n" +
 	"\vdescription\x18\x02 \x01(\tB\n" +
