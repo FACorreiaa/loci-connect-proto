@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+package loci.interest;
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/interest;interest";
+
+
+import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+import "proto/loci/common/common.proto";
+
+// Interest represents an interest tag
+message Interest {
+  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string name = 2 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  optional string description = 3 [(buf.validate.field).string = {min_len: 1, max_len: 1000}
+  ];
+  optional bool active = 4;
+  google.protobuf.Timestamp created_at = 5 [(buf.validate.field).required = true];
+  optional google.protobuf.Timestamp updated_at = 6;
+  string source = 7 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+}
+
+// Tags represents a tag
+message Tags {
+  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string name = 2 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string tag_type = 3 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  optional string description = 4 [(buf.validate.field).string = {min_len: 1, max_len: 1000}
+  ];
+  optional string source = 5 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+  optional bool active = 6;
+  google.protobuf.Timestamp created_at = 7 [(buf.validate.field).required = true];
+  optional google.protobuf.Timestamp updated_at = 8;
+}
+
+// CreateInterestRequest for creating a new interest
+message CreateInterestRequest {
+  string name = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  optional string description = 2 [(buf.validate.field).string = {min_len: 1, max_len: 1000}
+  ];
+  bool active = 3;
+}
+
+// UpdateInterestRequest for updating an interest
+message UpdateInterestRequest {
+  string interest_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string name = 2 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  optional string description = 3 [(buf.validate.field).string = {min_len: 1, max_len: 1000}
+  ];
+  bool active = 4;
+}
+
+// AddInterestRequest for adding an interest to user
+message AddInterestRequest {
+  string interest_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+}
+
+// UpdatePreferenceLevelRequest for updating preference level
+message UpdatePreferenceLevelRequest {
+  int32 preference_level = 1 [(buf.validate.field).int32 = {gte: 0, lte: 10}];
+}
+
+// GetInterestsRequest for retrieving interests
+message GetInterestsRequest {
+  optional bool active_only = 1;
+}
+
+// GetInterestsResponse for interests retrieval
+message GetInterestsResponse {
+  repeated Interest interests = 1;
+}
+
+// GetUserInterestsRequest for retrieving user interests
+message GetUserInterestsRequest {
+  optional string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+}
+
+// GetUserInterestsResponse for user interests retrieval
+message GetUserInterestsResponse {
+  repeated Interest interests = 1;
+}
+
+// InterestService defines interest-related RPCs
+service InterestService {
+  rpc GetInterests(GetInterestsRequest) returns (GetInterestsResponse);
+  rpc GetUserInterests(GetUserInterestsRequest) returns (GetUserInterestsResponse);
+  rpc CreateInterest(CreateInterestRequest) returns (loci.common.Response);
+  rpc UpdateInterest(UpdateInterestRequest) returns (loci.common.Response);
+  rpc AddInterestToUser(AddInterestRequest) returns (loci.common.Response);
+  rpc UpdatePreferenceLevel(UpdatePreferenceLevelRequest) returns (loci.common.Response);
+}

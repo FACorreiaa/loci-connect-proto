@@ -1,0 +1,149 @@
+syntax = "proto3";
+
+package loci.user;
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/user;user";
+
+
+import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+import "proto/loci/common/common.proto";
+
+// UserStats contains user statistics
+message UserStats {
+  int32 places_visited = 1 [(buf.validate.field).int32 = {gte: 0}];
+  int32 reviews_written = 2 [(buf.validate.field).int32 = {gte: 0}];
+  int32 lists_created = 3 [(buf.validate.field).int32 = {gte: 0}];
+  int32 followers = 4 [(buf.validate.field).int32 = {gte: 0}];
+  int32 following = 5 [(buf.validate.field).int32 = {gte: 0}];
+}
+
+// UserProfile represents a user's profile
+message UserProfile {
+  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string email = 2 [(buf.validate.field).string.email = true];
+  optional string username = 3 [(buf.validate.field).string = {
+    min_len: 1,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"  // Alphanumeric, underscore, hyphen only
+  }];
+  optional string firstname = 4 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+  optional string lastname = 5 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+  optional string phone_number = 6 [(buf.validate.field).string = {
+    min_len: 1,
+    max_len: 50,
+    pattern: "^\\+?[1-9]\\d{1,14}$"  // E.164 international phone format
+  }];
+  optional int32 age = 7 [(buf.validate.field).int32 = {gte: 0, lte: 120}];
+  optional string city = 8 [(buf.validate.field).string = {min_len: 1, max_len: 200}
+  ];
+  optional string country = 9 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+  optional string about_you = 10 [(buf.validate.field).string = {min_len: 1, max_len: 1000}
+  ];
+  optional string bio = 11 [(buf.validate.field).string = {min_len: 1, max_len: 1000}
+  ];
+  optional string location = 12 [(buf.validate.field).string = {min_len: 1, max_len: 200}
+  ];
+  google.protobuf.Timestamp joined_date = 13 [(buf.validate.field).required = true];
+  optional string avatar = 14 [(buf.validate.field).string = {
+    min_len: 1,
+    max_len: 2048,
+    uri: true  // URL validation
+  }];
+  repeated string interests = 15 [(buf.validate.field).repeated = {
+    max_items: 50,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
+  repeated string badges = 16 [(buf.validate.field).repeated = {
+    max_items: 100,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
+  optional UserStats stats = 17;
+  optional string display_name = 18 [(buf.validate.field).string = {min_len: 1, max_len: 150}
+  ];
+  optional string profile_image_url = 19 [(buf.validate.field).string = {
+    min_len: 1,
+    max_len: 2048,
+    uri: true  // URL validation
+  }];
+  bool is_active = 20;
+  optional google.protobuf.Timestamp email_verified_at = 21;
+  optional google.protobuf.Timestamp last_login_at = 22;
+  optional string theme = 23 [(buf.validate.field).string = {min_len: 1, max_len: 50}
+  ];
+  optional string language = 24 [(buf.validate.field).string = {
+    min_len: 2,
+    max_len: 10,
+    pattern: "^[a-z]{2}(-[A-Z]{2})?$"  // ISO 639-1 format (e.g., en, en-US)
+  }];
+  google.protobuf.Timestamp created_at = 25 [(buf.validate.field).required = true];
+  google.protobuf.Timestamp updated_at = 26 [(buf.validate.field).required = true];
+}
+
+// UpdateProfileParams for updating user profile
+message UpdateProfileParams {
+  optional string username = 1 [(buf.validate.field).string = {
+    min_len: 1,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"  // Alphanumeric, underscore, hyphen only
+  }];
+  optional string phone_number = 2 [(buf.validate.field).string = {
+    min_len: 1,
+    max_len: 50,
+    pattern: "^\\+?[1-9]\\d{1,14}$"  // E.164 international phone format
+  }];
+  optional string email = 3 [(buf.validate.field).string.email = true];
+  optional string display_name = 4 [(buf.validate.field).string = {min_len: 1, max_len: 150}
+  ];
+  optional string profile_image_url = 5 [(buf.validate.field).string = {
+    min_len: 1,
+    max_len: 2048,
+    uri: true  // URL validation
+  }];
+  optional string firstname = 6 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+  optional string lastname = 7 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+  optional int32 age = 8 [(buf.validate.field).int32 = {gte: 0, lte: 120}];
+  optional string city = 9 [(buf.validate.field).string = {min_len: 1, max_len: 200}
+  ];
+  optional string country = 10 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+  optional string about_you = 11 [(buf.validate.field).string = {min_len: 1, max_len: 1000}
+  ];
+  optional string location = 12 [(buf.validate.field).string = {min_len: 1, max_len: 200}
+  ];
+  repeated string interests = 13 [(buf.validate.field).repeated = {
+    max_items: 50,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
+  repeated string badges = 14 [(buf.validate.field).repeated = {
+    max_items: 100,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
+}
+
+// GetUserProfileRequest for retrieving user profile
+message GetUserProfileRequest {
+  optional string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ]; // If empty, get authenticated user's profile
+}
+
+// GetUserProfileResponse for user profile retrieval
+message GetUserProfileResponse {
+  UserProfile profile = 1;
+}
+
+// UpdateUserProfileRequest for updating user profile
+message UpdateUserProfileRequest {
+  UpdateProfileParams params = 1 [(buf.validate.field).required = true];
+}
+
+// UserService defines user-related RPCs
+service UserService {
+  rpc GetUserProfile(GetUserProfileRequest) returns (GetUserProfileResponse);
+  rpc UpdateUserProfile(UpdateUserProfileRequest) returns (loci.common.Response);
+}

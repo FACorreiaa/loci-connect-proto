@@ -1,0 +1,161 @@
+syntax = "proto3";
+
+package loci.auth;
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/auth;auth";
+
+
+import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+import "proto/loci/common/common.proto";
+
+// UserAuth represents the core user entity
+message UserAuth {
+  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string username = 2 [(buf.validate.field).string = {
+    min_len: 1,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"  // Alphanumeric, underscore, hyphen only
+  }];
+  string email = 3 [(buf.validate.field).string.email = true];
+  string role = 4 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  google.protobuf.Timestamp created_at = 5 [(buf.validate.field).required = true];
+  google.protobuf.Timestamp updated_at = 6 [(buf.validate.field).required = true];
+}
+
+// LoginRequest for user login
+message LoginRequest {
+  string email = 1 [(buf.validate.field).string.email = true];
+  string password = 2 [
+    (buf.validate.field).string = {
+      min_len: 8,
+      max_len: 200
+    }
+  ];
+}
+
+// LoginResponse after successful login
+message LoginResponse {
+  string access_token = 1 [(buf.validate.field).string = {min_len: 16}];
+  string refresh_token = 2 [(buf.validate.field).string = {min_len: 16}];
+  string message = 3 [(buf.validate.field).string = {min_len: 1, max_len: 500}];
+  string user_id = 4 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string username = 5 [(buf.validate.field).string = {
+    min_len: 1,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"  // Alphanumeric, underscore, hyphen only
+  }];
+  string email = 6 [(buf.validate.field).string.email = true];
+}
+
+// RegisterRequest for user registration
+message RegisterRequest {
+  string username = 1 [(buf.validate.field).string = {
+    min_len: 3,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"  // Alphanumeric, underscore, hyphen only
+  }];
+  string email = 2 [(buf.validate.field).string.email = true];
+  string password = 3 [
+    (buf.validate.field).string = {
+      min_len: 8,
+      max_len: 200
+    }
+  ];
+  optional string role = 4 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+}
+
+// RefreshTokenRequest for refreshing tokens
+message RefreshTokenRequest {
+  string refresh_token = 1 [(buf.validate.field).string = {min_len: 16}];
+}
+
+// TokenResponse after refreshing tokens
+message TokenResponse {
+  string access_token = 1 [(buf.validate.field).string = {min_len: 16}];
+  string refresh_token = 2 [(buf.validate.field).string = {min_len: 16}];
+}
+
+// ValidateSessionRequest for session validation
+message ValidateSessionRequest {
+  string session_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+}
+
+// ValidateSessionResponse for session validation result
+message ValidateSessionResponse {
+  bool valid = 1;
+  optional string user_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+  optional string username = 3 [(buf.validate.field).string = {
+    min_len: 1,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"  // Alphanumeric, underscore, hyphen only
+  }];
+  optional string email = 4 [(buf.validate.field).string.email = true
+  ];
+}
+
+// ChangePasswordRequest for changing password
+message ChangePasswordRequest {
+  string old_password = 1 [(buf.validate.field).string = {min_len: 8, max_len: 200}];
+  string new_password = 2 [
+    (buf.validate.field).string = {
+      min_len: 8,
+      max_len: 200
+    }
+  ];
+}
+
+// ChangeEmailRequest for changing email
+message ChangeEmailRequest {
+  string password = 1 [(buf.validate.field).string = {min_len: 8, max_len: 200}];
+  string new_email = 2 [(buf.validate.field).string.email = true];
+}
+
+// LogoutRequest for logout
+message LogoutRequest {
+  string refresh_token = 1 [(buf.validate.field).string = {min_len: 16}];
+}
+
+// Session represents session data
+message Session {
+  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string username = 2 [(buf.validate.field).string = {
+    min_len: 1,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"  // Alphanumeric, underscore, hyphen only
+  }];
+  string email = 3 [(buf.validate.field).string.email = true];
+}
+
+// Claims represents JWT claims
+message Claims {
+  string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string username = 2 [(buf.validate.field).string = {
+    min_len: 1,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"  // Alphanumeric, underscore, hyphen only
+  }];
+  string email = 3 [(buf.validate.field).string.email = true];
+  string role = 4 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  optional string subscription_plan = 5 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+  optional string subscription_status = 6 [(buf.validate.field).string = {min_len: 1, max_len: 100}
+  ];
+  optional string scope = 7 [(buf.validate.field).string = {min_len: 1, max_len: 200}
+  ];
+  int64 expires_at = 8 [(buf.validate.field).int64 = {gt: 0}];
+  int64 issued_at = 9 [(buf.validate.field).int64 = {gt: 0}];
+}
+
+// AuthService defines authentication-related RPCs
+service AuthService {
+  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc Register(RegisterRequest) returns (loci.common.Response);
+  rpc RefreshToken(RefreshTokenRequest) returns (TokenResponse);
+  rpc ValidateSession(ValidateSessionRequest) returns (ValidateSessionResponse);
+  rpc ChangePassword(ChangePasswordRequest) returns (loci.common.Response);
+  rpc ChangeEmail(ChangeEmailRequest) returns (loci.common.Response);
+  rpc Logout(LogoutRequest) returns (loci.common.Response);
+}
