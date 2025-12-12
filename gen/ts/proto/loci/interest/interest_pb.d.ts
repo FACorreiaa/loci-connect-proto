@@ -153,9 +153,9 @@ export declare type UpdateInterestRequest = Message<"loci.interest.UpdateInteres
   interestId: string;
 
   /**
-   * @generated from field: string name = 2;
+   * @generated from field: optional string name = 2;
    */
-  name: string;
+  name?: string;
 
   /**
    * @generated from field: optional string description = 3;
@@ -163,9 +163,9 @@ export declare type UpdateInterestRequest = Message<"loci.interest.UpdateInteres
   description?: string;
 
   /**
-   * @generated from field: bool active = 4;
+   * @generated from field: optional bool active = 4;
    */
-  active: boolean;
+  active?: boolean;
 };
 
 /**

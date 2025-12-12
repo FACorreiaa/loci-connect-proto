@@ -51,7 +51,7 @@ public object UpdateInterestRequestKt {
     }
 
     /**
-     * `string name = 2 [json_name = "name", (.buf.validate.field) = { ... }`
+     * `optional string name = 2 [json_name = "name", (.buf.validate.field) = { ... }`
      */
     public var name: kotlin.String
       @kotlin.jvm.JvmName("getName")
@@ -61,10 +61,17 @@ public object UpdateInterestRequestKt {
         _builder.name = value
       }
     /**
-     * `string name = 2 [json_name = "name", (.buf.validate.field) = { ... }`
+     * `optional string name = 2 [json_name = "name", (.buf.validate.field) = { ... }`
      */
     public fun clearName() {
       _builder.clearName()
+    }
+    /**
+     * `optional string name = 2 [json_name = "name", (.buf.validate.field) = { ... }`
+     * @return Whether the name field is set.
+     */
+    public fun hasName(): kotlin.Boolean {
+      return _builder.hasName()
     }
 
     /**
@@ -92,7 +99,7 @@ public object UpdateInterestRequestKt {
     }
 
     /**
-     * `bool active = 4 [json_name = "active"];`
+     * `optional bool active = 4 [json_name = "active"];`
      */
     public var active: kotlin.Boolean
       @kotlin.jvm.JvmName("getActive")
@@ -102,10 +109,17 @@ public object UpdateInterestRequestKt {
         _builder.active = value
       }
     /**
-     * `bool active = 4 [json_name = "active"];`
+     * `optional bool active = 4 [json_name = "active"];`
      */
     public fun clearActive() {
       _builder.clearActive()
+    }
+    /**
+     * `optional bool active = 4 [json_name = "active"];`
+     * @return Whether the active field is set.
+     */
+    public fun hasActive(): kotlin.Boolean {
+      return _builder.hasActive()
     }
   }
 }

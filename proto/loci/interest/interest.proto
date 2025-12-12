@@ -54,12 +54,15 @@ message CreateInterestRequest {
 // UpdateInterestRequest for updating an interest
 message UpdateInterestRequest {
   string interest_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  string name = 2 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  optional string name = 2 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 200}
+  }];
   optional string description = 3 [(buf.validate.field) = {
     ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 1000}
   }];
-  bool active = 4;
+  optional bool active = 4;
 }
 
 // AddInterestRequest for adding an interest to user
