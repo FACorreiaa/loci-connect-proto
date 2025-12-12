@@ -73,8 +73,10 @@ message LlmInteraction {
   string session_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   string user_id = 3 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   string profile_id = 4 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  optional string city_name = 5 [(buf.validate.field).string = {min_len: 1, max_len: 200}
-  ];
+  optional string city_name = 5 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 200}
+  }];
   string prompt = 6 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
   bytes request_payload = 7 [(buf.validate.field).bytes = {
     min_len: 1,
@@ -91,9 +93,18 @@ message LlmInteraction {
   int32 total_tokens = 13 [(buf.validate.field).int32 = {gte: 0}];
   int32 latency_ms = 14 [(buf.validate.field).int32 = {gte: 0}];
   google.protobuf.Timestamp timestamp = 15 [(buf.validate.field).required = true];
-  optional double latitude = 16 [(buf.validate.field).double = {gte: -90, lte: 90}];
-  optional double longitude = 17 [(buf.validate.field).double = {gte: -180, lte: 180}];
-  optional double distance = 18 [(buf.validate.field).double = {gte: 0}];
+  optional double latitude = 16 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    double: {gte: -90, lte: 90}
+  }];
+  optional double longitude = 17 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    double: {gte: -180, lte: 180}
+  }];
+  optional double distance = 18 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    double: {gte: 0}
+  }];
 }
 
 // ConversationMessage represents a single message in a conversation
@@ -108,11 +119,15 @@ message ConversationMessage {
 
 // MessageMetadata contains additional metadata for messages
 message MessageMetadata {
-  optional string llm_interaction_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}
-  ];
+  optional string llm_interaction_id = 1 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 100}
+  }];
   int32 modified_poi_count = 2 [(buf.validate.field).int32 = {gte: 0}];
-  optional string request_type = 3 [(buf.validate.field).string = {min_len: 1, max_len: 100}
-  ];
+  optional string request_type = 3 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 100}
+  }];
 }
 
 // ModificationRecord represents a modification in the session
@@ -219,13 +234,20 @@ message ChatSession {
 
 // ChatRequest for sending a message
 message ChatRequest {
-  optional string session_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}
-  ];
+  optional string session_id = 1 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 200}
+  }];
   string message = 2 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
-  optional string city_name = 3 [(buf.validate.field).string = {max_len: 200}
-  ];
+  optional string city_name = 3 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {max_len: 200}
+  }];
   optional UserLocation user_location = 4;
-  optional string profile_id = 5 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  optional string profile_id = 5 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 100}
+  }];
 }
 
 // ChatResponse for chat response
@@ -248,8 +270,10 @@ message StreamEvent {
   bytes data = 3 [(buf.validate.field).bytes = {
     max_len: 1048576  // 1MB limit
   }];
-  optional string error = 4 [(buf.validate.field).string = {min_len: 1, max_len: 500}
-  ];
+  optional string error = 4 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 500}
+  }];
   google.protobuf.Timestamp timestamp = 5 [(buf.validate.field).required = true];
   string event_id = 6 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   bool is_final = 7;
@@ -273,25 +297,42 @@ message NavigationData {
 
 
 message UserLocation {
-  optional double latitude = 1 [(buf.validate.field).double = {gte: -90, lte: 90}];
-  optional double longitude = 2 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  optional double latitude = 1 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    double: {gte: -90, lte: 90}
+  }];
+  optional double longitude = 2 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    double: {gte: -180, lte: 180}
+  }];
 }
 // StartChatRequest for starting a new chat session
 message StartChatRequest {
-  optional string city_name = 1 [(buf.validate.field).string = {max_len: 200}];
-  optional DomainType context_type = 2 [(buf.validate.field).enum = {defined_only: true}];
+  optional string city_name = 1 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {max_len: 200}
+  }];
+  optional DomainType context_type = 2 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    enum: {defined_only: true}
+  }];
   string initial_message = 3 [(buf.validate.field).string = {min_len: 1, max_len: 4000}
   ];
   optional UserLocation user_location = 4;
-  optional string profile_id = 5 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  optional string profile_id = 5 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 100}
+  }];
 }
 
 // ContinueChatRequest for continuing a chat session
 message ContinueChatRequest {
   string session_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   string message = 2 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
-  optional string city_name = 3 [(buf.validate.field).string = {max_len: 200}
-  ];
+  optional string city_name = 3 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {max_len: 200}
+  }];
   DomainType context_type = 4 [(buf.validate.field).enum = {defined_only: true}];
 }
 
@@ -307,8 +348,10 @@ message GetChatSessionResponse {
 
 // GetChatSessionsRequest for retrieving multiple chat sessions
 message GetChatSessionsRequest {
-  optional string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}
-  ];
+  optional string user_id = 1 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 100}
+  }];
   loci.common.PaginationRequest pagination = 2 [(buf.validate.field).required = true];
 }
 
@@ -323,11 +366,15 @@ message RecentInteraction {
   string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   string user_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   string city_name = 3 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
-  optional string city_id = 4 [(buf.validate.field).string = {min_len: 1, max_len: 100}
-  ];
+  optional string city_id = 4 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 100}
+  }];
   string prompt = 5 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
-  optional string response_text = 6 [(buf.validate.field).string = {min_len: 1, max_len: 4000}
-  ];
+  optional string response_text = 6 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 4000}
+  }];
   string model_used = 7 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   int32 latency_ms = 8 [(buf.validate.field).int32 = {gte: 0}];
   google.protobuf.Timestamp created_at = 9 [(buf.validate.field).required = true];
@@ -348,14 +395,22 @@ message CityInteractions {
     items: {string: {min_len: 1, max_len: 200}}
   }];
   string title = 7 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
-  optional int32 total_favorites = 8 [(buf.validate.field).int32 = {gte: 0}];
-  optional int32 total_itineraries = 9 [(buf.validate.field).int32 = {gte: 0}];
+  optional int32 total_favorites = 8 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    int32: {gte: 0}
+  }];
+  optional int32 total_itineraries = 9 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    int32: {gte: 0}
+  }];
 }
 
 // GetRecentInteractionsRequest for retrieving recent interactions
 message GetRecentInteractionsRequest {
-  optional string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}
-  ];
+  optional string user_id = 1 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 100}
+  }];
   loci.common.PaginationRequest pagination = 2 [(buf.validate.field).required = true];
 }
 
@@ -373,13 +428,31 @@ message BookmarkRequest {
     items: {string: {min_len: 1, max_len: 50}}
   }];
   bool is_public = 4;
-  optional string session_id = 5 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
-  optional string llm_interaction_id = 6 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  optional string primary_city_name = 7 [(buf.validate.field).string = {max_len: 200}];
-  optional string primary_city_id = 8 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  optional string session_id = 5 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 200}
+  }];
+  optional string llm_interaction_id = 6 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 100}
+  }];
+  optional string primary_city_name = 7 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {max_len: 200}
+  }];
+  optional string primary_city_id = 8 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 100}
+  }];
   // Specific IDs for items
-  optional string poi_id = 9 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  optional string itinerary_id = 10 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  optional string poi_id = 9 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 100}
+  }];
+  optional string itinerary_id = 10 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 100}
+  }];
 }
 
 message BookmarkResponse {
@@ -389,7 +462,10 @@ message BookmarkResponse {
 }
 
 message GetBookmarksRequest {
-  optional string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  optional string user_id = 1 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 100}
+  }];
   loci.common.PaginationRequest pagination = 2 [(buf.validate.field).required = true];
 }
 

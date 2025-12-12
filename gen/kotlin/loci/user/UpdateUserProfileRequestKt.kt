@@ -34,7 +34,7 @@ public object UpdateUserProfileRequestKt {
     internal fun _build(): loci.user.User.UpdateUserProfileRequest = _builder.build()
 
     /**
-     * `.loci.user.UpdateProfileParams params = 1 [json_name = "params", (.buf.validate.field) = { ... }`
+     * `optional .loci.user.UpdateProfileParams params = 1 [json_name = "params", (.buf.validate.field) = { ... }`
      */
     public var params: loci.user.User.UpdateProfileParams
       @kotlin.jvm.JvmName("getParams")
@@ -44,13 +44,13 @@ public object UpdateUserProfileRequestKt {
         _builder.params = value
       }
     /**
-     * `.loci.user.UpdateProfileParams params = 1 [json_name = "params", (.buf.validate.field) = { ... }`
+     * `optional .loci.user.UpdateProfileParams params = 1 [json_name = "params", (.buf.validate.field) = { ... }`
      */
     public fun clearParams() {
       _builder.clearParams()
     }
     /**
-     * `.loci.user.UpdateProfileParams params = 1 [json_name = "params", (.buf.validate.field) = { ... }`
+     * `optional .loci.user.UpdateProfileParams params = 1 [json_name = "params", (.buf.validate.field) = { ... }`
      * @return Whether the params field is set.
      */
     public fun hasParams(): kotlin.Boolean {

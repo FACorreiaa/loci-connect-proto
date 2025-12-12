@@ -321,7 +321,7 @@ export declare const GetUserProfileResponseSchema: GenMessage<GetUserProfileResp
  */
 export declare type UpdateUserProfileRequest = Message<"loci.user.UpdateUserProfileRequest"> & {
   /**
-   * @generated from field: loci.user.UpdateProfileParams params = 1;
+   * @generated from field: optional loci.user.UpdateProfileParams params = 1;
    */
   params?: UpdateProfileParams;
 };

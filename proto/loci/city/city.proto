@@ -12,22 +12,38 @@ message CityDetail {
   string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   string name = 2 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   string country = 3 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  optional string state_province = 4 [(buf.validate.field).string = {min_len: 1, max_len: 100}
-  ];
+  optional string state_province = 4 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 100}
+  }];
   string ai_summary = 5 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
-  optional double center_latitude = 6 [(buf.validate.field).double = {gte: -90, lte: 90}];
-  optional double center_longitude = 7 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  optional double center_latitude = 6 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    double: {gte: -90, lte: 90}
+  }];
+  optional double center_longitude = 7 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    double: {gte: -180, lte: 180}
+  }];
 }
 
 // GeneralCityData contains general information about a city
 message GeneralCityData {
   string city = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   string country = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  optional string state_province = 3 [(buf.validate.field).string = {min_len: 1, max_len: 100}
-  ];
+  optional string state_province = 3 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 100}
+  }];
   string description = 4 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
-  optional double center_latitude = 5 [(buf.validate.field).double = {gte: -90, lte: 90}];
-  optional double center_longitude = 6 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  optional double center_latitude = 5 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    double: {gte: -90, lte: 90}
+  }];
+  optional double center_longitude = 6 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    double: {gte: -180, lte: 180}
+  }];
   string population = 7 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   string area = 8 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   string timezone = 9 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
@@ -54,7 +70,10 @@ message GetCityResponse {
 // SearchCitiesRequest for searching cities
 message SearchCitiesRequest {
   string query = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
-  optional int32 limit = 2 [(buf.validate.field).int32 = {gte: 1, lte: 100}];
+  optional int32 limit = 2 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    int32: {gte: 1, lte: 100}
+  }];
 }
 
 // SearchCitiesResponse for city search results
