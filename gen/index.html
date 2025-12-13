@@ -1088,6 +1088,105 @@
         
           
           <li>
+            <a href="#proto%2floci%2fpayment%2fv1%2fpayment.proto">proto/loci/payment/v1/payment.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#loci.payment.v1.CancelSubscriptionRequest"><span class="badge">M</span>CancelSubscriptionRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.payment.v1.CancelSubscriptionResponse"><span class="badge">M</span>CancelSubscriptionResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.payment.v1.CreatePaymentRequest"><span class="badge">M</span>CreatePaymentRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.payment.v1.CreatePaymentRequest.MetadataEntry"><span class="badge">M</span>CreatePaymentRequest.MetadataEntry</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.payment.v1.CreatePaymentResponse"><span class="badge">M</span>CreatePaymentResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.payment.v1.CreateSubscriptionRequest"><span class="badge">M</span>CreateSubscriptionRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.payment.v1.CreateSubscriptionResponse"><span class="badge">M</span>CreateSubscriptionResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.payment.v1.GetInvoiceRequest"><span class="badge">M</span>GetInvoiceRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.payment.v1.GetPaymentRequest"><span class="badge">M</span>GetPaymentRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.payment.v1.GetPaymentResponse"><span class="badge">M</span>GetPaymentResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.payment.v1.GetUserInvoicesRequest"><span class="badge">M</span>GetUserInvoicesRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.payment.v1.GetUserInvoicesResponse"><span class="badge">M</span>GetUserInvoicesResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.payment.v1.GetUserPaymentsRequest"><span class="badge">M</span>GetUserPaymentsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.payment.v1.GetUserPaymentsResponse"><span class="badge">M</span>GetUserPaymentsResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.payment.v1.GetUserSubscriptionsRequest"><span class="badge">M</span>GetUserSubscriptionsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.payment.v1.GetUserSubscriptionsResponse"><span class="badge">M</span>GetUserSubscriptionsResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.payment.v1.Invoice"><span class="badge">M</span>Invoice</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.payment.v1.Payment"><span class="badge">M</span>Payment</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.payment.v1.RefundPaymentRequest"><span class="badge">M</span>RefundPaymentRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.payment.v1.RefundPaymentResponse"><span class="badge">M</span>RefundPaymentResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.payment.v1.Subscription"><span class="badge">M</span>Subscription</a>
+                </li>
+              
+              
+              
+              
+                <li>
+                  <a href="#loci.payment.v1.PaymentService"><span class="badge">S</span>PaymentService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#proto%2floci%2frecents%2frecents.proto">proto/loci/recents/recents.proto</a>
             <ul>
               
@@ -11947,6 +12046,1012 @@
                 <td>SearchPublicLists</td>
                 <td><a href="#ai_poi.list.v1.SearchPublicListsRequest">SearchPublicListsRequest</a></td>
                 <td><a href="#ai_poi.list.v1.SearchPublicListsResponse">SearchPublicListsResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="proto/loci/payment/v1/payment.proto">proto/loci/payment/v1/payment.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="loci.payment.v1.CancelSubscriptionRequest">CancelSubscriptionRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>subscription_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>cancel_at_period_end</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.payment.v1.CancelSubscriptionResponse">CancelSubscriptionResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>subscription_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.payment.v1.CreatePaymentRequest">CreatePaymentRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>amount</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>currency</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>type</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>metadata</td>
+                  <td><a href="#loci.payment.v1.CreatePaymentRequest.MetadataEntry">CreatePaymentRequest.MetadataEntry</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.payment.v1.CreatePaymentRequest.MetadataEntry">CreatePaymentRequest.MetadataEntry</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.payment.v1.CreatePaymentResponse">CreatePaymentResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>payment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>client_secret</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>external_payment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.payment.v1.CreateSubscriptionRequest">CreateSubscriptionRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>plan_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>e.g. price_123... or our internal plan ID </p></td>
+                </tr>
+              
+                <tr>
+                  <td>payment_method_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Stripe PaymentMethod ID if immediate charge </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.payment.v1.CreateSubscriptionResponse">CreateSubscriptionResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>subscription_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>client_secret</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>For SetupIntent or PaymentIntent if 3DS needed </p></td>
+                </tr>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.payment.v1.GetInvoiceRequest">GetInvoiceRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>invoice_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.payment.v1.GetPaymentRequest">GetPaymentRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>payment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.payment.v1.GetPaymentResponse">GetPaymentResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>payment</td>
+                  <td><a href="#loci.payment.v1.Payment">Payment</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>invoice</td>
+                  <td><a href="#loci.payment.v1.Invoice">Invoice</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.payment.v1.GetUserInvoicesRequest">GetUserInvoicesRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>page</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>page_size</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.payment.v1.GetUserInvoicesResponse">GetUserInvoicesResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>invoices</td>
+                  <td><a href="#loci.payment.v1.Invoice">Invoice</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>total</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>page</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>page_size</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.payment.v1.GetUserPaymentsRequest">GetUserPaymentsRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>page</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>page_size</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.payment.v1.GetUserPaymentsResponse">GetUserPaymentsResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>payments</td>
+                  <td><a href="#loci.payment.v1.Payment">Payment</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>total</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>page</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>page_size</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.payment.v1.GetUserSubscriptionsRequest">GetUserSubscriptionsRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>page</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>page_size</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.payment.v1.GetUserSubscriptionsResponse">GetUserSubscriptionsResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>subscriptions</td>
+                  <td><a href="#loci.payment.v1.Subscription">Subscription</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.payment.v1.Invoice">Invoice</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>payment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>invoice_number</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>user_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>amount</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>currency</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>pdf_url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>issued_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>paid_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.payment.v1.Payment">Payment</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>user_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>provider</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>e.g. &#34;stripe&#34; </p></td>
+                </tr>
+              
+                <tr>
+                  <td>external_payment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>type</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>&#34;one_time&#34;, &#34;subscription&#34; </p></td>
+                </tr>
+              
+                <tr>
+                  <td>payment_method</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>amount</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>currency</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>&#34;succeeded&#34;, &#34;pending&#34;, &#34;failed&#34; </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>updated_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.payment.v1.RefundPaymentRequest">RefundPaymentRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>payment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>amount_cents</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>Optional, defaults to full if 0/missing logic handles it </p></td>
+                </tr>
+              
+                <tr>
+                  <td>reason</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.payment.v1.RefundPaymentResponse">RefundPaymentResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>refund_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>payment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>amount_cents</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>currency</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>total_refunded</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>is_full_refund</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.payment.v1.Subscription">Subscription</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>user_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>plan_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>&#34;active&#34;, &#34;canceled&#34;, etc. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>stripe_subscription_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>stripe_customer_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>current_period_start</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>current_period_end</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>cancel_at_period_end</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+
+      
+
+      
+        <h3 id="loci.payment.v1.PaymentService">PaymentService</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>CreatePayment</td>
+                <td><a href="#loci.payment.v1.CreatePaymentRequest">CreatePaymentRequest</a></td>
+                <td><a href="#loci.payment.v1.CreatePaymentResponse">CreatePaymentResponse</a></td>
+                <td><p>Payments</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetPayment</td>
+                <td><a href="#loci.payment.v1.GetPaymentRequest">GetPaymentRequest</a></td>
+                <td><a href="#loci.payment.v1.GetPaymentResponse">GetPaymentResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>GetUserPayments</td>
+                <td><a href="#loci.payment.v1.GetUserPaymentsRequest">GetUserPaymentsRequest</a></td>
+                <td><a href="#loci.payment.v1.GetUserPaymentsResponse">GetUserPaymentsResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>RefundPayment</td>
+                <td><a href="#loci.payment.v1.RefundPaymentRequest">RefundPaymentRequest</a></td>
+                <td><a href="#loci.payment.v1.RefundPaymentResponse">RefundPaymentResponse</a></td>
+                <td><p>Admin or constrained</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetInvoice</td>
+                <td><a href="#loci.payment.v1.GetInvoiceRequest">GetInvoiceRequest</a></td>
+                <td><a href="#loci.payment.v1.Invoice">Invoice</a></td>
+                <td><p>Invoices</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetUserInvoices</td>
+                <td><a href="#loci.payment.v1.GetUserInvoicesRequest">GetUserInvoicesRequest</a></td>
+                <td><a href="#loci.payment.v1.GetUserInvoicesResponse">GetUserInvoicesResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>CreateSubscription</td>
+                <td><a href="#loci.payment.v1.CreateSubscriptionRequest">CreateSubscriptionRequest</a></td>
+                <td><a href="#loci.payment.v1.CreateSubscriptionResponse">CreateSubscriptionResponse</a></td>
+                <td><p>Subscriptions</p></td>
+              </tr>
+            
+              <tr>
+                <td>CancelSubscription</td>
+                <td><a href="#loci.payment.v1.CancelSubscriptionRequest">CancelSubscriptionRequest</a></td>
+                <td><a href="#loci.payment.v1.CancelSubscriptionResponse">CancelSubscriptionResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>GetUserSubscriptions</td>
+                <td><a href="#loci.payment.v1.GetUserSubscriptionsRequest">GetUserSubscriptionsRequest</a></td>
+                <td><a href="#loci.payment.v1.GetUserSubscriptionsResponse">GetUserSubscriptionsResponse</a></td>
                 <td><p></p></td>
               </tr>
             
