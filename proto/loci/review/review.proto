@@ -6,7 +6,7 @@ option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/ai_poi/revi
 
 import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
-import "proto/loci/common/common.proto";
+import "loci/common/common.proto";
 
 
 // ReviewService provides review and rating functionality for POIs

@@ -7,8 +7,8 @@ option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/profil
 
 import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
-import "proto/loci/common/common.proto";
-import "proto/loci/interest/interest.proto";
+import "loci/common/common.proto";
+import "loci/interest/interest.proto";
 
 // Enums for preferences
 enum DayPreference {

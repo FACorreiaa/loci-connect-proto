@@ -6,8 +6,8 @@ option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/discov
 
 
 import "buf/validate/validate.proto";
-import "proto/loci/common/common.proto";
-import "proto/loci/chat/chat.proto";
+import "loci/common/common.proto";
+import "loci/chat/chat.proto";
 
 // TrendingDiscovery represents a trending discovery/search
 message TrendingDiscovery {

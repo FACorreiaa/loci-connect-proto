@@ -7,8 +7,8 @@ option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/itiner
 
 import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
-import "proto/loci/common/common.proto";
-import "proto/loci/poi/poi.proto";
+import "loci/common/common.proto";
+import "loci/poi/poi.proto";
 
 // ContentType defines the type of content in a list item
 enum ContentType {

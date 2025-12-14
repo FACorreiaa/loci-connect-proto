@@ -6,7 +6,7 @@ plugins:
     out: gen/go
     opt: paths=source_relative
   - remote: buf.build/connectrpc/go:v1.16.2
-    out: gen/go-connect
+    out: gen/go
     opt: paths=source_relative
   - remote: buf.build/protocolbuffers/kotlin:v33.0
     out: gen/kotlin

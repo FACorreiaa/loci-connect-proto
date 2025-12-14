@@ -7,10 +7,10 @@ option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/chat;c
 
 import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
-import "proto/loci/common/common.proto";
-import "proto/loci/city/city.proto";
-import "proto/loci/poi/poi.proto";
-import "proto/loci/profile/profile.proto";
+import "loci/common/common.proto";
+import "loci/city/city.proto";
+import "loci/poi/poi.proto";
+import "loci/profile/profile.proto";
 
 // Enums for chat types
 enum MessageRole {

@@ -7,7 +7,7 @@ option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/auth;a
 
 import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
-import "proto/loci/common/common.proto";
+import "loci/common/common.proto";
 
 // UserAuth represents the core user entity
 message UserAuth {
