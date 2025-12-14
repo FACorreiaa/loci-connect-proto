@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package ai_poi.statistics.v1;
+package loci.statistics;
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/ai_poi/statistics/v1;statisticsv1";
+option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/statistics;statisticsv1";
 
 import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";

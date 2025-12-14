@@ -8,7 +8,7 @@ import (
 	connect "connectrpc.com/connect"
 	context "context"
 	errors "errors"
-	v1 "github.com/FACorreiaa/loci-connect-proto/gen/go/ai_poi/recents/v1"
+	recents "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/recents"
 	http "net/http"
 	strings "strings"
 )
@@ -22,7 +22,7 @@ const _ = connect.IsAtLeastVersion1_13_0
 
 const (
 	// RecentsServiceName is the fully-qualified name of the RecentsService service.
-	RecentsServiceName = "ai_poi.recents.v1.RecentsService"
+	RecentsServiceName = "loci.recents.RecentsService"
 )
 
 // These constants are the fully-qualified names of the RPCs defined in this package. They're
@@ -35,24 +35,24 @@ const (
 const (
 	// RecentsServiceGetRecentInteractionsProcedure is the fully-qualified name of the RecentsService's
 	// GetRecentInteractions RPC.
-	RecentsServiceGetRecentInteractionsProcedure = "/ai_poi.recents.v1.RecentsService/GetRecentInteractions"
+	RecentsServiceGetRecentInteractionsProcedure = "/loci.recents.RecentsService/GetRecentInteractions"
 	// RecentsServiceGetCityInteractionsProcedure is the fully-qualified name of the RecentsService's
 	// GetCityInteractions RPC.
-	RecentsServiceGetCityInteractionsProcedure = "/ai_poi.recents.v1.RecentsService/GetCityInteractions"
+	RecentsServiceGetCityInteractionsProcedure = "/loci.recents.RecentsService/GetCityInteractions"
 	// RecentsServiceRecordInteractionProcedure is the fully-qualified name of the RecentsService's
 	// RecordInteraction RPC.
-	RecentsServiceRecordInteractionProcedure = "/ai_poi.recents.v1.RecentsService/RecordInteraction"
+	RecentsServiceRecordInteractionProcedure = "/loci.recents.RecentsService/RecordInteraction"
 	// RecentsServiceGetInteractionHistoryProcedure is the fully-qualified name of the RecentsService's
 	// GetInteractionHistory RPC.
-	RecentsServiceGetInteractionHistoryProcedure = "/ai_poi.recents.v1.RecentsService/GetInteractionHistory"
+	RecentsServiceGetInteractionHistoryProcedure = "/loci.recents.RecentsService/GetInteractionHistory"
 	// RecentsServiceGetFrequentPlacesProcedure is the fully-qualified name of the RecentsService's
 	// GetFrequentPlaces RPC.
-	RecentsServiceGetFrequentPlacesProcedure = "/ai_poi.recents.v1.RecentsService/GetFrequentPlaces"
+	RecentsServiceGetFrequentPlacesProcedure = "/loci.recents.RecentsService/GetFrequentPlaces"
 )
 
 // These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
 var (
-	recentsServiceServiceDescriptor                     = v1.File_loci_recents_recents_proto.Services().ByName("RecentsService")
+	recentsServiceServiceDescriptor                     = recents.File_loci_recents_recents_proto.Services().ByName("RecentsService")
 	recentsServiceGetRecentInteractionsMethodDescriptor = recentsServiceServiceDescriptor.Methods().ByName("GetRecentInteractions")
 	recentsServiceGetCityInteractionsMethodDescriptor   = recentsServiceServiceDescriptor.Methods().ByName("GetCityInteractions")
 	recentsServiceRecordInteractionMethodDescriptor     = recentsServiceServiceDescriptor.Methods().ByName("RecordInteraction")
@@ -60,21 +60,21 @@ var (
 	recentsServiceGetFrequentPlacesMethodDescriptor     = recentsServiceServiceDescriptor.Methods().ByName("GetFrequentPlaces")
 )
 
-// RecentsServiceClient is a client for the ai_poi.recents.v1.RecentsService service.
+// RecentsServiceClient is a client for the loci.recents.RecentsService service.
 type RecentsServiceClient interface {
 	// Get user's recent interactions
-	GetRecentInteractions(context.Context, *connect.Request[v1.GetRecentInteractionsRequest]) (*connect.Response[v1.GetRecentInteractionsResponse], error)
+	GetRecentInteractions(context.Context, *connect.Request[recents.GetRecentInteractionsRequest]) (*connect.Response[recents.GetRecentInteractionsResponse], error)
 	// Get recent interactions for a specific city
-	GetCityInteractions(context.Context, *connect.Request[v1.GetCityInteractionsRequest]) (*connect.Response[v1.GetCityInteractionsResponse], error)
+	GetCityInteractions(context.Context, *connect.Request[recents.GetCityInteractionsRequest]) (*connect.Response[recents.GetCityInteractionsResponse], error)
 	// Record a new user interaction (internal)
-	RecordInteraction(context.Context, *connect.Request[v1.RecordInteractionRequest]) (*connect.Response[v1.RecordInteractionResponse], error)
+	RecordInteraction(context.Context, *connect.Request[recents.RecordInteractionRequest]) (*connect.Response[recents.RecordInteractionResponse], error)
 	// Get user's interaction history with filters
-	GetInteractionHistory(context.Context, *connect.Request[v1.GetInteractionHistoryRequest]) (*connect.Response[v1.GetInteractionHistoryResponse], error)
+	GetInteractionHistory(context.Context, *connect.Request[recents.GetInteractionHistoryRequest]) (*connect.Response[recents.GetInteractionHistoryResponse], error)
 	// Get frequently visited places
-	GetFrequentPlaces(context.Context, *connect.Request[v1.GetFrequentPlacesRequest]) (*connect.Response[v1.GetFrequentPlacesResponse], error)
+	GetFrequentPlaces(context.Context, *connect.Request[recents.GetFrequentPlacesRequest]) (*connect.Response[recents.GetFrequentPlacesResponse], error)
 }
 
-// NewRecentsServiceClient constructs a client for the ai_poi.recents.v1.RecentsService service. By
+// NewRecentsServiceClient constructs a client for the loci.recents.RecentsService service. By
 // default, it uses the Connect protocol with the binary Protobuf Codec, asks for gzipped responses,
 // and sends uncompressed requests. To use the gRPC or gRPC-Web protocols, supply the
 // connect.WithGRPC() or connect.WithGRPCWeb() options.
@@ -84,31 +84,31 @@ type RecentsServiceClient interface {
 func NewRecentsServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) RecentsServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
 	return &recentsServiceClient{
-		getRecentInteractions: connect.NewClient[v1.GetRecentInteractionsRequest, v1.GetRecentInteractionsResponse](
+		getRecentInteractions: connect.NewClient[recents.GetRecentInteractionsRequest, recents.GetRecentInteractionsResponse](
 			httpClient,
 			baseURL+RecentsServiceGetRecentInteractionsProcedure,
 			connect.WithSchema(recentsServiceGetRecentInteractionsMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		getCityInteractions: connect.NewClient[v1.GetCityInteractionsRequest, v1.GetCityInteractionsResponse](
+		getCityInteractions: connect.NewClient[recents.GetCityInteractionsRequest, recents.GetCityInteractionsResponse](
 			httpClient,
 			baseURL+RecentsServiceGetCityInteractionsProcedure,
 			connect.WithSchema(recentsServiceGetCityInteractionsMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		recordInteraction: connect.NewClient[v1.RecordInteractionRequest, v1.RecordInteractionResponse](
+		recordInteraction: connect.NewClient[recents.RecordInteractionRequest, recents.RecordInteractionResponse](
 			httpClient,
 			baseURL+RecentsServiceRecordInteractionProcedure,
 			connect.WithSchema(recentsServiceRecordInteractionMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		getInteractionHistory: connect.NewClient[v1.GetInteractionHistoryRequest, v1.GetInteractionHistoryResponse](
+		getInteractionHistory: connect.NewClient[recents.GetInteractionHistoryRequest, recents.GetInteractionHistoryResponse](
 			httpClient,
 			baseURL+RecentsServiceGetInteractionHistoryProcedure,
 			connect.WithSchema(recentsServiceGetInteractionHistoryMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		getFrequentPlaces: connect.NewClient[v1.GetFrequentPlacesRequest, v1.GetFrequentPlacesResponse](
+		getFrequentPlaces: connect.NewClient[recents.GetFrequentPlacesRequest, recents.GetFrequentPlacesResponse](
 			httpClient,
 			baseURL+RecentsServiceGetFrequentPlacesProcedure,
 			connect.WithSchema(recentsServiceGetFrequentPlacesMethodDescriptor),
@@ -119,50 +119,50 @@ func NewRecentsServiceClient(httpClient connect.HTTPClient, baseURL string, opts
 
 // recentsServiceClient implements RecentsServiceClient.
 type recentsServiceClient struct {
-	getRecentInteractions *connect.Client[v1.GetRecentInteractionsRequest, v1.GetRecentInteractionsResponse]
-	getCityInteractions   *connect.Client[v1.GetCityInteractionsRequest, v1.GetCityInteractionsResponse]
-	recordInteraction     *connect.Client[v1.RecordInteractionRequest, v1.RecordInteractionResponse]
-	getInteractionHistory *connect.Client[v1.GetInteractionHistoryRequest, v1.GetInteractionHistoryResponse]
-	getFrequentPlaces     *connect.Client[v1.GetFrequentPlacesRequest, v1.GetFrequentPlacesResponse]
+	getRecentInteractions *connect.Client[recents.GetRecentInteractionsRequest, recents.GetRecentInteractionsResponse]
+	getCityInteractions   *connect.Client[recents.GetCityInteractionsRequest, recents.GetCityInteractionsResponse]
+	recordInteraction     *connect.Client[recents.RecordInteractionRequest, recents.RecordInteractionResponse]
+	getInteractionHistory *connect.Client[recents.GetInteractionHistoryRequest, recents.GetInteractionHistoryResponse]
+	getFrequentPlaces     *connect.Client[recents.GetFrequentPlacesRequest, recents.GetFrequentPlacesResponse]
 }
 
-// GetRecentInteractions calls ai_poi.recents.v1.RecentsService.GetRecentInteractions.
-func (c *recentsServiceClient) GetRecentInteractions(ctx context.Context, req *connect.Request[v1.GetRecentInteractionsRequest]) (*connect.Response[v1.GetRecentInteractionsResponse], error) {
+// GetRecentInteractions calls loci.recents.RecentsService.GetRecentInteractions.
+func (c *recentsServiceClient) GetRecentInteractions(ctx context.Context, req *connect.Request[recents.GetRecentInteractionsRequest]) (*connect.Response[recents.GetRecentInteractionsResponse], error) {
 	return c.getRecentInteractions.CallUnary(ctx, req)
 }
 
-// GetCityInteractions calls ai_poi.recents.v1.RecentsService.GetCityInteractions.
-func (c *recentsServiceClient) GetCityInteractions(ctx context.Context, req *connect.Request[v1.GetCityInteractionsRequest]) (*connect.Response[v1.GetCityInteractionsResponse], error) {
+// GetCityInteractions calls loci.recents.RecentsService.GetCityInteractions.
+func (c *recentsServiceClient) GetCityInteractions(ctx context.Context, req *connect.Request[recents.GetCityInteractionsRequest]) (*connect.Response[recents.GetCityInteractionsResponse], error) {
 	return c.getCityInteractions.CallUnary(ctx, req)
 }
 
-// RecordInteraction calls ai_poi.recents.v1.RecentsService.RecordInteraction.
-func (c *recentsServiceClient) RecordInteraction(ctx context.Context, req *connect.Request[v1.RecordInteractionRequest]) (*connect.Response[v1.RecordInteractionResponse], error) {
+// RecordInteraction calls loci.recents.RecentsService.RecordInteraction.
+func (c *recentsServiceClient) RecordInteraction(ctx context.Context, req *connect.Request[recents.RecordInteractionRequest]) (*connect.Response[recents.RecordInteractionResponse], error) {
 	return c.recordInteraction.CallUnary(ctx, req)
 }
 
-// GetInteractionHistory calls ai_poi.recents.v1.RecentsService.GetInteractionHistory.
-func (c *recentsServiceClient) GetInteractionHistory(ctx context.Context, req *connect.Request[v1.GetInteractionHistoryRequest]) (*connect.Response[v1.GetInteractionHistoryResponse], error) {
+// GetInteractionHistory calls loci.recents.RecentsService.GetInteractionHistory.
+func (c *recentsServiceClient) GetInteractionHistory(ctx context.Context, req *connect.Request[recents.GetInteractionHistoryRequest]) (*connect.Response[recents.GetInteractionHistoryResponse], error) {
 	return c.getInteractionHistory.CallUnary(ctx, req)
 }
 
-// GetFrequentPlaces calls ai_poi.recents.v1.RecentsService.GetFrequentPlaces.
-func (c *recentsServiceClient) GetFrequentPlaces(ctx context.Context, req *connect.Request[v1.GetFrequentPlacesRequest]) (*connect.Response[v1.GetFrequentPlacesResponse], error) {
+// GetFrequentPlaces calls loci.recents.RecentsService.GetFrequentPlaces.
+func (c *recentsServiceClient) GetFrequentPlaces(ctx context.Context, req *connect.Request[recents.GetFrequentPlacesRequest]) (*connect.Response[recents.GetFrequentPlacesResponse], error) {
 	return c.getFrequentPlaces.CallUnary(ctx, req)
 }
 
-// RecentsServiceHandler is an implementation of the ai_poi.recents.v1.RecentsService service.
+// RecentsServiceHandler is an implementation of the loci.recents.RecentsService service.
 type RecentsServiceHandler interface {
 	// Get user's recent interactions
-	GetRecentInteractions(context.Context, *connect.Request[v1.GetRecentInteractionsRequest]) (*connect.Response[v1.GetRecentInteractionsResponse], error)
+	GetRecentInteractions(context.Context, *connect.Request[recents.GetRecentInteractionsRequest]) (*connect.Response[recents.GetRecentInteractionsResponse], error)
 	// Get recent interactions for a specific city
-	GetCityInteractions(context.Context, *connect.Request[v1.GetCityInteractionsRequest]) (*connect.Response[v1.GetCityInteractionsResponse], error)
+	GetCityInteractions(context.Context, *connect.Request[recents.GetCityInteractionsRequest]) (*connect.Response[recents.GetCityInteractionsResponse], error)
 	// Record a new user interaction (internal)
-	RecordInteraction(context.Context, *connect.Request[v1.RecordInteractionRequest]) (*connect.Response[v1.RecordInteractionResponse], error)
+	RecordInteraction(context.Context, *connect.Request[recents.RecordInteractionRequest]) (*connect.Response[recents.RecordInteractionResponse], error)
 	// Get user's interaction history with filters
-	GetInteractionHistory(context.Context, *connect.Request[v1.GetInteractionHistoryRequest]) (*connect.Response[v1.GetInteractionHistoryResponse], error)
+	GetInteractionHistory(context.Context, *connect.Request[recents.GetInteractionHistoryRequest]) (*connect.Response[recents.GetInteractionHistoryResponse], error)
 	// Get frequently visited places
-	GetFrequentPlaces(context.Context, *connect.Request[v1.GetFrequentPlacesRequest]) (*connect.Response[v1.GetFrequentPlacesResponse], error)
+	GetFrequentPlaces(context.Context, *connect.Request[recents.GetFrequentPlacesRequest]) (*connect.Response[recents.GetFrequentPlacesResponse], error)
 }
 
 // NewRecentsServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -201,7 +201,7 @@ func NewRecentsServiceHandler(svc RecentsServiceHandler, opts ...connect.Handler
 		connect.WithSchema(recentsServiceGetFrequentPlacesMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
-	return "/ai_poi.recents.v1.RecentsService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	return "/loci.recents.RecentsService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case RecentsServiceGetRecentInteractionsProcedure:
 			recentsServiceGetRecentInteractionsHandler.ServeHTTP(w, r)
@@ -222,22 +222,22 @@ func NewRecentsServiceHandler(svc RecentsServiceHandler, opts ...connect.Handler
 // UnimplementedRecentsServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedRecentsServiceHandler struct{}
 
-func (UnimplementedRecentsServiceHandler) GetRecentInteractions(context.Context, *connect.Request[v1.GetRecentInteractionsRequest]) (*connect.Response[v1.GetRecentInteractionsResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.recents.v1.RecentsService.GetRecentInteractions is not implemented"))
+func (UnimplementedRecentsServiceHandler) GetRecentInteractions(context.Context, *connect.Request[recents.GetRecentInteractionsRequest]) (*connect.Response[recents.GetRecentInteractionsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.recents.RecentsService.GetRecentInteractions is not implemented"))
 }
 
-func (UnimplementedRecentsServiceHandler) GetCityInteractions(context.Context, *connect.Request[v1.GetCityInteractionsRequest]) (*connect.Response[v1.GetCityInteractionsResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.recents.v1.RecentsService.GetCityInteractions is not implemented"))
+func (UnimplementedRecentsServiceHandler) GetCityInteractions(context.Context, *connect.Request[recents.GetCityInteractionsRequest]) (*connect.Response[recents.GetCityInteractionsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.recents.RecentsService.GetCityInteractions is not implemented"))
 }
 
-func (UnimplementedRecentsServiceHandler) RecordInteraction(context.Context, *connect.Request[v1.RecordInteractionRequest]) (*connect.Response[v1.RecordInteractionResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.recents.v1.RecentsService.RecordInteraction is not implemented"))
+func (UnimplementedRecentsServiceHandler) RecordInteraction(context.Context, *connect.Request[recents.RecordInteractionRequest]) (*connect.Response[recents.RecordInteractionResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.recents.RecentsService.RecordInteraction is not implemented"))
 }
 
-func (UnimplementedRecentsServiceHandler) GetInteractionHistory(context.Context, *connect.Request[v1.GetInteractionHistoryRequest]) (*connect.Response[v1.GetInteractionHistoryResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.recents.v1.RecentsService.GetInteractionHistory is not implemented"))
+func (UnimplementedRecentsServiceHandler) GetInteractionHistory(context.Context, *connect.Request[recents.GetInteractionHistoryRequest]) (*connect.Response[recents.GetInteractionHistoryResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.recents.RecentsService.GetInteractionHistory is not implemented"))
 }
 
-func (UnimplementedRecentsServiceHandler) GetFrequentPlaces(context.Context, *connect.Request[v1.GetFrequentPlacesRequest]) (*connect.Response[v1.GetFrequentPlacesResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.recents.v1.RecentsService.GetFrequentPlaces is not implemented"))
+func (UnimplementedRecentsServiceHandler) GetFrequentPlaces(context.Context, *connect.Request[recents.GetFrequentPlacesRequest]) (*connect.Response[recents.GetFrequentPlacesResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.recents.RecentsService.GetFrequentPlaces is not implemented"))
 }

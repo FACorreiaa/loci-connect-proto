@@ -8,7 +8,7 @@ import (
 	connect "connectrpc.com/connect"
 	context "context"
 	errors "errors"
-	v1 "github.com/FACorreiaa/loci-connect-proto/gen/go/ai_poi/statistics/v1"
+	statistics "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/statistics"
 	http "net/http"
 	strings "strings"
 )
@@ -22,7 +22,7 @@ const _ = connect.IsAtLeastVersion1_13_0
 
 const (
 	// StatisticsServiceName is the fully-qualified name of the StatisticsService service.
-	StatisticsServiceName = "ai_poi.statistics.v1.StatisticsService"
+	StatisticsServiceName = "loci.statistics.StatisticsService"
 )
 
 // These constants are the fully-qualified names of the RPCs defined in this package. They're
@@ -35,27 +35,27 @@ const (
 const (
 	// StatisticsServiceGetMainPageStatisticsProcedure is the fully-qualified name of the
 	// StatisticsService's GetMainPageStatistics RPC.
-	StatisticsServiceGetMainPageStatisticsProcedure = "/ai_poi.statistics.v1.StatisticsService/GetMainPageStatistics"
+	StatisticsServiceGetMainPageStatisticsProcedure = "/loci.statistics.StatisticsService/GetMainPageStatistics"
 	// StatisticsServiceStreamMainPageStatisticsProcedure is the fully-qualified name of the
 	// StatisticsService's StreamMainPageStatistics RPC.
-	StatisticsServiceStreamMainPageStatisticsProcedure = "/ai_poi.statistics.v1.StatisticsService/StreamMainPageStatistics"
+	StatisticsServiceStreamMainPageStatisticsProcedure = "/loci.statistics.StatisticsService/StreamMainPageStatistics"
 	// StatisticsServiceGetDetailedPOIStatisticsProcedure is the fully-qualified name of the
 	// StatisticsService's GetDetailedPOIStatistics RPC.
-	StatisticsServiceGetDetailedPOIStatisticsProcedure = "/ai_poi.statistics.v1.StatisticsService/GetDetailedPOIStatistics"
+	StatisticsServiceGetDetailedPOIStatisticsProcedure = "/loci.statistics.StatisticsService/GetDetailedPOIStatistics"
 	// StatisticsServiceGetLandingPageStatisticsProcedure is the fully-qualified name of the
 	// StatisticsService's GetLandingPageStatistics RPC.
-	StatisticsServiceGetLandingPageStatisticsProcedure = "/ai_poi.statistics.v1.StatisticsService/GetLandingPageStatistics"
+	StatisticsServiceGetLandingPageStatisticsProcedure = "/loci.statistics.StatisticsService/GetLandingPageStatistics"
 	// StatisticsServiceGetUserActivityAnalyticsProcedure is the fully-qualified name of the
 	// StatisticsService's GetUserActivityAnalytics RPC.
-	StatisticsServiceGetUserActivityAnalyticsProcedure = "/ai_poi.statistics.v1.StatisticsService/GetUserActivityAnalytics"
+	StatisticsServiceGetUserActivityAnalyticsProcedure = "/loci.statistics.StatisticsService/GetUserActivityAnalytics"
 	// StatisticsServiceGetSystemAnalyticsProcedure is the fully-qualified name of the
 	// StatisticsService's GetSystemAnalytics RPC.
-	StatisticsServiceGetSystemAnalyticsProcedure = "/ai_poi.statistics.v1.StatisticsService/GetSystemAnalytics"
+	StatisticsServiceGetSystemAnalyticsProcedure = "/loci.statistics.StatisticsService/GetSystemAnalytics"
 )
 
 // These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
 var (
-	statisticsServiceServiceDescriptor                        = v1.File_loci_statistics_statistics_proto.Services().ByName("StatisticsService")
+	statisticsServiceServiceDescriptor                        = statistics.File_loci_statistics_statistics_proto.Services().ByName("StatisticsService")
 	statisticsServiceGetMainPageStatisticsMethodDescriptor    = statisticsServiceServiceDescriptor.Methods().ByName("GetMainPageStatistics")
 	statisticsServiceStreamMainPageStatisticsMethodDescriptor = statisticsServiceServiceDescriptor.Methods().ByName("StreamMainPageStatistics")
 	statisticsServiceGetDetailedPOIStatisticsMethodDescriptor = statisticsServiceServiceDescriptor.Methods().ByName("GetDetailedPOIStatistics")
@@ -64,63 +64,63 @@ var (
 	statisticsServiceGetSystemAnalyticsMethodDescriptor       = statisticsServiceServiceDescriptor.Methods().ByName("GetSystemAnalytics")
 )
 
-// StatisticsServiceClient is a client for the ai_poi.statistics.v1.StatisticsService service.
+// StatisticsServiceClient is a client for the loci.statistics.StatisticsService service.
 type StatisticsServiceClient interface {
 	// Get main page statistics (public)
-	GetMainPageStatistics(context.Context, *connect.Request[v1.GetMainPageStatisticsRequest]) (*connect.Response[v1.GetMainPageStatisticsResponse], error)
+	GetMainPageStatistics(context.Context, *connect.Request[statistics.GetMainPageStatisticsRequest]) (*connect.Response[statistics.GetMainPageStatisticsResponse], error)
 	// Stream real-time statistics updates (public)
-	StreamMainPageStatistics(context.Context, *connect.Request[v1.StreamMainPageStatisticsRequest]) (*connect.ServerStreamForClient[v1.StatisticsEvent], error)
+	StreamMainPageStatistics(context.Context, *connect.Request[statistics.StreamMainPageStatisticsRequest]) (*connect.ServerStreamForClient[statistics.StatisticsEvent], error)
 	// Get detailed POI statistics (authenticated)
-	GetDetailedPOIStatistics(context.Context, *connect.Request[v1.GetDetailedPOIStatisticsRequest]) (*connect.Response[v1.GetDetailedPOIStatisticsResponse], error)
+	GetDetailedPOIStatistics(context.Context, *connect.Request[statistics.GetDetailedPOIStatisticsRequest]) (*connect.Response[statistics.GetDetailedPOIStatisticsResponse], error)
 	// Get user landing page statistics (authenticated)
-	GetLandingPageStatistics(context.Context, *connect.Request[v1.GetLandingPageStatisticsRequest]) (*connect.Response[v1.GetLandingPageStatisticsResponse], error)
+	GetLandingPageStatistics(context.Context, *connect.Request[statistics.GetLandingPageStatisticsRequest]) (*connect.Response[statistics.GetLandingPageStatisticsResponse], error)
 	// Get user activity analytics (authenticated)
-	GetUserActivityAnalytics(context.Context, *connect.Request[v1.GetUserActivityAnalyticsRequest]) (*connect.Response[v1.GetUserActivityAnalyticsResponse], error)
+	GetUserActivityAnalytics(context.Context, *connect.Request[statistics.GetUserActivityAnalyticsRequest]) (*connect.Response[statistics.GetUserActivityAnalyticsResponse], error)
 	// Get system-wide analytics (admin)
-	GetSystemAnalytics(context.Context, *connect.Request[v1.GetSystemAnalyticsRequest]) (*connect.Response[v1.GetSystemAnalyticsResponse], error)
+	GetSystemAnalytics(context.Context, *connect.Request[statistics.GetSystemAnalyticsRequest]) (*connect.Response[statistics.GetSystemAnalyticsResponse], error)
 }
 
-// NewStatisticsServiceClient constructs a client for the ai_poi.statistics.v1.StatisticsService
-// service. By default, it uses the Connect protocol with the binary Protobuf Codec, asks for
-// gzipped responses, and sends uncompressed requests. To use the gRPC or gRPC-Web protocols, supply
-// the connect.WithGRPC() or connect.WithGRPCWeb() options.
+// NewStatisticsServiceClient constructs a client for the loci.statistics.StatisticsService service.
+// By default, it uses the Connect protocol with the binary Protobuf Codec, asks for gzipped
+// responses, and sends uncompressed requests. To use the gRPC or gRPC-Web protocols, supply the
+// connect.WithGRPC() or connect.WithGRPCWeb() options.
 //
 // The URL supplied here should be the base URL for the Connect or gRPC server (for example,
 // http://api.acme.com or https://acme.com/grpc).
 func NewStatisticsServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) StatisticsServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
 	return &statisticsServiceClient{
-		getMainPageStatistics: connect.NewClient[v1.GetMainPageStatisticsRequest, v1.GetMainPageStatisticsResponse](
+		getMainPageStatistics: connect.NewClient[statistics.GetMainPageStatisticsRequest, statistics.GetMainPageStatisticsResponse](
 			httpClient,
 			baseURL+StatisticsServiceGetMainPageStatisticsProcedure,
 			connect.WithSchema(statisticsServiceGetMainPageStatisticsMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		streamMainPageStatistics: connect.NewClient[v1.StreamMainPageStatisticsRequest, v1.StatisticsEvent](
+		streamMainPageStatistics: connect.NewClient[statistics.StreamMainPageStatisticsRequest, statistics.StatisticsEvent](
 			httpClient,
 			baseURL+StatisticsServiceStreamMainPageStatisticsProcedure,
 			connect.WithSchema(statisticsServiceStreamMainPageStatisticsMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		getDetailedPOIStatistics: connect.NewClient[v1.GetDetailedPOIStatisticsRequest, v1.GetDetailedPOIStatisticsResponse](
+		getDetailedPOIStatistics: connect.NewClient[statistics.GetDetailedPOIStatisticsRequest, statistics.GetDetailedPOIStatisticsResponse](
 			httpClient,
 			baseURL+StatisticsServiceGetDetailedPOIStatisticsProcedure,
 			connect.WithSchema(statisticsServiceGetDetailedPOIStatisticsMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		getLandingPageStatistics: connect.NewClient[v1.GetLandingPageStatisticsRequest, v1.GetLandingPageStatisticsResponse](
+		getLandingPageStatistics: connect.NewClient[statistics.GetLandingPageStatisticsRequest, statistics.GetLandingPageStatisticsResponse](
 			httpClient,
 			baseURL+StatisticsServiceGetLandingPageStatisticsProcedure,
 			connect.WithSchema(statisticsServiceGetLandingPageStatisticsMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		getUserActivityAnalytics: connect.NewClient[v1.GetUserActivityAnalyticsRequest, v1.GetUserActivityAnalyticsResponse](
+		getUserActivityAnalytics: connect.NewClient[statistics.GetUserActivityAnalyticsRequest, statistics.GetUserActivityAnalyticsResponse](
 			httpClient,
 			baseURL+StatisticsServiceGetUserActivityAnalyticsProcedure,
 			connect.WithSchema(statisticsServiceGetUserActivityAnalyticsMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		getSystemAnalytics: connect.NewClient[v1.GetSystemAnalyticsRequest, v1.GetSystemAnalyticsResponse](
+		getSystemAnalytics: connect.NewClient[statistics.GetSystemAnalyticsRequest, statistics.GetSystemAnalyticsResponse](
 			httpClient,
 			baseURL+StatisticsServiceGetSystemAnalyticsProcedure,
 			connect.WithSchema(statisticsServiceGetSystemAnalyticsMethodDescriptor),
@@ -131,59 +131,58 @@ func NewStatisticsServiceClient(httpClient connect.HTTPClient, baseURL string, o
 
 // statisticsServiceClient implements StatisticsServiceClient.
 type statisticsServiceClient struct {
-	getMainPageStatistics    *connect.Client[v1.GetMainPageStatisticsRequest, v1.GetMainPageStatisticsResponse]
-	streamMainPageStatistics *connect.Client[v1.StreamMainPageStatisticsRequest, v1.StatisticsEvent]
-	getDetailedPOIStatistics *connect.Client[v1.GetDetailedPOIStatisticsRequest, v1.GetDetailedPOIStatisticsResponse]
-	getLandingPageStatistics *connect.Client[v1.GetLandingPageStatisticsRequest, v1.GetLandingPageStatisticsResponse]
-	getUserActivityAnalytics *connect.Client[v1.GetUserActivityAnalyticsRequest, v1.GetUserActivityAnalyticsResponse]
-	getSystemAnalytics       *connect.Client[v1.GetSystemAnalyticsRequest, v1.GetSystemAnalyticsResponse]
+	getMainPageStatistics    *connect.Client[statistics.GetMainPageStatisticsRequest, statistics.GetMainPageStatisticsResponse]
+	streamMainPageStatistics *connect.Client[statistics.StreamMainPageStatisticsRequest, statistics.StatisticsEvent]
+	getDetailedPOIStatistics *connect.Client[statistics.GetDetailedPOIStatisticsRequest, statistics.GetDetailedPOIStatisticsResponse]
+	getLandingPageStatistics *connect.Client[statistics.GetLandingPageStatisticsRequest, statistics.GetLandingPageStatisticsResponse]
+	getUserActivityAnalytics *connect.Client[statistics.GetUserActivityAnalyticsRequest, statistics.GetUserActivityAnalyticsResponse]
+	getSystemAnalytics       *connect.Client[statistics.GetSystemAnalyticsRequest, statistics.GetSystemAnalyticsResponse]
 }
 
-// GetMainPageStatistics calls ai_poi.statistics.v1.StatisticsService.GetMainPageStatistics.
-func (c *statisticsServiceClient) GetMainPageStatistics(ctx context.Context, req *connect.Request[v1.GetMainPageStatisticsRequest]) (*connect.Response[v1.GetMainPageStatisticsResponse], error) {
+// GetMainPageStatistics calls loci.statistics.StatisticsService.GetMainPageStatistics.
+func (c *statisticsServiceClient) GetMainPageStatistics(ctx context.Context, req *connect.Request[statistics.GetMainPageStatisticsRequest]) (*connect.Response[statistics.GetMainPageStatisticsResponse], error) {
 	return c.getMainPageStatistics.CallUnary(ctx, req)
 }
 
-// StreamMainPageStatistics calls ai_poi.statistics.v1.StatisticsService.StreamMainPageStatistics.
-func (c *statisticsServiceClient) StreamMainPageStatistics(ctx context.Context, req *connect.Request[v1.StreamMainPageStatisticsRequest]) (*connect.ServerStreamForClient[v1.StatisticsEvent], error) {
+// StreamMainPageStatistics calls loci.statistics.StatisticsService.StreamMainPageStatistics.
+func (c *statisticsServiceClient) StreamMainPageStatistics(ctx context.Context, req *connect.Request[statistics.StreamMainPageStatisticsRequest]) (*connect.ServerStreamForClient[statistics.StatisticsEvent], error) {
 	return c.streamMainPageStatistics.CallServerStream(ctx, req)
 }
 
-// GetDetailedPOIStatistics calls ai_poi.statistics.v1.StatisticsService.GetDetailedPOIStatistics.
-func (c *statisticsServiceClient) GetDetailedPOIStatistics(ctx context.Context, req *connect.Request[v1.GetDetailedPOIStatisticsRequest]) (*connect.Response[v1.GetDetailedPOIStatisticsResponse], error) {
+// GetDetailedPOIStatistics calls loci.statistics.StatisticsService.GetDetailedPOIStatistics.
+func (c *statisticsServiceClient) GetDetailedPOIStatistics(ctx context.Context, req *connect.Request[statistics.GetDetailedPOIStatisticsRequest]) (*connect.Response[statistics.GetDetailedPOIStatisticsResponse], error) {
 	return c.getDetailedPOIStatistics.CallUnary(ctx, req)
 }
 
-// GetLandingPageStatistics calls ai_poi.statistics.v1.StatisticsService.GetLandingPageStatistics.
-func (c *statisticsServiceClient) GetLandingPageStatistics(ctx context.Context, req *connect.Request[v1.GetLandingPageStatisticsRequest]) (*connect.Response[v1.GetLandingPageStatisticsResponse], error) {
+// GetLandingPageStatistics calls loci.statistics.StatisticsService.GetLandingPageStatistics.
+func (c *statisticsServiceClient) GetLandingPageStatistics(ctx context.Context, req *connect.Request[statistics.GetLandingPageStatisticsRequest]) (*connect.Response[statistics.GetLandingPageStatisticsResponse], error) {
 	return c.getLandingPageStatistics.CallUnary(ctx, req)
 }
 
-// GetUserActivityAnalytics calls ai_poi.statistics.v1.StatisticsService.GetUserActivityAnalytics.
-func (c *statisticsServiceClient) GetUserActivityAnalytics(ctx context.Context, req *connect.Request[v1.GetUserActivityAnalyticsRequest]) (*connect.Response[v1.GetUserActivityAnalyticsResponse], error) {
+// GetUserActivityAnalytics calls loci.statistics.StatisticsService.GetUserActivityAnalytics.
+func (c *statisticsServiceClient) GetUserActivityAnalytics(ctx context.Context, req *connect.Request[statistics.GetUserActivityAnalyticsRequest]) (*connect.Response[statistics.GetUserActivityAnalyticsResponse], error) {
 	return c.getUserActivityAnalytics.CallUnary(ctx, req)
 }
 
-// GetSystemAnalytics calls ai_poi.statistics.v1.StatisticsService.GetSystemAnalytics.
-func (c *statisticsServiceClient) GetSystemAnalytics(ctx context.Context, req *connect.Request[v1.GetSystemAnalyticsRequest]) (*connect.Response[v1.GetSystemAnalyticsResponse], error) {
+// GetSystemAnalytics calls loci.statistics.StatisticsService.GetSystemAnalytics.
+func (c *statisticsServiceClient) GetSystemAnalytics(ctx context.Context, req *connect.Request[statistics.GetSystemAnalyticsRequest]) (*connect.Response[statistics.GetSystemAnalyticsResponse], error) {
 	return c.getSystemAnalytics.CallUnary(ctx, req)
 }
 
-// StatisticsServiceHandler is an implementation of the ai_poi.statistics.v1.StatisticsService
-// service.
+// StatisticsServiceHandler is an implementation of the loci.statistics.StatisticsService service.
 type StatisticsServiceHandler interface {
 	// Get main page statistics (public)
-	GetMainPageStatistics(context.Context, *connect.Request[v1.GetMainPageStatisticsRequest]) (*connect.Response[v1.GetMainPageStatisticsResponse], error)
+	GetMainPageStatistics(context.Context, *connect.Request[statistics.GetMainPageStatisticsRequest]) (*connect.Response[statistics.GetMainPageStatisticsResponse], error)
 	// Stream real-time statistics updates (public)
-	StreamMainPageStatistics(context.Context, *connect.Request[v1.StreamMainPageStatisticsRequest], *connect.ServerStream[v1.StatisticsEvent]) error
+	StreamMainPageStatistics(context.Context, *connect.Request[statistics.StreamMainPageStatisticsRequest], *connect.ServerStream[statistics.StatisticsEvent]) error
 	// Get detailed POI statistics (authenticated)
-	GetDetailedPOIStatistics(context.Context, *connect.Request[v1.GetDetailedPOIStatisticsRequest]) (*connect.Response[v1.GetDetailedPOIStatisticsResponse], error)
+	GetDetailedPOIStatistics(context.Context, *connect.Request[statistics.GetDetailedPOIStatisticsRequest]) (*connect.Response[statistics.GetDetailedPOIStatisticsResponse], error)
 	// Get user landing page statistics (authenticated)
-	GetLandingPageStatistics(context.Context, *connect.Request[v1.GetLandingPageStatisticsRequest]) (*connect.Response[v1.GetLandingPageStatisticsResponse], error)
+	GetLandingPageStatistics(context.Context, *connect.Request[statistics.GetLandingPageStatisticsRequest]) (*connect.Response[statistics.GetLandingPageStatisticsResponse], error)
 	// Get user activity analytics (authenticated)
-	GetUserActivityAnalytics(context.Context, *connect.Request[v1.GetUserActivityAnalyticsRequest]) (*connect.Response[v1.GetUserActivityAnalyticsResponse], error)
+	GetUserActivityAnalytics(context.Context, *connect.Request[statistics.GetUserActivityAnalyticsRequest]) (*connect.Response[statistics.GetUserActivityAnalyticsResponse], error)
 	// Get system-wide analytics (admin)
-	GetSystemAnalytics(context.Context, *connect.Request[v1.GetSystemAnalyticsRequest]) (*connect.Response[v1.GetSystemAnalyticsResponse], error)
+	GetSystemAnalytics(context.Context, *connect.Request[statistics.GetSystemAnalyticsRequest]) (*connect.Response[statistics.GetSystemAnalyticsResponse], error)
 }
 
 // NewStatisticsServiceHandler builds an HTTP handler from the service implementation. It returns
@@ -228,7 +227,7 @@ func NewStatisticsServiceHandler(svc StatisticsServiceHandler, opts ...connect.H
 		connect.WithSchema(statisticsServiceGetSystemAnalyticsMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
-	return "/ai_poi.statistics.v1.StatisticsService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	return "/loci.statistics.StatisticsService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case StatisticsServiceGetMainPageStatisticsProcedure:
 			statisticsServiceGetMainPageStatisticsHandler.ServeHTTP(w, r)
@@ -251,26 +250,26 @@ func NewStatisticsServiceHandler(svc StatisticsServiceHandler, opts ...connect.H
 // UnimplementedStatisticsServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedStatisticsServiceHandler struct{}
 
-func (UnimplementedStatisticsServiceHandler) GetMainPageStatistics(context.Context, *connect.Request[v1.GetMainPageStatisticsRequest]) (*connect.Response[v1.GetMainPageStatisticsResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.statistics.v1.StatisticsService.GetMainPageStatistics is not implemented"))
+func (UnimplementedStatisticsServiceHandler) GetMainPageStatistics(context.Context, *connect.Request[statistics.GetMainPageStatisticsRequest]) (*connect.Response[statistics.GetMainPageStatisticsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.statistics.StatisticsService.GetMainPageStatistics is not implemented"))
 }
 
-func (UnimplementedStatisticsServiceHandler) StreamMainPageStatistics(context.Context, *connect.Request[v1.StreamMainPageStatisticsRequest], *connect.ServerStream[v1.StatisticsEvent]) error {
-	return connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.statistics.v1.StatisticsService.StreamMainPageStatistics is not implemented"))
+func (UnimplementedStatisticsServiceHandler) StreamMainPageStatistics(context.Context, *connect.Request[statistics.StreamMainPageStatisticsRequest], *connect.ServerStream[statistics.StatisticsEvent]) error {
+	return connect.NewError(connect.CodeUnimplemented, errors.New("loci.statistics.StatisticsService.StreamMainPageStatistics is not implemented"))
 }
 
-func (UnimplementedStatisticsServiceHandler) GetDetailedPOIStatistics(context.Context, *connect.Request[v1.GetDetailedPOIStatisticsRequest]) (*connect.Response[v1.GetDetailedPOIStatisticsResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.statistics.v1.StatisticsService.GetDetailedPOIStatistics is not implemented"))
+func (UnimplementedStatisticsServiceHandler) GetDetailedPOIStatistics(context.Context, *connect.Request[statistics.GetDetailedPOIStatisticsRequest]) (*connect.Response[statistics.GetDetailedPOIStatisticsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.statistics.StatisticsService.GetDetailedPOIStatistics is not implemented"))
 }
 
-func (UnimplementedStatisticsServiceHandler) GetLandingPageStatistics(context.Context, *connect.Request[v1.GetLandingPageStatisticsRequest]) (*connect.Response[v1.GetLandingPageStatisticsResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.statistics.v1.StatisticsService.GetLandingPageStatistics is not implemented"))
+func (UnimplementedStatisticsServiceHandler) GetLandingPageStatistics(context.Context, *connect.Request[statistics.GetLandingPageStatisticsRequest]) (*connect.Response[statistics.GetLandingPageStatisticsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.statistics.StatisticsService.GetLandingPageStatistics is not implemented"))
 }
 
-func (UnimplementedStatisticsServiceHandler) GetUserActivityAnalytics(context.Context, *connect.Request[v1.GetUserActivityAnalyticsRequest]) (*connect.Response[v1.GetUserActivityAnalyticsResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.statistics.v1.StatisticsService.GetUserActivityAnalytics is not implemented"))
+func (UnimplementedStatisticsServiceHandler) GetUserActivityAnalytics(context.Context, *connect.Request[statistics.GetUserActivityAnalyticsRequest]) (*connect.Response[statistics.GetUserActivityAnalyticsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.statistics.StatisticsService.GetUserActivityAnalytics is not implemented"))
 }
 
-func (UnimplementedStatisticsServiceHandler) GetSystemAnalytics(context.Context, *connect.Request[v1.GetSystemAnalyticsRequest]) (*connect.Response[v1.GetSystemAnalyticsResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.statistics.v1.StatisticsService.GetSystemAnalytics is not implemented"))
+func (UnimplementedStatisticsServiceHandler) GetSystemAnalytics(context.Context, *connect.Request[statistics.GetSystemAnalyticsRequest]) (*connect.Response[statistics.GetSystemAnalyticsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.statistics.StatisticsService.GetSystemAnalytics is not implemented"))
 }

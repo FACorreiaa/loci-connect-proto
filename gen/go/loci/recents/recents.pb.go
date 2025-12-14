@@ -102,7 +102,7 @@ type RecentInteraction struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	Id              string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	UserId          string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	InteractionType InteractionType        `protobuf:"varint,3,opt,name=interaction_type,json=interactionType,proto3,enum=ai_poi.recents.v1.InteractionType" json:"interaction_type,omitempty"`
+	InteractionType InteractionType        `protobuf:"varint,3,opt,name=interaction_type,json=interactionType,proto3,enum=loci.recents.InteractionType" json:"interaction_type,omitempty"`
 	EntityId        string                 `protobuf:"bytes,4,opt,name=entity_id,json=entityId,proto3" json:"entity_id,omitempty"`       // POI ID, City ID, etc.
 	EntityType      string                 `protobuf:"bytes,5,opt,name=entity_type,json=entityType,proto3" json:"entity_type,omitempty"` // "poi", "city", "itinerary", "search"
 	EntityName      string                 `protobuf:"bytes,6,opt,name=entity_name,json=entityName,proto3" json:"entity_name,omitempty"`
@@ -641,7 +641,7 @@ type FrequentPlace struct {
 	FirstVisit          *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=first_visit,json=firstVisit,proto3" json:"first_visit,omitempty"`
 	LastVisit           *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=last_visit,json=lastVisit,proto3" json:"last_visit,omitempty"`
 	VisitFrequencyScore float64                `protobuf:"fixed64,12,opt,name=visit_frequency_score,json=visitFrequencyScore,proto3" json:"visit_frequency_score,omitempty"` // Algorithm-calculated frequency score
-	InteractionTypes    []InteractionType      `protobuf:"varint,13,rep,packed,name=interaction_types,json=interactionTypes,proto3,enum=ai_poi.recents.v1.InteractionType" json:"interaction_types,omitempty"`
+	InteractionTypes    []InteractionType      `protobuf:"varint,13,rep,packed,name=interaction_types,json=interactionTypes,proto3,enum=loci.recents.InteractionType" json:"interaction_types,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -770,7 +770,7 @@ func (x *FrequentPlace) GetInteractionTypes() []InteractionType {
 // Interaction filters
 type InteractionFilter struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
-	InteractionTypes []InteractionType      `protobuf:"varint,1,rep,packed,name=interaction_types,json=interactionTypes,proto3,enum=ai_poi.recents.v1.InteractionType" json:"interaction_types,omitempty"`
+	InteractionTypes []InteractionType      `protobuf:"varint,1,rep,packed,name=interaction_types,json=interactionTypes,proto3,enum=loci.recents.InteractionType" json:"interaction_types,omitempty"`
 	EntityTypes      []string               `protobuf:"bytes,2,rep,name=entity_types,json=entityTypes,proto3" json:"entity_types,omitempty"`
 	CityId           string                 `protobuf:"bytes,3,opt,name=city_id,json=cityId,proto3" json:"city_id,omitempty"`
 	StartDate        *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=start_date,json=startDate,proto3" json:"start_date,omitempty"`
@@ -1391,7 +1391,7 @@ func (x *CityInsights) GetVisitFrequency() string {
 type RecordInteractionRequest struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	UserId          string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	InteractionType InteractionType        `protobuf:"varint,2,opt,name=interaction_type,json=interactionType,proto3,enum=ai_poi.recents.v1.InteractionType" json:"interaction_type,omitempty"`
+	InteractionType InteractionType        `protobuf:"varint,2,opt,name=interaction_type,json=interactionType,proto3,enum=loci.recents.InteractionType" json:"interaction_type,omitempty"`
 	EntityId        string                 `protobuf:"bytes,3,opt,name=entity_id,json=entityId,proto3" json:"entity_id,omitempty"`
 	EntityType      string                 `protobuf:"bytes,4,opt,name=entity_type,json=entityType,proto3" json:"entity_type,omitempty"`
 	EntityName      string                 `protobuf:"bytes,5,opt,name=entity_name,json=entityName,proto3" json:"entity_name,omitempty"`
@@ -1771,7 +1771,7 @@ func (x *TrendData) GetTypeBreakdown() []*InteractionTypeCount {
 
 type InteractionTypeCount struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Type          InteractionType        `protobuf:"varint,1,opt,name=type,proto3,enum=ai_poi.recents.v1.InteractionType" json:"type,omitempty"`
+	Type          InteractionType        `protobuf:"varint,1,opt,name=type,proto3,enum=loci.recents.InteractionType" json:"type,omitempty"`
 	Count         int32                  `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -2030,11 +2030,11 @@ var File_loci_recents_recents_proto protoreflect.FileDescriptor
 
 const file_loci_recents_recents_proto_rawDesc = "" +
 	"\n" +
-	"\x1aloci/recents/recents.proto\x12\x11ai_poi.recents.v1\x1a\x1bbuf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xe5\x04\n" +
+	"\x1aloci/recents/recents.proto\x12\floci.recents\x1a\x1bbuf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xd6\x04\n" +
 	"\x11RecentInteraction\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
-	"\auser_id\x18\x02 \x01(\tR\x06userId\x12M\n" +
-	"\x10interaction_type\x18\x03 \x01(\x0e2\".ai_poi.recents.v1.InteractionTypeR\x0finteractionType\x12\x1b\n" +
+	"\auser_id\x18\x02 \x01(\tR\x06userId\x12H\n" +
+	"\x10interaction_type\x18\x03 \x01(\x0e2\x1d.loci.recents.InteractionTypeR\x0finteractionType\x12\x1b\n" +
 	"\tentity_id\x18\x04 \x01(\tR\bentityId\x12\x1f\n" +
 	"\ventity_type\x18\x05 \x01(\tR\n" +
 	"entityType\x12\x1f\n" +
@@ -2044,14 +2044,14 @@ const file_loci_recents_recents_proto_rawDesc = "" +
 	"\acity_id\x18\b \x01(\tR\x06cityId\x12\x1b\n" +
 	"\tcity_name\x18\t \x01(\tR\bcityName\x12\x18\n" +
 	"\acountry\x18\n" +
-	" \x01(\tR\acountry\x12?\n" +
-	"\acontext\x18\v \x01(\v2%.ai_poi.recents.v1.InteractionContextR\acontext\x12N\n" +
-	"\bmetadata\x18\f \x03(\v22.ai_poi.recents.v1.RecentInteraction.MetadataEntryR\bmetadata\x129\n" +
+	" \x01(\tR\acountry\x12:\n" +
+	"\acontext\x18\v \x01(\v2 .loci.recents.InteractionContextR\acontext\x12I\n" +
+	"\bmetadata\x18\f \x03(\v2-.loci.recents.RecentInteraction.MetadataEntryR\bmetadata\x129\n" +
 	"\n" +
 	"created_at\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xe9\x03\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xdf\x03\n" +
 	"\x12InteractionContext\x12*\n" +
 	"\vsource_page\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\n" +
 	"sourcePage\x12)\n" +
@@ -2059,14 +2059,14 @@ const file_loci_recents_recents_proto_rawDesc = "" +
 	"user_agent\x18\x02 \x01(\tB\n" +
 	"\xbaH\ar\x05\x10\x01\x18\x80\x04R\tuserAgent\x12*\n" +
 	"\vdevice_type\x18\x03 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x182R\n" +
-	"deviceType\x12:\n" +
-	"\blocation\x18\x04 \x01(\v2\x1e.ai_poi.recents.v1.GeoLocationR\blocation\x12)\n" +
+	"deviceType\x125\n" +
+	"\blocation\x18\x04 \x01(\v2\x19.loci.recents.GeoLocationR\blocation\x12)\n" +
 	"\n" +
 	"session_id\x18\x05 \x01(\tB\n" +
 	"\xbaH\ar\x05\x10\x01\x18\xc8\x01R\tsessionId\x12&\n" +
 	"\breferrer\x18\x06 \x01(\tB\n" +
-	"\xbaH\ar\x05\x10\x01\x18\x80\x10R\breferrer\x12|\n" +
-	"\x11custom_properties\x18\a \x03(\v2;.ai_poi.recents.v1.InteractionContext.CustomPropertiesEntryB\x12\xbaH\x0f\x9a\x01\f\"\x04r\x02\x10\x01*\x04r\x02\x10\x01R\x10customProperties\x1aC\n" +
+	"\xbaH\ar\x05\x10\x01\x18\x80\x10R\breferrer\x12w\n" +
+	"\x11custom_properties\x18\a \x03(\v26.loci.recents.InteractionContext.CustomPropertiesEntryB\x12\xbaH\x0f\x9a\x01\f\"\x04r\x02\x10\x01*\x04r\x02\x10\x01R\x10customProperties\x1aC\n" +
 	"\x15CustomPropertiesEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xea\x01\n" +
@@ -2076,7 +2076,7 @@ const file_loci_recents_recents_proto_rawDesc = "" +
 	"\x04city\x18\x03 \x01(\tB\n" +
 	"\xbaH\ar\x05\x10\x01\x18\xc8\x01R\x04city\x12#\n" +
 	"\acountry\x18\x04 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\acountry\x12*\n" +
-	"\baccuracy\x18\x05 \x01(\x01B\x0e\xbaH\v\x12\t)\x00\x00\x00\x00\x00\x00\x00\x00R\baccuracy\"\xa7\x05\n" +
+	"\baccuracy\x18\x05 \x01(\x01B\x0e\xbaH\v\x12\t)\x00\x00\x00\x00\x00\x00\x00\x00R\baccuracy\"\xa2\x05\n" +
 	"\x10CityInteractions\x12\"\n" +
 	"\acity_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06cityId\x12'\n" +
 	"\tcity_name\x18\x02 \x01(\tB\n" +
@@ -2092,14 +2092,14 @@ const file_loci_recents_recents_proto_rawDesc = "" +
 	"\x11first_interaction\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\x10firstInteraction\x12M\n" +
 	"\x10last_interaction\x18\v \x01(\v2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\x0flastInteraction\x12%\n" +
-	"\x0etop_categories\x18\f \x03(\tR\rtopCategories\x12D\n" +
-	"\vpreferences\x18\r \x01(\v2\".ai_poi.recents.v1.CityPreferencesR\vpreferences\"\xb8\x02\n" +
+	"\x0etop_categories\x18\f \x03(\tR\rtopCategories\x12?\n" +
+	"\vpreferences\x18\r \x01(\v2\x1d.loci.recents.CityPreferencesR\vpreferences\"\xb8\x02\n" +
 	"\x0fCityPreferences\x121\n" +
 	"\x14preferred_categories\x18\x01 \x03(\tR\x13preferredCategories\x12=\n" +
 	"\x15preferred_price_range\x18\x02 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x182R\x13preferredPriceRange\x12F\n" +
 	"\x17preferred_radius_meters\x18\x03 \x01(\x01B\x0e\xbaH\v\x12\t)\x00\x00\x00\x00\x00\x00\x00\x00R\x15preferredRadiusMeters\x12<\n" +
 	"\x15preferred_time_of_day\x18\x04 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x182R\x12preferredTimeOfDay\x12-\n" +
-	"\x12avoided_categories\x18\x05 \x03(\tR\x11avoidedCategories\"\xd2\x05\n" +
+	"\x12avoided_categories\x18\x05 \x03(\tR\x11avoidedCategories\"\xcd\x05\n" +
 	"\rFrequentPlace\x12$\n" +
 	"\bplace_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\aplaceId\x12)\n" +
 	"\n" +
@@ -2120,11 +2120,11 @@ const file_loci_recents_recents_proto_rawDesc = "" +
 	"firstVisit\x12A\n" +
 	"\n" +
 	"last_visit\x18\v \x01(\v2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\tlastVisit\x12B\n" +
-	"\x15visit_frequency_score\x18\f \x01(\x01B\x0e\xbaH\v\x12\t)\x00\x00\x00\x00\x00\x00\x00\x00R\x13visitFrequencyScore\x12^\n" +
-	"\x11interaction_types\x18\r \x03(\x0e2\".ai_poi.recents.v1.InteractionTypeB\r\xbaH\n" +
-	"\x92\x01\a\"\x05\x82\x01\x02\x10\x01R\x10interactionTypes\"\xfb\x02\n" +
-	"\x11InteractionFilter\x12^\n" +
-	"\x11interaction_types\x18\x01 \x03(\x0e2\".ai_poi.recents.v1.InteractionTypeB\r\xbaH\n" +
+	"\x15visit_frequency_score\x18\f \x01(\x01B\x0e\xbaH\v\x12\t)\x00\x00\x00\x00\x00\x00\x00\x00R\x13visitFrequencyScore\x12Y\n" +
+	"\x11interaction_types\x18\r \x03(\x0e2\x1d.loci.recents.InteractionTypeB\r\xbaH\n" +
+	"\x92\x01\a\"\x05\x82\x01\x02\x10\x01R\x10interactionTypes\"\xf6\x02\n" +
+	"\x11InteractionFilter\x12Y\n" +
+	"\x11interaction_types\x18\x01 \x03(\x0e2\x1d.loci.recents.InteractionTypeB\r\xbaH\n" +
 	"\x92\x01\a\"\x05\x82\x01\x02\x10\x01R\x10interactionTypes\x12!\n" +
 	"\fentity_types\x18\x02 \x03(\tR\ventityTypes\x12\"\n" +
 	"\acity_id\x18\x03 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06cityId\x129\n" +
@@ -2135,27 +2135,27 @@ const file_loci_recents_recents_proto_rawDesc = "" +
 	"\xbaH\ar\x05\x10\x01\x18\xc8\x01R\vsearchQuery\x12\x1e\n" +
 	"\n" +
 	"categories\x18\a \x03(\tR\n" +
-	"categories\"\xe6\x01\n" +
+	"categories\"\xe1\x01\n" +
 	"\x1cGetRecentInteractionsRequest\x12\"\n" +
 	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x12\x1f\n" +
 	"\x05limit\x18\x02 \x01(\x05B\t\xbaH\x06\x1a\x04\x18d(\x01R\x05limit\x12\x1f\n" +
-	"\x06offset\x18\x03 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x06offset\x12<\n" +
-	"\x06filter\x18\x04 \x01(\v2$.ai_poi.recents.v1.InteractionFilterR\x06filter\x12\"\n" +
-	"\rgroup_by_city\x18\x05 \x01(\bR\vgroupByCity\"\xa3\x02\n" +
-	"\x1dGetRecentInteractionsResponse\x12H\n" +
-	"\finteractions\x18\x01 \x03(\v2$.ai_poi.recents.v1.RecentInteractionR\finteractions\x12\x1f\n" +
+	"\x06offset\x18\x03 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x06offset\x127\n" +
+	"\x06filter\x18\x04 \x01(\v2\x1f.loci.recents.InteractionFilterR\x06filter\x12\"\n" +
+	"\rgroup_by_city\x18\x05 \x01(\bR\vgroupByCity\"\x94\x02\n" +
+	"\x1dGetRecentInteractionsResponse\x12C\n" +
+	"\finteractions\x18\x01 \x03(\v2\x1f.loci.recents.RecentInteractionR\finteractions\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
-	"totalCount\x12P\n" +
-	"\x0ecity_summaries\x18\x03 \x03(\v2).ai_poi.recents.v1.CityInteractionSummaryR\rcitySummaries\x12E\n" +
-	"\tanalytics\x18\x04 \x01(\v2'.ai_poi.recents.v1.InteractionAnalyticsR\tanalytics\"\xea\x02\n" +
+	"totalCount\x12K\n" +
+	"\x0ecity_summaries\x18\x03 \x03(\v2$.loci.recents.CityInteractionSummaryR\rcitySummaries\x12@\n" +
+	"\tanalytics\x18\x04 \x01(\v2\".loci.recents.InteractionAnalyticsR\tanalytics\"\xe5\x02\n" +
 	"\x16CityInteractionSummary\x12\"\n" +
 	"\acity_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06cityId\x12'\n" +
 	"\tcity_name\x18\x02 \x01(\tB\n" +
 	"\xbaH\ar\x05\x10\x01\x18\xc8\x01R\bcityName\x12#\n" +
 	"\acountry\x18\x03 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\acountry\x124\n" +
 	"\x11interaction_count\x18\x04 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x10interactionCount\x12Q\n" +
-	"\x12latest_interaction\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\x11latestInteraction\x12U\n" +
-	"\x13recent_interactions\x18\x06 \x03(\v2$.ai_poi.recents.v1.RecentInteractionR\x12recentInteractions\"\x99\x03\n" +
+	"\x12latest_interaction\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\x11latestInteraction\x12P\n" +
+	"\x13recent_interactions\x18\x06 \x03(\v2\x1f.loci.recents.RecentInteractionR\x12recentInteractions\"\x99\x03\n" +
 	"\x14InteractionAnalytics\x12A\n" +
 	"\x18total_interactions_today\x18\x01 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x16totalInteractionsToday\x12H\n" +
 	"\x1ctotal_interactions_this_week\x18\x02 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x19totalInteractionsThisWeek\x12;\n" +
@@ -2170,58 +2170,58 @@ const file_loci_recents_recents_proto_rawDesc = "" +
 	"\x0finclude_details\x18\x03 \x01(\bR\x0eincludeDetails\x129\n" +
 	"\n" +
 	"start_date\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tstartDate\x125\n" +
-	"\bend_date\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\aendDate\"\x87\x02\n" +
-	"\x1bGetCityInteractionsResponse\x12P\n" +
-	"\x11city_interactions\x18\x01 \x01(\v2#.ai_poi.recents.v1.CityInteractionsR\x10cityInteractions\x12Y\n" +
-	"\x15detailed_interactions\x18\x02 \x03(\v2$.ai_poi.recents.v1.RecentInteractionR\x14detailedInteractions\x12;\n" +
-	"\binsights\x18\x03 \x01(\v2\x1f.ai_poi.recents.v1.CityInsightsR\binsights\"\x9c\x02\n" +
+	"\bend_date\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\aendDate\"\xf8\x01\n" +
+	"\x1bGetCityInteractionsResponse\x12K\n" +
+	"\x11city_interactions\x18\x01 \x01(\v2\x1e.loci.recents.CityInteractionsR\x10cityInteractions\x12T\n" +
+	"\x15detailed_interactions\x18\x02 \x03(\v2\x1f.loci.recents.RecentInteractionR\x14detailedInteractions\x126\n" +
+	"\binsights\x18\x03 \x01(\v2\x1a.loci.recents.CityInsightsR\binsights\"\x9c\x02\n" +
 	"\fCityInsights\x126\n" +
 	"\x11discovery_pattern\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x10discoveryPattern\x121\n" +
 	"\x14suggested_categories\x18\x02 \x03(\tR\x13suggestedCategories\x12)\n" +
 	"\x10unexplored_areas\x18\x03 \x03(\tR\x0funexploredAreas\x12B\n" +
 	"\x10engagement_score\x18\x04 \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00Y@)\x00\x00\x00\x00\x00\x00\x00\x00R\x0fengagementScore\x122\n" +
-	"\x0fvisit_frequency\x18\x05 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x182R\x0evisitFrequency\"\xad\x04\n" +
+	"\x0fvisit_frequency\x18\x05 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x182R\x0evisitFrequency\"\x9e\x04\n" +
 	"\x18RecordInteractionRequest\x12\"\n" +
-	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x12W\n" +
-	"\x10interaction_type\x18\x02 \x01(\x0e2\".ai_poi.recents.v1.InteractionTypeB\b\xbaH\x05\x82\x01\x02\x10\x01R\x0finteractionType\x12&\n" +
+	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x12R\n" +
+	"\x10interaction_type\x18\x02 \x01(\x0e2\x1d.loci.recents.InteractionTypeB\b\xbaH\x05\x82\x01\x02\x10\x01R\x0finteractionType\x12&\n" +
 	"\tentity_id\x18\x03 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\bentityId\x12*\n" +
 	"\ventity_type\x18\x04 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x182R\n" +
 	"entityType\x12+\n" +
 	"\ventity_name\x18\x05 \x01(\tB\n" +
 	"\xbaH\ar\x05\x10\x01\x18\xc8\x01R\n" +
 	"entityName\x12\"\n" +
-	"\acity_id\x18\x06 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06cityId\x12G\n" +
-	"\acontext\x18\a \x01(\v2%.ai_poi.recents.v1.InteractionContextB\x06\xbaH\x03\xc8\x01\x01R\acontext\x12i\n" +
-	"\bmetadata\x18\b \x03(\v29.ai_poi.recents.v1.RecordInteractionRequest.MetadataEntryB\x12\xbaH\x0f\x9a\x01\f\"\x04r\x02\x10\x01*\x04r\x02\x10\x01R\bmetadata\x1a;\n" +
+	"\acity_id\x18\x06 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06cityId\x12B\n" +
+	"\acontext\x18\a \x01(\v2 .loci.recents.InteractionContextB\x06\xbaH\x03\xc8\x01\x01R\acontext\x12d\n" +
+	"\bmetadata\x18\b \x03(\v24.loci.recents.RecordInteractionRequest.MetadataEntryB\x12\xbaH\x0f\x9a\x01\f\"\x04r\x02\x10\x01*\x04r\x02\x10\x01R\bmetadata\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"v\n" +
 	"\x19RecordInteractionResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12%\n" +
 	"\x0einteraction_id\x18\x02 \x01(\tR\rinteractionId\x12\x18\n" +
-	"\amessage\x18\x03 \x01(\tR\amessage\"\xdd\x02\n" +
+	"\amessage\x18\x03 \x01(\tR\amessage\"\xd8\x02\n" +
 	"\x1cGetInteractionHistoryRequest\x12\"\n" +
-	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x12<\n" +
-	"\x06filter\x18\x02 \x01(\v2$.ai_poi.recents.v1.InteractionFilterR\x06filter\x12 \n" +
+	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x127\n" +
+	"\x06filter\x18\x02 \x01(\v2\x1f.loci.recents.InteractionFilterR\x06filter\x12 \n" +
 	"\x05limit\x18\x03 \x01(\x05B\n" +
 	"\xbaH\a\x1a\x05\x18\xc8\x01(\x01R\x05limit\x12\x1f\n" +
 	"\x06offset\x18\x04 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x06offset\x12:\n" +
 	"\asort_by\x18\x05 \x01(\tB!\xbaH\x1er\x1cR\x04dateR\tfrequencyR\trelevanceR\x06sortBy\x12/\n" +
 	"\n" +
 	"sort_order\x18\x06 \x01(\tB\x10\xbaH\rr\vR\x03ascR\x04descR\tsortOrder\x12+\n" +
-	"\x11include_analytics\x18\a \x01(\bR\x10includeAnalytics\"\x87\x02\n" +
-	"\x1dGetInteractionHistoryResponse\x12H\n" +
-	"\finteractions\x18\x01 \x03(\v2$.ai_poi.recents.v1.RecentInteractionR\finteractions\x12\x1f\n" +
+	"\x11include_analytics\x18\a \x01(\bR\x10includeAnalytics\"\xf8\x01\n" +
+	"\x1dGetInteractionHistoryResponse\x12C\n" +
+	"\finteractions\x18\x01 \x03(\v2\x1f.loci.recents.RecentInteractionR\finteractions\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
-	"totalCount\x12E\n" +
-	"\tanalytics\x18\x03 \x01(\v2'.ai_poi.recents.v1.InteractionAnalyticsR\tanalytics\x124\n" +
-	"\x06trends\x18\x04 \x03(\v2\x1c.ai_poi.recents.v1.TrendDataR\x06trends\"\xc9\x01\n" +
+	"totalCount\x12@\n" +
+	"\tanalytics\x18\x03 \x01(\v2\".loci.recents.InteractionAnalyticsR\tanalytics\x12/\n" +
+	"\x06trends\x18\x04 \x03(\v2\x17.loci.recents.TrendDataR\x06trends\"\xc4\x01\n" +
 	"\tTrendData\x126\n" +
 	"\x04date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\x04date\x124\n" +
-	"\x11interaction_count\x18\x02 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x10interactionCount\x12N\n" +
-	"\x0etype_breakdown\x18\x03 \x03(\v2'.ai_poi.recents.v1.InteractionTypeCountR\rtypeBreakdown\"w\n" +
-	"\x14InteractionTypeCount\x12@\n" +
-	"\x04type\x18\x01 \x01(\x0e2\".ai_poi.recents.v1.InteractionTypeB\b\xbaH\x05\x82\x01\x02\x10\x01R\x04type\x12\x1d\n" +
+	"\x11interaction_count\x18\x02 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x10interactionCount\x12I\n" +
+	"\x0etype_breakdown\x18\x03 \x03(\v2\".loci.recents.InteractionTypeCountR\rtypeBreakdown\"r\n" +
+	"\x14InteractionTypeCount\x12;\n" +
+	"\x04type\x18\x01 \x01(\x0e2\x1d.loci.recents.InteractionTypeB\b\xbaH\x05\x82\x01\x02\x10\x01R\x04type\x12\x1d\n" +
 	"\x05count\x18\x02 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x05count\"\x89\x02\n" +
 	"\x18GetFrequentPlacesRequest\x12\"\n" +
 	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x12\x1f\n" +
@@ -2230,10 +2230,10 @@ const file_loci_recents_recents_proto_rawDesc = "" +
 	"\n" +
 	"time_range\x18\x04 \x01(\tB\x18\xbaH\x15r\x13R\x0330dR\x0390dR\x021yR\x03allR\ttimeRange\x12/\n" +
 	"\vplace_types\x18\x05 \x03(\tB\x0e\xbaH\v\x92\x01\b\"\x06r\x04\x10\x01\x182R\n" +
-	"placeTypes\"\x9b\x01\n" +
-	"\x19GetFrequentPlacesResponse\x128\n" +
-	"\x06places\x18\x01 \x03(\v2 .ai_poi.recents.v1.FrequentPlaceR\x06places\x12D\n" +
-	"\binsights\x18\x02 \x01(\v2(.ai_poi.recents.v1.FrequentPlaceInsightsR\binsights\"\xb9\x02\n" +
+	"placeTypes\"\x91\x01\n" +
+	"\x19GetFrequentPlacesResponse\x123\n" +
+	"\x06places\x18\x01 \x03(\v2\x1b.loci.recents.FrequentPlaceR\x06places\x12?\n" +
+	"\binsights\x18\x02 \x01(\v2#.loci.recents.FrequentPlaceInsightsR\binsights\"\xb9\x02\n" +
 	"\x15FrequentPlaceInsights\x120\n" +
 	"\x0etravel_pattern\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\rtravelPattern\x12/\n" +
 	"\x13favorite_categories\x18\x02 \x03(\tR\x12favoriteCategories\x12W\n" +
@@ -2252,13 +2252,13 @@ const file_loci_recents_recents_proto_rawDesc = "" +
 	"\x1aINTERACTION_TYPE_DISCOVERY\x10\b\x12)\n" +
 	"%INTERACTION_TYPE_RECOMMENDATION_CLICK\x10\t\x12$\n" +
 	" INTERACTION_TYPE_BOOKING_ATTEMPT\x10\n" +
-	"2\xde\x04\n" +
-	"\x0eRecentsService\x12z\n" +
-	"\x15GetRecentInteractions\x12/.ai_poi.recents.v1.GetRecentInteractionsRequest\x1a0.ai_poi.recents.v1.GetRecentInteractionsResponse\x12t\n" +
-	"\x13GetCityInteractions\x12-.ai_poi.recents.v1.GetCityInteractionsRequest\x1a..ai_poi.recents.v1.GetCityInteractionsResponse\x12n\n" +
-	"\x11RecordInteraction\x12+.ai_poi.recents.v1.RecordInteractionRequest\x1a,.ai_poi.recents.v1.RecordInteractionResponse\x12z\n" +
-	"\x15GetInteractionHistory\x12/.ai_poi.recents.v1.GetInteractionHistoryRequest\x1a0.ai_poi.recents.v1.GetInteractionHistoryResponse\x12n\n" +
-	"\x11GetFrequentPlaces\x12+.ai_poi.recents.v1.GetFrequentPlacesRequest\x1a,.ai_poi.recents.v1.GetFrequentPlacesResponseBMZKgithub.com/FACorreiaa/loci-connect-proto/gen/go/ai_poi/recents/v1;recentsv1b\x06proto3"
+	"2\xac\x04\n" +
+	"\x0eRecentsService\x12p\n" +
+	"\x15GetRecentInteractions\x12*.loci.recents.GetRecentInteractionsRequest\x1a+.loci.recents.GetRecentInteractionsResponse\x12j\n" +
+	"\x13GetCityInteractions\x12(.loci.recents.GetCityInteractionsRequest\x1a).loci.recents.GetCityInteractionsResponse\x12d\n" +
+	"\x11RecordInteraction\x12&.loci.recents.RecordInteractionRequest\x1a'.loci.recents.RecordInteractionResponse\x12p\n" +
+	"\x15GetInteractionHistory\x12*.loci.recents.GetInteractionHistoryRequest\x1a+.loci.recents.GetInteractionHistoryResponse\x12d\n" +
+	"\x11GetFrequentPlaces\x12&.loci.recents.GetFrequentPlacesRequest\x1a'.loci.recents.GetFrequentPlacesResponseBHZFgithub.com/FACorreiaa/loci-connect-proto/gen/go/loci/recents;recentsv1b\x06proto3"
 
 var (
 	file_loci_recents_recents_proto_rawDescOnce sync.Once
@@ -2275,84 +2275,84 @@ func file_loci_recents_recents_proto_rawDescGZIP() []byte {
 var file_loci_recents_recents_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_loci_recents_recents_proto_msgTypes = make([]protoimpl.MessageInfo, 26)
 var file_loci_recents_recents_proto_goTypes = []any{
-	(InteractionType)(0),                  // 0: ai_poi.recents.v1.InteractionType
-	(*RecentInteraction)(nil),             // 1: ai_poi.recents.v1.RecentInteraction
-	(*InteractionContext)(nil),            // 2: ai_poi.recents.v1.InteractionContext
-	(*GeoLocation)(nil),                   // 3: ai_poi.recents.v1.GeoLocation
-	(*CityInteractions)(nil),              // 4: ai_poi.recents.v1.CityInteractions
-	(*CityPreferences)(nil),               // 5: ai_poi.recents.v1.CityPreferences
-	(*FrequentPlace)(nil),                 // 6: ai_poi.recents.v1.FrequentPlace
-	(*InteractionFilter)(nil),             // 7: ai_poi.recents.v1.InteractionFilter
-	(*GetRecentInteractionsRequest)(nil),  // 8: ai_poi.recents.v1.GetRecentInteractionsRequest
-	(*GetRecentInteractionsResponse)(nil), // 9: ai_poi.recents.v1.GetRecentInteractionsResponse
-	(*CityInteractionSummary)(nil),        // 10: ai_poi.recents.v1.CityInteractionSummary
-	(*InteractionAnalytics)(nil),          // 11: ai_poi.recents.v1.InteractionAnalytics
-	(*GetCityInteractionsRequest)(nil),    // 12: ai_poi.recents.v1.GetCityInteractionsRequest
-	(*GetCityInteractionsResponse)(nil),   // 13: ai_poi.recents.v1.GetCityInteractionsResponse
-	(*CityInsights)(nil),                  // 14: ai_poi.recents.v1.CityInsights
-	(*RecordInteractionRequest)(nil),      // 15: ai_poi.recents.v1.RecordInteractionRequest
-	(*RecordInteractionResponse)(nil),     // 16: ai_poi.recents.v1.RecordInteractionResponse
-	(*GetInteractionHistoryRequest)(nil),  // 17: ai_poi.recents.v1.GetInteractionHistoryRequest
-	(*GetInteractionHistoryResponse)(nil), // 18: ai_poi.recents.v1.GetInteractionHistoryResponse
-	(*TrendData)(nil),                     // 19: ai_poi.recents.v1.TrendData
-	(*InteractionTypeCount)(nil),          // 20: ai_poi.recents.v1.InteractionTypeCount
-	(*GetFrequentPlacesRequest)(nil),      // 21: ai_poi.recents.v1.GetFrequentPlacesRequest
-	(*GetFrequentPlacesResponse)(nil),     // 22: ai_poi.recents.v1.GetFrequentPlacesResponse
-	(*FrequentPlaceInsights)(nil),         // 23: ai_poi.recents.v1.FrequentPlaceInsights
-	nil,                                   // 24: ai_poi.recents.v1.RecentInteraction.MetadataEntry
-	nil,                                   // 25: ai_poi.recents.v1.InteractionContext.CustomPropertiesEntry
-	nil,                                   // 26: ai_poi.recents.v1.RecordInteractionRequest.MetadataEntry
+	(InteractionType)(0),                  // 0: loci.recents.InteractionType
+	(*RecentInteraction)(nil),             // 1: loci.recents.RecentInteraction
+	(*InteractionContext)(nil),            // 2: loci.recents.InteractionContext
+	(*GeoLocation)(nil),                   // 3: loci.recents.GeoLocation
+	(*CityInteractions)(nil),              // 4: loci.recents.CityInteractions
+	(*CityPreferences)(nil),               // 5: loci.recents.CityPreferences
+	(*FrequentPlace)(nil),                 // 6: loci.recents.FrequentPlace
+	(*InteractionFilter)(nil),             // 7: loci.recents.InteractionFilter
+	(*GetRecentInteractionsRequest)(nil),  // 8: loci.recents.GetRecentInteractionsRequest
+	(*GetRecentInteractionsResponse)(nil), // 9: loci.recents.GetRecentInteractionsResponse
+	(*CityInteractionSummary)(nil),        // 10: loci.recents.CityInteractionSummary
+	(*InteractionAnalytics)(nil),          // 11: loci.recents.InteractionAnalytics
+	(*GetCityInteractionsRequest)(nil),    // 12: loci.recents.GetCityInteractionsRequest
+	(*GetCityInteractionsResponse)(nil),   // 13: loci.recents.GetCityInteractionsResponse
+	(*CityInsights)(nil),                  // 14: loci.recents.CityInsights
+	(*RecordInteractionRequest)(nil),      // 15: loci.recents.RecordInteractionRequest
+	(*RecordInteractionResponse)(nil),     // 16: loci.recents.RecordInteractionResponse
+	(*GetInteractionHistoryRequest)(nil),  // 17: loci.recents.GetInteractionHistoryRequest
+	(*GetInteractionHistoryResponse)(nil), // 18: loci.recents.GetInteractionHistoryResponse
+	(*TrendData)(nil),                     // 19: loci.recents.TrendData
+	(*InteractionTypeCount)(nil),          // 20: loci.recents.InteractionTypeCount
+	(*GetFrequentPlacesRequest)(nil),      // 21: loci.recents.GetFrequentPlacesRequest
+	(*GetFrequentPlacesResponse)(nil),     // 22: loci.recents.GetFrequentPlacesResponse
+	(*FrequentPlaceInsights)(nil),         // 23: loci.recents.FrequentPlaceInsights
+	nil,                                   // 24: loci.recents.RecentInteraction.MetadataEntry
+	nil,                                   // 25: loci.recents.InteractionContext.CustomPropertiesEntry
+	nil,                                   // 26: loci.recents.RecordInteractionRequest.MetadataEntry
 	(*timestamppb.Timestamp)(nil),         // 27: google.protobuf.Timestamp
 }
 var file_loci_recents_recents_proto_depIdxs = []int32{
-	0,  // 0: ai_poi.recents.v1.RecentInteraction.interaction_type:type_name -> ai_poi.recents.v1.InteractionType
-	2,  // 1: ai_poi.recents.v1.RecentInteraction.context:type_name -> ai_poi.recents.v1.InteractionContext
-	24, // 2: ai_poi.recents.v1.RecentInteraction.metadata:type_name -> ai_poi.recents.v1.RecentInteraction.MetadataEntry
-	27, // 3: ai_poi.recents.v1.RecentInteraction.created_at:type_name -> google.protobuf.Timestamp
-	3,  // 4: ai_poi.recents.v1.InteractionContext.location:type_name -> ai_poi.recents.v1.GeoLocation
-	25, // 5: ai_poi.recents.v1.InteractionContext.custom_properties:type_name -> ai_poi.recents.v1.InteractionContext.CustomPropertiesEntry
-	27, // 6: ai_poi.recents.v1.CityInteractions.first_interaction:type_name -> google.protobuf.Timestamp
-	27, // 7: ai_poi.recents.v1.CityInteractions.last_interaction:type_name -> google.protobuf.Timestamp
-	5,  // 8: ai_poi.recents.v1.CityInteractions.preferences:type_name -> ai_poi.recents.v1.CityPreferences
-	27, // 9: ai_poi.recents.v1.FrequentPlace.first_visit:type_name -> google.protobuf.Timestamp
-	27, // 10: ai_poi.recents.v1.FrequentPlace.last_visit:type_name -> google.protobuf.Timestamp
-	0,  // 11: ai_poi.recents.v1.FrequentPlace.interaction_types:type_name -> ai_poi.recents.v1.InteractionType
-	0,  // 12: ai_poi.recents.v1.InteractionFilter.interaction_types:type_name -> ai_poi.recents.v1.InteractionType
-	27, // 13: ai_poi.recents.v1.InteractionFilter.start_date:type_name -> google.protobuf.Timestamp
-	27, // 14: ai_poi.recents.v1.InteractionFilter.end_date:type_name -> google.protobuf.Timestamp
-	7,  // 15: ai_poi.recents.v1.GetRecentInteractionsRequest.filter:type_name -> ai_poi.recents.v1.InteractionFilter
-	1,  // 16: ai_poi.recents.v1.GetRecentInteractionsResponse.interactions:type_name -> ai_poi.recents.v1.RecentInteraction
-	10, // 17: ai_poi.recents.v1.GetRecentInteractionsResponse.city_summaries:type_name -> ai_poi.recents.v1.CityInteractionSummary
-	11, // 18: ai_poi.recents.v1.GetRecentInteractionsResponse.analytics:type_name -> ai_poi.recents.v1.InteractionAnalytics
-	27, // 19: ai_poi.recents.v1.CityInteractionSummary.latest_interaction:type_name -> google.protobuf.Timestamp
-	1,  // 20: ai_poi.recents.v1.CityInteractionSummary.recent_interactions:type_name -> ai_poi.recents.v1.RecentInteraction
-	27, // 21: ai_poi.recents.v1.GetCityInteractionsRequest.start_date:type_name -> google.protobuf.Timestamp
-	27, // 22: ai_poi.recents.v1.GetCityInteractionsRequest.end_date:type_name -> google.protobuf.Timestamp
-	4,  // 23: ai_poi.recents.v1.GetCityInteractionsResponse.city_interactions:type_name -> ai_poi.recents.v1.CityInteractions
-	1,  // 24: ai_poi.recents.v1.GetCityInteractionsResponse.detailed_interactions:type_name -> ai_poi.recents.v1.RecentInteraction
-	14, // 25: ai_poi.recents.v1.GetCityInteractionsResponse.insights:type_name -> ai_poi.recents.v1.CityInsights
-	0,  // 26: ai_poi.recents.v1.RecordInteractionRequest.interaction_type:type_name -> ai_poi.recents.v1.InteractionType
-	2,  // 27: ai_poi.recents.v1.RecordInteractionRequest.context:type_name -> ai_poi.recents.v1.InteractionContext
-	26, // 28: ai_poi.recents.v1.RecordInteractionRequest.metadata:type_name -> ai_poi.recents.v1.RecordInteractionRequest.MetadataEntry
-	7,  // 29: ai_poi.recents.v1.GetInteractionHistoryRequest.filter:type_name -> ai_poi.recents.v1.InteractionFilter
-	1,  // 30: ai_poi.recents.v1.GetInteractionHistoryResponse.interactions:type_name -> ai_poi.recents.v1.RecentInteraction
-	11, // 31: ai_poi.recents.v1.GetInteractionHistoryResponse.analytics:type_name -> ai_poi.recents.v1.InteractionAnalytics
-	19, // 32: ai_poi.recents.v1.GetInteractionHistoryResponse.trends:type_name -> ai_poi.recents.v1.TrendData
-	27, // 33: ai_poi.recents.v1.TrendData.date:type_name -> google.protobuf.Timestamp
-	20, // 34: ai_poi.recents.v1.TrendData.type_breakdown:type_name -> ai_poi.recents.v1.InteractionTypeCount
-	0,  // 35: ai_poi.recents.v1.InteractionTypeCount.type:type_name -> ai_poi.recents.v1.InteractionType
-	6,  // 36: ai_poi.recents.v1.GetFrequentPlacesResponse.places:type_name -> ai_poi.recents.v1.FrequentPlace
-	23, // 37: ai_poi.recents.v1.GetFrequentPlacesResponse.insights:type_name -> ai_poi.recents.v1.FrequentPlaceInsights
-	8,  // 38: ai_poi.recents.v1.RecentsService.GetRecentInteractions:input_type -> ai_poi.recents.v1.GetRecentInteractionsRequest
-	12, // 39: ai_poi.recents.v1.RecentsService.GetCityInteractions:input_type -> ai_poi.recents.v1.GetCityInteractionsRequest
-	15, // 40: ai_poi.recents.v1.RecentsService.RecordInteraction:input_type -> ai_poi.recents.v1.RecordInteractionRequest
-	17, // 41: ai_poi.recents.v1.RecentsService.GetInteractionHistory:input_type -> ai_poi.recents.v1.GetInteractionHistoryRequest
-	21, // 42: ai_poi.recents.v1.RecentsService.GetFrequentPlaces:input_type -> ai_poi.recents.v1.GetFrequentPlacesRequest
-	9,  // 43: ai_poi.recents.v1.RecentsService.GetRecentInteractions:output_type -> ai_poi.recents.v1.GetRecentInteractionsResponse
-	13, // 44: ai_poi.recents.v1.RecentsService.GetCityInteractions:output_type -> ai_poi.recents.v1.GetCityInteractionsResponse
-	16, // 45: ai_poi.recents.v1.RecentsService.RecordInteraction:output_type -> ai_poi.recents.v1.RecordInteractionResponse
-	18, // 46: ai_poi.recents.v1.RecentsService.GetInteractionHistory:output_type -> ai_poi.recents.v1.GetInteractionHistoryResponse
-	22, // 47: ai_poi.recents.v1.RecentsService.GetFrequentPlaces:output_type -> ai_poi.recents.v1.GetFrequentPlacesResponse
+	0,  // 0: loci.recents.RecentInteraction.interaction_type:type_name -> loci.recents.InteractionType
+	2,  // 1: loci.recents.RecentInteraction.context:type_name -> loci.recents.InteractionContext
+	24, // 2: loci.recents.RecentInteraction.metadata:type_name -> loci.recents.RecentInteraction.MetadataEntry
+	27, // 3: loci.recents.RecentInteraction.created_at:type_name -> google.protobuf.Timestamp
+	3,  // 4: loci.recents.InteractionContext.location:type_name -> loci.recents.GeoLocation
+	25, // 5: loci.recents.InteractionContext.custom_properties:type_name -> loci.recents.InteractionContext.CustomPropertiesEntry
+	27, // 6: loci.recents.CityInteractions.first_interaction:type_name -> google.protobuf.Timestamp
+	27, // 7: loci.recents.CityInteractions.last_interaction:type_name -> google.protobuf.Timestamp
+	5,  // 8: loci.recents.CityInteractions.preferences:type_name -> loci.recents.CityPreferences
+	27, // 9: loci.recents.FrequentPlace.first_visit:type_name -> google.protobuf.Timestamp
+	27, // 10: loci.recents.FrequentPlace.last_visit:type_name -> google.protobuf.Timestamp
+	0,  // 11: loci.recents.FrequentPlace.interaction_types:type_name -> loci.recents.InteractionType
+	0,  // 12: loci.recents.InteractionFilter.interaction_types:type_name -> loci.recents.InteractionType
+	27, // 13: loci.recents.InteractionFilter.start_date:type_name -> google.protobuf.Timestamp
+	27, // 14: loci.recents.InteractionFilter.end_date:type_name -> google.protobuf.Timestamp
+	7,  // 15: loci.recents.GetRecentInteractionsRequest.filter:type_name -> loci.recents.InteractionFilter
+	1,  // 16: loci.recents.GetRecentInteractionsResponse.interactions:type_name -> loci.recents.RecentInteraction
+	10, // 17: loci.recents.GetRecentInteractionsResponse.city_summaries:type_name -> loci.recents.CityInteractionSummary
+	11, // 18: loci.recents.GetRecentInteractionsResponse.analytics:type_name -> loci.recents.InteractionAnalytics
+	27, // 19: loci.recents.CityInteractionSummary.latest_interaction:type_name -> google.protobuf.Timestamp
+	1,  // 20: loci.recents.CityInteractionSummary.recent_interactions:type_name -> loci.recents.RecentInteraction
+	27, // 21: loci.recents.GetCityInteractionsRequest.start_date:type_name -> google.protobuf.Timestamp
+	27, // 22: loci.recents.GetCityInteractionsRequest.end_date:type_name -> google.protobuf.Timestamp
+	4,  // 23: loci.recents.GetCityInteractionsResponse.city_interactions:type_name -> loci.recents.CityInteractions
+	1,  // 24: loci.recents.GetCityInteractionsResponse.detailed_interactions:type_name -> loci.recents.RecentInteraction
+	14, // 25: loci.recents.GetCityInteractionsResponse.insights:type_name -> loci.recents.CityInsights
+	0,  // 26: loci.recents.RecordInteractionRequest.interaction_type:type_name -> loci.recents.InteractionType
+	2,  // 27: loci.recents.RecordInteractionRequest.context:type_name -> loci.recents.InteractionContext
+	26, // 28: loci.recents.RecordInteractionRequest.metadata:type_name -> loci.recents.RecordInteractionRequest.MetadataEntry
+	7,  // 29: loci.recents.GetInteractionHistoryRequest.filter:type_name -> loci.recents.InteractionFilter
+	1,  // 30: loci.recents.GetInteractionHistoryResponse.interactions:type_name -> loci.recents.RecentInteraction
+	11, // 31: loci.recents.GetInteractionHistoryResponse.analytics:type_name -> loci.recents.InteractionAnalytics
+	19, // 32: loci.recents.GetInteractionHistoryResponse.trends:type_name -> loci.recents.TrendData
+	27, // 33: loci.recents.TrendData.date:type_name -> google.protobuf.Timestamp
+	20, // 34: loci.recents.TrendData.type_breakdown:type_name -> loci.recents.InteractionTypeCount
+	0,  // 35: loci.recents.InteractionTypeCount.type:type_name -> loci.recents.InteractionType
+	6,  // 36: loci.recents.GetFrequentPlacesResponse.places:type_name -> loci.recents.FrequentPlace
+	23, // 37: loci.recents.GetFrequentPlacesResponse.insights:type_name -> loci.recents.FrequentPlaceInsights
+	8,  // 38: loci.recents.RecentsService.GetRecentInteractions:input_type -> loci.recents.GetRecentInteractionsRequest
+	12, // 39: loci.recents.RecentsService.GetCityInteractions:input_type -> loci.recents.GetCityInteractionsRequest
+	15, // 40: loci.recents.RecentsService.RecordInteraction:input_type -> loci.recents.RecordInteractionRequest
+	17, // 41: loci.recents.RecentsService.GetInteractionHistory:input_type -> loci.recents.GetInteractionHistoryRequest
+	21, // 42: loci.recents.RecentsService.GetFrequentPlaces:input_type -> loci.recents.GetFrequentPlacesRequest
+	9,  // 43: loci.recents.RecentsService.GetRecentInteractions:output_type -> loci.recents.GetRecentInteractionsResponse
+	13, // 44: loci.recents.RecentsService.GetCityInteractions:output_type -> loci.recents.GetCityInteractionsResponse
+	16, // 45: loci.recents.RecentsService.RecordInteraction:output_type -> loci.recents.RecordInteractionResponse
+	18, // 46: loci.recents.RecentsService.GetInteractionHistory:output_type -> loci.recents.GetInteractionHistoryResponse
+	22, // 47: loci.recents.RecentsService.GetFrequentPlaces:output_type -> loci.recents.GetFrequentPlacesResponse
 	43, // [43:48] is the sub-list for method output_type
 	38, // [38:43] is the sub-list for method input_type
 	38, // [38:38] is the sub-list for extension type_name

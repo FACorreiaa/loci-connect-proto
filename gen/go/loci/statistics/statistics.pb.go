@@ -3236,7 +3236,7 @@ var File_loci_statistics_statistics_proto protoreflect.FileDescriptor
 
 const file_loci_statistics_statistics_proto_rawDesc = "" +
 	"\n" +
-	" loci/statistics/statistics.proto\x12\x14ai_poi.statistics.v1\x1a\x1bbuf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x88\x05\n" +
+	" loci/statistics/statistics.proto\x12\x0floci.statistics\x1a\x1bbuf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xf9\x04\n" +
 	"\x12MainPageStatistics\x12&\n" +
 	"\n" +
 	"total_pois\x18\x01 \x01(\x03B\a\xbaH\x04\"\x02(\x00R\ttotalPois\x12*\n" +
@@ -3245,10 +3245,10 @@ const file_loci_statistics_statistics_proto_rawDesc = "" +
 	"totalUsers\x124\n" +
 	"\x11total_itineraries\x18\x04 \x01(\x03B\a\xbaH\x04\"\x02(\x00R\x10totalItineraries\x129\n" +
 	"\x14total_searches_today\x18\x05 \x01(\x03B\a\xbaH\x04\"\x02(\x00R\x12totalSearchesToday\x125\n" +
-	"\x12active_users_today\x18\x06 \x01(\x03B\a\xbaH\x04\"\x02(\x00R\x10activeUsersToday\x12M\n" +
-	"\x0frecent_activity\x18\a \x01(\v2$.ai_poi.statistics.v1.RecentActivityR\x0erecentActivity\x12[\n" +
-	"\x14popular_destinations\x18\b \x03(\v2(.ai_poi.statistics.v1.PopularDestinationR\x13popularDestinations\x12Y\n" +
-	"\x13trending_categories\x18\t \x01(\v2(.ai_poi.statistics.v1.TrendingCategoriesR\x12trendingCategories\x12E\n" +
+	"\x12active_users_today\x18\x06 \x01(\x03B\a\xbaH\x04\"\x02(\x00R\x10activeUsersToday\x12H\n" +
+	"\x0frecent_activity\x18\a \x01(\v2\x1f.loci.statistics.RecentActivityR\x0erecentActivity\x12V\n" +
+	"\x14popular_destinations\x18\b \x03(\v2#.loci.statistics.PopularDestinationR\x13popularDestinations\x12T\n" +
+	"\x13trending_categories\x18\t \x01(\v2#.loci.statistics.TrendingCategoriesR\x12trendingCategories\x12E\n" +
 	"\flast_updated\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\vlastUpdated\"\xf8\x01\n" +
 	"\x0eRecentActivity\x125\n" +
@@ -3264,10 +3264,10 @@ const file_loci_statistics_statistics_proto_rawDesc = "" +
 	"\fsearch_count\x18\x04 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\vsearchCount\x12&\n" +
 	"\n" +
 	"user_count\x18\x05 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\tuserCount\x12+\n" +
-	"\x11growth_percentage\x18\x06 \x01(\x01R\x10growthPercentage\"\x8f\x01\n" +
-	"\x12TrendingCategories\x12C\n" +
+	"\x11growth_percentage\x18\x06 \x01(\x01R\x10growthPercentage\"\x8a\x01\n" +
+	"\x12TrendingCategories\x12>\n" +
 	"\n" +
-	"categories\x18\x01 \x03(\v2#.ai_poi.statistics.v1.CategoryTrendR\n" +
+	"categories\x18\x01 \x03(\v2\x1e.loci.statistics.CategoryTrendR\n" +
 	"categories\x124\n" +
 	"\vtime_period\x18\x02 \x01(\tB\x13\xbaH\x10r\x0eR\x0324hR\x027dR\x0330dR\n" +
 	"timePeriod\"\xac\x01\n" +
@@ -3275,16 +3275,16 @@ const file_loci_statistics_statistics_proto_rawDesc = "" +
 	"\bcategory\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\bcategory\x12*\n" +
 	"\fsearch_count\x18\x02 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\vsearchCount\x12+\n" +
 	"\x11growth_percentage\x18\x03 \x01(\x01R\x10growthPercentage\x12\x1b\n" +
-	"\x04rank\x18\x04 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x04rank\"\xcd\x04\n" +
+	"\x04rank\x18\x04 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x04rank\"\xbe\x04\n" +
 	"\x15DetailedPOIStatistics\x12\"\n" +
 	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x125\n" +
 	"\x12total_poi_searches\x18\x02 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x10totalPoiSearches\x127\n" +
 	"\x13favorite_pois_count\x18\x03 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x11favoritePoisCount\x129\n" +
 	"\x14visited_cities_count\x18\x04 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x12visitedCitiesCount\x12%\n" +
-	"\x0etop_categories\x18\x05 \x03(\tR\rtopCategories\x12W\n" +
-	"\x11city_interactions\x18\x06 \x03(\v2*.ai_poi.statistics.v1.CityInteractionStatsR\x10cityInteractions\x12M\n" +
-	"\x0fsearch_patterns\x18\a \x01(\v2$.ai_poi.statistics.v1.SearchPatternsR\x0esearchPatterns\x12O\n" +
-	"\x0etime_analytics\x18\b \x01(\v2(.ai_poi.statistics.v1.TimeBasedAnalyticsR\rtimeAnalytics\x12E\n" +
+	"\x0etop_categories\x18\x05 \x03(\tR\rtopCategories\x12R\n" +
+	"\x11city_interactions\x18\x06 \x03(\v2%.loci.statistics.CityInteractionStatsR\x10cityInteractions\x12H\n" +
+	"\x0fsearch_patterns\x18\a \x01(\v2\x1f.loci.statistics.SearchPatternsR\x0esearchPatterns\x12J\n" +
+	"\x0etime_analytics\x18\b \x01(\v2#.loci.statistics.TimeBasedAnalyticsR\rtimeAnalytics\x12E\n" +
 	"\fgenerated_at\x18\t \x01(\v2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\vgeneratedAt\"\xc8\x02\n" +
 	"\x14CityInteractionStats\x12\"\n" +
 	"\acity_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06cityId\x12'\n" +
@@ -3300,11 +3300,11 @@ const file_loci_statistics_statistics_proto_rawDesc = "" +
 	"\x15preferred_price_range\x18\x03 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x182R\x13preferredPriceRange\x12B\n" +
 	"\x15average_search_radius\x18\x04 \x01(\x01B\x0e\xbaH\v\x12\t)\x00\x00\x00\x00\x00\x00\x00\x00R\x13averageSearchRadius\x12?\n" +
 	"\x17most_active_time_of_day\x18\x05 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x182R\x13mostActiveTimeOfDay\x12?\n" +
-	"\x17most_active_day_of_week\x18\x06 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x182R\x13mostActiveDayOfWeek\"\x81\x02\n" +
-	"\x12TimeBasedAnalytics\x12M\n" +
-	"\x0fhourly_activity\x18\x01 \x03(\v2$.ai_poi.statistics.v1.HourlyActivityR\x0ehourlyActivity\x12J\n" +
-	"\x0edaily_activity\x18\x02 \x03(\v2#.ai_poi.statistics.v1.DailyActivityR\rdailyActivity\x12P\n" +
-	"\x10monthly_activity\x18\x03 \x03(\v2%.ai_poi.statistics.v1.MonthlyActivityR\x0fmonthlyActivity\"_\n" +
+	"\x17most_active_day_of_week\x18\x06 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x182R\x13mostActiveDayOfWeek\"\xf2\x01\n" +
+	"\x12TimeBasedAnalytics\x12H\n" +
+	"\x0fhourly_activity\x18\x01 \x03(\v2\x1f.loci.statistics.HourlyActivityR\x0ehourlyActivity\x12E\n" +
+	"\x0edaily_activity\x18\x02 \x03(\v2\x1e.loci.statistics.DailyActivityR\rdailyActivity\x12K\n" +
+	"\x10monthly_activity\x18\x03 \x03(\v2 .loci.statistics.MonthlyActivityR\x0fmonthlyActivity\"_\n" +
 	"\x0eHourlyActivity\x12\x1d\n" +
 	"\x04hour\x18\x01 \x01(\x05B\t\xbaH\x06\x1a\x04\x18\x17(\x00R\x04hour\x12.\n" +
 	"\x0eactivity_count\x18\x02 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\ractivityCount\"\xd8\x01\n" +
@@ -3317,25 +3317,25 @@ const file_loci_statistics_statistics_proto_rawDesc = "" +
 	"\x04year\x18\x01 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x04year\x12\x1f\n" +
 	"\x05month\x18\x02 \x01(\x05B\t\xbaH\x06\x1a\x04\x18\f(\x01R\x05month\x12.\n" +
 	"\x0etotal_activity\x18\x03 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\rtotalActivity\x12+\n" +
-	"\x11growth_percentage\x18\x04 \x01(\x01R\x10growthPercentage\"\xe3\x04\n" +
+	"\x11growth_percentage\x18\x04 \x01(\x01R\x10growthPercentage\"\xd4\x04\n" +
 	"\x14LandingPageUserStats\x12\"\n" +
 	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x125\n" +
 	"\x12searches_this_week\x18\x02 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x10searchesThisWeek\x12>\n" +
 	"\x17new_favorites_this_week\x18\x03 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x14newFavoritesThisWeek\x12L\n" +
 	"\x1eitineraries_created_this_month\x18\x04 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x1bitinerariesCreatedThisMonth\x128\n" +
-	"\x18recently_searched_cities\x18\x05 \x03(\tR\x16recentlySearchedCities\x12X\n" +
-	"\x13recent_interactions\x18\x06 \x03(\v2'.ai_poi.statistics.v1.RecentInteractionR\x12recentInteractions\x12[\n" +
-	"\x0frecommendations\x18\a \x01(\v21.ai_poi.statistics.v1.PersonalizedRecommendationsR\x0frecommendations\x12?\n" +
-	"\x06badges\x18\b \x01(\v2'.ai_poi.statistics.v1.AchievementBadgesR\x06badges\x120\n" +
-	"\x0fcities_explored\x18\t \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x0ecitiesExplored\"\xef\x02\n" +
+	"\x18recently_searched_cities\x18\x05 \x03(\tR\x16recentlySearchedCities\x12S\n" +
+	"\x13recent_interactions\x18\x06 \x03(\v2\".loci.statistics.RecentInteractionR\x12recentInteractions\x12V\n" +
+	"\x0frecommendations\x18\a \x01(\v2,.loci.statistics.PersonalizedRecommendationsR\x0frecommendations\x12:\n" +
+	"\x06badges\x18\b \x01(\v2\".loci.statistics.AchievementBadgesR\x06badges\x120\n" +
+	"\x0fcities_explored\x18\t \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x0ecitiesExplored\"\xea\x02\n" +
 	"\x11RecentInteraction\x12\x1d\n" +
 	"\x04type\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x182R\x04type\x12,\n" +
 	"\vdescription\x18\x02 \x01(\tB\n" +
 	"\xbaH\ar\x05\x10\x01\x18\xf4\x03R\vdescription\x12@\n" +
 	"\ttimestamp\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\ttimestamp\x12'\n" +
 	"\tcity_name\x18\x04 \x01(\tB\n" +
-	"\xbaH\ar\x05\x10\x01\x18\xc8\x01R\bcityName\x12e\n" +
-	"\bmetadata\x18\x05 \x03(\v25.ai_poi.statistics.v1.RecentInteraction.MetadataEntryB\x12\xbaH\x0f\x9a\x01\f\"\x04r\x02\x10\x01*\x04r\x02\x10\x01R\bmetadata\x1a;\n" +
+	"\xbaH\ar\x05\x10\x01\x18\xc8\x01R\bcityName\x12`\n" +
+	"\bmetadata\x18\x05 \x03(\v20.loci.statistics.RecentInteraction.MetadataEntryB\x12\xbaH\x0f\x9a\x01\f\"\x04r\x02\x10\x01*\x04r\x02\x10\x01R\bmetadata\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xbc\x01\n" +
@@ -3343,10 +3343,10 @@ const file_loci_statistics_statistics_proto_rawDesc = "" +
 	"\x10suggested_cities\x18\x01 \x03(\tR\x0fsuggestedCities\x121\n" +
 	"\x14suggested_categories\x18\x02 \x03(\tR\x13suggestedCategories\x12?\n" +
 	"\x15recommendation_reason\x18\x03 \x01(\tB\n" +
-	"\xbaH\ar\x05\x10\x01\x18\xf4\x03R\x14recommendationReason\"\x9d\x01\n" +
-	"\x11AchievementBadges\x12@\n" +
-	"\rearned_badges\x18\x01 \x03(\v2\x1b.ai_poi.statistics.v1.BadgeR\fearnedBadges\x12F\n" +
-	"\x10available_badges\x18\x02 \x03(\v2\x1b.ai_poi.statistics.v1.BadgeR\x0favailableBadges\"\xa0\x02\n" +
+	"\xbaH\ar\x05\x10\x01\x18\xf4\x03R\x14recommendationReason\"\x93\x01\n" +
+	"\x11AchievementBadges\x12;\n" +
+	"\rearned_badges\x18\x01 \x03(\v2\x16.loci.statistics.BadgeR\fearnedBadges\x12A\n" +
+	"\x10available_badges\x18\x02 \x03(\v2\x16.loci.statistics.BadgeR\x0favailableBadges\"\xa0\x02\n" +
 	"\x05Badge\x12\x19\n" +
 	"\x02id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x02id\x12\x1e\n" +
 	"\x04name\x18\x02 \x01(\tB\n" +
@@ -3357,15 +3357,15 @@ const file_loci_statistics_statistics_proto_rawDesc = "" +
 	"\xbaH\ar\x05\x10\x01\x18\x80\x10R\aiconUrl\x12?\n" +
 	"\tearned_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\bearnedAt\x12%\n" +
 	"\bprogress\x18\x06 \x01(\x05B\t\xbaH\x06\x1a\x04\x18d(\x00R\bprogress\x12\x1f\n" +
-	"\x06target\x18\a \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x06target\"\xbf\x04\n" +
-	"\x0fSystemAnalytics\x12H\n" +
-	"\vuser_growth\x18\x01 \x01(\v2'.ai_poi.statistics.v1.UserGrowthMetricsR\n" +
-	"userGrowth\x12G\n" +
-	"\rusage_metrics\x18\x02 \x01(\v2\".ai_poi.statistics.v1.UsageMetricsR\fusageMetrics\x12Y\n" +
-	"\x13performance_metrics\x18\x03 \x01(\v2(.ai_poi.statistics.v1.PerformanceMetricsR\x12performanceMetrics\x12G\n" +
-	"\rerror_metrics\x18\x04 \x01(\v2\".ai_poi.statistics.v1.ErrorMetricsR\ferrorMetrics\x12e\n" +
-	"\x17geographic_distribution\x18\x05 \x01(\v2,.ai_poi.statistics.v1.GeographicDistributionR\x16geographicDistribution\x12G\n" +
-	"\rfeature_usage\x18\x06 \x01(\v2\".ai_poi.statistics.v1.FeatureUsageR\ffeatureUsage\x12E\n" +
+	"\x06target\x18\a \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x06target\"\xa1\x04\n" +
+	"\x0fSystemAnalytics\x12C\n" +
+	"\vuser_growth\x18\x01 \x01(\v2\".loci.statistics.UserGrowthMetricsR\n" +
+	"userGrowth\x12B\n" +
+	"\rusage_metrics\x18\x02 \x01(\v2\x1d.loci.statistics.UsageMetricsR\fusageMetrics\x12T\n" +
+	"\x13performance_metrics\x18\x03 \x01(\v2#.loci.statistics.PerformanceMetricsR\x12performanceMetrics\x12B\n" +
+	"\rerror_metrics\x18\x04 \x01(\v2\x1d.loci.statistics.ErrorMetricsR\ferrorMetrics\x12`\n" +
+	"\x17geographic_distribution\x18\x05 \x01(\v2'.loci.statistics.GeographicDistributionR\x16geographicDistribution\x12B\n" +
+	"\rfeature_usage\x18\x06 \x01(\v2\x1d.loci.statistics.FeatureUsageR\ffeatureUsage\x12E\n" +
 	"\fgenerated_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\vgeneratedAt\"\x9d\x04\n" +
 	"\x11UserGrowthMetrics\x12(\n" +
 	"\vtotal_users\x18\x01 \x01(\x03B\a\xbaH\x04\"\x02(\x00R\n" +
@@ -3394,12 +3394,12 @@ const file_loci_statistics_statistics_proto_rawDesc = "" +
 	"\x15disk_usage_percentage\x18\x03 \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00Y@)\x00\x00\x00\x00\x00\x00\x00\x00R\x13diskUsagePercentage\x12G\n" +
 	"\x1bactive_database_connections\x18\x04 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x19activeDatabaseConnections\x12F\n" +
 	"\x18average_db_query_time_ms\x18\x05 \x01(\x01B\x0e\xbaH\v\x12\t)\x00\x00\x00\x00\x00\x00\x00\x00R\x14averageDbQueryTimeMs\x12D\n" +
-	"\x19cache_hit_rate_percentage\x18\x06 \x01(\x05B\t\xbaH\x06\x1a\x04\x18d(\x00R\x16cacheHitRatePercentage\"\x9f\x02\n" +
+	"\x19cache_hit_rate_percentage\x18\x06 \x01(\x05B\t\xbaH\x06\x1a\x04\x18d(\x00R\x16cacheHitRatePercentage\"\x9a\x02\n" +
 	"\fErrorMetrics\x125\n" +
 	"\x12total_errors_today\x18\x01 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x10totalErrorsToday\x12<\n" +
 	"\x16total_errors_this_week\x18\x02 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x13totalErrorsThisWeek\x12K\n" +
-	"\x15error_rate_percentage\x18\x03 \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00Y@)\x00\x00\x00\x00\x00\x00\x00\x00R\x13errorRatePercentage\x12M\n" +
-	"\x0ferror_breakdown\x18\x04 \x03(\v2$.ai_poi.statistics.v1.ErrorBreakdownR\x0eerrorBreakdown\"\x93\x01\n" +
+	"\x15error_rate_percentage\x18\x03 \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00Y@)\x00\x00\x00\x00\x00\x00\x00\x00R\x13errorRatePercentage\x12H\n" +
+	"\x0ferror_breakdown\x18\x04 \x03(\v2\x1f.loci.statistics.ErrorBreakdownR\x0eerrorBreakdown\"\x93\x01\n" +
 	"\x0eErrorBreakdown\x12)\n" +
 	"\n" +
 	"error_type\x18\x01 \x01(\tB\n" +
@@ -3407,11 +3407,11 @@ const file_loci_statistics_statistics_proto_rawDesc = "" +
 	"\x05count\x18\x02 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x05count\x127\n" +
 	"\n" +
 	"percentage\x18\x03 \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00Y@)\x00\x00\x00\x00\x00\x00\x00\x00R\n" +
-	"percentage\"\xa1\x01\n" +
-	"\x16GeographicDistribution\x12G\n" +
-	"\rcountry_stats\x18\x01 \x03(\v2\".ai_poi.statistics.v1.CountryStatsR\fcountryStats\x12>\n" +
+	"percentage\"\x97\x01\n" +
+	"\x16GeographicDistribution\x12B\n" +
+	"\rcountry_stats\x18\x01 \x03(\v2\x1d.loci.statistics.CountryStatsR\fcountryStats\x129\n" +
 	"\n" +
-	"city_stats\x18\x02 \x03(\v2\x1f.ai_poi.statistics.v1.CityStatsR\tcityStats\"\x87\x02\n" +
+	"city_stats\x18\x02 \x03(\v2\x1a.loci.statistics.CityStatsR\tcityStats\"\x87\x02\n" +
 	"\fCountryStats\x12,\n" +
 	"\fcountry_code\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x02\x18\x03R\vcountryCode\x12,\n" +
 	"\fcountry_name\x18\x02 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\vcountryName\x12&\n" +
@@ -3425,28 +3425,28 @@ const file_loci_statistics_statistics_proto_rawDesc = "" +
 	"\xbaH\ar\x05\x10\x01\x18\xc8\x01R\bcityName\x12*\n" +
 	"\fsearch_count\x18\x03 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\vsearchCount\x12$\n" +
 	"\tpoi_count\x18\x04 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\bpoiCount\x129\n" +
-	"\x10popularity_score\x18\x05 \x01(\x01B\x0e\xbaH\v\x12\t)\x00\x00\x00\x00\x00\x00\x00\x00R\x0fpopularityScore\"\xda\x02\n" +
+	"\x10popularity_score\x18\x05 \x01(\x01B\x0e\xbaH\v\x12\t)\x00\x00\x00\x00\x00\x00\x00\x00R\x0fpopularityScore\"\xd5\x02\n" +
 	"\fFeatureUsage\x124\n" +
 	"\x11semantic_searches\x18\x01 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x10semanticSearches\x120\n" +
 	"\x0ffavorites_added\x18\x02 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x0efavoritesAdded\x128\n" +
 	"\x13itineraries_created\x18\x03 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x12itinerariesCreated\x12,\n" +
 	"\rlists_created\x18\x04 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\flistsCreated\x12,\n" +
-	"\rchat_sessions\x18\x05 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\fchatSessions\x12L\n" +
-	"\x0ffeature_metrics\x18\x06 \x03(\v2#.ai_poi.statistics.v1.FeatureMetricR\x0efeatureMetrics\"\xa6\x01\n" +
+	"\rchat_sessions\x18\x05 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\fchatSessions\x12G\n" +
+	"\x0ffeature_metrics\x18\x06 \x03(\v2\x1e.loci.statistics.FeatureMetricR\x0efeatureMetrics\"\xa6\x01\n" +
 	"\rFeatureMetric\x12-\n" +
 	"\ffeature_name\x18\x01 \x01(\tB\n" +
 	"\xbaH\ar\x05\x10\x01\x18\xc8\x01R\vfeatureName\x12(\n" +
 	"\vusage_count\x18\x02 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\n" +
 	"usageCount\x12<\n" +
-	"\radoption_rate\x18\x03 \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00Y@)\x00\x00\x00\x00\x00\x00\x00\x00R\fadoptionRate\"\xed\x02\n" +
+	"\radoption_rate\x18\x03 \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00Y@)\x00\x00\x00\x00\x00\x00\x00\x00R\fadoptionRate\"\xde\x02\n" +
 	"\x0fStatisticsEvent\x12(\n" +
 	"\n" +
 	"event_type\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x182R\teventType\x12@\n" +
-	"\ttimestamp\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\ttimestamp\x12I\n" +
+	"\ttimestamp\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\ttimestamp\x12D\n" +
 	"\n" +
-	"main_stats\x18\x03 \x01(\v2(.ai_poi.statistics.v1.MainPageStatisticsH\x00R\tmainStats\x12I\n" +
-	"\rmetric_update\x18\x04 \x01(\v2\".ai_poi.statistics.v1.MetricUpdateH\x00R\fmetricUpdate\x12F\n" +
-	"\fsystem_alert\x18\x05 \x01(\v2!.ai_poi.statistics.v1.SystemAlertH\x00R\vsystemAlertB\x10\n" +
+	"main_stats\x18\x03 \x01(\v2#.loci.statistics.MainPageStatisticsH\x00R\tmainStats\x12D\n" +
+	"\rmetric_update\x18\x04 \x01(\v2\x1d.loci.statistics.MetricUpdateH\x00R\fmetricUpdate\x12A\n" +
+	"\fsystem_alert\x18\x05 \x01(\v2\x1c.loci.statistics.SystemAlertH\x00R\vsystemAlertB\x10\n" +
 	"\apayload\x12\x05\xbaH\x02\b\x01\"\xbc\x01\n" +
 	"\fMetricUpdate\x12+\n" +
 	"\vmetric_name\x18\x01 \x01(\tB\n" +
@@ -3455,24 +3455,24 @@ const file_loci_statistics_statistics_proto_rawDesc = "" +
 	"\x05value\x18\x02 \x01(\x01R\x05value\x12B\n" +
 	"\vchange_type\x18\x03 \x01(\tB!\xbaH\x1er\x1cR\bincreaseR\bdecreaseR\x06stableR\n" +
 	"changeType\x12%\n" +
-	"\x0eprevious_value\x18\x04 \x01(\x01R\rpreviousValue\"\xb7\x02\n" +
+	"\x0eprevious_value\x18\x04 \x01(\x01R\rpreviousValue\"\xb2\x02\n" +
 	"\vSystemAlert\x12(\n" +
 	"\n" +
 	"alert_type\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\talertType\x12$\n" +
 	"\amessage\x18\x02 \x01(\tB\n" +
 	"\xbaH\ar\x05\x10\x01\x18\xe8\aR\amessage\x12>\n" +
-	"\bseverity\x18\x03 \x01(\tB\"\xbaH\x1fr\x1dR\x03lowR\x06mediumR\x04highR\bcriticalR\bseverity\x12\\\n" +
-	"\adetails\x18\x04 \x03(\v2..ai_poi.statistics.v1.SystemAlert.DetailsEntryB\x12\xbaH\x0f\x9a\x01\f\"\x04r\x02\x10\x01*\x04r\x02\x10\x01R\adetails\x1a:\n" +
+	"\bseverity\x18\x03 \x01(\tB\"\xbaH\x1fr\x1dR\x03lowR\x06mediumR\x04highR\bcriticalR\bseverity\x12W\n" +
+	"\adetails\x18\x04 \x03(\v2).loci.statistics.SystemAlert.DetailsEntryB\x12\xbaH\x0f\x9a\x01\f\"\x04r\x02\x10\x01*\x04r\x02\x10\x01R\adetails\x1a:\n" +
 	"\fDetailsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"y\n" +
 	"\x1cGetMainPageStatisticsRequest\x12%\n" +
 	"\x0einclude_trends\x18\x01 \x01(\bR\rincludeTrends\x122\n" +
 	"\n" +
-	"time_range\x18\x02 \x01(\tB\x13\xbaH\x10r\x0eR\x0324hR\x027dR\x0330dR\ttimeRange\"i\n" +
-	"\x1dGetMainPageStatisticsResponse\x12H\n" +
+	"time_range\x18\x02 \x01(\tB\x13\xbaH\x10r\x0eR\x0324hR\x027dR\x0330dR\ttimeRange\"d\n" +
+	"\x1dGetMainPageStatisticsResponse\x12C\n" +
 	"\n" +
-	"statistics\x18\x01 \x01(\v2(.ai_poi.statistics.v1.MainPageStatisticsR\n" +
+	"statistics\x18\x01 \x01(\v2#.loci.statistics.MainPageStatisticsR\n" +
 	"statistics\"\x8c\x01\n" +
 	"\x1fStreamMainPageStatisticsRequest\x12B\n" +
 	"\x17update_interval_seconds\x18\x01 \x01(\x05B\n" +
@@ -3482,12 +3482,12 @@ const file_loci_statistics_statistics_proto_rawDesc = "" +
 	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x126\n" +
 	"\n" +
 	"time_range\x18\x02 \x01(\tB\x17\xbaH\x14r\x12R\x027dR\x0330dR\x0390dR\x021yR\ttimeRange\x12/\n" +
-	"\x13include_predictions\x18\x03 \x01(\bR\x12includePredictions\"\xb3\x01\n" +
-	" GetDetailedPOIStatisticsResponse\x12K\n" +
+	"\x13include_predictions\x18\x03 \x01(\bR\x12includePredictions\"\xa9\x01\n" +
+	" GetDetailedPOIStatisticsResponse\x12F\n" +
 	"\n" +
-	"statistics\x18\x01 \x01(\v2+.ai_poi.statistics.v1.DetailedPOIStatisticsR\n" +
-	"statistics\x12B\n" +
-	"\vpredictions\x18\x02 \x03(\v2 .ai_poi.statistics.v1.PredictionR\vpredictions\"\xbd\x01\n" +
+	"statistics\x18\x01 \x01(\v2&.loci.statistics.DetailedPOIStatisticsR\n" +
+	"statistics\x12=\n" +
+	"\vpredictions\x18\x02 \x03(\v2\x1b.loci.statistics.PredictionR\vpredictions\"\xbd\x01\n" +
 	"\n" +
 	"Prediction\x12\"\n" +
 	"\x06metric\x18\x01 \x01(\tB\n" +
@@ -3496,20 +3496,20 @@ const file_loci_statistics_statistics_proto_rawDesc = "" +
 	"\x10confidence_level\x18\x03 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x0fconfidenceLevel\x12,\n" +
 	"\ftime_horizon\x18\x04 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\vtimeHorizon\"E\n" +
 	"\x1fGetLandingPageStatisticsRequest\x12\"\n" +
-	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\"n\n" +
-	" GetLandingPageStatisticsResponse\x12J\n" +
+	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\"i\n" +
+	" GetLandingPageStatisticsResponse\x12E\n" +
 	"\n" +
-	"statistics\x18\x01 \x01(\v2*.ai_poi.statistics.v1.LandingPageUserStatsR\n" +
+	"statistics\x18\x01 \x01(\v2%.loci.statistics.LandingPageUserStatsR\n" +
 	"statistics\"\x88\x02\n" +
 	"\x1fGetUserActivityAnalyticsRequest\x12\"\n" +
 	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x12A\n" +
 	"\n" +
 	"start_date\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\tstartDate\x12=\n" +
 	"\bend_date\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\aendDate\x12?\n" +
-	"\vgranularity\x18\x04 \x01(\tB\x1d\xbaH\x1ar\x18R\x04hourR\x03dayR\x04weekR\x05monthR\vgranularity\"\xb1\x01\n" +
-	" GetUserActivityAnalyticsResponse\x12L\n" +
-	"\ractivity_data\x18\x01 \x03(\v2'.ai_poi.statistics.v1.ActivityDataPointR\factivityData\x12?\n" +
-	"\asummary\x18\x02 \x01(\v2%.ai_poi.statistics.v1.ActivitySummaryR\asummary\"\x85\x02\n" +
+	"\vgranularity\x18\x04 \x01(\tB\x1d\xbaH\x1ar\x18R\x04hourR\x03dayR\x04weekR\x05monthR\vgranularity\"\xa7\x01\n" +
+	" GetUserActivityAnalyticsResponse\x12G\n" +
+	"\ractivity_data\x18\x01 \x03(\v2\".loci.statistics.ActivityDataPointR\factivityData\x12:\n" +
+	"\asummary\x18\x02 \x01(\v2 .loci.statistics.ActivitySummaryR\asummary\"\x85\x02\n" +
 	"\x11ActivityDataPoint\x12@\n" +
 	"\ttimestamp\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\ttimestamp\x12#\n" +
 	"\bsearches\x18\x02 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\bsearches\x12%\n" +
@@ -3525,16 +3525,16 @@ const file_loci_statistics_statistics_proto_rawDesc = "" +
 	"\x19GetSystemAnalyticsRequest\x122\n" +
 	"\n" +
 	"time_range\x18\x01 \x01(\tB\x13\xbaH\x10r\x0eR\x0324hR\x027dR\x0330dR\ttimeRange\x12;\n" +
-	"\x11metric_categories\x18\x02 \x03(\tB\x0e\xbaH\v\x92\x01\b\"\x06r\x04\x10\x01\x18dR\x10metricCategories\"a\n" +
-	"\x1aGetSystemAnalyticsResponse\x12C\n" +
-	"\tanalytics\x18\x01 \x01(\v2%.ai_poi.statistics.v1.SystemAnalyticsR\tanalytics2\xaf\x06\n" +
-	"\x11StatisticsService\x12\x80\x01\n" +
-	"\x15GetMainPageStatistics\x122.ai_poi.statistics.v1.GetMainPageStatisticsRequest\x1a3.ai_poi.statistics.v1.GetMainPageStatisticsResponse\x12z\n" +
-	"\x18StreamMainPageStatistics\x125.ai_poi.statistics.v1.StreamMainPageStatisticsRequest\x1a%.ai_poi.statistics.v1.StatisticsEvent0\x01\x12\x89\x01\n" +
-	"\x18GetDetailedPOIStatistics\x125.ai_poi.statistics.v1.GetDetailedPOIStatisticsRequest\x1a6.ai_poi.statistics.v1.GetDetailedPOIStatisticsResponse\x12\x89\x01\n" +
-	"\x18GetLandingPageStatistics\x125.ai_poi.statistics.v1.GetLandingPageStatisticsRequest\x1a6.ai_poi.statistics.v1.GetLandingPageStatisticsResponse\x12\x89\x01\n" +
-	"\x18GetUserActivityAnalytics\x125.ai_poi.statistics.v1.GetUserActivityAnalyticsRequest\x1a6.ai_poi.statistics.v1.GetUserActivityAnalyticsResponse\x12w\n" +
-	"\x12GetSystemAnalytics\x12/.ai_poi.statistics.v1.GetSystemAnalyticsRequest\x1a0.ai_poi.statistics.v1.GetSystemAnalyticsResponseBSZQgithub.com/FACorreiaa/loci-connect-proto/gen/go/ai_poi/statistics/v1;statisticsv1b\x06proto3"
+	"\x11metric_categories\x18\x02 \x03(\tB\x0e\xbaH\v\x92\x01\b\"\x06r\x04\x10\x01\x18dR\x10metricCategories\"\\\n" +
+	"\x1aGetSystemAnalyticsResponse\x12>\n" +
+	"\tanalytics\x18\x01 \x01(\v2 .loci.statistics.SystemAnalyticsR\tanalytics2\xef\x05\n" +
+	"\x11StatisticsService\x12v\n" +
+	"\x15GetMainPageStatistics\x12-.loci.statistics.GetMainPageStatisticsRequest\x1a..loci.statistics.GetMainPageStatisticsResponse\x12p\n" +
+	"\x18StreamMainPageStatistics\x120.loci.statistics.StreamMainPageStatisticsRequest\x1a .loci.statistics.StatisticsEvent0\x01\x12\x7f\n" +
+	"\x18GetDetailedPOIStatistics\x120.loci.statistics.GetDetailedPOIStatisticsRequest\x1a1.loci.statistics.GetDetailedPOIStatisticsResponse\x12\x7f\n" +
+	"\x18GetLandingPageStatistics\x120.loci.statistics.GetLandingPageStatisticsRequest\x1a1.loci.statistics.GetLandingPageStatisticsResponse\x12\x7f\n" +
+	"\x18GetUserActivityAnalytics\x120.loci.statistics.GetUserActivityAnalyticsRequest\x1a1.loci.statistics.GetUserActivityAnalyticsResponse\x12m\n" +
+	"\x12GetSystemAnalytics\x12*.loci.statistics.GetSystemAnalyticsRequest\x1a+.loci.statistics.GetSystemAnalyticsResponseBNZLgithub.com/FACorreiaa/loci-connect-proto/gen/go/loci/statistics;statisticsv1b\x06proto3"
 
 var (
 	file_loci_statistics_statistics_proto_rawDescOnce sync.Once
@@ -3550,116 +3550,116 @@ func file_loci_statistics_statistics_proto_rawDescGZIP() []byte {
 
 var file_loci_statistics_statistics_proto_msgTypes = make([]protoimpl.MessageInfo, 47)
 var file_loci_statistics_statistics_proto_goTypes = []any{
-	(*MainPageStatistics)(nil),               // 0: ai_poi.statistics.v1.MainPageStatistics
-	(*RecentActivity)(nil),                   // 1: ai_poi.statistics.v1.RecentActivity
-	(*PopularDestination)(nil),               // 2: ai_poi.statistics.v1.PopularDestination
-	(*TrendingCategories)(nil),               // 3: ai_poi.statistics.v1.TrendingCategories
-	(*CategoryTrend)(nil),                    // 4: ai_poi.statistics.v1.CategoryTrend
-	(*DetailedPOIStatistics)(nil),            // 5: ai_poi.statistics.v1.DetailedPOIStatistics
-	(*CityInteractionStats)(nil),             // 6: ai_poi.statistics.v1.CityInteractionStats
-	(*SearchPatterns)(nil),                   // 7: ai_poi.statistics.v1.SearchPatterns
-	(*TimeBasedAnalytics)(nil),               // 8: ai_poi.statistics.v1.TimeBasedAnalytics
-	(*HourlyActivity)(nil),                   // 9: ai_poi.statistics.v1.HourlyActivity
-	(*DailyActivity)(nil),                    // 10: ai_poi.statistics.v1.DailyActivity
-	(*MonthlyActivity)(nil),                  // 11: ai_poi.statistics.v1.MonthlyActivity
-	(*LandingPageUserStats)(nil),             // 12: ai_poi.statistics.v1.LandingPageUserStats
-	(*RecentInteraction)(nil),                // 13: ai_poi.statistics.v1.RecentInteraction
-	(*PersonalizedRecommendations)(nil),      // 14: ai_poi.statistics.v1.PersonalizedRecommendations
-	(*AchievementBadges)(nil),                // 15: ai_poi.statistics.v1.AchievementBadges
-	(*Badge)(nil),                            // 16: ai_poi.statistics.v1.Badge
-	(*SystemAnalytics)(nil),                  // 17: ai_poi.statistics.v1.SystemAnalytics
-	(*UserGrowthMetrics)(nil),                // 18: ai_poi.statistics.v1.UserGrowthMetrics
-	(*UsageMetrics)(nil),                     // 19: ai_poi.statistics.v1.UsageMetrics
-	(*PerformanceMetrics)(nil),               // 20: ai_poi.statistics.v1.PerformanceMetrics
-	(*ErrorMetrics)(nil),                     // 21: ai_poi.statistics.v1.ErrorMetrics
-	(*ErrorBreakdown)(nil),                   // 22: ai_poi.statistics.v1.ErrorBreakdown
-	(*GeographicDistribution)(nil),           // 23: ai_poi.statistics.v1.GeographicDistribution
-	(*CountryStats)(nil),                     // 24: ai_poi.statistics.v1.CountryStats
-	(*CityStats)(nil),                        // 25: ai_poi.statistics.v1.CityStats
-	(*FeatureUsage)(nil),                     // 26: ai_poi.statistics.v1.FeatureUsage
-	(*FeatureMetric)(nil),                    // 27: ai_poi.statistics.v1.FeatureMetric
-	(*StatisticsEvent)(nil),                  // 28: ai_poi.statistics.v1.StatisticsEvent
-	(*MetricUpdate)(nil),                     // 29: ai_poi.statistics.v1.MetricUpdate
-	(*SystemAlert)(nil),                      // 30: ai_poi.statistics.v1.SystemAlert
-	(*GetMainPageStatisticsRequest)(nil),     // 31: ai_poi.statistics.v1.GetMainPageStatisticsRequest
-	(*GetMainPageStatisticsResponse)(nil),    // 32: ai_poi.statistics.v1.GetMainPageStatisticsResponse
-	(*StreamMainPageStatisticsRequest)(nil),  // 33: ai_poi.statistics.v1.StreamMainPageStatisticsRequest
-	(*GetDetailedPOIStatisticsRequest)(nil),  // 34: ai_poi.statistics.v1.GetDetailedPOIStatisticsRequest
-	(*GetDetailedPOIStatisticsResponse)(nil), // 35: ai_poi.statistics.v1.GetDetailedPOIStatisticsResponse
-	(*Prediction)(nil),                       // 36: ai_poi.statistics.v1.Prediction
-	(*GetLandingPageStatisticsRequest)(nil),  // 37: ai_poi.statistics.v1.GetLandingPageStatisticsRequest
-	(*GetLandingPageStatisticsResponse)(nil), // 38: ai_poi.statistics.v1.GetLandingPageStatisticsResponse
-	(*GetUserActivityAnalyticsRequest)(nil),  // 39: ai_poi.statistics.v1.GetUserActivityAnalyticsRequest
-	(*GetUserActivityAnalyticsResponse)(nil), // 40: ai_poi.statistics.v1.GetUserActivityAnalyticsResponse
-	(*ActivityDataPoint)(nil),                // 41: ai_poi.statistics.v1.ActivityDataPoint
-	(*ActivitySummary)(nil),                  // 42: ai_poi.statistics.v1.ActivitySummary
-	(*GetSystemAnalyticsRequest)(nil),        // 43: ai_poi.statistics.v1.GetSystemAnalyticsRequest
-	(*GetSystemAnalyticsResponse)(nil),       // 44: ai_poi.statistics.v1.GetSystemAnalyticsResponse
-	nil,                                      // 45: ai_poi.statistics.v1.RecentInteraction.MetadataEntry
-	nil,                                      // 46: ai_poi.statistics.v1.SystemAlert.DetailsEntry
+	(*MainPageStatistics)(nil),               // 0: loci.statistics.MainPageStatistics
+	(*RecentActivity)(nil),                   // 1: loci.statistics.RecentActivity
+	(*PopularDestination)(nil),               // 2: loci.statistics.PopularDestination
+	(*TrendingCategories)(nil),               // 3: loci.statistics.TrendingCategories
+	(*CategoryTrend)(nil),                    // 4: loci.statistics.CategoryTrend
+	(*DetailedPOIStatistics)(nil),            // 5: loci.statistics.DetailedPOIStatistics
+	(*CityInteractionStats)(nil),             // 6: loci.statistics.CityInteractionStats
+	(*SearchPatterns)(nil),                   // 7: loci.statistics.SearchPatterns
+	(*TimeBasedAnalytics)(nil),               // 8: loci.statistics.TimeBasedAnalytics
+	(*HourlyActivity)(nil),                   // 9: loci.statistics.HourlyActivity
+	(*DailyActivity)(nil),                    // 10: loci.statistics.DailyActivity
+	(*MonthlyActivity)(nil),                  // 11: loci.statistics.MonthlyActivity
+	(*LandingPageUserStats)(nil),             // 12: loci.statistics.LandingPageUserStats
+	(*RecentInteraction)(nil),                // 13: loci.statistics.RecentInteraction
+	(*PersonalizedRecommendations)(nil),      // 14: loci.statistics.PersonalizedRecommendations
+	(*AchievementBadges)(nil),                // 15: loci.statistics.AchievementBadges
+	(*Badge)(nil),                            // 16: loci.statistics.Badge
+	(*SystemAnalytics)(nil),                  // 17: loci.statistics.SystemAnalytics
+	(*UserGrowthMetrics)(nil),                // 18: loci.statistics.UserGrowthMetrics
+	(*UsageMetrics)(nil),                     // 19: loci.statistics.UsageMetrics
+	(*PerformanceMetrics)(nil),               // 20: loci.statistics.PerformanceMetrics
+	(*ErrorMetrics)(nil),                     // 21: loci.statistics.ErrorMetrics
+	(*ErrorBreakdown)(nil),                   // 22: loci.statistics.ErrorBreakdown
+	(*GeographicDistribution)(nil),           // 23: loci.statistics.GeographicDistribution
+	(*CountryStats)(nil),                     // 24: loci.statistics.CountryStats
+	(*CityStats)(nil),                        // 25: loci.statistics.CityStats
+	(*FeatureUsage)(nil),                     // 26: loci.statistics.FeatureUsage
+	(*FeatureMetric)(nil),                    // 27: loci.statistics.FeatureMetric
+	(*StatisticsEvent)(nil),                  // 28: loci.statistics.StatisticsEvent
+	(*MetricUpdate)(nil),                     // 29: loci.statistics.MetricUpdate
+	(*SystemAlert)(nil),                      // 30: loci.statistics.SystemAlert
+	(*GetMainPageStatisticsRequest)(nil),     // 31: loci.statistics.GetMainPageStatisticsRequest
+	(*GetMainPageStatisticsResponse)(nil),    // 32: loci.statistics.GetMainPageStatisticsResponse
+	(*StreamMainPageStatisticsRequest)(nil),  // 33: loci.statistics.StreamMainPageStatisticsRequest
+	(*GetDetailedPOIStatisticsRequest)(nil),  // 34: loci.statistics.GetDetailedPOIStatisticsRequest
+	(*GetDetailedPOIStatisticsResponse)(nil), // 35: loci.statistics.GetDetailedPOIStatisticsResponse
+	(*Prediction)(nil),                       // 36: loci.statistics.Prediction
+	(*GetLandingPageStatisticsRequest)(nil),  // 37: loci.statistics.GetLandingPageStatisticsRequest
+	(*GetLandingPageStatisticsResponse)(nil), // 38: loci.statistics.GetLandingPageStatisticsResponse
+	(*GetUserActivityAnalyticsRequest)(nil),  // 39: loci.statistics.GetUserActivityAnalyticsRequest
+	(*GetUserActivityAnalyticsResponse)(nil), // 40: loci.statistics.GetUserActivityAnalyticsResponse
+	(*ActivityDataPoint)(nil),                // 41: loci.statistics.ActivityDataPoint
+	(*ActivitySummary)(nil),                  // 42: loci.statistics.ActivitySummary
+	(*GetSystemAnalyticsRequest)(nil),        // 43: loci.statistics.GetSystemAnalyticsRequest
+	(*GetSystemAnalyticsResponse)(nil),       // 44: loci.statistics.GetSystemAnalyticsResponse
+	nil,                                      // 45: loci.statistics.RecentInteraction.MetadataEntry
+	nil,                                      // 46: loci.statistics.SystemAlert.DetailsEntry
 	(*timestamppb.Timestamp)(nil),            // 47: google.protobuf.Timestamp
 }
 var file_loci_statistics_statistics_proto_depIdxs = []int32{
-	1,  // 0: ai_poi.statistics.v1.MainPageStatistics.recent_activity:type_name -> ai_poi.statistics.v1.RecentActivity
-	2,  // 1: ai_poi.statistics.v1.MainPageStatistics.popular_destinations:type_name -> ai_poi.statistics.v1.PopularDestination
-	3,  // 2: ai_poi.statistics.v1.MainPageStatistics.trending_categories:type_name -> ai_poi.statistics.v1.TrendingCategories
-	47, // 3: ai_poi.statistics.v1.MainPageStatistics.last_updated:type_name -> google.protobuf.Timestamp
-	4,  // 4: ai_poi.statistics.v1.TrendingCategories.categories:type_name -> ai_poi.statistics.v1.CategoryTrend
-	6,  // 5: ai_poi.statistics.v1.DetailedPOIStatistics.city_interactions:type_name -> ai_poi.statistics.v1.CityInteractionStats
-	7,  // 6: ai_poi.statistics.v1.DetailedPOIStatistics.search_patterns:type_name -> ai_poi.statistics.v1.SearchPatterns
-	8,  // 7: ai_poi.statistics.v1.DetailedPOIStatistics.time_analytics:type_name -> ai_poi.statistics.v1.TimeBasedAnalytics
-	47, // 8: ai_poi.statistics.v1.DetailedPOIStatistics.generated_at:type_name -> google.protobuf.Timestamp
-	47, // 9: ai_poi.statistics.v1.CityInteractionStats.last_interaction:type_name -> google.protobuf.Timestamp
-	9,  // 10: ai_poi.statistics.v1.TimeBasedAnalytics.hourly_activity:type_name -> ai_poi.statistics.v1.HourlyActivity
-	10, // 11: ai_poi.statistics.v1.TimeBasedAnalytics.daily_activity:type_name -> ai_poi.statistics.v1.DailyActivity
-	11, // 12: ai_poi.statistics.v1.TimeBasedAnalytics.monthly_activity:type_name -> ai_poi.statistics.v1.MonthlyActivity
-	47, // 13: ai_poi.statistics.v1.DailyActivity.date:type_name -> google.protobuf.Timestamp
-	13, // 14: ai_poi.statistics.v1.LandingPageUserStats.recent_interactions:type_name -> ai_poi.statistics.v1.RecentInteraction
-	14, // 15: ai_poi.statistics.v1.LandingPageUserStats.recommendations:type_name -> ai_poi.statistics.v1.PersonalizedRecommendations
-	15, // 16: ai_poi.statistics.v1.LandingPageUserStats.badges:type_name -> ai_poi.statistics.v1.AchievementBadges
-	47, // 17: ai_poi.statistics.v1.RecentInteraction.timestamp:type_name -> google.protobuf.Timestamp
-	45, // 18: ai_poi.statistics.v1.RecentInteraction.metadata:type_name -> ai_poi.statistics.v1.RecentInteraction.MetadataEntry
-	16, // 19: ai_poi.statistics.v1.AchievementBadges.earned_badges:type_name -> ai_poi.statistics.v1.Badge
-	16, // 20: ai_poi.statistics.v1.AchievementBadges.available_badges:type_name -> ai_poi.statistics.v1.Badge
-	47, // 21: ai_poi.statistics.v1.Badge.earned_at:type_name -> google.protobuf.Timestamp
-	18, // 22: ai_poi.statistics.v1.SystemAnalytics.user_growth:type_name -> ai_poi.statistics.v1.UserGrowthMetrics
-	19, // 23: ai_poi.statistics.v1.SystemAnalytics.usage_metrics:type_name -> ai_poi.statistics.v1.UsageMetrics
-	20, // 24: ai_poi.statistics.v1.SystemAnalytics.performance_metrics:type_name -> ai_poi.statistics.v1.PerformanceMetrics
-	21, // 25: ai_poi.statistics.v1.SystemAnalytics.error_metrics:type_name -> ai_poi.statistics.v1.ErrorMetrics
-	23, // 26: ai_poi.statistics.v1.SystemAnalytics.geographic_distribution:type_name -> ai_poi.statistics.v1.GeographicDistribution
-	26, // 27: ai_poi.statistics.v1.SystemAnalytics.feature_usage:type_name -> ai_poi.statistics.v1.FeatureUsage
-	47, // 28: ai_poi.statistics.v1.SystemAnalytics.generated_at:type_name -> google.protobuf.Timestamp
-	22, // 29: ai_poi.statistics.v1.ErrorMetrics.error_breakdown:type_name -> ai_poi.statistics.v1.ErrorBreakdown
-	24, // 30: ai_poi.statistics.v1.GeographicDistribution.country_stats:type_name -> ai_poi.statistics.v1.CountryStats
-	25, // 31: ai_poi.statistics.v1.GeographicDistribution.city_stats:type_name -> ai_poi.statistics.v1.CityStats
-	27, // 32: ai_poi.statistics.v1.FeatureUsage.feature_metrics:type_name -> ai_poi.statistics.v1.FeatureMetric
-	47, // 33: ai_poi.statistics.v1.StatisticsEvent.timestamp:type_name -> google.protobuf.Timestamp
-	0,  // 34: ai_poi.statistics.v1.StatisticsEvent.main_stats:type_name -> ai_poi.statistics.v1.MainPageStatistics
-	29, // 35: ai_poi.statistics.v1.StatisticsEvent.metric_update:type_name -> ai_poi.statistics.v1.MetricUpdate
-	30, // 36: ai_poi.statistics.v1.StatisticsEvent.system_alert:type_name -> ai_poi.statistics.v1.SystemAlert
-	46, // 37: ai_poi.statistics.v1.SystemAlert.details:type_name -> ai_poi.statistics.v1.SystemAlert.DetailsEntry
-	0,  // 38: ai_poi.statistics.v1.GetMainPageStatisticsResponse.statistics:type_name -> ai_poi.statistics.v1.MainPageStatistics
-	5,  // 39: ai_poi.statistics.v1.GetDetailedPOIStatisticsResponse.statistics:type_name -> ai_poi.statistics.v1.DetailedPOIStatistics
-	36, // 40: ai_poi.statistics.v1.GetDetailedPOIStatisticsResponse.predictions:type_name -> ai_poi.statistics.v1.Prediction
-	12, // 41: ai_poi.statistics.v1.GetLandingPageStatisticsResponse.statistics:type_name -> ai_poi.statistics.v1.LandingPageUserStats
-	47, // 42: ai_poi.statistics.v1.GetUserActivityAnalyticsRequest.start_date:type_name -> google.protobuf.Timestamp
-	47, // 43: ai_poi.statistics.v1.GetUserActivityAnalyticsRequest.end_date:type_name -> google.protobuf.Timestamp
-	41, // 44: ai_poi.statistics.v1.GetUserActivityAnalyticsResponse.activity_data:type_name -> ai_poi.statistics.v1.ActivityDataPoint
-	42, // 45: ai_poi.statistics.v1.GetUserActivityAnalyticsResponse.summary:type_name -> ai_poi.statistics.v1.ActivitySummary
-	47, // 46: ai_poi.statistics.v1.ActivityDataPoint.timestamp:type_name -> google.protobuf.Timestamp
-	17, // 47: ai_poi.statistics.v1.GetSystemAnalyticsResponse.analytics:type_name -> ai_poi.statistics.v1.SystemAnalytics
-	31, // 48: ai_poi.statistics.v1.StatisticsService.GetMainPageStatistics:input_type -> ai_poi.statistics.v1.GetMainPageStatisticsRequest
-	33, // 49: ai_poi.statistics.v1.StatisticsService.StreamMainPageStatistics:input_type -> ai_poi.statistics.v1.StreamMainPageStatisticsRequest
-	34, // 50: ai_poi.statistics.v1.StatisticsService.GetDetailedPOIStatistics:input_type -> ai_poi.statistics.v1.GetDetailedPOIStatisticsRequest
-	37, // 51: ai_poi.statistics.v1.StatisticsService.GetLandingPageStatistics:input_type -> ai_poi.statistics.v1.GetLandingPageStatisticsRequest
-	39, // 52: ai_poi.statistics.v1.StatisticsService.GetUserActivityAnalytics:input_type -> ai_poi.statistics.v1.GetUserActivityAnalyticsRequest
-	43, // 53: ai_poi.statistics.v1.StatisticsService.GetSystemAnalytics:input_type -> ai_poi.statistics.v1.GetSystemAnalyticsRequest
-	32, // 54: ai_poi.statistics.v1.StatisticsService.GetMainPageStatistics:output_type -> ai_poi.statistics.v1.GetMainPageStatisticsResponse
-	28, // 55: ai_poi.statistics.v1.StatisticsService.StreamMainPageStatistics:output_type -> ai_poi.statistics.v1.StatisticsEvent
-	35, // 56: ai_poi.statistics.v1.StatisticsService.GetDetailedPOIStatistics:output_type -> ai_poi.statistics.v1.GetDetailedPOIStatisticsResponse
-	38, // 57: ai_poi.statistics.v1.StatisticsService.GetLandingPageStatistics:output_type -> ai_poi.statistics.v1.GetLandingPageStatisticsResponse
-	40, // 58: ai_poi.statistics.v1.StatisticsService.GetUserActivityAnalytics:output_type -> ai_poi.statistics.v1.GetUserActivityAnalyticsResponse
-	44, // 59: ai_poi.statistics.v1.StatisticsService.GetSystemAnalytics:output_type -> ai_poi.statistics.v1.GetSystemAnalyticsResponse
+	1,  // 0: loci.statistics.MainPageStatistics.recent_activity:type_name -> loci.statistics.RecentActivity
+	2,  // 1: loci.statistics.MainPageStatistics.popular_destinations:type_name -> loci.statistics.PopularDestination
+	3,  // 2: loci.statistics.MainPageStatistics.trending_categories:type_name -> loci.statistics.TrendingCategories
+	47, // 3: loci.statistics.MainPageStatistics.last_updated:type_name -> google.protobuf.Timestamp
+	4,  // 4: loci.statistics.TrendingCategories.categories:type_name -> loci.statistics.CategoryTrend
+	6,  // 5: loci.statistics.DetailedPOIStatistics.city_interactions:type_name -> loci.statistics.CityInteractionStats
+	7,  // 6: loci.statistics.DetailedPOIStatistics.search_patterns:type_name -> loci.statistics.SearchPatterns
+	8,  // 7: loci.statistics.DetailedPOIStatistics.time_analytics:type_name -> loci.statistics.TimeBasedAnalytics
+	47, // 8: loci.statistics.DetailedPOIStatistics.generated_at:type_name -> google.protobuf.Timestamp
+	47, // 9: loci.statistics.CityInteractionStats.last_interaction:type_name -> google.protobuf.Timestamp
+	9,  // 10: loci.statistics.TimeBasedAnalytics.hourly_activity:type_name -> loci.statistics.HourlyActivity
+	10, // 11: loci.statistics.TimeBasedAnalytics.daily_activity:type_name -> loci.statistics.DailyActivity
+	11, // 12: loci.statistics.TimeBasedAnalytics.monthly_activity:type_name -> loci.statistics.MonthlyActivity
+	47, // 13: loci.statistics.DailyActivity.date:type_name -> google.protobuf.Timestamp
+	13, // 14: loci.statistics.LandingPageUserStats.recent_interactions:type_name -> loci.statistics.RecentInteraction
+	14, // 15: loci.statistics.LandingPageUserStats.recommendations:type_name -> loci.statistics.PersonalizedRecommendations
+	15, // 16: loci.statistics.LandingPageUserStats.badges:type_name -> loci.statistics.AchievementBadges
+	47, // 17: loci.statistics.RecentInteraction.timestamp:type_name -> google.protobuf.Timestamp
+	45, // 18: loci.statistics.RecentInteraction.metadata:type_name -> loci.statistics.RecentInteraction.MetadataEntry
+	16, // 19: loci.statistics.AchievementBadges.earned_badges:type_name -> loci.statistics.Badge
+	16, // 20: loci.statistics.AchievementBadges.available_badges:type_name -> loci.statistics.Badge
+	47, // 21: loci.statistics.Badge.earned_at:type_name -> google.protobuf.Timestamp
+	18, // 22: loci.statistics.SystemAnalytics.user_growth:type_name -> loci.statistics.UserGrowthMetrics
+	19, // 23: loci.statistics.SystemAnalytics.usage_metrics:type_name -> loci.statistics.UsageMetrics
+	20, // 24: loci.statistics.SystemAnalytics.performance_metrics:type_name -> loci.statistics.PerformanceMetrics
+	21, // 25: loci.statistics.SystemAnalytics.error_metrics:type_name -> loci.statistics.ErrorMetrics
+	23, // 26: loci.statistics.SystemAnalytics.geographic_distribution:type_name -> loci.statistics.GeographicDistribution
+	26, // 27: loci.statistics.SystemAnalytics.feature_usage:type_name -> loci.statistics.FeatureUsage
+	47, // 28: loci.statistics.SystemAnalytics.generated_at:type_name -> google.protobuf.Timestamp
+	22, // 29: loci.statistics.ErrorMetrics.error_breakdown:type_name -> loci.statistics.ErrorBreakdown
+	24, // 30: loci.statistics.GeographicDistribution.country_stats:type_name -> loci.statistics.CountryStats
+	25, // 31: loci.statistics.GeographicDistribution.city_stats:type_name -> loci.statistics.CityStats
+	27, // 32: loci.statistics.FeatureUsage.feature_metrics:type_name -> loci.statistics.FeatureMetric
+	47, // 33: loci.statistics.StatisticsEvent.timestamp:type_name -> google.protobuf.Timestamp
+	0,  // 34: loci.statistics.StatisticsEvent.main_stats:type_name -> loci.statistics.MainPageStatistics
+	29, // 35: loci.statistics.StatisticsEvent.metric_update:type_name -> loci.statistics.MetricUpdate
+	30, // 36: loci.statistics.StatisticsEvent.system_alert:type_name -> loci.statistics.SystemAlert
+	46, // 37: loci.statistics.SystemAlert.details:type_name -> loci.statistics.SystemAlert.DetailsEntry
+	0,  // 38: loci.statistics.GetMainPageStatisticsResponse.statistics:type_name -> loci.statistics.MainPageStatistics
+	5,  // 39: loci.statistics.GetDetailedPOIStatisticsResponse.statistics:type_name -> loci.statistics.DetailedPOIStatistics
+	36, // 40: loci.statistics.GetDetailedPOIStatisticsResponse.predictions:type_name -> loci.statistics.Prediction
+	12, // 41: loci.statistics.GetLandingPageStatisticsResponse.statistics:type_name -> loci.statistics.LandingPageUserStats
+	47, // 42: loci.statistics.GetUserActivityAnalyticsRequest.start_date:type_name -> google.protobuf.Timestamp
+	47, // 43: loci.statistics.GetUserActivityAnalyticsRequest.end_date:type_name -> google.protobuf.Timestamp
+	41, // 44: loci.statistics.GetUserActivityAnalyticsResponse.activity_data:type_name -> loci.statistics.ActivityDataPoint
+	42, // 45: loci.statistics.GetUserActivityAnalyticsResponse.summary:type_name -> loci.statistics.ActivitySummary
+	47, // 46: loci.statistics.ActivityDataPoint.timestamp:type_name -> google.protobuf.Timestamp
+	17, // 47: loci.statistics.GetSystemAnalyticsResponse.analytics:type_name -> loci.statistics.SystemAnalytics
+	31, // 48: loci.statistics.StatisticsService.GetMainPageStatistics:input_type -> loci.statistics.GetMainPageStatisticsRequest
+	33, // 49: loci.statistics.StatisticsService.StreamMainPageStatistics:input_type -> loci.statistics.StreamMainPageStatisticsRequest
+	34, // 50: loci.statistics.StatisticsService.GetDetailedPOIStatistics:input_type -> loci.statistics.GetDetailedPOIStatisticsRequest
+	37, // 51: loci.statistics.StatisticsService.GetLandingPageStatistics:input_type -> loci.statistics.GetLandingPageStatisticsRequest
+	39, // 52: loci.statistics.StatisticsService.GetUserActivityAnalytics:input_type -> loci.statistics.GetUserActivityAnalyticsRequest
+	43, // 53: loci.statistics.StatisticsService.GetSystemAnalytics:input_type -> loci.statistics.GetSystemAnalyticsRequest
+	32, // 54: loci.statistics.StatisticsService.GetMainPageStatistics:output_type -> loci.statistics.GetMainPageStatisticsResponse
+	28, // 55: loci.statistics.StatisticsService.StreamMainPageStatistics:output_type -> loci.statistics.StatisticsEvent
+	35, // 56: loci.statistics.StatisticsService.GetDetailedPOIStatistics:output_type -> loci.statistics.GetDetailedPOIStatisticsResponse
+	38, // 57: loci.statistics.StatisticsService.GetLandingPageStatistics:output_type -> loci.statistics.GetLandingPageStatisticsResponse
+	40, // 58: loci.statistics.StatisticsService.GetUserActivityAnalytics:output_type -> loci.statistics.GetUserActivityAnalyticsResponse
+	44, // 59: loci.statistics.StatisticsService.GetSystemAnalytics:output_type -> loci.statistics.GetSystemAnalyticsResponse
 	54, // [54:60] is the sub-list for method output_type
 	48, // [48:54] is the sub-list for method input_type
 	48, // [48:48] is the sub-list for extension type_name

@@ -8,7 +8,7 @@ import (
 	connect "connectrpc.com/connect"
 	context "context"
 	errors "errors"
-	v1 "github.com/FACorreiaa/loci-connect-proto/gen/go/ai_poi/tags/v1"
+	tags "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/tags"
 	http "net/http"
 	strings "strings"
 )
@@ -22,7 +22,7 @@ const _ = connect.IsAtLeastVersion1_13_0
 
 const (
 	// TagsServiceName is the fully-qualified name of the TagsService service.
-	TagsServiceName = "ai_poi.tags.v1.TagsService"
+	TagsServiceName = "loci.tags.TagsService"
 )
 
 // These constants are the fully-qualified names of the RPCs defined in this package. They're
@@ -34,20 +34,20 @@ const (
 // period.
 const (
 	// TagsServiceGetTagsProcedure is the fully-qualified name of the TagsService's GetTags RPC.
-	TagsServiceGetTagsProcedure = "/ai_poi.tags.v1.TagsService/GetTags"
+	TagsServiceGetTagsProcedure = "/loci.tags.TagsService/GetTags"
 	// TagsServiceGetTagProcedure is the fully-qualified name of the TagsService's GetTag RPC.
-	TagsServiceGetTagProcedure = "/ai_poi.tags.v1.TagsService/GetTag"
+	TagsServiceGetTagProcedure = "/loci.tags.TagsService/GetTag"
 	// TagsServiceCreateTagProcedure is the fully-qualified name of the TagsService's CreateTag RPC.
-	TagsServiceCreateTagProcedure = "/ai_poi.tags.v1.TagsService/CreateTag"
+	TagsServiceCreateTagProcedure = "/loci.tags.TagsService/CreateTag"
 	// TagsServiceUpdateTagProcedure is the fully-qualified name of the TagsService's UpdateTag RPC.
-	TagsServiceUpdateTagProcedure = "/ai_poi.tags.v1.TagsService/UpdateTag"
+	TagsServiceUpdateTagProcedure = "/loci.tags.TagsService/UpdateTag"
 	// TagsServiceDeleteTagProcedure is the fully-qualified name of the TagsService's DeleteTag RPC.
-	TagsServiceDeleteTagProcedure = "/ai_poi.tags.v1.TagsService/DeleteTag"
+	TagsServiceDeleteTagProcedure = "/loci.tags.TagsService/DeleteTag"
 )
 
 // These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
 var (
-	tagsServiceServiceDescriptor         = v1.File_loci_tags_tags_proto.Services().ByName("TagsService")
+	tagsServiceServiceDescriptor         = tags.File_loci_tags_tags_proto.Services().ByName("TagsService")
 	tagsServiceGetTagsMethodDescriptor   = tagsServiceServiceDescriptor.Methods().ByName("GetTags")
 	tagsServiceGetTagMethodDescriptor    = tagsServiceServiceDescriptor.Methods().ByName("GetTag")
 	tagsServiceCreateTagMethodDescriptor = tagsServiceServiceDescriptor.Methods().ByName("CreateTag")
@@ -55,56 +55,56 @@ var (
 	tagsServiceDeleteTagMethodDescriptor = tagsServiceServiceDescriptor.Methods().ByName("DeleteTag")
 )
 
-// TagsServiceClient is a client for the ai_poi.tags.v1.TagsService service.
+// TagsServiceClient is a client for the loci.tags.TagsService service.
 type TagsServiceClient interface {
 	// GetTags retrieves all tags for a specific user
-	GetTags(context.Context, *connect.Request[v1.GetTagsRequest]) (*connect.Response[v1.GetTagsResponse], error)
+	GetTags(context.Context, *connect.Request[tags.GetTagsRequest]) (*connect.Response[tags.GetTagsResponse], error)
 	// GetTag retrieves a specific tag by ID
-	GetTag(context.Context, *connect.Request[v1.GetTagRequest]) (*connect.Response[v1.GetTagResponse], error)
+	GetTag(context.Context, *connect.Request[tags.GetTagRequest]) (*connect.Response[tags.GetTagResponse], error)
 	// CreateTag creates a new personal tag
-	CreateTag(context.Context, *connect.Request[v1.CreateTagRequest]) (*connect.Response[v1.CreateTagResponse], error)
+	CreateTag(context.Context, *connect.Request[tags.CreateTagRequest]) (*connect.Response[tags.CreateTagResponse], error)
 	// UpdateTag updates an existing tag
 	// Note: Renamed from "Update" to "UpdateTag" for RPC clarity
-	UpdateTag(context.Context, *connect.Request[v1.UpdateTagRequest]) (*connect.Response[v1.UpdateTagResponse], error)
+	UpdateTag(context.Context, *connect.Request[tags.UpdateTagRequest]) (*connect.Response[tags.UpdateTagResponse], error)
 	// DeleteTag deletes a specific tag
-	DeleteTag(context.Context, *connect.Request[v1.DeleteTagRequest]) (*connect.Response[v1.DeleteTagResponse], error)
+	DeleteTag(context.Context, *connect.Request[tags.DeleteTagRequest]) (*connect.Response[tags.DeleteTagResponse], error)
 }
 
-// NewTagsServiceClient constructs a client for the ai_poi.tags.v1.TagsService service. By default,
-// it uses the Connect protocol with the binary Protobuf Codec, asks for gzipped responses, and
-// sends uncompressed requests. To use the gRPC or gRPC-Web protocols, supply the connect.WithGRPC()
-// or connect.WithGRPCWeb() options.
+// NewTagsServiceClient constructs a client for the loci.tags.TagsService service. By default, it
+// uses the Connect protocol with the binary Protobuf Codec, asks for gzipped responses, and sends
+// uncompressed requests. To use the gRPC or gRPC-Web protocols, supply the connect.WithGRPC() or
+// connect.WithGRPCWeb() options.
 //
 // The URL supplied here should be the base URL for the Connect or gRPC server (for example,
 // http://api.acme.com or https://acme.com/grpc).
 func NewTagsServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) TagsServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
 	return &tagsServiceClient{
-		getTags: connect.NewClient[v1.GetTagsRequest, v1.GetTagsResponse](
+		getTags: connect.NewClient[tags.GetTagsRequest, tags.GetTagsResponse](
 			httpClient,
 			baseURL+TagsServiceGetTagsProcedure,
 			connect.WithSchema(tagsServiceGetTagsMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		getTag: connect.NewClient[v1.GetTagRequest, v1.GetTagResponse](
+		getTag: connect.NewClient[tags.GetTagRequest, tags.GetTagResponse](
 			httpClient,
 			baseURL+TagsServiceGetTagProcedure,
 			connect.WithSchema(tagsServiceGetTagMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		createTag: connect.NewClient[v1.CreateTagRequest, v1.CreateTagResponse](
+		createTag: connect.NewClient[tags.CreateTagRequest, tags.CreateTagResponse](
 			httpClient,
 			baseURL+TagsServiceCreateTagProcedure,
 			connect.WithSchema(tagsServiceCreateTagMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		updateTag: connect.NewClient[v1.UpdateTagRequest, v1.UpdateTagResponse](
+		updateTag: connect.NewClient[tags.UpdateTagRequest, tags.UpdateTagResponse](
 			httpClient,
 			baseURL+TagsServiceUpdateTagProcedure,
 			connect.WithSchema(tagsServiceUpdateTagMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		deleteTag: connect.NewClient[v1.DeleteTagRequest, v1.DeleteTagResponse](
+		deleteTag: connect.NewClient[tags.DeleteTagRequest, tags.DeleteTagResponse](
 			httpClient,
 			baseURL+TagsServiceDeleteTagProcedure,
 			connect.WithSchema(tagsServiceDeleteTagMethodDescriptor),
@@ -115,51 +115,51 @@ func NewTagsServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 
 // tagsServiceClient implements TagsServiceClient.
 type tagsServiceClient struct {
-	getTags   *connect.Client[v1.GetTagsRequest, v1.GetTagsResponse]
-	getTag    *connect.Client[v1.GetTagRequest, v1.GetTagResponse]
-	createTag *connect.Client[v1.CreateTagRequest, v1.CreateTagResponse]
-	updateTag *connect.Client[v1.UpdateTagRequest, v1.UpdateTagResponse]
-	deleteTag *connect.Client[v1.DeleteTagRequest, v1.DeleteTagResponse]
+	getTags   *connect.Client[tags.GetTagsRequest, tags.GetTagsResponse]
+	getTag    *connect.Client[tags.GetTagRequest, tags.GetTagResponse]
+	createTag *connect.Client[tags.CreateTagRequest, tags.CreateTagResponse]
+	updateTag *connect.Client[tags.UpdateTagRequest, tags.UpdateTagResponse]
+	deleteTag *connect.Client[tags.DeleteTagRequest, tags.DeleteTagResponse]
 }
 
-// GetTags calls ai_poi.tags.v1.TagsService.GetTags.
-func (c *tagsServiceClient) GetTags(ctx context.Context, req *connect.Request[v1.GetTagsRequest]) (*connect.Response[v1.GetTagsResponse], error) {
+// GetTags calls loci.tags.TagsService.GetTags.
+func (c *tagsServiceClient) GetTags(ctx context.Context, req *connect.Request[tags.GetTagsRequest]) (*connect.Response[tags.GetTagsResponse], error) {
 	return c.getTags.CallUnary(ctx, req)
 }
 
-// GetTag calls ai_poi.tags.v1.TagsService.GetTag.
-func (c *tagsServiceClient) GetTag(ctx context.Context, req *connect.Request[v1.GetTagRequest]) (*connect.Response[v1.GetTagResponse], error) {
+// GetTag calls loci.tags.TagsService.GetTag.
+func (c *tagsServiceClient) GetTag(ctx context.Context, req *connect.Request[tags.GetTagRequest]) (*connect.Response[tags.GetTagResponse], error) {
 	return c.getTag.CallUnary(ctx, req)
 }
 
-// CreateTag calls ai_poi.tags.v1.TagsService.CreateTag.
-func (c *tagsServiceClient) CreateTag(ctx context.Context, req *connect.Request[v1.CreateTagRequest]) (*connect.Response[v1.CreateTagResponse], error) {
+// CreateTag calls loci.tags.TagsService.CreateTag.
+func (c *tagsServiceClient) CreateTag(ctx context.Context, req *connect.Request[tags.CreateTagRequest]) (*connect.Response[tags.CreateTagResponse], error) {
 	return c.createTag.CallUnary(ctx, req)
 }
 
-// UpdateTag calls ai_poi.tags.v1.TagsService.UpdateTag.
-func (c *tagsServiceClient) UpdateTag(ctx context.Context, req *connect.Request[v1.UpdateTagRequest]) (*connect.Response[v1.UpdateTagResponse], error) {
+// UpdateTag calls loci.tags.TagsService.UpdateTag.
+func (c *tagsServiceClient) UpdateTag(ctx context.Context, req *connect.Request[tags.UpdateTagRequest]) (*connect.Response[tags.UpdateTagResponse], error) {
 	return c.updateTag.CallUnary(ctx, req)
 }
 
-// DeleteTag calls ai_poi.tags.v1.TagsService.DeleteTag.
-func (c *tagsServiceClient) DeleteTag(ctx context.Context, req *connect.Request[v1.DeleteTagRequest]) (*connect.Response[v1.DeleteTagResponse], error) {
+// DeleteTag calls loci.tags.TagsService.DeleteTag.
+func (c *tagsServiceClient) DeleteTag(ctx context.Context, req *connect.Request[tags.DeleteTagRequest]) (*connect.Response[tags.DeleteTagResponse], error) {
 	return c.deleteTag.CallUnary(ctx, req)
 }
 
-// TagsServiceHandler is an implementation of the ai_poi.tags.v1.TagsService service.
+// TagsServiceHandler is an implementation of the loci.tags.TagsService service.
 type TagsServiceHandler interface {
 	// GetTags retrieves all tags for a specific user
-	GetTags(context.Context, *connect.Request[v1.GetTagsRequest]) (*connect.Response[v1.GetTagsResponse], error)
+	GetTags(context.Context, *connect.Request[tags.GetTagsRequest]) (*connect.Response[tags.GetTagsResponse], error)
 	// GetTag retrieves a specific tag by ID
-	GetTag(context.Context, *connect.Request[v1.GetTagRequest]) (*connect.Response[v1.GetTagResponse], error)
+	GetTag(context.Context, *connect.Request[tags.GetTagRequest]) (*connect.Response[tags.GetTagResponse], error)
 	// CreateTag creates a new personal tag
-	CreateTag(context.Context, *connect.Request[v1.CreateTagRequest]) (*connect.Response[v1.CreateTagResponse], error)
+	CreateTag(context.Context, *connect.Request[tags.CreateTagRequest]) (*connect.Response[tags.CreateTagResponse], error)
 	// UpdateTag updates an existing tag
 	// Note: Renamed from "Update" to "UpdateTag" for RPC clarity
-	UpdateTag(context.Context, *connect.Request[v1.UpdateTagRequest]) (*connect.Response[v1.UpdateTagResponse], error)
+	UpdateTag(context.Context, *connect.Request[tags.UpdateTagRequest]) (*connect.Response[tags.UpdateTagResponse], error)
 	// DeleteTag deletes a specific tag
-	DeleteTag(context.Context, *connect.Request[v1.DeleteTagRequest]) (*connect.Response[v1.DeleteTagResponse], error)
+	DeleteTag(context.Context, *connect.Request[tags.DeleteTagRequest]) (*connect.Response[tags.DeleteTagResponse], error)
 }
 
 // NewTagsServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -198,7 +198,7 @@ func NewTagsServiceHandler(svc TagsServiceHandler, opts ...connect.HandlerOption
 		connect.WithSchema(tagsServiceDeleteTagMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
-	return "/ai_poi.tags.v1.TagsService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	return "/loci.tags.TagsService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case TagsServiceGetTagsProcedure:
 			tagsServiceGetTagsHandler.ServeHTTP(w, r)
@@ -219,22 +219,22 @@ func NewTagsServiceHandler(svc TagsServiceHandler, opts ...connect.HandlerOption
 // UnimplementedTagsServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedTagsServiceHandler struct{}
 
-func (UnimplementedTagsServiceHandler) GetTags(context.Context, *connect.Request[v1.GetTagsRequest]) (*connect.Response[v1.GetTagsResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.tags.v1.TagsService.GetTags is not implemented"))
+func (UnimplementedTagsServiceHandler) GetTags(context.Context, *connect.Request[tags.GetTagsRequest]) (*connect.Response[tags.GetTagsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.tags.TagsService.GetTags is not implemented"))
 }
 
-func (UnimplementedTagsServiceHandler) GetTag(context.Context, *connect.Request[v1.GetTagRequest]) (*connect.Response[v1.GetTagResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.tags.v1.TagsService.GetTag is not implemented"))
+func (UnimplementedTagsServiceHandler) GetTag(context.Context, *connect.Request[tags.GetTagRequest]) (*connect.Response[tags.GetTagResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.tags.TagsService.GetTag is not implemented"))
 }
 
-func (UnimplementedTagsServiceHandler) CreateTag(context.Context, *connect.Request[v1.CreateTagRequest]) (*connect.Response[v1.CreateTagResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.tags.v1.TagsService.CreateTag is not implemented"))
+func (UnimplementedTagsServiceHandler) CreateTag(context.Context, *connect.Request[tags.CreateTagRequest]) (*connect.Response[tags.CreateTagResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.tags.TagsService.CreateTag is not implemented"))
 }
 
-func (UnimplementedTagsServiceHandler) UpdateTag(context.Context, *connect.Request[v1.UpdateTagRequest]) (*connect.Response[v1.UpdateTagResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.tags.v1.TagsService.UpdateTag is not implemented"))
+func (UnimplementedTagsServiceHandler) UpdateTag(context.Context, *connect.Request[tags.UpdateTagRequest]) (*connect.Response[tags.UpdateTagResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.tags.TagsService.UpdateTag is not implemented"))
 }
 
-func (UnimplementedTagsServiceHandler) DeleteTag(context.Context, *connect.Request[v1.DeleteTagRequest]) (*connect.Response[v1.DeleteTagResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.tags.v1.TagsService.DeleteTag is not implemented"))
+func (UnimplementedTagsServiceHandler) DeleteTag(context.Context, *connect.Request[tags.DeleteTagRequest]) (*connect.Response[tags.DeleteTagResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.tags.TagsService.DeleteTag is not implemented"))
 }
