@@ -802,6 +802,69 @@
         
           
           <li>
+            <a href="#loci%2ffavorites%2fv1%2ffavorites.proto">loci/favorites/v1/favorites.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#loci.favorites.v1.AddToFavoritesRequest"><span class="badge">M</span>AddToFavoritesRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.favorites.v1.AddToFavoritesResponse"><span class="badge">M</span>AddToFavoritesResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.favorites.v1.FavoriteItem"><span class="badge">M</span>FavoriteItem</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.favorites.v1.GetFavoritesCountRequest"><span class="badge">M</span>GetFavoritesCountRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.favorites.v1.GetFavoritesCountResponse"><span class="badge">M</span>GetFavoritesCountResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.favorites.v1.GetFavoritesRequest"><span class="badge">M</span>GetFavoritesRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.favorites.v1.GetFavoritesResponse"><span class="badge">M</span>GetFavoritesResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.favorites.v1.IsFavoritedRequest"><span class="badge">M</span>IsFavoritedRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.favorites.v1.IsFavoritedResponse"><span class="badge">M</span>IsFavoritedResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.favorites.v1.RemoveFromFavoritesRequest"><span class="badge">M</span>RemoveFromFavoritesRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.favorites.v1.RemoveFromFavoritesResponse"><span class="badge">M</span>RemoveFromFavoritesResponse</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#loci.favorites.v1.ContentType"><span class="badge">E</span>ContentType</a>
+                </li>
+              
+              
+              
+                <li>
+                  <a href="#loci.favorites.v1.FavoritesService"><span class="badge">S</span>FavoritesService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#loci%2fitinerary%2fitinerary.proto">loci/itinerary/itinerary.proto</a>
             <ul>
               
@@ -8675,6 +8738,617 @@
                 <td><a href="#loci.discover.GetCategoryResultsRequest">GetCategoryResultsRequest</a></td>
                 <td><a href="#loci.discover.GetCategoryResultsResponse">GetCategoryResultsResponse</a></td>
                 <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="loci/favorites/v1/favorites.proto">loci/favorites/v1/favorites.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="loci.favorites.v1.AddToFavoritesRequest">AddToFavoritesRequest</h3>
+        <p>AddToFavorites</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>user_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>item_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>item_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>content_type</td>
+                  <td><a href="#loci.favorites.v1.ContentType">ContentType</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>notes</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>latitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>longitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>rating</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>category</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>llm_interaction_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Optional: link to LLM interaction </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.favorites.v1.AddToFavoritesResponse">AddToFavoritesResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>success</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>message</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>favorite</td>
+                  <td><a href="#loci.favorites.v1.FavoriteItem">FavoriteItem</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.favorites.v1.FavoriteItem">FavoriteItem</h3>
+        <p>Favorite item representation</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>user_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>item_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The ID of the POI/hotel/restaurant/itinerary </p></td>
+                </tr>
+              
+                <tr>
+                  <td>item_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>content_type</td>
+                  <td><a href="#loci.favorites.v1.ContentType">ContentType</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>notes</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>latitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>longitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>rating</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>category</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>added_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.favorites.v1.GetFavoritesCountRequest">GetFavoritesCountRequest</h3>
+        <p>GetFavoritesCount</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>user_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>content_type</td>
+                  <td><a href="#loci.favorites.v1.ContentType">ContentType</a></td>
+                  <td></td>
+                  <td><p>Optional: filter by type (0 = all) </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.favorites.v1.GetFavoritesCountResponse">GetFavoritesCountResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>count</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.favorites.v1.GetFavoritesRequest">GetFavoritesRequest</h3>
+        <p>GetFavorites</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>user_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>content_type</td>
+                  <td><a href="#loci.favorites.v1.ContentType">ContentType</a></td>
+                  <td></td>
+                  <td><p>Optional: filter by type (0 = all) </p></td>
+                </tr>
+              
+                <tr>
+                  <td>limit</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>offset</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.favorites.v1.GetFavoritesResponse">GetFavoritesResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>favorites</td>
+                  <td><a href="#loci.favorites.v1.FavoriteItem">FavoriteItem</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>total_count</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.favorites.v1.IsFavoritedRequest">IsFavoritedRequest</h3>
+        <p>IsFavorited</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>user_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>item_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>content_type</td>
+                  <td><a href="#loci.favorites.v1.ContentType">ContentType</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.favorites.v1.IsFavoritedResponse">IsFavoritedResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>is_favorited</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.favorites.v1.RemoveFromFavoritesRequest">RemoveFromFavoritesRequest</h3>
+        <p>RemoveFromFavorites</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>user_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>item_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>content_type</td>
+                  <td><a href="#loci.favorites.v1.ContentType">ContentType</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.favorites.v1.RemoveFromFavoritesResponse">RemoveFromFavoritesResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>success</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>message</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+        <h3 id="loci.favorites.v1.ContentType">ContentType</h3>
+        <p>Content type for favorites</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>CONTENT_TYPE_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>CONTENT_TYPE_POI</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>CONTENT_TYPE_HOTEL</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>CONTENT_TYPE_RESTAURANT</td>
+                <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>CONTENT_TYPE_ITINERARY</td>
+                <td>4</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+
+      
+
+      
+        <h3 id="loci.favorites.v1.FavoritesService">FavoritesService</h3>
+        <p>FavoritesService provides favorites management functionality</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>AddToFavorites</td>
+                <td><a href="#loci.favorites.v1.AddToFavoritesRequest">AddToFavoritesRequest</a></td>
+                <td><a href="#loci.favorites.v1.AddToFavoritesResponse">AddToFavoritesResponse</a></td>
+                <td><p>Add an item to favorites</p></td>
+              </tr>
+            
+              <tr>
+                <td>RemoveFromFavorites</td>
+                <td><a href="#loci.favorites.v1.RemoveFromFavoritesRequest">RemoveFromFavoritesRequest</a></td>
+                <td><a href="#loci.favorites.v1.RemoveFromFavoritesResponse">RemoveFromFavoritesResponse</a></td>
+                <td><p>Remove an item from favorites</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetFavorites</td>
+                <td><a href="#loci.favorites.v1.GetFavoritesRequest">GetFavoritesRequest</a></td>
+                <td><a href="#loci.favorites.v1.GetFavoritesResponse">GetFavoritesResponse</a></td>
+                <td><p>Get all favorites for a user</p></td>
+              </tr>
+            
+              <tr>
+                <td>IsFavorited</td>
+                <td><a href="#loci.favorites.v1.IsFavoritedRequest">IsFavoritedRequest</a></td>
+                <td><a href="#loci.favorites.v1.IsFavoritedResponse">IsFavoritedResponse</a></td>
+                <td><p>Check if an item is favorited</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetFavoritesCount</td>
+                <td><a href="#loci.favorites.v1.GetFavoritesCountRequest">GetFavoritesCountRequest</a></td>
+                <td><a href="#loci.favorites.v1.GetFavoritesCountResponse">GetFavoritesCountResponse</a></td>
+                <td><p>Get favorites count</p></td>
               </tr>
             
           </tbody>

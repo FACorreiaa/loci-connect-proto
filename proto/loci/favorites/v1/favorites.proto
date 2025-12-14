@@ -1,0 +1,120 @@
+syntax = "proto3";
+
+package loci.favorites.v1;
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/favorites/v1;favoritesv1";
+
+import "google/protobuf/timestamp.proto";
+import "buf/validate/validate.proto";
+
+// Content type for favorites
+enum ContentType {
+  CONTENT_TYPE_UNSPECIFIED = 0;
+  CONTENT_TYPE_POI = 1;
+  CONTENT_TYPE_HOTEL = 2;
+  CONTENT_TYPE_RESTAURANT = 3;
+  CONTENT_TYPE_ITINERARY = 4;
+}
+
+// Favorite item representation
+message FavoriteItem {
+  string id = 1;
+  string user_id = 2;
+  string item_id = 3;  // The ID of the POI/hotel/restaurant/itinerary
+  string item_name = 4;
+  ContentType content_type = 5;
+  string notes = 6;
+  string description = 7;
+  string city_name = 8;
+  double latitude = 9;
+  double longitude = 10;
+  double rating = 11;
+  string category = 12;
+  google.protobuf.Timestamp added_at = 13;
+}
+
+// FavoritesService provides favorites management functionality
+service FavoritesService {
+  // Add an item to favorites
+  rpc AddToFavorites(AddToFavoritesRequest) returns (AddToFavoritesResponse);
+  
+  // Remove an item from favorites
+  rpc RemoveFromFavorites(RemoveFromFavoritesRequest) returns (RemoveFromFavoritesResponse);
+  
+  // Get all favorites for a user
+  rpc GetFavorites(GetFavoritesRequest) returns (GetFavoritesResponse);
+  
+  // Check if an item is favorited
+  rpc IsFavorited(IsFavoritedRequest) returns (IsFavoritedResponse);
+  
+  // Get favorites count
+  rpc GetFavoritesCount(GetFavoritesCountRequest) returns (GetFavoritesCountResponse);
+}
+
+// AddToFavorites
+message AddToFavoritesRequest {
+  string user_id = 1 [(buf.validate.field).string.min_len = 1];
+  string item_id = 2 [(buf.validate.field).string.min_len = 1];
+  string item_name = 3;
+  ContentType content_type = 4;
+  string notes = 5;
+  string description = 6;
+  string city_name = 7;
+  double latitude = 8;
+  double longitude = 9;
+  double rating = 10;
+  string category = 11;
+  string llm_interaction_id = 12;  // Optional: link to LLM interaction
+}
+
+message AddToFavoritesResponse {
+  bool success = 1;
+  string message = 2;
+  FavoriteItem favorite = 3;
+}
+
+// RemoveFromFavorites
+message RemoveFromFavoritesRequest {
+  string user_id = 1 [(buf.validate.field).string.min_len = 1];
+  string item_id = 2 [(buf.validate.field).string.min_len = 1];
+  ContentType content_type = 3;
+}
+
+message RemoveFromFavoritesResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// GetFavorites
+message GetFavoritesRequest {
+  string user_id = 1 [(buf.validate.field).string.min_len = 1];
+  ContentType content_type = 2;  // Optional: filter by type (0 = all)
+  int32 limit = 3;
+  int32 offset = 4;
+}
+
+message GetFavoritesResponse {
+  repeated FavoriteItem favorites = 1;
+  int32 total_count = 2;
+}
+
+// IsFavorited
+message IsFavoritedRequest {
+  string user_id = 1 [(buf.validate.field).string.min_len = 1];
+  string item_id = 2 [(buf.validate.field).string.min_len = 1];
+  ContentType content_type = 3;
+}
+
+message IsFavoritedResponse {
+  bool is_favorited = 1;
+}
+
+// GetFavoritesCount
+message GetFavoritesCountRequest {
+  string user_id = 1 [(buf.validate.field).string.min_len = 1];
+  ContentType content_type = 2;  // Optional: filter by type (0 = all)
+}
+
+message GetFavoritesCountResponse {
+  int32 count = 1;
+}
