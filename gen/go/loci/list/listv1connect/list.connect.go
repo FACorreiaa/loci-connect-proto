@@ -8,7 +8,7 @@ import (
 	connect "connectrpc.com/connect"
 	context "context"
 	errors "errors"
-	v1 "github.com/FACorreiaa/loci-connect-proto/gen/go/ai_poi/list/v1"
+	v1 "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/list/v1"
 	http "net/http"
 	strings "strings"
 )
@@ -22,7 +22,7 @@ const _ = connect.IsAtLeastVersion1_13_0
 
 const (
 	// ListServiceName is the fully-qualified name of the ListService service.
-	ListServiceName = "ai_poi.list.v1.ListService"
+	ListServiceName = "loci.list.v1.ListService"
 )
 
 // These constants are the fully-qualified names of the RPCs defined in this package. They're
@@ -34,49 +34,49 @@ const (
 // period.
 const (
 	// ListServiceCreateListProcedure is the fully-qualified name of the ListService's CreateList RPC.
-	ListServiceCreateListProcedure = "/ai_poi.list.v1.ListService/CreateList"
+	ListServiceCreateListProcedure = "/loci.list.v1.ListService/CreateList"
 	// ListServiceGetListsProcedure is the fully-qualified name of the ListService's GetLists RPC.
-	ListServiceGetListsProcedure = "/ai_poi.list.v1.ListService/GetLists"
+	ListServiceGetListsProcedure = "/loci.list.v1.ListService/GetLists"
 	// ListServiceGetListProcedure is the fully-qualified name of the ListService's GetList RPC.
-	ListServiceGetListProcedure = "/ai_poi.list.v1.ListService/GetList"
+	ListServiceGetListProcedure = "/loci.list.v1.ListService/GetList"
 	// ListServiceUpdateListProcedure is the fully-qualified name of the ListService's UpdateList RPC.
-	ListServiceUpdateListProcedure = "/ai_poi.list.v1.ListService/UpdateList"
+	ListServiceUpdateListProcedure = "/loci.list.v1.ListService/UpdateList"
 	// ListServiceDeleteListProcedure is the fully-qualified name of the ListService's DeleteList RPC.
-	ListServiceDeleteListProcedure = "/ai_poi.list.v1.ListService/DeleteList"
+	ListServiceDeleteListProcedure = "/loci.list.v1.ListService/DeleteList"
 	// ListServiceCreateItineraryProcedure is the fully-qualified name of the ListService's
 	// CreateItinerary RPC.
-	ListServiceCreateItineraryProcedure = "/ai_poi.list.v1.ListService/CreateItinerary"
+	ListServiceCreateItineraryProcedure = "/loci.list.v1.ListService/CreateItinerary"
 	// ListServiceAddListItemProcedure is the fully-qualified name of the ListService's AddListItem RPC.
-	ListServiceAddListItemProcedure = "/ai_poi.list.v1.ListService/AddListItem"
+	ListServiceAddListItemProcedure = "/loci.list.v1.ListService/AddListItem"
 	// ListServiceUpdateListItemProcedure is the fully-qualified name of the ListService's
 	// UpdateListItem RPC.
-	ListServiceUpdateListItemProcedure = "/ai_poi.list.v1.ListService/UpdateListItem"
+	ListServiceUpdateListItemProcedure = "/loci.list.v1.ListService/UpdateListItem"
 	// ListServiceRemoveListItemProcedure is the fully-qualified name of the ListService's
 	// RemoveListItem RPC.
-	ListServiceRemoveListItemProcedure = "/ai_poi.list.v1.ListService/RemoveListItem"
+	ListServiceRemoveListItemProcedure = "/loci.list.v1.ListService/RemoveListItem"
 	// ListServiceGetListItemsProcedure is the fully-qualified name of the ListService's GetListItems
 	// RPC.
-	ListServiceGetListItemsProcedure = "/ai_poi.list.v1.ListService/GetListItems"
+	ListServiceGetListItemsProcedure = "/loci.list.v1.ListService/GetListItems"
 	// ListServiceGetListRestaurantsProcedure is the fully-qualified name of the ListService's
 	// GetListRestaurants RPC.
-	ListServiceGetListRestaurantsProcedure = "/ai_poi.list.v1.ListService/GetListRestaurants"
+	ListServiceGetListRestaurantsProcedure = "/loci.list.v1.ListService/GetListRestaurants"
 	// ListServiceGetListHotelsProcedure is the fully-qualified name of the ListService's GetListHotels
 	// RPC.
-	ListServiceGetListHotelsProcedure = "/ai_poi.list.v1.ListService/GetListHotels"
+	ListServiceGetListHotelsProcedure = "/loci.list.v1.ListService/GetListHotels"
 	// ListServiceGetListItinerariesProcedure is the fully-qualified name of the ListService's
 	// GetListItineraries RPC.
-	ListServiceGetListItinerariesProcedure = "/ai_poi.list.v1.ListService/GetListItineraries"
+	ListServiceGetListItinerariesProcedure = "/loci.list.v1.ListService/GetListItineraries"
 	// ListServiceSavePublicListProcedure is the fully-qualified name of the ListService's
 	// SavePublicList RPC.
-	ListServiceSavePublicListProcedure = "/ai_poi.list.v1.ListService/SavePublicList"
+	ListServiceSavePublicListProcedure = "/loci.list.v1.ListService/SavePublicList"
 	// ListServiceUnsaveListProcedure is the fully-qualified name of the ListService's UnsaveList RPC.
-	ListServiceUnsaveListProcedure = "/ai_poi.list.v1.ListService/UnsaveList"
+	ListServiceUnsaveListProcedure = "/loci.list.v1.ListService/UnsaveList"
 	// ListServiceGetSavedListsProcedure is the fully-qualified name of the ListService's GetSavedLists
 	// RPC.
-	ListServiceGetSavedListsProcedure = "/ai_poi.list.v1.ListService/GetSavedLists"
+	ListServiceGetSavedListsProcedure = "/loci.list.v1.ListService/GetSavedLists"
 	// ListServiceSearchPublicListsProcedure is the fully-qualified name of the ListService's
 	// SearchPublicLists RPC.
-	ListServiceSearchPublicListsProcedure = "/ai_poi.list.v1.ListService/SearchPublicLists"
+	ListServiceSearchPublicListsProcedure = "/loci.list.v1.ListService/SearchPublicLists"
 )
 
 // These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
@@ -101,7 +101,7 @@ var (
 	listServiceSearchPublicListsMethodDescriptor  = listServiceServiceDescriptor.Methods().ByName("SearchPublicLists")
 )
 
-// ListServiceClient is a client for the ai_poi.list.v1.ListService service.
+// ListServiceClient is a client for the loci.list.v1.ListService service.
 type ListServiceClient interface {
 	// List management
 	CreateList(context.Context, *connect.Request[v1.CreateListRequest]) (*connect.Response[v1.CreateListResponse], error)
@@ -127,10 +127,10 @@ type ListServiceClient interface {
 	SearchPublicLists(context.Context, *connect.Request[v1.SearchPublicListsRequest]) (*connect.Response[v1.SearchPublicListsResponse], error)
 }
 
-// NewListServiceClient constructs a client for the ai_poi.list.v1.ListService service. By default,
-// it uses the Connect protocol with the binary Protobuf Codec, asks for gzipped responses, and
-// sends uncompressed requests. To use the gRPC or gRPC-Web protocols, supply the connect.WithGRPC()
-// or connect.WithGRPCWeb() options.
+// NewListServiceClient constructs a client for the loci.list.v1.ListService service. By default, it
+// uses the Connect protocol with the binary Protobuf Codec, asks for gzipped responses, and sends
+// uncompressed requests. To use the gRPC or gRPC-Web protocols, supply the connect.WithGRPC() or
+// connect.WithGRPCWeb() options.
 //
 // The URL supplied here should be the base URL for the Connect or gRPC server (for example,
 // http://api.acme.com or https://acme.com/grpc).
@@ -263,92 +263,92 @@ type listServiceClient struct {
 	searchPublicLists  *connect.Client[v1.SearchPublicListsRequest, v1.SearchPublicListsResponse]
 }
 
-// CreateList calls ai_poi.list.v1.ListService.CreateList.
+// CreateList calls loci.list.v1.ListService.CreateList.
 func (c *listServiceClient) CreateList(ctx context.Context, req *connect.Request[v1.CreateListRequest]) (*connect.Response[v1.CreateListResponse], error) {
 	return c.createList.CallUnary(ctx, req)
 }
 
-// GetLists calls ai_poi.list.v1.ListService.GetLists.
+// GetLists calls loci.list.v1.ListService.GetLists.
 func (c *listServiceClient) GetLists(ctx context.Context, req *connect.Request[v1.GetListsRequest]) (*connect.Response[v1.GetListsResponse], error) {
 	return c.getLists.CallUnary(ctx, req)
 }
 
-// GetList calls ai_poi.list.v1.ListService.GetList.
+// GetList calls loci.list.v1.ListService.GetList.
 func (c *listServiceClient) GetList(ctx context.Context, req *connect.Request[v1.GetListRequest]) (*connect.Response[v1.GetListResponse], error) {
 	return c.getList.CallUnary(ctx, req)
 }
 
-// UpdateList calls ai_poi.list.v1.ListService.UpdateList.
+// UpdateList calls loci.list.v1.ListService.UpdateList.
 func (c *listServiceClient) UpdateList(ctx context.Context, req *connect.Request[v1.UpdateListRequest]) (*connect.Response[v1.UpdateListResponse], error) {
 	return c.updateList.CallUnary(ctx, req)
 }
 
-// DeleteList calls ai_poi.list.v1.ListService.DeleteList.
+// DeleteList calls loci.list.v1.ListService.DeleteList.
 func (c *listServiceClient) DeleteList(ctx context.Context, req *connect.Request[v1.DeleteListRequest]) (*connect.Response[v1.DeleteListResponse], error) {
 	return c.deleteList.CallUnary(ctx, req)
 }
 
-// CreateItinerary calls ai_poi.list.v1.ListService.CreateItinerary.
+// CreateItinerary calls loci.list.v1.ListService.CreateItinerary.
 func (c *listServiceClient) CreateItinerary(ctx context.Context, req *connect.Request[v1.CreateItineraryRequest]) (*connect.Response[v1.CreateItineraryResponse], error) {
 	return c.createItinerary.CallUnary(ctx, req)
 }
 
-// AddListItem calls ai_poi.list.v1.ListService.AddListItem.
+// AddListItem calls loci.list.v1.ListService.AddListItem.
 func (c *listServiceClient) AddListItem(ctx context.Context, req *connect.Request[v1.AddListItemRequest]) (*connect.Response[v1.AddListItemResponse], error) {
 	return c.addListItem.CallUnary(ctx, req)
 }
 
-// UpdateListItem calls ai_poi.list.v1.ListService.UpdateListItem.
+// UpdateListItem calls loci.list.v1.ListService.UpdateListItem.
 func (c *listServiceClient) UpdateListItem(ctx context.Context, req *connect.Request[v1.UpdateListItemRequest]) (*connect.Response[v1.UpdateListItemResponse], error) {
 	return c.updateListItem.CallUnary(ctx, req)
 }
 
-// RemoveListItem calls ai_poi.list.v1.ListService.RemoveListItem.
+// RemoveListItem calls loci.list.v1.ListService.RemoveListItem.
 func (c *listServiceClient) RemoveListItem(ctx context.Context, req *connect.Request[v1.RemoveListItemRequest]) (*connect.Response[v1.RemoveListItemResponse], error) {
 	return c.removeListItem.CallUnary(ctx, req)
 }
 
-// GetListItems calls ai_poi.list.v1.ListService.GetListItems.
+// GetListItems calls loci.list.v1.ListService.GetListItems.
 func (c *listServiceClient) GetListItems(ctx context.Context, req *connect.Request[v1.GetListItemsRequest]) (*connect.Response[v1.GetListItemsResponse], error) {
 	return c.getListItems.CallUnary(ctx, req)
 }
 
-// GetListRestaurants calls ai_poi.list.v1.ListService.GetListRestaurants.
+// GetListRestaurants calls loci.list.v1.ListService.GetListRestaurants.
 func (c *listServiceClient) GetListRestaurants(ctx context.Context, req *connect.Request[v1.GetListRestaurantsRequest]) (*connect.Response[v1.GetListRestaurantsResponse], error) {
 	return c.getListRestaurants.CallUnary(ctx, req)
 }
 
-// GetListHotels calls ai_poi.list.v1.ListService.GetListHotels.
+// GetListHotels calls loci.list.v1.ListService.GetListHotels.
 func (c *listServiceClient) GetListHotels(ctx context.Context, req *connect.Request[v1.GetListHotelsRequest]) (*connect.Response[v1.GetListHotelsResponse], error) {
 	return c.getListHotels.CallUnary(ctx, req)
 }
 
-// GetListItineraries calls ai_poi.list.v1.ListService.GetListItineraries.
+// GetListItineraries calls loci.list.v1.ListService.GetListItineraries.
 func (c *listServiceClient) GetListItineraries(ctx context.Context, req *connect.Request[v1.GetListItinerariesRequest]) (*connect.Response[v1.GetListItinerariesResponse], error) {
 	return c.getListItineraries.CallUnary(ctx, req)
 }
 
-// SavePublicList calls ai_poi.list.v1.ListService.SavePublicList.
+// SavePublicList calls loci.list.v1.ListService.SavePublicList.
 func (c *listServiceClient) SavePublicList(ctx context.Context, req *connect.Request[v1.SavePublicListRequest]) (*connect.Response[v1.SavePublicListResponse], error) {
 	return c.savePublicList.CallUnary(ctx, req)
 }
 
-// UnsaveList calls ai_poi.list.v1.ListService.UnsaveList.
+// UnsaveList calls loci.list.v1.ListService.UnsaveList.
 func (c *listServiceClient) UnsaveList(ctx context.Context, req *connect.Request[v1.UnsaveListRequest]) (*connect.Response[v1.UnsaveListResponse], error) {
 	return c.unsaveList.CallUnary(ctx, req)
 }
 
-// GetSavedLists calls ai_poi.list.v1.ListService.GetSavedLists.
+// GetSavedLists calls loci.list.v1.ListService.GetSavedLists.
 func (c *listServiceClient) GetSavedLists(ctx context.Context, req *connect.Request[v1.GetSavedListsRequest]) (*connect.Response[v1.GetSavedListsResponse], error) {
 	return c.getSavedLists.CallUnary(ctx, req)
 }
 
-// SearchPublicLists calls ai_poi.list.v1.ListService.SearchPublicLists.
+// SearchPublicLists calls loci.list.v1.ListService.SearchPublicLists.
 func (c *listServiceClient) SearchPublicLists(ctx context.Context, req *connect.Request[v1.SearchPublicListsRequest]) (*connect.Response[v1.SearchPublicListsResponse], error) {
 	return c.searchPublicLists.CallUnary(ctx, req)
 }
 
-// ListServiceHandler is an implementation of the ai_poi.list.v1.ListService service.
+// ListServiceHandler is an implementation of the loci.list.v1.ListService service.
 type ListServiceHandler interface {
 	// List management
 	CreateList(context.Context, *connect.Request[v1.CreateListRequest]) (*connect.Response[v1.CreateListResponse], error)
@@ -482,7 +482,7 @@ func NewListServiceHandler(svc ListServiceHandler, opts ...connect.HandlerOption
 		connect.WithSchema(listServiceSearchPublicListsMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
-	return "/ai_poi.list.v1.ListService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	return "/loci.list.v1.ListService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case ListServiceCreateListProcedure:
 			listServiceCreateListHandler.ServeHTTP(w, r)
@@ -528,69 +528,69 @@ func NewListServiceHandler(svc ListServiceHandler, opts ...connect.HandlerOption
 type UnimplementedListServiceHandler struct{}
 
 func (UnimplementedListServiceHandler) CreateList(context.Context, *connect.Request[v1.CreateListRequest]) (*connect.Response[v1.CreateListResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.list.v1.ListService.CreateList is not implemented"))
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.list.v1.ListService.CreateList is not implemented"))
 }
 
 func (UnimplementedListServiceHandler) GetLists(context.Context, *connect.Request[v1.GetListsRequest]) (*connect.Response[v1.GetListsResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.list.v1.ListService.GetLists is not implemented"))
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.list.v1.ListService.GetLists is not implemented"))
 }
 
 func (UnimplementedListServiceHandler) GetList(context.Context, *connect.Request[v1.GetListRequest]) (*connect.Response[v1.GetListResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.list.v1.ListService.GetList is not implemented"))
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.list.v1.ListService.GetList is not implemented"))
 }
 
 func (UnimplementedListServiceHandler) UpdateList(context.Context, *connect.Request[v1.UpdateListRequest]) (*connect.Response[v1.UpdateListResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.list.v1.ListService.UpdateList is not implemented"))
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.list.v1.ListService.UpdateList is not implemented"))
 }
 
 func (UnimplementedListServiceHandler) DeleteList(context.Context, *connect.Request[v1.DeleteListRequest]) (*connect.Response[v1.DeleteListResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.list.v1.ListService.DeleteList is not implemented"))
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.list.v1.ListService.DeleteList is not implemented"))
 }
 
 func (UnimplementedListServiceHandler) CreateItinerary(context.Context, *connect.Request[v1.CreateItineraryRequest]) (*connect.Response[v1.CreateItineraryResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.list.v1.ListService.CreateItinerary is not implemented"))
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.list.v1.ListService.CreateItinerary is not implemented"))
 }
 
 func (UnimplementedListServiceHandler) AddListItem(context.Context, *connect.Request[v1.AddListItemRequest]) (*connect.Response[v1.AddListItemResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.list.v1.ListService.AddListItem is not implemented"))
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.list.v1.ListService.AddListItem is not implemented"))
 }
 
 func (UnimplementedListServiceHandler) UpdateListItem(context.Context, *connect.Request[v1.UpdateListItemRequest]) (*connect.Response[v1.UpdateListItemResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.list.v1.ListService.UpdateListItem is not implemented"))
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.list.v1.ListService.UpdateListItem is not implemented"))
 }
 
 func (UnimplementedListServiceHandler) RemoveListItem(context.Context, *connect.Request[v1.RemoveListItemRequest]) (*connect.Response[v1.RemoveListItemResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.list.v1.ListService.RemoveListItem is not implemented"))
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.list.v1.ListService.RemoveListItem is not implemented"))
 }
 
 func (UnimplementedListServiceHandler) GetListItems(context.Context, *connect.Request[v1.GetListItemsRequest]) (*connect.Response[v1.GetListItemsResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.list.v1.ListService.GetListItems is not implemented"))
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.list.v1.ListService.GetListItems is not implemented"))
 }
 
 func (UnimplementedListServiceHandler) GetListRestaurants(context.Context, *connect.Request[v1.GetListRestaurantsRequest]) (*connect.Response[v1.GetListRestaurantsResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.list.v1.ListService.GetListRestaurants is not implemented"))
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.list.v1.ListService.GetListRestaurants is not implemented"))
 }
 
 func (UnimplementedListServiceHandler) GetListHotels(context.Context, *connect.Request[v1.GetListHotelsRequest]) (*connect.Response[v1.GetListHotelsResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.list.v1.ListService.GetListHotels is not implemented"))
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.list.v1.ListService.GetListHotels is not implemented"))
 }
 
 func (UnimplementedListServiceHandler) GetListItineraries(context.Context, *connect.Request[v1.GetListItinerariesRequest]) (*connect.Response[v1.GetListItinerariesResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.list.v1.ListService.GetListItineraries is not implemented"))
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.list.v1.ListService.GetListItineraries is not implemented"))
 }
 
 func (UnimplementedListServiceHandler) SavePublicList(context.Context, *connect.Request[v1.SavePublicListRequest]) (*connect.Response[v1.SavePublicListResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.list.v1.ListService.SavePublicList is not implemented"))
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.list.v1.ListService.SavePublicList is not implemented"))
 }
 
 func (UnimplementedListServiceHandler) UnsaveList(context.Context, *connect.Request[v1.UnsaveListRequest]) (*connect.Response[v1.UnsaveListResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.list.v1.ListService.UnsaveList is not implemented"))
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.list.v1.ListService.UnsaveList is not implemented"))
 }
 
 func (UnimplementedListServiceHandler) GetSavedLists(context.Context, *connect.Request[v1.GetSavedListsRequest]) (*connect.Response[v1.GetSavedListsResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.list.v1.ListService.GetSavedLists is not implemented"))
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.list.v1.ListService.GetSavedLists is not implemented"))
 }
 
 func (UnimplementedListServiceHandler) SearchPublicLists(context.Context, *connect.Request[v1.SearchPublicListsRequest]) (*connect.Response[v1.SearchPublicListsResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("ai_poi.list.v1.ListService.SearchPublicLists is not implemented"))
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.list.v1.ListService.SearchPublicLists is not implemented"))
 }

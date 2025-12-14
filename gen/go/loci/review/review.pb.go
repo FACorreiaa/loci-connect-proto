@@ -198,7 +198,7 @@ type Review struct {
 	Title     string                 `protobuf:"bytes,5,opt,name=title,proto3" json:"title,omitempty"`
 	Content   string                 `protobuf:"bytes,6,opt,name=content,proto3" json:"content,omitempty"`
 	Photos    []string               `protobuf:"bytes,7,rep,name=photos,proto3" json:"photos,omitempty"` // Photo URLs
-	Status    ReviewStatus           `protobuf:"varint,8,opt,name=status,proto3,enum=ai_poi.review.v1.ReviewStatus" json:"status,omitempty"`
+	Status    ReviewStatus           `protobuf:"varint,8,opt,name=status,proto3,enum=loci.review.v1.ReviewStatus" json:"status,omitempty"`
 	VisitDate *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=visit_date,json=visitDate,proto3" json:"visit_date,omitempty"`
 	CreatedAt *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	UpdatedAt *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
@@ -1309,8 +1309,8 @@ type ReviewFilter struct {
 	VerifiedOnly   bool                   `protobuf:"varint,5,opt,name=verified_only,json=verifiedOnly,proto3" json:"verified_only,omitempty"`
 	WithPhotosOnly bool                   `protobuf:"varint,6,opt,name=with_photos_only,json=withPhotosOnly,proto3" json:"with_photos_only,omitempty"`
 	Keywords       []string               `protobuf:"bytes,7,rep,name=keywords,proto3" json:"keywords,omitempty"`
-	SortBy         ReviewSortBy           `protobuf:"varint,8,opt,name=sort_by,json=sortBy,proto3,enum=ai_poi.review.v1.ReviewSortBy" json:"sort_by,omitempty"`
-	SortDirection  SortDirection          `protobuf:"varint,9,opt,name=sort_direction,json=sortDirection,proto3,enum=ai_poi.review.v1.SortDirection" json:"sort_direction,omitempty"`
+	SortBy         ReviewSortBy           `protobuf:"varint,8,opt,name=sort_by,json=sortBy,proto3,enum=loci.review.v1.ReviewSortBy" json:"sort_by,omitempty"`
+	SortDirection  SortDirection          `protobuf:"varint,9,opt,name=sort_direction,json=sortDirection,proto3,enum=loci.review.v1.SortDirection" json:"sort_direction,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -2577,7 +2577,7 @@ var File_loci_review_review_proto protoreflect.FileDescriptor
 
 const file_loci_review_review_proto_rawDesc = "" +
 	"\n" +
-	"\x18loci/review/review.proto\x12\x10ai_poi.review.v1\x1a\x1bbuf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18loci/common/common.proto\"\x95\a\n" +
+	"\x18loci/review/review.proto\x12\x0eloci.review.v1\x1a\x1bbuf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18loci/common/common.proto\"\x8d\a\n" +
 	"\x06Review\x12\x19\n" +
 	"\x02id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x02id\x12\"\n" +
 	"\auser_id\x18\x02 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x12 \n" +
@@ -2589,8 +2589,8 @@ const file_loci_review_review_proto_rawDesc = "" +
 	"\xbaH\ar\x05\x10\x01\x18\xa0\x1fR\acontent\x12,\n" +
 	"\x06photos\x18\a \x03(\tB\x14\xbaH\x11\x92\x01\x0e\x10\n" +
 	"\"\n" +
-	"r\b\x10\x01\x18\x80\x10\x88\x01\x01R\x06photos\x12@\n" +
-	"\x06status\x18\b \x01(\x0e2\x1e.ai_poi.review.v1.ReviewStatusB\b\xbaH\x05\x82\x01\x02\x10\x01R\x06status\x129\n" +
+	"r\b\x10\x01\x18\x80\x10\x88\x01\x01R\x06photos\x12>\n" +
+	"\x06status\x18\b \x01(\x0e2\x1c.loci.review.v1.ReviewStatusB\b\xbaH\x05\x82\x01\x02\x10\x01R\x06status\x129\n" +
 	"\n" +
 	"visit_date\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\tvisitDate\x12A\n" +
 	"\n" +
@@ -2603,10 +2603,10 @@ const file_loci_review_review_proto_rawDesc = "" +
 	"\vis_verified\x18\x0e \x01(\bR\n" +
 	"isVerified\x12=\n" +
 	"\blanguage\x18\x0f \x01(\tB!\xbaH\x1er\x1c\x10\x02\x18\n" +
-	"2\x16^[a-z]{2}(-[A-Z]{2})?$R\blanguage\x129\n" +
-	"\aaspects\x18\x10 \x01(\v2\x1f.ai_poi.review.v1.ReviewAspectsR\aaspects\x12:\n" +
-	"\breviewer\x18\x11 \x01(\v2\x1e.ai_poi.review.v1.ReviewerInfoR\breviewer\x12O\n" +
-	"\x11business_response\x18\x12 \x01(\v2\".ai_poi.review.v1.BusinessResponseR\x10businessResponse\"\x8f\x05\n" +
+	"2\x16^[a-z]{2}(-[A-Z]{2})?$R\blanguage\x127\n" +
+	"\aaspects\x18\x10 \x01(\v2\x1d.loci.review.v1.ReviewAspectsR\aaspects\x128\n" +
+	"\breviewer\x18\x11 \x01(\v2\x1c.loci.review.v1.ReviewerInfoR\breviewer\x12M\n" +
+	"\x11business_response\x18\x12 \x01(\v2 .loci.review.v1.BusinessResponseR\x10businessResponse\"\x8f\x05\n" +
 	"\rReviewAspects\x12>\n" +
 	"\x0eservice_rating\x18\x01 \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00\x14@)\x00\x00\x00\x00\x00\x00\xf0?R\rserviceRating\x12>\n" +
 	"\x0equality_rating\x18\x02 \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00\x14@)\x00\x00\x00\x00\x00\x00\xf0?R\rqualityRating\x12:\n" +
@@ -2642,16 +2642,16 @@ const file_loci_review_review_proto_rawDesc = "" +
 	"\x0eresponder_name\x18\x05 \x01(\tB\n" +
 	"\xbaH\ar\x05\x10\x01\x18\xc8\x01R\rresponderName\x123\n" +
 	"\x0fresponder_title\x18\x06 \x01(\tB\n" +
-	"\xbaH\ar\x05\x10\x01\x18\xc8\x01R\x0eresponderTitle\"\xcc\x04\n" +
+	"\xbaH\ar\x05\x10\x01\x18\xc8\x01R\x0eresponderTitle\"\xc2\x04\n" +
 	"\x10ReviewStatistics\x12 \n" +
 	"\x06poi_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x05poiId\x12>\n" +
 	"\x0eoverall_rating\x18\x02 \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00\x14@)\x00\x00\x00\x00\x00\x00\x00\x00R\roverallRating\x12,\n" +
-	"\rtotal_reviews\x18\x03 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\ftotalReviews\x12L\n" +
-	"\x10rating_breakdown\x18\x04 \x01(\v2!.ai_poi.review.v1.RatingBreakdownR\x0fratingBreakdown\x12O\n" +
-	"\x0faspect_averages\x18\x05 \x01(\v2&.ai_poi.review.v1.ReviewAspectAveragesR\x0easpectAverages\x12<\n" +
-	"\x06trends\x18\x06 \x01(\v2$.ai_poi.review.v1.RecentReviewTrendsR\x06trends\x12/\n" +
-	"\x04tags\x18\a \x03(\v2\x1b.ai_poi.review.v1.ReviewTagR\x04tags\x12[\n" +
-	"\x15language_distribution\x18\b \x01(\v2&.ai_poi.review.v1.LanguageDistributionR\x14languageDistribution\x12=\n" +
+	"\rtotal_reviews\x18\x03 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\ftotalReviews\x12J\n" +
+	"\x10rating_breakdown\x18\x04 \x01(\v2\x1f.loci.review.v1.RatingBreakdownR\x0fratingBreakdown\x12M\n" +
+	"\x0faspect_averages\x18\x05 \x01(\v2$.loci.review.v1.ReviewAspectAveragesR\x0easpectAverages\x12:\n" +
+	"\x06trends\x18\x06 \x01(\v2\".loci.review.v1.RecentReviewTrendsR\x06trends\x12-\n" +
+	"\x04tags\x18\a \x03(\v2\x19.loci.review.v1.ReviewTagR\x04tags\x12Y\n" +
+	"\x15language_distribution\x18\b \x01(\v2$.loci.review.v1.LanguageDistributionR\x14languageDistribution\x12=\n" +
 	"\flast_updated\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\vlastUpdated\"\xcd\x01\n" +
 	"\x0fRatingBreakdown\x12\"\n" +
 	"\bone_star\x18\x01 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\aoneStar\x12\"\n" +
@@ -2671,13 +2671,13 @@ const file_loci_review_review_proto_rawDesc = "" +
 	"\froom_average\x18\b \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00\x14@)\x00\x00\x00\x00\x00\x00\x00\x00R\vroomAverage\x12D\n" +
 	"\x11amenities_average\x18\t \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00\x14@)\x00\x00\x00\x00\x00\x00\x00\x00R\x10amenitiesAverage\x12<\n" +
 	"\rstaff_average\x18\n" +
-	" \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00\x14@)\x00\x00\x00\x00\x00\x00\x00\x00R\fstaffAverage\"\xca\x02\n" +
+	" \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00\x14@)\x00\x00\x00\x00\x00\x00\x00\x00R\fstaffAverage\"\xc8\x02\n" +
 	"\x12RecentReviewTrends\x12!\n" +
 	"\frating_trend\x18\x01 \x01(\x01R\vratingTrend\x128\n" +
 	"\x14reviews_last_30_days\x18\x02 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x11reviewsLast30Days\x12U\n" +
 	"\x1baverage_rating_last_30_days\x18\x03 \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00\x14@)\x00\x00\x00\x00\x00\x00\x00\x00R\x17averageRatingLast30Days\x128\n" +
-	"\x18rating_change_percentage\x18\x04 \x01(\x01R\x16ratingChangePercentage\x12F\n" +
-	"\fmonthly_data\x18\x05 \x03(\v2#.ai_poi.review.v1.MonthlyReviewDataR\vmonthlyData\"\xbd\x01\n" +
+	"\x18rating_change_percentage\x18\x04 \x01(\x01R\x16ratingChangePercentage\x12D\n" +
+	"\fmonthly_data\x18\x05 \x03(\v2!.loci.review.v1.MonthlyReviewDataR\vmonthlyData\"\xbd\x01\n" +
 	"\x11MonthlyReviewData\x12\x1b\n" +
 	"\x04year\x18\x01 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x04year\x12\x1f\n" +
 	"\x05month\x18\x02 \x01(\x05B\t\xbaH\x06\x1a\x04\x18\f(\x01R\x05month\x12*\n" +
@@ -2687,9 +2687,9 @@ const file_loci_review_review_proto_rawDesc = "" +
 	"\x03tag\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x03tag\x12\x1d\n" +
 	"\x05count\x18\x02 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x05count\x12@\n" +
 	"\x0fsentiment_score\x18\x03 \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00\xf0?)\x00\x00\x00\x00\x00\x00\xf0\xbfR\x0esentimentScore\x12%\n" +
-	"\bcategory\x18\x04 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x182R\bcategory\"U\n" +
-	"\x14LanguageDistribution\x12=\n" +
-	"\tlanguages\x18\x01 \x03(\v2\x1f.ai_poi.review.v1.LanguageCountR\tlanguages\"\xc7\x01\n" +
+	"\bcategory\x18\x04 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x182R\bcategory\"S\n" +
+	"\x14LanguageDistribution\x12;\n" +
+	"\tlanguages\x18\x01 \x03(\v2\x1d.loci.review.v1.LanguageCountR\tlanguages\"\xc7\x01\n" +
 	"\rLanguageCount\x12.\n" +
 	"\rlanguage_code\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x02\x18\n" +
 	"R\flanguageCode\x12.\n" +
@@ -2697,7 +2697,7 @@ const file_loci_review_review_proto_rawDesc = "" +
 	"\x05count\x18\x03 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x05count\x127\n" +
 	"\n" +
 	"percentage\x18\x04 \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00Y@)\x00\x00\x00\x00\x00\x00\x00\x00R\n" +
-	"percentage\"\x8d\x04\n" +
+	"percentage\"\x89\x04\n" +
 	"\fReviewFilter\x12E\n" +
 	"\x0erating_filters\x18\x01 \x03(\x01B\x1e\xbaH\x1b\x92\x01\x18\x10\x05\"\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00\x14@)\x00\x00\x00\x00\x00\x00\xf0?R\rratingFilters\x129\n" +
 	"\n" +
@@ -2709,9 +2709,9 @@ const file_loci_review_review_proto_rawDesc = "" +
 	"\rverified_only\x18\x05 \x01(\bR\fverifiedOnly\x12(\n" +
 	"\x10with_photos_only\x18\x06 \x01(\bR\x0ewithPhotosOnly\x12,\n" +
 	"\bkeywords\x18\a \x03(\tB\x10\xbaH\r\x92\x01\n" +
-	"\x10\x14\"\x06r\x04\x10\x01\x18dR\bkeywords\x127\n" +
-	"\asort_by\x18\b \x01(\x0e2\x1e.ai_poi.review.v1.ReviewSortByR\x06sortBy\x12F\n" +
-	"\x0esort_direction\x18\t \x01(\x0e2\x1f.ai_poi.review.v1.SortDirectionR\rsortDirection\"\xbe\x03\n" +
+	"\x10\x14\"\x06r\x04\x10\x01\x18dR\bkeywords\x125\n" +
+	"\asort_by\x18\b \x01(\x0e2\x1c.loci.review.v1.ReviewSortByR\x06sortBy\x12D\n" +
+	"\x0esort_direction\x18\t \x01(\x0e2\x1d.loci.review.v1.SortDirectionR\rsortDirection\"\xbc\x03\n" +
 	"\x13CreateReviewRequest\x12\"\n" +
 	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x12 \n" +
 	"\x06poi_id\x18\x02 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x05poiId\x12/\n" +
@@ -2725,36 +2725,36 @@ const file_loci_review_review_proto_rawDesc = "" +
 	"\"\n" +
 	"r\b\x10\x01\x18\x80\x10\x88\x01\x01R\tphotoUrls\x129\n" +
 	"\n" +
-	"visit_date\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tvisitDate\x129\n" +
-	"\aaspects\x18\b \x01(\v2\x1f.ai_poi.review.v1.ReviewAspectsR\aaspects\x12=\n" +
+	"visit_date\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tvisitDate\x127\n" +
+	"\aaspects\x18\b \x01(\v2\x1d.loci.review.v1.ReviewAspectsR\aaspects\x12=\n" +
 	"\blanguage\x18\t \x01(\tB!\xbaH\x1er\x1c\x10\x02\x18\n" +
-	"2\x16^[a-z]{2}(-[A-Z]{2})?$R\blanguage\"{\n" +
+	"2\x16^[a-z]{2}(-[A-Z]{2})?$R\blanguage\"y\n" +
 	"\x14CreateReviewResponse\x121\n" +
-	"\bresponse\x18\x01 \x01(\v2\x15.loci.common.ResponseR\bresponse\x120\n" +
-	"\x06review\x18\x02 \x01(\v2\x18.ai_poi.review.v1.ReviewR\x06review\"\xb0\x01\n" +
+	"\bresponse\x18\x01 \x01(\v2\x15.loci.common.ResponseR\bresponse\x12.\n" +
+	"\x06review\x18\x02 \x01(\v2\x16.loci.review.v1.ReviewR\x06review\"\xae\x01\n" +
 	"\x14GetPOIReviewsRequest\x12 \n" +
 	"\x06poi_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x05poiId\x12>\n" +
 	"\n" +
 	"pagination\x18\x02 \x01(\v2\x1e.loci.common.PaginationRequestR\n" +
-	"pagination\x126\n" +
-	"\x06filter\x18\x03 \x01(\v2\x1e.ai_poi.review.v1.ReviewFilterR\x06filter\"\xd0\x01\n" +
-	"\x15GetPOIReviewsResponse\x122\n" +
-	"\areviews\x18\x01 \x03(\v2\x18.ai_poi.review.v1.ReviewR\areviews\x12?\n" +
+	"pagination\x124\n" +
+	"\x06filter\x18\x03 \x01(\v2\x1c.loci.review.v1.ReviewFilterR\x06filter\"\xcc\x01\n" +
+	"\x15GetPOIReviewsResponse\x120\n" +
+	"\areviews\x18\x01 \x03(\v2\x16.loci.review.v1.ReviewR\areviews\x12?\n" +
 	"\n" +
 	"pagination\x18\x02 \x01(\v2\x1f.loci.common.PaginationMetadataR\n" +
-	"pagination\x12B\n" +
+	"pagination\x12@\n" +
 	"\n" +
-	"statistics\x18\x03 \x01(\v2\".ai_poi.review.v1.ReviewStatisticsR\n" +
+	"statistics\x18\x03 \x01(\v2 .loci.review.v1.ReviewStatisticsR\n" +
 	"statistics\"_\n" +
 	"\x10GetReviewRequest\x12&\n" +
 	"\treview_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\breviewId\x12#\n" +
 	"\auser_id\x18\x02 \x01(\tB\n" +
-	"\xbaH\a\xd8\x01\x01r\x02\x18dR\x06userId\"\x7f\n" +
-	"\x11GetReviewResponse\x120\n" +
-	"\x06review\x18\x01 \x01(\v2\x18.ai_poi.review.v1.ReviewR\x06review\x12\x19\n" +
+	"\xbaH\a\xd8\x01\x01r\x02\x18dR\x06userId\"}\n" +
+	"\x11GetReviewResponse\x12.\n" +
+	"\x06review\x18\x01 \x01(\v2\x16.loci.review.v1.ReviewR\x06review\x12\x19\n" +
 	"\bcan_edit\x18\x02 \x01(\bR\acanEdit\x12\x1d\n" +
 	"\n" +
-	"can_delete\x18\x03 \x01(\bR\tcanDelete\"\x85\x03\n" +
+	"can_delete\x18\x03 \x01(\bR\tcanDelete\"\x83\x03\n" +
 	"\x13UpdateReviewRequest\x12\"\n" +
 	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x12&\n" +
 	"\treview_id\x18\x02 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\breviewId\x12/\n" +
@@ -2768,29 +2768,29 @@ const file_loci_review_review_proto_rawDesc = "" +
 	"\"\n" +
 	"r\b\x10\x01\x18\x80\x10\x88\x01\x01R\tphotoUrls\x129\n" +
 	"\n" +
-	"visit_date\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tvisitDate\x129\n" +
-	"\aaspects\x18\b \x01(\v2\x1f.ai_poi.review.v1.ReviewAspectsR\aaspects\"{\n" +
+	"visit_date\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tvisitDate\x127\n" +
+	"\aaspects\x18\b \x01(\v2\x1d.loci.review.v1.ReviewAspectsR\aaspects\"y\n" +
 	"\x14UpdateReviewResponse\x121\n" +
-	"\bresponse\x18\x01 \x01(\v2\x15.loci.common.ResponseR\bresponse\x120\n" +
-	"\x06review\x18\x02 \x01(\v2\x18.ai_poi.review.v1.ReviewR\x06review\"a\n" +
+	"\bresponse\x18\x01 \x01(\v2\x15.loci.common.ResponseR\bresponse\x12.\n" +
+	"\x06review\x18\x02 \x01(\v2\x16.loci.review.v1.ReviewR\x06review\"a\n" +
 	"\x13DeleteReviewRequest\x12\"\n" +
 	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x12&\n" +
 	"\treview_id\x18\x02 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\breviewId\"I\n" +
 	"\x14DeleteReviewResponse\x121\n" +
-	"\bresponse\x18\x01 \x01(\v2\x15.loci.common.ResponseR\bresponse\"\xb3\x01\n" +
+	"\bresponse\x18\x01 \x01(\v2\x15.loci.common.ResponseR\bresponse\"\xb1\x01\n" +
 	"\x15GetUserReviewsRequest\x12\"\n" +
 	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x12>\n" +
 	"\n" +
 	"pagination\x18\x02 \x01(\v2\x1e.loci.common.PaginationRequestR\n" +
-	"pagination\x126\n" +
-	"\x06filter\x18\x03 \x01(\v2\x1e.ai_poi.review.v1.ReviewFilterR\x06filter\"\xd5\x01\n" +
-	"\x16GetUserReviewsResponse\x122\n" +
-	"\areviews\x18\x01 \x03(\v2\x18.ai_poi.review.v1.ReviewR\areviews\x12?\n" +
+	"pagination\x124\n" +
+	"\x06filter\x18\x03 \x01(\v2\x1c.loci.review.v1.ReviewFilterR\x06filter\"\xd1\x01\n" +
+	"\x16GetUserReviewsResponse\x120\n" +
+	"\areviews\x18\x01 \x03(\v2\x16.loci.review.v1.ReviewR\areviews\x12?\n" +
 	"\n" +
 	"pagination\x18\x02 \x01(\v2\x1f.loci.common.PaginationMetadataR\n" +
-	"pagination\x12F\n" +
+	"pagination\x12D\n" +
 	"\n" +
-	"statistics\x18\x03 \x01(\v2&.ai_poi.review.v1.UserReviewStatisticsR\n" +
+	"statistics\x18\x03 \x01(\v2$.loci.review.v1.UserReviewStatisticsR\n" +
 	"statistics\"\xb8\x02\n" +
 	"\x14UserReviewStatistics\x12,\n" +
 	"\rtotal_reviews\x18\x01 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\ftotalReviews\x12I\n" +
@@ -2816,10 +2816,10 @@ const file_loci_review_review_proto_rawDesc = "" +
 	"\x1aGetReviewStatisticsRequest\x12 \n" +
 	"\x06poi_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x05poiId\x12%\n" +
 	"\x0einclude_trends\x18\x02 \x01(\bR\rincludeTrends\x12!\n" +
-	"\finclude_tags\x18\x03 \x01(\bR\vincludeTags\"a\n" +
-	"\x1bGetReviewStatisticsResponse\x12B\n" +
+	"\finclude_tags\x18\x03 \x01(\bR\vincludeTags\"_\n" +
+	"\x1bGetReviewStatisticsResponse\x12@\n" +
 	"\n" +
-	"statistics\x18\x01 \x01(\v2\".ai_poi.review.v1.ReviewStatisticsR\n" +
+	"statistics\x18\x01 \x01(\v2 .loci.review.v1.ReviewStatisticsR\n" +
 	"statistics*\xb5\x01\n" +
 	"\fReviewStatus\x12\x1d\n" +
 	"\x19REVIEW_STATUS_UNSPECIFIED\x10\x00\x12\x19\n" +
@@ -2837,18 +2837,18 @@ const file_loci_review_review_proto_rawDesc = "" +
 	"\x13REVIEW_SORT_BY_DATE\x10\x01\x12\x19\n" +
 	"\x15REVIEW_SORT_BY_RATING\x10\x02\x12\x1a\n" +
 	"\x16REVIEW_SORT_BY_HELPFUL\x10\x03\x12\x1c\n" +
-	"\x18REVIEW_SORT_BY_RELEVANCE\x10\x042\xf5\x06\n" +
-	"\rReviewService\x12]\n" +
-	"\fCreateReview\x12%.ai_poi.review.v1.CreateReviewRequest\x1a&.ai_poi.review.v1.CreateReviewResponse\x12`\n" +
-	"\rGetPOIReviews\x12&.ai_poi.review.v1.GetPOIReviewsRequest\x1a'.ai_poi.review.v1.GetPOIReviewsResponse\x12T\n" +
-	"\tGetReview\x12\".ai_poi.review.v1.GetReviewRequest\x1a#.ai_poi.review.v1.GetReviewResponse\x12]\n" +
-	"\fUpdateReview\x12%.ai_poi.review.v1.UpdateReviewRequest\x1a&.ai_poi.review.v1.UpdateReviewResponse\x12]\n" +
-	"\fDeleteReview\x12%.ai_poi.review.v1.DeleteReviewRequest\x1a&.ai_poi.review.v1.DeleteReviewResponse\x12c\n" +
-	"\x0eGetUserReviews\x12'.ai_poi.review.v1.GetUserReviewsRequest\x1a(.ai_poi.review.v1.GetUserReviewsResponse\x12W\n" +
+	"\x18REVIEW_SORT_BY_RELEVANCE\x10\x042\xd1\x06\n" +
+	"\rReviewService\x12Y\n" +
+	"\fCreateReview\x12#.loci.review.v1.CreateReviewRequest\x1a$.loci.review.v1.CreateReviewResponse\x12\\\n" +
+	"\rGetPOIReviews\x12$.loci.review.v1.GetPOIReviewsRequest\x1a%.loci.review.v1.GetPOIReviewsResponse\x12P\n" +
+	"\tGetReview\x12 .loci.review.v1.GetReviewRequest\x1a!.loci.review.v1.GetReviewResponse\x12Y\n" +
+	"\fUpdateReview\x12#.loci.review.v1.UpdateReviewRequest\x1a$.loci.review.v1.UpdateReviewResponse\x12Y\n" +
+	"\fDeleteReview\x12#.loci.review.v1.DeleteReviewRequest\x1a$.loci.review.v1.DeleteReviewResponse\x12_\n" +
+	"\x0eGetUserReviews\x12%.loci.review.v1.GetUserReviewsRequest\x1a&.loci.review.v1.GetUserReviewsResponse\x12S\n" +
 	"\n" +
-	"LikeReview\x12#.ai_poi.review.v1.LikeReviewRequest\x1a$.ai_poi.review.v1.LikeReviewResponse\x12]\n" +
-	"\fReportReview\x12%.ai_poi.review.v1.ReportReviewRequest\x1a&.ai_poi.review.v1.ReportReviewResponse\x12r\n" +
-	"\x13GetReviewStatistics\x12,.ai_poi.review.v1.GetReviewStatisticsRequest\x1a-.ai_poi.review.v1.GetReviewStatisticsResponseBKZIgithub.com/FACorreiaa/loci-connect-proto/gen/go/ai_poi/review/v1;reviewv1b\x06proto3"
+	"LikeReview\x12!.loci.review.v1.LikeReviewRequest\x1a\".loci.review.v1.LikeReviewResponse\x12Y\n" +
+	"\fReportReview\x12#.loci.review.v1.ReportReviewRequest\x1a$.loci.review.v1.ReportReviewResponse\x12n\n" +
+	"\x13GetReviewStatistics\x12*.loci.review.v1.GetReviewStatisticsRequest\x1a+.loci.review.v1.GetReviewStatisticsResponseBIZGgithub.com/FACorreiaa/loci-connect-proto/gen/go/loci/review/v1;reviewv1b\x06proto3"
 
 var (
 	file_loci_review_review_proto_rawDescOnce sync.Once
@@ -2865,109 +2865,109 @@ func file_loci_review_review_proto_rawDescGZIP() []byte {
 var file_loci_review_review_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
 var file_loci_review_review_proto_msgTypes = make([]protoimpl.MessageInfo, 32)
 var file_loci_review_review_proto_goTypes = []any{
-	(ReviewStatus)(0),                   // 0: ai_poi.review.v1.ReviewStatus
-	(SortDirection)(0),                  // 1: ai_poi.review.v1.SortDirection
-	(ReviewSortBy)(0),                   // 2: ai_poi.review.v1.ReviewSortBy
-	(*Review)(nil),                      // 3: ai_poi.review.v1.Review
-	(*ReviewAspects)(nil),               // 4: ai_poi.review.v1.ReviewAspects
-	(*ReviewerInfo)(nil),                // 5: ai_poi.review.v1.ReviewerInfo
-	(*BusinessResponse)(nil),            // 6: ai_poi.review.v1.BusinessResponse
-	(*ReviewStatistics)(nil),            // 7: ai_poi.review.v1.ReviewStatistics
-	(*RatingBreakdown)(nil),             // 8: ai_poi.review.v1.RatingBreakdown
-	(*ReviewAspectAverages)(nil),        // 9: ai_poi.review.v1.ReviewAspectAverages
-	(*RecentReviewTrends)(nil),          // 10: ai_poi.review.v1.RecentReviewTrends
-	(*MonthlyReviewData)(nil),           // 11: ai_poi.review.v1.MonthlyReviewData
-	(*ReviewTag)(nil),                   // 12: ai_poi.review.v1.ReviewTag
-	(*LanguageDistribution)(nil),        // 13: ai_poi.review.v1.LanguageDistribution
-	(*LanguageCount)(nil),               // 14: ai_poi.review.v1.LanguageCount
-	(*ReviewFilter)(nil),                // 15: ai_poi.review.v1.ReviewFilter
-	(*CreateReviewRequest)(nil),         // 16: ai_poi.review.v1.CreateReviewRequest
-	(*CreateReviewResponse)(nil),        // 17: ai_poi.review.v1.CreateReviewResponse
-	(*GetPOIReviewsRequest)(nil),        // 18: ai_poi.review.v1.GetPOIReviewsRequest
-	(*GetPOIReviewsResponse)(nil),       // 19: ai_poi.review.v1.GetPOIReviewsResponse
-	(*GetReviewRequest)(nil),            // 20: ai_poi.review.v1.GetReviewRequest
-	(*GetReviewResponse)(nil),           // 21: ai_poi.review.v1.GetReviewResponse
-	(*UpdateReviewRequest)(nil),         // 22: ai_poi.review.v1.UpdateReviewRequest
-	(*UpdateReviewResponse)(nil),        // 23: ai_poi.review.v1.UpdateReviewResponse
-	(*DeleteReviewRequest)(nil),         // 24: ai_poi.review.v1.DeleteReviewRequest
-	(*DeleteReviewResponse)(nil),        // 25: ai_poi.review.v1.DeleteReviewResponse
-	(*GetUserReviewsRequest)(nil),       // 26: ai_poi.review.v1.GetUserReviewsRequest
-	(*GetUserReviewsResponse)(nil),      // 27: ai_poi.review.v1.GetUserReviewsResponse
-	(*UserReviewStatistics)(nil),        // 28: ai_poi.review.v1.UserReviewStatistics
-	(*LikeReviewRequest)(nil),           // 29: ai_poi.review.v1.LikeReviewRequest
-	(*LikeReviewResponse)(nil),          // 30: ai_poi.review.v1.LikeReviewResponse
-	(*ReportReviewRequest)(nil),         // 31: ai_poi.review.v1.ReportReviewRequest
-	(*ReportReviewResponse)(nil),        // 32: ai_poi.review.v1.ReportReviewResponse
-	(*GetReviewStatisticsRequest)(nil),  // 33: ai_poi.review.v1.GetReviewStatisticsRequest
-	(*GetReviewStatisticsResponse)(nil), // 34: ai_poi.review.v1.GetReviewStatisticsResponse
+	(ReviewStatus)(0),                   // 0: loci.review.v1.ReviewStatus
+	(SortDirection)(0),                  // 1: loci.review.v1.SortDirection
+	(ReviewSortBy)(0),                   // 2: loci.review.v1.ReviewSortBy
+	(*Review)(nil),                      // 3: loci.review.v1.Review
+	(*ReviewAspects)(nil),               // 4: loci.review.v1.ReviewAspects
+	(*ReviewerInfo)(nil),                // 5: loci.review.v1.ReviewerInfo
+	(*BusinessResponse)(nil),            // 6: loci.review.v1.BusinessResponse
+	(*ReviewStatistics)(nil),            // 7: loci.review.v1.ReviewStatistics
+	(*RatingBreakdown)(nil),             // 8: loci.review.v1.RatingBreakdown
+	(*ReviewAspectAverages)(nil),        // 9: loci.review.v1.ReviewAspectAverages
+	(*RecentReviewTrends)(nil),          // 10: loci.review.v1.RecentReviewTrends
+	(*MonthlyReviewData)(nil),           // 11: loci.review.v1.MonthlyReviewData
+	(*ReviewTag)(nil),                   // 12: loci.review.v1.ReviewTag
+	(*LanguageDistribution)(nil),        // 13: loci.review.v1.LanguageDistribution
+	(*LanguageCount)(nil),               // 14: loci.review.v1.LanguageCount
+	(*ReviewFilter)(nil),                // 15: loci.review.v1.ReviewFilter
+	(*CreateReviewRequest)(nil),         // 16: loci.review.v1.CreateReviewRequest
+	(*CreateReviewResponse)(nil),        // 17: loci.review.v1.CreateReviewResponse
+	(*GetPOIReviewsRequest)(nil),        // 18: loci.review.v1.GetPOIReviewsRequest
+	(*GetPOIReviewsResponse)(nil),       // 19: loci.review.v1.GetPOIReviewsResponse
+	(*GetReviewRequest)(nil),            // 20: loci.review.v1.GetReviewRequest
+	(*GetReviewResponse)(nil),           // 21: loci.review.v1.GetReviewResponse
+	(*UpdateReviewRequest)(nil),         // 22: loci.review.v1.UpdateReviewRequest
+	(*UpdateReviewResponse)(nil),        // 23: loci.review.v1.UpdateReviewResponse
+	(*DeleteReviewRequest)(nil),         // 24: loci.review.v1.DeleteReviewRequest
+	(*DeleteReviewResponse)(nil),        // 25: loci.review.v1.DeleteReviewResponse
+	(*GetUserReviewsRequest)(nil),       // 26: loci.review.v1.GetUserReviewsRequest
+	(*GetUserReviewsResponse)(nil),      // 27: loci.review.v1.GetUserReviewsResponse
+	(*UserReviewStatistics)(nil),        // 28: loci.review.v1.UserReviewStatistics
+	(*LikeReviewRequest)(nil),           // 29: loci.review.v1.LikeReviewRequest
+	(*LikeReviewResponse)(nil),          // 30: loci.review.v1.LikeReviewResponse
+	(*ReportReviewRequest)(nil),         // 31: loci.review.v1.ReportReviewRequest
+	(*ReportReviewResponse)(nil),        // 32: loci.review.v1.ReportReviewResponse
+	(*GetReviewStatisticsRequest)(nil),  // 33: loci.review.v1.GetReviewStatisticsRequest
+	(*GetReviewStatisticsResponse)(nil), // 34: loci.review.v1.GetReviewStatisticsResponse
 	(*timestamppb.Timestamp)(nil),       // 35: google.protobuf.Timestamp
 	(*common.Response)(nil),             // 36: loci.common.Response
 	(*common.PaginationRequest)(nil),    // 37: loci.common.PaginationRequest
 	(*common.PaginationMetadata)(nil),   // 38: loci.common.PaginationMetadata
 }
 var file_loci_review_review_proto_depIdxs = []int32{
-	0,  // 0: ai_poi.review.v1.Review.status:type_name -> ai_poi.review.v1.ReviewStatus
-	35, // 1: ai_poi.review.v1.Review.visit_date:type_name -> google.protobuf.Timestamp
-	35, // 2: ai_poi.review.v1.Review.created_at:type_name -> google.protobuf.Timestamp
-	35, // 3: ai_poi.review.v1.Review.updated_at:type_name -> google.protobuf.Timestamp
-	4,  // 4: ai_poi.review.v1.Review.aspects:type_name -> ai_poi.review.v1.ReviewAspects
-	5,  // 5: ai_poi.review.v1.Review.reviewer:type_name -> ai_poi.review.v1.ReviewerInfo
-	6,  // 6: ai_poi.review.v1.Review.business_response:type_name -> ai_poi.review.v1.BusinessResponse
-	35, // 7: ai_poi.review.v1.ReviewerInfo.member_since:type_name -> google.protobuf.Timestamp
-	35, // 8: ai_poi.review.v1.BusinessResponse.created_at:type_name -> google.protobuf.Timestamp
-	8,  // 9: ai_poi.review.v1.ReviewStatistics.rating_breakdown:type_name -> ai_poi.review.v1.RatingBreakdown
-	9,  // 10: ai_poi.review.v1.ReviewStatistics.aspect_averages:type_name -> ai_poi.review.v1.ReviewAspectAverages
-	10, // 11: ai_poi.review.v1.ReviewStatistics.trends:type_name -> ai_poi.review.v1.RecentReviewTrends
-	12, // 12: ai_poi.review.v1.ReviewStatistics.tags:type_name -> ai_poi.review.v1.ReviewTag
-	13, // 13: ai_poi.review.v1.ReviewStatistics.language_distribution:type_name -> ai_poi.review.v1.LanguageDistribution
-	35, // 14: ai_poi.review.v1.ReviewStatistics.last_updated:type_name -> google.protobuf.Timestamp
-	11, // 15: ai_poi.review.v1.RecentReviewTrends.monthly_data:type_name -> ai_poi.review.v1.MonthlyReviewData
-	14, // 16: ai_poi.review.v1.LanguageDistribution.languages:type_name -> ai_poi.review.v1.LanguageCount
-	35, // 17: ai_poi.review.v1.ReviewFilter.start_date:type_name -> google.protobuf.Timestamp
-	35, // 18: ai_poi.review.v1.ReviewFilter.end_date:type_name -> google.protobuf.Timestamp
-	2,  // 19: ai_poi.review.v1.ReviewFilter.sort_by:type_name -> ai_poi.review.v1.ReviewSortBy
-	1,  // 20: ai_poi.review.v1.ReviewFilter.sort_direction:type_name -> ai_poi.review.v1.SortDirection
-	35, // 21: ai_poi.review.v1.CreateReviewRequest.visit_date:type_name -> google.protobuf.Timestamp
-	4,  // 22: ai_poi.review.v1.CreateReviewRequest.aspects:type_name -> ai_poi.review.v1.ReviewAspects
-	36, // 23: ai_poi.review.v1.CreateReviewResponse.response:type_name -> loci.common.Response
-	3,  // 24: ai_poi.review.v1.CreateReviewResponse.review:type_name -> ai_poi.review.v1.Review
-	37, // 25: ai_poi.review.v1.GetPOIReviewsRequest.pagination:type_name -> loci.common.PaginationRequest
-	15, // 26: ai_poi.review.v1.GetPOIReviewsRequest.filter:type_name -> ai_poi.review.v1.ReviewFilter
-	3,  // 27: ai_poi.review.v1.GetPOIReviewsResponse.reviews:type_name -> ai_poi.review.v1.Review
-	38, // 28: ai_poi.review.v1.GetPOIReviewsResponse.pagination:type_name -> loci.common.PaginationMetadata
-	7,  // 29: ai_poi.review.v1.GetPOIReviewsResponse.statistics:type_name -> ai_poi.review.v1.ReviewStatistics
-	3,  // 30: ai_poi.review.v1.GetReviewResponse.review:type_name -> ai_poi.review.v1.Review
-	35, // 31: ai_poi.review.v1.UpdateReviewRequest.visit_date:type_name -> google.protobuf.Timestamp
-	4,  // 32: ai_poi.review.v1.UpdateReviewRequest.aspects:type_name -> ai_poi.review.v1.ReviewAspects
-	36, // 33: ai_poi.review.v1.UpdateReviewResponse.response:type_name -> loci.common.Response
-	3,  // 34: ai_poi.review.v1.UpdateReviewResponse.review:type_name -> ai_poi.review.v1.Review
-	36, // 35: ai_poi.review.v1.DeleteReviewResponse.response:type_name -> loci.common.Response
-	37, // 36: ai_poi.review.v1.GetUserReviewsRequest.pagination:type_name -> loci.common.PaginationRequest
-	15, // 37: ai_poi.review.v1.GetUserReviewsRequest.filter:type_name -> ai_poi.review.v1.ReviewFilter
-	3,  // 38: ai_poi.review.v1.GetUserReviewsResponse.reviews:type_name -> ai_poi.review.v1.Review
-	38, // 39: ai_poi.review.v1.GetUserReviewsResponse.pagination:type_name -> loci.common.PaginationMetadata
-	28, // 40: ai_poi.review.v1.GetUserReviewsResponse.statistics:type_name -> ai_poi.review.v1.UserReviewStatistics
-	36, // 41: ai_poi.review.v1.LikeReviewResponse.response:type_name -> loci.common.Response
-	36, // 42: ai_poi.review.v1.ReportReviewResponse.response:type_name -> loci.common.Response
-	7,  // 43: ai_poi.review.v1.GetReviewStatisticsResponse.statistics:type_name -> ai_poi.review.v1.ReviewStatistics
-	16, // 44: ai_poi.review.v1.ReviewService.CreateReview:input_type -> ai_poi.review.v1.CreateReviewRequest
-	18, // 45: ai_poi.review.v1.ReviewService.GetPOIReviews:input_type -> ai_poi.review.v1.GetPOIReviewsRequest
-	20, // 46: ai_poi.review.v1.ReviewService.GetReview:input_type -> ai_poi.review.v1.GetReviewRequest
-	22, // 47: ai_poi.review.v1.ReviewService.UpdateReview:input_type -> ai_poi.review.v1.UpdateReviewRequest
-	24, // 48: ai_poi.review.v1.ReviewService.DeleteReview:input_type -> ai_poi.review.v1.DeleteReviewRequest
-	26, // 49: ai_poi.review.v1.ReviewService.GetUserReviews:input_type -> ai_poi.review.v1.GetUserReviewsRequest
-	29, // 50: ai_poi.review.v1.ReviewService.LikeReview:input_type -> ai_poi.review.v1.LikeReviewRequest
-	31, // 51: ai_poi.review.v1.ReviewService.ReportReview:input_type -> ai_poi.review.v1.ReportReviewRequest
-	33, // 52: ai_poi.review.v1.ReviewService.GetReviewStatistics:input_type -> ai_poi.review.v1.GetReviewStatisticsRequest
-	17, // 53: ai_poi.review.v1.ReviewService.CreateReview:output_type -> ai_poi.review.v1.CreateReviewResponse
-	19, // 54: ai_poi.review.v1.ReviewService.GetPOIReviews:output_type -> ai_poi.review.v1.GetPOIReviewsResponse
-	21, // 55: ai_poi.review.v1.ReviewService.GetReview:output_type -> ai_poi.review.v1.GetReviewResponse
-	23, // 56: ai_poi.review.v1.ReviewService.UpdateReview:output_type -> ai_poi.review.v1.UpdateReviewResponse
-	25, // 57: ai_poi.review.v1.ReviewService.DeleteReview:output_type -> ai_poi.review.v1.DeleteReviewResponse
-	27, // 58: ai_poi.review.v1.ReviewService.GetUserReviews:output_type -> ai_poi.review.v1.GetUserReviewsResponse
-	30, // 59: ai_poi.review.v1.ReviewService.LikeReview:output_type -> ai_poi.review.v1.LikeReviewResponse
-	32, // 60: ai_poi.review.v1.ReviewService.ReportReview:output_type -> ai_poi.review.v1.ReportReviewResponse
-	34, // 61: ai_poi.review.v1.ReviewService.GetReviewStatistics:output_type -> ai_poi.review.v1.GetReviewStatisticsResponse
+	0,  // 0: loci.review.v1.Review.status:type_name -> loci.review.v1.ReviewStatus
+	35, // 1: loci.review.v1.Review.visit_date:type_name -> google.protobuf.Timestamp
+	35, // 2: loci.review.v1.Review.created_at:type_name -> google.protobuf.Timestamp
+	35, // 3: loci.review.v1.Review.updated_at:type_name -> google.protobuf.Timestamp
+	4,  // 4: loci.review.v1.Review.aspects:type_name -> loci.review.v1.ReviewAspects
+	5,  // 5: loci.review.v1.Review.reviewer:type_name -> loci.review.v1.ReviewerInfo
+	6,  // 6: loci.review.v1.Review.business_response:type_name -> loci.review.v1.BusinessResponse
+	35, // 7: loci.review.v1.ReviewerInfo.member_since:type_name -> google.protobuf.Timestamp
+	35, // 8: loci.review.v1.BusinessResponse.created_at:type_name -> google.protobuf.Timestamp
+	8,  // 9: loci.review.v1.ReviewStatistics.rating_breakdown:type_name -> loci.review.v1.RatingBreakdown
+	9,  // 10: loci.review.v1.ReviewStatistics.aspect_averages:type_name -> loci.review.v1.ReviewAspectAverages
+	10, // 11: loci.review.v1.ReviewStatistics.trends:type_name -> loci.review.v1.RecentReviewTrends
+	12, // 12: loci.review.v1.ReviewStatistics.tags:type_name -> loci.review.v1.ReviewTag
+	13, // 13: loci.review.v1.ReviewStatistics.language_distribution:type_name -> loci.review.v1.LanguageDistribution
+	35, // 14: loci.review.v1.ReviewStatistics.last_updated:type_name -> google.protobuf.Timestamp
+	11, // 15: loci.review.v1.RecentReviewTrends.monthly_data:type_name -> loci.review.v1.MonthlyReviewData
+	14, // 16: loci.review.v1.LanguageDistribution.languages:type_name -> loci.review.v1.LanguageCount
+	35, // 17: loci.review.v1.ReviewFilter.start_date:type_name -> google.protobuf.Timestamp
+	35, // 18: loci.review.v1.ReviewFilter.end_date:type_name -> google.protobuf.Timestamp
+	2,  // 19: loci.review.v1.ReviewFilter.sort_by:type_name -> loci.review.v1.ReviewSortBy
+	1,  // 20: loci.review.v1.ReviewFilter.sort_direction:type_name -> loci.review.v1.SortDirection
+	35, // 21: loci.review.v1.CreateReviewRequest.visit_date:type_name -> google.protobuf.Timestamp
+	4,  // 22: loci.review.v1.CreateReviewRequest.aspects:type_name -> loci.review.v1.ReviewAspects
+	36, // 23: loci.review.v1.CreateReviewResponse.response:type_name -> loci.common.Response
+	3,  // 24: loci.review.v1.CreateReviewResponse.review:type_name -> loci.review.v1.Review
+	37, // 25: loci.review.v1.GetPOIReviewsRequest.pagination:type_name -> loci.common.PaginationRequest
+	15, // 26: loci.review.v1.GetPOIReviewsRequest.filter:type_name -> loci.review.v1.ReviewFilter
+	3,  // 27: loci.review.v1.GetPOIReviewsResponse.reviews:type_name -> loci.review.v1.Review
+	38, // 28: loci.review.v1.GetPOIReviewsResponse.pagination:type_name -> loci.common.PaginationMetadata
+	7,  // 29: loci.review.v1.GetPOIReviewsResponse.statistics:type_name -> loci.review.v1.ReviewStatistics
+	3,  // 30: loci.review.v1.GetReviewResponse.review:type_name -> loci.review.v1.Review
+	35, // 31: loci.review.v1.UpdateReviewRequest.visit_date:type_name -> google.protobuf.Timestamp
+	4,  // 32: loci.review.v1.UpdateReviewRequest.aspects:type_name -> loci.review.v1.ReviewAspects
+	36, // 33: loci.review.v1.UpdateReviewResponse.response:type_name -> loci.common.Response
+	3,  // 34: loci.review.v1.UpdateReviewResponse.review:type_name -> loci.review.v1.Review
+	36, // 35: loci.review.v1.DeleteReviewResponse.response:type_name -> loci.common.Response
+	37, // 36: loci.review.v1.GetUserReviewsRequest.pagination:type_name -> loci.common.PaginationRequest
+	15, // 37: loci.review.v1.GetUserReviewsRequest.filter:type_name -> loci.review.v1.ReviewFilter
+	3,  // 38: loci.review.v1.GetUserReviewsResponse.reviews:type_name -> loci.review.v1.Review
+	38, // 39: loci.review.v1.GetUserReviewsResponse.pagination:type_name -> loci.common.PaginationMetadata
+	28, // 40: loci.review.v1.GetUserReviewsResponse.statistics:type_name -> loci.review.v1.UserReviewStatistics
+	36, // 41: loci.review.v1.LikeReviewResponse.response:type_name -> loci.common.Response
+	36, // 42: loci.review.v1.ReportReviewResponse.response:type_name -> loci.common.Response
+	7,  // 43: loci.review.v1.GetReviewStatisticsResponse.statistics:type_name -> loci.review.v1.ReviewStatistics
+	16, // 44: loci.review.v1.ReviewService.CreateReview:input_type -> loci.review.v1.CreateReviewRequest
+	18, // 45: loci.review.v1.ReviewService.GetPOIReviews:input_type -> loci.review.v1.GetPOIReviewsRequest
+	20, // 46: loci.review.v1.ReviewService.GetReview:input_type -> loci.review.v1.GetReviewRequest
+	22, // 47: loci.review.v1.ReviewService.UpdateReview:input_type -> loci.review.v1.UpdateReviewRequest
+	24, // 48: loci.review.v1.ReviewService.DeleteReview:input_type -> loci.review.v1.DeleteReviewRequest
+	26, // 49: loci.review.v1.ReviewService.GetUserReviews:input_type -> loci.review.v1.GetUserReviewsRequest
+	29, // 50: loci.review.v1.ReviewService.LikeReview:input_type -> loci.review.v1.LikeReviewRequest
+	31, // 51: loci.review.v1.ReviewService.ReportReview:input_type -> loci.review.v1.ReportReviewRequest
+	33, // 52: loci.review.v1.ReviewService.GetReviewStatistics:input_type -> loci.review.v1.GetReviewStatisticsRequest
+	17, // 53: loci.review.v1.ReviewService.CreateReview:output_type -> loci.review.v1.CreateReviewResponse
+	19, // 54: loci.review.v1.ReviewService.GetPOIReviews:output_type -> loci.review.v1.GetPOIReviewsResponse
+	21, // 55: loci.review.v1.ReviewService.GetReview:output_type -> loci.review.v1.GetReviewResponse
+	23, // 56: loci.review.v1.ReviewService.UpdateReview:output_type -> loci.review.v1.UpdateReviewResponse
+	25, // 57: loci.review.v1.ReviewService.DeleteReview:output_type -> loci.review.v1.DeleteReviewResponse
+	27, // 58: loci.review.v1.ReviewService.GetUserReviews:output_type -> loci.review.v1.GetUserReviewsResponse
+	30, // 59: loci.review.v1.ReviewService.LikeReview:output_type -> loci.review.v1.LikeReviewResponse
+	32, // 60: loci.review.v1.ReviewService.ReportReview:output_type -> loci.review.v1.ReportReviewResponse
+	34, // 61: loci.review.v1.ReviewService.GetReviewStatistics:output_type -> loci.review.v1.GetReviewStatisticsResponse
 	53, // [53:62] is the sub-list for method output_type
 	44, // [44:53] is the sub-list for method input_type
 	44, // [44:44] is the sub-list for extension type_name

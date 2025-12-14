@@ -234,7 +234,7 @@ type ListItem struct {
 	ListId                 string                 `protobuf:"bytes,1,opt,name=list_id,json=listId,proto3" json:"list_id,omitempty"`
 	ItemId                 string                 `protobuf:"bytes,2,opt,name=item_id,json=itemId,proto3" json:"item_id,omitempty"`
 	PoiId                  string                 `protobuf:"bytes,3,opt,name=poi_id,json=poiId,proto3" json:"poi_id,omitempty"` // For backward compatibility with POI-only items
-	ContentType            ContentType            `protobuf:"varint,4,opt,name=content_type,json=contentType,proto3,enum=ai_poi.list.v1.ContentType" json:"content_type,omitempty"`
+	ContentType            ContentType            `protobuf:"varint,4,opt,name=content_type,json=contentType,proto3,enum=loci.list.v1.ContentType" json:"content_type,omitempty"`
 	Position               int32                  `protobuf:"varint,5,opt,name=position,proto3" json:"position,omitempty"`
 	Notes                  string                 `protobuf:"bytes,6,opt,name=notes,proto3" json:"notes,omitempty"`
 	DayNumber              int32                  `protobuf:"varint,7,opt,name=day_number,json=dayNumber,proto3" json:"day_number,omitempty"`
@@ -1724,7 +1724,7 @@ type AddListItemRequest struct {
 	UserId                 string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	ListId                 string                 `protobuf:"bytes,2,opt,name=list_id,json=listId,proto3" json:"list_id,omitempty"`
 	ItemId                 string                 `protobuf:"bytes,3,opt,name=item_id,json=itemId,proto3" json:"item_id,omitempty"`
-	ContentType            ContentType            `protobuf:"varint,4,opt,name=content_type,json=contentType,proto3,enum=ai_poi.list.v1.ContentType" json:"content_type,omitempty"`
+	ContentType            ContentType            `protobuf:"varint,4,opt,name=content_type,json=contentType,proto3,enum=loci.list.v1.ContentType" json:"content_type,omitempty"`
 	Position               int32                  `protobuf:"varint,5,opt,name=position,proto3" json:"position,omitempty"`
 	Notes                  string                 `protobuf:"bytes,6,opt,name=notes,proto3" json:"notes,omitempty"`
 	DayNumber              int32                  `protobuf:"varint,7,opt,name=day_number,json=dayNumber,proto3" json:"day_number,omitempty"`
@@ -1908,7 +1908,7 @@ type UpdateListItemRequest struct {
 	UserId                 string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	ListId                 string                 `protobuf:"bytes,2,opt,name=list_id,json=listId,proto3" json:"list_id,omitempty"`
 	ItemId                 string                 `protobuf:"bytes,3,opt,name=item_id,json=itemId,proto3" json:"item_id,omitempty"`
-	ContentType            ContentType            `protobuf:"varint,4,opt,name=content_type,json=contentType,proto3,enum=ai_poi.list.v1.ContentType" json:"content_type,omitempty"`
+	ContentType            ContentType            `protobuf:"varint,4,opt,name=content_type,json=contentType,proto3,enum=loci.list.v1.ContentType" json:"content_type,omitempty"`
 	Position               int32                  `protobuf:"varint,5,opt,name=position,proto3" json:"position,omitempty"`
 	Notes                  string                 `protobuf:"bytes,6,opt,name=notes,proto3" json:"notes,omitempty"`
 	DayNumber              int32                  `protobuf:"varint,7,opt,name=day_number,json=dayNumber,proto3" json:"day_number,omitempty"`
@@ -2092,7 +2092,7 @@ type RemoveListItemRequest struct {
 	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	ListId        string                 `protobuf:"bytes,2,opt,name=list_id,json=listId,proto3" json:"list_id,omitempty"`
 	ItemId        string                 `protobuf:"bytes,3,opt,name=item_id,json=itemId,proto3" json:"item_id,omitempty"`
-	ContentType   ContentType            `protobuf:"varint,4,opt,name=content_type,json=contentType,proto3,enum=ai_poi.list.v1.ContentType" json:"content_type,omitempty"`
+	ContentType   ContentType            `protobuf:"varint,4,opt,name=content_type,json=contentType,proto3,enum=loci.list.v1.ContentType" json:"content_type,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3137,7 +3137,7 @@ var File_loci_list_list_proto protoreflect.FileDescriptor
 
 const file_loci_list_list_proto_rawDesc = "" +
 	"\n" +
-	"\x14loci/list/list.proto\x12\x0eai_poi.list.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bbuf/validate/validate.proto\"\xcb\x04\n" +
+	"\x14loci/list/list.proto\x12\floci.list.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bbuf/validate/validate.proto\"\xcb\x04\n" +
 	"\x04List\x12\x19\n" +
 	"\x02id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x02id\x12\"\n" +
 	"\auser_id\x18\x02 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x12\x1e\n" +
@@ -3160,12 +3160,12 @@ const file_loci_list_list_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\r \x01(\v2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\tcreatedAt\x12A\n" +
 	"\n" +
-	"updated_at\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\tupdatedAt\"\x8d\x05\n" +
+	"updated_at\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\tupdatedAt\"\x8b\x05\n" +
 	"\bListItem\x12\"\n" +
 	"\alist_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06listId\x12\"\n" +
 	"\aitem_id\x18\x02 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06itemId\x12 \n" +
-	"\x06poi_id\x18\x03 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x05poiId\x12H\n" +
-	"\fcontent_type\x18\x04 \x01(\x0e2\x1b.ai_poi.list.v1.ContentTypeB\b\xbaH\x05\x82\x01\x02\x10\x01R\vcontentType\x12#\n" +
+	"\x06poi_id\x18\x03 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x05poiId\x12F\n" +
+	"\fcontent_type\x18\x04 \x01(\x0e2\x19.loci.list.v1.ContentTypeB\b\xbaH\x05\x82\x01\x02\x10\x01R\vcontentType\x12#\n" +
 	"\bposition\x18\x05 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\bposition\x12\x1e\n" +
 	"\x05notes\x18\x06 \x01(\tB\b\xbaH\x05r\x03\x18\xa0\x1fR\x05notes\x12&\n" +
 	"\n" +
@@ -3178,21 +3178,21 @@ const file_loci_list_list_proto_rawDesc = "" +
 	"\n" +
 	"updated_at\x18\v \x01(\v2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\tupdatedAt\x12B\n" +
 	"\x19source_llm_interaction_id\x18\f \x01(\tB\a\xbaH\x04r\x02\x18dR\x16sourceLlmInteractionId\x128\n" +
-	"\x13item_ai_description\x18\r \x01(\tB\b\xbaH\x05r\x03\x18\xa0\x1fR\x11itemAiDescription\"i\n" +
-	"\rListWithItems\x12(\n" +
-	"\x04list\x18\x01 \x01(\v2\x14.ai_poi.list.v1.ListR\x04list\x12.\n" +
-	"\x05items\x18\x02 \x03(\v2\x18.ai_poi.list.v1.ListItemR\x05items\"\xc2\x02\n" +
-	"\x13ListItemWithContent\x125\n" +
-	"\tlist_item\x18\x01 \x01(\v2\x18.ai_poi.list.v1.ListItemR\blistItem\x121\n" +
-	"\x03poi\x18\x02 \x01(\v2\x1f.ai_poi.list.v1.POIDetailedInfoR\x03poi\x12F\n" +
+	"\x13item_ai_description\x18\r \x01(\tB\b\xbaH\x05r\x03\x18\xa0\x1fR\x11itemAiDescription\"e\n" +
+	"\rListWithItems\x12&\n" +
+	"\x04list\x18\x01 \x01(\v2\x12.loci.list.v1.ListR\x04list\x12,\n" +
+	"\x05items\x18\x02 \x03(\v2\x16.loci.list.v1.ListItemR\x05items\"\xb8\x02\n" +
+	"\x13ListItemWithContent\x123\n" +
+	"\tlist_item\x18\x01 \x01(\v2\x16.loci.list.v1.ListItemR\blistItem\x12/\n" +
+	"\x03poi\x18\x02 \x01(\v2\x1d.loci.list.v1.POIDetailedInfoR\x03poi\x12D\n" +
 	"\n" +
-	"restaurant\x18\x03 \x01(\v2&.ai_poi.list.v1.RestaurantDetailedInfoR\n" +
-	"restaurant\x127\n" +
-	"\x05hotel\x18\x04 \x01(\v2!.ai_poi.list.v1.HotelDetailedInfoR\x05hotel\x12@\n" +
-	"\titinerary\x18\x05 \x01(\v2\".ai_poi.list.v1.UserSavedItineraryR\titinerary\"|\n" +
-	"\x15ListWithDetailedItems\x12(\n" +
-	"\x04list\x18\x01 \x01(\v2\x14.ai_poi.list.v1.ListR\x04list\x129\n" +
-	"\x05items\x18\x02 \x03(\v2#.ai_poi.list.v1.ListItemWithContentR\x05items\"\xac\x04\n" +
+	"restaurant\x18\x03 \x01(\v2$.loci.list.v1.RestaurantDetailedInfoR\n" +
+	"restaurant\x125\n" +
+	"\x05hotel\x18\x04 \x01(\v2\x1f.loci.list.v1.HotelDetailedInfoR\x05hotel\x12>\n" +
+	"\titinerary\x18\x05 \x01(\v2 .loci.list.v1.UserSavedItineraryR\titinerary\"x\n" +
+	"\x15ListWithDetailedItems\x12&\n" +
+	"\x04list\x18\x01 \x01(\v2\x12.loci.list.v1.ListR\x04list\x127\n" +
+	"\x05items\x18\x02 \x03(\v2!.loci.list.v1.ListItemWithContentR\x05items\"\xac\x04\n" +
 	"\x0fPOIDetailedInfo\x12\x19\n" +
 	"\x02id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x02id\x12\x1e\n" +
 	"\x04name\x18\x02 \x01(\tB\n" +
@@ -3213,17 +3213,17 @@ const file_loci_list_list_proto_rawDesc = "" +
 	"\x05phone\x18\v \x01(\tB\a\xbaH\x04r\x02\x182R\x05phone\x12\"\n" +
 	"\awebsite\x18\f \x01(\tB\b\xbaH\x05r\x03\x18\x80\x10R\awebsite\x12,\n" +
 	"\x06photos\x18\r \x03(\tB\x14\xbaH\x11\x92\x01\x0e\x10\x14\"\n" +
-	"r\b\x10\x01\x18\x80\x10\x88\x01\x01R\x06photos\"\x97\x02\n" +
-	"\x16RestaurantDetailedInfo\x129\n" +
-	"\x03poi\x18\x01 \x01(\v2\x1f.ai_poi.list.v1.POIDetailedInfoB\x06\xbaH\x03\xc8\x01\x01R\x03poi\x12*\n" +
+	"r\b\x10\x01\x18\x80\x10\x88\x01\x01R\x06photos\"\x95\x02\n" +
+	"\x16RestaurantDetailedInfo\x127\n" +
+	"\x03poi\x18\x01 \x01(\v2\x1d.loci.list.v1.POIDetailedInfoB\x06\xbaH\x03\xc8\x01\x01R\x03poi\x12*\n" +
 	"\fcuisine_type\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x18dR\vcuisineType\x129\n" +
 	"\x0fdietary_options\x18\x03 \x03(\tB\x10\xbaH\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x0edietaryOptions\x12&\n" +
 	"\n" +
 	"dress_code\x18\x04 \x01(\tB\a\xbaH\x04r\x02\x18dR\tdressCode\x123\n" +
-	"\x15reservations_required\x18\x05 \x01(\bR\x14reservationsRequired\"\xb7\x02\n" +
-	"\x11HotelDetailedInfo\x129\n" +
-	"\x03poi\x18\x01 \x01(\v2\x1f.ai_poi.list.v1.POIDetailedInfoB\x06\xbaH\x03\xc8\x01\x01R\x03poi\x12*\n" +
+	"\x15reservations_required\x18\x05 \x01(\bR\x14reservationsRequired\"\xb5\x02\n" +
+	"\x11HotelDetailedInfo\x127\n" +
+	"\x03poi\x18\x01 \x01(\v2\x1d.loci.list.v1.POIDetailedInfoB\x06\xbaH\x03\xc8\x01\x01R\x03poi\x12*\n" +
 	"\vstar_rating\x18\x02 \x01(\x05B\t\xbaH\x06\x1a\x04\x18\x05(\x00R\n" +
 	"starRating\x12/\n" +
 	"\n" +
@@ -3255,27 +3255,27 @@ const file_loci_list_list_proto_rawDesc = "" +
 	"\xbaH\ar\x05\x10\x01\x18\xa0\x1fR\vdescription\x12\"\n" +
 	"\acity_id\x18\x04 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06cityId\x12!\n" +
 	"\fis_itinerary\x18\x05 \x01(\bR\visItinerary\x12\x1b\n" +
-	"\tis_public\x18\x06 \x01(\bR\bisPublic\"|\n" +
+	"\tis_public\x18\x06 \x01(\bR\bisPublic\"z\n" +
 	"\x12CreateListResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\"\n" +
-	"\amessage\x18\x02 \x01(\tB\b\xbaH\x05r\x03\x18\xf4\x03R\amessage\x12(\n" +
-	"\x04list\x18\x03 \x01(\v2\x14.ai_poi.list.v1.ListR\x04list\"\x9d\x01\n" +
+	"\amessage\x18\x02 \x01(\tB\b\xbaH\x05r\x03\x18\xf4\x03R\amessage\x12&\n" +
+	"\x04list\x18\x03 \x01(\v2\x12.loci.list.v1.ListR\x04list\"\x9d\x01\n" +
 	"\x0fGetListsRequest\x12\"\n" +
 	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x12 \n" +
 	"\x05limit\x18\x02 \x01(\x05B\n" +
 	"\xbaH\a\x1a\x05\x18\xc8\x01(\x01R\x05limit\x12\x1f\n" +
 	"\x06offset\x18\x03 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x06offset\x12#\n" +
-	"\rinclude_items\x18\x04 \x01(\bR\fincludeItems\"h\n" +
-	"\x10GetListsResponse\x123\n" +
-	"\x05lists\x18\x01 \x03(\v2\x1d.ai_poi.list.v1.ListWithItemsR\x05lists\x12\x1f\n" +
+	"\rinclude_items\x18\x04 \x01(\bR\fincludeItems\"f\n" +
+	"\x10GetListsResponse\x121\n" +
+	"\x05lists\x18\x01 \x03(\v2\x1b.loci.list.v1.ListWithItemsR\x05lists\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
 	"totalCount\"\x8e\x01\n" +
 	"\x0eGetListRequest\x12\"\n" +
 	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x12\"\n" +
 	"\alist_id\x18\x02 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06listId\x124\n" +
-	"\x16include_detailed_items\x18\x03 \x01(\bR\x14includeDetailedItems\"L\n" +
-	"\x0fGetListResponse\x129\n" +
-	"\x04list\x18\x01 \x01(\v2%.ai_poi.list.v1.ListWithDetailedItemsR\x04list\"\x8b\x02\n" +
+	"\x16include_detailed_items\x18\x03 \x01(\bR\x14includeDetailedItems\"J\n" +
+	"\x0fGetListResponse\x127\n" +
+	"\x04list\x18\x01 \x01(\v2#.loci.list.v1.ListWithDetailedItemsR\x04list\"\x8b\x02\n" +
 	"\x11UpdateListRequest\x12\"\n" +
 	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x12\"\n" +
 	"\alist_id\x18\x02 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06listId\x12\x1c\n" +
@@ -3283,11 +3283,11 @@ const file_loci_list_list_proto_rawDesc = "" +
 	"\vdescription\x18\x04 \x01(\tB\b\xbaH\x05r\x03\x18\xa0\x1fR\vdescription\x12%\n" +
 	"\timage_url\x18\x05 \x01(\tB\b\xbaH\x05r\x03\x18\x80\x10R\bimageUrl\x12\x1b\n" +
 	"\tis_public\x18\x06 \x01(\bR\bisPublic\x12 \n" +
-	"\acity_id\x18\a \x01(\tB\a\xbaH\x04r\x02\x18dR\x06cityId\"|\n" +
+	"\acity_id\x18\a \x01(\tB\a\xbaH\x04r\x02\x18dR\x06cityId\"z\n" +
 	"\x12UpdateListResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\"\n" +
-	"\amessage\x18\x02 \x01(\tB\b\xbaH\x05r\x03\x18\xf4\x03R\amessage\x12(\n" +
-	"\x04list\x18\x03 \x01(\v2\x14.ai_poi.list.v1.ListR\x04list\"[\n" +
+	"\amessage\x18\x02 \x01(\tB\b\xbaH\x05r\x03\x18\xf4\x03R\amessage\x12&\n" +
+	"\x04list\x18\x03 \x01(\v2\x12.loci.list.v1.ListR\x04list\"[\n" +
 	"\x11DeleteListRequest\x12\"\n" +
 	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x12\"\n" +
 	"\alist_id\x18\x02 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06listId\"R\n" +
@@ -3300,16 +3300,16 @@ const file_loci_list_list_proto_rawDesc = "" +
 	"\x04name\x18\x03 \x01(\tB\n" +
 	"\xbaH\ar\x05\x10\x01\x18\xc8\x01R\x04name\x12*\n" +
 	"\vdescription\x18\x04 \x01(\tB\b\xbaH\x05r\x03\x18\xa0\x1fR\vdescription\x12\x1b\n" +
-	"\tis_public\x18\x05 \x01(\bR\bisPublic\"\x8b\x01\n" +
+	"\tis_public\x18\x05 \x01(\bR\bisPublic\"\x89\x01\n" +
 	"\x17CreateItineraryResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\"\n" +
-	"\amessage\x18\x02 \x01(\tB\b\xbaH\x05r\x03\x18\xf4\x03R\amessage\x122\n" +
-	"\titinerary\x18\x03 \x01(\v2\x14.ai_poi.list.v1.ListR\titinerary\"\xa2\x04\n" +
+	"\amessage\x18\x02 \x01(\tB\b\xbaH\x05r\x03\x18\xf4\x03R\amessage\x120\n" +
+	"\titinerary\x18\x03 \x01(\v2\x12.loci.list.v1.ListR\titinerary\"\xa0\x04\n" +
 	"\x12AddListItemRequest\x12\"\n" +
 	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x12\"\n" +
 	"\alist_id\x18\x02 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06listId\x12\"\n" +
-	"\aitem_id\x18\x03 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06itemId\x12H\n" +
-	"\fcontent_type\x18\x04 \x01(\x0e2\x1b.ai_poi.list.v1.ContentTypeB\b\xbaH\x05\x82\x01\x02\x10\x01R\vcontentType\x12#\n" +
+	"\aitem_id\x18\x03 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06itemId\x12F\n" +
+	"\fcontent_type\x18\x04 \x01(\x0e2\x19.loci.list.v1.ContentTypeB\b\xbaH\x05\x82\x01\x02\x10\x01R\vcontentType\x12#\n" +
 	"\bposition\x18\x05 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\bposition\x12\x1e\n" +
 	"\x05notes\x18\x06 \x01(\tB\b\xbaH\x05r\x03\x18\xa0\x1fR\x05notes\x12&\n" +
 	"\n" +
@@ -3318,16 +3318,16 @@ const file_loci_list_list_proto_rawDesc = "" +
 	"\x10duration_minutes\x18\t \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x0fdurationMinutes\x12B\n" +
 	"\x19source_llm_interaction_id\x18\n" +
 	" \x01(\tB\a\xbaH\x04r\x02\x18dR\x16sourceLlmInteractionId\x128\n" +
-	"\x13item_ai_description\x18\v \x01(\tB\b\xbaH\x05r\x03\x18\xa0\x1fR\x11itemAiDescription\"\x81\x01\n" +
+	"\x13item_ai_description\x18\v \x01(\tB\b\xbaH\x05r\x03\x18\xa0\x1fR\x11itemAiDescription\"\x7f\n" +
 	"\x13AddListItemResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\"\n" +
-	"\amessage\x18\x02 \x01(\tB\b\xbaH\x05r\x03\x18\xf4\x03R\amessage\x12,\n" +
-	"\x04item\x18\x03 \x01(\v2\x18.ai_poi.list.v1.ListItemR\x04item\"\xa5\x04\n" +
+	"\amessage\x18\x02 \x01(\tB\b\xbaH\x05r\x03\x18\xf4\x03R\amessage\x12*\n" +
+	"\x04item\x18\x03 \x01(\v2\x16.loci.list.v1.ListItemR\x04item\"\xa3\x04\n" +
 	"\x15UpdateListItemRequest\x12\"\n" +
 	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x12\"\n" +
 	"\alist_id\x18\x02 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06listId\x12\"\n" +
-	"\aitem_id\x18\x03 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06itemId\x12H\n" +
-	"\fcontent_type\x18\x04 \x01(\x0e2\x1b.ai_poi.list.v1.ContentTypeB\b\xbaH\x05\x82\x01\x02\x10\x01R\vcontentType\x12#\n" +
+	"\aitem_id\x18\x03 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06itemId\x12F\n" +
+	"\fcontent_type\x18\x04 \x01(\x0e2\x19.loci.list.v1.ContentTypeB\b\xbaH\x05\x82\x01\x02\x10\x01R\vcontentType\x12#\n" +
 	"\bposition\x18\x05 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\bposition\x12\x1e\n" +
 	"\x05notes\x18\x06 \x01(\tB\b\xbaH\x05r\x03\x18\xa0\x1fR\x05notes\x12&\n" +
 	"\n" +
@@ -3336,42 +3336,42 @@ const file_loci_list_list_proto_rawDesc = "" +
 	"\x10duration_minutes\x18\t \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x0fdurationMinutes\x12B\n" +
 	"\x19source_llm_interaction_id\x18\n" +
 	" \x01(\tB\a\xbaH\x04r\x02\x18dR\x16sourceLlmInteractionId\x128\n" +
-	"\x13item_ai_description\x18\v \x01(\tB\b\xbaH\x05r\x03\x18\xa0\x1fR\x11itemAiDescription\"\x84\x01\n" +
+	"\x13item_ai_description\x18\v \x01(\tB\b\xbaH\x05r\x03\x18\xa0\x1fR\x11itemAiDescription\"\x82\x01\n" +
 	"\x16UpdateListItemResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\"\n" +
-	"\amessage\x18\x02 \x01(\tB\b\xbaH\x05r\x03\x18\xf4\x03R\amessage\x12,\n" +
-	"\x04item\x18\x03 \x01(\v2\x18.ai_poi.list.v1.ListItemR\x04item\"\xcd\x01\n" +
+	"\amessage\x18\x02 \x01(\tB\b\xbaH\x05r\x03\x18\xf4\x03R\amessage\x12*\n" +
+	"\x04item\x18\x03 \x01(\v2\x16.loci.list.v1.ListItemR\x04item\"\xcb\x01\n" +
 	"\x15RemoveListItemRequest\x12\"\n" +
 	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x12\"\n" +
 	"\alist_id\x18\x02 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06listId\x12\"\n" +
-	"\aitem_id\x18\x03 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06itemId\x12H\n" +
-	"\fcontent_type\x18\x04 \x01(\x0e2\x1b.ai_poi.list.v1.ContentTypeB\b\xbaH\x05\x82\x01\x02\x10\x01R\vcontentType\"V\n" +
+	"\aitem_id\x18\x03 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06itemId\x12F\n" +
+	"\fcontent_type\x18\x04 \x01(\x0e2\x19.loci.list.v1.ContentTypeB\b\xbaH\x05\x82\x01\x02\x10\x01R\vcontentType\"V\n" +
 	"\x16RemoveListItemResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\"\n" +
 	"\amessage\x18\x02 \x01(\tB\b\xbaH\x05r\x03\x18\xf4\x03R\amessage\"\x95\x01\n" +
 	"\x13GetListItemsRequest\x12\"\n" +
 	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x12\"\n" +
 	"\alist_id\x18\x02 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06listId\x126\n" +
-	"\x17include_content_details\x18\x03 \x01(\bR\x15includeContentDetails\"r\n" +
-	"\x14GetListItemsResponse\x129\n" +
-	"\x05items\x18\x01 \x03(\v2#.ai_poi.list.v1.ListItemWithContentR\x05items\x12\x1f\n" +
+	"\x17include_content_details\x18\x03 \x01(\bR\x15includeContentDetails\"p\n" +
+	"\x14GetListItemsResponse\x127\n" +
+	"\x05items\x18\x01 \x03(\v2!.loci.list.v1.ListItemWithContentR\x05items\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
 	"totalCount\"c\n" +
 	"\x19GetListRestaurantsRequest\x12\"\n" +
 	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x12\"\n" +
-	"\alist_id\x18\x02 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06listId\"f\n" +
-	"\x1aGetListRestaurantsResponse\x12H\n" +
-	"\vrestaurants\x18\x01 \x03(\v2&.ai_poi.list.v1.RestaurantDetailedInfoR\vrestaurants\"^\n" +
+	"\alist_id\x18\x02 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06listId\"d\n" +
+	"\x1aGetListRestaurantsResponse\x12F\n" +
+	"\vrestaurants\x18\x01 \x03(\v2$.loci.list.v1.RestaurantDetailedInfoR\vrestaurants\"^\n" +
 	"\x14GetListHotelsRequest\x12\"\n" +
 	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x12\"\n" +
-	"\alist_id\x18\x02 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06listId\"R\n" +
-	"\x15GetListHotelsResponse\x129\n" +
-	"\x06hotels\x18\x01 \x03(\v2!.ai_poi.list.v1.HotelDetailedInfoR\x06hotels\"c\n" +
+	"\alist_id\x18\x02 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06listId\"P\n" +
+	"\x15GetListHotelsResponse\x127\n" +
+	"\x06hotels\x18\x01 \x03(\v2\x1f.loci.list.v1.HotelDetailedInfoR\x06hotels\"c\n" +
 	"\x19GetListItinerariesRequest\x12\"\n" +
 	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x12\"\n" +
-	"\alist_id\x18\x02 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06listId\"b\n" +
-	"\x1aGetListItinerariesResponse\x12D\n" +
-	"\vitineraries\x18\x01 \x03(\v2\".ai_poi.list.v1.UserSavedItineraryR\vitineraries\"_\n" +
+	"\alist_id\x18\x02 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06listId\"`\n" +
+	"\x1aGetListItinerariesResponse\x12B\n" +
+	"\vitineraries\x18\x01 \x03(\v2 .loci.list.v1.UserSavedItineraryR\vitineraries\"_\n" +
 	"\x15SavePublicListRequest\x12\"\n" +
 	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x12\"\n" +
 	"\alist_id\x18\x02 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06listId\"V\n" +
@@ -3388,9 +3388,9 @@ const file_loci_list_list_proto_rawDesc = "" +
 	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x12 \n" +
 	"\x05limit\x18\x02 \x01(\x05B\n" +
 	"\xbaH\a\x1a\x05\x18\xc8\x01(\x01R\x05limit\x12\x1f\n" +
-	"\x06offset\x18\x03 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x06offset\"m\n" +
-	"\x15GetSavedListsResponse\x123\n" +
-	"\x05lists\x18\x01 \x03(\v2\x1d.ai_poi.list.v1.ListWithItemsR\x05lists\x12\x1f\n" +
+	"\x06offset\x18\x03 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x06offset\"k\n" +
+	"\x15GetSavedListsResponse\x121\n" +
+	"\x05lists\x18\x01 \x03(\v2\x1b.loci.list.v1.ListWithItemsR\x05lists\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
 	"totalCount\"\xfb\x01\n" +
 	"\x18SearchPublicListsRequest\x12 \n" +
@@ -3404,16 +3404,16 @@ const file_loci_list_list_proto_rawDesc = "" +
 	"\xbaH\a\x1a\x05\x18\xc8\x01(\x01R\x05limit\x12\x1f\n" +
 	"\x06offset\x18\x05 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x06offset\x128\n" +
 	"\asort_by\x18\x06 \x01(\tB\x1f\xbaH\x1cr\x1aR\n" +
-	"popularityR\x06recentR\x04nameR\x06sortBy\"\xad\x01\n" +
-	"\x19SearchPublicListsResponse\x123\n" +
-	"\x05lists\x18\x01 \x03(\v2\x1d.ai_poi.list.v1.ListWithItemsR\x05lists\x12\x1f\n" +
+	"popularityR\x06recentR\x04nameR\x06sortBy\"\xa9\x01\n" +
+	"\x19SearchPublicListsResponse\x121\n" +
+	"\x05lists\x18\x01 \x03(\v2\x1b.loci.list.v1.ListWithItemsR\x05lists\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
-	"totalCount\x12:\n" +
-	"\bmetadata\x18\x03 \x01(\v2\x1e.ai_poi.list.v1.SearchMetadataR\bmetadata\"\xf9\x01\n" +
+	"totalCount\x128\n" +
+	"\bmetadata\x18\x03 \x01(\v2\x1c.loci.list.v1.SearchMetadataR\bmetadata\"\xf7\x01\n" +
 	"\x0eSearchMetadata\x12\"\n" +
 	"\rquery_time_ms\x18\x01 \x01(\x01R\vqueryTimeMs\x12#\n" +
-	"\rsearch_method\x18\x02 \x01(\tR\fsearchMethod\x12[\n" +
-	"\x0ffilters_applied\x18\x03 \x03(\v22.ai_poi.list.v1.SearchMetadata.FiltersAppliedEntryR\x0efiltersApplied\x1aA\n" +
+	"\rsearch_method\x18\x02 \x01(\tR\fsearchMethod\x12Y\n" +
+	"\x0ffilters_applied\x18\x03 \x03(\v20.loci.list.v1.SearchMetadata.FiltersAppliedEntryR\x0efiltersApplied\x1aA\n" +
 	"\x13FiltersAppliedEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01*\x92\x01\n" +
@@ -3422,29 +3422,29 @@ const file_loci_list_list_proto_rawDesc = "" +
 	"\x10CONTENT_TYPE_POI\x10\x01\x12\x1b\n" +
 	"\x17CONTENT_TYPE_RESTAURANT\x10\x02\x12\x16\n" +
 	"\x12CONTENT_TYPE_HOTEL\x10\x03\x12\x1a\n" +
-	"\x16CONTENT_TYPE_ITINERARY\x10\x042\xb6\f\n" +
-	"\vListService\x12S\n" +
+	"\x16CONTENT_TYPE_ITINERARY\x10\x042\xf2\v\n" +
+	"\vListService\x12O\n" +
 	"\n" +
-	"CreateList\x12!.ai_poi.list.v1.CreateListRequest\x1a\".ai_poi.list.v1.CreateListResponse\x12M\n" +
-	"\bGetLists\x12\x1f.ai_poi.list.v1.GetListsRequest\x1a .ai_poi.list.v1.GetListsResponse\x12J\n" +
-	"\aGetList\x12\x1e.ai_poi.list.v1.GetListRequest\x1a\x1f.ai_poi.list.v1.GetListResponse\x12S\n" +
+	"CreateList\x12\x1f.loci.list.v1.CreateListRequest\x1a .loci.list.v1.CreateListResponse\x12I\n" +
+	"\bGetLists\x12\x1d.loci.list.v1.GetListsRequest\x1a\x1e.loci.list.v1.GetListsResponse\x12F\n" +
+	"\aGetList\x12\x1c.loci.list.v1.GetListRequest\x1a\x1d.loci.list.v1.GetListResponse\x12O\n" +
 	"\n" +
-	"UpdateList\x12!.ai_poi.list.v1.UpdateListRequest\x1a\".ai_poi.list.v1.UpdateListResponse\x12S\n" +
+	"UpdateList\x12\x1f.loci.list.v1.UpdateListRequest\x1a .loci.list.v1.UpdateListResponse\x12O\n" +
 	"\n" +
-	"DeleteList\x12!.ai_poi.list.v1.DeleteListRequest\x1a\".ai_poi.list.v1.DeleteListResponse\x12b\n" +
-	"\x0fCreateItinerary\x12&.ai_poi.list.v1.CreateItineraryRequest\x1a'.ai_poi.list.v1.CreateItineraryResponse\x12V\n" +
-	"\vAddListItem\x12\".ai_poi.list.v1.AddListItemRequest\x1a#.ai_poi.list.v1.AddListItemResponse\x12_\n" +
-	"\x0eUpdateListItem\x12%.ai_poi.list.v1.UpdateListItemRequest\x1a&.ai_poi.list.v1.UpdateListItemResponse\x12_\n" +
-	"\x0eRemoveListItem\x12%.ai_poi.list.v1.RemoveListItemRequest\x1a&.ai_poi.list.v1.RemoveListItemResponse\x12Y\n" +
-	"\fGetListItems\x12#.ai_poi.list.v1.GetListItemsRequest\x1a$.ai_poi.list.v1.GetListItemsResponse\x12k\n" +
-	"\x12GetListRestaurants\x12).ai_poi.list.v1.GetListRestaurantsRequest\x1a*.ai_poi.list.v1.GetListRestaurantsResponse\x12\\\n" +
-	"\rGetListHotels\x12$.ai_poi.list.v1.GetListHotelsRequest\x1a%.ai_poi.list.v1.GetListHotelsResponse\x12k\n" +
-	"\x12GetListItineraries\x12).ai_poi.list.v1.GetListItinerariesRequest\x1a*.ai_poi.list.v1.GetListItinerariesResponse\x12_\n" +
-	"\x0eSavePublicList\x12%.ai_poi.list.v1.SavePublicListRequest\x1a&.ai_poi.list.v1.SavePublicListResponse\x12S\n" +
+	"DeleteList\x12\x1f.loci.list.v1.DeleteListRequest\x1a .loci.list.v1.DeleteListResponse\x12^\n" +
+	"\x0fCreateItinerary\x12$.loci.list.v1.CreateItineraryRequest\x1a%.loci.list.v1.CreateItineraryResponse\x12R\n" +
+	"\vAddListItem\x12 .loci.list.v1.AddListItemRequest\x1a!.loci.list.v1.AddListItemResponse\x12[\n" +
+	"\x0eUpdateListItem\x12#.loci.list.v1.UpdateListItemRequest\x1a$.loci.list.v1.UpdateListItemResponse\x12[\n" +
+	"\x0eRemoveListItem\x12#.loci.list.v1.RemoveListItemRequest\x1a$.loci.list.v1.RemoveListItemResponse\x12U\n" +
+	"\fGetListItems\x12!.loci.list.v1.GetListItemsRequest\x1a\".loci.list.v1.GetListItemsResponse\x12g\n" +
+	"\x12GetListRestaurants\x12'.loci.list.v1.GetListRestaurantsRequest\x1a(.loci.list.v1.GetListRestaurantsResponse\x12X\n" +
+	"\rGetListHotels\x12\".loci.list.v1.GetListHotelsRequest\x1a#.loci.list.v1.GetListHotelsResponse\x12g\n" +
+	"\x12GetListItineraries\x12'.loci.list.v1.GetListItinerariesRequest\x1a(.loci.list.v1.GetListItinerariesResponse\x12[\n" +
+	"\x0eSavePublicList\x12#.loci.list.v1.SavePublicListRequest\x1a$.loci.list.v1.SavePublicListResponse\x12O\n" +
 	"\n" +
-	"UnsaveList\x12!.ai_poi.list.v1.UnsaveListRequest\x1a\".ai_poi.list.v1.UnsaveListResponse\x12\\\n" +
-	"\rGetSavedLists\x12$.ai_poi.list.v1.GetSavedListsRequest\x1a%.ai_poi.list.v1.GetSavedListsResponse\x12h\n" +
-	"\x11SearchPublicLists\x12(.ai_poi.list.v1.SearchPublicListsRequest\x1a).ai_poi.list.v1.SearchPublicListsResponseBGZEgithub.com/FACorreiaa/loci-connect-proto/gen/go/ai_poi/list/v1;listv1b\x06proto3"
+	"UnsaveList\x12\x1f.loci.list.v1.UnsaveListRequest\x1a .loci.list.v1.UnsaveListResponse\x12X\n" +
+	"\rGetSavedLists\x12\".loci.list.v1.GetSavedListsRequest\x1a#.loci.list.v1.GetSavedListsResponse\x12d\n" +
+	"\x11SearchPublicLists\x12&.loci.list.v1.SearchPublicListsRequest\x1a'.loci.list.v1.SearchPublicListsResponseBEZCgithub.com/FACorreiaa/loci-connect-proto/gen/go/loci/list/v1;listv1b\x06proto3"
 
 var (
 	file_loci_list_list_proto_rawDescOnce sync.Once
@@ -3461,128 +3461,128 @@ func file_loci_list_list_proto_rawDescGZIP() []byte {
 var file_loci_list_list_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_loci_list_list_proto_msgTypes = make([]protoimpl.MessageInfo, 45)
 var file_loci_list_list_proto_goTypes = []any{
-	(ContentType)(0),                   // 0: ai_poi.list.v1.ContentType
-	(*List)(nil),                       // 1: ai_poi.list.v1.List
-	(*ListItem)(nil),                   // 2: ai_poi.list.v1.ListItem
-	(*ListWithItems)(nil),              // 3: ai_poi.list.v1.ListWithItems
-	(*ListItemWithContent)(nil),        // 4: ai_poi.list.v1.ListItemWithContent
-	(*ListWithDetailedItems)(nil),      // 5: ai_poi.list.v1.ListWithDetailedItems
-	(*POIDetailedInfo)(nil),            // 6: ai_poi.list.v1.POIDetailedInfo
-	(*RestaurantDetailedInfo)(nil),     // 7: ai_poi.list.v1.RestaurantDetailedInfo
-	(*HotelDetailedInfo)(nil),          // 8: ai_poi.list.v1.HotelDetailedInfo
-	(*UserSavedItinerary)(nil),         // 9: ai_poi.list.v1.UserSavedItinerary
-	(*CreateListRequest)(nil),          // 10: ai_poi.list.v1.CreateListRequest
-	(*CreateListResponse)(nil),         // 11: ai_poi.list.v1.CreateListResponse
-	(*GetListsRequest)(nil),            // 12: ai_poi.list.v1.GetListsRequest
-	(*GetListsResponse)(nil),           // 13: ai_poi.list.v1.GetListsResponse
-	(*GetListRequest)(nil),             // 14: ai_poi.list.v1.GetListRequest
-	(*GetListResponse)(nil),            // 15: ai_poi.list.v1.GetListResponse
-	(*UpdateListRequest)(nil),          // 16: ai_poi.list.v1.UpdateListRequest
-	(*UpdateListResponse)(nil),         // 17: ai_poi.list.v1.UpdateListResponse
-	(*DeleteListRequest)(nil),          // 18: ai_poi.list.v1.DeleteListRequest
-	(*DeleteListResponse)(nil),         // 19: ai_poi.list.v1.DeleteListResponse
-	(*CreateItineraryRequest)(nil),     // 20: ai_poi.list.v1.CreateItineraryRequest
-	(*CreateItineraryResponse)(nil),    // 21: ai_poi.list.v1.CreateItineraryResponse
-	(*AddListItemRequest)(nil),         // 22: ai_poi.list.v1.AddListItemRequest
-	(*AddListItemResponse)(nil),        // 23: ai_poi.list.v1.AddListItemResponse
-	(*UpdateListItemRequest)(nil),      // 24: ai_poi.list.v1.UpdateListItemRequest
-	(*UpdateListItemResponse)(nil),     // 25: ai_poi.list.v1.UpdateListItemResponse
-	(*RemoveListItemRequest)(nil),      // 26: ai_poi.list.v1.RemoveListItemRequest
-	(*RemoveListItemResponse)(nil),     // 27: ai_poi.list.v1.RemoveListItemResponse
-	(*GetListItemsRequest)(nil),        // 28: ai_poi.list.v1.GetListItemsRequest
-	(*GetListItemsResponse)(nil),       // 29: ai_poi.list.v1.GetListItemsResponse
-	(*GetListRestaurantsRequest)(nil),  // 30: ai_poi.list.v1.GetListRestaurantsRequest
-	(*GetListRestaurantsResponse)(nil), // 31: ai_poi.list.v1.GetListRestaurantsResponse
-	(*GetListHotelsRequest)(nil),       // 32: ai_poi.list.v1.GetListHotelsRequest
-	(*GetListHotelsResponse)(nil),      // 33: ai_poi.list.v1.GetListHotelsResponse
-	(*GetListItinerariesRequest)(nil),  // 34: ai_poi.list.v1.GetListItinerariesRequest
-	(*GetListItinerariesResponse)(nil), // 35: ai_poi.list.v1.GetListItinerariesResponse
-	(*SavePublicListRequest)(nil),      // 36: ai_poi.list.v1.SavePublicListRequest
-	(*SavePublicListResponse)(nil),     // 37: ai_poi.list.v1.SavePublicListResponse
-	(*UnsaveListRequest)(nil),          // 38: ai_poi.list.v1.UnsaveListRequest
-	(*UnsaveListResponse)(nil),         // 39: ai_poi.list.v1.UnsaveListResponse
-	(*GetSavedListsRequest)(nil),       // 40: ai_poi.list.v1.GetSavedListsRequest
-	(*GetSavedListsResponse)(nil),      // 41: ai_poi.list.v1.GetSavedListsResponse
-	(*SearchPublicListsRequest)(nil),   // 42: ai_poi.list.v1.SearchPublicListsRequest
-	(*SearchPublicListsResponse)(nil),  // 43: ai_poi.list.v1.SearchPublicListsResponse
-	(*SearchMetadata)(nil),             // 44: ai_poi.list.v1.SearchMetadata
-	nil,                                // 45: ai_poi.list.v1.SearchMetadata.FiltersAppliedEntry
+	(ContentType)(0),                   // 0: loci.list.v1.ContentType
+	(*List)(nil),                       // 1: loci.list.v1.List
+	(*ListItem)(nil),                   // 2: loci.list.v1.ListItem
+	(*ListWithItems)(nil),              // 3: loci.list.v1.ListWithItems
+	(*ListItemWithContent)(nil),        // 4: loci.list.v1.ListItemWithContent
+	(*ListWithDetailedItems)(nil),      // 5: loci.list.v1.ListWithDetailedItems
+	(*POIDetailedInfo)(nil),            // 6: loci.list.v1.POIDetailedInfo
+	(*RestaurantDetailedInfo)(nil),     // 7: loci.list.v1.RestaurantDetailedInfo
+	(*HotelDetailedInfo)(nil),          // 8: loci.list.v1.HotelDetailedInfo
+	(*UserSavedItinerary)(nil),         // 9: loci.list.v1.UserSavedItinerary
+	(*CreateListRequest)(nil),          // 10: loci.list.v1.CreateListRequest
+	(*CreateListResponse)(nil),         // 11: loci.list.v1.CreateListResponse
+	(*GetListsRequest)(nil),            // 12: loci.list.v1.GetListsRequest
+	(*GetListsResponse)(nil),           // 13: loci.list.v1.GetListsResponse
+	(*GetListRequest)(nil),             // 14: loci.list.v1.GetListRequest
+	(*GetListResponse)(nil),            // 15: loci.list.v1.GetListResponse
+	(*UpdateListRequest)(nil),          // 16: loci.list.v1.UpdateListRequest
+	(*UpdateListResponse)(nil),         // 17: loci.list.v1.UpdateListResponse
+	(*DeleteListRequest)(nil),          // 18: loci.list.v1.DeleteListRequest
+	(*DeleteListResponse)(nil),         // 19: loci.list.v1.DeleteListResponse
+	(*CreateItineraryRequest)(nil),     // 20: loci.list.v1.CreateItineraryRequest
+	(*CreateItineraryResponse)(nil),    // 21: loci.list.v1.CreateItineraryResponse
+	(*AddListItemRequest)(nil),         // 22: loci.list.v1.AddListItemRequest
+	(*AddListItemResponse)(nil),        // 23: loci.list.v1.AddListItemResponse
+	(*UpdateListItemRequest)(nil),      // 24: loci.list.v1.UpdateListItemRequest
+	(*UpdateListItemResponse)(nil),     // 25: loci.list.v1.UpdateListItemResponse
+	(*RemoveListItemRequest)(nil),      // 26: loci.list.v1.RemoveListItemRequest
+	(*RemoveListItemResponse)(nil),     // 27: loci.list.v1.RemoveListItemResponse
+	(*GetListItemsRequest)(nil),        // 28: loci.list.v1.GetListItemsRequest
+	(*GetListItemsResponse)(nil),       // 29: loci.list.v1.GetListItemsResponse
+	(*GetListRestaurantsRequest)(nil),  // 30: loci.list.v1.GetListRestaurantsRequest
+	(*GetListRestaurantsResponse)(nil), // 31: loci.list.v1.GetListRestaurantsResponse
+	(*GetListHotelsRequest)(nil),       // 32: loci.list.v1.GetListHotelsRequest
+	(*GetListHotelsResponse)(nil),      // 33: loci.list.v1.GetListHotelsResponse
+	(*GetListItinerariesRequest)(nil),  // 34: loci.list.v1.GetListItinerariesRequest
+	(*GetListItinerariesResponse)(nil), // 35: loci.list.v1.GetListItinerariesResponse
+	(*SavePublicListRequest)(nil),      // 36: loci.list.v1.SavePublicListRequest
+	(*SavePublicListResponse)(nil),     // 37: loci.list.v1.SavePublicListResponse
+	(*UnsaveListRequest)(nil),          // 38: loci.list.v1.UnsaveListRequest
+	(*UnsaveListResponse)(nil),         // 39: loci.list.v1.UnsaveListResponse
+	(*GetSavedListsRequest)(nil),       // 40: loci.list.v1.GetSavedListsRequest
+	(*GetSavedListsResponse)(nil),      // 41: loci.list.v1.GetSavedListsResponse
+	(*SearchPublicListsRequest)(nil),   // 42: loci.list.v1.SearchPublicListsRequest
+	(*SearchPublicListsResponse)(nil),  // 43: loci.list.v1.SearchPublicListsResponse
+	(*SearchMetadata)(nil),             // 44: loci.list.v1.SearchMetadata
+	nil,                                // 45: loci.list.v1.SearchMetadata.FiltersAppliedEntry
 	(*timestamppb.Timestamp)(nil),      // 46: google.protobuf.Timestamp
 }
 var file_loci_list_list_proto_depIdxs = []int32{
-	46, // 0: ai_poi.list.v1.List.created_at:type_name -> google.protobuf.Timestamp
-	46, // 1: ai_poi.list.v1.List.updated_at:type_name -> google.protobuf.Timestamp
-	0,  // 2: ai_poi.list.v1.ListItem.content_type:type_name -> ai_poi.list.v1.ContentType
-	46, // 3: ai_poi.list.v1.ListItem.time_slot:type_name -> google.protobuf.Timestamp
-	46, // 4: ai_poi.list.v1.ListItem.created_at:type_name -> google.protobuf.Timestamp
-	46, // 5: ai_poi.list.v1.ListItem.updated_at:type_name -> google.protobuf.Timestamp
-	1,  // 6: ai_poi.list.v1.ListWithItems.list:type_name -> ai_poi.list.v1.List
-	2,  // 7: ai_poi.list.v1.ListWithItems.items:type_name -> ai_poi.list.v1.ListItem
-	2,  // 8: ai_poi.list.v1.ListItemWithContent.list_item:type_name -> ai_poi.list.v1.ListItem
-	6,  // 9: ai_poi.list.v1.ListItemWithContent.poi:type_name -> ai_poi.list.v1.POIDetailedInfo
-	7,  // 10: ai_poi.list.v1.ListItemWithContent.restaurant:type_name -> ai_poi.list.v1.RestaurantDetailedInfo
-	8,  // 11: ai_poi.list.v1.ListItemWithContent.hotel:type_name -> ai_poi.list.v1.HotelDetailedInfo
-	9,  // 12: ai_poi.list.v1.ListItemWithContent.itinerary:type_name -> ai_poi.list.v1.UserSavedItinerary
-	1,  // 13: ai_poi.list.v1.ListWithDetailedItems.list:type_name -> ai_poi.list.v1.List
-	4,  // 14: ai_poi.list.v1.ListWithDetailedItems.items:type_name -> ai_poi.list.v1.ListItemWithContent
-	6,  // 15: ai_poi.list.v1.RestaurantDetailedInfo.poi:type_name -> ai_poi.list.v1.POIDetailedInfo
-	6,  // 16: ai_poi.list.v1.HotelDetailedInfo.poi:type_name -> ai_poi.list.v1.POIDetailedInfo
-	46, // 17: ai_poi.list.v1.UserSavedItinerary.created_at:type_name -> google.protobuf.Timestamp
-	46, // 18: ai_poi.list.v1.UserSavedItinerary.updated_at:type_name -> google.protobuf.Timestamp
-	1,  // 19: ai_poi.list.v1.CreateListResponse.list:type_name -> ai_poi.list.v1.List
-	3,  // 20: ai_poi.list.v1.GetListsResponse.lists:type_name -> ai_poi.list.v1.ListWithItems
-	5,  // 21: ai_poi.list.v1.GetListResponse.list:type_name -> ai_poi.list.v1.ListWithDetailedItems
-	1,  // 22: ai_poi.list.v1.UpdateListResponse.list:type_name -> ai_poi.list.v1.List
-	1,  // 23: ai_poi.list.v1.CreateItineraryResponse.itinerary:type_name -> ai_poi.list.v1.List
-	0,  // 24: ai_poi.list.v1.AddListItemRequest.content_type:type_name -> ai_poi.list.v1.ContentType
-	46, // 25: ai_poi.list.v1.AddListItemRequest.time_slot:type_name -> google.protobuf.Timestamp
-	2,  // 26: ai_poi.list.v1.AddListItemResponse.item:type_name -> ai_poi.list.v1.ListItem
-	0,  // 27: ai_poi.list.v1.UpdateListItemRequest.content_type:type_name -> ai_poi.list.v1.ContentType
-	46, // 28: ai_poi.list.v1.UpdateListItemRequest.time_slot:type_name -> google.protobuf.Timestamp
-	2,  // 29: ai_poi.list.v1.UpdateListItemResponse.item:type_name -> ai_poi.list.v1.ListItem
-	0,  // 30: ai_poi.list.v1.RemoveListItemRequest.content_type:type_name -> ai_poi.list.v1.ContentType
-	4,  // 31: ai_poi.list.v1.GetListItemsResponse.items:type_name -> ai_poi.list.v1.ListItemWithContent
-	7,  // 32: ai_poi.list.v1.GetListRestaurantsResponse.restaurants:type_name -> ai_poi.list.v1.RestaurantDetailedInfo
-	8,  // 33: ai_poi.list.v1.GetListHotelsResponse.hotels:type_name -> ai_poi.list.v1.HotelDetailedInfo
-	9,  // 34: ai_poi.list.v1.GetListItinerariesResponse.itineraries:type_name -> ai_poi.list.v1.UserSavedItinerary
-	3,  // 35: ai_poi.list.v1.GetSavedListsResponse.lists:type_name -> ai_poi.list.v1.ListWithItems
-	3,  // 36: ai_poi.list.v1.SearchPublicListsResponse.lists:type_name -> ai_poi.list.v1.ListWithItems
-	44, // 37: ai_poi.list.v1.SearchPublicListsResponse.metadata:type_name -> ai_poi.list.v1.SearchMetadata
-	45, // 38: ai_poi.list.v1.SearchMetadata.filters_applied:type_name -> ai_poi.list.v1.SearchMetadata.FiltersAppliedEntry
-	10, // 39: ai_poi.list.v1.ListService.CreateList:input_type -> ai_poi.list.v1.CreateListRequest
-	12, // 40: ai_poi.list.v1.ListService.GetLists:input_type -> ai_poi.list.v1.GetListsRequest
-	14, // 41: ai_poi.list.v1.ListService.GetList:input_type -> ai_poi.list.v1.GetListRequest
-	16, // 42: ai_poi.list.v1.ListService.UpdateList:input_type -> ai_poi.list.v1.UpdateListRequest
-	18, // 43: ai_poi.list.v1.ListService.DeleteList:input_type -> ai_poi.list.v1.DeleteListRequest
-	20, // 44: ai_poi.list.v1.ListService.CreateItinerary:input_type -> ai_poi.list.v1.CreateItineraryRequest
-	22, // 45: ai_poi.list.v1.ListService.AddListItem:input_type -> ai_poi.list.v1.AddListItemRequest
-	24, // 46: ai_poi.list.v1.ListService.UpdateListItem:input_type -> ai_poi.list.v1.UpdateListItemRequest
-	26, // 47: ai_poi.list.v1.ListService.RemoveListItem:input_type -> ai_poi.list.v1.RemoveListItemRequest
-	28, // 48: ai_poi.list.v1.ListService.GetListItems:input_type -> ai_poi.list.v1.GetListItemsRequest
-	30, // 49: ai_poi.list.v1.ListService.GetListRestaurants:input_type -> ai_poi.list.v1.GetListRestaurantsRequest
-	32, // 50: ai_poi.list.v1.ListService.GetListHotels:input_type -> ai_poi.list.v1.GetListHotelsRequest
-	34, // 51: ai_poi.list.v1.ListService.GetListItineraries:input_type -> ai_poi.list.v1.GetListItinerariesRequest
-	36, // 52: ai_poi.list.v1.ListService.SavePublicList:input_type -> ai_poi.list.v1.SavePublicListRequest
-	38, // 53: ai_poi.list.v1.ListService.UnsaveList:input_type -> ai_poi.list.v1.UnsaveListRequest
-	40, // 54: ai_poi.list.v1.ListService.GetSavedLists:input_type -> ai_poi.list.v1.GetSavedListsRequest
-	42, // 55: ai_poi.list.v1.ListService.SearchPublicLists:input_type -> ai_poi.list.v1.SearchPublicListsRequest
-	11, // 56: ai_poi.list.v1.ListService.CreateList:output_type -> ai_poi.list.v1.CreateListResponse
-	13, // 57: ai_poi.list.v1.ListService.GetLists:output_type -> ai_poi.list.v1.GetListsResponse
-	15, // 58: ai_poi.list.v1.ListService.GetList:output_type -> ai_poi.list.v1.GetListResponse
-	17, // 59: ai_poi.list.v1.ListService.UpdateList:output_type -> ai_poi.list.v1.UpdateListResponse
-	19, // 60: ai_poi.list.v1.ListService.DeleteList:output_type -> ai_poi.list.v1.DeleteListResponse
-	21, // 61: ai_poi.list.v1.ListService.CreateItinerary:output_type -> ai_poi.list.v1.CreateItineraryResponse
-	23, // 62: ai_poi.list.v1.ListService.AddListItem:output_type -> ai_poi.list.v1.AddListItemResponse
-	25, // 63: ai_poi.list.v1.ListService.UpdateListItem:output_type -> ai_poi.list.v1.UpdateListItemResponse
-	27, // 64: ai_poi.list.v1.ListService.RemoveListItem:output_type -> ai_poi.list.v1.RemoveListItemResponse
-	29, // 65: ai_poi.list.v1.ListService.GetListItems:output_type -> ai_poi.list.v1.GetListItemsResponse
-	31, // 66: ai_poi.list.v1.ListService.GetListRestaurants:output_type -> ai_poi.list.v1.GetListRestaurantsResponse
-	33, // 67: ai_poi.list.v1.ListService.GetListHotels:output_type -> ai_poi.list.v1.GetListHotelsResponse
-	35, // 68: ai_poi.list.v1.ListService.GetListItineraries:output_type -> ai_poi.list.v1.GetListItinerariesResponse
-	37, // 69: ai_poi.list.v1.ListService.SavePublicList:output_type -> ai_poi.list.v1.SavePublicListResponse
-	39, // 70: ai_poi.list.v1.ListService.UnsaveList:output_type -> ai_poi.list.v1.UnsaveListResponse
-	41, // 71: ai_poi.list.v1.ListService.GetSavedLists:output_type -> ai_poi.list.v1.GetSavedListsResponse
-	43, // 72: ai_poi.list.v1.ListService.SearchPublicLists:output_type -> ai_poi.list.v1.SearchPublicListsResponse
+	46, // 0: loci.list.v1.List.created_at:type_name -> google.protobuf.Timestamp
+	46, // 1: loci.list.v1.List.updated_at:type_name -> google.protobuf.Timestamp
+	0,  // 2: loci.list.v1.ListItem.content_type:type_name -> loci.list.v1.ContentType
+	46, // 3: loci.list.v1.ListItem.time_slot:type_name -> google.protobuf.Timestamp
+	46, // 4: loci.list.v1.ListItem.created_at:type_name -> google.protobuf.Timestamp
+	46, // 5: loci.list.v1.ListItem.updated_at:type_name -> google.protobuf.Timestamp
+	1,  // 6: loci.list.v1.ListWithItems.list:type_name -> loci.list.v1.List
+	2,  // 7: loci.list.v1.ListWithItems.items:type_name -> loci.list.v1.ListItem
+	2,  // 8: loci.list.v1.ListItemWithContent.list_item:type_name -> loci.list.v1.ListItem
+	6,  // 9: loci.list.v1.ListItemWithContent.poi:type_name -> loci.list.v1.POIDetailedInfo
+	7,  // 10: loci.list.v1.ListItemWithContent.restaurant:type_name -> loci.list.v1.RestaurantDetailedInfo
+	8,  // 11: loci.list.v1.ListItemWithContent.hotel:type_name -> loci.list.v1.HotelDetailedInfo
+	9,  // 12: loci.list.v1.ListItemWithContent.itinerary:type_name -> loci.list.v1.UserSavedItinerary
+	1,  // 13: loci.list.v1.ListWithDetailedItems.list:type_name -> loci.list.v1.List
+	4,  // 14: loci.list.v1.ListWithDetailedItems.items:type_name -> loci.list.v1.ListItemWithContent
+	6,  // 15: loci.list.v1.RestaurantDetailedInfo.poi:type_name -> loci.list.v1.POIDetailedInfo
+	6,  // 16: loci.list.v1.HotelDetailedInfo.poi:type_name -> loci.list.v1.POIDetailedInfo
+	46, // 17: loci.list.v1.UserSavedItinerary.created_at:type_name -> google.protobuf.Timestamp
+	46, // 18: loci.list.v1.UserSavedItinerary.updated_at:type_name -> google.protobuf.Timestamp
+	1,  // 19: loci.list.v1.CreateListResponse.list:type_name -> loci.list.v1.List
+	3,  // 20: loci.list.v1.GetListsResponse.lists:type_name -> loci.list.v1.ListWithItems
+	5,  // 21: loci.list.v1.GetListResponse.list:type_name -> loci.list.v1.ListWithDetailedItems
+	1,  // 22: loci.list.v1.UpdateListResponse.list:type_name -> loci.list.v1.List
+	1,  // 23: loci.list.v1.CreateItineraryResponse.itinerary:type_name -> loci.list.v1.List
+	0,  // 24: loci.list.v1.AddListItemRequest.content_type:type_name -> loci.list.v1.ContentType
+	46, // 25: loci.list.v1.AddListItemRequest.time_slot:type_name -> google.protobuf.Timestamp
+	2,  // 26: loci.list.v1.AddListItemResponse.item:type_name -> loci.list.v1.ListItem
+	0,  // 27: loci.list.v1.UpdateListItemRequest.content_type:type_name -> loci.list.v1.ContentType
+	46, // 28: loci.list.v1.UpdateListItemRequest.time_slot:type_name -> google.protobuf.Timestamp
+	2,  // 29: loci.list.v1.UpdateListItemResponse.item:type_name -> loci.list.v1.ListItem
+	0,  // 30: loci.list.v1.RemoveListItemRequest.content_type:type_name -> loci.list.v1.ContentType
+	4,  // 31: loci.list.v1.GetListItemsResponse.items:type_name -> loci.list.v1.ListItemWithContent
+	7,  // 32: loci.list.v1.GetListRestaurantsResponse.restaurants:type_name -> loci.list.v1.RestaurantDetailedInfo
+	8,  // 33: loci.list.v1.GetListHotelsResponse.hotels:type_name -> loci.list.v1.HotelDetailedInfo
+	9,  // 34: loci.list.v1.GetListItinerariesResponse.itineraries:type_name -> loci.list.v1.UserSavedItinerary
+	3,  // 35: loci.list.v1.GetSavedListsResponse.lists:type_name -> loci.list.v1.ListWithItems
+	3,  // 36: loci.list.v1.SearchPublicListsResponse.lists:type_name -> loci.list.v1.ListWithItems
+	44, // 37: loci.list.v1.SearchPublicListsResponse.metadata:type_name -> loci.list.v1.SearchMetadata
+	45, // 38: loci.list.v1.SearchMetadata.filters_applied:type_name -> loci.list.v1.SearchMetadata.FiltersAppliedEntry
+	10, // 39: loci.list.v1.ListService.CreateList:input_type -> loci.list.v1.CreateListRequest
+	12, // 40: loci.list.v1.ListService.GetLists:input_type -> loci.list.v1.GetListsRequest
+	14, // 41: loci.list.v1.ListService.GetList:input_type -> loci.list.v1.GetListRequest
+	16, // 42: loci.list.v1.ListService.UpdateList:input_type -> loci.list.v1.UpdateListRequest
+	18, // 43: loci.list.v1.ListService.DeleteList:input_type -> loci.list.v1.DeleteListRequest
+	20, // 44: loci.list.v1.ListService.CreateItinerary:input_type -> loci.list.v1.CreateItineraryRequest
+	22, // 45: loci.list.v1.ListService.AddListItem:input_type -> loci.list.v1.AddListItemRequest
+	24, // 46: loci.list.v1.ListService.UpdateListItem:input_type -> loci.list.v1.UpdateListItemRequest
+	26, // 47: loci.list.v1.ListService.RemoveListItem:input_type -> loci.list.v1.RemoveListItemRequest
+	28, // 48: loci.list.v1.ListService.GetListItems:input_type -> loci.list.v1.GetListItemsRequest
+	30, // 49: loci.list.v1.ListService.GetListRestaurants:input_type -> loci.list.v1.GetListRestaurantsRequest
+	32, // 50: loci.list.v1.ListService.GetListHotels:input_type -> loci.list.v1.GetListHotelsRequest
+	34, // 51: loci.list.v1.ListService.GetListItineraries:input_type -> loci.list.v1.GetListItinerariesRequest
+	36, // 52: loci.list.v1.ListService.SavePublicList:input_type -> loci.list.v1.SavePublicListRequest
+	38, // 53: loci.list.v1.ListService.UnsaveList:input_type -> loci.list.v1.UnsaveListRequest
+	40, // 54: loci.list.v1.ListService.GetSavedLists:input_type -> loci.list.v1.GetSavedListsRequest
+	42, // 55: loci.list.v1.ListService.SearchPublicLists:input_type -> loci.list.v1.SearchPublicListsRequest
+	11, // 56: loci.list.v1.ListService.CreateList:output_type -> loci.list.v1.CreateListResponse
+	13, // 57: loci.list.v1.ListService.GetLists:output_type -> loci.list.v1.GetListsResponse
+	15, // 58: loci.list.v1.ListService.GetList:output_type -> loci.list.v1.GetListResponse
+	17, // 59: loci.list.v1.ListService.UpdateList:output_type -> loci.list.v1.UpdateListResponse
+	19, // 60: loci.list.v1.ListService.DeleteList:output_type -> loci.list.v1.DeleteListResponse
+	21, // 61: loci.list.v1.ListService.CreateItinerary:output_type -> loci.list.v1.CreateItineraryResponse
+	23, // 62: loci.list.v1.ListService.AddListItem:output_type -> loci.list.v1.AddListItemResponse
+	25, // 63: loci.list.v1.ListService.UpdateListItem:output_type -> loci.list.v1.UpdateListItemResponse
+	27, // 64: loci.list.v1.ListService.RemoveListItem:output_type -> loci.list.v1.RemoveListItemResponse
+	29, // 65: loci.list.v1.ListService.GetListItems:output_type -> loci.list.v1.GetListItemsResponse
+	31, // 66: loci.list.v1.ListService.GetListRestaurants:output_type -> loci.list.v1.GetListRestaurantsResponse
+	33, // 67: loci.list.v1.ListService.GetListHotels:output_type -> loci.list.v1.GetListHotelsResponse
+	35, // 68: loci.list.v1.ListService.GetListItineraries:output_type -> loci.list.v1.GetListItinerariesResponse
+	37, // 69: loci.list.v1.ListService.SavePublicList:output_type -> loci.list.v1.SavePublicListResponse
+	39, // 70: loci.list.v1.ListService.UnsaveList:output_type -> loci.list.v1.UnsaveListResponse
+	41, // 71: loci.list.v1.ListService.GetSavedLists:output_type -> loci.list.v1.GetSavedListsResponse
+	43, // 72: loci.list.v1.ListService.SearchPublicLists:output_type -> loci.list.v1.SearchPublicListsResponse
 	56, // [56:73] is the sub-list for method output_type
 	39, // [39:56] is the sub-list for method input_type
 	39, // [39:39] is the sub-list for extension type_name
