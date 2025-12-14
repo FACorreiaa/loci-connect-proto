@@ -132,4 +132,43 @@ public class PaymentServiceClient(
     ),
   )
 
+
+  override suspend fun getSubscription(request: PaymentOuterClass.GetSubscriptionRequest, headers: Headers): ResponseMessage<PaymentOuterClass.GetSubscriptionResponse> = client.unary(
+    request,
+    headers,
+    MethodSpec(
+    "loci.payment.v1.PaymentService/GetSubscription",
+      loci.payment.v1.PaymentOuterClass.GetSubscriptionRequest::class,
+      loci.payment.v1.PaymentOuterClass.GetSubscriptionResponse::class,
+      StreamType.UNARY,
+    ),
+  )
+
+
+  /**
+   *  Stripe Checkout & Portal
+   */
+  override suspend fun createCheckoutSession(request: PaymentOuterClass.CreateCheckoutSessionRequest, headers: Headers): ResponseMessage<PaymentOuterClass.CreateCheckoutSessionResponse> = client.unary(
+    request,
+    headers,
+    MethodSpec(
+    "loci.payment.v1.PaymentService/CreateCheckoutSession",
+      loci.payment.v1.PaymentOuterClass.CreateCheckoutSessionRequest::class,
+      loci.payment.v1.PaymentOuterClass.CreateCheckoutSessionResponse::class,
+      StreamType.UNARY,
+    ),
+  )
+
+
+  override suspend fun createCustomerPortalSession(request: PaymentOuterClass.CreateCustomerPortalSessionRequest, headers: Headers): ResponseMessage<PaymentOuterClass.CreateCustomerPortalSessionResponse> = client.unary(
+    request,
+    headers,
+    MethodSpec(
+    "loci.payment.v1.PaymentService/CreateCustomerPortalSession",
+      loci.payment.v1.PaymentOuterClass.CreateCustomerPortalSessionRequest::class,
+      loci.payment.v1.PaymentOuterClass.CreateCustomerPortalSessionResponse::class,
+      StreamType.UNARY,
+    ),
+  )
+
 }

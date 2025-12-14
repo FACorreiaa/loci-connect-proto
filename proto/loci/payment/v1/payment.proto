@@ -21,6 +21,11 @@ service PaymentService {
   rpc CreateSubscription(CreateSubscriptionRequest) returns (CreateSubscriptionResponse);
   rpc CancelSubscription(CancelSubscriptionRequest) returns (CancelSubscriptionResponse);
   rpc GetUserSubscriptions(GetUserSubscriptionsRequest) returns (GetUserSubscriptionsResponse);
+  rpc GetSubscription(GetSubscriptionRequest) returns (GetSubscriptionResponse);
+
+  // Stripe Checkout & Portal
+  rpc CreateCheckoutSession(CreateCheckoutSessionRequest) returns (CreateCheckoutSessionResponse);
+  rpc CreateCustomerPortalSession(CreateCustomerPortalSessionRequest) returns (CreateCustomerPortalSessionResponse);
 }
 
 // --- Common Messages ---
@@ -163,4 +168,47 @@ message GetUserSubscriptionsRequest {
 
 message GetUserSubscriptionsResponse {
   repeated Subscription subscriptions = 1;
+}
+
+// --- GetSubscription (single subscription with usage) ---
+
+message GetSubscriptionRequest {
+  // Empty - uses authenticated user's subscription
+}
+
+message GetSubscriptionResponse {
+  Subscription subscription = 1;
+  SubscriptionUsage usage = 2;
+}
+
+message SubscriptionUsage {
+  int32 requests_today = 1;
+  int32 requests_limit = 2;
+  int32 saved_locations = 3;
+  int32 saved_locations_limit = 4;
+}
+
+// --- Checkout Session ---
+
+message CreateCheckoutSessionRequest {
+  string price_id = 1;         // Stripe Price ID (price_xxx)
+  string success_url = 2;      // URL to redirect on success
+  string cancel_url = 3;       // URL to redirect on cancel
+  string mode = 4;             // "subscription" or "payment"
+}
+
+message CreateCheckoutSessionResponse {
+  string session_id = 1;       // Stripe Checkout Session ID
+  string url = 2;              // Redirect URL for the user
+}
+
+// --- Customer Portal Session ---
+
+message CreateCustomerPortalSessionRequest {
+  string return_url = 1;       // URL to return to after portal session
+}
+
+message CreateCustomerPortalSessionResponse {
+  string session_id = 1;       // Stripe Portal Session ID
+  string url = 2;              // Redirect URL for the user
 }

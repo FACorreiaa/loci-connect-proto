@@ -60,20 +60,32 @@ const (
 	// PaymentServiceGetUserSubscriptionsProcedure is the fully-qualified name of the PaymentService's
 	// GetUserSubscriptions RPC.
 	PaymentServiceGetUserSubscriptionsProcedure = "/loci.payment.v1.PaymentService/GetUserSubscriptions"
+	// PaymentServiceGetSubscriptionProcedure is the fully-qualified name of the PaymentService's
+	// GetSubscription RPC.
+	PaymentServiceGetSubscriptionProcedure = "/loci.payment.v1.PaymentService/GetSubscription"
+	// PaymentServiceCreateCheckoutSessionProcedure is the fully-qualified name of the PaymentService's
+	// CreateCheckoutSession RPC.
+	PaymentServiceCreateCheckoutSessionProcedure = "/loci.payment.v1.PaymentService/CreateCheckoutSession"
+	// PaymentServiceCreateCustomerPortalSessionProcedure is the fully-qualified name of the
+	// PaymentService's CreateCustomerPortalSession RPC.
+	PaymentServiceCreateCustomerPortalSessionProcedure = "/loci.payment.v1.PaymentService/CreateCustomerPortalSession"
 )
 
 // These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
 var (
-	paymentServiceServiceDescriptor                    = v1.File_proto_loci_payment_v1_payment_proto.Services().ByName("PaymentService")
-	paymentServiceCreatePaymentMethodDescriptor        = paymentServiceServiceDescriptor.Methods().ByName("CreatePayment")
-	paymentServiceGetPaymentMethodDescriptor           = paymentServiceServiceDescriptor.Methods().ByName("GetPayment")
-	paymentServiceGetUserPaymentsMethodDescriptor      = paymentServiceServiceDescriptor.Methods().ByName("GetUserPayments")
-	paymentServiceRefundPaymentMethodDescriptor        = paymentServiceServiceDescriptor.Methods().ByName("RefundPayment")
-	paymentServiceGetInvoiceMethodDescriptor           = paymentServiceServiceDescriptor.Methods().ByName("GetInvoice")
-	paymentServiceGetUserInvoicesMethodDescriptor      = paymentServiceServiceDescriptor.Methods().ByName("GetUserInvoices")
-	paymentServiceCreateSubscriptionMethodDescriptor   = paymentServiceServiceDescriptor.Methods().ByName("CreateSubscription")
-	paymentServiceCancelSubscriptionMethodDescriptor   = paymentServiceServiceDescriptor.Methods().ByName("CancelSubscription")
-	paymentServiceGetUserSubscriptionsMethodDescriptor = paymentServiceServiceDescriptor.Methods().ByName("GetUserSubscriptions")
+	paymentServiceServiceDescriptor                           = v1.File_proto_loci_payment_v1_payment_proto.Services().ByName("PaymentService")
+	paymentServiceCreatePaymentMethodDescriptor               = paymentServiceServiceDescriptor.Methods().ByName("CreatePayment")
+	paymentServiceGetPaymentMethodDescriptor                  = paymentServiceServiceDescriptor.Methods().ByName("GetPayment")
+	paymentServiceGetUserPaymentsMethodDescriptor             = paymentServiceServiceDescriptor.Methods().ByName("GetUserPayments")
+	paymentServiceRefundPaymentMethodDescriptor               = paymentServiceServiceDescriptor.Methods().ByName("RefundPayment")
+	paymentServiceGetInvoiceMethodDescriptor                  = paymentServiceServiceDescriptor.Methods().ByName("GetInvoice")
+	paymentServiceGetUserInvoicesMethodDescriptor             = paymentServiceServiceDescriptor.Methods().ByName("GetUserInvoices")
+	paymentServiceCreateSubscriptionMethodDescriptor          = paymentServiceServiceDescriptor.Methods().ByName("CreateSubscription")
+	paymentServiceCancelSubscriptionMethodDescriptor          = paymentServiceServiceDescriptor.Methods().ByName("CancelSubscription")
+	paymentServiceGetUserSubscriptionsMethodDescriptor        = paymentServiceServiceDescriptor.Methods().ByName("GetUserSubscriptions")
+	paymentServiceGetSubscriptionMethodDescriptor             = paymentServiceServiceDescriptor.Methods().ByName("GetSubscription")
+	paymentServiceCreateCheckoutSessionMethodDescriptor       = paymentServiceServiceDescriptor.Methods().ByName("CreateCheckoutSession")
+	paymentServiceCreateCustomerPortalSessionMethodDescriptor = paymentServiceServiceDescriptor.Methods().ByName("CreateCustomerPortalSession")
 )
 
 // PaymentServiceClient is a client for the loci.payment.v1.PaymentService service.
@@ -90,6 +102,10 @@ type PaymentServiceClient interface {
 	CreateSubscription(context.Context, *connect.Request[v1.CreateSubscriptionRequest]) (*connect.Response[v1.CreateSubscriptionResponse], error)
 	CancelSubscription(context.Context, *connect.Request[v1.CancelSubscriptionRequest]) (*connect.Response[v1.CancelSubscriptionResponse], error)
 	GetUserSubscriptions(context.Context, *connect.Request[v1.GetUserSubscriptionsRequest]) (*connect.Response[v1.GetUserSubscriptionsResponse], error)
+	GetSubscription(context.Context, *connect.Request[v1.GetSubscriptionRequest]) (*connect.Response[v1.GetSubscriptionResponse], error)
+	// Stripe Checkout & Portal
+	CreateCheckoutSession(context.Context, *connect.Request[v1.CreateCheckoutSessionRequest]) (*connect.Response[v1.CreateCheckoutSessionResponse], error)
+	CreateCustomerPortalSession(context.Context, *connect.Request[v1.CreateCustomerPortalSessionRequest]) (*connect.Response[v1.CreateCustomerPortalSessionResponse], error)
 }
 
 // NewPaymentServiceClient constructs a client for the loci.payment.v1.PaymentService service. By
@@ -156,20 +172,41 @@ func NewPaymentServiceClient(httpClient connect.HTTPClient, baseURL string, opts
 			connect.WithSchema(paymentServiceGetUserSubscriptionsMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
+		getSubscription: connect.NewClient[v1.GetSubscriptionRequest, v1.GetSubscriptionResponse](
+			httpClient,
+			baseURL+PaymentServiceGetSubscriptionProcedure,
+			connect.WithSchema(paymentServiceGetSubscriptionMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		createCheckoutSession: connect.NewClient[v1.CreateCheckoutSessionRequest, v1.CreateCheckoutSessionResponse](
+			httpClient,
+			baseURL+PaymentServiceCreateCheckoutSessionProcedure,
+			connect.WithSchema(paymentServiceCreateCheckoutSessionMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		createCustomerPortalSession: connect.NewClient[v1.CreateCustomerPortalSessionRequest, v1.CreateCustomerPortalSessionResponse](
+			httpClient,
+			baseURL+PaymentServiceCreateCustomerPortalSessionProcedure,
+			connect.WithSchema(paymentServiceCreateCustomerPortalSessionMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
 // paymentServiceClient implements PaymentServiceClient.
 type paymentServiceClient struct {
-	createPayment        *connect.Client[v1.CreatePaymentRequest, v1.CreatePaymentResponse]
-	getPayment           *connect.Client[v1.GetPaymentRequest, v1.GetPaymentResponse]
-	getUserPayments      *connect.Client[v1.GetUserPaymentsRequest, v1.GetUserPaymentsResponse]
-	refundPayment        *connect.Client[v1.RefundPaymentRequest, v1.RefundPaymentResponse]
-	getInvoice           *connect.Client[v1.GetInvoiceRequest, v1.Invoice]
-	getUserInvoices      *connect.Client[v1.GetUserInvoicesRequest, v1.GetUserInvoicesResponse]
-	createSubscription   *connect.Client[v1.CreateSubscriptionRequest, v1.CreateSubscriptionResponse]
-	cancelSubscription   *connect.Client[v1.CancelSubscriptionRequest, v1.CancelSubscriptionResponse]
-	getUserSubscriptions *connect.Client[v1.GetUserSubscriptionsRequest, v1.GetUserSubscriptionsResponse]
+	createPayment               *connect.Client[v1.CreatePaymentRequest, v1.CreatePaymentResponse]
+	getPayment                  *connect.Client[v1.GetPaymentRequest, v1.GetPaymentResponse]
+	getUserPayments             *connect.Client[v1.GetUserPaymentsRequest, v1.GetUserPaymentsResponse]
+	refundPayment               *connect.Client[v1.RefundPaymentRequest, v1.RefundPaymentResponse]
+	getInvoice                  *connect.Client[v1.GetInvoiceRequest, v1.Invoice]
+	getUserInvoices             *connect.Client[v1.GetUserInvoicesRequest, v1.GetUserInvoicesResponse]
+	createSubscription          *connect.Client[v1.CreateSubscriptionRequest, v1.CreateSubscriptionResponse]
+	cancelSubscription          *connect.Client[v1.CancelSubscriptionRequest, v1.CancelSubscriptionResponse]
+	getUserSubscriptions        *connect.Client[v1.GetUserSubscriptionsRequest, v1.GetUserSubscriptionsResponse]
+	getSubscription             *connect.Client[v1.GetSubscriptionRequest, v1.GetSubscriptionResponse]
+	createCheckoutSession       *connect.Client[v1.CreateCheckoutSessionRequest, v1.CreateCheckoutSessionResponse]
+	createCustomerPortalSession *connect.Client[v1.CreateCustomerPortalSessionRequest, v1.CreateCustomerPortalSessionResponse]
 }
 
 // CreatePayment calls loci.payment.v1.PaymentService.CreatePayment.
@@ -217,6 +254,21 @@ func (c *paymentServiceClient) GetUserSubscriptions(ctx context.Context, req *co
 	return c.getUserSubscriptions.CallUnary(ctx, req)
 }
 
+// GetSubscription calls loci.payment.v1.PaymentService.GetSubscription.
+func (c *paymentServiceClient) GetSubscription(ctx context.Context, req *connect.Request[v1.GetSubscriptionRequest]) (*connect.Response[v1.GetSubscriptionResponse], error) {
+	return c.getSubscription.CallUnary(ctx, req)
+}
+
+// CreateCheckoutSession calls loci.payment.v1.PaymentService.CreateCheckoutSession.
+func (c *paymentServiceClient) CreateCheckoutSession(ctx context.Context, req *connect.Request[v1.CreateCheckoutSessionRequest]) (*connect.Response[v1.CreateCheckoutSessionResponse], error) {
+	return c.createCheckoutSession.CallUnary(ctx, req)
+}
+
+// CreateCustomerPortalSession calls loci.payment.v1.PaymentService.CreateCustomerPortalSession.
+func (c *paymentServiceClient) CreateCustomerPortalSession(ctx context.Context, req *connect.Request[v1.CreateCustomerPortalSessionRequest]) (*connect.Response[v1.CreateCustomerPortalSessionResponse], error) {
+	return c.createCustomerPortalSession.CallUnary(ctx, req)
+}
+
 // PaymentServiceHandler is an implementation of the loci.payment.v1.PaymentService service.
 type PaymentServiceHandler interface {
 	// Payments
@@ -231,6 +283,10 @@ type PaymentServiceHandler interface {
 	CreateSubscription(context.Context, *connect.Request[v1.CreateSubscriptionRequest]) (*connect.Response[v1.CreateSubscriptionResponse], error)
 	CancelSubscription(context.Context, *connect.Request[v1.CancelSubscriptionRequest]) (*connect.Response[v1.CancelSubscriptionResponse], error)
 	GetUserSubscriptions(context.Context, *connect.Request[v1.GetUserSubscriptionsRequest]) (*connect.Response[v1.GetUserSubscriptionsResponse], error)
+	GetSubscription(context.Context, *connect.Request[v1.GetSubscriptionRequest]) (*connect.Response[v1.GetSubscriptionResponse], error)
+	// Stripe Checkout & Portal
+	CreateCheckoutSession(context.Context, *connect.Request[v1.CreateCheckoutSessionRequest]) (*connect.Response[v1.CreateCheckoutSessionResponse], error)
+	CreateCustomerPortalSession(context.Context, *connect.Request[v1.CreateCustomerPortalSessionRequest]) (*connect.Response[v1.CreateCustomerPortalSessionResponse], error)
 }
 
 // NewPaymentServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -293,6 +349,24 @@ func NewPaymentServiceHandler(svc PaymentServiceHandler, opts ...connect.Handler
 		connect.WithSchema(paymentServiceGetUserSubscriptionsMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
+	paymentServiceGetSubscriptionHandler := connect.NewUnaryHandler(
+		PaymentServiceGetSubscriptionProcedure,
+		svc.GetSubscription,
+		connect.WithSchema(paymentServiceGetSubscriptionMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	paymentServiceCreateCheckoutSessionHandler := connect.NewUnaryHandler(
+		PaymentServiceCreateCheckoutSessionProcedure,
+		svc.CreateCheckoutSession,
+		connect.WithSchema(paymentServiceCreateCheckoutSessionMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	paymentServiceCreateCustomerPortalSessionHandler := connect.NewUnaryHandler(
+		PaymentServiceCreateCustomerPortalSessionProcedure,
+		svc.CreateCustomerPortalSession,
+		connect.WithSchema(paymentServiceCreateCustomerPortalSessionMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/loci.payment.v1.PaymentService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case PaymentServiceCreatePaymentProcedure:
@@ -313,6 +387,12 @@ func NewPaymentServiceHandler(svc PaymentServiceHandler, opts ...connect.Handler
 			paymentServiceCancelSubscriptionHandler.ServeHTTP(w, r)
 		case PaymentServiceGetUserSubscriptionsProcedure:
 			paymentServiceGetUserSubscriptionsHandler.ServeHTTP(w, r)
+		case PaymentServiceGetSubscriptionProcedure:
+			paymentServiceGetSubscriptionHandler.ServeHTTP(w, r)
+		case PaymentServiceCreateCheckoutSessionProcedure:
+			paymentServiceCreateCheckoutSessionHandler.ServeHTTP(w, r)
+		case PaymentServiceCreateCustomerPortalSessionProcedure:
+			paymentServiceCreateCustomerPortalSessionHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -356,4 +436,16 @@ func (UnimplementedPaymentServiceHandler) CancelSubscription(context.Context, *c
 
 func (UnimplementedPaymentServiceHandler) GetUserSubscriptions(context.Context, *connect.Request[v1.GetUserSubscriptionsRequest]) (*connect.Response[v1.GetUserSubscriptionsResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.payment.v1.PaymentService.GetUserSubscriptions is not implemented"))
+}
+
+func (UnimplementedPaymentServiceHandler) GetSubscription(context.Context, *connect.Request[v1.GetSubscriptionRequest]) (*connect.Response[v1.GetSubscriptionResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.payment.v1.PaymentService.GetSubscription is not implemented"))
+}
+
+func (UnimplementedPaymentServiceHandler) CreateCheckoutSession(context.Context, *connect.Request[v1.CreateCheckoutSessionRequest]) (*connect.Response[v1.CreateCheckoutSessionResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.payment.v1.PaymentService.CreateCheckoutSession is not implemented"))
+}
+
+func (UnimplementedPaymentServiceHandler) CreateCustomerPortalSession(context.Context, *connect.Request[v1.CreateCustomerPortalSessionRequest]) (*connect.Response[v1.CreateCustomerPortalSessionResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.payment.v1.PaymentService.CreateCustomerPortalSession is not implemented"))
 }

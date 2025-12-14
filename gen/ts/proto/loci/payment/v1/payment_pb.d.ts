@@ -638,6 +638,179 @@ export declare type GetUserSubscriptionsResponse = Message<"loci.payment.v1.GetU
 export declare const GetUserSubscriptionsResponseSchema: GenMessage<GetUserSubscriptionsResponse>;
 
 /**
+ * Empty - uses authenticated user's subscription
+ *
+ * @generated from message loci.payment.v1.GetSubscriptionRequest
+ */
+export declare type GetSubscriptionRequest = Message<"loci.payment.v1.GetSubscriptionRequest"> & {
+};
+
+/**
+ * Describes the message loci.payment.v1.GetSubscriptionRequest.
+ * Use `create(GetSubscriptionRequestSchema)` to create a new message.
+ */
+export declare const GetSubscriptionRequestSchema: GenMessage<GetSubscriptionRequest>;
+
+/**
+ * @generated from message loci.payment.v1.GetSubscriptionResponse
+ */
+export declare type GetSubscriptionResponse = Message<"loci.payment.v1.GetSubscriptionResponse"> & {
+  /**
+   * @generated from field: loci.payment.v1.Subscription subscription = 1;
+   */
+  subscription?: Subscription;
+
+  /**
+   * @generated from field: loci.payment.v1.SubscriptionUsage usage = 2;
+   */
+  usage?: SubscriptionUsage;
+};
+
+/**
+ * Describes the message loci.payment.v1.GetSubscriptionResponse.
+ * Use `create(GetSubscriptionResponseSchema)` to create a new message.
+ */
+export declare const GetSubscriptionResponseSchema: GenMessage<GetSubscriptionResponse>;
+
+/**
+ * @generated from message loci.payment.v1.SubscriptionUsage
+ */
+export declare type SubscriptionUsage = Message<"loci.payment.v1.SubscriptionUsage"> & {
+  /**
+   * @generated from field: int32 requests_today = 1;
+   */
+  requestsToday: number;
+
+  /**
+   * @generated from field: int32 requests_limit = 2;
+   */
+  requestsLimit: number;
+
+  /**
+   * @generated from field: int32 saved_locations = 3;
+   */
+  savedLocations: number;
+
+  /**
+   * @generated from field: int32 saved_locations_limit = 4;
+   */
+  savedLocationsLimit: number;
+};
+
+/**
+ * Describes the message loci.payment.v1.SubscriptionUsage.
+ * Use `create(SubscriptionUsageSchema)` to create a new message.
+ */
+export declare const SubscriptionUsageSchema: GenMessage<SubscriptionUsage>;
+
+/**
+ * @generated from message loci.payment.v1.CreateCheckoutSessionRequest
+ */
+export declare type CreateCheckoutSessionRequest = Message<"loci.payment.v1.CreateCheckoutSessionRequest"> & {
+  /**
+   * Stripe Price ID (price_xxx)
+   *
+   * @generated from field: string price_id = 1;
+   */
+  priceId: string;
+
+  /**
+   * URL to redirect on success
+   *
+   * @generated from field: string success_url = 2;
+   */
+  successUrl: string;
+
+  /**
+   * URL to redirect on cancel
+   *
+   * @generated from field: string cancel_url = 3;
+   */
+  cancelUrl: string;
+
+  /**
+   * "subscription" or "payment"
+   *
+   * @generated from field: string mode = 4;
+   */
+  mode: string;
+};
+
+/**
+ * Describes the message loci.payment.v1.CreateCheckoutSessionRequest.
+ * Use `create(CreateCheckoutSessionRequestSchema)` to create a new message.
+ */
+export declare const CreateCheckoutSessionRequestSchema: GenMessage<CreateCheckoutSessionRequest>;
+
+/**
+ * @generated from message loci.payment.v1.CreateCheckoutSessionResponse
+ */
+export declare type CreateCheckoutSessionResponse = Message<"loci.payment.v1.CreateCheckoutSessionResponse"> & {
+  /**
+   * Stripe Checkout Session ID
+   *
+   * @generated from field: string session_id = 1;
+   */
+  sessionId: string;
+
+  /**
+   * Redirect URL for the user
+   *
+   * @generated from field: string url = 2;
+   */
+  url: string;
+};
+
+/**
+ * Describes the message loci.payment.v1.CreateCheckoutSessionResponse.
+ * Use `create(CreateCheckoutSessionResponseSchema)` to create a new message.
+ */
+export declare const CreateCheckoutSessionResponseSchema: GenMessage<CreateCheckoutSessionResponse>;
+
+/**
+ * @generated from message loci.payment.v1.CreateCustomerPortalSessionRequest
+ */
+export declare type CreateCustomerPortalSessionRequest = Message<"loci.payment.v1.CreateCustomerPortalSessionRequest"> & {
+  /**
+   * URL to return to after portal session
+   *
+   * @generated from field: string return_url = 1;
+   */
+  returnUrl: string;
+};
+
+/**
+ * Describes the message loci.payment.v1.CreateCustomerPortalSessionRequest.
+ * Use `create(CreateCustomerPortalSessionRequestSchema)` to create a new message.
+ */
+export declare const CreateCustomerPortalSessionRequestSchema: GenMessage<CreateCustomerPortalSessionRequest>;
+
+/**
+ * @generated from message loci.payment.v1.CreateCustomerPortalSessionResponse
+ */
+export declare type CreateCustomerPortalSessionResponse = Message<"loci.payment.v1.CreateCustomerPortalSessionResponse"> & {
+  /**
+   * Stripe Portal Session ID
+   *
+   * @generated from field: string session_id = 1;
+   */
+  sessionId: string;
+
+  /**
+   * Redirect URL for the user
+   *
+   * @generated from field: string url = 2;
+   */
+  url: string;
+};
+
+/**
+ * Describes the message loci.payment.v1.CreateCustomerPortalSessionResponse.
+ * Use `create(CreateCustomerPortalSessionResponseSchema)` to create a new message.
+ */
+export declare const CreateCustomerPortalSessionResponseSchema: GenMessage<CreateCustomerPortalSessionResponse>;
+
+/**
  * @generated from service loci.payment.v1.PaymentService
  */
 export declare const PaymentService: GenService<{
@@ -720,6 +893,32 @@ export declare const PaymentService: GenService<{
     methodKind: "unary";
     input: typeof GetUserSubscriptionsRequestSchema;
     output: typeof GetUserSubscriptionsResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.payment.v1.PaymentService.GetSubscription
+   */
+  getSubscription: {
+    methodKind: "unary";
+    input: typeof GetSubscriptionRequestSchema;
+    output: typeof GetSubscriptionResponseSchema;
+  },
+  /**
+   * Stripe Checkout & Portal
+   *
+   * @generated from rpc loci.payment.v1.PaymentService.CreateCheckoutSession
+   */
+  createCheckoutSession: {
+    methodKind: "unary";
+    input: typeof CreateCheckoutSessionRequestSchema;
+    output: typeof CreateCheckoutSessionResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.payment.v1.PaymentService.CreateCustomerPortalSession
+   */
+  createCustomerPortalSession: {
+    methodKind: "unary";
+    input: typeof CreateCustomerPortalSessionRequestSchema;
+    output: typeof CreateCustomerPortalSessionResponseSchema;
   },
 }>;
 

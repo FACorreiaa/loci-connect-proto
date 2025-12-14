@@ -1366,6 +1366,378 @@ func (x *GetUserSubscriptionsResponse) GetSubscriptions() []*Subscription {
 	return nil
 }
 
+type GetSubscriptionRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetSubscriptionRequest) Reset() {
+	*x = GetSubscriptionRequest{}
+	mi := &file_proto_loci_payment_v1_payment_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSubscriptionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSubscriptionRequest) ProtoMessage() {}
+
+func (x *GetSubscriptionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_loci_payment_v1_payment_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSubscriptionRequest.ProtoReflect.Descriptor instead.
+func (*GetSubscriptionRequest) Descriptor() ([]byte, []int) {
+	return file_proto_loci_payment_v1_payment_proto_rawDescGZIP(), []int{20}
+}
+
+type GetSubscriptionResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Subscription  *Subscription          `protobuf:"bytes,1,opt,name=subscription,proto3" json:"subscription,omitempty"`
+	Usage         *SubscriptionUsage     `protobuf:"bytes,2,opt,name=usage,proto3" json:"usage,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetSubscriptionResponse) Reset() {
+	*x = GetSubscriptionResponse{}
+	mi := &file_proto_loci_payment_v1_payment_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSubscriptionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSubscriptionResponse) ProtoMessage() {}
+
+func (x *GetSubscriptionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_loci_payment_v1_payment_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSubscriptionResponse.ProtoReflect.Descriptor instead.
+func (*GetSubscriptionResponse) Descriptor() ([]byte, []int) {
+	return file_proto_loci_payment_v1_payment_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *GetSubscriptionResponse) GetSubscription() *Subscription {
+	if x != nil {
+		return x.Subscription
+	}
+	return nil
+}
+
+func (x *GetSubscriptionResponse) GetUsage() *SubscriptionUsage {
+	if x != nil {
+		return x.Usage
+	}
+	return nil
+}
+
+type SubscriptionUsage struct {
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	RequestsToday       int32                  `protobuf:"varint,1,opt,name=requests_today,json=requestsToday,proto3" json:"requests_today,omitempty"`
+	RequestsLimit       int32                  `protobuf:"varint,2,opt,name=requests_limit,json=requestsLimit,proto3" json:"requests_limit,omitempty"`
+	SavedLocations      int32                  `protobuf:"varint,3,opt,name=saved_locations,json=savedLocations,proto3" json:"saved_locations,omitempty"`
+	SavedLocationsLimit int32                  `protobuf:"varint,4,opt,name=saved_locations_limit,json=savedLocationsLimit,proto3" json:"saved_locations_limit,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *SubscriptionUsage) Reset() {
+	*x = SubscriptionUsage{}
+	mi := &file_proto_loci_payment_v1_payment_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SubscriptionUsage) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SubscriptionUsage) ProtoMessage() {}
+
+func (x *SubscriptionUsage) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_loci_payment_v1_payment_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SubscriptionUsage.ProtoReflect.Descriptor instead.
+func (*SubscriptionUsage) Descriptor() ([]byte, []int) {
+	return file_proto_loci_payment_v1_payment_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *SubscriptionUsage) GetRequestsToday() int32 {
+	if x != nil {
+		return x.RequestsToday
+	}
+	return 0
+}
+
+func (x *SubscriptionUsage) GetRequestsLimit() int32 {
+	if x != nil {
+		return x.RequestsLimit
+	}
+	return 0
+}
+
+func (x *SubscriptionUsage) GetSavedLocations() int32 {
+	if x != nil {
+		return x.SavedLocations
+	}
+	return 0
+}
+
+func (x *SubscriptionUsage) GetSavedLocationsLimit() int32 {
+	if x != nil {
+		return x.SavedLocationsLimit
+	}
+	return 0
+}
+
+type CreateCheckoutSessionRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PriceId       string                 `protobuf:"bytes,1,opt,name=price_id,json=priceId,proto3" json:"price_id,omitempty"`          // Stripe Price ID (price_xxx)
+	SuccessUrl    string                 `protobuf:"bytes,2,opt,name=success_url,json=successUrl,proto3" json:"success_url,omitempty"` // URL to redirect on success
+	CancelUrl     string                 `protobuf:"bytes,3,opt,name=cancel_url,json=cancelUrl,proto3" json:"cancel_url,omitempty"`    // URL to redirect on cancel
+	Mode          string                 `protobuf:"bytes,4,opt,name=mode,proto3" json:"mode,omitempty"`                               // "subscription" or "payment"
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateCheckoutSessionRequest) Reset() {
+	*x = CreateCheckoutSessionRequest{}
+	mi := &file_proto_loci_payment_v1_payment_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateCheckoutSessionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateCheckoutSessionRequest) ProtoMessage() {}
+
+func (x *CreateCheckoutSessionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_loci_payment_v1_payment_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateCheckoutSessionRequest.ProtoReflect.Descriptor instead.
+func (*CreateCheckoutSessionRequest) Descriptor() ([]byte, []int) {
+	return file_proto_loci_payment_v1_payment_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *CreateCheckoutSessionRequest) GetPriceId() string {
+	if x != nil {
+		return x.PriceId
+	}
+	return ""
+}
+
+func (x *CreateCheckoutSessionRequest) GetSuccessUrl() string {
+	if x != nil {
+		return x.SuccessUrl
+	}
+	return ""
+}
+
+func (x *CreateCheckoutSessionRequest) GetCancelUrl() string {
+	if x != nil {
+		return x.CancelUrl
+	}
+	return ""
+}
+
+func (x *CreateCheckoutSessionRequest) GetMode() string {
+	if x != nil {
+		return x.Mode
+	}
+	return ""
+}
+
+type CreateCheckoutSessionResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SessionId     string                 `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"` // Stripe Checkout Session ID
+	Url           string                 `protobuf:"bytes,2,opt,name=url,proto3" json:"url,omitempty"`                              // Redirect URL for the user
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateCheckoutSessionResponse) Reset() {
+	*x = CreateCheckoutSessionResponse{}
+	mi := &file_proto_loci_payment_v1_payment_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateCheckoutSessionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateCheckoutSessionResponse) ProtoMessage() {}
+
+func (x *CreateCheckoutSessionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_loci_payment_v1_payment_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateCheckoutSessionResponse.ProtoReflect.Descriptor instead.
+func (*CreateCheckoutSessionResponse) Descriptor() ([]byte, []int) {
+	return file_proto_loci_payment_v1_payment_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *CreateCheckoutSessionResponse) GetSessionId() string {
+	if x != nil {
+		return x.SessionId
+	}
+	return ""
+}
+
+func (x *CreateCheckoutSessionResponse) GetUrl() string {
+	if x != nil {
+		return x.Url
+	}
+	return ""
+}
+
+type CreateCustomerPortalSessionRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ReturnUrl     string                 `protobuf:"bytes,1,opt,name=return_url,json=returnUrl,proto3" json:"return_url,omitempty"` // URL to return to after portal session
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateCustomerPortalSessionRequest) Reset() {
+	*x = CreateCustomerPortalSessionRequest{}
+	mi := &file_proto_loci_payment_v1_payment_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateCustomerPortalSessionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateCustomerPortalSessionRequest) ProtoMessage() {}
+
+func (x *CreateCustomerPortalSessionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_loci_payment_v1_payment_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateCustomerPortalSessionRequest.ProtoReflect.Descriptor instead.
+func (*CreateCustomerPortalSessionRequest) Descriptor() ([]byte, []int) {
+	return file_proto_loci_payment_v1_payment_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *CreateCustomerPortalSessionRequest) GetReturnUrl() string {
+	if x != nil {
+		return x.ReturnUrl
+	}
+	return ""
+}
+
+type CreateCustomerPortalSessionResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SessionId     string                 `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"` // Stripe Portal Session ID
+	Url           string                 `protobuf:"bytes,2,opt,name=url,proto3" json:"url,omitempty"`                              // Redirect URL for the user
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateCustomerPortalSessionResponse) Reset() {
+	*x = CreateCustomerPortalSessionResponse{}
+	mi := &file_proto_loci_payment_v1_payment_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateCustomerPortalSessionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateCustomerPortalSessionResponse) ProtoMessage() {}
+
+func (x *CreateCustomerPortalSessionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_loci_payment_v1_payment_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateCustomerPortalSessionResponse.ProtoReflect.Descriptor instead.
+func (*CreateCustomerPortalSessionResponse) Descriptor() ([]byte, []int) {
+	return file_proto_loci_payment_v1_payment_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *CreateCustomerPortalSessionResponse) GetSessionId() string {
+	if x != nil {
+		return x.SessionId
+	}
+	return ""
+}
+
+func (x *CreateCustomerPortalSessionResponse) GetUrl() string {
+	if x != nil {
+		return x.Url
+	}
+	return ""
+}
+
 var File_proto_loci_payment_v1_payment_proto protoreflect.FileDescriptor
 
 const file_proto_loci_payment_v1_payment_proto_rawDesc = "" +
@@ -1481,7 +1853,34 @@ const file_proto_loci_payment_v1_payment_proto_rawDesc = "" +
 	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x1b\n" +
 	"\tpage_size\x18\x02 \x01(\x05R\bpageSize\"c\n" +
 	"\x1cGetUserSubscriptionsResponse\x12C\n" +
-	"\rsubscriptions\x18\x01 \x03(\v2\x1d.loci.payment.v1.SubscriptionR\rsubscriptions2\x92\a\n" +
+	"\rsubscriptions\x18\x01 \x03(\v2\x1d.loci.payment.v1.SubscriptionR\rsubscriptions\"\x18\n" +
+	"\x16GetSubscriptionRequest\"\x96\x01\n" +
+	"\x17GetSubscriptionResponse\x12A\n" +
+	"\fsubscription\x18\x01 \x01(\v2\x1d.loci.payment.v1.SubscriptionR\fsubscription\x128\n" +
+	"\x05usage\x18\x02 \x01(\v2\".loci.payment.v1.SubscriptionUsageR\x05usage\"\xbe\x01\n" +
+	"\x11SubscriptionUsage\x12%\n" +
+	"\x0erequests_today\x18\x01 \x01(\x05R\rrequestsToday\x12%\n" +
+	"\x0erequests_limit\x18\x02 \x01(\x05R\rrequestsLimit\x12'\n" +
+	"\x0fsaved_locations\x18\x03 \x01(\x05R\x0esavedLocations\x122\n" +
+	"\x15saved_locations_limit\x18\x04 \x01(\x05R\x13savedLocationsLimit\"\x8d\x01\n" +
+	"\x1cCreateCheckoutSessionRequest\x12\x19\n" +
+	"\bprice_id\x18\x01 \x01(\tR\apriceId\x12\x1f\n" +
+	"\vsuccess_url\x18\x02 \x01(\tR\n" +
+	"successUrl\x12\x1d\n" +
+	"\n" +
+	"cancel_url\x18\x03 \x01(\tR\tcancelUrl\x12\x12\n" +
+	"\x04mode\x18\x04 \x01(\tR\x04mode\"P\n" +
+	"\x1dCreateCheckoutSessionResponse\x12\x1d\n" +
+	"\n" +
+	"session_id\x18\x01 \x01(\tR\tsessionId\x12\x10\n" +
+	"\x03url\x18\x02 \x01(\tR\x03url\"C\n" +
+	"\"CreateCustomerPortalSessionRequest\x12\x1d\n" +
+	"\n" +
+	"return_url\x18\x01 \x01(\tR\treturnUrl\"V\n" +
+	"#CreateCustomerPortalSessionResponse\x12\x1d\n" +
+	"\n" +
+	"session_id\x18\x01 \x01(\tR\tsessionId\x12\x10\n" +
+	"\x03url\x18\x02 \x01(\tR\x03url2\xfb\t\n" +
 	"\x0ePaymentService\x12^\n" +
 	"\rCreatePayment\x12%.loci.payment.v1.CreatePaymentRequest\x1a&.loci.payment.v1.CreatePaymentResponse\x12U\n" +
 	"\n" +
@@ -1493,7 +1892,10 @@ const file_proto_loci_payment_v1_payment_proto_rawDesc = "" +
 	"\x0fGetUserInvoices\x12'.loci.payment.v1.GetUserInvoicesRequest\x1a(.loci.payment.v1.GetUserInvoicesResponse\x12m\n" +
 	"\x12CreateSubscription\x12*.loci.payment.v1.CreateSubscriptionRequest\x1a+.loci.payment.v1.CreateSubscriptionResponse\x12m\n" +
 	"\x12CancelSubscription\x12*.loci.payment.v1.CancelSubscriptionRequest\x1a+.loci.payment.v1.CancelSubscriptionResponse\x12s\n" +
-	"\x14GetUserSubscriptions\x12,.loci.payment.v1.GetUserSubscriptionsRequest\x1a-.loci.payment.v1.GetUserSubscriptionsResponseBKZIgithub.com/FACorreiaa/loci-connect-proto/gen/go/loci/payment/v1;paymentv1b\x06proto3"
+	"\x14GetUserSubscriptions\x12,.loci.payment.v1.GetUserSubscriptionsRequest\x1a-.loci.payment.v1.GetUserSubscriptionsResponse\x12d\n" +
+	"\x0fGetSubscription\x12'.loci.payment.v1.GetSubscriptionRequest\x1a(.loci.payment.v1.GetSubscriptionResponse\x12v\n" +
+	"\x15CreateCheckoutSession\x12-.loci.payment.v1.CreateCheckoutSessionRequest\x1a..loci.payment.v1.CreateCheckoutSessionResponse\x12\x88\x01\n" +
+	"\x1bCreateCustomerPortalSession\x123.loci.payment.v1.CreateCustomerPortalSessionRequest\x1a4.loci.payment.v1.CreateCustomerPortalSessionResponseBKZIgithub.com/FACorreiaa/loci-connect-proto/gen/go/loci/payment/v1;paymentv1b\x06proto3"
 
 var (
 	file_proto_loci_payment_v1_payment_proto_rawDescOnce sync.Once
@@ -1507,67 +1909,82 @@ func file_proto_loci_payment_v1_payment_proto_rawDescGZIP() []byte {
 	return file_proto_loci_payment_v1_payment_proto_rawDescData
 }
 
-var file_proto_loci_payment_v1_payment_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
+var file_proto_loci_payment_v1_payment_proto_msgTypes = make([]protoimpl.MessageInfo, 28)
 var file_proto_loci_payment_v1_payment_proto_goTypes = []any{
-	(*Payment)(nil),                      // 0: loci.payment.v1.Payment
-	(*Invoice)(nil),                      // 1: loci.payment.v1.Invoice
-	(*Subscription)(nil),                 // 2: loci.payment.v1.Subscription
-	(*CreatePaymentRequest)(nil),         // 3: loci.payment.v1.CreatePaymentRequest
-	(*CreatePaymentResponse)(nil),        // 4: loci.payment.v1.CreatePaymentResponse
-	(*GetPaymentRequest)(nil),            // 5: loci.payment.v1.GetPaymentRequest
-	(*GetPaymentResponse)(nil),           // 6: loci.payment.v1.GetPaymentResponse
-	(*GetUserPaymentsRequest)(nil),       // 7: loci.payment.v1.GetUserPaymentsRequest
-	(*GetUserPaymentsResponse)(nil),      // 8: loci.payment.v1.GetUserPaymentsResponse
-	(*RefundPaymentRequest)(nil),         // 9: loci.payment.v1.RefundPaymentRequest
-	(*RefundPaymentResponse)(nil),        // 10: loci.payment.v1.RefundPaymentResponse
-	(*GetInvoiceRequest)(nil),            // 11: loci.payment.v1.GetInvoiceRequest
-	(*GetUserInvoicesRequest)(nil),       // 12: loci.payment.v1.GetUserInvoicesRequest
-	(*GetUserInvoicesResponse)(nil),      // 13: loci.payment.v1.GetUserInvoicesResponse
-	(*CreateSubscriptionRequest)(nil),    // 14: loci.payment.v1.CreateSubscriptionRequest
-	(*CreateSubscriptionResponse)(nil),   // 15: loci.payment.v1.CreateSubscriptionResponse
-	(*CancelSubscriptionRequest)(nil),    // 16: loci.payment.v1.CancelSubscriptionRequest
-	(*CancelSubscriptionResponse)(nil),   // 17: loci.payment.v1.CancelSubscriptionResponse
-	(*GetUserSubscriptionsRequest)(nil),  // 18: loci.payment.v1.GetUserSubscriptionsRequest
-	(*GetUserSubscriptionsResponse)(nil), // 19: loci.payment.v1.GetUserSubscriptionsResponse
-	nil,                                  // 20: loci.payment.v1.CreatePaymentRequest.MetadataEntry
-	(*timestamppb.Timestamp)(nil),        // 21: google.protobuf.Timestamp
+	(*Payment)(nil),                             // 0: loci.payment.v1.Payment
+	(*Invoice)(nil),                             // 1: loci.payment.v1.Invoice
+	(*Subscription)(nil),                        // 2: loci.payment.v1.Subscription
+	(*CreatePaymentRequest)(nil),                // 3: loci.payment.v1.CreatePaymentRequest
+	(*CreatePaymentResponse)(nil),               // 4: loci.payment.v1.CreatePaymentResponse
+	(*GetPaymentRequest)(nil),                   // 5: loci.payment.v1.GetPaymentRequest
+	(*GetPaymentResponse)(nil),                  // 6: loci.payment.v1.GetPaymentResponse
+	(*GetUserPaymentsRequest)(nil),              // 7: loci.payment.v1.GetUserPaymentsRequest
+	(*GetUserPaymentsResponse)(nil),             // 8: loci.payment.v1.GetUserPaymentsResponse
+	(*RefundPaymentRequest)(nil),                // 9: loci.payment.v1.RefundPaymentRequest
+	(*RefundPaymentResponse)(nil),               // 10: loci.payment.v1.RefundPaymentResponse
+	(*GetInvoiceRequest)(nil),                   // 11: loci.payment.v1.GetInvoiceRequest
+	(*GetUserInvoicesRequest)(nil),              // 12: loci.payment.v1.GetUserInvoicesRequest
+	(*GetUserInvoicesResponse)(nil),             // 13: loci.payment.v1.GetUserInvoicesResponse
+	(*CreateSubscriptionRequest)(nil),           // 14: loci.payment.v1.CreateSubscriptionRequest
+	(*CreateSubscriptionResponse)(nil),          // 15: loci.payment.v1.CreateSubscriptionResponse
+	(*CancelSubscriptionRequest)(nil),           // 16: loci.payment.v1.CancelSubscriptionRequest
+	(*CancelSubscriptionResponse)(nil),          // 17: loci.payment.v1.CancelSubscriptionResponse
+	(*GetUserSubscriptionsRequest)(nil),         // 18: loci.payment.v1.GetUserSubscriptionsRequest
+	(*GetUserSubscriptionsResponse)(nil),        // 19: loci.payment.v1.GetUserSubscriptionsResponse
+	(*GetSubscriptionRequest)(nil),              // 20: loci.payment.v1.GetSubscriptionRequest
+	(*GetSubscriptionResponse)(nil),             // 21: loci.payment.v1.GetSubscriptionResponse
+	(*SubscriptionUsage)(nil),                   // 22: loci.payment.v1.SubscriptionUsage
+	(*CreateCheckoutSessionRequest)(nil),        // 23: loci.payment.v1.CreateCheckoutSessionRequest
+	(*CreateCheckoutSessionResponse)(nil),       // 24: loci.payment.v1.CreateCheckoutSessionResponse
+	(*CreateCustomerPortalSessionRequest)(nil),  // 25: loci.payment.v1.CreateCustomerPortalSessionRequest
+	(*CreateCustomerPortalSessionResponse)(nil), // 26: loci.payment.v1.CreateCustomerPortalSessionResponse
+	nil,                           // 27: loci.payment.v1.CreatePaymentRequest.MetadataEntry
+	(*timestamppb.Timestamp)(nil), // 28: google.protobuf.Timestamp
 }
 var file_proto_loci_payment_v1_payment_proto_depIdxs = []int32{
-	21, // 0: loci.payment.v1.Payment.created_at:type_name -> google.protobuf.Timestamp
-	21, // 1: loci.payment.v1.Payment.updated_at:type_name -> google.protobuf.Timestamp
-	21, // 2: loci.payment.v1.Invoice.issued_at:type_name -> google.protobuf.Timestamp
-	21, // 3: loci.payment.v1.Invoice.paid_at:type_name -> google.protobuf.Timestamp
-	21, // 4: loci.payment.v1.Subscription.current_period_start:type_name -> google.protobuf.Timestamp
-	21, // 5: loci.payment.v1.Subscription.current_period_end:type_name -> google.protobuf.Timestamp
-	20, // 6: loci.payment.v1.CreatePaymentRequest.metadata:type_name -> loci.payment.v1.CreatePaymentRequest.MetadataEntry
+	28, // 0: loci.payment.v1.Payment.created_at:type_name -> google.protobuf.Timestamp
+	28, // 1: loci.payment.v1.Payment.updated_at:type_name -> google.protobuf.Timestamp
+	28, // 2: loci.payment.v1.Invoice.issued_at:type_name -> google.protobuf.Timestamp
+	28, // 3: loci.payment.v1.Invoice.paid_at:type_name -> google.protobuf.Timestamp
+	28, // 4: loci.payment.v1.Subscription.current_period_start:type_name -> google.protobuf.Timestamp
+	28, // 5: loci.payment.v1.Subscription.current_period_end:type_name -> google.protobuf.Timestamp
+	27, // 6: loci.payment.v1.CreatePaymentRequest.metadata:type_name -> loci.payment.v1.CreatePaymentRequest.MetadataEntry
 	0,  // 7: loci.payment.v1.GetPaymentResponse.payment:type_name -> loci.payment.v1.Payment
 	1,  // 8: loci.payment.v1.GetPaymentResponse.invoice:type_name -> loci.payment.v1.Invoice
 	0,  // 9: loci.payment.v1.GetUserPaymentsResponse.payments:type_name -> loci.payment.v1.Payment
 	1,  // 10: loci.payment.v1.GetUserInvoicesResponse.invoices:type_name -> loci.payment.v1.Invoice
 	2,  // 11: loci.payment.v1.GetUserSubscriptionsResponse.subscriptions:type_name -> loci.payment.v1.Subscription
-	3,  // 12: loci.payment.v1.PaymentService.CreatePayment:input_type -> loci.payment.v1.CreatePaymentRequest
-	5,  // 13: loci.payment.v1.PaymentService.GetPayment:input_type -> loci.payment.v1.GetPaymentRequest
-	7,  // 14: loci.payment.v1.PaymentService.GetUserPayments:input_type -> loci.payment.v1.GetUserPaymentsRequest
-	9,  // 15: loci.payment.v1.PaymentService.RefundPayment:input_type -> loci.payment.v1.RefundPaymentRequest
-	11, // 16: loci.payment.v1.PaymentService.GetInvoice:input_type -> loci.payment.v1.GetInvoiceRequest
-	12, // 17: loci.payment.v1.PaymentService.GetUserInvoices:input_type -> loci.payment.v1.GetUserInvoicesRequest
-	14, // 18: loci.payment.v1.PaymentService.CreateSubscription:input_type -> loci.payment.v1.CreateSubscriptionRequest
-	16, // 19: loci.payment.v1.PaymentService.CancelSubscription:input_type -> loci.payment.v1.CancelSubscriptionRequest
-	18, // 20: loci.payment.v1.PaymentService.GetUserSubscriptions:input_type -> loci.payment.v1.GetUserSubscriptionsRequest
-	4,  // 21: loci.payment.v1.PaymentService.CreatePayment:output_type -> loci.payment.v1.CreatePaymentResponse
-	6,  // 22: loci.payment.v1.PaymentService.GetPayment:output_type -> loci.payment.v1.GetPaymentResponse
-	8,  // 23: loci.payment.v1.PaymentService.GetUserPayments:output_type -> loci.payment.v1.GetUserPaymentsResponse
-	10, // 24: loci.payment.v1.PaymentService.RefundPayment:output_type -> loci.payment.v1.RefundPaymentResponse
-	1,  // 25: loci.payment.v1.PaymentService.GetInvoice:output_type -> loci.payment.v1.Invoice
-	13, // 26: loci.payment.v1.PaymentService.GetUserInvoices:output_type -> loci.payment.v1.GetUserInvoicesResponse
-	15, // 27: loci.payment.v1.PaymentService.CreateSubscription:output_type -> loci.payment.v1.CreateSubscriptionResponse
-	17, // 28: loci.payment.v1.PaymentService.CancelSubscription:output_type -> loci.payment.v1.CancelSubscriptionResponse
-	19, // 29: loci.payment.v1.PaymentService.GetUserSubscriptions:output_type -> loci.payment.v1.GetUserSubscriptionsResponse
-	21, // [21:30] is the sub-list for method output_type
-	12, // [12:21] is the sub-list for method input_type
-	12, // [12:12] is the sub-list for extension type_name
-	12, // [12:12] is the sub-list for extension extendee
-	0,  // [0:12] is the sub-list for field type_name
+	2,  // 12: loci.payment.v1.GetSubscriptionResponse.subscription:type_name -> loci.payment.v1.Subscription
+	22, // 13: loci.payment.v1.GetSubscriptionResponse.usage:type_name -> loci.payment.v1.SubscriptionUsage
+	3,  // 14: loci.payment.v1.PaymentService.CreatePayment:input_type -> loci.payment.v1.CreatePaymentRequest
+	5,  // 15: loci.payment.v1.PaymentService.GetPayment:input_type -> loci.payment.v1.GetPaymentRequest
+	7,  // 16: loci.payment.v1.PaymentService.GetUserPayments:input_type -> loci.payment.v1.GetUserPaymentsRequest
+	9,  // 17: loci.payment.v1.PaymentService.RefundPayment:input_type -> loci.payment.v1.RefundPaymentRequest
+	11, // 18: loci.payment.v1.PaymentService.GetInvoice:input_type -> loci.payment.v1.GetInvoiceRequest
+	12, // 19: loci.payment.v1.PaymentService.GetUserInvoices:input_type -> loci.payment.v1.GetUserInvoicesRequest
+	14, // 20: loci.payment.v1.PaymentService.CreateSubscription:input_type -> loci.payment.v1.CreateSubscriptionRequest
+	16, // 21: loci.payment.v1.PaymentService.CancelSubscription:input_type -> loci.payment.v1.CancelSubscriptionRequest
+	18, // 22: loci.payment.v1.PaymentService.GetUserSubscriptions:input_type -> loci.payment.v1.GetUserSubscriptionsRequest
+	20, // 23: loci.payment.v1.PaymentService.GetSubscription:input_type -> loci.payment.v1.GetSubscriptionRequest
+	23, // 24: loci.payment.v1.PaymentService.CreateCheckoutSession:input_type -> loci.payment.v1.CreateCheckoutSessionRequest
+	25, // 25: loci.payment.v1.PaymentService.CreateCustomerPortalSession:input_type -> loci.payment.v1.CreateCustomerPortalSessionRequest
+	4,  // 26: loci.payment.v1.PaymentService.CreatePayment:output_type -> loci.payment.v1.CreatePaymentResponse
+	6,  // 27: loci.payment.v1.PaymentService.GetPayment:output_type -> loci.payment.v1.GetPaymentResponse
+	8,  // 28: loci.payment.v1.PaymentService.GetUserPayments:output_type -> loci.payment.v1.GetUserPaymentsResponse
+	10, // 29: loci.payment.v1.PaymentService.RefundPayment:output_type -> loci.payment.v1.RefundPaymentResponse
+	1,  // 30: loci.payment.v1.PaymentService.GetInvoice:output_type -> loci.payment.v1.Invoice
+	13, // 31: loci.payment.v1.PaymentService.GetUserInvoices:output_type -> loci.payment.v1.GetUserInvoicesResponse
+	15, // 32: loci.payment.v1.PaymentService.CreateSubscription:output_type -> loci.payment.v1.CreateSubscriptionResponse
+	17, // 33: loci.payment.v1.PaymentService.CancelSubscription:output_type -> loci.payment.v1.CancelSubscriptionResponse
+	19, // 34: loci.payment.v1.PaymentService.GetUserSubscriptions:output_type -> loci.payment.v1.GetUserSubscriptionsResponse
+	21, // 35: loci.payment.v1.PaymentService.GetSubscription:output_type -> loci.payment.v1.GetSubscriptionResponse
+	24, // 36: loci.payment.v1.PaymentService.CreateCheckoutSession:output_type -> loci.payment.v1.CreateCheckoutSessionResponse
+	26, // 37: loci.payment.v1.PaymentService.CreateCustomerPortalSession:output_type -> loci.payment.v1.CreateCustomerPortalSessionResponse
+	26, // [26:38] is the sub-list for method output_type
+	14, // [14:26] is the sub-list for method input_type
+	14, // [14:14] is the sub-list for extension type_name
+	14, // [14:14] is the sub-list for extension extendee
+	0,  // [0:14] is the sub-list for field type_name
 }
 
 func init() { file_proto_loci_payment_v1_payment_proto_init() }
@@ -1581,7 +1998,7 @@ func file_proto_loci_payment_v1_payment_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_loci_payment_v1_payment_proto_rawDesc), len(file_proto_loci_payment_v1_payment_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   21,
+			NumMessages:   28,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

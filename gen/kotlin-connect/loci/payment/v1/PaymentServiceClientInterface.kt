@@ -37,4 +37,13 @@ public interface PaymentServiceClientInterface {
   public suspend fun cancelSubscription(request: PaymentOuterClass.CancelSubscriptionRequest, headers: Headers = emptyMap()): ResponseMessage<PaymentOuterClass.CancelSubscriptionResponse>
 
   public suspend fun getUserSubscriptions(request: PaymentOuterClass.GetUserSubscriptionsRequest, headers: Headers = emptyMap()): ResponseMessage<PaymentOuterClass.GetUserSubscriptionsResponse>
+
+  public suspend fun getSubscription(request: PaymentOuterClass.GetSubscriptionRequest, headers: Headers = emptyMap()): ResponseMessage<PaymentOuterClass.GetSubscriptionResponse>
+
+  /**
+   *  Stripe Checkout & Portal
+   */
+  public suspend fun createCheckoutSession(request: PaymentOuterClass.CreateCheckoutSessionRequest, headers: Headers = emptyMap()): ResponseMessage<PaymentOuterClass.CreateCheckoutSessionResponse>
+
+  public suspend fun createCustomerPortalSession(request: PaymentOuterClass.CreateCustomerPortalSessionRequest, headers: Headers = emptyMap()): ResponseMessage<PaymentOuterClass.CreateCustomerPortalSessionResponse>
 }

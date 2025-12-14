@@ -1100,6 +1100,22 @@
                 </li>
               
                 <li>
+                  <a href="#loci.payment.v1.CreateCheckoutSessionRequest"><span class="badge">M</span>CreateCheckoutSessionRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.payment.v1.CreateCheckoutSessionResponse"><span class="badge">M</span>CreateCheckoutSessionResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.payment.v1.CreateCustomerPortalSessionRequest"><span class="badge">M</span>CreateCustomerPortalSessionRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.payment.v1.CreateCustomerPortalSessionResponse"><span class="badge">M</span>CreateCustomerPortalSessionResponse</a>
+                </li>
+              
+                <li>
                   <a href="#loci.payment.v1.CreatePaymentRequest"><span class="badge">M</span>CreatePaymentRequest</a>
                 </li>
               
@@ -1129,6 +1145,14 @@
               
                 <li>
                   <a href="#loci.payment.v1.GetPaymentResponse"><span class="badge">M</span>GetPaymentResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.payment.v1.GetSubscriptionRequest"><span class="badge">M</span>GetSubscriptionRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.payment.v1.GetSubscriptionResponse"><span class="badge">M</span>GetSubscriptionResponse</a>
                 </li>
               
                 <li>
@@ -1173,6 +1197,10 @@
               
                 <li>
                   <a href="#loci.payment.v1.Subscription"><span class="badge">M</span>Subscription</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.payment.v1.SubscriptionUsage"><span class="badge">M</span>SubscriptionUsage</a>
                 </li>
               
               
@@ -12123,6 +12151,137 @@
 
         
       
+        <h3 id="loci.payment.v1.CreateCheckoutSessionRequest">CreateCheckoutSessionRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>price_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Stripe Price ID (price_xxx) </p></td>
+                </tr>
+              
+                <tr>
+                  <td>success_url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>URL to redirect on success </p></td>
+                </tr>
+              
+                <tr>
+                  <td>cancel_url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>URL to redirect on cancel </p></td>
+                </tr>
+              
+                <tr>
+                  <td>mode</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>&#34;subscription&#34; or &#34;payment&#34; </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.payment.v1.CreateCheckoutSessionResponse">CreateCheckoutSessionResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>session_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Stripe Checkout Session ID </p></td>
+                </tr>
+              
+                <tr>
+                  <td>url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Redirect URL for the user </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.payment.v1.CreateCustomerPortalSessionRequest">CreateCustomerPortalSessionRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>return_url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>URL to return to after portal session </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.payment.v1.CreateCustomerPortalSessionResponse">CreateCustomerPortalSessionResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>session_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Stripe Portal Session ID </p></td>
+                </tr>
+              
+                <tr>
+                  <td>url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Redirect URL for the user </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.payment.v1.CreatePaymentRequest">CreatePaymentRequest</h3>
         <p></p>
 
@@ -12388,6 +12547,44 @@
                 <tr>
                   <td>invoice</td>
                   <td><a href="#loci.payment.v1.Invoice">Invoice</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.payment.v1.GetSubscriptionRequest">GetSubscriptionRequest</h3>
+        <p>Empty - uses authenticated user's subscription</p>
+
+        
+
+        
+      
+        <h3 id="loci.payment.v1.GetSubscriptionResponse">GetSubscriptionResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>subscription</td>
+                  <td><a href="#loci.payment.v1.Subscription">Subscription</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>usage</td>
+                  <td><a href="#loci.payment.v1.SubscriptionUsage">SubscriptionUsage</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -12978,6 +13175,51 @@
 
         
       
+        <h3 id="loci.payment.v1.SubscriptionUsage">SubscriptionUsage</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>requests_today</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>requests_limit</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>saved_locations</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>saved_locations_limit</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
 
       
 
@@ -13052,6 +13294,27 @@
                 <td>GetUserSubscriptions</td>
                 <td><a href="#loci.payment.v1.GetUserSubscriptionsRequest">GetUserSubscriptionsRequest</a></td>
                 <td><a href="#loci.payment.v1.GetUserSubscriptionsResponse">GetUserSubscriptionsResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>GetSubscription</td>
+                <td><a href="#loci.payment.v1.GetSubscriptionRequest">GetSubscriptionRequest</a></td>
+                <td><a href="#loci.payment.v1.GetSubscriptionResponse">GetSubscriptionResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>CreateCheckoutSession</td>
+                <td><a href="#loci.payment.v1.CreateCheckoutSessionRequest">CreateCheckoutSessionRequest</a></td>
+                <td><a href="#loci.payment.v1.CreateCheckoutSessionResponse">CreateCheckoutSessionResponse</a></td>
+                <td><p>Stripe Checkout &amp; Portal</p></td>
+              </tr>
+            
+              <tr>
+                <td>CreateCustomerPortalSession</td>
+                <td><a href="#loci.payment.v1.CreateCustomerPortalSessionRequest">CreateCustomerPortalSessionRequest</a></td>
+                <td><a href="#loci.payment.v1.CreateCustomerPortalSessionResponse">CreateCustomerPortalSessionResponse</a></td>
                 <td><p></p></td>
               </tr>
             
