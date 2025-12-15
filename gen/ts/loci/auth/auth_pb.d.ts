@@ -311,6 +311,47 @@ export declare type LogoutRequest = Message<"loci.auth.LogoutRequest"> & {
 export declare const LogoutRequestSchema: GenMessage<LogoutRequest>;
 
 /**
+ * ForgotPasswordRequest for initiating password reset
+ *
+ * @generated from message loci.auth.ForgotPasswordRequest
+ */
+export declare type ForgotPasswordRequest = Message<"loci.auth.ForgotPasswordRequest"> & {
+  /**
+   * @generated from field: string email = 1;
+   */
+  email: string;
+};
+
+/**
+ * Describes the message loci.auth.ForgotPasswordRequest.
+ * Use `create(ForgotPasswordRequestSchema)` to create a new message.
+ */
+export declare const ForgotPasswordRequestSchema: GenMessage<ForgotPasswordRequest>;
+
+/**
+ * ResetPasswordRequest for completing password reset with token
+ *
+ * @generated from message loci.auth.ResetPasswordRequest
+ */
+export declare type ResetPasswordRequest = Message<"loci.auth.ResetPasswordRequest"> & {
+  /**
+   * @generated from field: string token = 1;
+   */
+  token: string;
+
+  /**
+   * @generated from field: string new_password = 2;
+   */
+  newPassword: string;
+};
+
+/**
+ * Describes the message loci.auth.ResetPasswordRequest.
+ * Use `create(ResetPasswordRequestSchema)` to create a new message.
+ */
+export declare const ResetPasswordRequestSchema: GenMessage<ResetPasswordRequest>;
+
+/**
  * Session represents session data
  *
  * @generated from message loci.auth.Session
@@ -456,6 +497,24 @@ export declare const AuthService: GenService<{
   logout: {
     methodKind: "unary";
     input: typeof LogoutRequestSchema;
+    output: typeof ResponseSchema;
+  },
+  /**
+   * Password reset flow (does not require authentication)
+   *
+   * @generated from rpc loci.auth.AuthService.ForgotPassword
+   */
+  forgotPassword: {
+    methodKind: "unary";
+    input: typeof ForgotPasswordRequestSchema;
+    output: typeof ResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.auth.AuthService.ResetPassword
+   */
+  resetPassword: {
+    methodKind: "unary";
+    input: typeof ResetPasswordRequestSchema;
     output: typeof ResponseSchema;
   },
 }>;

@@ -313,6 +313,10 @@
                 </li>
               
                 <li>
+                  <a href="#loci.auth.ForgotPasswordRequest"><span class="badge">M</span>ForgotPasswordRequest</a>
+                </li>
+              
+                <li>
                   <a href="#loci.auth.LoginRequest"><span class="badge">M</span>LoginRequest</a>
                 </li>
               
@@ -330,6 +334,10 @@
               
                 <li>
                   <a href="#loci.auth.RegisterRequest"><span class="badge">M</span>RegisterRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.auth.ResetPasswordRequest"><span class="badge">M</span>ResetPasswordRequest</a>
                 </li>
               
                 <li>
@@ -3115,6 +3123,30 @@
 
         
       
+        <h3 id="loci.auth.ForgotPasswordRequest">ForgotPasswordRequest</h3>
+        <p>ForgotPasswordRequest for initiating password reset</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>email</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.auth.LoginRequest">LoginRequest</h3>
         <p>LoginRequest for user login</p>
 
@@ -3288,6 +3320,37 @@
                   <td>role</td>
                   <td><a href="#string">string</a></td>
                   <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.auth.ResetPasswordRequest">ResetPasswordRequest</h3>
+        <p>ResetPasswordRequest for completing password reset with token</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>token</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>new_password</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
                   <td><p> </p></td>
                 </tr>
               
@@ -3554,6 +3617,20 @@
               <tr>
                 <td>Logout</td>
                 <td><a href="#loci.auth.LogoutRequest">LogoutRequest</a></td>
+                <td><a href="#loci.common.Response">.loci.common.Response</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ForgotPassword</td>
+                <td><a href="#loci.auth.ForgotPasswordRequest">ForgotPasswordRequest</a></td>
+                <td><a href="#loci.common.Response">.loci.common.Response</a></td>
+                <td><p>Password reset flow (does not require authentication)</p></td>
+              </tr>
+            
+              <tr>
+                <td>ResetPassword</td>
+                <td><a href="#loci.auth.ResetPasswordRequest">ResetPasswordRequest</a></td>
                 <td><a href="#loci.common.Response">.loci.common.Response</a></td>
                 <td><p></p></td>
               </tr>

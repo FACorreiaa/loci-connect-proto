@@ -25,4 +25,11 @@ public interface AuthServiceClientInterface {
   public suspend fun changeEmail(request: Auth.ChangeEmailRequest, headers: Headers = emptyMap()): ResponseMessage<Common.Response>
 
   public suspend fun logout(request: Auth.LogoutRequest, headers: Headers = emptyMap()): ResponseMessage<Common.Response>
+
+  /**
+   *  Password reset flow (does not require authentication)
+   */
+  public suspend fun forgotPassword(request: Auth.ForgotPasswordRequest, headers: Headers = emptyMap()): ResponseMessage<Common.Response>
+
+  public suspend fun resetPassword(request: Auth.ResetPasswordRequest, headers: Headers = emptyMap()): ResponseMessage<Common.Response>
 }

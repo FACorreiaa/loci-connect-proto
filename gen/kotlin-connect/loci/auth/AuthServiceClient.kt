@@ -100,4 +100,31 @@ public class AuthServiceClient(
     ),
   )
 
+
+  /**
+   *  Password reset flow (does not require authentication)
+   */
+  override suspend fun forgotPassword(request: Auth.ForgotPasswordRequest, headers: Headers): ResponseMessage<Common.Response> = client.unary(
+    request,
+    headers,
+    MethodSpec(
+    "loci.auth.AuthService/ForgotPassword",
+      loci.auth.Auth.ForgotPasswordRequest::class,
+      loci.common.Common.Response::class,
+      StreamType.UNARY,
+    ),
+  )
+
+
+  override suspend fun resetPassword(request: Auth.ResetPasswordRequest, headers: Headers): ResponseMessage<Common.Response> = client.unary(
+    request,
+    headers,
+    MethodSpec(
+    "loci.auth.AuthService/ResetPassword",
+      loci.auth.Auth.ResetPasswordRequest::class,
+      loci.common.Common.Response::class,
+      StreamType.UNARY,
+    ),
+  )
+
 }

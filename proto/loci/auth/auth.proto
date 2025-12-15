@@ -123,6 +123,22 @@ message LogoutRequest {
   string refresh_token = 1 [(buf.validate.field).string = {min_len: 16}];
 }
 
+// ForgotPasswordRequest for initiating password reset
+message ForgotPasswordRequest {
+  string email = 1 [(buf.validate.field).string.email = true];
+}
+
+// ResetPasswordRequest for completing password reset with token
+message ResetPasswordRequest {
+  string token = 1 [(buf.validate.field).string = {min_len: 32, max_len: 128}];
+  string new_password = 2 [
+    (buf.validate.field).string = {
+      min_len: 8,
+      max_len: 200
+    }
+  ];
+}
+
 // Session represents session data
 message Session {
   string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
@@ -169,4 +185,7 @@ service AuthService {
   rpc ChangePassword(ChangePasswordRequest) returns (loci.common.Response);
   rpc ChangeEmail(ChangeEmailRequest) returns (loci.common.Response);
   rpc Logout(LogoutRequest) returns (loci.common.Response);
+  // Password reset flow (does not require authentication)
+  rpc ForgotPassword(ForgotPasswordRequest) returns (loci.common.Response);
+  rpc ResetPassword(ResetPasswordRequest) returns (loci.common.Response);
 }
