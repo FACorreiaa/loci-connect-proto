@@ -731,6 +731,57 @@
         
           
           <li>
+            <a href="#loci%2fcustom_auth%2fcustom_auth.proto">loci/custom_auth/custom_auth.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#loci.custom_auth.GetOAuthURLRequest"><span class="badge">M</span>GetOAuthURLRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.custom_auth.GetOAuthURLResponse"><span class="badge">M</span>GetOAuthURLResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.custom_auth.OAuthCallbackRequest"><span class="badge">M</span>OAuthCallbackRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.custom_auth.OAuthCallbackResponse"><span class="badge">M</span>OAuthCallbackResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.custom_auth.SendPhoneVerificationRequest"><span class="badge">M</span>SendPhoneVerificationRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.custom_auth.SendPhoneVerificationResponse"><span class="badge">M</span>SendPhoneVerificationResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.custom_auth.VerifyPhoneRequest"><span class="badge">M</span>VerifyPhoneRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.custom_auth.VerifyPhoneResponse"><span class="badge">M</span>VerifyPhoneResponse</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#loci.custom_auth.OAuthProvider"><span class="badge">E</span>OAuthProvider</a>
+                </li>
+              
+              
+              
+                <li>
+                  <a href="#loci.custom_auth.CustomAuthService"><span class="badge">S</span>CustomAuthService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#loci%2fdiscover%2fdiscover.proto">loci/discover/discover.proto</a>
             <ul>
               
@@ -8162,6 +8213,379 @@
                 <td><a href="#loci.chat.ChatRequest">ChatRequest</a></td>
                 <td><a href="#loci.chat.StreamEvent">StreamEvent</a> stream</td>
                 <td><p>Streaming RPC for real-time chat responses</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="loci/custom_auth/custom_auth.proto">loci/custom_auth/custom_auth.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="loci.custom_auth.GetOAuthURLRequest">GetOAuthURLRequest</h3>
+        <p>GetOAuthURLRequest for initiating OAuth flow</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>provider</td>
+                  <td><a href="#loci.custom_auth.OAuthProvider">OAuthProvider</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>redirect_uri</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.custom_auth.GetOAuthURLResponse">GetOAuthURLResponse</h3>
+        <p>GetOAuthURLResponse returns the OAuth authorization URL</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>auth_url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>state</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.custom_auth.OAuthCallbackRequest">OAuthCallbackRequest</h3>
+        <p>OAuthCallbackRequest for handling OAuth callback</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>provider</td>
+                  <td><a href="#loci.custom_auth.OAuthProvider">OAuthProvider</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>code</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>state</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.custom_auth.OAuthCallbackResponse">OAuthCallbackResponse</h3>
+        <p>OAuthCallbackResponse returns tokens after OAuth authentication</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>access_token</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>refresh_token</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>user_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>email</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>username</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>is_new_user</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.custom_auth.SendPhoneVerificationRequest">SendPhoneVerificationRequest</h3>
+        <p>SendPhoneVerificationRequest for initiating phone auth</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>phone_number</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.custom_auth.SendPhoneVerificationResponse">SendPhoneVerificationResponse</h3>
+        <p>SendPhoneVerificationResponse confirms SMS was sent</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>success</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>message</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.custom_auth.VerifyPhoneRequest">VerifyPhoneRequest</h3>
+        <p>VerifyPhoneRequest for verifying phone code</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>phone_number</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>code</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.custom_auth.VerifyPhoneResponse">VerifyPhoneResponse</h3>
+        <p>VerifyPhoneResponse returns tokens after phone verification</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>access_token</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>refresh_token</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>user_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>is_new_user</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+        <h3 id="loci.custom_auth.OAuthProvider">OAuthProvider</h3>
+        <p>OAuthProvider enum for supported OAuth providers</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>OAUTH_PROVIDER_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>OAUTH_PROVIDER_GOOGLE</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>OAUTH_PROVIDER_APPLE</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+
+      
+
+      
+        <h3 id="loci.custom_auth.CustomAuthService">CustomAuthService</h3>
+        <p>CustomAuthService handles alternative authentication methods (OAuth, Phone)</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>GetOAuthURL</td>
+                <td><a href="#loci.custom_auth.GetOAuthURLRequest">GetOAuthURLRequest</a></td>
+                <td><a href="#loci.custom_auth.GetOAuthURLResponse">GetOAuthURLResponse</a></td>
+                <td><p>OAuth authentication</p></td>
+              </tr>
+            
+              <tr>
+                <td>OAuthCallback</td>
+                <td><a href="#loci.custom_auth.OAuthCallbackRequest">OAuthCallbackRequest</a></td>
+                <td><a href="#loci.custom_auth.OAuthCallbackResponse">OAuthCallbackResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>SendPhoneVerification</td>
+                <td><a href="#loci.custom_auth.SendPhoneVerificationRequest">SendPhoneVerificationRequest</a></td>
+                <td><a href="#loci.custom_auth.SendPhoneVerificationResponse">SendPhoneVerificationResponse</a></td>
+                <td><p>Phone authentication</p></td>
+              </tr>
+            
+              <tr>
+                <td>VerifyPhone</td>
+                <td><a href="#loci.custom_auth.VerifyPhoneRequest">VerifyPhoneRequest</a></td>
+                <td><a href="#loci.custom_auth.VerifyPhoneResponse">VerifyPhoneResponse</a></td>
+                <td><p></p></td>
               </tr>
             
           </tbody>

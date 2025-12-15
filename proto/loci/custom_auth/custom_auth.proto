@@ -1,0 +1,99 @@
+syntax = "proto3";
+
+package loci.custom_auth;
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/custom_auth;customauth";
+
+import "buf/validate/validate.proto";
+
+// OAuthProvider enum for supported OAuth providers
+enum OAuthProvider {
+  OAUTH_PROVIDER_UNSPECIFIED = 0;
+  OAUTH_PROVIDER_GOOGLE = 1;
+  OAUTH_PROVIDER_APPLE = 2;
+}
+
+// =====================
+// OAuth Messages
+// =====================
+
+// GetOAuthURLRequest for initiating OAuth flow
+message GetOAuthURLRequest {
+  OAuthProvider provider = 1 [(buf.validate.field).enum = {defined_only: true, not_in: [0]}];
+  string redirect_uri = 2 [(buf.validate.field).string = {min_len: 1, max_len: 500}];
+}
+
+// GetOAuthURLResponse returns the OAuth authorization URL
+message GetOAuthURLResponse {
+  string auth_url = 1;
+  string state = 2;
+}
+
+// OAuthCallbackRequest for handling OAuth callback
+message OAuthCallbackRequest {
+  OAuthProvider provider = 1 [(buf.validate.field).enum = {defined_only: true, not_in: [0]}];
+  string code = 2 [(buf.validate.field).string = {min_len: 1}];
+  string state = 3 [(buf.validate.field).string = {min_len: 1}];
+}
+
+// OAuthCallbackResponse returns tokens after OAuth authentication
+message OAuthCallbackResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+  string user_id = 3;
+  string email = 4;
+  string username = 5;
+  bool is_new_user = 6;
+}
+
+// =====================
+// Phone Auth Messages
+// =====================
+
+// SendPhoneVerificationRequest for initiating phone auth
+message SendPhoneVerificationRequest {
+  string phone_number = 1 [(buf.validate.field).string = {
+    min_len: 10,
+    max_len: 20,
+    pattern: "^\\+[1-9]\\d{1,14}$"
+  }];
+}
+
+// SendPhoneVerificationResponse confirms SMS was sent
+message SendPhoneVerificationResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// VerifyPhoneRequest for verifying phone code
+message VerifyPhoneRequest {
+  string phone_number = 1 [(buf.validate.field).string = {
+    min_len: 10,
+    max_len: 20,
+    pattern: "^\\+[1-9]\\d{1,14}$"
+  }];
+  string code = 2 [(buf.validate.field).string = {min_len: 4, max_len: 8}];
+}
+
+// VerifyPhoneResponse returns tokens after phone verification
+message VerifyPhoneResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+  string user_id = 3;
+  bool is_new_user = 4;
+}
+
+// =====================
+// Service Definition
+// =====================
+
+// CustomAuthService handles alternative authentication methods (OAuth, Phone)
+service CustomAuthService {
+  // OAuth authentication
+  rpc GetOAuthURL(GetOAuthURLRequest) returns (GetOAuthURLResponse);
+  rpc OAuthCallback(OAuthCallbackRequest) returns (OAuthCallbackResponse);
+  
+  // Phone authentication
+  rpc SendPhoneVerification(SendPhoneVerificationRequest) returns (SendPhoneVerificationResponse);
+  rpc VerifyPhone(VerifyPhoneRequest) returns (VerifyPhoneResponse);
+}
