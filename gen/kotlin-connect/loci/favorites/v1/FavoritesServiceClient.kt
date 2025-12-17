@@ -90,4 +90,64 @@ public class FavoritesServiceClient(
     ),
   )
 
+
+  /**
+   *  Get hotel details
+   */
+  override suspend fun getHotelDetails(request: Favorites.GetHotelDetailsRequest, headers: Headers): ResponseMessage<Favorites.GetHotelDetailsResponse> = client.unary(
+    request,
+    headers,
+    MethodSpec(
+    "loci.favorites.v1.FavoritesService/GetHotelDetails",
+      loci.favorites.v1.Favorites.GetHotelDetailsRequest::class,
+      loci.favorites.v1.Favorites.GetHotelDetailsResponse::class,
+      StreamType.UNARY,
+    ),
+  )
+
+
+  /**
+   *  Get restaurant details
+   */
+  override suspend fun getRestaurantDetails(request: Favorites.GetRestaurantDetailsRequest, headers: Headers): ResponseMessage<Favorites.GetRestaurantDetailsResponse> = client.unary(
+    request,
+    headers,
+    MethodSpec(
+    "loci.favorites.v1.FavoritesService/GetRestaurantDetails",
+      loci.favorites.v1.Favorites.GetRestaurantDetailsRequest::class,
+      loci.favorites.v1.Favorites.GetRestaurantDetailsResponse::class,
+      StreamType.UNARY,
+    ),
+  )
+
+
+  /**
+   *  Get nearby hotels
+   */
+  override suspend fun getNearbyHotels(request: Favorites.GetNearbyHotelsRequest, headers: Headers): ResponseMessage<Favorites.GetNearbyHotelsResponse> = client.unary(
+    request,
+    headers,
+    MethodSpec(
+    "loci.favorites.v1.FavoritesService/GetNearbyHotels",
+      loci.favorites.v1.Favorites.GetNearbyHotelsRequest::class,
+      loci.favorites.v1.Favorites.GetNearbyHotelsResponse::class,
+      StreamType.UNARY,
+    ),
+  )
+
+
+  /**
+   *  Get nearby restaurants
+   */
+  override suspend fun getNearbyRestaurants(request: Favorites.GetNearbyRestaurantsRequest, headers: Headers): ResponseMessage<Favorites.GetNearbyRestaurantsResponse> = client.unary(
+    request,
+    headers,
+    MethodSpec(
+    "loci.favorites.v1.FavoritesService/GetNearbyRestaurants",
+      loci.favorites.v1.Favorites.GetNearbyRestaurantsRequest::class,
+      loci.favorites.v1.Favorites.GetNearbyRestaurantsResponse::class,
+      StreamType.UNARY,
+    ),
+  )
+
 }

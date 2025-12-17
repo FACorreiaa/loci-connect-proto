@@ -1,0 +1,154 @@
+syntax = "proto3";
+
+package loci.share;
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/share;sharev1";
+
+import "google/protobuf/timestamp.proto";
+import "buf/validate/validate.proto";
+
+// ShareService provides functionality for sharing content
+service ShareService {
+  // Get share metadata for a shared item (for OG tags generation)
+  rpc GetShareMetadata(GetShareMetadataRequest) returns (GetShareMetadataResponse);
+  
+  // Create a share link for an item
+  rpc CreateShareLink(CreateShareLinkRequest) returns (CreateShareLinkResponse);
+  
+  // Get shared content by share code (public endpoint)
+  rpc GetSharedContent(GetSharedContentRequest) returns (GetSharedContentResponse);
+}
+
+// Type of content being shared
+enum ShareContentType {
+  SHARE_CONTENT_TYPE_UNSPECIFIED = 0;
+  SHARE_CONTENT_TYPE_POI = 1;
+  SHARE_CONTENT_TYPE_HOTEL = 2;
+  SHARE_CONTENT_TYPE_RESTAURANT = 3;
+  SHARE_CONTENT_TYPE_ITINERARY = 4;
+  SHARE_CONTENT_TYPE_LIST = 5;
+  SHARE_CONTENT_TYPE_ACTIVITY = 6;
+}
+
+// Shared content metadata for OG tags
+message ShareMetadata {
+  string share_code = 1;
+  ShareContentType content_type = 2;
+  string title = 3;
+  string description = 4;
+  string image_url = 5;
+  string canonical_url = 6;
+  string site_name = 7;
+  google.protobuf.Timestamp created_at = 8;
+  int32 view_count = 9;
+}
+
+// Request to get share metadata
+message GetShareMetadataRequest {
+  string share_code = 1 [(buf.validate.field).string = {min_len: 1, max_len: 50}];
+}
+
+// Response with share metadata
+message GetShareMetadataResponse {
+  bool success = 1;
+  string message = 2;
+  ShareMetadata metadata = 3;
+}
+
+// Request to create a share link
+message CreateShareLinkRequest {
+  string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  ShareContentType content_type = 2 [(buf.validate.field).enum = {defined_only: true}];
+  string content_id = 3 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string title = 4 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string description = 5 [(buf.validate.field).string = {max_len: 500}];
+  string image_url = 6 [(buf.validate.field).string = {max_len: 2048}];
+}
+
+// Response with created share link
+message CreateShareLinkResponse {
+  bool success = 1;
+  string message = 2;
+  string share_code = 3;
+  string share_url = 4;
+}
+
+// Request to get shared content
+message GetSharedContentRequest {
+  string share_code = 1 [(buf.validate.field).string = {min_len: 1, max_len: 50}];
+}
+
+// Shared content details
+message SharedContent {
+  ShareMetadata metadata = 1;
+  // The actual content data - only one will be populated based on content_type
+  POIContent poi = 2;
+  HotelContent hotel = 3;
+  RestaurantContent restaurant = 4;
+  ItineraryContent itinerary = 5;
+  ListContent list = 6;
+}
+
+// POI content for sharing
+message POIContent {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string address = 4;
+  double latitude = 5;
+  double longitude = 6;
+  string category = 7;
+  double rating = 8;
+  repeated string photos = 9;
+}
+
+// Hotel content for sharing
+message HotelContent {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string address = 4;
+  int32 star_rating = 5;
+  double rating = 6;
+  string price_range = 7;
+  repeated string amenities = 8;
+  repeated string photos = 9;
+}
+
+// Restaurant content for sharing
+message RestaurantContent {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string address = 4;
+  string cuisine_type = 5;
+  double rating = 6;
+  string price_range = 7;
+  repeated string photos = 8;
+}
+
+// Itinerary content for sharing
+message ItineraryContent {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+  string city_name = 4;
+  int32 duration_days = 5;
+  int32 stop_count = 6;
+}
+
+// List content for sharing  
+message ListContent {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  int32 item_count = 4;
+  bool is_itinerary = 5;
+}
+
+// Response with shared content
+message GetSharedContentResponse {
+  bool success = 1;
+  string message = 2;
+  SharedContent content = 3;
+}

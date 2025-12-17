@@ -39,6 +39,9 @@ const (
 	// ReviewServiceGetPOIReviewsProcedure is the fully-qualified name of the ReviewService's
 	// GetPOIReviews RPC.
 	ReviewServiceGetPOIReviewsProcedure = "/loci.review.ReviewService/GetPOIReviews"
+	// ReviewServiceGetContentReviewsProcedure is the fully-qualified name of the ReviewService's
+	// GetContentReviews RPC.
+	ReviewServiceGetContentReviewsProcedure = "/loci.review.ReviewService/GetContentReviews"
 	// ReviewServiceGetReviewProcedure is the fully-qualified name of the ReviewService's GetReview RPC.
 	ReviewServiceGetReviewProcedure = "/loci.review.ReviewService/GetReview"
 	// ReviewServiceUpdateReviewProcedure is the fully-qualified name of the ReviewService's
@@ -66,6 +69,7 @@ var (
 	reviewServiceServiceDescriptor                   = review.File_loci_review_review_proto.Services().ByName("ReviewService")
 	reviewServiceCreateReviewMethodDescriptor        = reviewServiceServiceDescriptor.Methods().ByName("CreateReview")
 	reviewServiceGetPOIReviewsMethodDescriptor       = reviewServiceServiceDescriptor.Methods().ByName("GetPOIReviews")
+	reviewServiceGetContentReviewsMethodDescriptor   = reviewServiceServiceDescriptor.Methods().ByName("GetContentReviews")
 	reviewServiceGetReviewMethodDescriptor           = reviewServiceServiceDescriptor.Methods().ByName("GetReview")
 	reviewServiceUpdateReviewMethodDescriptor        = reviewServiceServiceDescriptor.Methods().ByName("UpdateReview")
 	reviewServiceDeleteReviewMethodDescriptor        = reviewServiceServiceDescriptor.Methods().ByName("DeleteReview")
@@ -79,8 +83,10 @@ var (
 type ReviewServiceClient interface {
 	// Create a new review
 	CreateReview(context.Context, *connect.Request[review.CreateReviewRequest]) (*connect.Response[review.CreateReviewResponse], error)
-	// Get reviews for a POI
+	// Get reviews for a POI (deprecated: use GetContentReviews)
 	GetPOIReviews(context.Context, *connect.Request[review.GetPOIReviewsRequest]) (*connect.Response[review.GetPOIReviewsResponse], error)
+	// Get reviews for any content type (POI, hotel, restaurant, list, itinerary)
+	GetContentReviews(context.Context, *connect.Request[review.GetContentReviewsRequest]) (*connect.Response[review.GetContentReviewsResponse], error)
 	// Get a specific review
 	GetReview(context.Context, *connect.Request[review.GetReviewRequest]) (*connect.Response[review.GetReviewResponse], error)
 	// Update an existing review
@@ -93,7 +99,7 @@ type ReviewServiceClient interface {
 	LikeReview(context.Context, *connect.Request[review.LikeReviewRequest]) (*connect.Response[review.LikeReviewResponse], error)
 	// Report a review
 	ReportReview(context.Context, *connect.Request[review.ReportReviewRequest]) (*connect.Response[review.ReportReviewResponse], error)
-	// Get review statistics for a POI
+	// Get review statistics for any content type
 	GetReviewStatistics(context.Context, *connect.Request[review.GetReviewStatisticsRequest]) (*connect.Response[review.GetReviewStatisticsResponse], error)
 }
 
@@ -117,6 +123,12 @@ func NewReviewServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 			httpClient,
 			baseURL+ReviewServiceGetPOIReviewsProcedure,
 			connect.WithSchema(reviewServiceGetPOIReviewsMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		getContentReviews: connect.NewClient[review.GetContentReviewsRequest, review.GetContentReviewsResponse](
+			httpClient,
+			baseURL+ReviewServiceGetContentReviewsProcedure,
+			connect.WithSchema(reviewServiceGetContentReviewsMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
 		getReview: connect.NewClient[review.GetReviewRequest, review.GetReviewResponse](
@@ -168,6 +180,7 @@ func NewReviewServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 type reviewServiceClient struct {
 	createReview        *connect.Client[review.CreateReviewRequest, review.CreateReviewResponse]
 	getPOIReviews       *connect.Client[review.GetPOIReviewsRequest, review.GetPOIReviewsResponse]
+	getContentReviews   *connect.Client[review.GetContentReviewsRequest, review.GetContentReviewsResponse]
 	getReview           *connect.Client[review.GetReviewRequest, review.GetReviewResponse]
 	updateReview        *connect.Client[review.UpdateReviewRequest, review.UpdateReviewResponse]
 	deleteReview        *connect.Client[review.DeleteReviewRequest, review.DeleteReviewResponse]
@@ -185,6 +198,11 @@ func (c *reviewServiceClient) CreateReview(ctx context.Context, req *connect.Req
 // GetPOIReviews calls loci.review.ReviewService.GetPOIReviews.
 func (c *reviewServiceClient) GetPOIReviews(ctx context.Context, req *connect.Request[review.GetPOIReviewsRequest]) (*connect.Response[review.GetPOIReviewsResponse], error) {
 	return c.getPOIReviews.CallUnary(ctx, req)
+}
+
+// GetContentReviews calls loci.review.ReviewService.GetContentReviews.
+func (c *reviewServiceClient) GetContentReviews(ctx context.Context, req *connect.Request[review.GetContentReviewsRequest]) (*connect.Response[review.GetContentReviewsResponse], error) {
+	return c.getContentReviews.CallUnary(ctx, req)
 }
 
 // GetReview calls loci.review.ReviewService.GetReview.
@@ -226,8 +244,10 @@ func (c *reviewServiceClient) GetReviewStatistics(ctx context.Context, req *conn
 type ReviewServiceHandler interface {
 	// Create a new review
 	CreateReview(context.Context, *connect.Request[review.CreateReviewRequest]) (*connect.Response[review.CreateReviewResponse], error)
-	// Get reviews for a POI
+	// Get reviews for a POI (deprecated: use GetContentReviews)
 	GetPOIReviews(context.Context, *connect.Request[review.GetPOIReviewsRequest]) (*connect.Response[review.GetPOIReviewsResponse], error)
+	// Get reviews for any content type (POI, hotel, restaurant, list, itinerary)
+	GetContentReviews(context.Context, *connect.Request[review.GetContentReviewsRequest]) (*connect.Response[review.GetContentReviewsResponse], error)
 	// Get a specific review
 	GetReview(context.Context, *connect.Request[review.GetReviewRequest]) (*connect.Response[review.GetReviewResponse], error)
 	// Update an existing review
@@ -240,7 +260,7 @@ type ReviewServiceHandler interface {
 	LikeReview(context.Context, *connect.Request[review.LikeReviewRequest]) (*connect.Response[review.LikeReviewResponse], error)
 	// Report a review
 	ReportReview(context.Context, *connect.Request[review.ReportReviewRequest]) (*connect.Response[review.ReportReviewResponse], error)
-	// Get review statistics for a POI
+	// Get review statistics for any content type
 	GetReviewStatistics(context.Context, *connect.Request[review.GetReviewStatisticsRequest]) (*connect.Response[review.GetReviewStatisticsResponse], error)
 }
 
@@ -260,6 +280,12 @@ func NewReviewServiceHandler(svc ReviewServiceHandler, opts ...connect.HandlerOp
 		ReviewServiceGetPOIReviewsProcedure,
 		svc.GetPOIReviews,
 		connect.WithSchema(reviewServiceGetPOIReviewsMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	reviewServiceGetContentReviewsHandler := connect.NewUnaryHandler(
+		ReviewServiceGetContentReviewsProcedure,
+		svc.GetContentReviews,
+		connect.WithSchema(reviewServiceGetContentReviewsMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
 	reviewServiceGetReviewHandler := connect.NewUnaryHandler(
@@ -310,6 +336,8 @@ func NewReviewServiceHandler(svc ReviewServiceHandler, opts ...connect.HandlerOp
 			reviewServiceCreateReviewHandler.ServeHTTP(w, r)
 		case ReviewServiceGetPOIReviewsProcedure:
 			reviewServiceGetPOIReviewsHandler.ServeHTTP(w, r)
+		case ReviewServiceGetContentReviewsProcedure:
+			reviewServiceGetContentReviewsHandler.ServeHTTP(w, r)
 		case ReviewServiceGetReviewProcedure:
 			reviewServiceGetReviewHandler.ServeHTTP(w, r)
 		case ReviewServiceUpdateReviewProcedure:
@@ -339,6 +367,10 @@ func (UnimplementedReviewServiceHandler) CreateReview(context.Context, *connect.
 
 func (UnimplementedReviewServiceHandler) GetPOIReviews(context.Context, *connect.Request[review.GetPOIReviewsRequest]) (*connect.Response[review.GetPOIReviewsResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.review.ReviewService.GetPOIReviews is not implemented"))
+}
+
+func (UnimplementedReviewServiceHandler) GetContentReviews(context.Context, *connect.Request[review.GetContentReviewsRequest]) (*connect.Response[review.GetContentReviewsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.review.ReviewService.GetContentReviews is not implemented"))
 }
 
 func (UnimplementedReviewServiceHandler) GetReview(context.Context, *connect.Request[review.GetReviewRequest]) (*connect.Response[review.GetReviewResponse], error) {

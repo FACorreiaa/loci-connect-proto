@@ -12,9 +12,31 @@ import loci.common.Common
  *  ProfileService defines profile-related RPCs
  */
 public interface ProfileServiceClientInterface {
+  /**
+   *  Core profile operations
+   */
   public suspend fun getUserPreferenceProfiles(request: Profile.GetUserPreferenceProfilesRequest, headers: Headers = emptyMap()): ResponseMessage<Profile.GetUserPreferenceProfilesResponse>
+
+  public suspend fun getUserPreferenceProfile(request: Profile.GetUserPreferenceProfileRequest, headers: Headers = emptyMap()): ResponseMessage<Profile.GetUserPreferenceProfileResponse>
 
   public suspend fun createUserPreferenceProfile(request: Profile.CreateUserPreferenceProfileRequest, headers: Headers = emptyMap()): ResponseMessage<Common.Response>
 
   public suspend fun updateUserPreferenceProfile(request: Profile.UpdateUserPreferenceProfileRequest, headers: Headers = emptyMap()): ResponseMessage<Common.Response>
+
+  public suspend fun deleteUserPreferenceProfile(request: Profile.DeleteUserPreferenceProfileRequest, headers: Headers = emptyMap()): ResponseMessage<Common.Response>
+
+  public suspend fun setDefaultProfile(request: Profile.SetDefaultProfileRequest, headers: Headers = emptyMap()): ResponseMessage<Common.Response>
+
+  /**
+   *  Domain-specific preference queries
+   */
+  public suspend fun getAccommodationPreferences(request: Profile.GetDomainPreferencesRequest, headers: Headers = emptyMap()): ResponseMessage<Profile.AccommodationPreferencesResponse>
+
+  public suspend fun getDiningPreferences(request: Profile.GetDomainPreferencesRequest, headers: Headers = emptyMap()): ResponseMessage<Profile.DiningPreferencesResponse>
+
+  public suspend fun getActivityPreferences(request: Profile.GetDomainPreferencesRequest, headers: Headers = emptyMap()): ResponseMessage<Profile.ActivityPreferencesResponse>
+
+  public suspend fun getItineraryPreferences(request: Profile.GetDomainPreferencesRequest, headers: Headers = emptyMap()): ResponseMessage<Profile.ItineraryPreferencesResponse>
+
+  public suspend fun getCombinedFilters(request: Profile.GetCombinedFiltersRequest, headers: Headers = emptyMap()): ResponseMessage<Profile.CombinedFiltersResponse>
 }

@@ -765,6 +765,60 @@ export declare type GetUserItinerariesResponse = Message<"loci.itinerary.GetUser
 export declare const GetUserItinerariesResponseSchema: GenMessage<GetUserItinerariesResponse>;
 
 /**
+ * GetItineraryRequest for retrieving a single itinerary
+ *
+ * @generated from message loci.itinerary.GetItineraryRequest
+ */
+export declare type GetItineraryRequest = Message<"loci.itinerary.GetItineraryRequest"> & {
+  /**
+   * @generated from field: string itinerary_id = 1;
+   */
+  itineraryId: string;
+};
+
+/**
+ * Describes the message loci.itinerary.GetItineraryRequest.
+ * Use `create(GetItineraryRequestSchema)` to create a new message.
+ */
+export declare const GetItineraryRequestSchema: GenMessage<GetItineraryRequest>;
+
+/**
+ * GetItineraryResponse for itinerary retrieval
+ *
+ * @generated from message loci.itinerary.GetItineraryResponse
+ */
+export declare type GetItineraryResponse = Message<"loci.itinerary.GetItineraryResponse"> & {
+  /**
+   * @generated from field: loci.itinerary.UserSavedItinerary itinerary = 1;
+   */
+  itinerary?: UserSavedItinerary;
+};
+
+/**
+ * Describes the message loci.itinerary.GetItineraryResponse.
+ * Use `create(GetItineraryResponseSchema)` to create a new message.
+ */
+export declare const GetItineraryResponseSchema: GenMessage<GetItineraryResponse>;
+
+/**
+ * DeleteBookmarkRequest for removing a bookmarked itinerary
+ *
+ * @generated from message loci.itinerary.DeleteBookmarkRequest
+ */
+export declare type DeleteBookmarkRequest = Message<"loci.itinerary.DeleteBookmarkRequest"> & {
+  /**
+   * @generated from field: string itinerary_id = 1;
+   */
+  itineraryId: string;
+};
+
+/**
+ * Describes the message loci.itinerary.DeleteBookmarkRequest.
+ * Use `create(DeleteBookmarkRequestSchema)` to create a new message.
+ */
+export declare const DeleteBookmarkRequestSchema: GenMessage<DeleteBookmarkRequest>;
+
+/**
  * ContentType defines the type of content in a list item
  *
  * @generated from enum loci.itinerary.ContentType
@@ -864,6 +918,14 @@ export declare const ItineraryService: GenService<{
     output: typeof GetUserItinerariesResponseSchema;
   },
   /**
+   * @generated from rpc loci.itinerary.ItineraryService.GetItinerary
+   */
+  getItinerary: {
+    methodKind: "unary";
+    input: typeof GetItineraryRequestSchema;
+    output: typeof GetItineraryResponseSchema;
+  },
+  /**
    * @generated from rpc loci.itinerary.ItineraryService.UpdateItinerary
    */
   updateItinerary: {
@@ -877,6 +939,14 @@ export declare const ItineraryService: GenService<{
   bookmarkItinerary: {
     methodKind: "unary";
     input: typeof BookmarkRequestSchema;
+    output: typeof ResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.itinerary.ItineraryService.DeleteBookmark
+   */
+  deleteBookmark: {
+    methodKind: "unary";
+    input: typeof DeleteBookmarkRequestSchema;
     output: typeof ResponseSchema;
   },
 }>;

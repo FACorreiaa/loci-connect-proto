@@ -51,6 +51,10 @@ public object CreateReviewRequestKt {
     }
 
     /**
+     * ```
+     * Deprecated: use content_id
+     * ```
+     *
      * `string poi_id = 2 [json_name = "poiId", (.buf.validate.field) = { ... }`
      */
     public var poiId: kotlin.String
@@ -61,6 +65,10 @@ public object CreateReviewRequestKt {
         _builder.poiId = value
       }
     /**
+     * ```
+     * Deprecated: use content_id
+     * ```
+     *
      * `string poi_id = 2 [json_name = "poiId", (.buf.validate.field) = { ... }`
      */
     public fun clearPoiId() {
@@ -257,6 +265,88 @@ public object CreateReviewRequestKt {
      */
     public fun clearLanguage() {
       _builder.clearLanguage()
+    }
+
+    /**
+     * ```
+     * NEW: Support for all content types
+     * ```
+     *
+     * `.loci.review.ReviewContentType content_type = 10 [json_name = "contentType"];`
+     */
+    public var contentType: loci.review.ReviewOuterClass.ReviewContentType
+      @kotlin.jvm.JvmName("getContentType")
+        get() = _builder.contentType
+      @kotlin.jvm.JvmName("setContentType")
+        set(value) {
+        _builder.contentType = value
+      }
+    public var contentTypeValue: kotlin.Int
+      @kotlin.jvm.JvmName("getContentTypeValue")
+        get() = _builder.contentTypeValue
+      @kotlin.jvm.JvmName("setContentTypeValue")
+        set(value) {
+        _builder.contentTypeValue = value
+      }
+    /**
+     * ```
+     * NEW: Support for all content types
+     * ```
+     *
+     * `.loci.review.ReviewContentType content_type = 10 [json_name = "contentType"];`
+     */
+    public fun clearContentType() {
+      _builder.clearContentType()
+    }
+
+    /**
+     * ```
+     * ID of content
+     * ```
+     *
+     * `string content_id = 11 [json_name = "contentId", (.buf.validate.field) = { ... }`
+     */
+    public var contentId: kotlin.String
+      @kotlin.jvm.JvmName("getContentId")
+        get() = _builder.contentId
+      @kotlin.jvm.JvmName("setContentId")
+        set(value) {
+        _builder.contentId = value
+      }
+    /**
+     * ```
+     * ID of content
+     * ```
+     *
+     * `string content_id = 11 [json_name = "contentId", (.buf.validate.field) = { ... }`
+     */
+    public fun clearContentId() {
+      _builder.clearContentId()
+    }
+
+    /**
+     * ```
+     * Name of content for display
+     * ```
+     *
+     * `string content_name = 12 [json_name = "contentName", (.buf.validate.field) = { ... }`
+     */
+    public var contentName: kotlin.String
+      @kotlin.jvm.JvmName("getContentName")
+        get() = _builder.contentName
+      @kotlin.jvm.JvmName("setContentName")
+        set(value) {
+        _builder.contentName = value
+      }
+    /**
+     * ```
+     * Name of content for display
+     * ```
+     *
+     * `string content_name = 12 [json_name = "contentName", (.buf.validate.field) = { ... }`
+     */
+    public fun clearContentName() {
+      _builder.clearContentName()
     }
   }
 }

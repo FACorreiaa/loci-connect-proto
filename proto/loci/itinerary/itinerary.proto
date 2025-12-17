@@ -315,6 +315,23 @@ service ItineraryService {
   rpc AddListItem(AddListItemRequest) returns (loci.common.Response);
   rpc UpdateListItem(UpdateListItemRequest) returns (loci.common.Response);
   rpc GetUserItineraries(GetUserItinerariesRequest) returns (GetUserItinerariesResponse);
+  rpc GetItinerary(GetItineraryRequest) returns (GetItineraryResponse);
   rpc UpdateItinerary(UpdateItineraryRequest) returns (loci.common.Response);
   rpc BookmarkItinerary(BookmarkRequest) returns (loci.common.Response);
+  rpc DeleteBookmark(DeleteBookmarkRequest) returns (loci.common.Response);
+}
+
+// GetItineraryRequest for retrieving a single itinerary
+message GetItineraryRequest {
+  string itinerary_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+}
+
+// GetItineraryResponse for itinerary retrieval
+message GetItineraryResponse {
+  UserSavedItinerary itinerary = 1;
+}
+
+// DeleteBookmarkRequest for removing a bookmarked itinerary
+message DeleteBookmarkRequest {
+  string itinerary_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
 }

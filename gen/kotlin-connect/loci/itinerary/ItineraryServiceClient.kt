@@ -101,6 +101,18 @@ public class ItineraryServiceClient(
   )
 
 
+  override suspend fun getItinerary(request: Itinerary.GetItineraryRequest, headers: Headers): ResponseMessage<Itinerary.GetItineraryResponse> = client.unary(
+    request,
+    headers,
+    MethodSpec(
+    "loci.itinerary.ItineraryService/GetItinerary",
+      loci.itinerary.Itinerary.GetItineraryRequest::class,
+      loci.itinerary.Itinerary.GetItineraryResponse::class,
+      StreamType.UNARY,
+    ),
+  )
+
+
   override suspend fun updateItinerary(request: Itinerary.UpdateItineraryRequest, headers: Headers): ResponseMessage<Common.Response> = client.unary(
     request,
     headers,
@@ -119,6 +131,18 @@ public class ItineraryServiceClient(
     MethodSpec(
     "loci.itinerary.ItineraryService/BookmarkItinerary",
       loci.itinerary.Itinerary.BookmarkRequest::class,
+      loci.common.Common.Response::class,
+      StreamType.UNARY,
+    ),
+  )
+
+
+  override suspend fun deleteBookmark(request: Itinerary.DeleteBookmarkRequest, headers: Headers): ResponseMessage<Common.Response> = client.unary(
+    request,
+    headers,
+    MethodSpec(
+    "loci.itinerary.ItineraryService/DeleteBookmark",
+      loci.itinerary.Itinerary.DeleteBookmarkRequest::class,
       loci.common.Common.Response::class,
       StreamType.UNARY,
     ),

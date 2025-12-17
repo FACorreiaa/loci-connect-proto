@@ -17,6 +17,9 @@ import loci.common.Common
 public class ProfileServiceClient(
   private val client: ProtocolClientInterface,
 ) : ProfileServiceClientInterface {
+  /**
+   *  Core profile operations
+   */
   override suspend fun getUserPreferenceProfiles(request: Profile.GetUserPreferenceProfilesRequest, headers: Headers): ResponseMessage<Profile.GetUserPreferenceProfilesResponse> = client.unary(
     request,
     headers,
@@ -24,6 +27,18 @@ public class ProfileServiceClient(
     "loci.profile.ProfileService/GetUserPreferenceProfiles",
       loci.profile.Profile.GetUserPreferenceProfilesRequest::class,
       loci.profile.Profile.GetUserPreferenceProfilesResponse::class,
+      StreamType.UNARY,
+    ),
+  )
+
+
+  override suspend fun getUserPreferenceProfile(request: Profile.GetUserPreferenceProfileRequest, headers: Headers): ResponseMessage<Profile.GetUserPreferenceProfileResponse> = client.unary(
+    request,
+    headers,
+    MethodSpec(
+    "loci.profile.ProfileService/GetUserPreferenceProfile",
+      loci.profile.Profile.GetUserPreferenceProfileRequest::class,
+      loci.profile.Profile.GetUserPreferenceProfileResponse::class,
       StreamType.UNARY,
     ),
   )
@@ -48,6 +63,93 @@ public class ProfileServiceClient(
     "loci.profile.ProfileService/UpdateUserPreferenceProfile",
       loci.profile.Profile.UpdateUserPreferenceProfileRequest::class,
       loci.common.Common.Response::class,
+      StreamType.UNARY,
+    ),
+  )
+
+
+  override suspend fun deleteUserPreferenceProfile(request: Profile.DeleteUserPreferenceProfileRequest, headers: Headers): ResponseMessage<Common.Response> = client.unary(
+    request,
+    headers,
+    MethodSpec(
+    "loci.profile.ProfileService/DeleteUserPreferenceProfile",
+      loci.profile.Profile.DeleteUserPreferenceProfileRequest::class,
+      loci.common.Common.Response::class,
+      StreamType.UNARY,
+    ),
+  )
+
+
+  override suspend fun setDefaultProfile(request: Profile.SetDefaultProfileRequest, headers: Headers): ResponseMessage<Common.Response> = client.unary(
+    request,
+    headers,
+    MethodSpec(
+    "loci.profile.ProfileService/SetDefaultProfile",
+      loci.profile.Profile.SetDefaultProfileRequest::class,
+      loci.common.Common.Response::class,
+      StreamType.UNARY,
+    ),
+  )
+
+
+  /**
+   *  Domain-specific preference queries
+   */
+  override suspend fun getAccommodationPreferences(request: Profile.GetDomainPreferencesRequest, headers: Headers): ResponseMessage<Profile.AccommodationPreferencesResponse> = client.unary(
+    request,
+    headers,
+    MethodSpec(
+    "loci.profile.ProfileService/GetAccommodationPreferences",
+      loci.profile.Profile.GetDomainPreferencesRequest::class,
+      loci.profile.Profile.AccommodationPreferencesResponse::class,
+      StreamType.UNARY,
+    ),
+  )
+
+
+  override suspend fun getDiningPreferences(request: Profile.GetDomainPreferencesRequest, headers: Headers): ResponseMessage<Profile.DiningPreferencesResponse> = client.unary(
+    request,
+    headers,
+    MethodSpec(
+    "loci.profile.ProfileService/GetDiningPreferences",
+      loci.profile.Profile.GetDomainPreferencesRequest::class,
+      loci.profile.Profile.DiningPreferencesResponse::class,
+      StreamType.UNARY,
+    ),
+  )
+
+
+  override suspend fun getActivityPreferences(request: Profile.GetDomainPreferencesRequest, headers: Headers): ResponseMessage<Profile.ActivityPreferencesResponse> = client.unary(
+    request,
+    headers,
+    MethodSpec(
+    "loci.profile.ProfileService/GetActivityPreferences",
+      loci.profile.Profile.GetDomainPreferencesRequest::class,
+      loci.profile.Profile.ActivityPreferencesResponse::class,
+      StreamType.UNARY,
+    ),
+  )
+
+
+  override suspend fun getItineraryPreferences(request: Profile.GetDomainPreferencesRequest, headers: Headers): ResponseMessage<Profile.ItineraryPreferencesResponse> = client.unary(
+    request,
+    headers,
+    MethodSpec(
+    "loci.profile.ProfileService/GetItineraryPreferences",
+      loci.profile.Profile.GetDomainPreferencesRequest::class,
+      loci.profile.Profile.ItineraryPreferencesResponse::class,
+      StreamType.UNARY,
+    ),
+  )
+
+
+  override suspend fun getCombinedFilters(request: Profile.GetCombinedFiltersRequest, headers: Headers): ResponseMessage<Profile.CombinedFiltersResponse> = client.unary(
+    request,
+    headers,
+    MethodSpec(
+    "loci.profile.ProfileService/GetCombinedFilters",
+      loci.profile.Profile.GetCombinedFiltersRequest::class,
+      loci.profile.Profile.CombinedFiltersResponse::class,
       StreamType.UNARY,
     ),
   )

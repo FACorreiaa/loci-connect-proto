@@ -14,8 +14,11 @@ service ReviewService {
   // Create a new review
   rpc CreateReview(CreateReviewRequest) returns (CreateReviewResponse);
   
-  // Get reviews for a POI
+  // Get reviews for a POI (deprecated: use GetContentReviews)
   rpc GetPOIReviews(GetPOIReviewsRequest) returns (GetPOIReviewsResponse);
+  
+  // Get reviews for any content type (POI, hotel, restaurant, list, itinerary)
+  rpc GetContentReviews(GetContentReviewsRequest) returns (GetContentReviewsResponse);
   
   // Get a specific review
   rpc GetReview(GetReviewRequest) returns (GetReviewResponse);
@@ -35,7 +38,7 @@ service ReviewService {
   // Report a review
   rpc ReportReview(ReportReviewRequest) returns (ReportReviewResponse);
   
-  // Get review statistics for a POI
+  // Get review statistics for any content type
   rpc GetReviewStatistics(GetReviewStatisticsRequest) returns (GetReviewStatisticsResponse);
 }
 
@@ -43,7 +46,7 @@ service ReviewService {
 message Review {
   string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   string user_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  string poi_id = 3 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string poi_id = 3 [(buf.validate.field).string = {min_len: 1, max_len: 100}]; // Deprecated: use content_id instead
   double rating = 4 [(buf.validate.field).double = {gte: 1, lte: 5}]; // 1.0 - 5.0
   string title = 5 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   string content = 6 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
@@ -74,6 +77,22 @@ message Review {
   
   // Response from business owner
   BusinessResponse business_response = 18;
+  
+  // NEW: Support for all content types (not just POIs)
+  ReviewContentType content_type = 19; // Type of content being reviewed
+  string content_id = 20 [(buf.validate.field).string = {min_len: 1, max_len: 100}]; // ID of content being reviewed
+  string content_name = 21 [(buf.validate.field).string = {max_len: 300}]; // Name of content for display
+}
+
+// Type of content being reviewed
+enum ReviewContentType {
+  REVIEW_CONTENT_TYPE_UNSPECIFIED = 0;
+  REVIEW_CONTENT_TYPE_POI = 1;          // Point of Interest
+  REVIEW_CONTENT_TYPE_HOTEL = 2;        // Hotel
+  REVIEW_CONTENT_TYPE_RESTAURANT = 3;   // Restaurant
+  REVIEW_CONTENT_TYPE_ACTIVITY = 4;     // Activity/Attraction
+  REVIEW_CONTENT_TYPE_ITINERARY = 5;    // User-created itinerary
+  REVIEW_CONTENT_TYPE_LIST = 6;         // User-created list
 }
 
 // Review status
@@ -239,7 +258,7 @@ enum ReviewSortBy {
 // Request/Response messages
 message CreateReviewRequest {
   string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  string poi_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string poi_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}]; // Deprecated: use content_id
   double rating = 3 [(buf.validate.field).double = {gte: 1, lte: 5}];
   string title = 4 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   string content = 5 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
@@ -254,6 +273,10 @@ message CreateReviewRequest {
     max_len: 10,
     pattern: "^[a-z]{2}(-[A-Z]{2})?$"  // ISO 639-1 format (e.g., en, en-US)
   }];
+  // NEW: Support for all content types
+  ReviewContentType content_type = 10; // Type of content being reviewed
+  string content_id = 11 [(buf.validate.field).string = {min_len: 1, max_len: 100}]; // ID of content
+  string content_name = 12 [(buf.validate.field).string = {max_len: 300}]; // Name of content for display
 }
 
 message CreateReviewResponse {
@@ -268,6 +291,20 @@ message GetPOIReviewsRequest {
 }
 
 message GetPOIReviewsResponse {
+  repeated Review reviews = 1;
+  loci.common.PaginationMetadata pagination = 2;
+  ReviewStatistics statistics = 3;
+}
+
+// NEW: Generic request for any content type
+message GetContentReviewsRequest {
+  ReviewContentType content_type = 1 [(buf.validate.field).enum = {defined_only: true}];
+  string content_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  loci.common.PaginationRequest pagination = 3;
+  ReviewFilter filter = 4;
+}
+
+message GetContentReviewsResponse {
   repeated Review reviews = 1;
   loci.common.PaginationMetadata pagination = 2;
   ReviewStatistics statistics = 3;

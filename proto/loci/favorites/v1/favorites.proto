@@ -49,6 +49,18 @@ service FavoritesService {
   
   // Get favorites count
   rpc GetFavoritesCount(GetFavoritesCountRequest) returns (GetFavoritesCountResponse);
+  
+  // Get hotel details
+  rpc GetHotelDetails(GetHotelDetailsRequest) returns (GetHotelDetailsResponse);
+  
+  // Get restaurant details
+  rpc GetRestaurantDetails(GetRestaurantDetailsRequest) returns (GetRestaurantDetailsResponse);
+  
+  // Get nearby hotels
+  rpc GetNearbyHotels(GetNearbyHotelsRequest) returns (GetNearbyHotelsResponse);
+  
+  // Get nearby restaurants
+  rpc GetNearbyRestaurants(GetNearbyRestaurantsRequest) returns (GetNearbyRestaurantsResponse);
 }
 
 // AddToFavorites
@@ -117,4 +129,158 @@ message GetFavoritesCountRequest {
 
 message GetFavoritesCountResponse {
   int32 count = 1;
+}
+
+// ==================
+// HOTEL DETAILS
+// ==================
+
+message HotelDetails {
+  string id = 1;
+  string name = 2;
+  string city = 3;
+  string description = 4;
+  double latitude = 5;
+  double longitude = 6;
+  string address = 7;
+  string category = 8;
+  double rating = 9;
+  string star_rating = 10;
+  string price_range = 11;
+  repeated string amenities = 12;
+  repeated string images = 13;
+  string phone = 14;
+  string website = 15;
+  string llm_interaction_id = 16;
+  google.protobuf.Timestamp created_at = 17;
+  
+  // Extended fields for detail page
+  string check_in = 18;
+  string check_out = 19;
+  string price_per_night = 20;
+  int32 review_count = 21;
+  repeated string features = 22;
+  repeated HotelRoom rooms = 23;
+  repeated NearbyAttraction nearby_attractions = 24;
+  HotelContact contact = 25;
+}
+
+message HotelRoom {
+  string type = 1;
+  string description = 2;
+  string price = 3;
+  string size = 4;
+  string capacity = 5;
+  repeated string amenities = 6;
+}
+
+message NearbyAttraction {
+  string name = 1;
+  string type = 2;
+  string distance = 3;
+}
+
+message HotelContact {
+  string phone = 1;
+  string email = 2;
+  string website = 3;
+}
+
+message GetHotelDetailsRequest {
+  string hotel_id = 1 [(buf.validate.field).string.min_len = 1];
+}
+
+message GetHotelDetailsResponse {
+  bool success = 1;
+  string message = 2;
+  HotelDetails hotel = 3;
+}
+
+message GetNearbyHotelsRequest {
+  double latitude = 1;
+  double longitude = 2;
+  double radius_km = 3;  // Optional, default 5km
+  int32 limit = 4;       // Optional, default 20
+}
+
+message GetNearbyHotelsResponse {
+  repeated HotelDetails hotels = 1;
+  int32 total_count = 2;
+}
+
+// ==================
+// RESTAURANT DETAILS
+// ==================
+
+message RestaurantDetails {
+  string id = 1;
+  string name = 2;
+  string city = 3;
+  string description = 4;
+  double latitude = 5;
+  double longitude = 6;
+  string address = 7;
+  string category = 8;
+  double rating = 9;
+  string cuisine_type = 10;
+  string price_range = 11;
+  repeated string tags = 12;
+  repeated string images = 13;
+  string phone = 14;
+  string website = 15;
+  string llm_interaction_id = 16;
+  google.protobuf.Timestamp created_at = 17;
+  
+  // Extended fields for detail page
+  int32 review_count = 18;
+  bool is_open = 19;
+  bool reservation_required = 20;
+  bool accepts_cards = 21;
+  repeated string features = 22;
+  repeated string specialties = 23;
+  repeated string languages = 24;
+  string average_price = 25;
+  RestaurantMenu menu = 26;
+  map<string, string> hours = 27;
+  RestaurantContact contact = 28;
+}
+
+message MenuItem {
+  string name = 1;
+  string description = 2;
+  string price = 3;
+}
+
+message RestaurantMenu {
+  repeated MenuItem starters = 1;
+  repeated MenuItem mains = 2;
+  repeated MenuItem desserts = 3;
+}
+
+message RestaurantContact {
+  string phone = 1;
+  string email = 2;
+  string website = 3;
+}
+
+message GetRestaurantDetailsRequest {
+  string restaurant_id = 1 [(buf.validate.field).string.min_len = 1];
+}
+
+message GetRestaurantDetailsResponse {
+  bool success = 1;
+  string message = 2;
+  RestaurantDetails restaurant = 3;
+}
+
+message GetNearbyRestaurantsRequest {
+  double latitude = 1;
+  double longitude = 2;
+  double radius_km = 3;  // Optional, default 5km
+  int32 limit = 4;       // Optional, default 20
+}
+
+message GetNearbyRestaurantsResponse {
+  repeated RestaurantDetails restaurants = 1;
+  int32 total_count = 2;
 }

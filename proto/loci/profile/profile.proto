@@ -342,7 +342,82 @@ message GetUserPreferenceProfilesResponse {
 
 // ProfileService defines profile-related RPCs
 service ProfileService {
+  // Core profile operations
   rpc GetUserPreferenceProfiles(GetUserPreferenceProfilesRequest) returns (GetUserPreferenceProfilesResponse);
+  rpc GetUserPreferenceProfile(GetUserPreferenceProfileRequest) returns (GetUserPreferenceProfileResponse);
   rpc CreateUserPreferenceProfile(CreateUserPreferenceProfileRequest) returns (loci.common.Response);
   rpc UpdateUserPreferenceProfile(UpdateUserPreferenceProfileRequest) returns (loci.common.Response);
+  rpc DeleteUserPreferenceProfile(DeleteUserPreferenceProfileRequest) returns (loci.common.Response);
+  rpc SetDefaultProfile(SetDefaultProfileRequest) returns (loci.common.Response);
+  
+  // Domain-specific preference queries
+  rpc GetAccommodationPreferences(GetDomainPreferencesRequest) returns (AccommodationPreferencesResponse);
+  rpc GetDiningPreferences(GetDomainPreferencesRequest) returns (DiningPreferencesResponse);
+  rpc GetActivityPreferences(GetDomainPreferencesRequest) returns (ActivityPreferencesResponse);
+  rpc GetItineraryPreferences(GetDomainPreferencesRequest) returns (ItineraryPreferencesResponse);
+  rpc GetCombinedFilters(GetCombinedFiltersRequest) returns (CombinedFiltersResponse);
+}
+
+// GetUserPreferenceProfile request/response
+message GetUserPreferenceProfileRequest {
+  string profile_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+}
+
+message GetUserPreferenceProfileResponse {
+  UserPreferenceProfile profile = 1;
+}
+
+// DeleteUserPreferenceProfile request
+message DeleteUserPreferenceProfileRequest {
+  string profile_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+}
+
+// SetDefaultProfile request
+message SetDefaultProfileRequest {
+  string profile_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+}
+
+// Domain preference requests/responses
+message GetDomainPreferencesRequest {
+  string profile_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+}
+
+message AccommodationPreferencesResponse {
+  bool success = 1;
+  string message = 2;
+  AccommodationPreferences preferences = 3;
+}
+
+message DiningPreferencesResponse {
+  bool success = 1;
+  string message = 2;
+  DiningPreferences preferences = 3;
+}
+
+message ActivityPreferencesResponse {
+  bool success = 1;
+  string message = 2;
+  ActivityPreferences preferences = 3;
+}
+
+message ItineraryPreferencesResponse {
+  bool success = 1;
+  string message = 2;
+  ItineraryPreferences preferences = 3;
+}
+
+// Combined filters for a domain
+message GetCombinedFiltersRequest {
+  string profile_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  optional string domain = 2; // general, accommodation, dining, activities, itinerary
+}
+
+message CombinedFiltersResponse {
+  bool success = 1;
+  string message = 2;
+  UserPreferenceProfile profile = 3;
+  optional AccommodationPreferences accommodation = 4;
+  optional DiningPreferences dining = 5;
+  optional ActivityPreferences activity = 6;
+  optional ItineraryPreferences itinerary = 7;
 }

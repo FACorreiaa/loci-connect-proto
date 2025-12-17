@@ -716,6 +716,269 @@ export declare type GetUserPreferenceProfilesResponse = Message<"loci.profile.Ge
 export declare const GetUserPreferenceProfilesResponseSchema: GenMessage<GetUserPreferenceProfilesResponse>;
 
 /**
+ * GetUserPreferenceProfile request/response
+ *
+ * @generated from message loci.profile.GetUserPreferenceProfileRequest
+ */
+export declare type GetUserPreferenceProfileRequest = Message<"loci.profile.GetUserPreferenceProfileRequest"> & {
+  /**
+   * @generated from field: string profile_id = 1;
+   */
+  profileId: string;
+};
+
+/**
+ * Describes the message loci.profile.GetUserPreferenceProfileRequest.
+ * Use `create(GetUserPreferenceProfileRequestSchema)` to create a new message.
+ */
+export declare const GetUserPreferenceProfileRequestSchema: GenMessage<GetUserPreferenceProfileRequest>;
+
+/**
+ * @generated from message loci.profile.GetUserPreferenceProfileResponse
+ */
+export declare type GetUserPreferenceProfileResponse = Message<"loci.profile.GetUserPreferenceProfileResponse"> & {
+  /**
+   * @generated from field: loci.profile.UserPreferenceProfile profile = 1;
+   */
+  profile?: UserPreferenceProfile;
+};
+
+/**
+ * Describes the message loci.profile.GetUserPreferenceProfileResponse.
+ * Use `create(GetUserPreferenceProfileResponseSchema)` to create a new message.
+ */
+export declare const GetUserPreferenceProfileResponseSchema: GenMessage<GetUserPreferenceProfileResponse>;
+
+/**
+ * DeleteUserPreferenceProfile request
+ *
+ * @generated from message loci.profile.DeleteUserPreferenceProfileRequest
+ */
+export declare type DeleteUserPreferenceProfileRequest = Message<"loci.profile.DeleteUserPreferenceProfileRequest"> & {
+  /**
+   * @generated from field: string profile_id = 1;
+   */
+  profileId: string;
+};
+
+/**
+ * Describes the message loci.profile.DeleteUserPreferenceProfileRequest.
+ * Use `create(DeleteUserPreferenceProfileRequestSchema)` to create a new message.
+ */
+export declare const DeleteUserPreferenceProfileRequestSchema: GenMessage<DeleteUserPreferenceProfileRequest>;
+
+/**
+ * SetDefaultProfile request
+ *
+ * @generated from message loci.profile.SetDefaultProfileRequest
+ */
+export declare type SetDefaultProfileRequest = Message<"loci.profile.SetDefaultProfileRequest"> & {
+  /**
+   * @generated from field: string profile_id = 1;
+   */
+  profileId: string;
+};
+
+/**
+ * Describes the message loci.profile.SetDefaultProfileRequest.
+ * Use `create(SetDefaultProfileRequestSchema)` to create a new message.
+ */
+export declare const SetDefaultProfileRequestSchema: GenMessage<SetDefaultProfileRequest>;
+
+/**
+ * Domain preference requests/responses
+ *
+ * @generated from message loci.profile.GetDomainPreferencesRequest
+ */
+export declare type GetDomainPreferencesRequest = Message<"loci.profile.GetDomainPreferencesRequest"> & {
+  /**
+   * @generated from field: string profile_id = 1;
+   */
+  profileId: string;
+};
+
+/**
+ * Describes the message loci.profile.GetDomainPreferencesRequest.
+ * Use `create(GetDomainPreferencesRequestSchema)` to create a new message.
+ */
+export declare const GetDomainPreferencesRequestSchema: GenMessage<GetDomainPreferencesRequest>;
+
+/**
+ * @generated from message loci.profile.AccommodationPreferencesResponse
+ */
+export declare type AccommodationPreferencesResponse = Message<"loci.profile.AccommodationPreferencesResponse"> & {
+  /**
+   * @generated from field: bool success = 1;
+   */
+  success: boolean;
+
+  /**
+   * @generated from field: string message = 2;
+   */
+  message: string;
+
+  /**
+   * @generated from field: loci.profile.AccommodationPreferences preferences = 3;
+   */
+  preferences?: AccommodationPreferences;
+};
+
+/**
+ * Describes the message loci.profile.AccommodationPreferencesResponse.
+ * Use `create(AccommodationPreferencesResponseSchema)` to create a new message.
+ */
+export declare const AccommodationPreferencesResponseSchema: GenMessage<AccommodationPreferencesResponse>;
+
+/**
+ * @generated from message loci.profile.DiningPreferencesResponse
+ */
+export declare type DiningPreferencesResponse = Message<"loci.profile.DiningPreferencesResponse"> & {
+  /**
+   * @generated from field: bool success = 1;
+   */
+  success: boolean;
+
+  /**
+   * @generated from field: string message = 2;
+   */
+  message: string;
+
+  /**
+   * @generated from field: loci.profile.DiningPreferences preferences = 3;
+   */
+  preferences?: DiningPreferences;
+};
+
+/**
+ * Describes the message loci.profile.DiningPreferencesResponse.
+ * Use `create(DiningPreferencesResponseSchema)` to create a new message.
+ */
+export declare const DiningPreferencesResponseSchema: GenMessage<DiningPreferencesResponse>;
+
+/**
+ * @generated from message loci.profile.ActivityPreferencesResponse
+ */
+export declare type ActivityPreferencesResponse = Message<"loci.profile.ActivityPreferencesResponse"> & {
+  /**
+   * @generated from field: bool success = 1;
+   */
+  success: boolean;
+
+  /**
+   * @generated from field: string message = 2;
+   */
+  message: string;
+
+  /**
+   * @generated from field: loci.profile.ActivityPreferences preferences = 3;
+   */
+  preferences?: ActivityPreferences;
+};
+
+/**
+ * Describes the message loci.profile.ActivityPreferencesResponse.
+ * Use `create(ActivityPreferencesResponseSchema)` to create a new message.
+ */
+export declare const ActivityPreferencesResponseSchema: GenMessage<ActivityPreferencesResponse>;
+
+/**
+ * @generated from message loci.profile.ItineraryPreferencesResponse
+ */
+export declare type ItineraryPreferencesResponse = Message<"loci.profile.ItineraryPreferencesResponse"> & {
+  /**
+   * @generated from field: bool success = 1;
+   */
+  success: boolean;
+
+  /**
+   * @generated from field: string message = 2;
+   */
+  message: string;
+
+  /**
+   * @generated from field: loci.profile.ItineraryPreferences preferences = 3;
+   */
+  preferences?: ItineraryPreferences;
+};
+
+/**
+ * Describes the message loci.profile.ItineraryPreferencesResponse.
+ * Use `create(ItineraryPreferencesResponseSchema)` to create a new message.
+ */
+export declare const ItineraryPreferencesResponseSchema: GenMessage<ItineraryPreferencesResponse>;
+
+/**
+ * Combined filters for a domain
+ *
+ * @generated from message loci.profile.GetCombinedFiltersRequest
+ */
+export declare type GetCombinedFiltersRequest = Message<"loci.profile.GetCombinedFiltersRequest"> & {
+  /**
+   * @generated from field: string profile_id = 1;
+   */
+  profileId: string;
+
+  /**
+   * general, accommodation, dining, activities, itinerary
+   *
+   * @generated from field: optional string domain = 2;
+   */
+  domain?: string;
+};
+
+/**
+ * Describes the message loci.profile.GetCombinedFiltersRequest.
+ * Use `create(GetCombinedFiltersRequestSchema)` to create a new message.
+ */
+export declare const GetCombinedFiltersRequestSchema: GenMessage<GetCombinedFiltersRequest>;
+
+/**
+ * @generated from message loci.profile.CombinedFiltersResponse
+ */
+export declare type CombinedFiltersResponse = Message<"loci.profile.CombinedFiltersResponse"> & {
+  /**
+   * @generated from field: bool success = 1;
+   */
+  success: boolean;
+
+  /**
+   * @generated from field: string message = 2;
+   */
+  message: string;
+
+  /**
+   * @generated from field: loci.profile.UserPreferenceProfile profile = 3;
+   */
+  profile?: UserPreferenceProfile;
+
+  /**
+   * @generated from field: optional loci.profile.AccommodationPreferences accommodation = 4;
+   */
+  accommodation?: AccommodationPreferences;
+
+  /**
+   * @generated from field: optional loci.profile.DiningPreferences dining = 5;
+   */
+  dining?: DiningPreferences;
+
+  /**
+   * @generated from field: optional loci.profile.ActivityPreferences activity = 6;
+   */
+  activity?: ActivityPreferences;
+
+  /**
+   * @generated from field: optional loci.profile.ItineraryPreferences itinerary = 7;
+   */
+  itinerary?: ItineraryPreferences;
+};
+
+/**
+ * Describes the message loci.profile.CombinedFiltersResponse.
+ * Use `create(CombinedFiltersResponseSchema)` to create a new message.
+ */
+export declare const CombinedFiltersResponseSchema: GenMessage<CombinedFiltersResponse>;
+
+/**
  * Enums for preferences
  *
  * @generated from enum loci.profile.DayPreference
@@ -824,12 +1087,22 @@ export declare const TransportPreferenceSchema: GenEnum<TransportPreference>;
  */
 export declare const ProfileService: GenService<{
   /**
+   * Core profile operations
+   *
    * @generated from rpc loci.profile.ProfileService.GetUserPreferenceProfiles
    */
   getUserPreferenceProfiles: {
     methodKind: "unary";
     input: typeof GetUserPreferenceProfilesRequestSchema;
     output: typeof GetUserPreferenceProfilesResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.profile.ProfileService.GetUserPreferenceProfile
+   */
+  getUserPreferenceProfile: {
+    methodKind: "unary";
+    input: typeof GetUserPreferenceProfileRequestSchema;
+    output: typeof GetUserPreferenceProfileResponseSchema;
   },
   /**
    * @generated from rpc loci.profile.ProfileService.CreateUserPreferenceProfile
@@ -846,6 +1119,64 @@ export declare const ProfileService: GenService<{
     methodKind: "unary";
     input: typeof UpdateUserPreferenceProfileRequestSchema;
     output: typeof ResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.profile.ProfileService.DeleteUserPreferenceProfile
+   */
+  deleteUserPreferenceProfile: {
+    methodKind: "unary";
+    input: typeof DeleteUserPreferenceProfileRequestSchema;
+    output: typeof ResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.profile.ProfileService.SetDefaultProfile
+   */
+  setDefaultProfile: {
+    methodKind: "unary";
+    input: typeof SetDefaultProfileRequestSchema;
+    output: typeof ResponseSchema;
+  },
+  /**
+   * Domain-specific preference queries
+   *
+   * @generated from rpc loci.profile.ProfileService.GetAccommodationPreferences
+   */
+  getAccommodationPreferences: {
+    methodKind: "unary";
+    input: typeof GetDomainPreferencesRequestSchema;
+    output: typeof AccommodationPreferencesResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.profile.ProfileService.GetDiningPreferences
+   */
+  getDiningPreferences: {
+    methodKind: "unary";
+    input: typeof GetDomainPreferencesRequestSchema;
+    output: typeof DiningPreferencesResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.profile.ProfileService.GetActivityPreferences
+   */
+  getActivityPreferences: {
+    methodKind: "unary";
+    input: typeof GetDomainPreferencesRequestSchema;
+    output: typeof ActivityPreferencesResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.profile.ProfileService.GetItineraryPreferences
+   */
+  getItineraryPreferences: {
+    methodKind: "unary";
+    input: typeof GetDomainPreferencesRequestSchema;
+    output: typeof ItineraryPreferencesResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.profile.ProfileService.GetCombinedFilters
+   */
+  getCombinedFilters: {
+    methodKind: "unary";
+    input: typeof GetCombinedFiltersRequestSchema;
+    output: typeof CombinedFiltersResponseSchema;
   },
 }>;
 

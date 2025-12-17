@@ -29,6 +29,8 @@ export declare type Review = Message<"loci.review.Review"> & {
   userId: string;
 
   /**
+   * Deprecated: use content_id instead
+   *
    * @generated from field: string poi_id = 3;
    */
   poiId: string;
@@ -127,6 +129,29 @@ export declare type Review = Message<"loci.review.Review"> & {
    * @generated from field: loci.review.BusinessResponse business_response = 18;
    */
   businessResponse?: BusinessResponse;
+
+  /**
+   * NEW: Support for all content types (not just POIs)
+   *
+   * Type of content being reviewed
+   *
+   * @generated from field: loci.review.ReviewContentType content_type = 19;
+   */
+  contentType: ReviewContentType;
+
+  /**
+   * ID of content being reviewed
+   *
+   * @generated from field: string content_id = 20;
+   */
+  contentId: string;
+
+  /**
+   * Name of content for display
+   *
+   * @generated from field: string content_name = 21;
+   */
+  contentName: string;
 };
 
 /**
@@ -685,6 +710,8 @@ export declare type CreateReviewRequest = Message<"loci.review.CreateReviewReque
   userId: string;
 
   /**
+   * Deprecated: use content_id
+   *
    * @generated from field: string poi_id = 2;
    */
   poiId: string;
@@ -723,6 +750,29 @@ export declare type CreateReviewRequest = Message<"loci.review.CreateReviewReque
    * @generated from field: string language = 9;
    */
   language: string;
+
+  /**
+   * NEW: Support for all content types
+   *
+   * Type of content being reviewed
+   *
+   * @generated from field: loci.review.ReviewContentType content_type = 10;
+   */
+  contentType: ReviewContentType;
+
+  /**
+   * ID of content
+   *
+   * @generated from field: string content_id = 11;
+   */
+  contentId: string;
+
+  /**
+   * Name of content for display
+   *
+   * @generated from field: string content_name = 12;
+   */
+  contentName: string;
 };
 
 /**
@@ -803,6 +853,65 @@ export declare type GetPOIReviewsResponse = Message<"loci.review.GetPOIReviewsRe
  * Use `create(GetPOIReviewsResponseSchema)` to create a new message.
  */
 export declare const GetPOIReviewsResponseSchema: GenMessage<GetPOIReviewsResponse>;
+
+/**
+ * NEW: Generic request for any content type
+ *
+ * @generated from message loci.review.GetContentReviewsRequest
+ */
+export declare type GetContentReviewsRequest = Message<"loci.review.GetContentReviewsRequest"> & {
+  /**
+   * @generated from field: loci.review.ReviewContentType content_type = 1;
+   */
+  contentType: ReviewContentType;
+
+  /**
+   * @generated from field: string content_id = 2;
+   */
+  contentId: string;
+
+  /**
+   * @generated from field: loci.common.PaginationRequest pagination = 3;
+   */
+  pagination?: PaginationRequest;
+
+  /**
+   * @generated from field: loci.review.ReviewFilter filter = 4;
+   */
+  filter?: ReviewFilter;
+};
+
+/**
+ * Describes the message loci.review.GetContentReviewsRequest.
+ * Use `create(GetContentReviewsRequestSchema)` to create a new message.
+ */
+export declare const GetContentReviewsRequestSchema: GenMessage<GetContentReviewsRequest>;
+
+/**
+ * @generated from message loci.review.GetContentReviewsResponse
+ */
+export declare type GetContentReviewsResponse = Message<"loci.review.GetContentReviewsResponse"> & {
+  /**
+   * @generated from field: repeated loci.review.Review reviews = 1;
+   */
+  reviews: Review[];
+
+  /**
+   * @generated from field: loci.common.PaginationMetadata pagination = 2;
+   */
+  pagination?: PaginationMetadata;
+
+  /**
+   * @generated from field: loci.review.ReviewStatistics statistics = 3;
+   */
+  statistics?: ReviewStatistics;
+};
+
+/**
+ * Describes the message loci.review.GetContentReviewsResponse.
+ * Use `create(GetContentReviewsResponseSchema)` to create a new message.
+ */
+export declare const GetContentReviewsResponseSchema: GenMessage<GetContentReviewsResponse>;
 
 /**
  * @generated from message loci.review.GetReviewRequest
@@ -1191,6 +1300,65 @@ export declare type GetReviewStatisticsResponse = Message<"loci.review.GetReview
 export declare const GetReviewStatisticsResponseSchema: GenMessage<GetReviewStatisticsResponse>;
 
 /**
+ * Type of content being reviewed
+ *
+ * @generated from enum loci.review.ReviewContentType
+ */
+export enum ReviewContentType {
+  /**
+   * @generated from enum value: REVIEW_CONTENT_TYPE_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * Point of Interest
+   *
+   * @generated from enum value: REVIEW_CONTENT_TYPE_POI = 1;
+   */
+  POI = 1,
+
+  /**
+   * Hotel
+   *
+   * @generated from enum value: REVIEW_CONTENT_TYPE_HOTEL = 2;
+   */
+  HOTEL = 2,
+
+  /**
+   * Restaurant
+   *
+   * @generated from enum value: REVIEW_CONTENT_TYPE_RESTAURANT = 3;
+   */
+  RESTAURANT = 3,
+
+  /**
+   * Activity/Attraction
+   *
+   * @generated from enum value: REVIEW_CONTENT_TYPE_ACTIVITY = 4;
+   */
+  ACTIVITY = 4,
+
+  /**
+   * User-created itinerary
+   *
+   * @generated from enum value: REVIEW_CONTENT_TYPE_ITINERARY = 5;
+   */
+  ITINERARY = 5,
+
+  /**
+   * User-created list
+   *
+   * @generated from enum value: REVIEW_CONTENT_TYPE_LIST = 6;
+   */
+  LIST = 6,
+}
+
+/**
+ * Describes the enum loci.review.ReviewContentType.
+ */
+export declare const ReviewContentTypeSchema: GenEnum<ReviewContentType>;
+
+/**
  * Review status
  *
  * @generated from enum loci.review.ReviewStatus
@@ -1329,7 +1497,7 @@ export declare const ReviewService: GenService<{
     output: typeof CreateReviewResponseSchema;
   },
   /**
-   * Get reviews for a POI
+   * Get reviews for a POI (deprecated: use GetContentReviews)
    *
    * @generated from rpc loci.review.ReviewService.GetPOIReviews
    */
@@ -1337,6 +1505,16 @@ export declare const ReviewService: GenService<{
     methodKind: "unary";
     input: typeof GetPOIReviewsRequestSchema;
     output: typeof GetPOIReviewsResponseSchema;
+  },
+  /**
+   * Get reviews for any content type (POI, hotel, restaurant, list, itinerary)
+   *
+   * @generated from rpc loci.review.ReviewService.GetContentReviews
+   */
+  getContentReviews: {
+    methodKind: "unary";
+    input: typeof GetContentReviewsRequestSchema;
+    output: typeof GetContentReviewsResponseSchema;
   },
   /**
    * Get a specific review
@@ -1399,7 +1577,7 @@ export declare const ReviewService: GenService<{
     output: typeof ReportReviewResponseSchema;
   },
   /**
-   * Get review statistics for a POI
+   * Get review statistics for any content type
    *
    * @generated from rpc loci.review.ReviewService.GetReviewStatistics
    */

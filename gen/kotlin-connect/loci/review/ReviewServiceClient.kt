@@ -32,7 +32,7 @@ public class ReviewServiceClient(
 
 
   /**
-   *  Get reviews for a POI
+   *  Get reviews for a POI (deprecated: use GetContentReviews)
    */
   override suspend fun getPOIReviews(request: ReviewOuterClass.GetPOIReviewsRequest, headers: Headers): ResponseMessage<ReviewOuterClass.GetPOIReviewsResponse> = client.unary(
     request,
@@ -41,6 +41,21 @@ public class ReviewServiceClient(
     "loci.review.ReviewService/GetPOIReviews",
       loci.review.ReviewOuterClass.GetPOIReviewsRequest::class,
       loci.review.ReviewOuterClass.GetPOIReviewsResponse::class,
+      StreamType.UNARY,
+    ),
+  )
+
+
+  /**
+   *  Get reviews for any content type (POI, hotel, restaurant, list, itinerary)
+   */
+  override suspend fun getContentReviews(request: ReviewOuterClass.GetContentReviewsRequest, headers: Headers): ResponseMessage<ReviewOuterClass.GetContentReviewsResponse> = client.unary(
+    request,
+    headers,
+    MethodSpec(
+    "loci.review.ReviewService/GetContentReviews",
+      loci.review.ReviewOuterClass.GetContentReviewsRequest::class,
+      loci.review.ReviewOuterClass.GetContentReviewsResponse::class,
       StreamType.UNARY,
     ),
   )
@@ -137,7 +152,7 @@ public class ReviewServiceClient(
 
 
   /**
-   *  Get review statistics for a POI
+   *  Get review statistics for any content type
    */
   override suspend fun getReviewStatistics(request: ReviewOuterClass.GetReviewStatisticsRequest, headers: Headers): ResponseMessage<ReviewOuterClass.GetReviewStatisticsResponse> = client.unary(
     request,

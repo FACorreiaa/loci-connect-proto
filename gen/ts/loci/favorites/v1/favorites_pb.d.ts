@@ -383,6 +383,664 @@ export declare type GetFavoritesCountResponse = Message<"loci.favorites.v1.GetFa
 export declare const GetFavoritesCountResponseSchema: GenMessage<GetFavoritesCountResponse>;
 
 /**
+ * @generated from message loci.favorites.v1.HotelDetails
+ */
+export declare type HotelDetails = Message<"loci.favorites.v1.HotelDetails"> & {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * @generated from field: string name = 2;
+   */
+  name: string;
+
+  /**
+   * @generated from field: string city = 3;
+   */
+  city: string;
+
+  /**
+   * @generated from field: string description = 4;
+   */
+  description: string;
+
+  /**
+   * @generated from field: double latitude = 5;
+   */
+  latitude: number;
+
+  /**
+   * @generated from field: double longitude = 6;
+   */
+  longitude: number;
+
+  /**
+   * @generated from field: string address = 7;
+   */
+  address: string;
+
+  /**
+   * @generated from field: string category = 8;
+   */
+  category: string;
+
+  /**
+   * @generated from field: double rating = 9;
+   */
+  rating: number;
+
+  /**
+   * @generated from field: string star_rating = 10;
+   */
+  starRating: string;
+
+  /**
+   * @generated from field: string price_range = 11;
+   */
+  priceRange: string;
+
+  /**
+   * @generated from field: repeated string amenities = 12;
+   */
+  amenities: string[];
+
+  /**
+   * @generated from field: repeated string images = 13;
+   */
+  images: string[];
+
+  /**
+   * @generated from field: string phone = 14;
+   */
+  phone: string;
+
+  /**
+   * @generated from field: string website = 15;
+   */
+  website: string;
+
+  /**
+   * @generated from field: string llm_interaction_id = 16;
+   */
+  llmInteractionId: string;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp created_at = 17;
+   */
+  createdAt?: Timestamp;
+
+  /**
+   * Extended fields for detail page
+   *
+   * @generated from field: string check_in = 18;
+   */
+  checkIn: string;
+
+  /**
+   * @generated from field: string check_out = 19;
+   */
+  checkOut: string;
+
+  /**
+   * @generated from field: string price_per_night = 20;
+   */
+  pricePerNight: string;
+
+  /**
+   * @generated from field: int32 review_count = 21;
+   */
+  reviewCount: number;
+
+  /**
+   * @generated from field: repeated string features = 22;
+   */
+  features: string[];
+
+  /**
+   * @generated from field: repeated loci.favorites.v1.HotelRoom rooms = 23;
+   */
+  rooms: HotelRoom[];
+
+  /**
+   * @generated from field: repeated loci.favorites.v1.NearbyAttraction nearby_attractions = 24;
+   */
+  nearbyAttractions: NearbyAttraction[];
+
+  /**
+   * @generated from field: loci.favorites.v1.HotelContact contact = 25;
+   */
+  contact?: HotelContact;
+};
+
+/**
+ * Describes the message loci.favorites.v1.HotelDetails.
+ * Use `create(HotelDetailsSchema)` to create a new message.
+ */
+export declare const HotelDetailsSchema: GenMessage<HotelDetails>;
+
+/**
+ * @generated from message loci.favorites.v1.HotelRoom
+ */
+export declare type HotelRoom = Message<"loci.favorites.v1.HotelRoom"> & {
+  /**
+   * @generated from field: string type = 1;
+   */
+  type: string;
+
+  /**
+   * @generated from field: string description = 2;
+   */
+  description: string;
+
+  /**
+   * @generated from field: string price = 3;
+   */
+  price: string;
+
+  /**
+   * @generated from field: string size = 4;
+   */
+  size: string;
+
+  /**
+   * @generated from field: string capacity = 5;
+   */
+  capacity: string;
+
+  /**
+   * @generated from field: repeated string amenities = 6;
+   */
+  amenities: string[];
+};
+
+/**
+ * Describes the message loci.favorites.v1.HotelRoom.
+ * Use `create(HotelRoomSchema)` to create a new message.
+ */
+export declare const HotelRoomSchema: GenMessage<HotelRoom>;
+
+/**
+ * @generated from message loci.favorites.v1.NearbyAttraction
+ */
+export declare type NearbyAttraction = Message<"loci.favorites.v1.NearbyAttraction"> & {
+  /**
+   * @generated from field: string name = 1;
+   */
+  name: string;
+
+  /**
+   * @generated from field: string type = 2;
+   */
+  type: string;
+
+  /**
+   * @generated from field: string distance = 3;
+   */
+  distance: string;
+};
+
+/**
+ * Describes the message loci.favorites.v1.NearbyAttraction.
+ * Use `create(NearbyAttractionSchema)` to create a new message.
+ */
+export declare const NearbyAttractionSchema: GenMessage<NearbyAttraction>;
+
+/**
+ * @generated from message loci.favorites.v1.HotelContact
+ */
+export declare type HotelContact = Message<"loci.favorites.v1.HotelContact"> & {
+  /**
+   * @generated from field: string phone = 1;
+   */
+  phone: string;
+
+  /**
+   * @generated from field: string email = 2;
+   */
+  email: string;
+
+  /**
+   * @generated from field: string website = 3;
+   */
+  website: string;
+};
+
+/**
+ * Describes the message loci.favorites.v1.HotelContact.
+ * Use `create(HotelContactSchema)` to create a new message.
+ */
+export declare const HotelContactSchema: GenMessage<HotelContact>;
+
+/**
+ * @generated from message loci.favorites.v1.GetHotelDetailsRequest
+ */
+export declare type GetHotelDetailsRequest = Message<"loci.favorites.v1.GetHotelDetailsRequest"> & {
+  /**
+   * @generated from field: string hotel_id = 1;
+   */
+  hotelId: string;
+};
+
+/**
+ * Describes the message loci.favorites.v1.GetHotelDetailsRequest.
+ * Use `create(GetHotelDetailsRequestSchema)` to create a new message.
+ */
+export declare const GetHotelDetailsRequestSchema: GenMessage<GetHotelDetailsRequest>;
+
+/**
+ * @generated from message loci.favorites.v1.GetHotelDetailsResponse
+ */
+export declare type GetHotelDetailsResponse = Message<"loci.favorites.v1.GetHotelDetailsResponse"> & {
+  /**
+   * @generated from field: bool success = 1;
+   */
+  success: boolean;
+
+  /**
+   * @generated from field: string message = 2;
+   */
+  message: string;
+
+  /**
+   * @generated from field: loci.favorites.v1.HotelDetails hotel = 3;
+   */
+  hotel?: HotelDetails;
+};
+
+/**
+ * Describes the message loci.favorites.v1.GetHotelDetailsResponse.
+ * Use `create(GetHotelDetailsResponseSchema)` to create a new message.
+ */
+export declare const GetHotelDetailsResponseSchema: GenMessage<GetHotelDetailsResponse>;
+
+/**
+ * @generated from message loci.favorites.v1.GetNearbyHotelsRequest
+ */
+export declare type GetNearbyHotelsRequest = Message<"loci.favorites.v1.GetNearbyHotelsRequest"> & {
+  /**
+   * @generated from field: double latitude = 1;
+   */
+  latitude: number;
+
+  /**
+   * @generated from field: double longitude = 2;
+   */
+  longitude: number;
+
+  /**
+   * Optional, default 5km
+   *
+   * @generated from field: double radius_km = 3;
+   */
+  radiusKm: number;
+
+  /**
+   * Optional, default 20
+   *
+   * @generated from field: int32 limit = 4;
+   */
+  limit: number;
+};
+
+/**
+ * Describes the message loci.favorites.v1.GetNearbyHotelsRequest.
+ * Use `create(GetNearbyHotelsRequestSchema)` to create a new message.
+ */
+export declare const GetNearbyHotelsRequestSchema: GenMessage<GetNearbyHotelsRequest>;
+
+/**
+ * @generated from message loci.favorites.v1.GetNearbyHotelsResponse
+ */
+export declare type GetNearbyHotelsResponse = Message<"loci.favorites.v1.GetNearbyHotelsResponse"> & {
+  /**
+   * @generated from field: repeated loci.favorites.v1.HotelDetails hotels = 1;
+   */
+  hotels: HotelDetails[];
+
+  /**
+   * @generated from field: int32 total_count = 2;
+   */
+  totalCount: number;
+};
+
+/**
+ * Describes the message loci.favorites.v1.GetNearbyHotelsResponse.
+ * Use `create(GetNearbyHotelsResponseSchema)` to create a new message.
+ */
+export declare const GetNearbyHotelsResponseSchema: GenMessage<GetNearbyHotelsResponse>;
+
+/**
+ * @generated from message loci.favorites.v1.RestaurantDetails
+ */
+export declare type RestaurantDetails = Message<"loci.favorites.v1.RestaurantDetails"> & {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * @generated from field: string name = 2;
+   */
+  name: string;
+
+  /**
+   * @generated from field: string city = 3;
+   */
+  city: string;
+
+  /**
+   * @generated from field: string description = 4;
+   */
+  description: string;
+
+  /**
+   * @generated from field: double latitude = 5;
+   */
+  latitude: number;
+
+  /**
+   * @generated from field: double longitude = 6;
+   */
+  longitude: number;
+
+  /**
+   * @generated from field: string address = 7;
+   */
+  address: string;
+
+  /**
+   * @generated from field: string category = 8;
+   */
+  category: string;
+
+  /**
+   * @generated from field: double rating = 9;
+   */
+  rating: number;
+
+  /**
+   * @generated from field: string cuisine_type = 10;
+   */
+  cuisineType: string;
+
+  /**
+   * @generated from field: string price_range = 11;
+   */
+  priceRange: string;
+
+  /**
+   * @generated from field: repeated string tags = 12;
+   */
+  tags: string[];
+
+  /**
+   * @generated from field: repeated string images = 13;
+   */
+  images: string[];
+
+  /**
+   * @generated from field: string phone = 14;
+   */
+  phone: string;
+
+  /**
+   * @generated from field: string website = 15;
+   */
+  website: string;
+
+  /**
+   * @generated from field: string llm_interaction_id = 16;
+   */
+  llmInteractionId: string;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp created_at = 17;
+   */
+  createdAt?: Timestamp;
+
+  /**
+   * Extended fields for detail page
+   *
+   * @generated from field: int32 review_count = 18;
+   */
+  reviewCount: number;
+
+  /**
+   * @generated from field: bool is_open = 19;
+   */
+  isOpen: boolean;
+
+  /**
+   * @generated from field: bool reservation_required = 20;
+   */
+  reservationRequired: boolean;
+
+  /**
+   * @generated from field: bool accepts_cards = 21;
+   */
+  acceptsCards: boolean;
+
+  /**
+   * @generated from field: repeated string features = 22;
+   */
+  features: string[];
+
+  /**
+   * @generated from field: repeated string specialties = 23;
+   */
+  specialties: string[];
+
+  /**
+   * @generated from field: repeated string languages = 24;
+   */
+  languages: string[];
+
+  /**
+   * @generated from field: string average_price = 25;
+   */
+  averagePrice: string;
+
+  /**
+   * @generated from field: loci.favorites.v1.RestaurantMenu menu = 26;
+   */
+  menu?: RestaurantMenu;
+
+  /**
+   * @generated from field: map<string, string> hours = 27;
+   */
+  hours: { [key: string]: string };
+
+  /**
+   * @generated from field: loci.favorites.v1.RestaurantContact contact = 28;
+   */
+  contact?: RestaurantContact;
+};
+
+/**
+ * Describes the message loci.favorites.v1.RestaurantDetails.
+ * Use `create(RestaurantDetailsSchema)` to create a new message.
+ */
+export declare const RestaurantDetailsSchema: GenMessage<RestaurantDetails>;
+
+/**
+ * @generated from message loci.favorites.v1.MenuItem
+ */
+export declare type MenuItem = Message<"loci.favorites.v1.MenuItem"> & {
+  /**
+   * @generated from field: string name = 1;
+   */
+  name: string;
+
+  /**
+   * @generated from field: string description = 2;
+   */
+  description: string;
+
+  /**
+   * @generated from field: string price = 3;
+   */
+  price: string;
+};
+
+/**
+ * Describes the message loci.favorites.v1.MenuItem.
+ * Use `create(MenuItemSchema)` to create a new message.
+ */
+export declare const MenuItemSchema: GenMessage<MenuItem>;
+
+/**
+ * @generated from message loci.favorites.v1.RestaurantMenu
+ */
+export declare type RestaurantMenu = Message<"loci.favorites.v1.RestaurantMenu"> & {
+  /**
+   * @generated from field: repeated loci.favorites.v1.MenuItem starters = 1;
+   */
+  starters: MenuItem[];
+
+  /**
+   * @generated from field: repeated loci.favorites.v1.MenuItem mains = 2;
+   */
+  mains: MenuItem[];
+
+  /**
+   * @generated from field: repeated loci.favorites.v1.MenuItem desserts = 3;
+   */
+  desserts: MenuItem[];
+};
+
+/**
+ * Describes the message loci.favorites.v1.RestaurantMenu.
+ * Use `create(RestaurantMenuSchema)` to create a new message.
+ */
+export declare const RestaurantMenuSchema: GenMessage<RestaurantMenu>;
+
+/**
+ * @generated from message loci.favorites.v1.RestaurantContact
+ */
+export declare type RestaurantContact = Message<"loci.favorites.v1.RestaurantContact"> & {
+  /**
+   * @generated from field: string phone = 1;
+   */
+  phone: string;
+
+  /**
+   * @generated from field: string email = 2;
+   */
+  email: string;
+
+  /**
+   * @generated from field: string website = 3;
+   */
+  website: string;
+};
+
+/**
+ * Describes the message loci.favorites.v1.RestaurantContact.
+ * Use `create(RestaurantContactSchema)` to create a new message.
+ */
+export declare const RestaurantContactSchema: GenMessage<RestaurantContact>;
+
+/**
+ * @generated from message loci.favorites.v1.GetRestaurantDetailsRequest
+ */
+export declare type GetRestaurantDetailsRequest = Message<"loci.favorites.v1.GetRestaurantDetailsRequest"> & {
+  /**
+   * @generated from field: string restaurant_id = 1;
+   */
+  restaurantId: string;
+};
+
+/**
+ * Describes the message loci.favorites.v1.GetRestaurantDetailsRequest.
+ * Use `create(GetRestaurantDetailsRequestSchema)` to create a new message.
+ */
+export declare const GetRestaurantDetailsRequestSchema: GenMessage<GetRestaurantDetailsRequest>;
+
+/**
+ * @generated from message loci.favorites.v1.GetRestaurantDetailsResponse
+ */
+export declare type GetRestaurantDetailsResponse = Message<"loci.favorites.v1.GetRestaurantDetailsResponse"> & {
+  /**
+   * @generated from field: bool success = 1;
+   */
+  success: boolean;
+
+  /**
+   * @generated from field: string message = 2;
+   */
+  message: string;
+
+  /**
+   * @generated from field: loci.favorites.v1.RestaurantDetails restaurant = 3;
+   */
+  restaurant?: RestaurantDetails;
+};
+
+/**
+ * Describes the message loci.favorites.v1.GetRestaurantDetailsResponse.
+ * Use `create(GetRestaurantDetailsResponseSchema)` to create a new message.
+ */
+export declare const GetRestaurantDetailsResponseSchema: GenMessage<GetRestaurantDetailsResponse>;
+
+/**
+ * @generated from message loci.favorites.v1.GetNearbyRestaurantsRequest
+ */
+export declare type GetNearbyRestaurantsRequest = Message<"loci.favorites.v1.GetNearbyRestaurantsRequest"> & {
+  /**
+   * @generated from field: double latitude = 1;
+   */
+  latitude: number;
+
+  /**
+   * @generated from field: double longitude = 2;
+   */
+  longitude: number;
+
+  /**
+   * Optional, default 5km
+   *
+   * @generated from field: double radius_km = 3;
+   */
+  radiusKm: number;
+
+  /**
+   * Optional, default 20
+   *
+   * @generated from field: int32 limit = 4;
+   */
+  limit: number;
+};
+
+/**
+ * Describes the message loci.favorites.v1.GetNearbyRestaurantsRequest.
+ * Use `create(GetNearbyRestaurantsRequestSchema)` to create a new message.
+ */
+export declare const GetNearbyRestaurantsRequestSchema: GenMessage<GetNearbyRestaurantsRequest>;
+
+/**
+ * @generated from message loci.favorites.v1.GetNearbyRestaurantsResponse
+ */
+export declare type GetNearbyRestaurantsResponse = Message<"loci.favorites.v1.GetNearbyRestaurantsResponse"> & {
+  /**
+   * @generated from field: repeated loci.favorites.v1.RestaurantDetails restaurants = 1;
+   */
+  restaurants: RestaurantDetails[];
+
+  /**
+   * @generated from field: int32 total_count = 2;
+   */
+  totalCount: number;
+};
+
+/**
+ * Describes the message loci.favorites.v1.GetNearbyRestaurantsResponse.
+ * Use `create(GetNearbyRestaurantsResponseSchema)` to create a new message.
+ */
+export declare const GetNearbyRestaurantsResponseSchema: GenMessage<GetNearbyRestaurantsResponse>;
+
+/**
  * Content type for favorites
  *
  * @generated from enum loci.favorites.v1.ContentType
@@ -474,6 +1132,46 @@ export declare const FavoritesService: GenService<{
     methodKind: "unary";
     input: typeof GetFavoritesCountRequestSchema;
     output: typeof GetFavoritesCountResponseSchema;
+  },
+  /**
+   * Get hotel details
+   *
+   * @generated from rpc loci.favorites.v1.FavoritesService.GetHotelDetails
+   */
+  getHotelDetails: {
+    methodKind: "unary";
+    input: typeof GetHotelDetailsRequestSchema;
+    output: typeof GetHotelDetailsResponseSchema;
+  },
+  /**
+   * Get restaurant details
+   *
+   * @generated from rpc loci.favorites.v1.FavoritesService.GetRestaurantDetails
+   */
+  getRestaurantDetails: {
+    methodKind: "unary";
+    input: typeof GetRestaurantDetailsRequestSchema;
+    output: typeof GetRestaurantDetailsResponseSchema;
+  },
+  /**
+   * Get nearby hotels
+   *
+   * @generated from rpc loci.favorites.v1.FavoritesService.GetNearbyHotels
+   */
+  getNearbyHotels: {
+    methodKind: "unary";
+    input: typeof GetNearbyHotelsRequestSchema;
+    output: typeof GetNearbyHotelsResponseSchema;
+  },
+  /**
+   * Get nearby restaurants
+   *
+   * @generated from rpc loci.favorites.v1.FavoritesService.GetNearbyRestaurants
+   */
+  getNearbyRestaurants: {
+    methodKind: "unary";
+    input: typeof GetNearbyRestaurantsRequestSchema;
+    output: typeof GetNearbyRestaurantsResponseSchema;
   },
 }>;
 

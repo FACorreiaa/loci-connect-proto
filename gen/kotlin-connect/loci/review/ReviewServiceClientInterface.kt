@@ -17,9 +17,14 @@ public interface ReviewServiceClientInterface {
   public suspend fun createReview(request: ReviewOuterClass.CreateReviewRequest, headers: Headers = emptyMap()): ResponseMessage<ReviewOuterClass.CreateReviewResponse>
 
   /**
-   *  Get reviews for a POI
+   *  Get reviews for a POI (deprecated: use GetContentReviews)
    */
   public suspend fun getPOIReviews(request: ReviewOuterClass.GetPOIReviewsRequest, headers: Headers = emptyMap()): ResponseMessage<ReviewOuterClass.GetPOIReviewsResponse>
+
+  /**
+   *  Get reviews for any content type (POI, hotel, restaurant, list, itinerary)
+   */
+  public suspend fun getContentReviews(request: ReviewOuterClass.GetContentReviewsRequest, headers: Headers = emptyMap()): ResponseMessage<ReviewOuterClass.GetContentReviewsResponse>
 
   /**
    *  Get a specific review
@@ -52,7 +57,7 @@ public interface ReviewServiceClientInterface {
   public suspend fun reportReview(request: ReviewOuterClass.ReportReviewRequest, headers: Headers = emptyMap()): ResponseMessage<ReviewOuterClass.ReportReviewResponse>
 
   /**
-   *  Get review statistics for a POI
+   *  Get review statistics for any content type
    */
   public suspend fun getReviewStatistics(request: ReviewOuterClass.GetReviewStatisticsRequest, headers: Headers = emptyMap()): ResponseMessage<ReviewOuterClass.GetReviewStatisticsResponse>
 }

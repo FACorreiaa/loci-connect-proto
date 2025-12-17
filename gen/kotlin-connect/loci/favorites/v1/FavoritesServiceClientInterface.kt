@@ -35,4 +35,24 @@ public interface FavoritesServiceClientInterface {
    *  Get favorites count
    */
   public suspend fun getFavoritesCount(request: Favorites.GetFavoritesCountRequest, headers: Headers = emptyMap()): ResponseMessage<Favorites.GetFavoritesCountResponse>
+
+  /**
+   *  Get hotel details
+   */
+  public suspend fun getHotelDetails(request: Favorites.GetHotelDetailsRequest, headers: Headers = emptyMap()): ResponseMessage<Favorites.GetHotelDetailsResponse>
+
+  /**
+   *  Get restaurant details
+   */
+  public suspend fun getRestaurantDetails(request: Favorites.GetRestaurantDetailsRequest, headers: Headers = emptyMap()): ResponseMessage<Favorites.GetRestaurantDetailsResponse>
+
+  /**
+   *  Get nearby hotels
+   */
+  public suspend fun getNearbyHotels(request: Favorites.GetNearbyHotelsRequest, headers: Headers = emptyMap()): ResponseMessage<Favorites.GetNearbyHotelsResponse>
+
+  /**
+   *  Get nearby restaurants
+   */
+  public suspend fun getNearbyRestaurants(request: Favorites.GetNearbyRestaurantsRequest, headers: Headers = emptyMap()): ResponseMessage<Favorites.GetNearbyRestaurantsResponse>
 }

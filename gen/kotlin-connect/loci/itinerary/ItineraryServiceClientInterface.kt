@@ -26,7 +26,11 @@ public interface ItineraryServiceClientInterface {
 
   public suspend fun getUserItineraries(request: Itinerary.GetUserItinerariesRequest, headers: Headers = emptyMap()): ResponseMessage<Itinerary.GetUserItinerariesResponse>
 
+  public suspend fun getItinerary(request: Itinerary.GetItineraryRequest, headers: Headers = emptyMap()): ResponseMessage<Itinerary.GetItineraryResponse>
+
   public suspend fun updateItinerary(request: Itinerary.UpdateItineraryRequest, headers: Headers = emptyMap()): ResponseMessage<Common.Response>
 
   public suspend fun bookmarkItinerary(request: Itinerary.BookmarkRequest, headers: Headers = emptyMap()): ResponseMessage<Common.Response>
+
+  public suspend fun deleteBookmark(request: Itinerary.DeleteBookmarkRequest, headers: Headers = emptyMap()): ResponseMessage<Common.Response>
 }
