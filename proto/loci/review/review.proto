@@ -40,6 +40,9 @@ service ReviewService {
   
   // Get review statistics for any content type
   rpc GetReviewStatistics(GetReviewStatisticsRequest) returns (GetReviewStatisticsResponse);
+
+  // Get the most recent reviews across all content (global feed)
+  rpc GetRecentReviews(GetRecentReviewsRequest) returns (GetRecentReviewsResponse);
 }
 
 // Core review entity
@@ -294,6 +297,17 @@ message GetPOIReviewsResponse {
   repeated Review reviews = 1;
   loci.common.PaginationMetadata pagination = 2;
   ReviewStatistics statistics = 3;
+}
+
+// Global recent-reviews feed (across all content)
+message GetRecentReviewsRequest {
+  loci.common.PaginationRequest pagination = 1;
+  ReviewFilter filter = 2;
+}
+
+message GetRecentReviewsResponse {
+  repeated Review reviews = 1;
+  loci.common.PaginationMetadata pagination = 2;
 }
 
 // NEW: Generic request for any content type

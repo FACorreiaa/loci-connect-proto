@@ -1695,6 +1695,14 @@
                 </li>
               
                 <li>
+                  <a href="#loci.review.GetRecentReviewsRequest"><span class="badge">M</span>GetRecentReviewsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.review.GetRecentReviewsResponse"><span class="badge">M</span>GetRecentReviewsResponse</a>
+                </li>
+              
+                <li>
                   <a href="#loci.review.GetReviewRequest"><span class="badge">M</span>GetReviewRequest</a>
                 </li>
               
@@ -19212,6 +19220,68 @@ Type of content being reviewed </p></td>
 
         
       
+        <h3 id="loci.review.GetRecentReviewsRequest">GetRecentReviewsRequest</h3>
+        <p>Global recent-reviews feed (across all content)</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>pagination</td>
+                  <td><a href="#loci.common.PaginationRequest">loci.common.PaginationRequest</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>filter</td>
+                  <td><a href="#loci.review.ReviewFilter">ReviewFilter</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.review.GetRecentReviewsResponse">GetRecentReviewsResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>reviews</td>
+                  <td><a href="#loci.review.Review">Review</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>pagination</td>
+                  <td><a href="#loci.common.PaginationMetadata">loci.common.PaginationMetadata</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.review.GetReviewRequest">GetReviewRequest</h3>
         <p></p>
 
@@ -20796,6 +20866,13 @@ Type of content being reviewed </p></td>
                 <td><a href="#loci.review.GetReviewStatisticsRequest">GetReviewStatisticsRequest</a></td>
                 <td><a href="#loci.review.GetReviewStatisticsResponse">GetReviewStatisticsResponse</a></td>
                 <td><p>Get review statistics for any content type</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetRecentReviews</td>
+                <td><a href="#loci.review.GetRecentReviewsRequest">GetRecentReviewsRequest</a></td>
+                <td><a href="#loci.review.GetRecentReviewsResponse">GetRecentReviewsResponse</a></td>
+                <td><p>Get the most recent reviews across all content (global feed)</p></td>
               </tr>
             
           </tbody>

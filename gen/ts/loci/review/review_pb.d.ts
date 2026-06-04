@@ -855,6 +855,50 @@ export declare type GetPOIReviewsResponse = Message<"loci.review.GetPOIReviewsRe
 export declare const GetPOIReviewsResponseSchema: GenMessage<GetPOIReviewsResponse>;
 
 /**
+ * Global recent-reviews feed (across all content)
+ *
+ * @generated from message loci.review.GetRecentReviewsRequest
+ */
+export declare type GetRecentReviewsRequest = Message<"loci.review.GetRecentReviewsRequest"> & {
+  /**
+   * @generated from field: loci.common.PaginationRequest pagination = 1;
+   */
+  pagination?: PaginationRequest;
+
+  /**
+   * @generated from field: loci.review.ReviewFilter filter = 2;
+   */
+  filter?: ReviewFilter;
+};
+
+/**
+ * Describes the message loci.review.GetRecentReviewsRequest.
+ * Use `create(GetRecentReviewsRequestSchema)` to create a new message.
+ */
+export declare const GetRecentReviewsRequestSchema: GenMessage<GetRecentReviewsRequest>;
+
+/**
+ * @generated from message loci.review.GetRecentReviewsResponse
+ */
+export declare type GetRecentReviewsResponse = Message<"loci.review.GetRecentReviewsResponse"> & {
+  /**
+   * @generated from field: repeated loci.review.Review reviews = 1;
+   */
+  reviews: Review[];
+
+  /**
+   * @generated from field: loci.common.PaginationMetadata pagination = 2;
+   */
+  pagination?: PaginationMetadata;
+};
+
+/**
+ * Describes the message loci.review.GetRecentReviewsResponse.
+ * Use `create(GetRecentReviewsResponseSchema)` to create a new message.
+ */
+export declare const GetRecentReviewsResponseSchema: GenMessage<GetRecentReviewsResponse>;
+
+/**
  * NEW: Generic request for any content type
  *
  * @generated from message loci.review.GetContentReviewsRequest
@@ -1585,6 +1629,16 @@ export declare const ReviewService: GenService<{
     methodKind: "unary";
     input: typeof GetReviewStatisticsRequestSchema;
     output: typeof GetReviewStatisticsResponseSchema;
+  },
+  /**
+   * Get the most recent reviews across all content (global feed)
+   *
+   * @generated from rpc loci.review.ReviewService.GetRecentReviews
+   */
+  getRecentReviews: {
+    methodKind: "unary";
+    input: typeof GetRecentReviewsRequestSchema;
+    output: typeof GetRecentReviewsResponseSchema;
   },
 }>;
 
