@@ -16,3 +16,9 @@ plugins:
     out: gen
   - remote: buf.build/bufbuild/es:v2.10.1
     out: gen/ts
+  # OpenAPI v3.1 spec from the Connect protobufs (source for the Bruno collection).
+  - remote: buf.build/community/sudorandom-connect-openapi:v0.25.1
+    out: gen/openapi
+    opt:
+      - format=yaml
+      - path=loci.openapi.yaml
