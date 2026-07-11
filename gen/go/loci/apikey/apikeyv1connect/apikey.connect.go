@@ -44,6 +44,14 @@ const (
 	ApiKeyServiceRevokeApiKeyProcedure = "/loci.apikey.ApiKeyService/RevokeApiKey"
 )
 
+// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
+var (
+	apiKeyServiceServiceDescriptor            = apikey.File_loci_apikey_apikey_proto.Services().ByName("ApiKeyService")
+	apiKeyServiceCreateApiKeyMethodDescriptor = apiKeyServiceServiceDescriptor.Methods().ByName("CreateApiKey")
+	apiKeyServiceListApiKeysMethodDescriptor  = apiKeyServiceServiceDescriptor.Methods().ByName("ListApiKeys")
+	apiKeyServiceRevokeApiKeyMethodDescriptor = apiKeyServiceServiceDescriptor.Methods().ByName("RevokeApiKey")
+)
+
 // ApiKeyServiceClient is a client for the loci.apikey.ApiKeyService service.
 type ApiKeyServiceClient interface {
 	// CreateApiKey mints a new key. The plaintext key is returned exactly
@@ -64,24 +72,23 @@ type ApiKeyServiceClient interface {
 // http://api.acme.com or https://acme.com/grpc).
 func NewApiKeyServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) ApiKeyServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
-	apiKeyServiceMethods := apikey.File_loci_apikey_apikey_proto.Services().ByName("ApiKeyService").Methods()
 	return &apiKeyServiceClient{
 		createApiKey: connect.NewClient[apikey.CreateApiKeyRequest, apikey.CreateApiKeyResponse](
 			httpClient,
 			baseURL+ApiKeyServiceCreateApiKeyProcedure,
-			connect.WithSchema(apiKeyServiceMethods.ByName("CreateApiKey")),
+			connect.WithSchema(apiKeyServiceCreateApiKeyMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
 		listApiKeys: connect.NewClient[apikey.ListApiKeysRequest, apikey.ListApiKeysResponse](
 			httpClient,
 			baseURL+ApiKeyServiceListApiKeysProcedure,
-			connect.WithSchema(apiKeyServiceMethods.ByName("ListApiKeys")),
+			connect.WithSchema(apiKeyServiceListApiKeysMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
 		revokeApiKey: connect.NewClient[apikey.RevokeApiKeyRequest, apikey.RevokeApiKeyResponse](
 			httpClient,
 			baseURL+ApiKeyServiceRevokeApiKeyProcedure,
-			connect.WithSchema(apiKeyServiceMethods.ByName("RevokeApiKey")),
+			connect.WithSchema(apiKeyServiceRevokeApiKeyMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -126,23 +133,22 @@ type ApiKeyServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewApiKeyServiceHandler(svc ApiKeyServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
-	apiKeyServiceMethods := apikey.File_loci_apikey_apikey_proto.Services().ByName("ApiKeyService").Methods()
 	apiKeyServiceCreateApiKeyHandler := connect.NewUnaryHandler(
 		ApiKeyServiceCreateApiKeyProcedure,
 		svc.CreateApiKey,
-		connect.WithSchema(apiKeyServiceMethods.ByName("CreateApiKey")),
+		connect.WithSchema(apiKeyServiceCreateApiKeyMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
 	apiKeyServiceListApiKeysHandler := connect.NewUnaryHandler(
 		ApiKeyServiceListApiKeysProcedure,
 		svc.ListApiKeys,
-		connect.WithSchema(apiKeyServiceMethods.ByName("ListApiKeys")),
+		connect.WithSchema(apiKeyServiceListApiKeysMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
 	apiKeyServiceRevokeApiKeyHandler := connect.NewUnaryHandler(
 		ApiKeyServiceRevokeApiKeyProcedure,
 		svc.RevokeApiKey,
-		connect.WithSchema(apiKeyServiceMethods.ByName("RevokeApiKey")),
+		connect.WithSchema(apiKeyServiceRevokeApiKeyMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/loci.apikey.ApiKeyService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
