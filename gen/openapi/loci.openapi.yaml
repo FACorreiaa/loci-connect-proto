@@ -109,6 +109,116 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ai_poi.v1.HealthCheckResponse'
+  /loci.apikey.ApiKeyService/CreateApiKey:
+    post:
+      tags:
+        - loci.apikey.ApiKeyService
+      summary: CreateApiKey
+      description: |-
+        CreateApiKey mints a new key. The plaintext key is returned exactly
+         once in the response and never stored server-side.
+      operationId: loci.apikey.ApiKeyService.CreateApiKey
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.apikey.CreateApiKeyRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.apikey.CreateApiKeyResponse'
+  /loci.apikey.ApiKeyService/ListApiKeys:
+    post:
+      tags:
+        - loci.apikey.ApiKeyService
+      summary: ListApiKeys
+      description: ListApiKeys returns metadata for the caller's keys (never plaintext).
+      operationId: loci.apikey.ApiKeyService.ListApiKeys
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.apikey.ListApiKeysRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.apikey.ListApiKeysResponse'
+  /loci.apikey.ApiKeyService/RevokeApiKey:
+    post:
+      tags:
+        - loci.apikey.ApiKeyService
+      summary: RevokeApiKey
+      description: RevokeApiKey permanently disables a key.
+      operationId: loci.apikey.ApiKeyService.RevokeApiKey
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.apikey.RevokeApiKeyRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.apikey.RevokeApiKeyResponse'
   /loci.auth.AuthService/ChangeEmail:
     post:
       tags:
@@ -5351,6 +5461,102 @@ components:
          the Joda Time's [`ISODateTimeFormat.dateTime()`](
          http://www.joda.org/joda-time/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime%2D%2D
          ) to obtain a formatter capable of generating timestamps in this format.
+    loci.apikey.ApiKey:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          maxLength: 100
+          minLength: 1
+        name:
+          type: string
+          title: name
+          maxLength: 100
+          minLength: 1
+          description: Human-readable label chosen by the user, e.g. "Claude Desktop".
+        keyPrefix:
+          type: string
+          title: key_prefix
+          maxLength: 16
+          description: First characters of the key (e.g. "loci_sk_a1b2") for display.
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        lastUsedAt:
+          oneOf:
+            - $ref: '#/components/schemas/google.protobuf.Timestamp'
+            - type: "null"
+          title: last_used_at
+        expiresAt:
+          oneOf:
+            - $ref: '#/components/schemas/google.protobuf.Timestamp'
+            - type: "null"
+          title: expires_at
+        revokedAt:
+          oneOf:
+            - $ref: '#/components/schemas/google.protobuf.Timestamp'
+            - type: "null"
+          title: revoked_at
+      title: ApiKey
+      additionalProperties: false
+      description: Metadata about an API key. The plaintext secret is never included.
+    loci.apikey.CreateApiKeyRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          title: name
+          maxLength: 100
+          minLength: 1
+        expiresAt:
+          oneOf:
+            - $ref: '#/components/schemas/google.protobuf.Timestamp'
+            - type: "null"
+          title: expires_at
+          description: Optional expiry; omitted means the key does not expire.
+      title: CreateApiKeyRequest
+      additionalProperties: false
+    loci.apikey.CreateApiKeyResponse:
+      type: object
+      properties:
+        apiKey:
+          title: api_key
+          $ref: '#/components/schemas/loci.apikey.ApiKey'
+        plaintextKey:
+          type: string
+          title: plaintext_key
+          description: The full secret key ("loci_sk_..."). Shown once; store it now.
+      title: CreateApiKeyResponse
+      additionalProperties: false
+    loci.apikey.ListApiKeysRequest:
+      type: object
+      title: ListApiKeysRequest
+      additionalProperties: false
+    loci.apikey.ListApiKeysResponse:
+      type: object
+      properties:
+        apiKeys:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.apikey.ApiKey'
+          title: api_keys
+      title: ListApiKeysResponse
+      additionalProperties: false
+    loci.apikey.RevokeApiKeyRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          maxLength: 100
+          minLength: 1
+      title: RevokeApiKeyRequest
+      additionalProperties: false
+    loci.apikey.RevokeApiKeyResponse:
+      type: object
+      title: RevokeApiKeyResponse
+      additionalProperties: false
     loci.auth.ChangeEmailRequest:
       type: object
       properties:
@@ -16412,6 +16618,22 @@ components:
             minLength: 1
           title: badges
           maxItems: 100
+        theme:
+          type:
+            - string
+            - "null"
+          title: theme
+          maxLength: 50
+          minLength: 3
+          pattern: ^(classic|modern|loci):(light|dark|system)$
+        language:
+          type:
+            - string
+            - "null"
+          title: language
+          maxLength: 10
+          minLength: 2
+          pattern: ^[a-z]{2}(-[A-Z]{2})?$
       title: UpdateProfileParams
       additionalProperties: false
       description: UpdateProfileParams for updating user profile
@@ -16638,6 +16860,10 @@ tags:
     description: |-
       Main AI POI API Gateway Service
        This service can act as a unified entry point to all sub-services
+  - name: loci.apikey.ApiKeyService
+    description: |-
+      ApiKeyService manages long-lived API keys for programmatic access
+       (MCP clients, integrations). Keys authenticate as the owning user.
   - name: loci.auth.AuthService
     description: AuthService defines authentication-related RPCs
   - name: loci.city.CityService

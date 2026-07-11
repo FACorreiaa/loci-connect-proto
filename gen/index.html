@@ -258,6 +258,49 @@
         
           
           <li>
+            <a href="#loci%2fapikey%2fapikey.proto">loci/apikey/apikey.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#loci.apikey.ApiKey"><span class="badge">M</span>ApiKey</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.apikey.CreateApiKeyRequest"><span class="badge">M</span>CreateApiKeyRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.apikey.CreateApiKeyResponse"><span class="badge">M</span>CreateApiKeyResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.apikey.ListApiKeysRequest"><span class="badge">M</span>ListApiKeysRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.apikey.ListApiKeysResponse"><span class="badge">M</span>ListApiKeysResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.apikey.RevokeApiKeyRequest"><span class="badge">M</span>RevokeApiKeyRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.apikey.RevokeApiKeyResponse"><span class="badge">M</span>RevokeApiKeyResponse</a>
+                </li>
+              
+              
+              
+              
+                <li>
+                  <a href="#loci.apikey.ApiKeyService"><span class="badge">S</span>ApiKeyService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#loci%2fcommon%2fcommon.proto">loci/common/common.proto</a>
             <ul>
               
@@ -2902,6 +2945,244 @@
                 <td><a href="#ai_poi.v1.GetFeatureFlagsRequest">GetFeatureFlagsRequest</a></td>
                 <td><a href="#ai_poi.v1.GetFeatureFlagsResponse">GetFeatureFlagsResponse</a></td>
                 <td><p>Get feature flags for the user</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="loci/apikey/apikey.proto">loci/apikey/apikey.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="loci.apikey.ApiKey">ApiKey</h3>
+        <p>Metadata about an API key. The plaintext secret is never included.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Human-readable label chosen by the user, e.g. &#34;Claude Desktop&#34;. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>key_prefix</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>First characters of the key (e.g. &#34;loci_sk_a1b2&#34;) for display. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_used_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>expires_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>revoked_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.apikey.CreateApiKeyRequest">CreateApiKeyRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>expires_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td>optional</td>
+                  <td><p>Optional expiry; omitted means the key does not expire. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.apikey.CreateApiKeyResponse">CreateApiKeyResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>api_key</td>
+                  <td><a href="#loci.apikey.ApiKey">ApiKey</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>plaintext_key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The full secret key (&#34;loci_sk_...&#34;). Shown once; store it now. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.apikey.ListApiKeysRequest">ListApiKeysRequest</h3>
+        <p></p>
+
+        
+
+        
+      
+        <h3 id="loci.apikey.ListApiKeysResponse">ListApiKeysResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>api_keys</td>
+                  <td><a href="#loci.apikey.ApiKey">ApiKey</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.apikey.RevokeApiKeyRequest">RevokeApiKeyRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.apikey.RevokeApiKeyResponse">RevokeApiKeyResponse</h3>
+        <p></p>
+
+        
+
+        
+      
+
+      
+
+      
+
+      
+        <h3 id="loci.apikey.ApiKeyService">ApiKeyService</h3>
+        <p>ApiKeyService manages long-lived API keys for programmatic access</p><p>(MCP clients, integrations). Keys authenticate as the owning user.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>CreateApiKey</td>
+                <td><a href="#loci.apikey.CreateApiKeyRequest">CreateApiKeyRequest</a></td>
+                <td><a href="#loci.apikey.CreateApiKeyResponse">CreateApiKeyResponse</a></td>
+                <td><p>CreateApiKey mints a new key. The plaintext key is returned exactly
+once in the response and never stored server-side.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListApiKeys</td>
+                <td><a href="#loci.apikey.ListApiKeysRequest">ListApiKeysRequest</a></td>
+                <td><a href="#loci.apikey.ListApiKeysResponse">ListApiKeysResponse</a></td>
+                <td><p>ListApiKeys returns metadata for the caller&#39;s keys (never plaintext).</p></td>
+              </tr>
+            
+              <tr>
+                <td>RevokeApiKey</td>
+                <td><a href="#loci.apikey.RevokeApiKeyRequest">RevokeApiKeyRequest</a></td>
+                <td><a href="#loci.apikey.RevokeApiKeyResponse">RevokeApiKeyResponse</a></td>
+                <td><p>RevokeApiKey permanently disables a key.</p></td>
               </tr>
             
           </tbody>
@@ -24615,6 +24896,20 @@ Note: Renamed from &#34;Update&#34; to &#34;UpdateTag&#34; for RPC clarity</p></
                   <td>badges</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>theme</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>language</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
                   <td><p> </p></td>
                 </tr>
               
