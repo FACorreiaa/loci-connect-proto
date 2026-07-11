@@ -157,6 +157,18 @@ message UpdateProfileParams {
     max_items: 100,
     items: {string: {min_len: 1, max_len: 100}}
   }];
+  optional string theme = 15 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {
+      min_len: 3,
+      max_len: 50,
+      pattern: "^(classic|modern|loci):(light|dark|system)$"
+    }
+  }];
+  optional string language = 16 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 2, max_len: 10, pattern: "^[a-z]{2}(-[A-Z]{2})?$"}
+  }];
 }
 
 // GetUserProfileRequest for retrieving user profile
