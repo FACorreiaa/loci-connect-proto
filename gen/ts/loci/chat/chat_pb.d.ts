@@ -593,6 +593,29 @@ export declare type ChatRequest = Message<"loci.chat.ChatRequest"> & {
    * @generated from field: optional string profile_id = 5;
    */
   profileId?: string;
+
+  /**
+   * trip_id binds a stream to a persisted TripDraft (Slice 2). Optional.
+   *
+   * @generated from field: optional string trip_id = 6;
+   */
+  tripId?: string;
+
+  /**
+   * resume_token requests replay of an interrupted stream from the last acked
+   * event. When set, the server resumes the referenced session instead of
+   * starting a new turn; consumers dedup by StreamEvent.event_id.
+   *
+   * @generated from field: optional string resume_token = 7;
+   */
+  resumeToken?: string;
+
+  /**
+   * request_id is a client-generated idempotency/tracing id echoed on events.
+   *
+   * @generated from field: optional string request_id = 8;
+   */
+  requestId?: string;
 };
 
 /**
@@ -645,30 +668,300 @@ export declare type ChatResponse = Message<"loci.chat.ChatResponse"> & {
 export declare const ChatResponseSchema: GenMessage<ChatResponse>;
 
 /**
- * StreamEvent represents a streaming event
+ * StreamError is the typed error payload for STREAM_EVENT_TYPE_ERROR events.
+ * user_message is safe to render; internal_code is for logs/telemetry.
+ *
+ * @generated from message loci.chat.StreamError
+ */
+export declare type StreamError = Message<"loci.chat.StreamError"> & {
+  /**
+   * @generated from field: string user_message = 1;
+   */
+  userMessage: string;
+
+  /**
+   * @generated from field: string internal_code = 2;
+   */
+  internalCode: string;
+
+  /**
+   * @generated from field: bool retryable = 3;
+   */
+  retryable: boolean;
+
+  /**
+   * retry_after_ms hints the client when to retry (e.g. rate-limit/quota).
+   *
+   * @generated from field: optional int32 retry_after_ms = 4;
+   */
+  retryAfterMs?: number;
+};
+
+/**
+ * Describes the message loci.chat.StreamError.
+ * Use `create(StreamErrorSchema)` to create a new message.
+ */
+export declare const StreamErrorSchema: GenMessage<StreamError>;
+
+/**
+ * StartPayload opens a stream: the session it is bound to and the resolved domain.
+ *
+ * @generated from message loci.chat.StartPayload
+ */
+export declare type StartPayload = Message<"loci.chat.StartPayload"> & {
+  /**
+   * @generated from field: string session_id = 1;
+   */
+  sessionId: string;
+
+  /**
+   * @generated from field: loci.chat.DomainType domain = 2;
+   */
+  domain: DomainType;
+
+  /**
+   * @generated from field: optional string city_name = 3;
+   */
+  cityName?: string;
+};
+
+/**
+ * Describes the message loci.chat.StartPayload.
+ * Use `create(StartPayloadSchema)` to create a new message.
+ */
+export declare const StartPayloadSchema: GenMessage<StartPayload>;
+
+/**
+ * TokenPayload carries an incremental text token (STREAM_EVENT_TYPE_TOKEN) or an
+ * accumulated partial snapshot (STREAM_EVENT_TYPE_PARTIAL). `part` indexes the
+ * producing worker so consumers can accumulate per-part.
+ *
+ * @generated from message loci.chat.TokenPayload
+ */
+export declare type TokenPayload = Message<"loci.chat.TokenPayload"> & {
+  /**
+   * @generated from field: string text = 1;
+   */
+  text: string;
+
+  /**
+   * @generated from field: optional int32 part = 2;
+   */
+  part?: number;
+};
+
+/**
+ * Describes the message loci.chat.TokenPayload.
+ * Use `create(TokenPayloadSchema)` to create a new message.
+ */
+export declare const TokenPayloadSchema: GenMessage<TokenPayload>;
+
+/**
+ * ProgressPayload reports pipeline progress for STREAM_EVENT_TYPE_PROGRESS.
+ *
+ * @generated from message loci.chat.ProgressPayload
+ */
+export declare type ProgressPayload = Message<"loci.chat.ProgressPayload"> & {
+  /**
+   * @generated from field: string stage = 1;
+   */
+  stage: string;
+
+  /**
+   * @generated from field: optional int32 percent = 2;
+   */
+  percent?: number;
+};
+
+/**
+ * Describes the message loci.chat.ProgressPayload.
+ * Use `create(ProgressPayloadSchema)` to create a new message.
+ */
+export declare const ProgressPayloadSchema: GenMessage<ProgressPayload>;
+
+/**
+ * @generated from message loci.chat.CityDataPayload
+ */
+export declare type CityDataPayload = Message<"loci.chat.CityDataPayload"> & {
+  /**
+   * @generated from field: loci.city.GeneralCityData general_city_data = 1;
+   */
+  generalCityData?: GeneralCityData;
+
+  /**
+   * @generated from field: string session_id = 2;
+   */
+  sessionId: string;
+};
+
+/**
+ * Describes the message loci.chat.CityDataPayload.
+ * Use `create(CityDataPayloadSchema)` to create a new message.
+ */
+export declare const CityDataPayloadSchema: GenMessage<CityDataPayload>;
+
+/**
+ * @generated from message loci.chat.GeneralPoisPayload
+ */
+export declare type GeneralPoisPayload = Message<"loci.chat.GeneralPoisPayload"> & {
+  /**
+   * @generated from field: repeated loci.poi.POIDetailedInfo pois = 1;
+   */
+  pois: POIDetailedInfo[];
+
+  /**
+   * @generated from field: optional loci.city.GeneralCityData general_city_data = 2;
+   */
+  generalCityData?: GeneralCityData;
+
+  /**
+   * @generated from field: string session_id = 3;
+   */
+  sessionId: string;
+};
+
+/**
+ * Describes the message loci.chat.GeneralPoisPayload.
+ * Use `create(GeneralPoisPayloadSchema)` to create a new message.
+ */
+export declare const GeneralPoisPayloadSchema: GenMessage<GeneralPoisPayload>;
+
+/**
+ * Hotels/restaurants are carried as POIDetailedInfo in Slice 1 (how the client
+ * already renders them); richer HotelDetailedInfo/RestaurantDetailedInfo typing
+ * can land in a later slice if domain-specific fields are needed.
+ *
+ * @generated from message loci.chat.HotelsPayload
+ */
+export declare type HotelsPayload = Message<"loci.chat.HotelsPayload"> & {
+  /**
+   * @generated from field: repeated loci.poi.POIDetailedInfo pois = 1;
+   */
+  pois: POIDetailedInfo[];
+
+  /**
+   * @generated from field: optional loci.city.GeneralCityData general_city_data = 2;
+   */
+  generalCityData?: GeneralCityData;
+
+  /**
+   * @generated from field: string session_id = 3;
+   */
+  sessionId: string;
+};
+
+/**
+ * Describes the message loci.chat.HotelsPayload.
+ * Use `create(HotelsPayloadSchema)` to create a new message.
+ */
+export declare const HotelsPayloadSchema: GenMessage<HotelsPayload>;
+
+/**
+ * @generated from message loci.chat.RestaurantsPayload
+ */
+export declare type RestaurantsPayload = Message<"loci.chat.RestaurantsPayload"> & {
+  /**
+   * @generated from field: repeated loci.poi.POIDetailedInfo pois = 1;
+   */
+  pois: POIDetailedInfo[];
+
+  /**
+   * @generated from field: optional loci.city.GeneralCityData general_city_data = 2;
+   */
+  generalCityData?: GeneralCityData;
+
+  /**
+   * @generated from field: string session_id = 3;
+   */
+  sessionId: string;
+};
+
+/**
+ * Describes the message loci.chat.RestaurantsPayload.
+ * Use `create(RestaurantsPayloadSchema)` to create a new message.
+ */
+export declare const RestaurantsPayloadSchema: GenMessage<RestaurantsPayload>;
+
+/**
+ * @generated from message loci.chat.ActivitiesPayload
+ */
+export declare type ActivitiesPayload = Message<"loci.chat.ActivitiesPayload"> & {
+  /**
+   * @generated from field: repeated loci.poi.POIDetailedInfo activities = 1;
+   */
+  activities: POIDetailedInfo[];
+
+  /**
+   * @generated from field: optional loci.city.GeneralCityData general_city_data = 2;
+   */
+  generalCityData?: GeneralCityData;
+
+  /**
+   * @generated from field: string session_id = 3;
+   */
+  sessionId: string;
+};
+
+/**
+ * Describes the message loci.chat.ActivitiesPayload.
+ * Use `create(ActivitiesPayloadSchema)` to create a new message.
+ */
+export declare const ActivitiesPayloadSchema: GenMessage<ActivitiesPayload>;
+
+/**
+ * ItineraryPayload carries the full aggregate city response the itinerary view
+ * consumes (general_city_data + points_of_interest + itinerary_response).
+ *
+ * @generated from message loci.chat.ItineraryPayload
+ */
+export declare type ItineraryPayload = Message<"loci.chat.ItineraryPayload"> & {
+  /**
+   * @generated from field: loci.chat.AiCityResponse city_response = 1;
+   */
+  cityResponse?: AiCityResponse;
+};
+
+/**
+ * Describes the message loci.chat.ItineraryPayload.
+ * Use `create(ItineraryPayloadSchema)` to create a new message.
+ */
+export declare const ItineraryPayloadSchema: GenMessage<ItineraryPayload>;
+
+/**
+ * CompletePayload terminates a stream, optionally carrying the final aggregate.
+ *
+ * @generated from message loci.chat.CompletePayload
+ */
+export declare type CompletePayload = Message<"loci.chat.CompletePayload"> & {
+  /**
+   * @generated from field: string session_id = 1;
+   */
+  sessionId: string;
+
+  /**
+   * @generated from field: optional loci.chat.AiCityResponse result = 2;
+   */
+  result?: AiCityResponse;
+};
+
+/**
+ * Describes the message loci.chat.CompletePayload.
+ * Use `create(CompletePayloadSchema)` to create a new message.
+ */
+export declare const CompletePayloadSchema: GenMessage<CompletePayload>;
+
+/**
+ * StreamEvent represents a streaming event. The old free-form `type` string
+ * (field 1), opaque `data` bytes (field 3), and `error` string (field 4) were
+ * replaced by the typed `event_type` enum + `payload` oneof below.
  *
  * @generated from message loci.chat.StreamEvent
  */
 export declare type StreamEvent = Message<"loci.chat.StreamEvent"> & {
   /**
-   * @generated from field: string type = 1;
-   */
-  type: string;
-
-  /**
    * @generated from field: string message = 2;
    */
   message: string;
-
-  /**
-   * @generated from field: bytes data = 3;
-   */
-  data: Uint8Array;
-
-  /**
-   * @generated from field: optional string error = 4;
-   */
-  error?: string;
 
   /**
    * @generated from field: google.protobuf.Timestamp timestamp = 5;
@@ -689,6 +982,98 @@ export declare type StreamEvent = Message<"loci.chat.StreamEvent"> & {
    * @generated from field: optional loci.chat.NavigationData navigation = 8;
    */
   navigation?: NavigationData;
+
+  /**
+   * @generated from field: loci.chat.StreamEventType event_type = 9;
+   */
+  eventType: StreamEventType;
+
+  /**
+   * request_id echoes ChatRequest.request_id for client-side correlation.
+   *
+   * @generated from field: optional string request_id = 10;
+   */
+  requestId?: string;
+
+  /**
+   * payload is the typed body; its oneof case matches event_type. Absent for
+   * events that carry no structured body (some progress/keepalive frames).
+   *
+   * @generated from oneof loci.chat.StreamEvent.payload
+   */
+  payload: {
+    /**
+     * @generated from field: loci.chat.StartPayload start = 20;
+     */
+    value: StartPayload;
+    case: "start";
+  } | {
+    /**
+     * @generated from field: loci.chat.TokenPayload token = 21;
+     */
+    value: TokenPayload;
+    case: "token";
+  } | {
+    /**
+     * @generated from field: loci.chat.TokenPayload partial = 22;
+     */
+    value: TokenPayload;
+    case: "partial";
+  } | {
+    /**
+     * @generated from field: loci.chat.CityDataPayload city_data = 23;
+     */
+    value: CityDataPayload;
+    case: "cityData";
+  } | {
+    /**
+     * @generated from field: loci.chat.ItineraryPayload itinerary = 24;
+     */
+    value: ItineraryPayload;
+    case: "itinerary";
+  } | {
+    /**
+     * @generated from field: loci.chat.GeneralPoisPayload general_pois = 25;
+     */
+    value: GeneralPoisPayload;
+    case: "generalPois";
+  } | {
+    /**
+     * @generated from field: loci.chat.HotelsPayload hotels = 26;
+     */
+    value: HotelsPayload;
+    case: "hotels";
+  } | {
+    /**
+     * @generated from field: loci.chat.RestaurantsPayload restaurants = 27;
+     */
+    value: RestaurantsPayload;
+    case: "restaurants";
+  } | {
+    /**
+     * @generated from field: loci.chat.ActivitiesPayload activities = 28;
+     */
+    value: ActivitiesPayload;
+    case: "activities";
+  } | {
+    /**
+     * @generated from field: loci.chat.ProgressPayload progress = 29;
+     */
+    value: ProgressPayload;
+    case: "progress";
+  } | {
+    /**
+     * @generated from field: loci.chat.StreamError error = 30;
+     */
+    value: StreamError;
+    case: "error";
+  } | {
+    /**
+     * @generated from field: loci.chat.CompletePayload complete = 31;
+     */
+    value: CompletePayload;
+    case: "complete";
+  } | { case: undefined; value?: undefined };
 };
 
 /**
@@ -1434,6 +1819,89 @@ export enum DomainType {
  * Describes the enum loci.chat.DomainType.
  */
 export declare const DomainTypeSchema: GenEnum<DomainType>;
+
+/**
+ * StreamEventType is the typed discriminator for a StreamEvent. It replaces the
+ * old free-form string `type` field. The concrete payload (when present) is
+ * carried in StreamEvent.payload and its oneof case matches this enum.
+ *
+ * @generated from enum loci.chat.StreamEventType
+ */
+export enum StreamEventType {
+  /**
+   * @generated from enum value: STREAM_EVENT_TYPE_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: STREAM_EVENT_TYPE_START = 1;
+   */
+  START = 1,
+
+  /**
+   * incremental text token
+   *
+   * @generated from enum value: STREAM_EVENT_TYPE_TOKEN = 2;
+   */
+  TOKEN = 2,
+
+  /**
+   * partial/accumulated text snapshot
+   *
+   * @generated from enum value: STREAM_EVENT_TYPE_PARTIAL = 3;
+   */
+  PARTIAL = 3,
+
+  /**
+   * @generated from enum value: STREAM_EVENT_TYPE_CITY_DATA = 4;
+   */
+  CITY_DATA = 4,
+
+  /**
+   * @generated from enum value: STREAM_EVENT_TYPE_ITINERARY = 5;
+   */
+  ITINERARY = 5,
+
+  /**
+   * @generated from enum value: STREAM_EVENT_TYPE_GENERAL_POIS = 6;
+   */
+  GENERAL_POIS = 6,
+
+  /**
+   * @generated from enum value: STREAM_EVENT_TYPE_HOTELS = 7;
+   */
+  HOTELS = 7,
+
+  /**
+   * @generated from enum value: STREAM_EVENT_TYPE_RESTAURANTS = 8;
+   */
+  RESTAURANTS = 8,
+
+  /**
+   * @generated from enum value: STREAM_EVENT_TYPE_ACTIVITIES = 9;
+   */
+  ACTIVITIES = 9,
+
+  /**
+   * @generated from enum value: STREAM_EVENT_TYPE_PROGRESS = 10;
+   */
+  PROGRESS = 10,
+
+  /**
+   * @generated from enum value: STREAM_EVENT_TYPE_ERROR = 11;
+   */
+  ERROR = 11,
+
+  /**
+   * @generated from enum value: STREAM_EVENT_TYPE_COMPLETE = 12;
+   */
+  COMPLETE = 12,
+}
+
+/**
+ * Describes the enum loci.chat.StreamEventType.
+ */
+export declare const StreamEventTypeSchema: GenEnum<StreamEventType>;
 
 /**
  * @generated from service loci.chat.ChatService

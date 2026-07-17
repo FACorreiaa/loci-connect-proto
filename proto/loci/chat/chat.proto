@@ -67,6 +67,25 @@ enum DomainType {
   DOMAIN_TYPE_TRANSPORT = 6;
 }
 
+// StreamEventType is the typed discriminator for a StreamEvent. It replaces the
+// old free-form string `type` field. The concrete payload (when present) is
+// carried in StreamEvent.payload and its oneof case matches this enum.
+enum StreamEventType {
+  STREAM_EVENT_TYPE_UNSPECIFIED = 0;
+  STREAM_EVENT_TYPE_START = 1;
+  STREAM_EVENT_TYPE_TOKEN = 2;         // incremental text token
+  STREAM_EVENT_TYPE_PARTIAL = 3;       // partial/accumulated text snapshot
+  STREAM_EVENT_TYPE_CITY_DATA = 4;
+  STREAM_EVENT_TYPE_ITINERARY = 5;
+  STREAM_EVENT_TYPE_GENERAL_POIS = 6;
+  STREAM_EVENT_TYPE_HOTELS = 7;
+  STREAM_EVENT_TYPE_RESTAURANTS = 8;
+  STREAM_EVENT_TYPE_ACTIVITIES = 9;
+  STREAM_EVENT_TYPE_PROGRESS = 10;
+  STREAM_EVENT_TYPE_ERROR = 11;
+  STREAM_EVENT_TYPE_COMPLETE = 12;
+}
+
 // LlmInteraction represents an interaction with the LLM
 message LlmInteraction {
   string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
@@ -248,6 +267,23 @@ message ChatRequest {
     ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
+  // trip_id binds a stream to a persisted TripDraft (Slice 2). Optional.
+  optional string trip_id = 6 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 100}
+  }];
+  // resume_token requests replay of an interrupted stream from the last acked
+  // event. When set, the server resumes the referenced session instead of
+  // starting a new turn; consumers dedup by StreamEvent.event_id.
+  optional string resume_token = 7 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 200}
+  }];
+  // request_id is a client-generated idempotency/tracing id echoed on events.
+  optional string request_id = 8 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 100}
+  }];
 }
 
 // ChatResponse for chat response
@@ -263,21 +299,127 @@ message ChatResponse {
   }];
 }
 
-// StreamEvent represents a streaming event
-message StreamEvent {
-  string type = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  string message = 2 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
-  bytes data = 3 [(buf.validate.field).bytes = {
-    max_len: 1048576  // 1MB limit
-  }];
-  optional string error = 4 [(buf.validate.field) = {
+// StreamError is the typed error payload for STREAM_EVENT_TYPE_ERROR events.
+// user_message is safe to render; internal_code is for logs/telemetry.
+message StreamError {
+  string user_message = 1 [(buf.validate.field).string = {min_len: 1, max_len: 500}];
+  string internal_code = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  bool retryable = 3;
+  // retry_after_ms hints the client when to retry (e.g. rate-limit/quota).
+  optional int32 retry_after_ms = 4 [(buf.validate.field) = {
     ignore: IGNORE_IF_ZERO_VALUE,
-    string: {min_len: 1, max_len: 500}
+    int32: {gte: 0}
   }];
+}
+
+// StartPayload opens a stream: the session it is bound to and the resolved domain.
+message StartPayload {
+  string session_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  DomainType domain = 2 [(buf.validate.field).enum = {defined_only: true}];
+  optional string city_name = 3 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {max_len: 200}
+  }];
+}
+
+// TokenPayload carries an incremental text token (STREAM_EVENT_TYPE_TOKEN) or an
+// accumulated partial snapshot (STREAM_EVENT_TYPE_PARTIAL). `part` indexes the
+// producing worker so consumers can accumulate per-part.
+message TokenPayload {
+  string text = 1 [(buf.validate.field).string = {max_len: 16000}];
+  optional int32 part = 2 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    int32: {gte: 0}
+  }];
+}
+
+// ProgressPayload reports pipeline progress for STREAM_EVENT_TYPE_PROGRESS.
+message ProgressPayload {
+  string stage = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  optional int32 percent = 2 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    int32: {gte: 0, lte: 100}
+  }];
+}
+
+message CityDataPayload {
+  loci.city.GeneralCityData general_city_data = 1 [(buf.validate.field).required = true];
+  string session_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+}
+
+message GeneralPoisPayload {
+  repeated loci.poi.POIDetailedInfo pois = 1;
+  optional loci.city.GeneralCityData general_city_data = 2;
+  string session_id = 3 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+}
+
+// Hotels/restaurants are carried as POIDetailedInfo in Slice 1 (how the client
+// already renders them); richer HotelDetailedInfo/RestaurantDetailedInfo typing
+// can land in a later slice if domain-specific fields are needed.
+message HotelsPayload {
+  repeated loci.poi.POIDetailedInfo pois = 1;
+  optional loci.city.GeneralCityData general_city_data = 2;
+  string session_id = 3 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+}
+
+message RestaurantsPayload {
+  repeated loci.poi.POIDetailedInfo pois = 1;
+  optional loci.city.GeneralCityData general_city_data = 2;
+  string session_id = 3 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+}
+
+message ActivitiesPayload {
+  repeated loci.poi.POIDetailedInfo activities = 1;
+  optional loci.city.GeneralCityData general_city_data = 2;
+  string session_id = 3 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+}
+
+// ItineraryPayload carries the full aggregate city response the itinerary view
+// consumes (general_city_data + points_of_interest + itinerary_response).
+message ItineraryPayload {
+  AiCityResponse city_response = 1 [(buf.validate.field).required = true];
+}
+
+// CompletePayload terminates a stream, optionally carrying the final aggregate.
+message CompletePayload {
+  string session_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  optional AiCityResponse result = 2;
+}
+
+// StreamEvent represents a streaming event. The old free-form `type` string
+// (field 1), opaque `data` bytes (field 3), and `error` string (field 4) were
+// replaced by the typed `event_type` enum + `payload` oneof below.
+message StreamEvent {
+  reserved 1, 3, 4;
+
+  string message = 2 [(buf.validate.field).string = {max_len: 4000}];
   google.protobuf.Timestamp timestamp = 5 [(buf.validate.field).required = true];
   string event_id = 6 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   bool is_final = 7;
   optional NavigationData navigation = 8;
+  StreamEventType event_type = 9 [(buf.validate.field).enum = {defined_only: true}];
+  // request_id echoes ChatRequest.request_id for client-side correlation.
+  optional string request_id = 10 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 100}
+  }];
+
+  // payload is the typed body; its oneof case matches event_type. Absent for
+  // events that carry no structured body (some progress/keepalive frames).
+  oneof payload {
+    StartPayload start = 20;
+    TokenPayload token = 21;
+    TokenPayload partial = 22;
+    CityDataPayload city_data = 23;
+    ItineraryPayload itinerary = 24;
+    GeneralPoisPayload general_pois = 25;
+    HotelsPayload hotels = 26;
+    RestaurantsPayload restaurants = 27;
+    ActivitiesPayload activities = 28;
+    ProgressPayload progress = 29;
+    StreamError error = 30;
+    CompletePayload complete = 31;
+  }
 }
 
 // NavigationData contains navigation information

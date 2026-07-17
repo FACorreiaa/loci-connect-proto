@@ -5914,6 +5914,26 @@ components:
       title: AIItineraryResponse
       additionalProperties: false
       description: AIItineraryResponse represents an AI-generated itinerary response
+    loci.chat.ActivitiesPayload:
+      type: object
+      properties:
+        activities:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.poi.POIDetailedInfo'
+          title: activities
+        generalCityData:
+          oneOf:
+            - $ref: '#/components/schemas/loci.city.GeneralCityData'
+            - type: "null"
+          title: general_city_data
+        sessionId:
+          type: string
+          title: session_id
+          maxLength: 200
+          minLength: 1
+      title: ActivitiesPayload
+      additionalProperties: false
     loci.chat.AiCityResponse:
       type: object
       properties:
@@ -6055,6 +6075,33 @@ components:
           title: profile_id
           maxLength: 100
           minLength: 1
+        tripId:
+          type:
+            - string
+            - "null"
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+          description: trip_id binds a stream to a persisted TripDraft (Slice 2). Optional.
+        resumeToken:
+          type:
+            - string
+            - "null"
+          title: resume_token
+          maxLength: 200
+          minLength: 1
+          description: |-
+            resume_token requests replay of an interrupted stream from the last acked
+             event. When set, the server resumes the referenced session instead of
+             starting a new turn; consumers dedup by StreamEvent.event_id.
+        requestId:
+          type:
+            - string
+            - "null"
+          title: request_id
+          maxLength: 100
+          minLength: 1
+          description: request_id is a client-generated idempotency/tracing id echoed on events.
       title: ChatRequest
       additionalProperties: false
       description: ChatRequest for sending a message
@@ -6158,6 +6205,21 @@ components:
         - expiresAt
       additionalProperties: false
       description: ChatSession represents a chat session
+    loci.chat.CityDataPayload:
+      type: object
+      properties:
+        generalCityData:
+          title: general_city_data
+          $ref: '#/components/schemas/loci.city.GeneralCityData'
+        sessionId:
+          type: string
+          title: session_id
+          maxLength: 200
+          minLength: 1
+      title: CityDataPayload
+      required:
+        - generalCityData
+      additionalProperties: false
     loci.chat.CityInteractions:
       type: object
       properties:
@@ -6216,6 +6278,22 @@ components:
         - lastActivity
       additionalProperties: false
       description: CityInteractions groups interactions for a specific city
+    loci.chat.CompletePayload:
+      type: object
+      properties:
+        sessionId:
+          type: string
+          title: session_id
+          maxLength: 200
+          minLength: 1
+        result:
+          oneOf:
+            - $ref: '#/components/schemas/loci.chat.AiCityResponse'
+            - type: "null"
+          title: result
+      title: CompletePayload
+      additionalProperties: false
+      description: CompletePayload terminates a stream, optionally carrying the final aggregate.
     loci.chat.ContinueChatRequest:
       type: object
       properties:
@@ -6284,6 +6362,26 @@ components:
         - DOMAIN_TYPE_ACTIVITIES
         - DOMAIN_TYPE_ITINERARY
         - DOMAIN_TYPE_TRANSPORT
+    loci.chat.GeneralPoisPayload:
+      type: object
+      properties:
+        pois:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.poi.POIDetailedInfo'
+          title: pois
+        generalCityData:
+          oneOf:
+            - $ref: '#/components/schemas/loci.city.GeneralCityData'
+            - type: "null"
+          title: general_city_data
+        sessionId:
+          type: string
+          title: session_id
+          maxLength: 200
+          minLength: 1
+      title: GeneralPoisPayload
+      additionalProperties: false
     loci.chat.GetBookmarksRequest:
       type: object
       properties:
@@ -6385,6 +6483,30 @@ components:
       title: GetRecentInteractionsResponse
       additionalProperties: false
       description: GetRecentInteractionsResponse for recent interactions retrieval
+    loci.chat.HotelsPayload:
+      type: object
+      properties:
+        pois:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.poi.POIDetailedInfo'
+          title: pois
+        generalCityData:
+          oneOf:
+            - $ref: '#/components/schemas/loci.city.GeneralCityData'
+            - type: "null"
+          title: general_city_data
+        sessionId:
+          type: string
+          title: session_id
+          maxLength: 200
+          minLength: 1
+      title: HotelsPayload
+      additionalProperties: false
+      description: |-
+        Hotels/restaurants are carried as POIDetailedInfo in Slice 1 (how the client
+         already renders them); richer HotelDetailedInfo/RestaurantDetailedInfo typing
+         can land in a later slice if domain-specific fields are needed.
     loci.chat.IntentType:
       type: string
       title: IntentType
@@ -6406,6 +6528,19 @@ components:
         - INTENT_TYPE_CHANGE_DATE
         - INTENT_TYPE_CHANGE_LOCATION
         - INTENT_TYPE_SORT_ITINERARY
+    loci.chat.ItineraryPayload:
+      type: object
+      properties:
+        cityResponse:
+          title: city_response
+          $ref: '#/components/schemas/loci.chat.AiCityResponse'
+      title: ItineraryPayload
+      required:
+        - cityResponse
+      additionalProperties: false
+      description: |-
+        ItineraryPayload carries the full aggregate city response the itinerary view
+         consumes (general_city_data + points_of_interest + itinerary_response).
     loci.chat.LlmInteraction:
       type: object
       properties:
@@ -6622,6 +6757,25 @@ components:
           title: value
       title: QueryParamsEntry
       additionalProperties: false
+    loci.chat.ProgressPayload:
+      type: object
+      properties:
+        stage:
+          type: string
+          title: stage
+          maxLength: 100
+          minLength: 1
+        percent:
+          type:
+            - integer
+            - "null"
+          title: percent
+          maximum: 100
+          minimum: 0
+          format: int32
+      title: ProgressPayload
+      additionalProperties: false
+      description: ProgressPayload reports pipeline progress for STREAM_EVENT_TYPE_PROGRESS.
     loci.chat.RecentInteraction:
       type: object
       properties:
@@ -6692,6 +6846,26 @@ components:
         - createdAt
       additionalProperties: false
       description: RecentInteraction represents a recent user interaction
+    loci.chat.RestaurantsPayload:
+      type: object
+      properties:
+        pois:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.poi.POIDetailedInfo'
+          title: pois
+        generalCityData:
+          oneOf:
+            - $ref: '#/components/schemas/loci.city.GeneralCityData'
+            - type: "null"
+          title: general_city_data
+        sessionId:
+          type: string
+          title: session_id
+          maxLength: 200
+          minLength: 1
+      title: RestaurantsPayload
+      additionalProperties: false
     loci.chat.SessionContentMetrics:
       type: object
       properties:
@@ -6907,54 +7081,224 @@ components:
       title: StartChatRequest
       additionalProperties: false
       description: StartChatRequest for starting a new chat session
-    loci.chat.StreamEvent:
+    loci.chat.StartPayload:
       type: object
       properties:
-        type:
+        sessionId:
           type: string
-          title: type
-          maxLength: 100
+          title: session_id
+          maxLength: 200
           minLength: 1
-        message:
-          type: string
-          title: message
-          maxLength: 4000
-          minLength: 1
-        data:
-          type: string
-          title: data
-          maxLength: 1048576
-          format: byte
-          description: |
-            bytes.const = []
-        error:
+        domain:
+          title: domain
+          $ref: '#/components/schemas/loci.chat.DomainType'
+        cityName:
           type:
             - string
             - "null"
-          title: error
+          title: city_name
+          maxLength: 200
+      title: StartPayload
+      additionalProperties: false
+      description: 'StartPayload opens a stream: the session it is bound to and the resolved domain.'
+    loci.chat.StreamError:
+      type: object
+      properties:
+        userMessage:
+          type: string
+          title: user_message
           maxLength: 500
           minLength: 1
-        timestamp:
-          title: timestamp
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
-        eventId:
+        internalCode:
           type: string
-          title: event_id
-          maxLength: 200
+          title: internal_code
+          maxLength: 100
           minLength: 1
-        isFinal:
+        retryable:
           type: boolean
-          title: is_final
-        navigation:
-          oneOf:
-            - $ref: '#/components/schemas/loci.chat.NavigationData'
-            - type: "null"
-          title: navigation
+          title: retryable
+        retryAfterMs:
+          type:
+            - integer
+            - "null"
+          title: retry_after_ms
+          minimum: 0
+          format: int32
+          description: retry_after_ms hints the client when to retry (e.g. rate-limit/quota).
+      title: StreamError
+      additionalProperties: false
+      description: |-
+        StreamError is the typed error payload for STREAM_EVENT_TYPE_ERROR events.
+         user_message is safe to render; internal_code is for logs/telemetry.
+    loci.chat.StreamEvent:
+      type: object
+      allOf:
+        - properties:
+            message:
+              type: string
+              title: message
+              maxLength: 4000
+            timestamp:
+              title: timestamp
+              $ref: '#/components/schemas/google.protobuf.Timestamp'
+            eventId:
+              type: string
+              title: event_id
+              maxLength: 200
+              minLength: 1
+            isFinal:
+              type: boolean
+              title: is_final
+            navigation:
+              oneOf:
+                - $ref: '#/components/schemas/loci.chat.NavigationData'
+                - type: "null"
+              title: navigation
+            eventType:
+              title: event_type
+              $ref: '#/components/schemas/loci.chat.StreamEventType'
+            requestId:
+              type:
+                - string
+                - "null"
+              title: request_id
+              maxLength: 100
+              minLength: 1
+              description: request_id echoes ChatRequest.request_id for client-side correlation.
+        - oneOf:
+            - properties:
+                activities:
+                  title: activities
+                  $ref: '#/components/schemas/loci.chat.ActivitiesPayload'
+              title: activities
+              required:
+                - activities
+            - properties:
+                cityData:
+                  title: city_data
+                  $ref: '#/components/schemas/loci.chat.CityDataPayload'
+              title: city_data
+              required:
+                - cityData
+            - properties:
+                complete:
+                  title: complete
+                  $ref: '#/components/schemas/loci.chat.CompletePayload'
+              title: complete
+              required:
+                - complete
+            - properties:
+                error:
+                  title: error
+                  $ref: '#/components/schemas/loci.chat.StreamError'
+              title: error
+              required:
+                - error
+            - properties:
+                generalPois:
+                  title: general_pois
+                  $ref: '#/components/schemas/loci.chat.GeneralPoisPayload'
+              title: general_pois
+              required:
+                - generalPois
+            - properties:
+                hotels:
+                  title: hotels
+                  $ref: '#/components/schemas/loci.chat.HotelsPayload'
+              title: hotels
+              required:
+                - hotels
+            - properties:
+                itinerary:
+                  title: itinerary
+                  $ref: '#/components/schemas/loci.chat.ItineraryPayload'
+              title: itinerary
+              required:
+                - itinerary
+            - properties:
+                partial:
+                  title: partial
+                  $ref: '#/components/schemas/loci.chat.TokenPayload'
+              title: partial
+              required:
+                - partial
+            - properties:
+                progress:
+                  title: progress
+                  $ref: '#/components/schemas/loci.chat.ProgressPayload'
+              title: progress
+              required:
+                - progress
+            - properties:
+                restaurants:
+                  title: restaurants
+                  $ref: '#/components/schemas/loci.chat.RestaurantsPayload'
+              title: restaurants
+              required:
+                - restaurants
+            - properties:
+                start:
+                  title: start
+                  $ref: '#/components/schemas/loci.chat.StartPayload'
+              title: start
+              required:
+                - start
+            - properties:
+                token:
+                  title: token
+                  $ref: '#/components/schemas/loci.chat.TokenPayload'
+              title: token
+              required:
+                - token
       title: StreamEvent
       required:
         - timestamp
       additionalProperties: false
-      description: StreamEvent represents a streaming event
+      description: |-
+        StreamEvent represents a streaming event. The old free-form `type` string
+         (field 1), opaque `data` bytes (field 3), and `error` string (field 4) were
+         replaced by the typed `event_type` enum + `payload` oneof below.
+    loci.chat.StreamEventType:
+      type: string
+      title: StreamEventType
+      enum:
+        - STREAM_EVENT_TYPE_UNSPECIFIED
+        - STREAM_EVENT_TYPE_START
+        - STREAM_EVENT_TYPE_TOKEN
+        - STREAM_EVENT_TYPE_PARTIAL
+        - STREAM_EVENT_TYPE_CITY_DATA
+        - STREAM_EVENT_TYPE_ITINERARY
+        - STREAM_EVENT_TYPE_GENERAL_POIS
+        - STREAM_EVENT_TYPE_HOTELS
+        - STREAM_EVENT_TYPE_RESTAURANTS
+        - STREAM_EVENT_TYPE_ACTIVITIES
+        - STREAM_EVENT_TYPE_PROGRESS
+        - STREAM_EVENT_TYPE_ERROR
+        - STREAM_EVENT_TYPE_COMPLETE
+      description: |-
+        StreamEventType is the typed discriminator for a StreamEvent. It replaces the
+         old free-form string `type` field. The concrete payload (when present) is
+         carried in StreamEvent.payload and its oneof case matches this enum.
+    loci.chat.TokenPayload:
+      type: object
+      properties:
+        text:
+          type: string
+          title: text
+          maxLength: 16000
+        part:
+          type:
+            - integer
+            - "null"
+          title: part
+          minimum: 0
+          format: int32
+      title: TokenPayload
+      additionalProperties: false
+      description: |-
+        TokenPayload carries an incremental text token (STREAM_EVENT_TYPE_TOKEN) or an
+         accumulated partial snapshot (STREAM_EVENT_TYPE_PARTIAL). `part` indexes the
+         producing worker so consumers can accumulate per-part.
     loci.chat.UserLocation:
       type: object
       properties:
