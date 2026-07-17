@@ -268,6 +268,16 @@ export declare type UpdateProfileParams = Message<"loci.user.UpdateProfileParams
    * @generated from field: repeated string badges = 14;
    */
   badges: string[];
+
+  /**
+   * @generated from field: optional string theme = 15;
+   */
+  theme?: string;
+
+  /**
+   * @generated from field: optional string language = 16;
+   */
+  language?: string;
 };
 
 /**

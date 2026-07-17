@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package loci.apikey;
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/apikey;apikeyv1";
+
+import "google/protobuf/timestamp.proto";
+import "buf/validate/validate.proto";
+
+// ApiKeyService manages long-lived API keys for programmatic access
+// (MCP clients, integrations). Keys authenticate as the owning user.
+service ApiKeyService {
+  // CreateApiKey mints a new key. The plaintext key is returned exactly
+  // once in the response and never stored server-side.
+  rpc CreateApiKey(CreateApiKeyRequest) returns (CreateApiKeyResponse);
+  // ListApiKeys returns metadata for the caller's keys (never plaintext).
+  rpc ListApiKeys(ListApiKeysRequest) returns (ListApiKeysResponse);
+  // RevokeApiKey permanently disables a key.
+  rpc RevokeApiKey(RevokeApiKeyRequest) returns (RevokeApiKeyResponse);
+}
+
+// Metadata about an API key. The plaintext secret is never included.
+message ApiKey {
+  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  // Human-readable label chosen by the user, e.g. "Claude Desktop".
+  string name = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  // First characters of the key (e.g. "loci_sk_a1b2") for display.
+  string key_prefix = 3 [(buf.validate.field).string = {max_len: 16}];
+  google.protobuf.Timestamp created_at = 4;
+  optional google.protobuf.Timestamp last_used_at = 5;
+  optional google.protobuf.Timestamp expires_at = 6;
+  optional google.protobuf.Timestamp revoked_at = 7;
+}
+
+message CreateApiKeyRequest {
+  string name = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  // Optional expiry; omitted means the key does not expire.
+  optional google.protobuf.Timestamp expires_at = 2;
+}
+
+message CreateApiKeyResponse {
+  ApiKey api_key = 1;
+  // The full secret key ("loci_sk_..."). Shown once; store it now.
+  string plaintext_key = 2;
+}
+
+message ListApiKeysRequest {}
+
+message ListApiKeysResponse {
+  repeated ApiKey api_keys = 1;
+}
+
+message RevokeApiKeyRequest {
+  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+}
+
+message RevokeApiKeyResponse {}
