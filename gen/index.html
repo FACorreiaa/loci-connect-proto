@@ -679,6 +679,10 @@
                 </li>
               
                 <li>
+                  <a href="#loci.chat.ActivitiesPayload"><span class="badge">M</span>ActivitiesPayload</a>
+                </li>
+              
+                <li>
                   <a href="#loci.chat.AiCityResponse"><span class="badge">M</span>AiCityResponse</a>
                 </li>
               
@@ -703,7 +707,15 @@
                 </li>
               
                 <li>
+                  <a href="#loci.chat.CityDataPayload"><span class="badge">M</span>CityDataPayload</a>
+                </li>
+              
+                <li>
                   <a href="#loci.chat.CityInteractions"><span class="badge">M</span>CityInteractions</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.CompletePayload"><span class="badge">M</span>CompletePayload</a>
                 </li>
               
                 <li>
@@ -712,6 +724,10 @@
               
                 <li>
                   <a href="#loci.chat.ConversationMessage"><span class="badge">M</span>ConversationMessage</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.GeneralPoisPayload"><span class="badge">M</span>GeneralPoisPayload</a>
                 </li>
               
                 <li>
@@ -743,6 +759,14 @@
                 </li>
               
                 <li>
+                  <a href="#loci.chat.HotelsPayload"><span class="badge">M</span>HotelsPayload</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.ItineraryPayload"><span class="badge">M</span>ItineraryPayload</a>
+                </li>
+              
+                <li>
                   <a href="#loci.chat.LlmInteraction"><span class="badge">M</span>LlmInteraction</a>
                 </li>
               
@@ -763,7 +787,15 @@
                 </li>
               
                 <li>
+                  <a href="#loci.chat.ProgressPayload"><span class="badge">M</span>ProgressPayload</a>
+                </li>
+              
+                <li>
                   <a href="#loci.chat.RecentInteraction"><span class="badge">M</span>RecentInteraction</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.RestaurantsPayload"><span class="badge">M</span>RestaurantsPayload</a>
                 </li>
               
                 <li>
@@ -787,7 +819,19 @@
                 </li>
               
                 <li>
+                  <a href="#loci.chat.StartPayload"><span class="badge">M</span>StartPayload</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.StreamError"><span class="badge">M</span>StreamError</a>
+                </li>
+              
+                <li>
                   <a href="#loci.chat.StreamEvent"><span class="badge">M</span>StreamEvent</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.TokenPayload"><span class="badge">M</span>TokenPayload</a>
                 </li>
               
                 <li>
@@ -813,6 +857,10 @@
               
                 <li>
                   <a href="#loci.chat.SessionStatus"><span class="badge">E</span>SessionStatus</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.StreamEventType"><span class="badge">E</span>StreamEventType</a>
                 </li>
               
               
@@ -7319,6 +7367,44 @@ once in the response and never stored server-side.</p></td>
 
         
       
+        <h3 id="loci.chat.ActivitiesPayload">ActivitiesPayload</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>activities</td>
+                  <td><a href="#loci.poi.POIDetailedInfo">loci.poi.POIDetailedInfo</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>general_city_data</td>
+                  <td><a href="#loci.city.GeneralCityData">loci.city.GeneralCityData</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>session_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.chat.AiCityResponse">AiCityResponse</h3>
         <p>AiCityResponse represents a complete AI city response</p>
 
@@ -7534,6 +7620,29 @@ once in the response and never stored server-side.</p></td>
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>trip_id binds a stream to a persisted TripDraft (Slice 2). Optional. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>resume_token</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>resume_token requests replay of an interrupted stream from the last acked
+event. When set, the server resumes the referenced session instead of
+starting a new turn; consumers dedup by StreamEvent.event_id. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>request_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>request_id is a client-generated idempotency/tracing id echoed on events. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -7715,6 +7824,37 @@ once in the response and never stored server-side.</p></td>
 
         
       
+        <h3 id="loci.chat.CityDataPayload">CityDataPayload</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>general_city_data</td>
+                  <td><a href="#loci.city.GeneralCityData">loci.city.GeneralCityData</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>session_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.chat.CityInteractions">CityInteractions</h3>
         <p>CityInteractions groups interactions for a specific city</p>
 
@@ -7784,6 +7924,37 @@ once in the response and never stored server-side.</p></td>
                 <tr>
                   <td>total_itineraries</td>
                   <td><a href="#int32">int32</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.CompletePayload">CompletePayload</h3>
+        <p>CompletePayload terminates a stream, optionally carrying the final aggregate.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>session_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>result</td>
+                  <td><a href="#loci.chat.AiCityResponse">AiCityResponse</a></td>
                   <td>optional</td>
                   <td><p> </p></td>
                 </tr>
@@ -7889,6 +8060,44 @@ once in the response and never stored server-side.</p></td>
                   <td>metadata</td>
                   <td><a href="#loci.chat.MessageMetadata">MessageMetadata</a></td>
                   <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.GeneralPoisPayload">GeneralPoisPayload</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>pois</td>
+                  <td><a href="#loci.poi.POIDetailedInfo">loci.poi.POIDetailedInfo</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>general_city_data</td>
+                  <td><a href="#loci.city.GeneralCityData">loci.city.GeneralCityData</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>session_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
                   <td><p> </p></td>
                 </tr>
               
@@ -8091,6 +8300,68 @@ once in the response and never stored server-side.</p></td>
                 <tr>
                   <td>pagination</td>
                   <td><a href="#loci.common.PaginationMetadata">loci.common.PaginationMetadata</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.HotelsPayload">HotelsPayload</h3>
+        <p>Hotels/restaurants are carried as POIDetailedInfo in Slice 1 (how the client</p><p>already renders them); richer HotelDetailedInfo/RestaurantDetailedInfo typing</p><p>can land in a later slice if domain-specific fields are needed.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>pois</td>
+                  <td><a href="#loci.poi.POIDetailedInfo">loci.poi.POIDetailedInfo</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>general_city_data</td>
+                  <td><a href="#loci.city.GeneralCityData">loci.city.GeneralCityData</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>session_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.ItineraryPayload">ItineraryPayload</h3>
+        <p>ItineraryPayload carries the full aggregate city response the itinerary view</p><p>consumes (general_city_data + points_of_interest + itinerary_response).</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>city_response</td>
+                  <td><a href="#loci.chat.AiCityResponse">AiCityResponse</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -8397,6 +8668,37 @@ once in the response and never stored server-side.</p></td>
 
         
       
+        <h3 id="loci.chat.ProgressPayload">ProgressPayload</h3>
+        <p>ProgressPayload reports pipeline progress for STREAM_EVENT_TYPE_PROGRESS.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>stage</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>percent</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.chat.RecentInteraction">RecentInteraction</h3>
         <p>RecentInteraction represents a recent user interaction</p>
 
@@ -8488,6 +8790,44 @@ once in the response and never stored server-side.</p></td>
                   <td>restaurants</td>
                   <td><a href="#loci.poi.RestaurantDetailedInfo">loci.poi.RestaurantDetailedInfo</a></td>
                   <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.RestaurantsPayload">RestaurantsPayload</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>pois</td>
+                  <td><a href="#loci.poi.POIDetailedInfo">loci.poi.POIDetailedInfo</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>general_city_data</td>
+                  <td><a href="#loci.city.GeneralCityData">loci.city.GeneralCityData</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>session_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
                   <td><p> </p></td>
                 </tr>
               
@@ -8807,8 +9147,8 @@ once in the response and never stored server-side.</p></td>
 
         
       
-        <h3 id="loci.chat.StreamEvent">StreamEvent</h3>
-        <p>StreamEvent represents a streaming event</p>
+        <h3 id="loci.chat.StartPayload">StartPayload</h3>
+        <p>StartPayload opens a stream: the session it is bound to and the resolved domain.</p>
 
         
           <table class="field-table">
@@ -8818,30 +9158,92 @@ once in the response and never stored server-side.</p></td>
             <tbody>
               
                 <tr>
-                  <td>type</td>
+                  <td>session_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
+              
+                <tr>
+                  <td>domain</td>
+                  <td><a href="#loci.chat.DomainType">DomainType</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.StreamError">StreamError</h3>
+        <p>StreamError is the typed error payload for STREAM_EVENT_TYPE_ERROR events.</p><p>user_message is safe to render; internal_code is for logs/telemetry.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>user_message</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>internal_code</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>retryable</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>retry_after_ms</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td>optional</td>
+                  <td><p>retry_after_ms hints the client when to retry (e.g. rate-limit/quota). </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.StreamEvent">StreamEvent</h3>
+        <p>StreamEvent represents a streaming event. The old free-form `type` string</p><p>(field 1), opaque `data` bytes (field 3), and `error` string (field 4) were</p><p>replaced by the typed `event_type` enum + `payload` oneof below.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
               
                 <tr>
                   <td>message</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>data</td>
-                  <td><a href="#bytes">bytes</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>error</td>
-                  <td><a href="#string">string</a></td>
-                  <td>optional</td>
                   <td><p> </p></td>
                 </tr>
               
@@ -8869,6 +9271,135 @@ once in the response and never stored server-side.</p></td>
                 <tr>
                   <td>navigation</td>
                   <td><a href="#loci.chat.NavigationData">NavigationData</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>event_type</td>
+                  <td><a href="#loci.chat.StreamEventType">StreamEventType</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>request_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>request_id echoes ChatRequest.request_id for client-side correlation. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>start</td>
+                  <td><a href="#loci.chat.StartPayload">StartPayload</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>token</td>
+                  <td><a href="#loci.chat.TokenPayload">TokenPayload</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>partial</td>
+                  <td><a href="#loci.chat.TokenPayload">TokenPayload</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_data</td>
+                  <td><a href="#loci.chat.CityDataPayload">CityDataPayload</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>itinerary</td>
+                  <td><a href="#loci.chat.ItineraryPayload">ItineraryPayload</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>general_pois</td>
+                  <td><a href="#loci.chat.GeneralPoisPayload">GeneralPoisPayload</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>hotels</td>
+                  <td><a href="#loci.chat.HotelsPayload">HotelsPayload</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>restaurants</td>
+                  <td><a href="#loci.chat.RestaurantsPayload">RestaurantsPayload</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>activities</td>
+                  <td><a href="#loci.chat.ActivitiesPayload">ActivitiesPayload</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>progress</td>
+                  <td><a href="#loci.chat.ProgressPayload">ProgressPayload</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>error</td>
+                  <td><a href="#loci.chat.StreamError">StreamError</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>complete</td>
+                  <td><a href="#loci.chat.CompletePayload">CompletePayload</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.TokenPayload">TokenPayload</h3>
+        <p>TokenPayload carries an incremental text token (STREAM_EVENT_TYPE_TOKEN) or an</p><p>accumulated partial snapshot (STREAM_EVENT_TYPE_PARTIAL). `part` indexes the</p><p>producing worker so consumers can accumulate per-part.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>text</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>part</td>
+                  <td><a href="#int32">int32</a></td>
                   <td>optional</td>
                   <td><p> </p></td>
                 </tr>
@@ -9196,6 +9727,95 @@ once in the response and never stored server-side.</p></td>
               <tr>
                 <td>SESSION_STATUS_CLOSED</td>
                 <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="loci.chat.StreamEventType">StreamEventType</h3>
+        <p>StreamEventType is the typed discriminator for a StreamEvent. It replaces the</p><p>old free-form string `type` field. The concrete payload (when present) is</p><p>carried in StreamEvent.payload and its oneof case matches this enum.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>STREAM_EVENT_TYPE_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>STREAM_EVENT_TYPE_START</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>STREAM_EVENT_TYPE_TOKEN</td>
+                <td>2</td>
+                <td><p>incremental text token</p></td>
+              </tr>
+            
+              <tr>
+                <td>STREAM_EVENT_TYPE_PARTIAL</td>
+                <td>3</td>
+                <td><p>partial/accumulated text snapshot</p></td>
+              </tr>
+            
+              <tr>
+                <td>STREAM_EVENT_TYPE_CITY_DATA</td>
+                <td>4</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>STREAM_EVENT_TYPE_ITINERARY</td>
+                <td>5</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>STREAM_EVENT_TYPE_GENERAL_POIS</td>
+                <td>6</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>STREAM_EVENT_TYPE_HOTELS</td>
+                <td>7</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>STREAM_EVENT_TYPE_RESTAURANTS</td>
+                <td>8</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>STREAM_EVENT_TYPE_ACTIVITIES</td>
+                <td>9</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>STREAM_EVENT_TYPE_PROGRESS</td>
+                <td>10</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>STREAM_EVENT_TYPE_ERROR</td>
+                <td>11</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>STREAM_EVENT_TYPE_COMPLETE</td>
+                <td>12</td>
                 <td><p></p></td>
               </tr>
             
