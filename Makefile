@@ -1,7 +1,8 @@
-.PHONY: lint generate push ontology bruno
+.PHONY: lint generate push ontology bruno tag push-tag release
 
 GO ?= go
 GOFLAGS ?= -mod=mod
+REMOTE ?= origin
 ONTOLOGY_TTL ?= ontology/generated.ttl
 ONTOLOGY_CONTEXT ?= ontology/generated.context.jsonld
 
@@ -28,3 +29,13 @@ ontology: ## Generate ontology artifacts from the latest proto descriptors
 		--module-path=. \
 		--out="$(ONTOLOGY_TTL)" \
 		--context-out="$(ONTOLOGY_CONTEXT)"
+
+tag: ## Create a git tag: make tag VERSION=v1.0.0
+	@test -n "$(VERSION)" || (echo "VERSION is required, e.g. make tag VERSION=v1.0.0" && exit 1)
+	git tag $(VERSION)
+
+push-tag: ## Push a git tag to the remote: make push-tag VERSION=v1.0.0
+	@test -n "$(VERSION)" || (echo "VERSION is required, e.g. make push-tag VERSION=v1.0.0" && exit 1)
+	git push $(REMOTE) $(VERSION)
+
+release: tag push-tag push ## Tag, push the tag, and publish to the Buf Schema Registry: make release VERSION=v1.0.0
