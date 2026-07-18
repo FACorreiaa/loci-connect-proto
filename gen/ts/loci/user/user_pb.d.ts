@@ -343,6 +343,70 @@ export declare type UpdateUserProfileRequest = Message<"loci.user.UpdateUserProf
 export declare const UpdateUserProfileRequestSchema: GenMessage<UpdateUserProfileRequest>;
 
 /**
+ * ExportUserDataRequest requests a machine-readable copy of the caller's data.
+ *
+ * @generated from message loci.user.ExportUserDataRequest
+ */
+export declare type ExportUserDataRequest = Message<"loci.user.ExportUserDataRequest"> & {
+};
+
+/**
+ * Describes the message loci.user.ExportUserDataRequest.
+ * Use `create(ExportUserDataRequestSchema)` to create a new message.
+ */
+export declare const ExportUserDataRequestSchema: GenMessage<ExportUserDataRequest>;
+
+/**
+ * ExportUserDataResponse carries the exported data as a downloadable blob (JSON).
+ *
+ * @generated from message loci.user.ExportUserDataResponse
+ */
+export declare type ExportUserDataResponse = Message<"loci.user.ExportUserDataResponse"> & {
+  /**
+   * 50MB cap
+   *
+   * @generated from field: bytes data = 1;
+   */
+  data: Uint8Array;
+
+  /**
+   * @generated from field: string content_type = 2;
+   */
+  contentType: string;
+
+  /**
+   * @generated from field: string filename = 3;
+   */
+  filename: string;
+};
+
+/**
+ * Describes the message loci.user.ExportUserDataResponse.
+ * Use `create(ExportUserDataResponseSchema)` to create a new message.
+ */
+export declare const ExportUserDataResponseSchema: GenMessage<ExportUserDataResponse>;
+
+/**
+ * DeleteAccountRequest permanently deletes the caller's account and all owned
+ * data. `confirmation` must equal the literal "DELETE" to guard against
+ * accidental calls.
+ *
+ * @generated from message loci.user.DeleteAccountRequest
+ */
+export declare type DeleteAccountRequest = Message<"loci.user.DeleteAccountRequest"> & {
+  /**
+   * @generated from field: string confirmation = 1;
+   */
+  confirmation: string;
+};
+
+/**
+ * Describes the message loci.user.DeleteAccountRequest.
+ * Use `create(DeleteAccountRequestSchema)` to create a new message.
+ */
+export declare const DeleteAccountRequestSchema: GenMessage<DeleteAccountRequest>;
+
+/**
  * UserService defines user-related RPCs
  *
  * @generated from service loci.user.UserService
@@ -362,6 +426,24 @@ export declare const UserService: GenService<{
   updateUserProfile: {
     methodKind: "unary";
     input: typeof UpdateUserProfileRequestSchema;
+    output: typeof ResponseSchema;
+  },
+  /**
+   * Data controls (GDPR-style self-service).
+   *
+   * @generated from rpc loci.user.UserService.ExportUserData
+   */
+  exportUserData: {
+    methodKind: "unary";
+    input: typeof ExportUserDataRequestSchema;
+    output: typeof ExportUserDataResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.user.UserService.DeleteAccount
+   */
+  deleteAccount: {
+    methodKind: "unary";
+    input: typeof DeleteAccountRequestSchema;
     output: typeof ResponseSchema;
   },
 }>;

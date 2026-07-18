@@ -5218,6 +5218,77 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.trip.ShareTripResponse'
+  /loci.user.UserService/DeleteAccount:
+    post:
+      tags:
+        - loci.user.UserService
+      summary: DeleteAccount
+      operationId: loci.user.UserService.DeleteAccount
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.user.DeleteAccountRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.common.Response'
+  /loci.user.UserService/ExportUserData:
+    post:
+      tags:
+        - loci.user.UserService
+      summary: ExportUserData
+      description: Data controls (GDPR-style self-service).
+      operationId: loci.user.UserService.ExportUserData
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.user.ExportUserDataRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.user.ExportUserDataResponse'
   /loci.user.UserService/GetUserProfile:
     post:
       tags:
@@ -12307,6 +12378,33 @@ components:
           title: source
           maxLength: 100
           minLength: 1
+        uncertaintyScore:
+          type:
+            - number
+            - "null"
+          title: uncertainty_score
+          maximum: 1
+          minimum: 0
+          format: double
+          description: |-
+            Trust/transparency (Slice 3). uncertainty_score is 0..1 (higher = the model
+             was less sure); missing_data names fields that couldn't be verified (e.g.
+             "hours", "price"); recommendation_rationale is a short "why this" note.
+        missingData:
+          type: array
+          items:
+            type: string
+            maxLength: 50
+            minLength: 1
+          title: missing_data
+          maxItems: 20
+        recommendationRationale:
+          type:
+            - string
+            - "null"
+          title: recommendation_rationale
+          maxLength: 1000
+          minLength: 1
       title: POIDetailedInfo
       required:
         - createdAt
@@ -17642,6 +17740,49 @@ components:
       title: TripStop
       additionalProperties: false
       description: TripStop is a single place on a day's timeline.
+    loci.user.DeleteAccountRequest:
+      type: object
+      properties:
+        confirmation:
+          type: string
+          title: confirmation
+          maxLength: 20
+          minLength: 1
+      title: DeleteAccountRequest
+      additionalProperties: false
+      description: |-
+        DeleteAccountRequest permanently deletes the caller's account and all owned
+         data. `confirmation` must equal the literal "DELETE" to guard against
+         accidental calls.
+    loci.user.ExportUserDataRequest:
+      type: object
+      title: ExportUserDataRequest
+      additionalProperties: false
+      description: ExportUserDataRequest requests a machine-readable copy of the caller's data.
+    loci.user.ExportUserDataResponse:
+      type: object
+      properties:
+        data:
+          type: string
+          title: data
+          maxLength: 52428800
+          format: byte
+          description: |
+            50MB cap
+            bytes.const = []
+        contentType:
+          type: string
+          title: content_type
+          maxLength: 100
+          minLength: 1
+        filename:
+          type: string
+          title: filename
+          maxLength: 300
+          minLength: 1
+      title: ExportUserDataResponse
+      additionalProperties: false
+      description: ExportUserDataResponse carries the exported data as a downloadable blob (JSON).
     loci.user.GetUserProfileRequest:
       type: object
       properties:

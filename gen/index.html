@@ -2353,6 +2353,18 @@
             <ul>
               
                 <li>
+                  <a href="#loci.user.DeleteAccountRequest"><span class="badge">M</span>DeleteAccountRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.user.ExportUserDataRequest"><span class="badge">M</span>ExportUserDataRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.user.ExportUserDataResponse"><span class="badge">M</span>ExportUserDataResponse</a>
+                </li>
+              
+                <li>
                   <a href="#loci.user.GetUserProfileRequest"><span class="badge">M</span>GetUserProfileRequest</a>
                 </li>
               
@@ -5015,6 +5027,29 @@ once in the response and never stored server-side.</p></td>
               
                 <tr>
                   <td>source</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>uncertainty_score</td>
+                  <td><a href="#double">double</a></td>
+                  <td>optional</td>
+                  <td><p>Trust/transparency (Slice 3). uncertainty_score is 0..1 (higher = the model
+was less sure); missing_data names fields that couldn&#39;t be verified (e.g.
+&#34;hours&#34;, &#34;price&#34;); recommendation_rationale is a short &#34;why this&#34; note. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>missing_data</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>recommendation_rationale</td>
                   <td><a href="#string">string</a></td>
                   <td>optional</td>
                   <td><p> </p></td>
@@ -26359,6 +26394,75 @@ write with FailedPrecondition if the stored version has moved past it. </p></td>
       <p></p>
 
       
+        <h3 id="loci.user.DeleteAccountRequest">DeleteAccountRequest</h3>
+        <p>DeleteAccountRequest permanently deletes the caller's account and all owned</p><p>data. `confirmation` must equal the literal "DELETE" to guard against</p><p>accidental calls.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>confirmation</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.user.ExportUserDataRequest">ExportUserDataRequest</h3>
+        <p>ExportUserDataRequest requests a machine-readable copy of the caller's data.</p>
+
+        
+
+        
+      
+        <h3 id="loci.user.ExportUserDataResponse">ExportUserDataResponse</h3>
+        <p>ExportUserDataResponse carries the exported data as a downloadable blob (JSON).</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>data</td>
+                  <td><a href="#bytes">bytes</a></td>
+                  <td></td>
+                  <td><p>50MB cap </p></td>
+                </tr>
+              
+                <tr>
+                  <td>content_type</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>filename</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.user.GetUserProfileRequest">GetUserProfileRequest</h3>
         <p>GetUserProfileRequest for retrieving user profile</p>
 
@@ -26835,6 +26939,20 @@ write with FailedPrecondition if the stored version has moved past it. </p></td>
               <tr>
                 <td>UpdateUserProfile</td>
                 <td><a href="#loci.user.UpdateUserProfileRequest">UpdateUserProfileRequest</a></td>
+                <td><a href="#loci.common.Response">.loci.common.Response</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ExportUserData</td>
+                <td><a href="#loci.user.ExportUserDataRequest">ExportUserDataRequest</a></td>
+                <td><a href="#loci.user.ExportUserDataResponse">ExportUserDataResponse</a></td>
+                <td><p>Data controls (GDPR-style self-service).</p></td>
+              </tr>
+            
+              <tr>
+                <td>DeleteAccount</td>
+                <td><a href="#loci.user.DeleteAccountRequest">DeleteAccountRequest</a></td>
                 <td><a href="#loci.common.Response">.loci.common.Response</a></td>
                 <td><p></p></td>
               </tr>

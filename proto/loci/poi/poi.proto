@@ -80,6 +80,21 @@ message POIDetailedInfo {
     ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
+  // Trust/transparency (Slice 3). uncertainty_score is 0..1 (higher = the model
+  // was less sure); missing_data names fields that couldn't be verified (e.g.
+  // "hours", "price"); recommendation_rationale is a short "why this" note.
+  optional double uncertainty_score = 28 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    double: {gte: 0, lte: 1}
+  }];
+  repeated string missing_data = 29 [(buf.validate.field).repeated = {
+    max_items: 20,
+    items: {string: {min_len: 1, max_len: 50}}
+  }];
+  optional string recommendation_rationale = 30 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 1000}
+  }];
 }
 
 // HotelDetailedInfo represents hotel-specific information
