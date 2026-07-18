@@ -189,8 +189,29 @@ message UpdateUserProfileRequest {
   optional UpdateProfileParams params = 1 [(buf.validate.field).required = true];
 }
 
+// ExportUserDataRequest requests a machine-readable copy of the caller's data.
+message ExportUserDataRequest {}
+
+// ExportUserDataResponse carries the exported data as a downloadable blob (JSON).
+message ExportUserDataResponse {
+  bytes data = 1 [(buf.validate.field).bytes = {max_len: 52428800}];  // 50MB cap
+  string content_type = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string filename = 3 [(buf.validate.field).string = {min_len: 1, max_len: 300}];
+}
+
+// DeleteAccountRequest permanently deletes the caller's account and all owned
+// data. `confirmation` must equal the literal "DELETE" to guard against
+// accidental calls.
+message DeleteAccountRequest {
+  string confirmation = 1 [(buf.validate.field).string = {min_len: 1, max_len: 20}];
+}
+
 // UserService defines user-related RPCs
 service UserService {
   rpc GetUserProfile(GetUserProfileRequest) returns (GetUserProfileResponse);
   rpc UpdateUserProfile(UpdateUserProfileRequest) returns (loci.common.Response);
+
+  // Data controls (GDPR-style self-service).
+  rpc ExportUserData(ExportUserDataRequest) returns (ExportUserDataResponse);
+  rpc DeleteAccount(DeleteAccountRequest) returns (loci.common.Response);
 }

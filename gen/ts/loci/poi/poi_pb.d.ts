@@ -156,6 +156,25 @@ export declare type POIDetailedInfo = Message<"loci.poi.POIDetailedInfo"> & {
    * @generated from field: optional string source = 27;
    */
   source?: string;
+
+  /**
+   * Trust/transparency (Slice 3). uncertainty_score is 0..1 (higher = the model
+   * was less sure); missing_data names fields that couldn't be verified (e.g.
+   * "hours", "price"); recommendation_rationale is a short "why this" note.
+   *
+   * @generated from field: optional double uncertainty_score = 28;
+   */
+  uncertaintyScore?: number;
+
+  /**
+   * @generated from field: repeated string missing_data = 29;
+   */
+  missingData: string[];
+
+  /**
+   * @generated from field: optional string recommendation_rationale = 30;
+   */
+  recommendationRationale?: string;
 };
 
 /**
