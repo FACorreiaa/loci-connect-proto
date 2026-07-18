@@ -1,0 +1,219 @@
+syntax = "proto3";
+
+package loci.trip;
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/trip;trip";
+
+import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+import "loci/common/common.proto";
+import "loci/poi/poi.proto";
+
+// TripPace is how densely a day is packed.
+enum TripPace {
+  TRIP_PACE_UNSPECIFIED = 0;
+  TRIP_PACE_RELAXED = 1;
+  TRIP_PACE_MODERATE = 2;
+  TRIP_PACE_PACKED = 3;
+}
+
+// TripConstraint holds the planning constraints for a trip. These override the
+// user's search profile for this specific trip.
+message TripConstraint {
+  optional int32 budget_level = 1 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    int32: {gte: 1, lte: 4}
+  }];
+  TripPace pace = 2 [(buf.validate.field).enum = {defined_only: true}];
+  // mobility: e.g. "walking", "wheelchair", "transit", "car".
+  optional string mobility = 3 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 100}
+  }];
+  repeated string interests = 4 [(buf.validate.field).repeated = {
+    max_items: 50,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
+  // Daily active window, minutes from midnight (e.g. 540 = 09:00).
+  optional int32 day_start_minute = 5 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    int32: {gte: 0, lte: 1440}
+  }];
+  optional int32 day_end_minute = 6 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    int32: {gte: 0, lte: 1440}
+  }];
+}
+
+// TripStop is a single place on a day's timeline.
+message TripStop {
+  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string poi_id = 2 [(buf.validate.field).string = {max_len: 100}];
+  // order_index positions the stop within its day (0-based).
+  int32 order_index = 3 [(buf.validate.field).int32 = {gte: 0}];
+  // Display name; user-editable (RenameStop) and defaults to the POI name.
+  string name = 4 [(buf.validate.field).string = {min_len: 1, max_len: 300}];
+  // start_minute is minutes from midnight for the stop's start.
+  optional int32 start_minute = 5 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    int32: {gte: 0, lte: 1440}
+  }];
+  // duration_minutes is how long to spend here.
+  optional int32 duration_minutes = 6 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    int32: {gte: 0}
+  }];
+  string notes = 7 [(buf.validate.field).string = {max_len: 4000}];
+  optional string booking_url = 8 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 2048, uri: true}
+  }];
+  // Hydrated POI details for rendering (read side only; not persisted here).
+  optional loci.poi.POIDetailedInfo poi = 9;
+}
+
+// TripDay is one day of a trip.
+message TripDay {
+  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  int32 day_number = 2 [(buf.validate.field).int32 = {gte: 1}];
+  // Optional calendar date for the day (nil for a relative "Day N" plan).
+  optional google.protobuf.Timestamp date = 3;
+  repeated TripStop stops = 4;
+}
+
+// TripDraft is the full editable trip. `version` powers optimistic concurrency /
+// merge-safe multi-device edits: SaveTrip rejects a write whose base version is
+// stale.
+message TripDraft {
+  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string user_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  optional string city_id = 3 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 100}
+  }];
+  string city_name = 4 [(buf.validate.field).string = {max_len: 200}];
+  string title = 5 [(buf.validate.field).string = {min_len: 1, max_len: 300}];
+  TripConstraint constraints = 6;
+  repeated TripDay days = 7;
+  // Monotonic version; incremented server-side on every successful SaveTrip.
+  int64 version = 8 [(buf.validate.field).int64 = {gte: 0}];
+  // Session that generated the initial draft, if any.
+  optional string source_session_id = 9 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 200}
+  }];
+  google.protobuf.Timestamp created_at = 10 [(buf.validate.field).required = true];
+  google.protobuf.Timestamp updated_at = 11 [(buf.validate.field).required = true];
+}
+
+// TripSnapshot is an immutable point-in-time copy of a trip, written on each
+// save so a device can reconcile against a known base version.
+message TripSnapshot {
+  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string trip_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  int64 version = 3 [(buf.validate.field).int64 = {gte: 0}];
+  TripDraft trip = 4 [(buf.validate.field).required = true];
+  google.protobuf.Timestamp created_at = 5 [(buf.validate.field).required = true];
+}
+
+// ---- Requests / responses ----
+
+message SaveTripRequest {
+  // The full trip to upsert. For a new trip, id may be empty (server assigns).
+  TripDraft trip = 1 [(buf.validate.field).required = true];
+  // base_version is the version the client last read; the server rejects the
+  // write with FailedPrecondition if the stored version has moved past it.
+  int64 base_version = 2 [(buf.validate.field).int64 = {gte: 0}];
+}
+
+message GetTripRequest {
+  string trip_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+}
+
+message ListTripsRequest {
+  loci.common.PaginationRequest pagination = 1 [(buf.validate.field).required = true];
+}
+
+message ListTripsResponse {
+  repeated TripDraft trips = 1;
+  loci.common.PaginationMetadata pagination = 2;
+}
+
+message ShareTripRequest {
+  string trip_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  bool is_public = 2;
+}
+
+message ShareTripResponse {
+  string share_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string share_url = 2 [(buf.validate.field).string = {min_len: 1, max_len: 2048}];
+}
+
+message ReorderStopsRequest {
+  string trip_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string day_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  // Stop ids in their new order.
+  repeated string ordered_stop_ids = 3 [(buf.validate.field).repeated = {
+    min_items: 1,
+    max_items: 100,
+    items: {string: {min_len: 1, max_len: 100}}
+  }];
+  int64 base_version = 4 [(buf.validate.field).int64 = {gte: 0}];
+}
+
+message RenameStopRequest {
+  string trip_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string stop_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string name = 3 [(buf.validate.field).string = {min_len: 1, max_len: 300}];
+  int64 base_version = 4 [(buf.validate.field).int64 = {gte: 0}];
+}
+
+message EditStopDurationRequest {
+  string trip_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string stop_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  optional int32 start_minute = 3 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    int32: {gte: 0, lte: 1440}
+  }];
+  int32 duration_minutes = 4 [(buf.validate.field).int32 = {gte: 0}];
+  int64 base_version = 5 [(buf.validate.field).int64 = {gte: 0}];
+}
+
+message SetConstraintRequest {
+  string trip_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  TripConstraint constraints = 2 [(buf.validate.field).required = true];
+  int64 base_version = 3 [(buf.validate.field).int64 = {gte: 0}];
+}
+
+// ExportFormat selects the export artifact.
+enum ExportFormat {
+  EXPORT_FORMAT_UNSPECIFIED = 0;
+  EXPORT_FORMAT_ICS = 1;
+  EXPORT_FORMAT_PDF = 2;
+}
+
+message ExportTripRequest {
+  string trip_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  ExportFormat format = 2 [(buf.validate.field).enum = {defined_only: true}];
+}
+
+message ExportTripResponse {
+  bytes data = 1 [(buf.validate.field).bytes = {max_len: 10485760}];  // 10MB cap
+  string content_type = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string filename = 3 [(buf.validate.field).string = {min_len: 1, max_len: 300}];
+}
+
+// TripService persists and mutates editable day-by-day trips. All mutations that
+// take base_version enforce optimistic concurrency and return the updated
+// TripDraft (or affected sub-entity) with the bumped version.
+service TripService {
+  rpc SaveTrip(SaveTripRequest) returns (TripDraft);
+  rpc GetTrip(GetTripRequest) returns (TripDraft);
+  rpc ListTrips(ListTripsRequest) returns (ListTripsResponse);
+  rpc ShareTrip(ShareTripRequest) returns (ShareTripResponse);
+  rpc ReorderStops(ReorderStopsRequest) returns (TripDraft);
+  rpc RenameStop(RenameStopRequest) returns (TripDraft);
+  rpc EditStopDuration(EditStopDurationRequest) returns (TripDraft);
+  rpc SetConstraint(SetConstraintRequest) returns (TripDraft);
+  rpc ExportTrip(ExportTripRequest) returns (ExportTripResponse);
+}

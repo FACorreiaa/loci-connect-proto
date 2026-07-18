@@ -2258,6 +2258,97 @@
         
           
           <li>
+            <a href="#loci%2ftrip%2ftrip.proto">loci/trip/trip.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#loci.trip.EditStopDurationRequest"><span class="badge">M</span>EditStopDurationRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.ExportTripRequest"><span class="badge">M</span>ExportTripRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.ExportTripResponse"><span class="badge">M</span>ExportTripResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.GetTripRequest"><span class="badge">M</span>GetTripRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.ListTripsRequest"><span class="badge">M</span>ListTripsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.ListTripsResponse"><span class="badge">M</span>ListTripsResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.RenameStopRequest"><span class="badge">M</span>RenameStopRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.ReorderStopsRequest"><span class="badge">M</span>ReorderStopsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.SaveTripRequest"><span class="badge">M</span>SaveTripRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.SetConstraintRequest"><span class="badge">M</span>SetConstraintRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.ShareTripRequest"><span class="badge">M</span>ShareTripRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.ShareTripResponse"><span class="badge">M</span>ShareTripResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.TripConstraint"><span class="badge">M</span>TripConstraint</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.TripDay"><span class="badge">M</span>TripDay</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.TripDraft"><span class="badge">M</span>TripDraft</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.TripSnapshot"><span class="badge">M</span>TripSnapshot</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.TripStop"><span class="badge">M</span>TripStop</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#loci.trip.ExportFormat"><span class="badge">E</span>ExportFormat</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.TripPace"><span class="badge">E</span>TripPace</a>
+                </li>
+              
+              
+              
+                <li>
+                  <a href="#loci.trip.TripService"><span class="badge">S</span>TripService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#loci%2fuser%2fuser.proto">loci/user/user.proto</a>
             <ul>
               
@@ -25349,6 +25440,911 @@ Note: Renamed from &#34;Update&#34; to &#34;UpdateTag&#34; for RPC clarity</p></
                 <td><a href="#loci.tags.DeleteTagRequest">DeleteTagRequest</a></td>
                 <td><a href="#loci.tags.DeleteTagResponse">DeleteTagResponse</a></td>
                 <td><p>DeleteTag deletes a specific tag</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="loci/trip/trip.proto">loci/trip/trip.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="loci.trip.EditStopDurationRequest">EditStopDurationRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>stop_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>start_minute</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>duration_minutes</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base_version</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.ExportTripRequest">ExportTripRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>format</td>
+                  <td><a href="#loci.trip.ExportFormat">ExportFormat</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.ExportTripResponse">ExportTripResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>data</td>
+                  <td><a href="#bytes">bytes</a></td>
+                  <td></td>
+                  <td><p>10MB cap </p></td>
+                </tr>
+              
+                <tr>
+                  <td>content_type</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>filename</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.GetTripRequest">GetTripRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.ListTripsRequest">ListTripsRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>pagination</td>
+                  <td><a href="#loci.common.PaginationRequest">loci.common.PaginationRequest</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.ListTripsResponse">ListTripsResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trips</td>
+                  <td><a href="#loci.trip.TripDraft">TripDraft</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>pagination</td>
+                  <td><a href="#loci.common.PaginationMetadata">loci.common.PaginationMetadata</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.RenameStopRequest">RenameStopRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>stop_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base_version</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.ReorderStopsRequest">ReorderStopsRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>day_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>ordered_stop_ids</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>Stop ids in their new order. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base_version</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.SaveTripRequest">SaveTripRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip</td>
+                  <td><a href="#loci.trip.TripDraft">TripDraft</a></td>
+                  <td></td>
+                  <td><p>The full trip to upsert. For a new trip, id may be empty (server assigns). </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base_version</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>base_version is the version the client last read; the server rejects the
+write with FailedPrecondition if the stored version has moved past it. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.SetConstraintRequest">SetConstraintRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>constraints</td>
+                  <td><a href="#loci.trip.TripConstraint">TripConstraint</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base_version</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.ShareTripRequest">ShareTripRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>is_public</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.ShareTripResponse">ShareTripResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>share_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>share_url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.TripConstraint">TripConstraint</h3>
+        <p>TripConstraint holds the planning constraints for a trip. These override the</p><p>user's search profile for this specific trip.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>budget_level</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>pace</td>
+                  <td><a href="#loci.trip.TripPace">TripPace</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>mobility</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>mobility: e.g. &#34;walking&#34;, &#34;wheelchair&#34;, &#34;transit&#34;, &#34;car&#34;. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>interests</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>day_start_minute</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td>optional</td>
+                  <td><p>Daily active window, minutes from midnight (e.g. 540 = 09:00). </p></td>
+                </tr>
+              
+                <tr>
+                  <td>day_end_minute</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.TripDay">TripDay</h3>
+        <p>TripDay is one day of a trip.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>day_number</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>date</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td>optional</td>
+                  <td><p>Optional calendar date for the day (nil for a relative &#34;Day N&#34; plan). </p></td>
+                </tr>
+              
+                <tr>
+                  <td>stops</td>
+                  <td><a href="#loci.trip.TripStop">TripStop</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.TripDraft">TripDraft</h3>
+        <p>TripDraft is the full editable trip. `version` powers optimistic concurrency /</p><p>merge-safe multi-device edits: SaveTrip rejects a write whose base version is</p><p>stale.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>user_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>title</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>constraints</td>
+                  <td><a href="#loci.trip.TripConstraint">TripConstraint</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>days</td>
+                  <td><a href="#loci.trip.TripDay">TripDay</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>version</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>Monotonic version; incremented server-side on every successful SaveTrip. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>source_session_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>Session that generated the initial draft, if any. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>updated_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.TripSnapshot">TripSnapshot</h3>
+        <p>TripSnapshot is an immutable point-in-time copy of a trip, written on each</p><p>save so a device can reconcile against a known base version.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>version</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>trip</td>
+                  <td><a href="#loci.trip.TripDraft">TripDraft</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.TripStop">TripStop</h3>
+        <p>TripStop is a single place on a day's timeline.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>poi_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>order_index</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>order_index positions the stop within its day (0-based). </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Display name; user-editable (RenameStop) and defaults to the POI name. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>start_minute</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td>optional</td>
+                  <td><p>start_minute is minutes from midnight for the stop&#39;s start. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>duration_minutes</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td>optional</td>
+                  <td><p>duration_minutes is how long to spend here. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>notes</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>booking_url</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>poi</td>
+                  <td><a href="#loci.poi.POIDetailedInfo">loci.poi.POIDetailedInfo</a></td>
+                  <td>optional</td>
+                  <td><p>Hydrated POI details for rendering (read side only; not persisted here). </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+        <h3 id="loci.trip.ExportFormat">ExportFormat</h3>
+        <p>ExportFormat selects the export artifact.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>EXPORT_FORMAT_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>EXPORT_FORMAT_ICS</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>EXPORT_FORMAT_PDF</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="loci.trip.TripPace">TripPace</h3>
+        <p>TripPace is how densely a day is packed.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>TRIP_PACE_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>TRIP_PACE_RELAXED</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>TRIP_PACE_MODERATE</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>TRIP_PACE_PACKED</td>
+                <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+
+      
+
+      
+        <h3 id="loci.trip.TripService">TripService</h3>
+        <p>TripService persists and mutates editable day-by-day trips. All mutations that</p><p>take base_version enforce optimistic concurrency and return the updated</p><p>TripDraft (or affected sub-entity) with the bumped version.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>SaveTrip</td>
+                <td><a href="#loci.trip.SaveTripRequest">SaveTripRequest</a></td>
+                <td><a href="#loci.trip.TripDraft">TripDraft</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>GetTrip</td>
+                <td><a href="#loci.trip.GetTripRequest">GetTripRequest</a></td>
+                <td><a href="#loci.trip.TripDraft">TripDraft</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ListTrips</td>
+                <td><a href="#loci.trip.ListTripsRequest">ListTripsRequest</a></td>
+                <td><a href="#loci.trip.ListTripsResponse">ListTripsResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ShareTrip</td>
+                <td><a href="#loci.trip.ShareTripRequest">ShareTripRequest</a></td>
+                <td><a href="#loci.trip.ShareTripResponse">ShareTripResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ReorderStops</td>
+                <td><a href="#loci.trip.ReorderStopsRequest">ReorderStopsRequest</a></td>
+                <td><a href="#loci.trip.TripDraft">TripDraft</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>RenameStop</td>
+                <td><a href="#loci.trip.RenameStopRequest">RenameStopRequest</a></td>
+                <td><a href="#loci.trip.TripDraft">TripDraft</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>EditStopDuration</td>
+                <td><a href="#loci.trip.EditStopDurationRequest">EditStopDurationRequest</a></td>
+                <td><a href="#loci.trip.TripDraft">TripDraft</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>SetConstraint</td>
+                <td><a href="#loci.trip.SetConstraintRequest">SetConstraintRequest</a></td>
+                <td><a href="#loci.trip.TripDraft">TripDraft</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ExportTrip</td>
+                <td><a href="#loci.trip.ExportTripRequest">ExportTripRequest</a></td>
+                <td><a href="#loci.trip.ExportTripResponse">ExportTripResponse</a></td>
+                <td><p></p></td>
               </tr>
             
           </tbody>
