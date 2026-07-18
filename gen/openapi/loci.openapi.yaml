@@ -4903,6 +4903,321 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.tags.UpdateTagResponse'
+  /loci.trip.TripService/EditStopDuration:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: EditStopDuration
+      operationId: loci.trip.TripService.EditStopDuration
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.EditStopDurationRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.TripDraft'
+  /loci.trip.TripService/ExportTrip:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: ExportTrip
+      operationId: loci.trip.TripService.ExportTrip
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.ExportTripRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.ExportTripResponse'
+  /loci.trip.TripService/GetTrip:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: GetTrip
+      operationId: loci.trip.TripService.GetTrip
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.GetTripRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.TripDraft'
+  /loci.trip.TripService/ListTrips:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: ListTrips
+      operationId: loci.trip.TripService.ListTrips
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.ListTripsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.ListTripsResponse'
+  /loci.trip.TripService/RenameStop:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: RenameStop
+      operationId: loci.trip.TripService.RenameStop
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.RenameStopRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.TripDraft'
+  /loci.trip.TripService/ReorderStops:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: ReorderStops
+      operationId: loci.trip.TripService.ReorderStops
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.ReorderStopsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.TripDraft'
+  /loci.trip.TripService/SaveTrip:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: SaveTrip
+      operationId: loci.trip.TripService.SaveTrip
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.SaveTripRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.TripDraft'
+  /loci.trip.TripService/SetConstraint:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: SetConstraint
+      operationId: loci.trip.TripService.SetConstraint
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.SetConstraintRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.TripDraft'
+  /loci.trip.TripService/ShareTrip:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: ShareTrip
+      operationId: loci.trip.TripService.ShareTrip
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.ShareTripRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.ShareTripResponse'
   /loci.user.UserService/GetUserProfile:
     post:
       tags:
@@ -16833,6 +17148,500 @@ components:
           title: success
       title: UpdateTagResponse
       additionalProperties: false
+    loci.trip.EditStopDurationRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+        stopId:
+          type: string
+          title: stop_id
+          maxLength: 100
+          minLength: 1
+        startMinute:
+          type:
+            - integer
+            - "null"
+          title: start_minute
+          maximum: 1440
+          minimum: 0
+          format: int32
+        durationMinutes:
+          type: integer
+          title: duration_minutes
+          minimum: 0
+          format: int32
+        baseVersion:
+          type:
+            - integer
+            - string
+          title: base_version
+          minimum: 0
+          format: int64
+      title: EditStopDurationRequest
+      additionalProperties: false
+    loci.trip.ExportFormat:
+      type: string
+      title: ExportFormat
+      enum:
+        - EXPORT_FORMAT_UNSPECIFIED
+        - EXPORT_FORMAT_ICS
+        - EXPORT_FORMAT_PDF
+      description: ExportFormat selects the export artifact.
+    loci.trip.ExportTripRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+        format:
+          title: format
+          $ref: '#/components/schemas/loci.trip.ExportFormat'
+      title: ExportTripRequest
+      additionalProperties: false
+    loci.trip.ExportTripResponse:
+      type: object
+      properties:
+        data:
+          type: string
+          title: data
+          maxLength: 10485760
+          format: byte
+          description: |
+            10MB cap
+            bytes.const = []
+        contentType:
+          type: string
+          title: content_type
+          maxLength: 100
+          minLength: 1
+        filename:
+          type: string
+          title: filename
+          maxLength: 300
+          minLength: 1
+      title: ExportTripResponse
+      additionalProperties: false
+    loci.trip.GetTripRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+      title: GetTripRequest
+      additionalProperties: false
+    loci.trip.ListTripsRequest:
+      type: object
+      properties:
+        pagination:
+          title: pagination
+          $ref: '#/components/schemas/loci.common.PaginationRequest'
+      title: ListTripsRequest
+      required:
+        - pagination
+      additionalProperties: false
+    loci.trip.ListTripsResponse:
+      type: object
+      properties:
+        trips:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.trip.TripDraft'
+          title: trips
+        pagination:
+          title: pagination
+          $ref: '#/components/schemas/loci.common.PaginationMetadata'
+      title: ListTripsResponse
+      additionalProperties: false
+    loci.trip.RenameStopRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+        stopId:
+          type: string
+          title: stop_id
+          maxLength: 100
+          minLength: 1
+        name:
+          type: string
+          title: name
+          maxLength: 300
+          minLength: 1
+        baseVersion:
+          type:
+            - integer
+            - string
+          title: base_version
+          minimum: 0
+          format: int64
+      title: RenameStopRequest
+      additionalProperties: false
+    loci.trip.ReorderStopsRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+        dayId:
+          type: string
+          title: day_id
+          maxLength: 100
+          minLength: 1
+        orderedStopIds:
+          type: array
+          items:
+            type: string
+            maxLength: 100
+            minLength: 1
+          title: ordered_stop_ids
+          maxItems: 100
+          minItems: 1
+          description: Stop ids in their new order.
+        baseVersion:
+          type:
+            - integer
+            - string
+          title: base_version
+          minimum: 0
+          format: int64
+      title: ReorderStopsRequest
+      additionalProperties: false
+    loci.trip.SaveTripRequest:
+      type: object
+      properties:
+        trip:
+          title: trip
+          description: The full trip to upsert. For a new trip, id may be empty (server assigns).
+          $ref: '#/components/schemas/loci.trip.TripDraft'
+        baseVersion:
+          type:
+            - integer
+            - string
+          title: base_version
+          minimum: 0
+          format: int64
+          description: |-
+            base_version is the version the client last read; the server rejects the
+             write with FailedPrecondition if the stored version has moved past it.
+      title: SaveTripRequest
+      required:
+        - trip
+      additionalProperties: false
+    loci.trip.SetConstraintRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+        constraints:
+          title: constraints
+          $ref: '#/components/schemas/loci.trip.TripConstraint'
+        baseVersion:
+          type:
+            - integer
+            - string
+          title: base_version
+          minimum: 0
+          format: int64
+      title: SetConstraintRequest
+      required:
+        - constraints
+      additionalProperties: false
+    loci.trip.ShareTripRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+        isPublic:
+          type: boolean
+          title: is_public
+      title: ShareTripRequest
+      additionalProperties: false
+    loci.trip.ShareTripResponse:
+      type: object
+      properties:
+        shareId:
+          type: string
+          title: share_id
+          maxLength: 100
+          minLength: 1
+        shareUrl:
+          type: string
+          title: share_url
+          maxLength: 2048
+          minLength: 1
+      title: ShareTripResponse
+      additionalProperties: false
+    loci.trip.TripConstraint:
+      type: object
+      properties:
+        budgetLevel:
+          type:
+            - integer
+            - "null"
+          title: budget_level
+          maximum: 4
+          minimum: 1
+          format: int32
+        pace:
+          title: pace
+          $ref: '#/components/schemas/loci.trip.TripPace'
+        mobility:
+          type:
+            - string
+            - "null"
+          title: mobility
+          maxLength: 100
+          minLength: 1
+          description: 'mobility: e.g. "walking", "wheelchair", "transit", "car".'
+        interests:
+          type: array
+          items:
+            type: string
+            maxLength: 100
+            minLength: 1
+          title: interests
+          maxItems: 50
+        dayStartMinute:
+          type:
+            - integer
+            - "null"
+          title: day_start_minute
+          maximum: 1440
+          minimum: 0
+          format: int32
+          description: Daily active window, minutes from midnight (e.g. 540 = 09:00).
+        dayEndMinute:
+          type:
+            - integer
+            - "null"
+          title: day_end_minute
+          maximum: 1440
+          minimum: 0
+          format: int32
+      title: TripConstraint
+      additionalProperties: false
+      description: |-
+        TripConstraint holds the planning constraints for a trip. These override the
+         user's search profile for this specific trip.
+    loci.trip.TripDay:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          maxLength: 100
+          minLength: 1
+        dayNumber:
+          type: integer
+          title: day_number
+          minimum: 1
+          format: int32
+        date:
+          oneOf:
+            - $ref: '#/components/schemas/google.protobuf.Timestamp'
+            - type: "null"
+          title: date
+          description: Optional calendar date for the day (nil for a relative "Day N" plan).
+        stops:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.trip.TripStop'
+          title: stops
+      title: TripDay
+      additionalProperties: false
+      description: TripDay is one day of a trip.
+    loci.trip.TripDraft:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          maxLength: 100
+          minLength: 1
+        userId:
+          type: string
+          title: user_id
+          maxLength: 100
+          minLength: 1
+        cityId:
+          type:
+            - string
+            - "null"
+          title: city_id
+          maxLength: 100
+          minLength: 1
+        cityName:
+          type: string
+          title: city_name
+          maxLength: 200
+        title:
+          type: string
+          title: title
+          maxLength: 300
+          minLength: 1
+        constraints:
+          title: constraints
+          $ref: '#/components/schemas/loci.trip.TripConstraint'
+        days:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.trip.TripDay'
+          title: days
+        version:
+          type:
+            - integer
+            - string
+          title: version
+          minimum: 0
+          format: int64
+          description: Monotonic version; incremented server-side on every successful SaveTrip.
+        sourceSessionId:
+          type:
+            - string
+            - "null"
+          title: source_session_id
+          maxLength: 200
+          minLength: 1
+          description: Session that generated the initial draft, if any.
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        updatedAt:
+          title: updated_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: TripDraft
+      required:
+        - createdAt
+        - updatedAt
+      additionalProperties: false
+      description: |-
+        TripDraft is the full editable trip. `version` powers optimistic concurrency /
+         merge-safe multi-device edits: SaveTrip rejects a write whose base version is
+         stale.
+    loci.trip.TripPace:
+      type: string
+      title: TripPace
+      enum:
+        - TRIP_PACE_UNSPECIFIED
+        - TRIP_PACE_RELAXED
+        - TRIP_PACE_MODERATE
+        - TRIP_PACE_PACKED
+      description: TripPace is how densely a day is packed.
+    loci.trip.TripSnapshot:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          maxLength: 100
+          minLength: 1
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+        version:
+          type:
+            - integer
+            - string
+          title: version
+          minimum: 0
+          format: int64
+        trip:
+          title: trip
+          $ref: '#/components/schemas/loci.trip.TripDraft'
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: TripSnapshot
+      required:
+        - trip
+        - createdAt
+      additionalProperties: false
+      description: |-
+        TripSnapshot is an immutable point-in-time copy of a trip, written on each
+         save so a device can reconcile against a known base version.
+    loci.trip.TripStop:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          maxLength: 100
+          minLength: 1
+        poiId:
+          type: string
+          title: poi_id
+          maxLength: 100
+        orderIndex:
+          type: integer
+          title: order_index
+          minimum: 0
+          format: int32
+          description: order_index positions the stop within its day (0-based).
+        name:
+          type: string
+          title: name
+          maxLength: 300
+          minLength: 1
+          description: Display name; user-editable (RenameStop) and defaults to the POI name.
+        startMinute:
+          type:
+            - integer
+            - "null"
+          title: start_minute
+          maximum: 1440
+          minimum: 0
+          format: int32
+          description: start_minute is minutes from midnight for the stop's start.
+        durationMinutes:
+          type:
+            - integer
+            - "null"
+          title: duration_minutes
+          minimum: 0
+          format: int32
+          description: duration_minutes is how long to spend here.
+        notes:
+          type: string
+          title: notes
+          maxLength: 4000
+        bookingUrl:
+          type:
+            - string
+            - "null"
+          title: booking_url
+          maxLength: 2048
+          minLength: 1
+          format: uri
+        poi:
+          oneOf:
+            - $ref: '#/components/schemas/loci.poi.POIDetailedInfo'
+            - type: "null"
+          title: poi
+          description: Hydrated POI details for rendering (read side only; not persisted here).
+      title: TripStop
+      additionalProperties: false
+      description: TripStop is a single place on a day's timeline.
     loci.user.GetUserProfileRequest:
       type: object
       properties:
@@ -17242,5 +18051,10 @@ tags:
     description: StatisticsService provides analytics and statistics functionality
   - name: loci.tags.TagsService
     description: Service definition matching your tagsService interface
+  - name: loci.trip.TripService
+    description: |-
+      TripService persists and mutates editable day-by-day trips. All mutations that
+       take base_version enforce optimistic concurrency and return the updated
+       TripDraft (or affected sub-entity) with the bumped version.
   - name: loci.user.UserService
     description: UserService defines user-related RPCs
