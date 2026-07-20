@@ -1239,6 +1239,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.discover.GetTrendingResponse'
+  /loci.entitlement.v1.EntitlementService/GetEntitlements:
+    post:
+      tags:
+        - loci.entitlement.v1.EntitlementService
+      summary: GetEntitlements
+      operationId: loci.entitlement.v1.EntitlementService.GetEntitlements
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.entitlement.v1.GetEntitlementsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.entitlement.v1.Entitlements'
   /loci.export.ExportService/ExportActivitiesToPDF:
     post:
       tags:
@@ -8501,6 +8536,45 @@ components:
       title: TrendingDiscovery
       additionalProperties: false
       description: TrendingDiscovery represents a trending discovery/search
+    loci.entitlement.v1.Entitlements:
+      type: object
+      properties:
+        plan:
+          type: string
+          title: plan
+          description: free | premium_monthly | premium_annual (and legacy aliases)
+        listsUsed:
+          type: integer
+          title: lists_used
+          format: int32
+        listsLimit:
+          type: integer
+          title: lists_limit
+          format: int32
+          description: 5 free, -1 Pro
+        placesSaved:
+          type: integer
+          title: places_saved
+          format: int32
+          description: Saved places = list_items across owned lists + favorites (unified free cap).
+        placesLimit:
+          type: integer
+          title: places_limit
+          format: int32
+          description: 50 free, -1 Pro
+        advancedFilters:
+          type: boolean
+          title: advanced_filters
+        exportFull:
+          type: boolean
+          title: export_full
+          description: multi-day PDF + Markdown
+      title: Entitlements
+      additionalProperties: false
+    loci.entitlement.v1.GetEntitlementsRequest:
+      type: object
+      title: GetEntitlementsRequest
+      additionalProperties: false
     loci.export.ExportActivitiesRequest:
       type: object
       properties:
@@ -18174,6 +18248,10 @@ tags:
     description: CustomAuthService handles alternative authentication methods (OAuth, Phone)
   - name: loci.discover.DiscoverService
     description: DiscoverService defines discover-related RPCs
+  - name: loci.entitlement.v1.EntitlementService
+    description: |-
+      EntitlementService exposes freemium usage counters for the signed-in user.
+       Limits of -1 mean unlimited (Pro).
   - name: loci.export.ExportService
     description: ExportService handles PDF export for various content types
   - name: loci.favorites.v1.FavoritesService
