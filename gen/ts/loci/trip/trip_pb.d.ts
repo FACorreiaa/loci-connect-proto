@@ -625,6 +625,13 @@ export enum ExportFormat {
    * @generated from enum value: EXPORT_FORMAT_PDF = 2;
    */
   PDF = 2,
+
+  /**
+   * Premium — full itinerary as Markdown
+   *
+   * @generated from enum value: EXPORT_FORMAT_MARKDOWN = 3;
+   */
+  MARKDOWN = 3,
 }
 
 /**
