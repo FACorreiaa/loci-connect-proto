@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package loci.entitlement.v1;
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/entitlement/v1;entitlementv1";
+
+// EntitlementService exposes freemium usage counters for the signed-in user.
+// Limits of -1 mean unlimited (Pro).
+service EntitlementService {
+  rpc GetEntitlements(GetEntitlementsRequest) returns (Entitlements);
+}
+
+message GetEntitlementsRequest {}
+
+message Entitlements {
+  // free | premium_monthly | premium_annual (and legacy aliases)
+  string plan = 1;
+  int32 lists_used = 2;
+  int32 lists_limit = 3; // 5 free, -1 Pro
+  // Saved places = list_items across owned lists + favorites (unified free cap).
+  int32 places_saved = 4;
+  int32 places_limit = 5; // 50 free, -1 Pro
+  bool advanced_filters = 6;
+  bool export_full = 7; // multi-day PDF + Markdown
+}
