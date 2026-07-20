@@ -996,6 +996,29 @@
         
           
           <li>
+            <a href="#loci%2fentitlement%2fv1%2fentitlement.proto">loci/entitlement/v1/entitlement.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#loci.entitlement.v1.Entitlements"><span class="badge">M</span>Entitlements</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.entitlement.v1.GetEntitlementsRequest"><span class="badge">M</span>GetEntitlementsRequest</a>
+                </li>
+              
+              
+              
+              
+                <li>
+                  <a href="#loci.entitlement.v1.EntitlementService"><span class="badge">S</span>EntitlementService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#loci%2fexport%2fexport.proto">loci/export/export.proto</a>
             <ul>
               
@@ -10976,6 +10999,112 @@ starting a new turn; consumers dedup by StreamEvent.event_id. </p></td>
                 <td>GetCategoryResults</td>
                 <td><a href="#loci.discover.GetCategoryResultsRequest">GetCategoryResultsRequest</a></td>
                 <td><a href="#loci.discover.GetCategoryResultsResponse">GetCategoryResultsResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="loci/entitlement/v1/entitlement.proto">loci/entitlement/v1/entitlement.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="loci.entitlement.v1.Entitlements">Entitlements</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>plan</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>free | premium_monthly | premium_annual (and legacy aliases) </p></td>
+                </tr>
+              
+                <tr>
+                  <td>lists_used</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>lists_limit</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>5 free, -1 Pro </p></td>
+                </tr>
+              
+                <tr>
+                  <td>places_saved</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Saved places = list_items across owned lists &#43; favorites (unified free cap). </p></td>
+                </tr>
+              
+                <tr>
+                  <td>places_limit</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>50 free, -1 Pro </p></td>
+                </tr>
+              
+                <tr>
+                  <td>advanced_filters</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>export_full</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>multi-day PDF &#43; Markdown </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.entitlement.v1.GetEntitlementsRequest">GetEntitlementsRequest</h3>
+        <p></p>
+
+        
+
+        
+      
+
+      
+
+      
+
+      
+        <h3 id="loci.entitlement.v1.EntitlementService">EntitlementService</h3>
+        <p>EntitlementService exposes freemium usage counters for the signed-in user.</p><p>Limits of -1 mean unlimited (Pro).</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>GetEntitlements</td>
+                <td><a href="#loci.entitlement.v1.GetEntitlementsRequest">GetEntitlementsRequest</a></td>
+                <td><a href="#loci.entitlement.v1.Entitlements">Entitlements</a></td>
                 <td><p></p></td>
               </tr>
             
