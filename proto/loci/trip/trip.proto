@@ -190,6 +190,7 @@ enum ExportFormat {
   EXPORT_FORMAT_UNSPECIFIED = 0;
   EXPORT_FORMAT_ICS = 1;
   EXPORT_FORMAT_PDF = 2;
+  EXPORT_FORMAT_MARKDOWN = 3;  // Premium — full itinerary as Markdown
 }
 
 message ExportTripRequest {
