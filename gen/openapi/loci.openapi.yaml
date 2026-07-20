@@ -17288,6 +17288,7 @@ components:
         - EXPORT_FORMAT_UNSPECIFIED
         - EXPORT_FORMAT_ICS
         - EXPORT_FORMAT_PDF
+        - EXPORT_FORMAT_MARKDOWN
       description: ExportFormat selects the export artifact.
     loci.trip.ExportTripRequest:
       type: object
