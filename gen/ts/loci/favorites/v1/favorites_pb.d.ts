@@ -5,6 +5,7 @@
 import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv2";
 import type { Message } from "@bufbuild/protobuf";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
+import type { RecommendationTrace } from "../../recommendation/recommendation_pb";
 
 /**
  * Describes the file loci/favorites/v1/favorites.proto.
@@ -83,6 +84,11 @@ export declare type FavoriteItem = Message<"loci.favorites.v1.FavoriteItem"> & {
    * @generated from field: google.protobuf.Timestamp added_at = 13;
    */
   addedAt?: Timestamp;
+
+  /**
+   * @generated from field: optional loci.recommendation.RecommendationTrace recommendation_trace = 14;
+   */
+  recommendationTrace?: RecommendationTrace;
 };
 
 /**
@@ -158,6 +164,11 @@ export declare type AddToFavoritesRequest = Message<"loci.favorites.v1.AddToFavo
    * @generated from field: string llm_interaction_id = 12;
    */
   llmInteractionId: string;
+
+  /**
+   * @generated from field: optional loci.recommendation.RecommendationTrace recommendation_trace = 13;
+   */
+  recommendationTrace?: RecommendationTrace;
 };
 
 /**

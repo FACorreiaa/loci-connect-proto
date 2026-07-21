@@ -6,6 +6,7 @@ option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/favori
 
 import "google/protobuf/timestamp.proto";
 import "buf/validate/validate.proto";
+import "loci/recommendation/recommendation.proto";
 
 // Content type for favorites
 enum ContentType {
@@ -31,6 +32,7 @@ message FavoriteItem {
   double rating = 11;
   string category = 12;
   google.protobuf.Timestamp added_at = 13;
+  optional loci.recommendation.RecommendationTrace recommendation_trace = 14;
 }
 
 // FavoritesService provides favorites management functionality
@@ -77,6 +79,7 @@ message AddToFavoritesRequest {
   double rating = 10;
   string category = 11;
   string llm_interaction_id = 12;  // Optional: link to LLM interaction
+  optional loci.recommendation.RecommendationTrace recommendation_trace = 13;
 }
 
 message AddToFavoritesResponse {

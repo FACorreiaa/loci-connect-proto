@@ -1,0 +1,136 @@
+syntax = "proto3";
+
+package loci.place;
+
+import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/place;place";
+
+enum PlaceFactField {
+  PLACE_FACT_FIELD_UNSPECIFIED = 0;
+  PLACE_FACT_FIELD_OPENING_HOURS = 1;
+  PLACE_FACT_FIELD_PRICE_LEVEL = 2;
+  PLACE_FACT_FIELD_ACCESSIBILITY = 3;
+  PLACE_FACT_FIELD_DIETARY = 4;
+  PLACE_FACT_FIELD_CROWD_LEVEL = 5;
+  PLACE_FACT_FIELD_NOISE_LEVEL = 6;
+  PLACE_FACT_FIELD_CHILD_FRIENDLY = 7;
+  PLACE_FACT_FIELD_DOG_FRIENDLY = 8;
+  PLACE_FACT_FIELD_VIBE = 9;
+}
+
+enum PlaceClaimStatus {
+  PLACE_CLAIM_STATUS_UNSPECIFIED = 0;
+  PLACE_CLAIM_STATUS_PENDING = 1;
+  PLACE_CLAIM_STATUS_ACCEPTED = 2;
+  PLACE_CLAIM_STATUS_CONTRADICTED = 3;
+  PLACE_CLAIM_STATUS_EXPIRED = 4;
+}
+
+message PlaceFact {
+  PlaceFactField field = 1 [(buf.validate.field).enum = {defined_only: true}];
+  string value = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 1000
+  }];
+  double confidence = 3 [(buf.validate.field).double = {
+    gte: 0
+    lte: 1
+  }];
+  int32 contributor_count = 4 [(buf.validate.field).int32 = {gte: 0}];
+  google.protobuf.Timestamp verified_at = 5 [(buf.validate.field).required = true];
+  google.protobuf.Timestamp expires_at = 6 [(buf.validate.field).required = true];
+}
+
+message PlaceFacts {
+  string poi_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  repeated PlaceFact facts = 2;
+}
+
+message GetPlaceFactsRequest {
+  string poi_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+}
+
+message VerificationTask {
+  string poi_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string poi_name = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 300
+  }];
+  repeated PlaceFactField requested_fields = 3;
+  optional google.protobuf.Timestamp oldest_fact_at = 4;
+}
+
+message ListVerificationTasksRequest {
+  int32 limit = 1 [(buf.validate.field).int32 = {
+    gte: 1
+    lte: 50
+  }];
+}
+
+message ListVerificationTasksResponse {
+  repeated VerificationTask tasks = 1;
+}
+
+message SubmitPlaceClaimRequest {
+  string client_claim_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+    uuid: true
+  }];
+  string poi_id = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  PlaceFactField field = 3 [(buf.validate.field).enum = {defined_only: true}];
+  string value = 4 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 1000
+  }];
+  google.protobuf.Timestamp observed_at = 5 [(buf.validate.field).required = true];
+}
+
+message SubmitPlaceClaimResponse {
+  string claim_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  PlaceClaimStatus status = 2 [(buf.validate.field).enum = {defined_only: true}];
+}
+
+message ContributorProfile {
+  int32 reputation = 1 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 100
+  }];
+  int32 submitted_claims = 2 [(buf.validate.field).int32 = {gte: 0}];
+  int32 accepted_claims = 3 [(buf.validate.field).int32 = {gte: 0}];
+  repeated string badges = 4 [(buf.validate.field).repeated = {
+    max_items: 20
+    items: {
+      string: {
+        min_len: 1
+        max_len: 100
+      }
+    }
+  }];
+}
+
+message GetMyContributorProfileRequest {}
+
+service PlaceIntelligenceService {
+  rpc GetPlaceFacts(GetPlaceFactsRequest) returns (PlaceFacts);
+  rpc ListVerificationTasks(ListVerificationTasksRequest) returns (ListVerificationTasksResponse);
+  rpc SubmitPlaceClaim(SubmitPlaceClaimRequest) returns (SubmitPlaceClaimResponse);
+  rpc GetMyContributorProfile(GetMyContributorProfileRequest) returns (ContributorProfile);
+}

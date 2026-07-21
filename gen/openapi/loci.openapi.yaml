@@ -3434,6 +3434,146 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.payment.v1.RefundPaymentResponse'
+  /loci.place.PlaceIntelligenceService/GetMyContributorProfile:
+    post:
+      tags:
+        - loci.place.PlaceIntelligenceService
+      summary: GetMyContributorProfile
+      operationId: loci.place.PlaceIntelligenceService.GetMyContributorProfile
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.place.GetMyContributorProfileRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.place.ContributorProfile'
+  /loci.place.PlaceIntelligenceService/GetPlaceFacts:
+    post:
+      tags:
+        - loci.place.PlaceIntelligenceService
+      summary: GetPlaceFacts
+      operationId: loci.place.PlaceIntelligenceService.GetPlaceFacts
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.place.GetPlaceFactsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.place.PlaceFacts'
+  /loci.place.PlaceIntelligenceService/ListVerificationTasks:
+    post:
+      tags:
+        - loci.place.PlaceIntelligenceService
+      summary: ListVerificationTasks
+      operationId: loci.place.PlaceIntelligenceService.ListVerificationTasks
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.place.ListVerificationTasksRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.place.ListVerificationTasksResponse'
+  /loci.place.PlaceIntelligenceService/SubmitPlaceClaim:
+    post:
+      tags:
+        - loci.place.PlaceIntelligenceService
+      summary: SubmitPlaceClaim
+      operationId: loci.place.PlaceIntelligenceService.SubmitPlaceClaim
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.place.SubmitPlaceClaimRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.place.SubmitPlaceClaimResponse'
   /loci.poi.POIService/GetPOI:
     post:
       tags:
@@ -4071,6 +4211,181 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.recents.RecordInteractionResponse'
+  /loci.recommendation.RecommendationService/GetPersonalizationSettings:
+    post:
+      tags:
+        - loci.recommendation.RecommendationService
+      summary: GetPersonalizationSettings
+      operationId: loci.recommendation.RecommendationService.GetPersonalizationSettings
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.recommendation.GetPersonalizationSettingsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.recommendation.PersonalizationSettings'
+  /loci.recommendation.RecommendationService/GetTasteProfile:
+    post:
+      tags:
+        - loci.recommendation.RecommendationService
+      summary: GetTasteProfile
+      operationId: loci.recommendation.RecommendationService.GetTasteProfile
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.recommendation.GetTasteProfileRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.recommendation.TasteProfile'
+  /loci.recommendation.RecommendationService/RecordEvents:
+    post:
+      tags:
+        - loci.recommendation.RecommendationService
+      summary: RecordEvents
+      operationId: loci.recommendation.RecommendationService.RecordEvents
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.recommendation.RecordEventsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.recommendation.RecordEventsResponse'
+  /loci.recommendation.RecommendationService/ResetTasteProfile:
+    post:
+      tags:
+        - loci.recommendation.RecommendationService
+      summary: ResetTasteProfile
+      operationId: loci.recommendation.RecommendationService.ResetTasteProfile
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.recommendation.ResetTasteProfileRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.recommendation.ResetTasteProfileResponse'
+  /loci.recommendation.RecommendationService/UpdatePersonalizationSettings:
+    post:
+      tags:
+        - loci.recommendation.RecommendationService
+      summary: UpdatePersonalizationSettings
+      operationId: loci.recommendation.RecommendationService.UpdatePersonalizationSettings
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.recommendation.UpdatePersonalizationSettingsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.recommendation.PersonalizationSettings'
   /loci.review.ReviewService/CreateReview:
     post:
       tags:
@@ -4938,6 +5253,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.tags.UpdateTagResponse'
+  /loci.trip.TripService/AddStop:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: AddStop
+      operationId: loci.trip.TripService.AddStop
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.AddStopRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.TripDraft'
   /loci.trip.TripService/EditStopDuration:
     post:
       tags:
@@ -5078,6 +5428,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.trip.ListTripsResponse'
+  /loci.trip.TripService/RemoveStop:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: RemoveStop
+      operationId: loci.trip.TripService.RemoveStop
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.RemoveStopRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.TripDraft'
   /loci.trip.TripService/RenameStop:
     post:
       tags:
@@ -5134,6 +5519,41 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/loci.trip.ReorderStopsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.TripDraft'
+  /loci.trip.TripService/ReplaceStop:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: ReplaceStop
+      operationId: loci.trip.TripService.ReplaceStop
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.ReplaceStopRequest'
         required: true
       responses:
         default:
@@ -9036,6 +9456,11 @@ components:
           type: string
           title: llm_interaction_id
           description: 'Optional: link to LLM interaction'
+        recommendationTrace:
+          oneOf:
+            - $ref: '#/components/schemas/loci.recommendation.RecommendationTrace'
+            - type: "null"
+          title: recommendation_trace
       title: AddToFavoritesRequest
       additionalProperties: false
       description: AddToFavorites
@@ -9109,6 +9534,11 @@ components:
         addedAt:
           title: added_at
           $ref: '#/components/schemas/google.protobuf.Timestamp'
+        recommendationTrace:
+          oneOf:
+            - $ref: '#/components/schemas/loci.recommendation.RecommendationTrace'
+            - type: "null"
+          title: recommendation_trace
       title: FavoriteItem
       additionalProperties: false
       description: Favorite item representation
@@ -10639,6 +11069,11 @@ components:
           type: string
           title: item_ai_description
           maxLength: 4000
+        recommendationTrace:
+          oneOf:
+            - $ref: '#/components/schemas/loci.recommendation.RecommendationTrace'
+            - type: "null"
+          title: recommendation_trace
       title: AddListItemRequest
       additionalProperties: false
       description: List item management
@@ -11159,6 +11594,11 @@ components:
           type: string
           title: item_ai_description
           maxLength: 4000
+        recommendationTrace:
+          oneOf:
+            - $ref: '#/components/schemas/loci.recommendation.RecommendationTrace'
+            - type: "null"
+          title: recommendation_trace
       title: ListItem
       required:
         - createdAt
@@ -12138,6 +12578,208 @@ components:
           format: int32
       title: SubscriptionUsage
       additionalProperties: false
+    loci.place.ContributorProfile:
+      type: object
+      properties:
+        reputation:
+          type: integer
+          title: reputation
+          maximum: 100
+          minimum: 0
+          format: int32
+        submittedClaims:
+          type: integer
+          title: submitted_claims
+          minimum: 0
+          format: int32
+        acceptedClaims:
+          type: integer
+          title: accepted_claims
+          minimum: 0
+          format: int32
+        badges:
+          type: array
+          items:
+            type: string
+            maxLength: 100
+            minLength: 1
+          title: badges
+          maxItems: 20
+      title: ContributorProfile
+      additionalProperties: false
+    loci.place.GetMyContributorProfileRequest:
+      type: object
+      title: GetMyContributorProfileRequest
+      additionalProperties: false
+    loci.place.GetPlaceFactsRequest:
+      type: object
+      properties:
+        poiId:
+          type: string
+          title: poi_id
+          maxLength: 100
+          minLength: 1
+      title: GetPlaceFactsRequest
+      additionalProperties: false
+    loci.place.ListVerificationTasksRequest:
+      type: object
+      properties:
+        limit:
+          type: integer
+          title: limit
+          maximum: 50
+          minimum: 1
+          format: int32
+      title: ListVerificationTasksRequest
+      additionalProperties: false
+    loci.place.ListVerificationTasksResponse:
+      type: object
+      properties:
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.place.VerificationTask'
+          title: tasks
+      title: ListVerificationTasksResponse
+      additionalProperties: false
+    loci.place.PlaceClaimStatus:
+      type: string
+      title: PlaceClaimStatus
+      enum:
+        - PLACE_CLAIM_STATUS_UNSPECIFIED
+        - PLACE_CLAIM_STATUS_PENDING
+        - PLACE_CLAIM_STATUS_ACCEPTED
+        - PLACE_CLAIM_STATUS_CONTRADICTED
+        - PLACE_CLAIM_STATUS_EXPIRED
+    loci.place.PlaceFact:
+      type: object
+      properties:
+        field:
+          title: field
+          $ref: '#/components/schemas/loci.place.PlaceFactField'
+        value:
+          type: string
+          title: value
+          maxLength: 1000
+          minLength: 1
+        confidence:
+          type: number
+          title: confidence
+          maximum: 1
+          minimum: 0
+          format: double
+        contributorCount:
+          type: integer
+          title: contributor_count
+          minimum: 0
+          format: int32
+        verifiedAt:
+          title: verified_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        expiresAt:
+          title: expires_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: PlaceFact
+      required:
+        - verifiedAt
+        - expiresAt
+      additionalProperties: false
+    loci.place.PlaceFactField:
+      type: string
+      title: PlaceFactField
+      enum:
+        - PLACE_FACT_FIELD_UNSPECIFIED
+        - PLACE_FACT_FIELD_OPENING_HOURS
+        - PLACE_FACT_FIELD_PRICE_LEVEL
+        - PLACE_FACT_FIELD_ACCESSIBILITY
+        - PLACE_FACT_FIELD_DIETARY
+        - PLACE_FACT_FIELD_CROWD_LEVEL
+        - PLACE_FACT_FIELD_NOISE_LEVEL
+        - PLACE_FACT_FIELD_CHILD_FRIENDLY
+        - PLACE_FACT_FIELD_DOG_FRIENDLY
+        - PLACE_FACT_FIELD_VIBE
+    loci.place.PlaceFacts:
+      type: object
+      properties:
+        poiId:
+          type: string
+          title: poi_id
+          maxLength: 100
+          minLength: 1
+        facts:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.place.PlaceFact'
+          title: facts
+      title: PlaceFacts
+      additionalProperties: false
+    loci.place.SubmitPlaceClaimRequest:
+      type: object
+      properties:
+        clientClaimId:
+          type: string
+          title: client_claim_id
+          maxLength: 100
+          minLength: 1
+          format: uuid
+        poiId:
+          type: string
+          title: poi_id
+          maxLength: 100
+          minLength: 1
+        field:
+          title: field
+          $ref: '#/components/schemas/loci.place.PlaceFactField'
+        value:
+          type: string
+          title: value
+          maxLength: 1000
+          minLength: 1
+        observedAt:
+          title: observed_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: SubmitPlaceClaimRequest
+      required:
+        - observedAt
+      additionalProperties: false
+    loci.place.SubmitPlaceClaimResponse:
+      type: object
+      properties:
+        claimId:
+          type: string
+          title: claim_id
+          maxLength: 100
+          minLength: 1
+        status:
+          title: status
+          $ref: '#/components/schemas/loci.place.PlaceClaimStatus'
+      title: SubmitPlaceClaimResponse
+      additionalProperties: false
+    loci.place.VerificationTask:
+      type: object
+      properties:
+        poiId:
+          type: string
+          title: poi_id
+          maxLength: 100
+          minLength: 1
+        poiName:
+          type: string
+          title: poi_name
+          maxLength: 300
+          minLength: 1
+        requestedFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.place.PlaceFactField'
+          title: requested_fields
+        oldestFactAt:
+          oneOf:
+            - $ref: '#/components/schemas/google.protobuf.Timestamp'
+            - type: "null"
+          title: oldest_fact_at
+      title: VerificationTask
+      additionalProperties: false
     loci.poi.AddPoiRequest:
       type: object
       properties:
@@ -12280,6 +12922,11 @@ components:
           title: llm_interaction_id
           maxLength: 100
           minLength: 1
+        recommendationTrace:
+          oneOf:
+            - $ref: '#/components/schemas/loci.recommendation.RecommendationTrace'
+            - type: "null"
+          title: recommendation_trace
       title: HotelDetailedInfo
       additionalProperties: false
       description: HotelDetailedInfo represents hotel-specific information
@@ -12479,6 +13126,16 @@ components:
           title: recommendation_rationale
           maxLength: 1000
           minLength: 1
+        recommendationTrace:
+          oneOf:
+            - $ref: '#/components/schemas/loci.recommendation.RecommendationTrace'
+            - type: "null"
+          title: recommendation_trace
+        verifiedFacts:
+          oneOf:
+            - $ref: '#/components/schemas/loci.place.PlaceFacts'
+            - type: "null"
+          title: verified_facts
       title: POIDetailedInfo
       required:
         - createdAt
@@ -12634,6 +13291,11 @@ components:
           title: llm_interaction_id
           maxLength: 100
           minLength: 1
+        recommendationTrace:
+          oneOf:
+            - $ref: '#/components/schemas/loci.recommendation.RecommendationTrace'
+            - type: "null"
+          title: recommendation_trace
       title: RestaurantDetailedInfo
       additionalProperties: false
       description: RestaurantDetailedInfo represents restaurant-specific information
@@ -14487,6 +15149,293 @@ components:
         - date
       additionalProperties: false
       description: Trend data for interactions over time
+    loci.recommendation.GetPersonalizationSettingsRequest:
+      type: object
+      title: GetPersonalizationSettingsRequest
+      additionalProperties: false
+    loci.recommendation.GetTasteProfileRequest:
+      type: object
+      title: GetTasteProfileRequest
+      additionalProperties: false
+    loci.recommendation.PersonalizationSettings:
+      type: object
+      properties:
+        personalizationEnabled:
+          type: boolean
+          title: personalization_enabled
+        contributeAggregate:
+          type: boolean
+          title: contribute_aggregate
+        disclosureSeen:
+          type: boolean
+          title: disclosure_seen
+        updatedAt:
+          title: updated_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: PersonalizationSettings
+      required:
+        - updatedAt
+      additionalProperties: false
+    loci.recommendation.RecommendationChannel:
+      type: string
+      title: RecommendationChannel
+      enum:
+        - RECOMMENDATION_CHANNEL_UNSPECIFIED
+        - RECOMMENDATION_CHANNEL_WEB
+        - RECOMMENDATION_CHANNEL_MCP
+      description: RecommendationChannel identifies where a recommendation was delivered.
+    loci.recommendation.RecommendationEvent:
+      type: object
+      properties:
+        clientEventId:
+          type: string
+          title: client_event_id
+          maxLength: 100
+          minLength: 1
+          format: uuid
+        eventType:
+          title: event_type
+          $ref: '#/components/schemas/loci.recommendation.RecommendationEventType'
+        trace:
+          title: trace
+          $ref: '#/components/schemas/loci.recommendation.RecommendationTrace'
+        occurredAt:
+          title: occurred_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        poiId:
+          type:
+            - string
+            - "null"
+          title: poi_id
+          maxLength: 100
+          minLength: 1
+        tripId:
+          type:
+            - string
+            - "null"
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+        rating:
+          type:
+            - integer
+            - "null"
+          title: rating
+          maximum: 5
+          minimum: 1
+          format: int32
+        metadata:
+          type: object
+          title: metadata
+          maxProperties: 20
+          additionalProperties:
+            type: string
+            title: value
+            maxLength: 500
+      title: RecommendationEvent
+      required:
+        - trace
+        - occurredAt
+      additionalProperties: false
+    loci.recommendation.RecommendationEvent.MetadataEntry:
+      type: object
+      properties:
+        key:
+          type: string
+          title: key
+        value:
+          type: string
+          title: value
+      title: MetadataEntry
+      additionalProperties: false
+    loci.recommendation.RecommendationEventType:
+      type: string
+      title: RecommendationEventType
+      enum:
+        - RECOMMENDATION_EVENT_TYPE_UNSPECIFIED
+        - RECOMMENDATION_EVENT_TYPE_DELIVERED
+        - RECOMMENDATION_EVENT_TYPE_PRESENTED
+        - RECOMMENDATION_EVENT_TYPE_OPENED
+        - RECOMMENDATION_EVENT_TYPE_DISMISSED
+        - RECOMMENDATION_EVENT_TYPE_FAVORITED
+        - RECOMMENDATION_EVENT_TYPE_ADDED_TO_LIST
+        - RECOMMENDATION_EVENT_TYPE_ADDED_TO_TRIP
+        - RECOMMENDATION_EVENT_TYPE_KEPT_IN_TRIP
+        - RECOMMENDATION_EVENT_TYPE_REMOVED_FROM_TRIP
+        - RECOMMENDATION_EVENT_TYPE_EXPORTED
+        - RECOMMENDATION_EVENT_TYPE_BOOKING_OPENED
+        - RECOMMENDATION_EVENT_TYPE_VISIT_CONFIRMED
+        - RECOMMENDATION_EVENT_TYPE_RATED
+      description: RecommendationEventType separates exposure metrics from learning outcomes.
+    loci.recommendation.RecommendationSurface:
+      type: string
+      title: RecommendationSurface
+      enum:
+        - RECOMMENDATION_SURFACE_UNSPECIFIED
+        - RECOMMENDATION_SURFACE_DISCOVER
+        - RECOMMENDATION_SURFACE_NEARBY
+        - RECOMMENDATION_SURFACE_CHAT
+        - RECOMMENDATION_SURFACE_TRIP
+        - RECOMMENDATION_SURFACE_PLACE
+      description: RecommendationSurface identifies the product experience that ranked an item.
+    loci.recommendation.RecommendationTrace:
+      type: object
+      properties:
+        runId:
+          type: string
+          title: run_id
+          maxLength: 100
+          minLength: 1
+        itemId:
+          type: string
+          title: item_id
+          maxLength: 100
+          minLength: 1
+        rank:
+          type: integer
+          title: rank
+          minimum: 0
+          format: int32
+        algorithmVersion:
+          type: string
+          title: algorithm_version
+          maxLength: 100
+          minLength: 1
+        experimentVariant:
+          type: string
+          title: experiment_variant
+          maxLength: 100
+          minLength: 1
+        surface:
+          title: surface
+          $ref: '#/components/schemas/loci.recommendation.RecommendationSurface'
+        channel:
+          title: channel
+          $ref: '#/components/schemas/loci.recommendation.RecommendationChannel'
+      title: RecommendationTrace
+      additionalProperties: false
+      description: |-
+        RecommendationTrace is the opaque attribution data clients return with an
+         outcome. It contains no query text or precise user location.
+    loci.recommendation.RecordEventsRequest:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.recommendation.RecommendationEvent'
+          title: events
+          maxItems: 50
+          minItems: 1
+      title: RecordEventsRequest
+      additionalProperties: false
+    loci.recommendation.RecordEventsResponse:
+      type: object
+      properties:
+        accepted:
+          type: integer
+          title: accepted
+          minimum: 0
+          format: int32
+        duplicates:
+          type: integer
+          title: duplicates
+          minimum: 0
+          format: int32
+      title: RecordEventsResponse
+      additionalProperties: false
+    loci.recommendation.ResetTasteProfileRequest:
+      type: object
+      properties:
+        confirmation:
+          type: string
+          title: confirmation
+          const: RESET
+      title: ResetTasteProfileRequest
+      additionalProperties: false
+    loci.recommendation.ResetTasteProfileResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          title: success
+      title: ResetTasteProfileResponse
+      additionalProperties: false
+    loci.recommendation.TasteProfile:
+      type: object
+      properties:
+        traits:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.recommendation.TasteTrait'
+          title: traits
+        feedbackCount:
+          type: integer
+          title: feedback_count
+          minimum: 0
+          format: int32
+        algorithmVersion:
+          type: string
+          title: algorithm_version
+          maxLength: 100
+        lastFeedbackAt:
+          oneOf:
+            - $ref: '#/components/schemas/google.protobuf.Timestamp'
+            - type: "null"
+          title: last_feedback_at
+        updatedAt:
+          title: updated_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: TasteProfile
+      required:
+        - updatedAt
+      additionalProperties: false
+    loci.recommendation.TasteTrait:
+      type: object
+      properties:
+        key:
+          type: string
+          title: key
+          maxLength: 100
+          minLength: 1
+        label:
+          type: string
+          title: label
+          maxLength: 200
+          minLength: 1
+        score:
+          type: number
+          title: score
+          maximum: 1
+          minimum: -1
+          format: double
+        confidence:
+          type: number
+          title: confidence
+          maximum: 1
+          minimum: 0
+          format: double
+        evidenceCount:
+          type: integer
+          title: evidence_count
+          minimum: 0
+          format: int32
+      title: TasteTrait
+      additionalProperties: false
+    loci.recommendation.UpdatePersonalizationSettingsRequest:
+      type: object
+      properties:
+        personalizationEnabled:
+          type: boolean
+          title: personalization_enabled
+        contributeAggregate:
+          type: boolean
+          title: contribute_aggregate
+        disclosureSeen:
+          type: boolean
+          title: disclosure_seen
+      title: UpdatePersonalizationSettingsRequest
+      additionalProperties: false
     loci.review.BusinessResponse:
       type: object
       properties:
@@ -17320,6 +18269,33 @@ components:
           title: success
       title: UpdateTagResponse
       additionalProperties: false
+    loci.trip.AddStopRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+        dayId:
+          type: string
+          title: day_id
+          maxLength: 100
+          minLength: 1
+        stop:
+          title: stop
+          $ref: '#/components/schemas/loci.trip.TripStop'
+        baseVersion:
+          type:
+            - integer
+            - string
+          title: base_version
+          minimum: 0
+          format: int64
+      title: AddStopRequest
+      required:
+        - stop
+      additionalProperties: false
     loci.trip.EditStopDurationRequest:
       type: object
       properties:
@@ -17433,6 +18409,28 @@ components:
           $ref: '#/components/schemas/loci.common.PaginationMetadata'
       title: ListTripsResponse
       additionalProperties: false
+    loci.trip.RemoveStopRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+        stopId:
+          type: string
+          title: stop_id
+          maxLength: 100
+          minLength: 1
+        baseVersion:
+          type:
+            - integer
+            - string
+          title: base_version
+          minimum: 0
+          format: int64
+      title: RemoveStopRequest
+      additionalProperties: false
     loci.trip.RenameStopRequest:
       type: object
       properties:
@@ -17491,6 +18489,33 @@ components:
           minimum: 0
           format: int64
       title: ReorderStopsRequest
+      additionalProperties: false
+    loci.trip.ReplaceStopRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+        stopId:
+          type: string
+          title: stop_id
+          maxLength: 100
+          minLength: 1
+        replacement:
+          title: replacement
+          $ref: '#/components/schemas/loci.trip.TripStop'
+        baseVersion:
+          type:
+            - integer
+            - string
+          title: base_version
+          minimum: 0
+          format: int64
+      title: ReplaceStopRequest
+      required:
+        - replacement
       additionalProperties: false
     loci.trip.SaveTripRequest:
       type: object
@@ -17812,6 +18837,11 @@ components:
             - type: "null"
           title: poi
           description: Hydrated POI details for rendering (read side only; not persisted here).
+        recommendationTrace:
+          oneOf:
+            - $ref: '#/components/schemas/loci.recommendation.RecommendationTrace'
+            - type: "null"
+          title: recommendation_trace
       title: TripStop
       additionalProperties: false
       description: TripStop is a single place on a day's timeline.
@@ -18237,6 +19267,9 @@ tags:
     description: AuthService defines authentication-related RPCs
   - name: loci.city.CityService
     description: CityService defines city-related RPCs
+  - name: loci.place.PlaceIntelligenceService
+  - name: loci.recommendation.RecommendationService
+    description: RecommendationService owns private learning controls and client-side exposure events.
   - name: loci.poi.POIService
     description: POIService defines POI-related RPCs
   - name: loci.interest.InterestService

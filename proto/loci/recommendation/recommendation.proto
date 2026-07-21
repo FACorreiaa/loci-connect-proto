@@ -1,0 +1,183 @@
+syntax = "proto3";
+
+package loci.recommendation;
+
+import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/recommendation;recommendation";
+
+// RecommendationChannel identifies where a recommendation was delivered.
+enum RecommendationChannel {
+  RECOMMENDATION_CHANNEL_UNSPECIFIED = 0;
+  RECOMMENDATION_CHANNEL_WEB = 1;
+  RECOMMENDATION_CHANNEL_MCP = 2;
+}
+
+// RecommendationSurface identifies the product experience that ranked an item.
+enum RecommendationSurface {
+  RECOMMENDATION_SURFACE_UNSPECIFIED = 0;
+  RECOMMENDATION_SURFACE_DISCOVER = 1;
+  RECOMMENDATION_SURFACE_NEARBY = 2;
+  RECOMMENDATION_SURFACE_CHAT = 3;
+  RECOMMENDATION_SURFACE_TRIP = 4;
+  RECOMMENDATION_SURFACE_PLACE = 5;
+}
+
+// RecommendationEventType separates exposure metrics from learning outcomes.
+enum RecommendationEventType {
+  RECOMMENDATION_EVENT_TYPE_UNSPECIFIED = 0;
+  RECOMMENDATION_EVENT_TYPE_DELIVERED = 1;
+  RECOMMENDATION_EVENT_TYPE_PRESENTED = 2;
+  RECOMMENDATION_EVENT_TYPE_OPENED = 3;
+  RECOMMENDATION_EVENT_TYPE_DISMISSED = 4;
+  RECOMMENDATION_EVENT_TYPE_FAVORITED = 5;
+  RECOMMENDATION_EVENT_TYPE_ADDED_TO_LIST = 6;
+  RECOMMENDATION_EVENT_TYPE_ADDED_TO_TRIP = 7;
+  RECOMMENDATION_EVENT_TYPE_KEPT_IN_TRIP = 8;
+  RECOMMENDATION_EVENT_TYPE_REMOVED_FROM_TRIP = 9;
+  RECOMMENDATION_EVENT_TYPE_EXPORTED = 10;
+  RECOMMENDATION_EVENT_TYPE_BOOKING_OPENED = 11;
+  RECOMMENDATION_EVENT_TYPE_VISIT_CONFIRMED = 12;
+  RECOMMENDATION_EVENT_TYPE_RATED = 13;
+}
+
+// RecommendationTrace is the opaque attribution data clients return with an
+// outcome. It contains no query text or precise user location.
+message RecommendationTrace {
+  string run_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string item_id = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  int32 rank = 3 [(buf.validate.field).int32 = {gte: 0}];
+  string algorithm_version = 4 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string experiment_variant = 5 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  RecommendationSurface surface = 6 [(buf.validate.field).enum = {defined_only: true}];
+  RecommendationChannel channel = 7 [(buf.validate.field).enum = {defined_only: true}];
+}
+
+message RecommendationEvent {
+  string client_event_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+    uuid: true
+  }];
+  RecommendationEventType event_type = 2 [(buf.validate.field).enum = {defined_only: true}];
+  RecommendationTrace trace = 3 [(buf.validate.field).required = true];
+  google.protobuf.Timestamp occurred_at = 4 [(buf.validate.field).required = true];
+  optional string poi_id = 5 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE
+    string: {
+      min_len: 1
+      max_len: 100
+    }
+  }];
+  optional string trip_id = 6 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE
+    string: {
+      min_len: 1
+      max_len: 100
+    }
+  }];
+  optional int32 rating = 7 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE
+    int32: {
+      gte: 1
+      lte: 5
+    }
+  }];
+  map<string, string> metadata = 8 [(buf.validate.field).map = {
+    max_pairs: 20
+    keys: {
+      string: {
+        min_len: 1
+        max_len: 50
+      }
+    }
+    values: {string: {max_len: 500}}
+  }];
+}
+
+message RecordEventsRequest {
+  repeated RecommendationEvent events = 1 [(buf.validate.field).repeated = {
+    min_items: 1
+    max_items: 50
+  }];
+}
+
+message RecordEventsResponse {
+  int32 accepted = 1 [(buf.validate.field).int32 = {gte: 0}];
+  int32 duplicates = 2 [(buf.validate.field).int32 = {gte: 0}];
+}
+
+message PersonalizationSettings {
+  bool personalization_enabled = 1;
+  bool contribute_aggregate = 2;
+  bool disclosure_seen = 3;
+  google.protobuf.Timestamp updated_at = 4 [(buf.validate.field).required = true];
+}
+
+message GetPersonalizationSettingsRequest {}
+
+message UpdatePersonalizationSettingsRequest {
+  bool personalization_enabled = 1;
+  bool contribute_aggregate = 2;
+  bool disclosure_seen = 3;
+}
+
+message TasteTrait {
+  string key = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string label = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
+  double score = 3 [(buf.validate.field).double = {
+    gte: -1
+    lte: 1
+  }];
+  double confidence = 4 [(buf.validate.field).double = {
+    gte: 0
+    lte: 1
+  }];
+  int32 evidence_count = 5 [(buf.validate.field).int32 = {gte: 0}];
+}
+
+message TasteProfile {
+  repeated TasteTrait traits = 1;
+  int32 feedback_count = 2 [(buf.validate.field).int32 = {gte: 0}];
+  string algorithm_version = 3 [(buf.validate.field).string = {max_len: 100}];
+  optional google.protobuf.Timestamp last_feedback_at = 4;
+  google.protobuf.Timestamp updated_at = 5 [(buf.validate.field).required = true];
+}
+
+message GetTasteProfileRequest {}
+
+message ResetTasteProfileRequest {
+  string confirmation = 1 [(buf.validate.field).string = {const: "RESET"}];
+}
+
+message ResetTasteProfileResponse {
+  bool success = 1;
+}
+
+// RecommendationService owns private learning controls and client-side exposure events.
+service RecommendationService {
+  rpc RecordEvents(RecordEventsRequest) returns (RecordEventsResponse);
+  rpc GetPersonalizationSettings(GetPersonalizationSettingsRequest) returns (PersonalizationSettings);
+  rpc UpdatePersonalizationSettings(UpdatePersonalizationSettingsRequest) returns (PersonalizationSettings);
+  rpc GetTasteProfile(GetTasteProfileRequest) returns (TasteProfile);
+  rpc ResetTasteProfile(ResetTasteProfileRequest) returns (ResetTasteProfileResponse);
+}
