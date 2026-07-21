@@ -5,6 +5,8 @@
 import type { GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv2";
 import type { Message } from "@bufbuild/protobuf";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
+import type { RecommendationTrace } from "../recommendation/recommendation_pb";
+import type { PlaceFacts } from "../place/place_intelligence_pb";
 import type { PaginationMetadata } from "../common/common_pb";
 
 /**
@@ -175,6 +177,16 @@ export declare type POIDetailedInfo = Message<"loci.poi.POIDetailedInfo"> & {
    * @generated from field: optional string recommendation_rationale = 30;
    */
   recommendationRationale?: string;
+
+  /**
+   * @generated from field: optional loci.recommendation.RecommendationTrace recommendation_trace = 31;
+   */
+  recommendationTrace?: RecommendationTrace;
+
+  /**
+   * @generated from field: optional loci.place.PlaceFacts verified_facts = 32;
+   */
+  verifiedFacts?: PlaceFacts;
 };
 
 /**
@@ -268,6 +280,11 @@ export declare type HotelDetailedInfo = Message<"loci.poi.HotelDetailedInfo"> & 
    * @generated from field: string llm_interaction_id = 16;
    */
   llmInteractionId: string;
+
+  /**
+   * @generated from field: optional loci.recommendation.RecommendationTrace recommendation_trace = 17;
+   */
+  recommendationTrace?: RecommendationTrace;
 };
 
 /**
@@ -366,6 +383,11 @@ export declare type RestaurantDetailedInfo = Message<"loci.poi.RestaurantDetaile
    * @generated from field: string llm_interaction_id = 17;
    */
   llmInteractionId: string;
+
+  /**
+   * @generated from field: optional loci.recommendation.RecommendationTrace recommendation_trace = 18;
+   */
+  recommendationTrace?: RecommendationTrace;
 };
 
 /**

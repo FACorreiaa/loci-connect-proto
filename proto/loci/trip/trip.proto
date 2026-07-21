@@ -8,6 +8,7 @@ import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
 import "loci/common/common.proto";
 import "loci/poi/poi.proto";
+import "loci/recommendation/recommendation.proto";
 
 // TripPace is how densely a day is packed.
 enum TripPace {
@@ -70,6 +71,7 @@ message TripStop {
   }];
   // Hydrated POI details for rendering (read side only; not persisted here).
   optional loci.poi.POIDetailedInfo poi = 9;
+  optional loci.recommendation.RecommendationTrace recommendation_trace = 10;
 }
 
 // TripDay is one day of a trip.
@@ -185,6 +187,26 @@ message SetConstraintRequest {
   int64 base_version = 3 [(buf.validate.field).int64 = {gte: 0}];
 }
 
+message AddStopRequest {
+  string trip_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string day_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  TripStop stop = 3 [(buf.validate.field).required = true];
+  int64 base_version = 4 [(buf.validate.field).int64 = {gte: 0}];
+}
+
+message RemoveStopRequest {
+  string trip_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string stop_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  int64 base_version = 3 [(buf.validate.field).int64 = {gte: 0}];
+}
+
+message ReplaceStopRequest {
+  string trip_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string stop_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  TripStop replacement = 3 [(buf.validate.field).required = true];
+  int64 base_version = 4 [(buf.validate.field).int64 = {gte: 0}];
+}
+
 // ExportFormat selects the export artifact.
 enum ExportFormat {
   EXPORT_FORMAT_UNSPECIFIED = 0;
@@ -216,5 +238,8 @@ service TripService {
   rpc RenameStop(RenameStopRequest) returns (TripDraft);
   rpc EditStopDuration(EditStopDurationRequest) returns (TripDraft);
   rpc SetConstraint(SetConstraintRequest) returns (TripDraft);
+  rpc AddStop(AddStopRequest) returns (TripDraft);
+  rpc RemoveStop(RemoveStopRequest) returns (TripDraft);
+  rpc ReplaceStop(ReplaceStopRequest) returns (TripDraft);
   rpc ExportTrip(ExportTripRequest) returns (ExportTripResponse);
 }

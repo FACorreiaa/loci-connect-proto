@@ -8,6 +8,8 @@ option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/poi;po
 import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
 import "loci/common/common.proto";
+import "loci/place/place_intelligence.proto";
+import "loci/recommendation/recommendation.proto";
 
 // POIDetailedInfo represents a point of interest
 message POIDetailedInfo {
@@ -95,6 +97,8 @@ message POIDetailedInfo {
     ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 1000}
   }];
+  optional loci.recommendation.RecommendationTrace recommendation_trace = 31;
+  optional loci.place.PlaceFacts verified_facts = 32;
 }
 
 // HotelDetailedInfo represents hotel-specific information
@@ -133,6 +137,7 @@ message HotelDetailedInfo {
     items: {string: {min_len: 1, max_len: 2048, uri: true}}
   }];
   string llm_interaction_id = 16 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  optional loci.recommendation.RecommendationTrace recommendation_trace = 17;
 }
 
 // RestaurantDetailedInfo represents restaurant-specific information
@@ -178,6 +183,7 @@ message RestaurantDetailedInfo {
   }];
   double rating = 16 [(buf.validate.field).double = {gte: 0, lte: 5}];
   string llm_interaction_id = 17 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  optional loci.recommendation.RecommendationTrace recommendation_trace = 18;
 }
 
 // POIFilters for filtering POIs

@@ -5,6 +5,7 @@
 import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv2";
 import type { Message } from "@bufbuild/protobuf";
 import type { POIDetailedInfo } from "../poi/poi_pb";
+import type { RecommendationTrace } from "../recommendation/recommendation_pb";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
 import type { PaginationMetadata, PaginationRequest } from "../common/common_pb";
 
@@ -121,6 +122,11 @@ export declare type TripStop = Message<"loci.trip.TripStop"> & {
    * @generated from field: optional loci.poi.POIDetailedInfo poi = 9;
    */
   poi?: POIDetailedInfo;
+
+  /**
+   * @generated from field: optional loci.recommendation.RecommendationTrace recommendation_trace = 10;
+   */
+  recommendationTrace?: RecommendationTrace;
 };
 
 /**
@@ -525,6 +531,94 @@ export declare type SetConstraintRequest = Message<"loci.trip.SetConstraintReque
 export declare const SetConstraintRequestSchema: GenMessage<SetConstraintRequest>;
 
 /**
+ * @generated from message loci.trip.AddStopRequest
+ */
+export declare type AddStopRequest = Message<"loci.trip.AddStopRequest"> & {
+  /**
+   * @generated from field: string trip_id = 1;
+   */
+  tripId: string;
+
+  /**
+   * @generated from field: string day_id = 2;
+   */
+  dayId: string;
+
+  /**
+   * @generated from field: loci.trip.TripStop stop = 3;
+   */
+  stop?: TripStop;
+
+  /**
+   * @generated from field: int64 base_version = 4;
+   */
+  baseVersion: bigint;
+};
+
+/**
+ * Describes the message loci.trip.AddStopRequest.
+ * Use `create(AddStopRequestSchema)` to create a new message.
+ */
+export declare const AddStopRequestSchema: GenMessage<AddStopRequest>;
+
+/**
+ * @generated from message loci.trip.RemoveStopRequest
+ */
+export declare type RemoveStopRequest = Message<"loci.trip.RemoveStopRequest"> & {
+  /**
+   * @generated from field: string trip_id = 1;
+   */
+  tripId: string;
+
+  /**
+   * @generated from field: string stop_id = 2;
+   */
+  stopId: string;
+
+  /**
+   * @generated from field: int64 base_version = 3;
+   */
+  baseVersion: bigint;
+};
+
+/**
+ * Describes the message loci.trip.RemoveStopRequest.
+ * Use `create(RemoveStopRequestSchema)` to create a new message.
+ */
+export declare const RemoveStopRequestSchema: GenMessage<RemoveStopRequest>;
+
+/**
+ * @generated from message loci.trip.ReplaceStopRequest
+ */
+export declare type ReplaceStopRequest = Message<"loci.trip.ReplaceStopRequest"> & {
+  /**
+   * @generated from field: string trip_id = 1;
+   */
+  tripId: string;
+
+  /**
+   * @generated from field: string stop_id = 2;
+   */
+  stopId: string;
+
+  /**
+   * @generated from field: loci.trip.TripStop replacement = 3;
+   */
+  replacement?: TripStop;
+
+  /**
+   * @generated from field: int64 base_version = 4;
+   */
+  baseVersion: bigint;
+};
+
+/**
+ * Describes the message loci.trip.ReplaceStopRequest.
+ * Use `create(ReplaceStopRequestSchema)` to create a new message.
+ */
+export declare const ReplaceStopRequestSchema: GenMessage<ReplaceStopRequest>;
+
+/**
  * @generated from message loci.trip.ExportTripRequest
  */
 export declare type ExportTripRequest = Message<"loci.trip.ExportTripRequest"> & {
@@ -709,6 +803,30 @@ export declare const TripService: GenService<{
   setConstraint: {
     methodKind: "unary";
     input: typeof SetConstraintRequestSchema;
+    output: typeof TripDraftSchema;
+  },
+  /**
+   * @generated from rpc loci.trip.TripService.AddStop
+   */
+  addStop: {
+    methodKind: "unary";
+    input: typeof AddStopRequestSchema;
+    output: typeof TripDraftSchema;
+  },
+  /**
+   * @generated from rpc loci.trip.TripService.RemoveStop
+   */
+  removeStop: {
+    methodKind: "unary";
+    input: typeof RemoveStopRequestSchema;
+    output: typeof TripDraftSchema;
+  },
+  /**
+   * @generated from rpc loci.trip.TripService.ReplaceStop
+   */
+  replaceStop: {
+    methodKind: "unary";
+    input: typeof ReplaceStopRequestSchema;
     output: typeof TripDraftSchema;
   },
   /**

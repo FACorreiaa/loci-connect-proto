@@ -5,6 +5,7 @@
 import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv2";
 import type { Message } from "@bufbuild/protobuf";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
+import type { RecommendationTrace } from "../recommendation/recommendation_pb";
 
 /**
  * Describes the file loci/list/list.proto.
@@ -168,6 +169,11 @@ export declare type ListItem = Message<"loci.list.ListItem"> & {
    * @generated from field: string item_ai_description = 13;
    */
   itemAiDescription: string;
+
+  /**
+   * @generated from field: optional loci.recommendation.RecommendationTrace recommendation_trace = 14;
+   */
+  recommendationTrace?: RecommendationTrace;
 };
 
 /**
@@ -875,6 +881,11 @@ export declare type AddListItemRequest = Message<"loci.list.AddListItemRequest">
    * @generated from field: string item_ai_description = 11;
    */
   itemAiDescription: string;
+
+  /**
+   * @generated from field: optional loci.recommendation.RecommendationTrace recommendation_trace = 12;
+   */
+  recommendationTrace?: RecommendationTrace;
 };
 
 /**
