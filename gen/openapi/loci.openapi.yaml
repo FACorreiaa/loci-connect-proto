@@ -3009,6 +3009,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.list.UpdateListItemResponse'
+  /loci.localcontext.LocalContextService/GetLocalContext:
+    post:
+      tags:
+        - loci.localcontext.LocalContextService
+      summary: GetLocalContext
+      operationId: loci.localcontext.LocalContextService.GetLocalContext
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.localcontext.GetLocalContextRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.localcontext.LocalContext'
   /loci.payment.v1.PaymentService/CancelSubscription:
     post:
       tags:
@@ -12093,6 +12128,114 @@ components:
         - updatedAt
       additionalProperties: false
       description: User saved itinerary
+    loci.localcontext.AlertKind:
+      type: string
+      title: AlertKind
+      enum:
+        - ALERT_KIND_UNSPECIFIED
+        - ALERT_KIND_CLOSURE
+        - ALERT_KIND_HOLIDAY
+        - ALERT_KIND_STRIKE
+      description: AlertKind classifies a trip-time heads-up.
+    loci.localcontext.GetLocalContextRequest:
+      type: object
+      properties:
+        latitude:
+          type: number
+          title: latitude
+          maximum: 90
+          minimum: -90
+          format: double
+        longitude:
+          type: number
+          title: longitude
+          maximum: 180
+          minimum: -180
+          format: double
+        days:
+          type: integer
+          title: days
+          maximum: 16
+          minimum: 0
+          format: int32
+          description: Forecast horizon in days (server clamps to what the provider supports).
+      title: GetLocalContextRequest
+      additionalProperties: false
+      description: GetLocalContextRequest asks for weather + alerts near a point.
+    loci.localcontext.LocalAlert:
+      type: object
+      properties:
+        kind:
+          title: kind
+          $ref: '#/components/schemas/loci.localcontext.AlertKind'
+        title:
+          type: string
+          title: title
+          maxLength: 300
+          minLength: 1
+        detail:
+          type: string
+          title: detail
+          maxLength: 1000
+        date:
+          oneOf:
+            - $ref: '#/components/schemas/google.protobuf.Timestamp'
+            - type: "null"
+          title: date
+      title: LocalAlert
+      additionalProperties: false
+      description: LocalAlert warns about something affecting a trip day (closure/holiday/strike).
+    loci.localcontext.LocalContext:
+      type: object
+      properties:
+        weather:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.localcontext.WeatherDay'
+          title: weather
+        alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.localcontext.LocalAlert'
+          title: alerts
+        weatherIsEstimated:
+          type: boolean
+          title: weather_is_estimated
+          description: |-
+            weather_is_estimated is true when a placeholder/stub provider was used
+             (no real weather key configured) — the client should label it as such.
+      title: LocalContext
+      additionalProperties: false
+      description: LocalContext is the trip-time local information for a location.
+    loci.localcontext.WeatherDay:
+      type: object
+      properties:
+        date:
+          title: date
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        highC:
+          type: number
+          title: high_c
+          format: double
+        lowC:
+          type: number
+          title: low_c
+          format: double
+        condition:
+          type: string
+          title: condition
+          maxLength: 100
+        precipProb:
+          type: number
+          title: precip_prob
+          maximum: 1
+          minimum: 0
+          format: double
+      title: WeatherDay
+      required:
+        - date
+      additionalProperties: false
+      description: WeatherDay is a one-day forecast summary.
     loci.payment.v1.CancelSubscriptionRequest:
       type: object
       properties:
@@ -19293,6 +19436,10 @@ tags:
     description: ItineraryService defines itinerary-related RPCs
   - name: loci.list.ListService
     description: ListService provides list and itinerary management functionality
+  - name: loci.localcontext.LocalContextService
+    description: |-
+      LocalContextService surfaces trip-time context (weather now; closures/holidays/
+       strikes are stubbed behind the same contract until real providers are wired).
   - name: loci.payment.v1.PaymentService
   - name: loci.recents.RecentsService
     description: RecentsService provides recent user interactions and activity tracking

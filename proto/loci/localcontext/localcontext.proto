@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package loci.localcontext;
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/localcontext;localcontext";
+
+import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+
+// AlertKind classifies a trip-time heads-up.
+enum AlertKind {
+  ALERT_KIND_UNSPECIFIED = 0;
+  ALERT_KIND_CLOSURE = 1;
+  ALERT_KIND_HOLIDAY = 2;
+  ALERT_KIND_STRIKE = 3;
+}
+
+// WeatherDay is a one-day forecast summary.
+message WeatherDay {
+  google.protobuf.Timestamp date = 1 [(buf.validate.field).required = true];
+  double high_c = 2;
+  double low_c = 3;
+  string condition = 4 [(buf.validate.field).string = {max_len: 100}];
+  double precip_prob = 5 [(buf.validate.field).double = {gte: 0, lte: 1}];
+}
+
+// LocalAlert warns about something affecting a trip day (closure/holiday/strike).
+message LocalAlert {
+  AlertKind kind = 1 [(buf.validate.field).enum = {defined_only: true}];
+  string title = 2 [(buf.validate.field).string = {min_len: 1, max_len: 300}];
+  string detail = 3 [(buf.validate.field).string = {max_len: 1000}];
+  optional google.protobuf.Timestamp date = 4;
+}
+
+// GetLocalContextRequest asks for weather + alerts near a point.
+message GetLocalContextRequest {
+  double latitude = 1 [(buf.validate.field).double = {gte: -90, lte: 90}];
+  double longitude = 2 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  // Forecast horizon in days (server clamps to what the provider supports).
+  int32 days = 3 [(buf.validate.field).int32 = {gte: 0, lte: 16}];
+}
+
+// LocalContext is the trip-time local information for a location.
+message LocalContext {
+  repeated WeatherDay weather = 1;
+  repeated LocalAlert alerts = 2;
+  // weather_is_estimated is true when a placeholder/stub provider was used
+  // (no real weather key configured) — the client should label it as such.
+  bool weather_is_estimated = 3;
+}
+
+// LocalContextService surfaces trip-time context (weather now; closures/holidays/
+// strikes are stubbed behind the same contract until real providers are wired).
+service LocalContextService {
+  rpc GetLocalContext(GetLocalContextRequest) returns (LocalContext);
+}
