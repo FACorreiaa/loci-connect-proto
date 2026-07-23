@@ -1661,6 +1661,41 @@
         
           
           <li>
+            <a href="#loci%2flocalcontext%2flocalcontext.proto">loci/localcontext/localcontext.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#loci.localcontext.GetLocalContextRequest"><span class="badge">M</span>GetLocalContextRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.localcontext.LocalAlert"><span class="badge">M</span>LocalAlert</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.localcontext.LocalContext"><span class="badge">M</span>LocalContext</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.localcontext.WeatherDay"><span class="badge">M</span>WeatherDay</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#loci.localcontext.AlertKind"><span class="badge">E</span>AlertKind</a>
+                </li>
+              
+              
+              
+                <li>
+                  <a href="#loci.localcontext.LocalContextService"><span class="badge">S</span>LocalContextService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#loci%2fpayment%2fv1%2fpayment.proto">loci/payment/v1/payment.proto</a>
             <ul>
               
@@ -18563,6 +18598,248 @@ starting a new turn; consumers dedup by StreamEvent.event_id. </p></td>
                 <td>SearchPublicLists</td>
                 <td><a href="#loci.list.SearchPublicListsRequest">SearchPublicListsRequest</a></td>
                 <td><a href="#loci.list.SearchPublicListsResponse">SearchPublicListsResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="loci/localcontext/localcontext.proto">loci/localcontext/localcontext.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="loci.localcontext.GetLocalContextRequest">GetLocalContextRequest</h3>
+        <p>GetLocalContextRequest asks for weather + alerts near a point.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>latitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>longitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>days</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Forecast horizon in days (server clamps to what the provider supports). </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.localcontext.LocalAlert">LocalAlert</h3>
+        <p>LocalAlert warns about something affecting a trip day (closure/holiday/strike).</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>kind</td>
+                  <td><a href="#loci.localcontext.AlertKind">AlertKind</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>title</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>detail</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>date</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.localcontext.LocalContext">LocalContext</h3>
+        <p>LocalContext is the trip-time local information for a location.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>weather</td>
+                  <td><a href="#loci.localcontext.WeatherDay">WeatherDay</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>alerts</td>
+                  <td><a href="#loci.localcontext.LocalAlert">LocalAlert</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>weather_is_estimated</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>weather_is_estimated is true when a placeholder/stub provider was used
+(no real weather key configured) — the client should label it as such. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.localcontext.WeatherDay">WeatherDay</h3>
+        <p>WeatherDay is a one-day forecast summary.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>date</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>high_c</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>low_c</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>condition</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>precip_prob</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+        <h3 id="loci.localcontext.AlertKind">AlertKind</h3>
+        <p>AlertKind classifies a trip-time heads-up.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>ALERT_KIND_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ALERT_KIND_CLOSURE</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ALERT_KIND_HOLIDAY</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ALERT_KIND_STRIKE</td>
+                <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+
+      
+
+      
+        <h3 id="loci.localcontext.LocalContextService">LocalContextService</h3>
+        <p>LocalContextService surfaces trip-time context (weather now; closures/holidays/</p><p>strikes are stubbed behind the same contract until real providers are wired).</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>GetLocalContext</td>
+                <td><a href="#loci.localcontext.GetLocalContextRequest">GetLocalContextRequest</a></td>
+                <td><a href="#loci.localcontext.LocalContext">LocalContext</a></td>
                 <td><p></p></td>
               </tr>
             
