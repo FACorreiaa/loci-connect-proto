@@ -922,6 +922,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.city.SearchCitiesResponse'
+  /loci.compare.v1.CompareService/CompareWeekend:
+    post:
+      tags:
+        - loci.compare.v1.CompareService
+      summary: CompareWeekend
+      operationId: loci.compare.v1.CompareService.CompareWeekend
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.compare.v1.CompareWeekendRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.compare.v1.CompareWeekendResponse'
   /loci.custom_auth.CustomAuthService/GetOAuthURL:
     post:
       tags:
@@ -8539,6 +8574,244 @@ components:
       title: Response
       additionalProperties: false
       description: Generic response wrapper for API responses
+    loci.compare.v1.BookingLink:
+      type: object
+      properties:
+        provider:
+          type: string
+          title: provider
+          maxLength: 100
+          minLength: 1
+        label:
+          type: string
+          title: label
+          maxLength: 200
+          minLength: 1
+        url:
+          type: string
+          title: url
+          maxLength: 2048
+          minLength: 1
+          format: uri
+      title: BookingLink
+      additionalProperties: false
+      description: BookingLink is a partner deeplink (Booking.com, TheFork, etc.).
+    loci.compare.v1.CityCompareColumn:
+      type: object
+      properties:
+        cityName:
+          type: string
+          title: city_name
+          maxLength: 200
+          minLength: 1
+        cityId:
+          type: string
+          title: city_id
+          maxLength: 100
+        country:
+          type: string
+          title: country
+          maxLength: 200
+        centerLat:
+          type: number
+          title: center_lat
+          format: double
+        centerLon:
+          type: number
+          title: center_lon
+          format: double
+        distanceKm:
+          type: number
+          title: distance_km
+          minimum: 0
+          format: double
+        travelMins:
+          type: integer
+          title: travel_mins
+          minimum: 0
+          format: int32
+        weather:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.localcontext.WeatherDay'
+          title: weather
+        weatherIsEstimated:
+          type: boolean
+          title: weather_is_estimated
+        topPois:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.poi.POIDetailedInfo'
+          title: top_pois
+        pros:
+          type: array
+          items:
+            type: string
+          title: pros
+        cons:
+          type: array
+          items:
+            type: string
+          title: cons
+        bookingOptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.compare.v1.BookingLink'
+          title: booking_options
+        transportOptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.compare.v1.TransportLink'
+          title: transport_options
+        staySnippet:
+          type: string
+          title: stay_snippet
+          maxLength: 500
+        eatSnippet:
+          type: string
+          title: eat_snippet
+          maxLength: 500
+      title: CityCompareColumn
+      additionalProperties: false
+      description: CityCompareColumn is one candidate city's side-by-side summary.
+    loci.compare.v1.CompareRecommendation:
+      type: string
+      title: CompareRecommendation
+      enum:
+        - COMPARE_RECOMMENDATION_UNSPECIFIED
+        - COMPARE_RECOMMENDATION_FIRST
+        - COMPARE_RECOMMENDATION_SECOND
+        - COMPARE_RECOMMENDATION_BOTH
+      description: CompareRecommendation is the server's pick among candidates (or both).
+    loci.compare.v1.CompareWeekendRequest:
+      type: object
+      properties:
+        originCity:
+          type:
+            - string
+            - "null"
+          title: origin_city
+          maxLength: 200
+        originLat:
+          type:
+            - number
+            - "null"
+          title: origin_lat
+          maximum: 90
+          minimum: -90
+          format: double
+        originLon:
+          type:
+            - number
+            - "null"
+          title: origin_lon
+          maximum: 180
+          minimum: -180
+          format: double
+        candidateCityNames:
+          type: array
+          items:
+            type: string
+            maxLength: 200
+            minLength: 1
+          title: candidate_city_names
+          maxItems: 3
+          minItems: 2
+        startDate:
+          title: start_date
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        endDate:
+          title: end_date
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        profileId:
+          type:
+            - string
+            - "null"
+          title: profile_id
+          maxLength: 100
+      title: CompareWeekendRequest
+      additionalProperties: false
+      description: CompareWeekendRequest compares 2–3 candidate cities for a short trip window.
+    loci.compare.v1.CompareWeekendResponse:
+      type: object
+      properties:
+        originCity:
+          type: string
+          title: origin_city
+        originLat:
+          type: number
+          title: origin_lat
+          format: double
+        originLon:
+          type: number
+          title: origin_lon
+          format: double
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.compare.v1.CityCompareColumn'
+          title: columns
+        dualCityOption:
+          title: dual_city_option
+          $ref: '#/components/schemas/loci.compare.v1.DualCityOption'
+        recommendation:
+          title: recommendation
+          $ref: '#/components/schemas/loci.compare.v1.CompareRecommendation'
+        recommendationReason:
+          type: string
+          title: recommendation_reason
+          maxLength: 1000
+      title: CompareWeekendResponse
+      additionalProperties: false
+      description: CompareWeekendResponse holds columns plus an optional dual-city outline.
+    loci.compare.v1.DualCityOption:
+      type: object
+      properties:
+        feasible:
+          type: boolean
+          title: feasible
+        outline:
+          type: string
+          title: outline
+          maxLength: 2000
+        totalTravelMins:
+          type: integer
+          title: total_travel_mins
+          minimum: 0
+          format: int32
+        proOnly:
+          type: boolean
+          title: pro_only
+      title: DualCityOption
+      additionalProperties: false
+      description: DualCityOption describes whether a two-city weekend is feasible.
+    loci.compare.v1.TransportLink:
+      type: object
+      properties:
+        mode:
+          type: string
+          title: mode
+          maxLength: 50
+          minLength: 1
+        summary:
+          type: string
+          title: summary
+          maxLength: 300
+        durationMins:
+          type: integer
+          title: duration_mins
+          minimum: 0
+          format: int32
+        url:
+          type:
+            - string
+            - "null"
+          title: url
+          maxLength: 2048
+          format: uri
+      title: TransportLink
+      additionalProperties: false
+      description: TransportLink is a ride/transit deeplink or estimate.
     loci.custom_auth.GetOAuthURLRequest:
       type: object
       properties:
@@ -19420,6 +19693,12 @@ tags:
   - name: loci.profile.ProfileService
     description: ProfileService defines profile-related RPCs
   - name: loci.chat.ChatService
+  - name: loci.localcontext.LocalContextService
+    description: |-
+      LocalContextService surfaces trip-time context (weather now; closures/holidays/
+       strikes are stubbed behind the same contract until real providers are wired).
+  - name: loci.compare.v1.CompareService
+    description: CompareService compares weekend destinations side-by-side.
   - name: loci.custom_auth.CustomAuthService
     description: CustomAuthService handles alternative authentication methods (OAuth, Phone)
   - name: loci.discover.DiscoverService
@@ -19436,10 +19715,6 @@ tags:
     description: ItineraryService defines itinerary-related RPCs
   - name: loci.list.ListService
     description: ListService provides list and itinerary management functionality
-  - name: loci.localcontext.LocalContextService
-    description: |-
-      LocalContextService surfaces trip-time context (weather now; closures/holidays/
-       strikes are stubbed behind the same contract until real providers are wired).
   - name: loci.payment.v1.PaymentService
   - name: loci.recents.RecentsService
     description: RecentsService provides recent user interactions and activity tracking

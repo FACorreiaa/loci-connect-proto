@@ -1016,6 +1016,84 @@
         
           
           <li>
+            <a href="#loci%2flocalcontext%2flocalcontext.proto">loci/localcontext/localcontext.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#loci.localcontext.GetLocalContextRequest"><span class="badge">M</span>GetLocalContextRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.localcontext.LocalAlert"><span class="badge">M</span>LocalAlert</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.localcontext.LocalContext"><span class="badge">M</span>LocalContext</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.localcontext.WeatherDay"><span class="badge">M</span>WeatherDay</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#loci.localcontext.AlertKind"><span class="badge">E</span>AlertKind</a>
+                </li>
+              
+              
+              
+                <li>
+                  <a href="#loci.localcontext.LocalContextService"><span class="badge">S</span>LocalContextService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
+            <a href="#loci%2fcompare%2fv1%2fcompare.proto">loci/compare/v1/compare.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#loci.compare.v1.BookingLink"><span class="badge">M</span>BookingLink</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.compare.v1.CityCompareColumn"><span class="badge">M</span>CityCompareColumn</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.compare.v1.CompareWeekendRequest"><span class="badge">M</span>CompareWeekendRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.compare.v1.CompareWeekendResponse"><span class="badge">M</span>CompareWeekendResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.compare.v1.DualCityOption"><span class="badge">M</span>DualCityOption</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.compare.v1.TransportLink"><span class="badge">M</span>TransportLink</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#loci.compare.v1.CompareRecommendation"><span class="badge">E</span>CompareRecommendation</a>
+                </li>
+              
+              
+              
+                <li>
+                  <a href="#loci.compare.v1.CompareService"><span class="badge">S</span>CompareService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#loci%2fcustom_auth%2fcustom_auth.proto">loci/custom_auth/custom_auth.proto</a>
             <ul>
               
@@ -1654,41 +1732,6 @@
               
                 <li>
                   <a href="#loci.list.ListService"><span class="badge">S</span>ListService</a>
-                </li>
-              
-            </ul>
-          </li>
-        
-          
-          <li>
-            <a href="#loci%2flocalcontext%2flocalcontext.proto">loci/localcontext/localcontext.proto</a>
-            <ul>
-              
-                <li>
-                  <a href="#loci.localcontext.GetLocalContextRequest"><span class="badge">M</span>GetLocalContextRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#loci.localcontext.LocalAlert"><span class="badge">M</span>LocalAlert</a>
-                </li>
-              
-                <li>
-                  <a href="#loci.localcontext.LocalContext"><span class="badge">M</span>LocalContext</a>
-                </li>
-              
-                <li>
-                  <a href="#loci.localcontext.WeatherDay"><span class="badge">M</span>WeatherDay</a>
-                </li>
-              
-              
-                <li>
-                  <a href="#loci.localcontext.AlertKind"><span class="badge">E</span>AlertKind</a>
-                </li>
-              
-              
-              
-                <li>
-                  <a href="#loci.localcontext.LocalContextService"><span class="badge">S</span>LocalContextService</a>
                 </li>
               
             </ul>
@@ -11491,6 +11534,705 @@ starting a new turn; consumers dedup by StreamEvent.event_id. </p></td>
     
       
       <div class="file-heading">
+        <h2 id="loci/localcontext/localcontext.proto">loci/localcontext/localcontext.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="loci.localcontext.GetLocalContextRequest">GetLocalContextRequest</h3>
+        <p>GetLocalContextRequest asks for weather + alerts near a point.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>latitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>longitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>days</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Forecast horizon in days (server clamps to what the provider supports). </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.localcontext.LocalAlert">LocalAlert</h3>
+        <p>LocalAlert warns about something affecting a trip day (closure/holiday/strike).</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>kind</td>
+                  <td><a href="#loci.localcontext.AlertKind">AlertKind</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>title</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>detail</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>date</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.localcontext.LocalContext">LocalContext</h3>
+        <p>LocalContext is the trip-time local information for a location.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>weather</td>
+                  <td><a href="#loci.localcontext.WeatherDay">WeatherDay</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>alerts</td>
+                  <td><a href="#loci.localcontext.LocalAlert">LocalAlert</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>weather_is_estimated</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>weather_is_estimated is true when a placeholder/stub provider was used
+(no real weather key configured) — the client should label it as such. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.localcontext.WeatherDay">WeatherDay</h3>
+        <p>WeatherDay is a one-day forecast summary.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>date</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>high_c</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>low_c</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>condition</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>precip_prob</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+        <h3 id="loci.localcontext.AlertKind">AlertKind</h3>
+        <p>AlertKind classifies a trip-time heads-up.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>ALERT_KIND_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ALERT_KIND_CLOSURE</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ALERT_KIND_HOLIDAY</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ALERT_KIND_STRIKE</td>
+                <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+
+      
+
+      
+        <h3 id="loci.localcontext.LocalContextService">LocalContextService</h3>
+        <p>LocalContextService surfaces trip-time context (weather now; closures/holidays/</p><p>strikes are stubbed behind the same contract until real providers are wired).</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>GetLocalContext</td>
+                <td><a href="#loci.localcontext.GetLocalContextRequest">GetLocalContextRequest</a></td>
+                <td><a href="#loci.localcontext.LocalContext">LocalContext</a></td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="loci/compare/v1/compare.proto">loci/compare/v1/compare.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="loci.compare.v1.BookingLink">BookingLink</h3>
+        <p>BookingLink is a partner deeplink (Booking.com, TheFork, etc.).</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>provider</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>label</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.compare.v1.CityCompareColumn">CityCompareColumn</h3>
+        <p>CityCompareColumn is one candidate city's side-by-side summary.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>country</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>center_lat</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>center_lon</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>distance_km</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>travel_mins</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>weather</td>
+                  <td><a href="#loci.localcontext.WeatherDay">loci.localcontext.WeatherDay</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>weather_is_estimated</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>top_pois</td>
+                  <td><a href="#loci.poi.POIDetailedInfo">loci.poi.POIDetailedInfo</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>pros</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>cons</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>booking_options</td>
+                  <td><a href="#loci.compare.v1.BookingLink">BookingLink</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>transport_options</td>
+                  <td><a href="#loci.compare.v1.TransportLink">TransportLink</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>stay_snippet</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>eat_snippet</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.compare.v1.CompareWeekendRequest">CompareWeekendRequest</h3>
+        <p>CompareWeekendRequest compares 2–3 candidate cities for a short trip window.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>origin_city</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>origin_lat</td>
+                  <td><a href="#double">double</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>origin_lon</td>
+                  <td><a href="#double">double</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>candidate_city_names</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>start_date</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>end_date</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>profile_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.compare.v1.CompareWeekendResponse">CompareWeekendResponse</h3>
+        <p>CompareWeekendResponse holds columns plus an optional dual-city outline.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>origin_city</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>origin_lat</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>origin_lon</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>columns</td>
+                  <td><a href="#loci.compare.v1.CityCompareColumn">CityCompareColumn</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>dual_city_option</td>
+                  <td><a href="#loci.compare.v1.DualCityOption">DualCityOption</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>recommendation</td>
+                  <td><a href="#loci.compare.v1.CompareRecommendation">CompareRecommendation</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>recommendation_reason</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.compare.v1.DualCityOption">DualCityOption</h3>
+        <p>DualCityOption describes whether a two-city weekend is feasible.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>feasible</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>outline</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>total_travel_mins</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>pro_only</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.compare.v1.TransportLink">TransportLink</h3>
+        <p>TransportLink is a ride/transit deeplink or estimate.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>mode</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>summary</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>duration_mins</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>url</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+        <h3 id="loci.compare.v1.CompareRecommendation">CompareRecommendation</h3>
+        <p>CompareRecommendation is the server's pick among candidates (or both).</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>COMPARE_RECOMMENDATION_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>COMPARE_RECOMMENDATION_FIRST</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>COMPARE_RECOMMENDATION_SECOND</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>COMPARE_RECOMMENDATION_BOTH</td>
+                <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+
+      
+
+      
+        <h3 id="loci.compare.v1.CompareService">CompareService</h3>
+        <p>CompareService compares weekend destinations side-by-side.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>CompareWeekend</td>
+                <td><a href="#loci.compare.v1.CompareWeekendRequest">CompareWeekendRequest</a></td>
+                <td><a href="#loci.compare.v1.CompareWeekendResponse">CompareWeekendResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+    
+      
+      <div class="file-heading">
         <h2 id="loci/custom_auth/custom_auth.proto">loci/custom_auth/custom_auth.proto</h2><a href="#title">Top</a>
       </div>
       <p></p>
@@ -18598,248 +19340,6 @@ starting a new turn; consumers dedup by StreamEvent.event_id. </p></td>
                 <td>SearchPublicLists</td>
                 <td><a href="#loci.list.SearchPublicListsRequest">SearchPublicListsRequest</a></td>
                 <td><a href="#loci.list.SearchPublicListsResponse">SearchPublicListsResponse</a></td>
-                <td><p></p></td>
-              </tr>
-            
-          </tbody>
-        </table>
-
-        
-    
-      
-      <div class="file-heading">
-        <h2 id="loci/localcontext/localcontext.proto">loci/localcontext/localcontext.proto</h2><a href="#title">Top</a>
-      </div>
-      <p></p>
-
-      
-        <h3 id="loci.localcontext.GetLocalContextRequest">GetLocalContextRequest</h3>
-        <p>GetLocalContextRequest asks for weather + alerts near a point.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>latitude</td>
-                  <td><a href="#double">double</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>longitude</td>
-                  <td><a href="#double">double</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>days</td>
-                  <td><a href="#int32">int32</a></td>
-                  <td></td>
-                  <td><p>Forecast horizon in days (server clamps to what the provider supports). </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="loci.localcontext.LocalAlert">LocalAlert</h3>
-        <p>LocalAlert warns about something affecting a trip day (closure/holiday/strike).</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>kind</td>
-                  <td><a href="#loci.localcontext.AlertKind">AlertKind</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>title</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>detail</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>date</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td>optional</td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="loci.localcontext.LocalContext">LocalContext</h3>
-        <p>LocalContext is the trip-time local information for a location.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>weather</td>
-                  <td><a href="#loci.localcontext.WeatherDay">WeatherDay</a></td>
-                  <td>repeated</td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>alerts</td>
-                  <td><a href="#loci.localcontext.LocalAlert">LocalAlert</a></td>
-                  <td>repeated</td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>weather_is_estimated</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>weather_is_estimated is true when a placeholder/stub provider was used
-(no real weather key configured) — the client should label it as such. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="loci.localcontext.WeatherDay">WeatherDay</h3>
-        <p>WeatherDay is a one-day forecast summary.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>date</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>high_c</td>
-                  <td><a href="#double">double</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>low_c</td>
-                  <td><a href="#double">double</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>condition</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>precip_prob</td>
-                  <td><a href="#double">double</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-
-      
-        <h3 id="loci.localcontext.AlertKind">AlertKind</h3>
-        <p>AlertKind classifies a trip-time heads-up.</p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>ALERT_KIND_UNSPECIFIED</td>
-                <td>0</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>ALERT_KIND_CLOSURE</td>
-                <td>1</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>ALERT_KIND_HOLIDAY</td>
-                <td>2</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>ALERT_KIND_STRIKE</td>
-                <td>3</td>
-                <td><p></p></td>
-              </tr>
-            
-          </tbody>
-        </table>
-      
-
-      
-
-      
-        <h3 id="loci.localcontext.LocalContextService">LocalContextService</h3>
-        <p>LocalContextService surfaces trip-time context (weather now; closures/holidays/</p><p>strikes are stubbed behind the same contract until real providers are wired).</p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>GetLocalContext</td>
-                <td><a href="#loci.localcontext.GetLocalContextRequest">GetLocalContextRequest</a></td>
-                <td><a href="#loci.localcontext.LocalContext">LocalContext</a></td>
                 <td><p></p></td>
               </tr>
             
