@@ -57,20 +57,42 @@ const (
 	// AuthServiceResetPasswordProcedure is the fully-qualified name of the AuthService's ResetPassword
 	// RPC.
 	AuthServiceResetPasswordProcedure = "/loci.auth.AuthService/ResetPassword"
+	// AuthServiceVerifyMFAProcedure is the fully-qualified name of the AuthService's VerifyMFA RPC.
+	AuthServiceVerifyMFAProcedure = "/loci.auth.AuthService/VerifyMFA"
+	// AuthServiceBeginMFAEnrollmentProcedure is the fully-qualified name of the AuthService's
+	// BeginMFAEnrollment RPC.
+	AuthServiceBeginMFAEnrollmentProcedure = "/loci.auth.AuthService/BeginMFAEnrollment"
+	// AuthServiceConfirmMFAEnrollmentProcedure is the fully-qualified name of the AuthService's
+	// ConfirmMFAEnrollment RPC.
+	AuthServiceConfirmMFAEnrollmentProcedure = "/loci.auth.AuthService/ConfirmMFAEnrollment"
+	// AuthServiceDisableMFAProcedure is the fully-qualified name of the AuthService's DisableMFA RPC.
+	AuthServiceDisableMFAProcedure = "/loci.auth.AuthService/DisableMFA"
+	// AuthServiceRegenerateRecoveryCodesProcedure is the fully-qualified name of the AuthService's
+	// RegenerateRecoveryCodes RPC.
+	AuthServiceRegenerateRecoveryCodesProcedure = "/loci.auth.AuthService/RegenerateRecoveryCodes"
+	// AuthServiceGetMFAStatusProcedure is the fully-qualified name of the AuthService's GetMFAStatus
+	// RPC.
+	AuthServiceGetMFAStatusProcedure = "/loci.auth.AuthService/GetMFAStatus"
 )
 
 // These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
 var (
-	authServiceServiceDescriptor               = auth.File_loci_auth_auth_proto.Services().ByName("AuthService")
-	authServiceLoginMethodDescriptor           = authServiceServiceDescriptor.Methods().ByName("Login")
-	authServiceRegisterMethodDescriptor        = authServiceServiceDescriptor.Methods().ByName("Register")
-	authServiceRefreshTokenMethodDescriptor    = authServiceServiceDescriptor.Methods().ByName("RefreshToken")
-	authServiceValidateSessionMethodDescriptor = authServiceServiceDescriptor.Methods().ByName("ValidateSession")
-	authServiceChangePasswordMethodDescriptor  = authServiceServiceDescriptor.Methods().ByName("ChangePassword")
-	authServiceChangeEmailMethodDescriptor     = authServiceServiceDescriptor.Methods().ByName("ChangeEmail")
-	authServiceLogoutMethodDescriptor          = authServiceServiceDescriptor.Methods().ByName("Logout")
-	authServiceForgotPasswordMethodDescriptor  = authServiceServiceDescriptor.Methods().ByName("ForgotPassword")
-	authServiceResetPasswordMethodDescriptor   = authServiceServiceDescriptor.Methods().ByName("ResetPassword")
+	authServiceServiceDescriptor                       = auth.File_loci_auth_auth_proto.Services().ByName("AuthService")
+	authServiceLoginMethodDescriptor                   = authServiceServiceDescriptor.Methods().ByName("Login")
+	authServiceRegisterMethodDescriptor                = authServiceServiceDescriptor.Methods().ByName("Register")
+	authServiceRefreshTokenMethodDescriptor            = authServiceServiceDescriptor.Methods().ByName("RefreshToken")
+	authServiceValidateSessionMethodDescriptor         = authServiceServiceDescriptor.Methods().ByName("ValidateSession")
+	authServiceChangePasswordMethodDescriptor          = authServiceServiceDescriptor.Methods().ByName("ChangePassword")
+	authServiceChangeEmailMethodDescriptor             = authServiceServiceDescriptor.Methods().ByName("ChangeEmail")
+	authServiceLogoutMethodDescriptor                  = authServiceServiceDescriptor.Methods().ByName("Logout")
+	authServiceForgotPasswordMethodDescriptor          = authServiceServiceDescriptor.Methods().ByName("ForgotPassword")
+	authServiceResetPasswordMethodDescriptor           = authServiceServiceDescriptor.Methods().ByName("ResetPassword")
+	authServiceVerifyMFAMethodDescriptor               = authServiceServiceDescriptor.Methods().ByName("VerifyMFA")
+	authServiceBeginMFAEnrollmentMethodDescriptor      = authServiceServiceDescriptor.Methods().ByName("BeginMFAEnrollment")
+	authServiceConfirmMFAEnrollmentMethodDescriptor    = authServiceServiceDescriptor.Methods().ByName("ConfirmMFAEnrollment")
+	authServiceDisableMFAMethodDescriptor              = authServiceServiceDescriptor.Methods().ByName("DisableMFA")
+	authServiceRegenerateRecoveryCodesMethodDescriptor = authServiceServiceDescriptor.Methods().ByName("RegenerateRecoveryCodes")
+	authServiceGetMFAStatusMethodDescriptor            = authServiceServiceDescriptor.Methods().ByName("GetMFAStatus")
 )
 
 // AuthServiceClient is a client for the loci.auth.AuthService service.
@@ -85,6 +107,17 @@ type AuthServiceClient interface {
 	// Password reset flow (does not require authentication)
 	ForgotPassword(context.Context, *connect.Request[auth.ForgotPasswordRequest]) (*connect.Response[common.Response], error)
 	ResetPassword(context.Context, *connect.Request[auth.ResetPasswordRequest]) (*connect.Response[common.Response], error)
+	// Multi-factor auth.
+	//
+	// VerifyMFA is unauthenticated by design: it completes a login, so the caller
+	// has no access token yet. It authenticates via the mfa_token from Login.
+	VerifyMFA(context.Context, *connect.Request[auth.VerifyMFARequest]) (*connect.Response[auth.LoginResponse], error)
+	// The rest require a valid access token; the user is taken from it.
+	BeginMFAEnrollment(context.Context, *connect.Request[auth.BeginMFAEnrollmentRequest]) (*connect.Response[auth.BeginMFAEnrollmentResponse], error)
+	ConfirmMFAEnrollment(context.Context, *connect.Request[auth.ConfirmMFAEnrollmentRequest]) (*connect.Response[auth.ConfirmMFAEnrollmentResponse], error)
+	DisableMFA(context.Context, *connect.Request[auth.DisableMFARequest]) (*connect.Response[common.Response], error)
+	RegenerateRecoveryCodes(context.Context, *connect.Request[auth.RegenerateRecoveryCodesRequest]) (*connect.Response[auth.RegenerateRecoveryCodesResponse], error)
+	GetMFAStatus(context.Context, *connect.Request[auth.GetMFAStatusRequest]) (*connect.Response[auth.GetMFAStatusResponse], error)
 }
 
 // NewAuthServiceClient constructs a client for the loci.auth.AuthService service. By default, it
@@ -151,20 +184,62 @@ func NewAuthServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			connect.WithSchema(authServiceResetPasswordMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
+		verifyMFA: connect.NewClient[auth.VerifyMFARequest, auth.LoginResponse](
+			httpClient,
+			baseURL+AuthServiceVerifyMFAProcedure,
+			connect.WithSchema(authServiceVerifyMFAMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		beginMFAEnrollment: connect.NewClient[auth.BeginMFAEnrollmentRequest, auth.BeginMFAEnrollmentResponse](
+			httpClient,
+			baseURL+AuthServiceBeginMFAEnrollmentProcedure,
+			connect.WithSchema(authServiceBeginMFAEnrollmentMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		confirmMFAEnrollment: connect.NewClient[auth.ConfirmMFAEnrollmentRequest, auth.ConfirmMFAEnrollmentResponse](
+			httpClient,
+			baseURL+AuthServiceConfirmMFAEnrollmentProcedure,
+			connect.WithSchema(authServiceConfirmMFAEnrollmentMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		disableMFA: connect.NewClient[auth.DisableMFARequest, common.Response](
+			httpClient,
+			baseURL+AuthServiceDisableMFAProcedure,
+			connect.WithSchema(authServiceDisableMFAMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		regenerateRecoveryCodes: connect.NewClient[auth.RegenerateRecoveryCodesRequest, auth.RegenerateRecoveryCodesResponse](
+			httpClient,
+			baseURL+AuthServiceRegenerateRecoveryCodesProcedure,
+			connect.WithSchema(authServiceRegenerateRecoveryCodesMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		getMFAStatus: connect.NewClient[auth.GetMFAStatusRequest, auth.GetMFAStatusResponse](
+			httpClient,
+			baseURL+AuthServiceGetMFAStatusProcedure,
+			connect.WithSchema(authServiceGetMFAStatusMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
 // authServiceClient implements AuthServiceClient.
 type authServiceClient struct {
-	login           *connect.Client[auth.LoginRequest, auth.LoginResponse]
-	register        *connect.Client[auth.RegisterRequest, common.Response]
-	refreshToken    *connect.Client[auth.RefreshTokenRequest, auth.TokenResponse]
-	validateSession *connect.Client[auth.ValidateSessionRequest, auth.ValidateSessionResponse]
-	changePassword  *connect.Client[auth.ChangePasswordRequest, common.Response]
-	changeEmail     *connect.Client[auth.ChangeEmailRequest, common.Response]
-	logout          *connect.Client[auth.LogoutRequest, common.Response]
-	forgotPassword  *connect.Client[auth.ForgotPasswordRequest, common.Response]
-	resetPassword   *connect.Client[auth.ResetPasswordRequest, common.Response]
+	login                   *connect.Client[auth.LoginRequest, auth.LoginResponse]
+	register                *connect.Client[auth.RegisterRequest, common.Response]
+	refreshToken            *connect.Client[auth.RefreshTokenRequest, auth.TokenResponse]
+	validateSession         *connect.Client[auth.ValidateSessionRequest, auth.ValidateSessionResponse]
+	changePassword          *connect.Client[auth.ChangePasswordRequest, common.Response]
+	changeEmail             *connect.Client[auth.ChangeEmailRequest, common.Response]
+	logout                  *connect.Client[auth.LogoutRequest, common.Response]
+	forgotPassword          *connect.Client[auth.ForgotPasswordRequest, common.Response]
+	resetPassword           *connect.Client[auth.ResetPasswordRequest, common.Response]
+	verifyMFA               *connect.Client[auth.VerifyMFARequest, auth.LoginResponse]
+	beginMFAEnrollment      *connect.Client[auth.BeginMFAEnrollmentRequest, auth.BeginMFAEnrollmentResponse]
+	confirmMFAEnrollment    *connect.Client[auth.ConfirmMFAEnrollmentRequest, auth.ConfirmMFAEnrollmentResponse]
+	disableMFA              *connect.Client[auth.DisableMFARequest, common.Response]
+	regenerateRecoveryCodes *connect.Client[auth.RegenerateRecoveryCodesRequest, auth.RegenerateRecoveryCodesResponse]
+	getMFAStatus            *connect.Client[auth.GetMFAStatusRequest, auth.GetMFAStatusResponse]
 }
 
 // Login calls loci.auth.AuthService.Login.
@@ -212,6 +287,36 @@ func (c *authServiceClient) ResetPassword(ctx context.Context, req *connect.Requ
 	return c.resetPassword.CallUnary(ctx, req)
 }
 
+// VerifyMFA calls loci.auth.AuthService.VerifyMFA.
+func (c *authServiceClient) VerifyMFA(ctx context.Context, req *connect.Request[auth.VerifyMFARequest]) (*connect.Response[auth.LoginResponse], error) {
+	return c.verifyMFA.CallUnary(ctx, req)
+}
+
+// BeginMFAEnrollment calls loci.auth.AuthService.BeginMFAEnrollment.
+func (c *authServiceClient) BeginMFAEnrollment(ctx context.Context, req *connect.Request[auth.BeginMFAEnrollmentRequest]) (*connect.Response[auth.BeginMFAEnrollmentResponse], error) {
+	return c.beginMFAEnrollment.CallUnary(ctx, req)
+}
+
+// ConfirmMFAEnrollment calls loci.auth.AuthService.ConfirmMFAEnrollment.
+func (c *authServiceClient) ConfirmMFAEnrollment(ctx context.Context, req *connect.Request[auth.ConfirmMFAEnrollmentRequest]) (*connect.Response[auth.ConfirmMFAEnrollmentResponse], error) {
+	return c.confirmMFAEnrollment.CallUnary(ctx, req)
+}
+
+// DisableMFA calls loci.auth.AuthService.DisableMFA.
+func (c *authServiceClient) DisableMFA(ctx context.Context, req *connect.Request[auth.DisableMFARequest]) (*connect.Response[common.Response], error) {
+	return c.disableMFA.CallUnary(ctx, req)
+}
+
+// RegenerateRecoveryCodes calls loci.auth.AuthService.RegenerateRecoveryCodes.
+func (c *authServiceClient) RegenerateRecoveryCodes(ctx context.Context, req *connect.Request[auth.RegenerateRecoveryCodesRequest]) (*connect.Response[auth.RegenerateRecoveryCodesResponse], error) {
+	return c.regenerateRecoveryCodes.CallUnary(ctx, req)
+}
+
+// GetMFAStatus calls loci.auth.AuthService.GetMFAStatus.
+func (c *authServiceClient) GetMFAStatus(ctx context.Context, req *connect.Request[auth.GetMFAStatusRequest]) (*connect.Response[auth.GetMFAStatusResponse], error) {
+	return c.getMFAStatus.CallUnary(ctx, req)
+}
+
 // AuthServiceHandler is an implementation of the loci.auth.AuthService service.
 type AuthServiceHandler interface {
 	Login(context.Context, *connect.Request[auth.LoginRequest]) (*connect.Response[auth.LoginResponse], error)
@@ -224,6 +329,17 @@ type AuthServiceHandler interface {
 	// Password reset flow (does not require authentication)
 	ForgotPassword(context.Context, *connect.Request[auth.ForgotPasswordRequest]) (*connect.Response[common.Response], error)
 	ResetPassword(context.Context, *connect.Request[auth.ResetPasswordRequest]) (*connect.Response[common.Response], error)
+	// Multi-factor auth.
+	//
+	// VerifyMFA is unauthenticated by design: it completes a login, so the caller
+	// has no access token yet. It authenticates via the mfa_token from Login.
+	VerifyMFA(context.Context, *connect.Request[auth.VerifyMFARequest]) (*connect.Response[auth.LoginResponse], error)
+	// The rest require a valid access token; the user is taken from it.
+	BeginMFAEnrollment(context.Context, *connect.Request[auth.BeginMFAEnrollmentRequest]) (*connect.Response[auth.BeginMFAEnrollmentResponse], error)
+	ConfirmMFAEnrollment(context.Context, *connect.Request[auth.ConfirmMFAEnrollmentRequest]) (*connect.Response[auth.ConfirmMFAEnrollmentResponse], error)
+	DisableMFA(context.Context, *connect.Request[auth.DisableMFARequest]) (*connect.Response[common.Response], error)
+	RegenerateRecoveryCodes(context.Context, *connect.Request[auth.RegenerateRecoveryCodesRequest]) (*connect.Response[auth.RegenerateRecoveryCodesResponse], error)
+	GetMFAStatus(context.Context, *connect.Request[auth.GetMFAStatusRequest]) (*connect.Response[auth.GetMFAStatusResponse], error)
 }
 
 // NewAuthServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -286,6 +402,42 @@ func NewAuthServiceHandler(svc AuthServiceHandler, opts ...connect.HandlerOption
 		connect.WithSchema(authServiceResetPasswordMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
+	authServiceVerifyMFAHandler := connect.NewUnaryHandler(
+		AuthServiceVerifyMFAProcedure,
+		svc.VerifyMFA,
+		connect.WithSchema(authServiceVerifyMFAMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	authServiceBeginMFAEnrollmentHandler := connect.NewUnaryHandler(
+		AuthServiceBeginMFAEnrollmentProcedure,
+		svc.BeginMFAEnrollment,
+		connect.WithSchema(authServiceBeginMFAEnrollmentMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	authServiceConfirmMFAEnrollmentHandler := connect.NewUnaryHandler(
+		AuthServiceConfirmMFAEnrollmentProcedure,
+		svc.ConfirmMFAEnrollment,
+		connect.WithSchema(authServiceConfirmMFAEnrollmentMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	authServiceDisableMFAHandler := connect.NewUnaryHandler(
+		AuthServiceDisableMFAProcedure,
+		svc.DisableMFA,
+		connect.WithSchema(authServiceDisableMFAMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	authServiceRegenerateRecoveryCodesHandler := connect.NewUnaryHandler(
+		AuthServiceRegenerateRecoveryCodesProcedure,
+		svc.RegenerateRecoveryCodes,
+		connect.WithSchema(authServiceRegenerateRecoveryCodesMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	authServiceGetMFAStatusHandler := connect.NewUnaryHandler(
+		AuthServiceGetMFAStatusProcedure,
+		svc.GetMFAStatus,
+		connect.WithSchema(authServiceGetMFAStatusMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/loci.auth.AuthService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case AuthServiceLoginProcedure:
@@ -306,6 +458,18 @@ func NewAuthServiceHandler(svc AuthServiceHandler, opts ...connect.HandlerOption
 			authServiceForgotPasswordHandler.ServeHTTP(w, r)
 		case AuthServiceResetPasswordProcedure:
 			authServiceResetPasswordHandler.ServeHTTP(w, r)
+		case AuthServiceVerifyMFAProcedure:
+			authServiceVerifyMFAHandler.ServeHTTP(w, r)
+		case AuthServiceBeginMFAEnrollmentProcedure:
+			authServiceBeginMFAEnrollmentHandler.ServeHTTP(w, r)
+		case AuthServiceConfirmMFAEnrollmentProcedure:
+			authServiceConfirmMFAEnrollmentHandler.ServeHTTP(w, r)
+		case AuthServiceDisableMFAProcedure:
+			authServiceDisableMFAHandler.ServeHTTP(w, r)
+		case AuthServiceRegenerateRecoveryCodesProcedure:
+			authServiceRegenerateRecoveryCodesHandler.ServeHTTP(w, r)
+		case AuthServiceGetMFAStatusProcedure:
+			authServiceGetMFAStatusHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -349,4 +513,28 @@ func (UnimplementedAuthServiceHandler) ForgotPassword(context.Context, *connect.
 
 func (UnimplementedAuthServiceHandler) ResetPassword(context.Context, *connect.Request[auth.ResetPasswordRequest]) (*connect.Response[common.Response], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.auth.AuthService.ResetPassword is not implemented"))
+}
+
+func (UnimplementedAuthServiceHandler) VerifyMFA(context.Context, *connect.Request[auth.VerifyMFARequest]) (*connect.Response[auth.LoginResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.auth.AuthService.VerifyMFA is not implemented"))
+}
+
+func (UnimplementedAuthServiceHandler) BeginMFAEnrollment(context.Context, *connect.Request[auth.BeginMFAEnrollmentRequest]) (*connect.Response[auth.BeginMFAEnrollmentResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.auth.AuthService.BeginMFAEnrollment is not implemented"))
+}
+
+func (UnimplementedAuthServiceHandler) ConfirmMFAEnrollment(context.Context, *connect.Request[auth.ConfirmMFAEnrollmentRequest]) (*connect.Response[auth.ConfirmMFAEnrollmentResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.auth.AuthService.ConfirmMFAEnrollment is not implemented"))
+}
+
+func (UnimplementedAuthServiceHandler) DisableMFA(context.Context, *connect.Request[auth.DisableMFARequest]) (*connect.Response[common.Response], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.auth.AuthService.DisableMFA is not implemented"))
+}
+
+func (UnimplementedAuthServiceHandler) RegenerateRecoveryCodes(context.Context, *connect.Request[auth.RegenerateRecoveryCodesRequest]) (*connect.Response[auth.RegenerateRecoveryCodesResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.auth.AuthService.RegenerateRecoveryCodes is not implemented"))
+}
+
+func (UnimplementedAuthServiceHandler) GetMFAStatus(context.Context, *connect.Request[auth.GetMFAStatusRequest]) (*connect.Response[auth.GetMFAStatusResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.auth.AuthService.GetMFAStatus is not implemented"))
 }

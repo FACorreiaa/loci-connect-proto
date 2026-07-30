@@ -34,10 +34,23 @@ message LoginRequest {
   ];
 }
 
-// LoginResponse after successful login
+// LoginResponse after successful login.
+//
+// Login has two possible outcomes now that MFA exists. When the user has no
+// confirmed second factor, this carries the token pair as before. When they do,
+// it carries mfa_required + mfa_token and NO tokens: the session is only half
+// authenticated until VerifyMFA succeeds.
 message LoginResponse {
-  string access_token = 1 [(buf.validate.field).string = {min_len: 16}];
-  string refresh_token = 2 [(buf.validate.field).string = {min_len: 16}];
+  // Empty when mfa_required is true — the tokens do not exist yet at that point.
+  // The old min_len: 16 constraint made an MFA challenge literally unsendable.
+  string access_token = 1 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 16}
+  }];
+  string refresh_token = 2 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 16}
+  }];
   string message = 3 [(buf.validate.field).string = {min_len: 1, max_len: 500}];
   string user_id = 4 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   string username = 5 [(buf.validate.field).string = {
@@ -46,6 +59,104 @@ message LoginResponse {
     pattern: "^[a-zA-Z0-9_-]+$"  // Alphanumeric, underscore, hyphen only
   }];
   string email = 6 [(buf.validate.field).string.email = true];
+
+  // True when the password was correct but a second factor is still required.
+  bool mfa_required = 7;
+
+  // Short-lived, single-purpose challenge token. It proves the password step was
+  // passed and is the ONLY thing VerifyMFA accepts; it grants no API access of
+  // its own.
+  optional string mfa_token = 8 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 16, max_len: 4096}
+  }];
+}
+
+// VerifyMFARequest completes a login that was challenged for a second factor.
+message VerifyMFARequest {
+  string mfa_token = 1 [(buf.validate.field).string = {min_len: 16, max_len: 4096}];
+
+  // A 6-digit TOTP code, or a recovery code. Exactly one must be set.
+  //
+  // The length range spans both: 6 digits for TOTP, 11 characters for a
+  // dash-separated recovery code, with slack for how people retype them.
+  optional string code = 2 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 6, max_len: 20}
+  }];
+  optional string recovery_code = 3 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 6, max_len: 20}
+  }];
+}
+
+// BeginMFAEnrollmentRequest starts enrolment for the calling user.
+// The user is taken from the auth token, never from the request body.
+message BeginMFAEnrollmentRequest {}
+
+// BeginMFAEnrollmentResponse carries what the user needs to add the account to
+// an authenticator app. MFA is NOT active until ConfirmMFAEnrollment succeeds.
+message BeginMFAEnrollmentResponse {
+  // The otpauth:// URI to render as a QR code.
+  string provisioning_uri = 1 [(buf.validate.field).string = {min_len: 1, max_len: 2048}];
+
+  // The base32 secret, for manual entry when a camera is unavailable.
+  string secret = 2 [(buf.validate.field).string = {min_len: 16, max_len: 128}];
+}
+
+// ConfirmMFAEnrollmentRequest proves the user's app is generating valid codes.
+message ConfirmMFAEnrollmentRequest {
+  string code = 1 [(buf.validate.field).string = {min_len: 6, max_len: 20}];
+}
+
+// ConfirmMFAEnrollmentResponse returns the recovery codes.
+message ConfirmMFAEnrollmentResponse {
+  // Plaintext recovery codes, returned exactly once. Only hashes are stored, so
+  // they cannot be shown again — the client must make the user save them here.
+  repeated string recovery_codes = 1 [(buf.validate.field).repeated = {min_items: 1, max_items: 20}];
+  string message = 2 [(buf.validate.field).string = {min_len: 1, max_len: 500}];
+}
+
+// DisableMFARequest turns MFA off. Requires a current code: an attacker with a
+// hijacked session must not be able to strip the second factor.
+message DisableMFARequest {
+  optional string code = 1 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 6, max_len: 20}
+  }];
+  optional string recovery_code = 2 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 6, max_len: 20}
+  }];
+}
+
+// RegenerateRecoveryCodesRequest replaces all existing codes. Also requires a
+// current code, for the same reason as disabling.
+message RegenerateRecoveryCodesRequest {
+  string code = 1 [(buf.validate.field).string = {min_len: 6, max_len: 20}];
+}
+
+// RegenerateRecoveryCodesResponse returns the new codes and invalidates the old.
+message RegenerateRecoveryCodesResponse {
+  repeated string recovery_codes = 1 [(buf.validate.field).repeated = {min_items: 1, max_items: 20}];
+  string message = 2 [(buf.validate.field).string = {min_len: 1, max_len: 500}];
+}
+
+// GetMFAStatusRequest reports the calling user's MFA state, for Settings.
+message GetMFAStatusRequest {}
+
+message GetMFAStatusResponse {
+  bool enabled = 1;
+
+  // How many unused recovery codes remain. Surfacing this lets the UI nudge a
+  // user who is down to their last code, before they are locked out.
+  int32 recovery_codes_remaining = 2 [(buf.validate.field).int32 = {gte: 0}];
+
+  optional google.protobuf.Timestamp enrolled_at = 3;
+
+  // True when policy requires MFA for this user's role, so the UI can explain
+  // why disabling is refused.
+  bool required_by_policy = 4;
 }
 
 // RegisterRequest for user registration
@@ -188,4 +299,17 @@ service AuthService {
   // Password reset flow (does not require authentication)
   rpc ForgotPassword(ForgotPasswordRequest) returns (loci.common.Response);
   rpc ResetPassword(ResetPasswordRequest) returns (loci.common.Response);
+
+  // Multi-factor auth.
+  //
+  // VerifyMFA is unauthenticated by design: it completes a login, so the caller
+  // has no access token yet. It authenticates via the mfa_token from Login.
+  rpc VerifyMFA(VerifyMFARequest) returns (LoginResponse);
+
+  // The rest require a valid access token; the user is taken from it.
+  rpc BeginMFAEnrollment(BeginMFAEnrollmentRequest) returns (BeginMFAEnrollmentResponse);
+  rpc ConfirmMFAEnrollment(ConfirmMFAEnrollmentRequest) returns (ConfirmMFAEnrollmentResponse);
+  rpc DisableMFA(DisableMFARequest) returns (loci.common.Response);
+  rpc RegenerateRecoveryCodes(RegenerateRecoveryCodesRequest) returns (RegenerateRecoveryCodesResponse);
+  rpc GetMFAStatus(GetMFAStatusRequest) returns (GetMFAStatusResponse);
 }
