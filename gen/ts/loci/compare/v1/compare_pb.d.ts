@@ -4,8 +4,9 @@
 
 import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv2";
 import type { Message } from "@bufbuild/protobuf";
-import type { WeatherDay } from "../../localcontext/localcontext_pb";
+import type { GoScore, WeatherDay } from "../../localcontext/localcontext_pb";
 import type { POIDetailedInfo } from "../../poi/poi_pb";
+import type { TripLeg } from "../../trip/trip_pb";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
 
 /**
@@ -159,6 +160,14 @@ export declare type CityCompareColumn = Message<"loci.compare.v1.CityCompareColu
    * @generated from field: string eat_snippet = 16;
    */
   eatSnippet: string;
+
+  /**
+   * The go/no-go judgement for this city in the requested window, computed from
+   * the same weather, travel and POI data shown in this column.
+   *
+   * @generated from field: loci.localcontext.GoScore go_score = 17;
+   */
+  goScore?: GoScore;
 };
 
 /**
@@ -168,7 +177,150 @@ export declare type CityCompareColumn = Message<"loci.compare.v1.CityCompareColu
 export declare const CityCompareColumnSchema: GenMessage<CityCompareColumn>;
 
 /**
+ * PlannedCity is one city in a multi-city route, with the days it gets.
+ *
+ * @generated from message loci.compare.v1.PlannedCity
+ */
+export declare type PlannedCity = Message<"loci.compare.v1.PlannedCity"> & {
+  /**
+   * @generated from field: string city_name = 1;
+   */
+  cityName: string;
+
+  /**
+   * @generated from field: optional string city_id = 2;
+   */
+  cityId?: string;
+
+  /**
+   * @generated from field: double lat = 3;
+   */
+  lat: number;
+
+  /**
+   * @generated from field: double lon = 4;
+   */
+  lon: number;
+
+  /**
+   * Days assigned to this city, in trip order.
+   *
+   * @generated from field: repeated int32 day_numbers = 5;
+   */
+  dayNumbers: number[];
+
+  /**
+   * The city's go-score, so the route can be justified rather than asserted.
+   *
+   * @generated from field: optional loci.localcontext.GoScore go_score = 6;
+   */
+  goScore?: GoScore;
+};
+
+/**
+ * Describes the message loci.compare.v1.PlannedCity.
+ * Use `create(PlannedCitySchema)` to create a new message.
+ */
+export declare const PlannedCitySchema: GenMessage<PlannedCity>;
+
+/**
+ * DroppedCity is a candidate the planner left out, and why.
+ *
+ * @generated from message loci.compare.v1.DroppedCity
+ */
+export declare type DroppedCity = Message<"loci.compare.v1.DroppedCity"> & {
+  /**
+   * @generated from field: string city_name = 1;
+   */
+  cityName: string;
+
+  /**
+   * @generated from field: string reason = 2;
+   */
+  reason: string;
+};
+
+/**
+ * Describes the message loci.compare.v1.DroppedCity.
+ * Use `create(DroppedCitySchema)` to create a new message.
+ */
+export declare const DroppedCitySchema: GenMessage<DroppedCity>;
+
+/**
+ * MultiCityPlan is a route through any number of cities over any number of days.
+ * It generalises DualCityOption, which only ever answered "can I do these two in
+ * a weekend?".
+ *
+ * @generated from message loci.compare.v1.MultiCityPlan
+ */
+export declare type MultiCityPlan = Message<"loci.compare.v1.MultiCityPlan"> & {
+  /**
+   * False when not even one candidate fits the window.
+   *
+   * @generated from field: bool feasible = 1;
+   */
+  feasible: boolean;
+
+  /**
+   * @generated from field: repeated loci.compare.v1.PlannedCity cities = 2;
+   */
+  cities: PlannedCity[];
+
+  /**
+   * @generated from field: repeated loci.compare.v1.DroppedCity dropped = 3;
+   */
+  dropped: DroppedCity[];
+
+  /**
+   * Travel between the cities, in trip order, starting with the outbound leg.
+   *
+   * @generated from field: repeated loci.trip.TripLeg legs = 4;
+   */
+  legs: TripLeg[];
+
+  /**
+   * @generated from field: int32 total_travel_mins = 5;
+   */
+  totalTravelMins: number;
+
+  /**
+   * Share of the whole window spent travelling, 0-1.
+   *
+   * @generated from field: double travel_share = 6;
+   */
+  travelShare: number;
+
+  /**
+   * One-line summary a UI can show without walking the structure.
+   *
+   * @generated from field: string outline = 7;
+   */
+  outline: string;
+
+  /**
+   * Things that are legal but worth saying out loud (travel-heavy, thin days).
+   *
+   * @generated from field: repeated string warnings = 8;
+   */
+  warnings: string[];
+
+  /**
+   * Gated behind Pro, like the dual-city outline it replaces.
+   *
+   * @generated from field: bool pro_only = 9;
+   */
+  proOnly: boolean;
+};
+
+/**
+ * Describes the message loci.compare.v1.MultiCityPlan.
+ * Use `create(MultiCityPlanSchema)` to create a new message.
+ */
+export declare const MultiCityPlanSchema: GenMessage<MultiCityPlan>;
+
+/**
  * DualCityOption describes whether a two-city weekend is feasible.
+ * Deprecated: use MultiCityPlan, which handles any number of cities and days.
  *
  * @generated from message loci.compare.v1.DualCityOption
  */
@@ -278,6 +430,13 @@ export declare type CompareWeekendResponse = Message<"loci.compare.v1.CompareWee
    * @generated from field: loci.compare.v1.DualCityOption dual_city_option = 5;
    */
   dualCityOption?: DualCityOption;
+
+  /**
+   * The general plan. Prefer this over dual_city_option.
+   *
+   * @generated from field: loci.compare.v1.MultiCityPlan multi_city_plan = 15;
+   */
+  multiCityPlan?: MultiCityPlan;
 
   /**
    * @generated from field: loci.compare.v1.CompareRecommendation recommendation = 6;

@@ -260,10 +260,12 @@ enum ReviewSortBy {
 
 // Request/Response messages
 message CreateReviewRequest {
-  string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  // Ignored by the server, which takes the author from the auth token. Kept
+  // for wire compatibility; do not require it — clients correctly omit it.
+  string user_id = 1 [(buf.validate.field).string = {max_len: 100}];
   string poi_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}]; // Deprecated: use content_id
   double rating = 3 [(buf.validate.field).double = {gte: 1, lte: 5}];
-  string title = 4 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string title = 4 [(buf.validate.field).string = {max_len: 200}];
   string content = 5 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
   repeated string photo_urls = 6 [(buf.validate.field).repeated = {
     max_items: 10,
@@ -271,14 +273,20 @@ message CreateReviewRequest {
   }];
   google.protobuf.Timestamp visit_date = 7;
   ReviewAspects aspects = 8;
-  string language = 9 [(buf.validate.field).string = {
-    min_len: 2,
-    max_len: 10,
-    pattern: "^[a-z]{2}(-[A-Z]{2})?$"  // ISO 639-1 format (e.g., en, en-US)
+  // Optional. Empty means "unspecified"; when set it must be an ISO 639-1 code.
+  string language = 9 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {
+      min_len: 2,
+      max_len: 10,
+      pattern: "^[a-z]{2}(-[A-Z]{2})?$"
+    }
   }];
   // NEW: Support for all content types
   ReviewContentType content_type = 10; // Type of content being reviewed
-  string content_id = 11 [(buf.validate.field).string = {min_len: 1, max_len: 100}]; // ID of content
+  // Alternative to poi_id for non-POI content. Exactly one of the two is set,
+  // so this cannot be required.
+  string content_id = 11 [(buf.validate.field).string = {max_len: 100}];
   string content_name = 12 [(buf.validate.field).string = {max_len: 300}]; // Name of content for display
 }
 

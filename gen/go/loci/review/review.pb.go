@@ -1497,7 +1497,9 @@ func (x *ReviewFilter) GetSortDirection() SortDirection {
 
 // Request/Response messages
 type CreateReviewRequest struct {
-	state     protoimpl.MessageState `protogen:"open.v1"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Ignored by the server, which takes the author from the auth token. Kept
+	// for wire compatibility; do not require it — clients correctly omit it.
 	UserId    string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	PoiId     string                 `protobuf:"bytes,2,opt,name=poi_id,json=poiId,proto3" json:"poi_id,omitempty"` // Deprecated: use content_id
 	Rating    float64                `protobuf:"fixed64,3,opt,name=rating,proto3" json:"rating,omitempty"`
@@ -1506,11 +1508,14 @@ type CreateReviewRequest struct {
 	PhotoUrls []string               `protobuf:"bytes,6,rep,name=photo_urls,json=photoUrls,proto3" json:"photo_urls,omitempty"`
 	VisitDate *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=visit_date,json=visitDate,proto3" json:"visit_date,omitempty"`
 	Aspects   *ReviewAspects         `protobuf:"bytes,8,opt,name=aspects,proto3" json:"aspects,omitempty"`
-	Language  string                 `protobuf:"bytes,9,opt,name=language,proto3" json:"language,omitempty"`
+	// Optional. Empty means "unspecified"; when set it must be an ISO 639-1 code.
+	Language string `protobuf:"bytes,9,opt,name=language,proto3" json:"language,omitempty"`
 	// NEW: Support for all content types
-	ContentType   ReviewContentType `protobuf:"varint,10,opt,name=content_type,json=contentType,proto3,enum=loci.review.ReviewContentType" json:"content_type,omitempty"` // Type of content being reviewed
-	ContentId     string            `protobuf:"bytes,11,opt,name=content_id,json=contentId,proto3" json:"content_id,omitempty"`                                           // ID of content
-	ContentName   string            `protobuf:"bytes,12,opt,name=content_name,json=contentName,proto3" json:"content_name,omitempty"`                                     // Name of content for display
+	ContentType ReviewContentType `protobuf:"varint,10,opt,name=content_type,json=contentType,proto3,enum=loci.review.ReviewContentType" json:"content_type,omitempty"` // Type of content being reviewed
+	// Alternative to poi_id for non-POI content. Exactly one of the two is set,
+	// so this cannot be required.
+	ContentId     string `protobuf:"bytes,11,opt,name=content_id,json=contentId,proto3" json:"content_id,omitempty"`
+	ContentName   string `protobuf:"bytes,12,opt,name=content_name,json=contentName,proto3" json:"content_name,omitempty"` // Name of content for display
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3061,13 +3066,12 @@ const file_loci_review_review_proto_rawDesc = "" +
 	"\bkeywords\x18\a \x03(\tB\x10\xbaH\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\bkeywords\x122\n" +
 	"\asort_by\x18\b \x01(\x0e2\x19.loci.review.ReviewSortByR\x06sortBy\x12A\n" +
-	"\x0esort_direction\x18\t \x01(\x0e2\x1a.loci.review.SortDirectionR\rsortDirection\"\xd3\x04\n" +
-	"\x13CreateReviewRequest\x12\"\n" +
-	"\auser_id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x12 \n" +
+	"\x0esort_direction\x18\t \x01(\x0e2\x1a.loci.review.SortDirectionR\rsortDirection\"\xd0\x04\n" +
+	"\x13CreateReviewRequest\x12 \n" +
+	"\auser_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x18dR\x06userId\x12 \n" +
 	"\x06poi_id\x18\x02 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x05poiId\x12/\n" +
-	"\x06rating\x18\x03 \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00\x14@)\x00\x00\x00\x00\x00\x00\xf0?R\x06rating\x12 \n" +
-	"\x05title\x18\x04 \x01(\tB\n" +
-	"\xbaH\ar\x05\x10\x01\x18\xc8\x01R\x05title\x12$\n" +
+	"\x06rating\x18\x03 \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00\x14@)\x00\x00\x00\x00\x00\x00\xf0?R\x06rating\x12\x1e\n" +
+	"\x05title\x18\x04 \x01(\tB\b\xbaH\x05r\x03\x18\xc8\x01R\x05title\x12$\n" +
 	"\acontent\x18\x05 \x01(\tB\n" +
 	"\xbaH\ar\x05\x10\x01\x18\xa0\x1fR\acontent\x123\n" +
 	"\n" +
@@ -3076,13 +3080,13 @@ const file_loci_review_review_proto_rawDesc = "" +
 	"r\b\x10\x01\x18\x80\x10\x88\x01\x01R\tphotoUrls\x129\n" +
 	"\n" +
 	"visit_date\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tvisitDate\x124\n" +
-	"\aaspects\x18\b \x01(\v2\x1a.loci.review.ReviewAspectsR\aaspects\x12=\n" +
-	"\blanguage\x18\t \x01(\tB!\xbaH\x1er\x1c\x10\x02\x18\n" +
+	"\aaspects\x18\b \x01(\v2\x1a.loci.review.ReviewAspectsR\aaspects\x12@\n" +
+	"\blanguage\x18\t \x01(\tB$\xbaH!\xd8\x01\x01r\x1c\x10\x02\x18\n" +
 	"2\x16^[a-z]{2}(-[A-Z]{2})?$R\blanguage\x12A\n" +
 	"\fcontent_type\x18\n" +
-	" \x01(\x0e2\x1e.loci.review.ReviewContentTypeR\vcontentType\x12(\n" +
+	" \x01(\x0e2\x1e.loci.review.ReviewContentTypeR\vcontentType\x12&\n" +
 	"\n" +
-	"content_id\x18\v \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\tcontentId\x12+\n" +
+	"content_id\x18\v \x01(\tB\a\xbaH\x04r\x02\x18dR\tcontentId\x12+\n" +
 	"\fcontent_name\x18\f \x01(\tB\b\xbaH\x05r\x03\x18\xac\x02R\vcontentName\"v\n" +
 	"\x14CreateReviewResponse\x121\n" +
 	"\bresponse\x18\x01 \x01(\v2\x15.loci.common.ResponseR\bresponse\x12+\n" +

@@ -8,6 +8,7 @@ import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
 import "loci/localcontext/localcontext.proto";
 import "loci/poi/poi.proto";
+import "loci/trip/trip.proto";
 
 // CompareRecommendation is the server's pick among candidates (or both).
 enum CompareRecommendation {
@@ -50,9 +51,55 @@ message CityCompareColumn {
   repeated TransportLink transport_options = 14;
   string stay_snippet = 15 [(buf.validate.field).string = {max_len: 500}];
   string eat_snippet = 16 [(buf.validate.field).string = {max_len: 500}];
+  // The go/no-go judgement for this city in the requested window, computed from
+  // the same weather, travel and POI data shown in this column.
+  loci.localcontext.GoScore go_score = 17;
+}
+
+// PlannedCity is one city in a multi-city route, with the days it gets.
+message PlannedCity {
+  string city_name = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  optional string city_id = 2 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 100}
+  }];
+  double lat = 3 [(buf.validate.field).double = {gte: -90, lte: 90}];
+  double lon = 4 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  // Days assigned to this city, in trip order.
+  repeated int32 day_numbers = 5;
+  // The city's go-score, so the route can be justified rather than asserted.
+  optional loci.localcontext.GoScore go_score = 6;
+}
+
+// DroppedCity is a candidate the planner left out, and why.
+message DroppedCity {
+  string city_name = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string reason = 2 [(buf.validate.field).string = {max_len: 500}];
+}
+
+// MultiCityPlan is a route through any number of cities over any number of days.
+// It generalises DualCityOption, which only ever answered "can I do these two in
+// a weekend?".
+message MultiCityPlan {
+  // False when not even one candidate fits the window.
+  bool feasible = 1;
+  repeated PlannedCity cities = 2;
+  repeated DroppedCity dropped = 3;
+  // Travel between the cities, in trip order, starting with the outbound leg.
+  repeated loci.trip.TripLeg legs = 4;
+  int32 total_travel_mins = 5 [(buf.validate.field).int32 = {gte: 0}];
+  // Share of the whole window spent travelling, 0-1.
+  double travel_share = 6 [(buf.validate.field).double = {gte: 0, lte: 1}];
+  // One-line summary a UI can show without walking the structure.
+  string outline = 7 [(buf.validate.field).string = {max_len: 2000}];
+  // Things that are legal but worth saying out loud (travel-heavy, thin days).
+  repeated string warnings = 8;
+  // Gated behind Pro, like the dual-city outline it replaces.
+  bool pro_only = 9;
 }
 
 // DualCityOption describes whether a two-city weekend is feasible.
+// Deprecated: use MultiCityPlan, which handles any number of cities and days.
 message DualCityOption {
   bool feasible = 1;
   string outline = 2 [(buf.validate.field).string = {max_len: 2000}];
@@ -67,7 +114,7 @@ message CompareWeekendRequest {
   optional double origin_lon = 3 [(buf.validate.field).double = {gte: -180, lte: 180}];
   repeated string candidate_city_names = 4 [(buf.validate.field).repeated = {
     min_items: 2,
-    max_items: 3,
+    max_items: 8,
     items: {string: {min_len: 1, max_len: 200}}
   }];
   google.protobuf.Timestamp start_date = 5;
@@ -82,6 +129,8 @@ message CompareWeekendResponse {
   double origin_lon = 3;
   repeated CityCompareColumn columns = 4;
   DualCityOption dual_city_option = 5;
+  // The general plan. Prefer this over dual_city_option.
+  MultiCityPlan multi_city_plan = 15;
   CompareRecommendation recommendation = 6;
   string recommendation_reason = 7 [(buf.validate.field).string = {max_len: 1000}];
 }

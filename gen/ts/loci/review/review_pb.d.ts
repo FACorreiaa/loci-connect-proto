@@ -705,6 +705,9 @@ export declare const ReviewFilterSchema: GenMessage<ReviewFilter>;
  */
 export declare type CreateReviewRequest = Message<"loci.review.CreateReviewRequest"> & {
   /**
+   * Ignored by the server, which takes the author from the auth token. Kept
+   * for wire compatibility; do not require it — clients correctly omit it.
+   *
    * @generated from field: string user_id = 1;
    */
   userId: string;
@@ -747,6 +750,8 @@ export declare type CreateReviewRequest = Message<"loci.review.CreateReviewReque
   aspects?: ReviewAspects;
 
   /**
+   * Optional. Empty means "unspecified"; when set it must be an ISO 639-1 code.
+   *
    * @generated from field: string language = 9;
    */
   language: string;
@@ -761,7 +766,8 @@ export declare type CreateReviewRequest = Message<"loci.review.CreateReviewReque
   contentType: ReviewContentType;
 
   /**
-   * ID of content
+   * Alternative to poi_id for non-POI content. Exactly one of the two is set,
+   * so this cannot be required.
    *
    * @generated from field: string content_id = 11;
    */
