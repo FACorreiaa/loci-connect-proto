@@ -36,17 +36,23 @@ const (
 	// LocalContextServiceGetLocalContextProcedure is the fully-qualified name of the
 	// LocalContextService's GetLocalContext RPC.
 	LocalContextServiceGetLocalContextProcedure = "/loci.localcontext.LocalContextService/GetLocalContext"
+	// LocalContextServiceGetGoScoreProcedure is the fully-qualified name of the LocalContextService's
+	// GetGoScore RPC.
+	LocalContextServiceGetGoScoreProcedure = "/loci.localcontext.LocalContextService/GetGoScore"
 )
 
 // These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
 var (
 	localContextServiceServiceDescriptor               = localcontext.File_loci_localcontext_localcontext_proto.Services().ByName("LocalContextService")
 	localContextServiceGetLocalContextMethodDescriptor = localContextServiceServiceDescriptor.Methods().ByName("GetLocalContext")
+	localContextServiceGetGoScoreMethodDescriptor      = localContextServiceServiceDescriptor.Methods().ByName("GetGoScore")
 )
 
 // LocalContextServiceClient is a client for the loci.localcontext.LocalContextService service.
 type LocalContextServiceClient interface {
 	GetLocalContext(context.Context, *connect.Request[localcontext.GetLocalContextRequest]) (*connect.Response[localcontext.LocalContext], error)
+	// GetGoScore answers "should I go this weekend?" for one destination.
+	GetGoScore(context.Context, *connect.Request[localcontext.GetGoScoreRequest]) (*connect.Response[localcontext.GetGoScoreResponse], error)
 }
 
 // NewLocalContextServiceClient constructs a client for the loci.localcontext.LocalContextService
@@ -65,12 +71,19 @@ func NewLocalContextServiceClient(httpClient connect.HTTPClient, baseURL string,
 			connect.WithSchema(localContextServiceGetLocalContextMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
+		getGoScore: connect.NewClient[localcontext.GetGoScoreRequest, localcontext.GetGoScoreResponse](
+			httpClient,
+			baseURL+LocalContextServiceGetGoScoreProcedure,
+			connect.WithSchema(localContextServiceGetGoScoreMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
 // localContextServiceClient implements LocalContextServiceClient.
 type localContextServiceClient struct {
 	getLocalContext *connect.Client[localcontext.GetLocalContextRequest, localcontext.LocalContext]
+	getGoScore      *connect.Client[localcontext.GetGoScoreRequest, localcontext.GetGoScoreResponse]
 }
 
 // GetLocalContext calls loci.localcontext.LocalContextService.GetLocalContext.
@@ -78,10 +91,17 @@ func (c *localContextServiceClient) GetLocalContext(ctx context.Context, req *co
 	return c.getLocalContext.CallUnary(ctx, req)
 }
 
+// GetGoScore calls loci.localcontext.LocalContextService.GetGoScore.
+func (c *localContextServiceClient) GetGoScore(ctx context.Context, req *connect.Request[localcontext.GetGoScoreRequest]) (*connect.Response[localcontext.GetGoScoreResponse], error) {
+	return c.getGoScore.CallUnary(ctx, req)
+}
+
 // LocalContextServiceHandler is an implementation of the loci.localcontext.LocalContextService
 // service.
 type LocalContextServiceHandler interface {
 	GetLocalContext(context.Context, *connect.Request[localcontext.GetLocalContextRequest]) (*connect.Response[localcontext.LocalContext], error)
+	// GetGoScore answers "should I go this weekend?" for one destination.
+	GetGoScore(context.Context, *connect.Request[localcontext.GetGoScoreRequest]) (*connect.Response[localcontext.GetGoScoreResponse], error)
 }
 
 // NewLocalContextServiceHandler builds an HTTP handler from the service implementation. It returns
@@ -96,10 +116,18 @@ func NewLocalContextServiceHandler(svc LocalContextServiceHandler, opts ...conne
 		connect.WithSchema(localContextServiceGetLocalContextMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
+	localContextServiceGetGoScoreHandler := connect.NewUnaryHandler(
+		LocalContextServiceGetGoScoreProcedure,
+		svc.GetGoScore,
+		connect.WithSchema(localContextServiceGetGoScoreMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/loci.localcontext.LocalContextService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case LocalContextServiceGetLocalContextProcedure:
 			localContextServiceGetLocalContextHandler.ServeHTTP(w, r)
+		case LocalContextServiceGetGoScoreProcedure:
+			localContextServiceGetGoScoreHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -111,4 +139,8 @@ type UnimplementedLocalContextServiceHandler struct{}
 
 func (UnimplementedLocalContextServiceHandler) GetLocalContext(context.Context, *connect.Request[localcontext.GetLocalContextRequest]) (*connect.Response[localcontext.LocalContext], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.localcontext.LocalContextService.GetLocalContext is not implemented"))
+}
+
+func (UnimplementedLocalContextServiceHandler) GetGoScore(context.Context, *connect.Request[localcontext.GetGoScoreRequest]) (*connect.Response[localcontext.GetGoScoreResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.localcontext.LocalContextService.GetGoScore is not implemented"))
 }

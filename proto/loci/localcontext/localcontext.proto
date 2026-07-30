@@ -49,8 +49,55 @@ message LocalContext {
   bool weather_is_estimated = 3;
 }
 
+// ScoreFactor is one dimension of the go/no-go judgement, with its reasoning.
+// The score is always shown WITH these: a bare number is not an explanation,
+// and a user who disagrees with it should be able to see why it landed there.
+message ScoreFactor {
+  string label = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  // Signed points this dimension contributed (negative for disruptions).
+  int32 contribution = 2;
+  // Ceiling for this dimension, so a client can render "22 / 40" or a
+  // proportional bar without hardcoding the weights.
+  int32 max_contribution = 3 [(buf.validate.field).int32 = {gte: 0}];
+  string detail = 4 [(buf.validate.field).string = {max_len: 500}];
+}
+
+// GoScore answers "should I go here, in this window?".
+message GoScore {
+  int32 score = 1 [(buf.validate.field).int32 = {gte: 0, lte: 100}];
+  // One of "go", "maybe", "skip".
+  string verdict = 2 [(buf.validate.field).string = {min_len: 1, max_len: 20}];
+  repeated ScoreFactor factors = 3;
+  string summary = 4 [(buf.validate.field).string = {max_len: 300}];
+  // True when any input was a stub rather than real provider data. Clients MUST
+  // label the score as estimated when this is set.
+  bool has_estimated_inputs = 5;
+}
+
+// GetGoScoreRequest asks whether a city is worth the trip in a given window.
+message GetGoScoreRequest {
+  // Destination, by name (fuzzy-matched) or by coordinates.
+  optional string city_name = 1 [(buf.validate.field).string = {max_len: 200}];
+  optional double latitude = 2 [(buf.validate.field).double = {gte: -90, lte: 90}];
+  optional double longitude = 3 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  // Where the traveller starts from, used for travel time.
+  optional double origin_lat = 4 [(buf.validate.field).double = {gte: -90, lte: 90}];
+  optional double origin_lon = 5 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  // Trip window. Defaults to a 48-hour weekend when omitted.
+  optional google.protobuf.Timestamp start = 6;
+  optional google.protobuf.Timestamp end = 7;
+}
+
+// GetGoScoreResponse carries the verdict and the resolved destination.
+message GetGoScoreResponse {
+  GoScore score = 1;
+  string city_name = 2 [(buf.validate.field).string = {max_len: 200}];
+}
+
 // LocalContextService surfaces trip-time context (weather now; closures/holidays/
 // strikes are stubbed behind the same contract until real providers are wired).
 service LocalContextService {
   rpc GetLocalContext(GetLocalContextRequest) returns (LocalContext);
+  // GetGoScore answers "should I go this weekend?" for one destination.
+  rpc GetGoScore(GetGoScoreRequest) returns (GetGoScoreResponse);
 }

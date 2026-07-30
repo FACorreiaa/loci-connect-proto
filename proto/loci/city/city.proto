@@ -69,7 +69,10 @@ message GetCityResponse {
 
 // SearchCitiesRequest for searching cities
 message SearchCitiesRequest {
-  string query = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  // Empty means "browse": the server returns the first alphabetical page. The
+  // client's own city picker calls it that way on mount, so a min_len of 1 made
+  // that initial load fail validation before it ever reached the query.
+  string query = 1 [(buf.validate.field).string = {max_len: 200}];
   optional int32 limit = 2 [(buf.validate.field) = {
     ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 1, lte: 100}

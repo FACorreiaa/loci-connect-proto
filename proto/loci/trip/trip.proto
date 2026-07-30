@@ -48,7 +48,9 @@ message TripConstraint {
 
 // TripStop is a single place on a day's timeline.
 message TripStop {
-  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  // Empty on create; the database assigns it. Clients may send their own id when
+  // editing an existing stop.
+  string id = 1 [(buf.validate.field).string = {max_len: 100}];
   string poi_id = 2 [(buf.validate.field).string = {max_len: 100}];
   // order_index positions the stop within its day (0-based).
   int32 order_index = 3 [(buf.validate.field).int32 = {gte: 0}];
@@ -76,18 +78,62 @@ message TripStop {
 
 // TripDay is one day of a trip.
 message TripDay {
-  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  // Empty on create; the database assigns it.
+  string id = 1 [(buf.validate.field).string = {max_len: 100}];
   int32 day_number = 2 [(buf.validate.field).int32 = {gte: 1}];
   // Optional calendar date for the day (nil for a relative "Day N" plan).
   optional google.protobuf.Timestamp date = 3;
   repeated TripStop stops = 4;
+
+  // Which city this day is spent in. Empty means the trip's primary city, which
+  // is how every single-city trip written before multi-city support looks.
+  string city_name = 5 [(buf.validate.field).string = {max_len: 200}];
+  optional string city_id = 6 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 100}
+  }];
+  optional double city_lat = 7 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    double: {gte: -90, lte: 90}
+  }];
+  optional double city_lon = 8 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    double: {gte: -180, lte: 180}
+  }];
+  // True when the day includes a move between cities, so the UI can show that
+  // sightseeing time is reduced.
+  bool travel_day = 9;
+}
+
+// TripLeg is travel between two consecutive places in a multi-city trip.
+message TripLeg {
+  string id = 1 [(buf.validate.field).string = {max_len: 100}];
+  string from_name = 2 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string to_name = 3 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  double from_lat = 4 [(buf.validate.field).double = {gte: -90, lte: 90}];
+  double from_lon = 5 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  double to_lat = 6 [(buf.validate.field).double = {gte: -90, lte: 90}];
+  double to_lon = 7 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  double distance_km = 8 [(buf.validate.field).double = {gte: 0}];
+  int32 duration_mins = 9 [(buf.validate.field).int32 = {gte: 0}];
+  // The day at whose end this leg happens. 0 is the outbound leg from home.
+  int32 after_day = 10 [(buf.validate.field).int32 = {gte: 0}];
+  // "drive" today; rail/air slot in without changing the shape.
+  string mode = 11 [(buf.validate.field).string = {max_len: 40}];
+  optional string booking_url = 12 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE,
+    string: {min_len: 1, max_len: 2048, uri: true}
+  }];
 }
 
 // TripDraft is the full editable trip. `version` powers optimistic concurrency /
 // merge-safe multi-device edits: SaveTrip rejects a write whose base version is
 // stale.
 message TripDraft {
-  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  // Empty on create — the server assigns identity (repository.SaveTrip treats a
+  // nil id as "new trip"). Requiring it made creating a trip impossible, which
+  // is the one thing every trip has to do first.
+  string id = 1 [(buf.validate.field).string = {max_len: 100}];
   string user_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   optional string city_id = 3 [(buf.validate.field) = {
     ignore: IGNORE_IF_ZERO_VALUE,
@@ -99,6 +145,9 @@ message TripDraft {
   repeated TripDay days = 7;
   // Monotonic version; incremented server-side on every successful SaveTrip.
   int64 version = 8 [(buf.validate.field).int64 = {gte: 0}];
+  // Travel between cities. Empty for a single-city trip. `city_name` above stays
+  // the primary city (titles, exports) even when the trip spans several.
+  repeated TripLeg legs = 12;
   // Session that generated the initial draft, if any.
   optional string source_session_id = 9 [(buf.validate.field) = {
     ignore: IGNORE_IF_ZERO_VALUE,
@@ -116,6 +165,46 @@ message TripSnapshot {
   int64 version = 3 [(buf.validate.field).int64 = {gte: 0}];
   TripDraft trip = 4 [(buf.validate.field).required = true];
   google.protobuf.Timestamp created_at = 5 [(buf.validate.field).required = true];
+}
+
+// PackingCategory groups suggestions so a long list stays scannable.
+enum PackingCategory {
+  PACKING_CATEGORY_UNSPECIFIED = 0;
+  PACKING_CATEGORY_ESSENTIALS = 1;
+  PACKING_CATEGORY_CLOTHING = 2;
+  PACKING_CATEGORY_WEATHER = 3;
+  PACKING_CATEGORY_TECH = 4;
+  PACKING_CATEGORY_HEALTH = 5;
+  PACKING_CATEGORY_TRAVEL = 6;
+  PACKING_CATEGORY_ACTIVITY = 7;
+}
+
+// PackingSuggestion is one suggested item, with the reason this trip earned it.
+// The reason is not decoration: a suggestion the user cannot evaluate is noise,
+// and they need enough to disagree with it.
+message PackingSuggestion {
+  string text = 1 [(buf.validate.field).string = {min_len: 1, max_len: 300}];
+  PackingCategory category = 2 [(buf.validate.field).enum = {defined_only: true}];
+  // Empty for universal essentials, which need no justification.
+  string reason = 3 [(buf.validate.field).string = {max_len: 500}];
+  // Things it would be genuinely bad to forget, so a client can lead with them.
+  bool essential = 4;
+}
+
+// SuggestPackingRequest asks what to pack for a saved trip.
+message SuggestPackingRequest {
+  string trip_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+}
+
+// SuggestPackingResponse carries the suggestions and how they were derived.
+message SuggestPackingResponse {
+  repeated PackingSuggestion suggestions = 1;
+  // True when any city's forecast was a stub rather than real provider data, so
+  // the client can label weather-driven items as estimated.
+  bool weather_is_estimated = 2;
+  // False when no forecast was available at all; weather-driven suggestions are
+  // then absent rather than guessed.
+  bool used_forecast = 3;
 }
 
 // ---- Requests / responses ----
@@ -242,4 +331,7 @@ service TripService {
   rpc RemoveStop(RemoveStopRequest) returns (TripDraft);
   rpc ReplaceStop(ReplaceStopRequest) returns (TripDraft);
   rpc ExportTrip(ExportTripRequest) returns (ExportTripResponse);
+  // SuggestPacking derives a packing list from the trip: its length, its cities'
+  // forecasts, the driving between them, and the traveller's stated interests.
+  rpc SuggestPacking(SuggestPackingRequest) returns (SuggestPackingResponse);
 }

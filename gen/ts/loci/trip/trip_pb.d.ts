@@ -69,6 +69,9 @@ export declare const TripConstraintSchema: GenMessage<TripConstraint>;
  */
 export declare type TripStop = Message<"loci.trip.TripStop"> & {
   /**
+   * Empty on create; the database assigns it. Clients may send their own id when
+   * editing an existing stop.
+   *
    * @generated from field: string id = 1;
    */
   id: string;
@@ -142,6 +145,8 @@ export declare const TripStopSchema: GenMessage<TripStop>;
  */
 export declare type TripDay = Message<"loci.trip.TripDay"> & {
   /**
+   * Empty on create; the database assigns it.
+   *
    * @generated from field: string id = 1;
    */
   id: string;
@@ -162,6 +167,37 @@ export declare type TripDay = Message<"loci.trip.TripDay"> & {
    * @generated from field: repeated loci.trip.TripStop stops = 4;
    */
   stops: TripStop[];
+
+  /**
+   * Which city this day is spent in. Empty means the trip's primary city, which
+   * is how every single-city trip written before multi-city support looks.
+   *
+   * @generated from field: string city_name = 5;
+   */
+  cityName: string;
+
+  /**
+   * @generated from field: optional string city_id = 6;
+   */
+  cityId?: string;
+
+  /**
+   * @generated from field: optional double city_lat = 7;
+   */
+  cityLat?: number;
+
+  /**
+   * @generated from field: optional double city_lon = 8;
+   */
+  cityLon?: number;
+
+  /**
+   * True when the day includes a move between cities, so the UI can show that
+   * sightseeing time is reduced.
+   *
+   * @generated from field: bool travel_day = 9;
+   */
+  travelDay: boolean;
 };
 
 /**
@@ -169,6 +205,83 @@ export declare type TripDay = Message<"loci.trip.TripDay"> & {
  * Use `create(TripDaySchema)` to create a new message.
  */
 export declare const TripDaySchema: GenMessage<TripDay>;
+
+/**
+ * TripLeg is travel between two consecutive places in a multi-city trip.
+ *
+ * @generated from message loci.trip.TripLeg
+ */
+export declare type TripLeg = Message<"loci.trip.TripLeg"> & {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * @generated from field: string from_name = 2;
+   */
+  fromName: string;
+
+  /**
+   * @generated from field: string to_name = 3;
+   */
+  toName: string;
+
+  /**
+   * @generated from field: double from_lat = 4;
+   */
+  fromLat: number;
+
+  /**
+   * @generated from field: double from_lon = 5;
+   */
+  fromLon: number;
+
+  /**
+   * @generated from field: double to_lat = 6;
+   */
+  toLat: number;
+
+  /**
+   * @generated from field: double to_lon = 7;
+   */
+  toLon: number;
+
+  /**
+   * @generated from field: double distance_km = 8;
+   */
+  distanceKm: number;
+
+  /**
+   * @generated from field: int32 duration_mins = 9;
+   */
+  durationMins: number;
+
+  /**
+   * The day at whose end this leg happens. 0 is the outbound leg from home.
+   *
+   * @generated from field: int32 after_day = 10;
+   */
+  afterDay: number;
+
+  /**
+   * "drive" today; rail/air slot in without changing the shape.
+   *
+   * @generated from field: string mode = 11;
+   */
+  mode: string;
+
+  /**
+   * @generated from field: optional string booking_url = 12;
+   */
+  bookingUrl?: string;
+};
+
+/**
+ * Describes the message loci.trip.TripLeg.
+ * Use `create(TripLegSchema)` to create a new message.
+ */
+export declare const TripLegSchema: GenMessage<TripLeg>;
 
 /**
  * TripDraft is the full editable trip. `version` powers optimistic concurrency /
@@ -179,6 +292,10 @@ export declare const TripDaySchema: GenMessage<TripDay>;
  */
 export declare type TripDraft = Message<"loci.trip.TripDraft"> & {
   /**
+   * Empty on create — the server assigns identity (repository.SaveTrip treats a
+   * nil id as "new trip"). Requiring it made creating a trip impossible, which
+   * is the one thing every trip has to do first.
+   *
    * @generated from field: string id = 1;
    */
   id: string;
@@ -219,6 +336,14 @@ export declare type TripDraft = Message<"loci.trip.TripDraft"> & {
    * @generated from field: int64 version = 8;
    */
   version: bigint;
+
+  /**
+   * Travel between cities. Empty for a single-city trip. `city_name` above stays
+   * the primary city (titles, exports) even when the trip spans several.
+   *
+   * @generated from field: repeated loci.trip.TripLeg legs = 12;
+   */
+  legs: TripLeg[];
 
   /**
    * Session that generated the initial draft, if any.
@@ -282,6 +407,97 @@ export declare type TripSnapshot = Message<"loci.trip.TripSnapshot"> & {
  * Use `create(TripSnapshotSchema)` to create a new message.
  */
 export declare const TripSnapshotSchema: GenMessage<TripSnapshot>;
+
+/**
+ * PackingSuggestion is one suggested item, with the reason this trip earned it.
+ * The reason is not decoration: a suggestion the user cannot evaluate is noise,
+ * and they need enough to disagree with it.
+ *
+ * @generated from message loci.trip.PackingSuggestion
+ */
+export declare type PackingSuggestion = Message<"loci.trip.PackingSuggestion"> & {
+  /**
+   * @generated from field: string text = 1;
+   */
+  text: string;
+
+  /**
+   * @generated from field: loci.trip.PackingCategory category = 2;
+   */
+  category: PackingCategory;
+
+  /**
+   * Empty for universal essentials, which need no justification.
+   *
+   * @generated from field: string reason = 3;
+   */
+  reason: string;
+
+  /**
+   * Things it would be genuinely bad to forget, so a client can lead with them.
+   *
+   * @generated from field: bool essential = 4;
+   */
+  essential: boolean;
+};
+
+/**
+ * Describes the message loci.trip.PackingSuggestion.
+ * Use `create(PackingSuggestionSchema)` to create a new message.
+ */
+export declare const PackingSuggestionSchema: GenMessage<PackingSuggestion>;
+
+/**
+ * SuggestPackingRequest asks what to pack for a saved trip.
+ *
+ * @generated from message loci.trip.SuggestPackingRequest
+ */
+export declare type SuggestPackingRequest = Message<"loci.trip.SuggestPackingRequest"> & {
+  /**
+   * @generated from field: string trip_id = 1;
+   */
+  tripId: string;
+};
+
+/**
+ * Describes the message loci.trip.SuggestPackingRequest.
+ * Use `create(SuggestPackingRequestSchema)` to create a new message.
+ */
+export declare const SuggestPackingRequestSchema: GenMessage<SuggestPackingRequest>;
+
+/**
+ * SuggestPackingResponse carries the suggestions and how they were derived.
+ *
+ * @generated from message loci.trip.SuggestPackingResponse
+ */
+export declare type SuggestPackingResponse = Message<"loci.trip.SuggestPackingResponse"> & {
+  /**
+   * @generated from field: repeated loci.trip.PackingSuggestion suggestions = 1;
+   */
+  suggestions: PackingSuggestion[];
+
+  /**
+   * True when any city's forecast was a stub rather than real provider data, so
+   * the client can label weather-driven items as estimated.
+   *
+   * @generated from field: bool weather_is_estimated = 2;
+   */
+  weatherIsEstimated: boolean;
+
+  /**
+   * False when no forecast was available at all; weather-driven suggestions are
+   * then absent rather than guessed.
+   *
+   * @generated from field: bool used_forecast = 3;
+   */
+  usedForecast: boolean;
+};
+
+/**
+ * Describes the message loci.trip.SuggestPackingResponse.
+ * Use `create(SuggestPackingResponseSchema)` to create a new message.
+ */
+export declare const SuggestPackingResponseSchema: GenMessage<SuggestPackingResponse>;
 
 /**
  * @generated from message loci.trip.SaveTripRequest
@@ -700,6 +916,58 @@ export enum TripPace {
 export declare const TripPaceSchema: GenEnum<TripPace>;
 
 /**
+ * PackingCategory groups suggestions so a long list stays scannable.
+ *
+ * @generated from enum loci.trip.PackingCategory
+ */
+export enum PackingCategory {
+  /**
+   * @generated from enum value: PACKING_CATEGORY_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: PACKING_CATEGORY_ESSENTIALS = 1;
+   */
+  ESSENTIALS = 1,
+
+  /**
+   * @generated from enum value: PACKING_CATEGORY_CLOTHING = 2;
+   */
+  CLOTHING = 2,
+
+  /**
+   * @generated from enum value: PACKING_CATEGORY_WEATHER = 3;
+   */
+  WEATHER = 3,
+
+  /**
+   * @generated from enum value: PACKING_CATEGORY_TECH = 4;
+   */
+  TECH = 4,
+
+  /**
+   * @generated from enum value: PACKING_CATEGORY_HEALTH = 5;
+   */
+  HEALTH = 5,
+
+  /**
+   * @generated from enum value: PACKING_CATEGORY_TRAVEL = 6;
+   */
+  TRAVEL = 6,
+
+  /**
+   * @generated from enum value: PACKING_CATEGORY_ACTIVITY = 7;
+   */
+  ACTIVITY = 7,
+}
+
+/**
+ * Describes the enum loci.trip.PackingCategory.
+ */
+export declare const PackingCategorySchema: GenEnum<PackingCategory>;
+
+/**
  * ExportFormat selects the export artifact.
  *
  * @generated from enum loci.trip.ExportFormat
@@ -836,6 +1104,17 @@ export declare const TripService: GenService<{
     methodKind: "unary";
     input: typeof ExportTripRequestSchema;
     output: typeof ExportTripResponseSchema;
+  },
+  /**
+   * SuggestPacking derives a packing list from the trip: its length, its cities'
+   * forecasts, the driving between them, and the traveller's stated interests.
+   *
+   * @generated from rpc loci.trip.TripService.SuggestPacking
+   */
+  suggestPacking: {
+    methodKind: "unary";
+    input: typeof SuggestPackingRequestSchema;
+    output: typeof SuggestPackingResponseSchema;
   },
 }>;
 
