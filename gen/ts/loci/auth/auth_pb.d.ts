@@ -79,12 +79,20 @@ export declare type LoginRequest = Message<"loci.auth.LoginRequest"> & {
 export declare const LoginRequestSchema: GenMessage<LoginRequest>;
 
 /**
- * LoginResponse after successful login
+ * LoginResponse after successful login.
+ *
+ * Login has two possible outcomes now that MFA exists. When the user has no
+ * confirmed second factor, this carries the token pair as before. When they do,
+ * it carries mfa_required + mfa_token and NO tokens: the session is only half
+ * authenticated until VerifyMFA succeeds.
  *
  * @generated from message loci.auth.LoginResponse
  */
 export declare type LoginResponse = Message<"loci.auth.LoginResponse"> & {
   /**
+   * Empty when mfa_required is true — the tokens do not exist yet at that point.
+   * The old min_len: 16 constraint made an MFA challenge literally unsendable.
+   *
    * @generated from field: string access_token = 1;
    */
   accessToken: string;
@@ -113,6 +121,22 @@ export declare type LoginResponse = Message<"loci.auth.LoginResponse"> & {
    * @generated from field: string email = 6;
    */
   email: string;
+
+  /**
+   * True when the password was correct but a second factor is still required.
+   *
+   * @generated from field: bool mfa_required = 7;
+   */
+  mfaRequired: boolean;
+
+  /**
+   * Short-lived, single-purpose challenge token. It proves the password step was
+   * passed and is the ONLY thing VerifyMFA accepts; it grants no API access of
+   * its own.
+   *
+   * @generated from field: optional string mfa_token = 8;
+   */
+  mfaToken?: string;
 };
 
 /**
@@ -120,6 +144,243 @@ export declare type LoginResponse = Message<"loci.auth.LoginResponse"> & {
  * Use `create(LoginResponseSchema)` to create a new message.
  */
 export declare const LoginResponseSchema: GenMessage<LoginResponse>;
+
+/**
+ * VerifyMFARequest completes a login that was challenged for a second factor.
+ *
+ * @generated from message loci.auth.VerifyMFARequest
+ */
+export declare type VerifyMFARequest = Message<"loci.auth.VerifyMFARequest"> & {
+  /**
+   * @generated from field: string mfa_token = 1;
+   */
+  mfaToken: string;
+
+  /**
+   * A 6-digit TOTP code, or a recovery code. Exactly one must be set.
+   *
+   * The length range spans both: 6 digits for TOTP, 11 characters for a
+   * dash-separated recovery code, with slack for how people retype them.
+   *
+   * @generated from field: optional string code = 2;
+   */
+  code?: string;
+
+  /**
+   * @generated from field: optional string recovery_code = 3;
+   */
+  recoveryCode?: string;
+};
+
+/**
+ * Describes the message loci.auth.VerifyMFARequest.
+ * Use `create(VerifyMFARequestSchema)` to create a new message.
+ */
+export declare const VerifyMFARequestSchema: GenMessage<VerifyMFARequest>;
+
+/**
+ * BeginMFAEnrollmentRequest starts enrolment for the calling user.
+ * The user is taken from the auth token, never from the request body.
+ *
+ * @generated from message loci.auth.BeginMFAEnrollmentRequest
+ */
+export declare type BeginMFAEnrollmentRequest = Message<"loci.auth.BeginMFAEnrollmentRequest"> & {
+};
+
+/**
+ * Describes the message loci.auth.BeginMFAEnrollmentRequest.
+ * Use `create(BeginMFAEnrollmentRequestSchema)` to create a new message.
+ */
+export declare const BeginMFAEnrollmentRequestSchema: GenMessage<BeginMFAEnrollmentRequest>;
+
+/**
+ * BeginMFAEnrollmentResponse carries what the user needs to add the account to
+ * an authenticator app. MFA is NOT active until ConfirmMFAEnrollment succeeds.
+ *
+ * @generated from message loci.auth.BeginMFAEnrollmentResponse
+ */
+export declare type BeginMFAEnrollmentResponse = Message<"loci.auth.BeginMFAEnrollmentResponse"> & {
+  /**
+   * The otpauth:// URI to render as a QR code.
+   *
+   * @generated from field: string provisioning_uri = 1;
+   */
+  provisioningUri: string;
+
+  /**
+   * The base32 secret, for manual entry when a camera is unavailable.
+   *
+   * @generated from field: string secret = 2;
+   */
+  secret: string;
+};
+
+/**
+ * Describes the message loci.auth.BeginMFAEnrollmentResponse.
+ * Use `create(BeginMFAEnrollmentResponseSchema)` to create a new message.
+ */
+export declare const BeginMFAEnrollmentResponseSchema: GenMessage<BeginMFAEnrollmentResponse>;
+
+/**
+ * ConfirmMFAEnrollmentRequest proves the user's app is generating valid codes.
+ *
+ * @generated from message loci.auth.ConfirmMFAEnrollmentRequest
+ */
+export declare type ConfirmMFAEnrollmentRequest = Message<"loci.auth.ConfirmMFAEnrollmentRequest"> & {
+  /**
+   * @generated from field: string code = 1;
+   */
+  code: string;
+};
+
+/**
+ * Describes the message loci.auth.ConfirmMFAEnrollmentRequest.
+ * Use `create(ConfirmMFAEnrollmentRequestSchema)` to create a new message.
+ */
+export declare const ConfirmMFAEnrollmentRequestSchema: GenMessage<ConfirmMFAEnrollmentRequest>;
+
+/**
+ * ConfirmMFAEnrollmentResponse returns the recovery codes.
+ *
+ * @generated from message loci.auth.ConfirmMFAEnrollmentResponse
+ */
+export declare type ConfirmMFAEnrollmentResponse = Message<"loci.auth.ConfirmMFAEnrollmentResponse"> & {
+  /**
+   * Plaintext recovery codes, returned exactly once. Only hashes are stored, so
+   * they cannot be shown again — the client must make the user save them here.
+   *
+   * @generated from field: repeated string recovery_codes = 1;
+   */
+  recoveryCodes: string[];
+
+  /**
+   * @generated from field: string message = 2;
+   */
+  message: string;
+};
+
+/**
+ * Describes the message loci.auth.ConfirmMFAEnrollmentResponse.
+ * Use `create(ConfirmMFAEnrollmentResponseSchema)` to create a new message.
+ */
+export declare const ConfirmMFAEnrollmentResponseSchema: GenMessage<ConfirmMFAEnrollmentResponse>;
+
+/**
+ * DisableMFARequest turns MFA off. Requires a current code: an attacker with a
+ * hijacked session must not be able to strip the second factor.
+ *
+ * @generated from message loci.auth.DisableMFARequest
+ */
+export declare type DisableMFARequest = Message<"loci.auth.DisableMFARequest"> & {
+  /**
+   * @generated from field: optional string code = 1;
+   */
+  code?: string;
+
+  /**
+   * @generated from field: optional string recovery_code = 2;
+   */
+  recoveryCode?: string;
+};
+
+/**
+ * Describes the message loci.auth.DisableMFARequest.
+ * Use `create(DisableMFARequestSchema)` to create a new message.
+ */
+export declare const DisableMFARequestSchema: GenMessage<DisableMFARequest>;
+
+/**
+ * RegenerateRecoveryCodesRequest replaces all existing codes. Also requires a
+ * current code, for the same reason as disabling.
+ *
+ * @generated from message loci.auth.RegenerateRecoveryCodesRequest
+ */
+export declare type RegenerateRecoveryCodesRequest = Message<"loci.auth.RegenerateRecoveryCodesRequest"> & {
+  /**
+   * @generated from field: string code = 1;
+   */
+  code: string;
+};
+
+/**
+ * Describes the message loci.auth.RegenerateRecoveryCodesRequest.
+ * Use `create(RegenerateRecoveryCodesRequestSchema)` to create a new message.
+ */
+export declare const RegenerateRecoveryCodesRequestSchema: GenMessage<RegenerateRecoveryCodesRequest>;
+
+/**
+ * RegenerateRecoveryCodesResponse returns the new codes and invalidates the old.
+ *
+ * @generated from message loci.auth.RegenerateRecoveryCodesResponse
+ */
+export declare type RegenerateRecoveryCodesResponse = Message<"loci.auth.RegenerateRecoveryCodesResponse"> & {
+  /**
+   * @generated from field: repeated string recovery_codes = 1;
+   */
+  recoveryCodes: string[];
+
+  /**
+   * @generated from field: string message = 2;
+   */
+  message: string;
+};
+
+/**
+ * Describes the message loci.auth.RegenerateRecoveryCodesResponse.
+ * Use `create(RegenerateRecoveryCodesResponseSchema)` to create a new message.
+ */
+export declare const RegenerateRecoveryCodesResponseSchema: GenMessage<RegenerateRecoveryCodesResponse>;
+
+/**
+ * GetMFAStatusRequest reports the calling user's MFA state, for Settings.
+ *
+ * @generated from message loci.auth.GetMFAStatusRequest
+ */
+export declare type GetMFAStatusRequest = Message<"loci.auth.GetMFAStatusRequest"> & {
+};
+
+/**
+ * Describes the message loci.auth.GetMFAStatusRequest.
+ * Use `create(GetMFAStatusRequestSchema)` to create a new message.
+ */
+export declare const GetMFAStatusRequestSchema: GenMessage<GetMFAStatusRequest>;
+
+/**
+ * @generated from message loci.auth.GetMFAStatusResponse
+ */
+export declare type GetMFAStatusResponse = Message<"loci.auth.GetMFAStatusResponse"> & {
+  /**
+   * @generated from field: bool enabled = 1;
+   */
+  enabled: boolean;
+
+  /**
+   * How many unused recovery codes remain. Surfacing this lets the UI nudge a
+   * user who is down to their last code, before they are locked out.
+   *
+   * @generated from field: int32 recovery_codes_remaining = 2;
+   */
+  recoveryCodesRemaining: number;
+
+  /**
+   * @generated from field: optional google.protobuf.Timestamp enrolled_at = 3;
+   */
+  enrolledAt?: Timestamp;
+
+  /**
+   * True when policy requires MFA for this user's role, so the UI can explain
+   * why disabling is refused.
+   *
+   * @generated from field: bool required_by_policy = 4;
+   */
+  requiredByPolicy: boolean;
+};
+
+/**
+ * Describes the message loci.auth.GetMFAStatusResponse.
+ * Use `create(GetMFAStatusResponseSchema)` to create a new message.
+ */
+export declare const GetMFAStatusResponseSchema: GenMessage<GetMFAStatusResponse>;
 
 /**
  * RegisterRequest for user registration
@@ -516,6 +777,61 @@ export declare const AuthService: GenService<{
     methodKind: "unary";
     input: typeof ResetPasswordRequestSchema;
     output: typeof ResponseSchema;
+  },
+  /**
+   * Multi-factor auth.
+   *
+   * VerifyMFA is unauthenticated by design: it completes a login, so the caller
+   * has no access token yet. It authenticates via the mfa_token from Login.
+   *
+   * @generated from rpc loci.auth.AuthService.VerifyMFA
+   */
+  verifyMFA: {
+    methodKind: "unary";
+    input: typeof VerifyMFARequestSchema;
+    output: typeof LoginResponseSchema;
+  },
+  /**
+   * The rest require a valid access token; the user is taken from it.
+   *
+   * @generated from rpc loci.auth.AuthService.BeginMFAEnrollment
+   */
+  beginMFAEnrollment: {
+    methodKind: "unary";
+    input: typeof BeginMFAEnrollmentRequestSchema;
+    output: typeof BeginMFAEnrollmentResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.auth.AuthService.ConfirmMFAEnrollment
+   */
+  confirmMFAEnrollment: {
+    methodKind: "unary";
+    input: typeof ConfirmMFAEnrollmentRequestSchema;
+    output: typeof ConfirmMFAEnrollmentResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.auth.AuthService.DisableMFA
+   */
+  disableMFA: {
+    methodKind: "unary";
+    input: typeof DisableMFARequestSchema;
+    output: typeof ResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.auth.AuthService.RegenerateRecoveryCodes
+   */
+  regenerateRecoveryCodes: {
+    methodKind: "unary";
+    input: typeof RegenerateRecoveryCodesRequestSchema;
+    output: typeof RegenerateRecoveryCodesResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.auth.AuthService.GetMFAStatus
+   */
+  getMFAStatus: {
+    methodKind: "unary";
+    input: typeof GetMFAStatusRequestSchema;
+    output: typeof GetMFAStatusResponseSchema;
   },
 }>;
 

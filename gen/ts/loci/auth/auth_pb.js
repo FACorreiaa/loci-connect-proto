@@ -11,7 +11,7 @@ import { file_loci_common_common } from "../common/common_pb";
  * Describes the file loci/auth/auth.proto.
  */
 export const file_loci_auth_auth = /*@__PURE__*/
-  fileDesc("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AYgBARIhCgVzY29wZRgHIAEoCUINukgK2AEBcgUQARjIAUgCiAEBEhsKCmV4cGlyZXNfYXQYCCABKANCB7pIBCICIAASGgoJaXNzdWVkX2F0GAkgASgDQge6SAQiAiAAQhQKEl9zdWJzY3JpcHRpb25fcGxhbkIWChRfc3Vic2NyaXB0aW9uX3N0YXR1c0IICgZfc2NvcGUyiwUKC0F1dGhTZXJ2aWNlEjoKBUxvZ2luEhcubG9jaS5hdXRoLkxvZ2luUmVxdWVzdBoYLmxvY2kuYXV0aC5Mb2dpblJlc3BvbnNlEj0KCFJlZ2lzdGVyEhoubG9jaS5hdXRoLlJlZ2lzdGVyUmVxdWVzdBoVLmxvY2kuY29tbW9uLlJlc3BvbnNlEkgKDFJlZnJlc2hUb2tlbhIeLmxvY2kuYXV0aC5SZWZyZXNoVG9rZW5SZXF1ZXN0GhgubG9jaS5hdXRoLlRva2VuUmVzcG9uc2USWAoPVmFsaWRhdGVTZXNzaW9uEiEubG9jaS5hdXRoLlZhbGlkYXRlU2Vzc2lvblJlcXVlc3QaIi5sb2NpLmF1dGguVmFsaWRhdGVTZXNzaW9uUmVzcG9uc2USSQoOQ2hhbmdlUGFzc3dvcmQSIC5sb2NpLmF1dGguQ2hhbmdlUGFzc3dvcmRSZXF1ZXN0GhUubG9jaS5jb21tb24uUmVzcG9uc2USQwoLQ2hhbmdlRW1haWwSHS5sb2NpLmF1dGguQ2hhbmdlRW1haWxSZXF1ZXN0GhUubG9jaS5jb21tb24uUmVzcG9uc2USOQoGTG9nb3V0EhgubG9jaS5hdXRoLkxvZ291dFJlcXVlc3QaFS5sb2NpLmNvbW1vbi5SZXNwb25zZRJJCg5Gb3Jnb3RQYXNzd29yZBIgLmxvY2kuYXV0aC5Gb3Jnb3RQYXNzd29yZFJlcXVlc3QaFS5sb2NpLmNvbW1vbi5SZXNwb25zZRJHCg1SZXNldFBhc3N3b3JkEh8ubG9jaS5hdXRoLlJlc2V0UGFzc3dvcmRSZXF1ZXN0GhUubG9jaS5jb21tb24uUmVzcG9uc2VCQFo+Z2l0aHViLmNvbS9GQUNvcnJlaWFhL2xvY2ktY29ubmVjdC1wcm90by9nZW4vZ28vbG9jaS9hdXRoO2F1dGhiBnByb3RvMw", [file_buf_validate_validate, file_google_protobuf_timestamp, file_loci_common_common]);
+  fileDesc("ChRsb2NpL2F1dGgvYXV0aC5wcm90bxIJbG9jaS5hdXRoIvEBCghVc2VyQXV0aBIVCgJpZBgBIAEoCUIJukgGcgQQARhkEi0KCHVzZXJuYW1lGAIgASgJQhu6SBhyFhABGGQyEF5bYS16QS1aMC05Xy1dKyQSFgoFZW1haWwYAyABKAlCB7pIBHICYAESFwoEcm9sZRgEIAEoCUIJukgGcgQQARhkEjYKCmNyZWF0ZWRfYXQYBSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wQga6SAPIAQESNgoKdXBkYXRlZF9hdBgGIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBCBrpIA8gBASJECgxMb2dpblJlcXVlc3QSFgoFZW1haWwYASABKAlCB7pIBHICYAESHAoIcGFzc3dvcmQYAiABKAlCCrpIB3IFEAgYyAEinwIKDUxvZ2luUmVzcG9uc2USIAoMYWNjZXNzX3Rva2VuGAEgASgJQgq6SAfYAQFyAhAQEiEKDXJlZnJlc2hfdG9rZW4YAiABKAlCCrpIB9gBAXICEBASGwoHbWVzc2FnZRgDIAEoCUIKukgHcgUQARj0AxIaCgd1c2VyX2lkGAQgASgJQgm6SAZyBBABGGQSLQoIdXNlcm5hbWUYBSABKAlCG7pIGHIWEAEYZDIQXlthLXpBLVowLTlfLV0rJBIWCgVlbWFpbBgGIAEoCUIHukgEcgJgARIUCgxtZmFfcmVxdWlyZWQYByABKAgSJQoJbWZhX3Rva2VuGAggASgJQg26SArYAQFyBRAQGIAgSACIAQFCDAoKX21mYV90b2tlbiKXAQoQVmVyaWZ5TUZBUmVxdWVzdBIdCgltZmFfdG9rZW4YASABKAlCCrpIB3IFEBAYgCASHwoEY29kZRgCIAEoCUIMukgJ2AEBcgQQBhgUSACIAQESKAoNcmVjb3ZlcnlfY29kZRgDIAEoCUIMukgJ2AEBcgQQBhgUSAGIAQFCBwoFX2NvZGVCEAoOX3JlY292ZXJ5X2NvZGUiGwoZQmVnaW5NRkFFbnJvbGxtZW50UmVxdWVzdCJeChpCZWdpbk1GQUVucm9sbG1lbnRSZXNwb25zZRIkChBwcm92aXNpb25pbmdfdXJpGAEgASgJQgq6SAdyBRABGIAQEhoKBnNlY3JldBgCIAEoCUIKukgHcgUQEBiAASI2ChtDb25maXJtTUZBRW5yb2xsbWVudFJlcXVlc3QSFwoEY29kZRgBIAEoCUIJukgGcgQQBhgUIl8KHENvbmZpcm1NRkFFbnJvbGxtZW50UmVzcG9uc2USIgoOcmVjb3ZlcnlfY29kZXMYASADKAlCCrpIB5IBBAgBEBQSGwoHbWVzc2FnZRgCIAEoCUIKukgHcgUQARj0AyJ5ChFEaXNhYmxlTUZBUmVxdWVzdBIfCgRjb2RlGAEgASgJQgy6SAnYAQFyBBAGGBRIAIgBARIoCg1yZWNvdmVyeV9jb2RlGAIgASgJQgy6SAnYAQFyBBAGGBRIAYgBAUIHCgVfY29kZUIQCg5fcmVjb3ZlcnlfY29kZSI5Ch5SZWdlbmVyYXRlUmVjb3ZlcnlDb2Rlc1JlcXVlc3QSFwoEY29kZRgBIAEoCUIJukgGcgQQBhgUImIKH1JlZ2VuZXJhdGVSZWNvdmVyeUNvZGVzUmVzcG9uc2USIgoOcmVjb3ZlcnlfY29kZXMYASADKAlCCrpIB5IBBAgBEBQSGwoHbWVzc2FnZRgCIAEoCUIKukgHcgUQARj0AyIVChNHZXRNRkFTdGF0dXNSZXF1ZXN0IrQBChRHZXRNRkFTdGF0dXNSZXNwb25zZRIPCgdlbmFibGVkGAEgASgIEikKGHJlY292ZXJ5X2NvZGVzX3JlbWFpbmluZxgCIAEoBUIHukgEGgIoABI0CgtlbnJvbGxlZF9hdBgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBIAIgBARIaChJyZXF1aXJlZF9ieV9wb2xpY3kYBCABKAhCDgoMX2Vucm9sbGVkX2F0IqABCg9SZWdpc3RlclJlcXVlc3QSLQoIdXNlcm5hbWUYASABKAlCG7pIGHIWEAMYZDIQXlthLXpBLVowLTlfLV0rJBIWCgVlbWFpbBgCIAEoCUIHukgEcgJgARIcCghwYXNzd29yZBgDIAEoCUIKukgHcgUQCBjIARIfCgRyb2xlGAQgASgJQgy6SAnYAQFyBBABGGRIAIgBAUIHCgVfcm9sZSI1ChNSZWZyZXNoVG9rZW5SZXF1ZXN0Eh4KDXJlZnJlc2hfdG9rZW4YASABKAlCB7pIBHICEBAiTgoNVG9rZW5SZXNwb25zZRIdCgxhY2Nlc3NfdG9rZW4YASABKAlCB7pIBHICEBASHgoNcmVmcmVzaF90b2tlbhgCIAEoCUIHukgEcgIQECI4ChZWYWxpZGF0ZVNlc3Npb25SZXF1ZXN0Eh4KCnNlc3Npb25faWQYASABKAlCCrpIB3IFEAEYyAEixgEKF1ZhbGlkYXRlU2Vzc2lvblJlc3BvbnNlEg0KBXZhbGlkGAEgASgIEiIKB3VzZXJfaWQYAiABKAlCDLpICdgBAXIEEAEYZEgAiAEBEjUKCHVzZXJuYW1lGAMgASgJQh66SBvYAQFyFhABGGQyEF5bYS16QS1aMC05Xy1dKyRIAYgBARIeCgVlbWFpbBgEIAEoCUIKukgH2AEBcgJgAUgCiAEBQgoKCF91c2VyX2lkQgsKCV91c2VybmFtZUIICgZfZW1haWwiWwoVQ2hhbmdlUGFzc3dvcmRSZXF1ZXN0EiAKDG9sZF9wYXNzd29yZBgBIAEoCUIKukgHcgUQCBjIARIgCgxuZXdfcGFzc3dvcmQYAiABKAlCCrpIB3IFEAgYyAEiTgoSQ2hhbmdlRW1haWxSZXF1ZXN0EhwKCHBhc3N3b3JkGAEgASgJQgq6SAdyBRAIGMgBEhoKCW5ld19lbWFpbBgCIAEoCUIHukgEcgJgASIvCg1Mb2dvdXRSZXF1ZXN0Eh4KDXJlZnJlc2hfdG9rZW4YASABKAlCB7pIBHICEBAiLwoVRm9yZ290UGFzc3dvcmRSZXF1ZXN0EhYKBWVtYWlsGAEgASgJQge6SARyAmABIlMKFFJlc2V0UGFzc3dvcmRSZXF1ZXN0EhkKBXRva2VuGAEgASgJQgq6SAdyBRAgGIABEiAKDG5ld19wYXNzd29yZBgCIAEoCUIKukgHcgUQCBjIASJoCgdTZXNzaW9uEhYKAmlkGAEgASgJQgq6SAdyBRABGMgBEi0KCHVzZXJuYW1lGAIgASgJQhu6SBhyFhABGGQyEF5bYS16QS1aMC05Xy1dKyQSFgoFZW1haWwYAyABKAlCB7pIBHICYAEi9gIKBkNsYWltcxIaCgd1c2VyX2lkGAEgASgJQgm6SAZyBBABGGQSLQoIdXNlcm5hbWUYAiABKAlCG7pIGHIWEAEYZDIQXlthLXpBLVowLTlfLV0rJBIWCgVlbWFpbBgDIAEoCUIHukgEcgJgARIXCgRyb2xlGAQgASgJQgm6SAZyBBABGGQSLAoRc3Vic2NyaXB0aW9uX3BsYW4YBSABKAlCDLpICdgBAXIEEAEYZEgAiAEBEi4KE3N1YnNjcmlwdGlvbl9zdGF0dXMYBiABKAlCDLpICdgBAXIEEAEYZEgBiAEBEiEKBXNjb3BlGAcgASgJQg26SArYAQFyBRABGMgBSAKIAQESGwoKZXhwaXJlc19hdBgIIAEoA0IHukgEIgIgABIaCglpc3N1ZWRfYXQYCSABKANCB7pIBCICIABCFAoSX3N1YnNjcmlwdGlvbl9wbGFuQhYKFF9zdWJzY3JpcHRpb25fc3RhdHVzQggKBl9zY29wZTKhCQoLQXV0aFNlcnZpY2USOgoFTG9naW4SFy5sb2NpLmF1dGguTG9naW5SZXF1ZXN0GhgubG9jaS5hdXRoLkxvZ2luUmVzcG9uc2USPQoIUmVnaXN0ZXISGi5sb2NpLmF1dGguUmVnaXN0ZXJSZXF1ZXN0GhUubG9jaS5jb21tb24uUmVzcG9uc2USSAoMUmVmcmVzaFRva2VuEh4ubG9jaS5hdXRoLlJlZnJlc2hUb2tlblJlcXVlc3QaGC5sb2NpLmF1dGguVG9rZW5SZXNwb25zZRJYCg9WYWxpZGF0ZVNlc3Npb24SIS5sb2NpLmF1dGguVmFsaWRhdGVTZXNzaW9uUmVxdWVzdBoiLmxvY2kuYXV0aC5WYWxpZGF0ZVNlc3Npb25SZXNwb25zZRJJCg5DaGFuZ2VQYXNzd29yZBIgLmxvY2kuYXV0aC5DaGFuZ2VQYXNzd29yZFJlcXVlc3QaFS5sb2NpLmNvbW1vbi5SZXNwb25zZRJDCgtDaGFuZ2VFbWFpbBIdLmxvY2kuYXV0aC5DaGFuZ2VFbWFpbFJlcXVlc3QaFS5sb2NpLmNvbW1vbi5SZXNwb25zZRI5CgZMb2dvdXQSGC5sb2NpLmF1dGguTG9nb3V0UmVxdWVzdBoVLmxvY2kuY29tbW9uLlJlc3BvbnNlEkkKDkZvcmdvdFBhc3N3b3JkEiAubG9jaS5hdXRoLkZvcmdvdFBhc3N3b3JkUmVxdWVzdBoVLmxvY2kuY29tbW9uLlJlc3BvbnNlEkcKDVJlc2V0UGFzc3dvcmQSHy5sb2NpLmF1dGguUmVzZXRQYXNzd29yZFJlcXVlc3QaFS5sb2NpLmNvbW1vbi5SZXNwb25zZRJCCglWZXJpZnlNRkESGy5sb2NpLmF1dGguVmVyaWZ5TUZBUmVxdWVzdBoYLmxvY2kuYXV0aC5Mb2dpblJlc3BvbnNlEmEKEkJlZ2luTUZBRW5yb2xsbWVudBIkLmxvY2kuYXV0aC5CZWdpbk1GQUVucm9sbG1lbnRSZXF1ZXN0GiUubG9jaS5hdXRoLkJlZ2luTUZBRW5yb2xsbWVudFJlc3BvbnNlEmcKFENvbmZpcm1NRkFFbnJvbGxtZW50EiYubG9jaS5hdXRoLkNvbmZpcm1NRkFFbnJvbGxtZW50UmVxdWVzdBonLmxvY2kuYXV0aC5Db25maXJtTUZBRW5yb2xsbWVudFJlc3BvbnNlEkEKCkRpc2FibGVNRkESHC5sb2NpLmF1dGguRGlzYWJsZU1GQVJlcXVlc3QaFS5sb2NpLmNvbW1vbi5SZXNwb25zZRJwChdSZWdlbmVyYXRlUmVjb3ZlcnlDb2RlcxIpLmxvY2kuYXV0aC5SZWdlbmVyYXRlUmVjb3ZlcnlDb2Rlc1JlcXVlc3QaKi5sb2NpLmF1dGguUmVnZW5lcmF0ZVJlY292ZXJ5Q29kZXNSZXNwb25zZRJPCgxHZXRNRkFTdGF0dXMSHi5sb2NpLmF1dGguR2V0TUZBU3RhdHVzUmVxdWVzdBofLmxvY2kuYXV0aC5HZXRNRkFTdGF0dXNSZXNwb25zZUJAWj5naXRodWIuY29tL0ZBQ29ycmVpYWEvbG9jaS1jb25uZWN0LXByb3RvL2dlbi9nby9sb2NpL2F1dGg7YXV0aGIGcHJvdG8z", [file_buf_validate_validate, file_google_protobuf_timestamp, file_loci_common_common]);
 
 /**
  * Describes the message loci.auth.UserAuth.
@@ -35,88 +35,158 @@ export const LoginResponseSchema = /*@__PURE__*/
   messageDesc(file_loci_auth_auth, 2);
 
 /**
+ * Describes the message loci.auth.VerifyMFARequest.
+ * Use `create(VerifyMFARequestSchema)` to create a new message.
+ */
+export const VerifyMFARequestSchema = /*@__PURE__*/
+  messageDesc(file_loci_auth_auth, 3);
+
+/**
+ * Describes the message loci.auth.BeginMFAEnrollmentRequest.
+ * Use `create(BeginMFAEnrollmentRequestSchema)` to create a new message.
+ */
+export const BeginMFAEnrollmentRequestSchema = /*@__PURE__*/
+  messageDesc(file_loci_auth_auth, 4);
+
+/**
+ * Describes the message loci.auth.BeginMFAEnrollmentResponse.
+ * Use `create(BeginMFAEnrollmentResponseSchema)` to create a new message.
+ */
+export const BeginMFAEnrollmentResponseSchema = /*@__PURE__*/
+  messageDesc(file_loci_auth_auth, 5);
+
+/**
+ * Describes the message loci.auth.ConfirmMFAEnrollmentRequest.
+ * Use `create(ConfirmMFAEnrollmentRequestSchema)` to create a new message.
+ */
+export const ConfirmMFAEnrollmentRequestSchema = /*@__PURE__*/
+  messageDesc(file_loci_auth_auth, 6);
+
+/**
+ * Describes the message loci.auth.ConfirmMFAEnrollmentResponse.
+ * Use `create(ConfirmMFAEnrollmentResponseSchema)` to create a new message.
+ */
+export const ConfirmMFAEnrollmentResponseSchema = /*@__PURE__*/
+  messageDesc(file_loci_auth_auth, 7);
+
+/**
+ * Describes the message loci.auth.DisableMFARequest.
+ * Use `create(DisableMFARequestSchema)` to create a new message.
+ */
+export const DisableMFARequestSchema = /*@__PURE__*/
+  messageDesc(file_loci_auth_auth, 8);
+
+/**
+ * Describes the message loci.auth.RegenerateRecoveryCodesRequest.
+ * Use `create(RegenerateRecoveryCodesRequestSchema)` to create a new message.
+ */
+export const RegenerateRecoveryCodesRequestSchema = /*@__PURE__*/
+  messageDesc(file_loci_auth_auth, 9);
+
+/**
+ * Describes the message loci.auth.RegenerateRecoveryCodesResponse.
+ * Use `create(RegenerateRecoveryCodesResponseSchema)` to create a new message.
+ */
+export const RegenerateRecoveryCodesResponseSchema = /*@__PURE__*/
+  messageDesc(file_loci_auth_auth, 10);
+
+/**
+ * Describes the message loci.auth.GetMFAStatusRequest.
+ * Use `create(GetMFAStatusRequestSchema)` to create a new message.
+ */
+export const GetMFAStatusRequestSchema = /*@__PURE__*/
+  messageDesc(file_loci_auth_auth, 11);
+
+/**
+ * Describes the message loci.auth.GetMFAStatusResponse.
+ * Use `create(GetMFAStatusResponseSchema)` to create a new message.
+ */
+export const GetMFAStatusResponseSchema = /*@__PURE__*/
+  messageDesc(file_loci_auth_auth, 12);
+
+/**
  * Describes the message loci.auth.RegisterRequest.
  * Use `create(RegisterRequestSchema)` to create a new message.
  */
 export const RegisterRequestSchema = /*@__PURE__*/
-  messageDesc(file_loci_auth_auth, 3);
+  messageDesc(file_loci_auth_auth, 13);
 
 /**
  * Describes the message loci.auth.RefreshTokenRequest.
  * Use `create(RefreshTokenRequestSchema)` to create a new message.
  */
 export const RefreshTokenRequestSchema = /*@__PURE__*/
-  messageDesc(file_loci_auth_auth, 4);
+  messageDesc(file_loci_auth_auth, 14);
 
 /**
  * Describes the message loci.auth.TokenResponse.
  * Use `create(TokenResponseSchema)` to create a new message.
  */
 export const TokenResponseSchema = /*@__PURE__*/
-  messageDesc(file_loci_auth_auth, 5);
+  messageDesc(file_loci_auth_auth, 15);
 
 /**
  * Describes the message loci.auth.ValidateSessionRequest.
  * Use `create(ValidateSessionRequestSchema)` to create a new message.
  */
 export const ValidateSessionRequestSchema = /*@__PURE__*/
-  messageDesc(file_loci_auth_auth, 6);
+  messageDesc(file_loci_auth_auth, 16);
 
 /**
  * Describes the message loci.auth.ValidateSessionResponse.
  * Use `create(ValidateSessionResponseSchema)` to create a new message.
  */
 export const ValidateSessionResponseSchema = /*@__PURE__*/
-  messageDesc(file_loci_auth_auth, 7);
+  messageDesc(file_loci_auth_auth, 17);
 
 /**
  * Describes the message loci.auth.ChangePasswordRequest.
  * Use `create(ChangePasswordRequestSchema)` to create a new message.
  */
 export const ChangePasswordRequestSchema = /*@__PURE__*/
-  messageDesc(file_loci_auth_auth, 8);
+  messageDesc(file_loci_auth_auth, 18);
 
 /**
  * Describes the message loci.auth.ChangeEmailRequest.
  * Use `create(ChangeEmailRequestSchema)` to create a new message.
  */
 export const ChangeEmailRequestSchema = /*@__PURE__*/
-  messageDesc(file_loci_auth_auth, 9);
+  messageDesc(file_loci_auth_auth, 19);
 
 /**
  * Describes the message loci.auth.LogoutRequest.
  * Use `create(LogoutRequestSchema)` to create a new message.
  */
 export const LogoutRequestSchema = /*@__PURE__*/
-  messageDesc(file_loci_auth_auth, 10);
+  messageDesc(file_loci_auth_auth, 20);
 
 /**
  * Describes the message loci.auth.ForgotPasswordRequest.
  * Use `create(ForgotPasswordRequestSchema)` to create a new message.
  */
 export const ForgotPasswordRequestSchema = /*@__PURE__*/
-  messageDesc(file_loci_auth_auth, 11);
+  messageDesc(file_loci_auth_auth, 21);
 
 /**
  * Describes the message loci.auth.ResetPasswordRequest.
  * Use `create(ResetPasswordRequestSchema)` to create a new message.
  */
 export const ResetPasswordRequestSchema = /*@__PURE__*/
-  messageDesc(file_loci_auth_auth, 12);
+  messageDesc(file_loci_auth_auth, 22);
 
 /**
  * Describes the message loci.auth.Session.
  * Use `create(SessionSchema)` to create a new message.
  */
 export const SessionSchema = /*@__PURE__*/
-  messageDesc(file_loci_auth_auth, 13);
+  messageDesc(file_loci_auth_auth, 23);
 
 /**
  * Describes the message loci.auth.Claims.
  * Use `create(ClaimsSchema)` to create a new message.
  */
 export const ClaimsSchema = /*@__PURE__*/
-  messageDesc(file_loci_auth_auth, 14);
+  messageDesc(file_loci_auth_auth, 24);
 
 /**
  * AuthService defines authentication-related RPCs
