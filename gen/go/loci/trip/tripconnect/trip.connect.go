@@ -60,6 +60,9 @@ const (
 	TripServiceReplaceStopProcedure = "/loci.trip.TripService/ReplaceStop"
 	// TripServiceExportTripProcedure is the fully-qualified name of the TripService's ExportTrip RPC.
 	TripServiceExportTripProcedure = "/loci.trip.TripService/ExportTrip"
+	// TripServiceSuggestPackingProcedure is the fully-qualified name of the TripService's
+	// SuggestPacking RPC.
+	TripServiceSuggestPackingProcedure = "/loci.trip.TripService/SuggestPacking"
 )
 
 // These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
@@ -77,6 +80,7 @@ var (
 	tripServiceRemoveStopMethodDescriptor       = tripServiceServiceDescriptor.Methods().ByName("RemoveStop")
 	tripServiceReplaceStopMethodDescriptor      = tripServiceServiceDescriptor.Methods().ByName("ReplaceStop")
 	tripServiceExportTripMethodDescriptor       = tripServiceServiceDescriptor.Methods().ByName("ExportTrip")
+	tripServiceSuggestPackingMethodDescriptor   = tripServiceServiceDescriptor.Methods().ByName("SuggestPacking")
 )
 
 // TripServiceClient is a client for the loci.trip.TripService service.
@@ -93,6 +97,9 @@ type TripServiceClient interface {
 	RemoveStop(context.Context, *connect.Request[trip.RemoveStopRequest]) (*connect.Response[trip.TripDraft], error)
 	ReplaceStop(context.Context, *connect.Request[trip.ReplaceStopRequest]) (*connect.Response[trip.TripDraft], error)
 	ExportTrip(context.Context, *connect.Request[trip.ExportTripRequest]) (*connect.Response[trip.ExportTripResponse], error)
+	// SuggestPacking derives a packing list from the trip: its length, its cities'
+	// forecasts, the driving between them, and the traveller's stated interests.
+	SuggestPacking(context.Context, *connect.Request[trip.SuggestPackingRequest]) (*connect.Response[trip.SuggestPackingResponse], error)
 }
 
 // NewTripServiceClient constructs a client for the loci.trip.TripService service. By default, it
@@ -177,6 +184,12 @@ func NewTripServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			connect.WithSchema(tripServiceExportTripMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
+		suggestPacking: connect.NewClient[trip.SuggestPackingRequest, trip.SuggestPackingResponse](
+			httpClient,
+			baseURL+TripServiceSuggestPackingProcedure,
+			connect.WithSchema(tripServiceSuggestPackingMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -194,6 +207,7 @@ type tripServiceClient struct {
 	removeStop       *connect.Client[trip.RemoveStopRequest, trip.TripDraft]
 	replaceStop      *connect.Client[trip.ReplaceStopRequest, trip.TripDraft]
 	exportTrip       *connect.Client[trip.ExportTripRequest, trip.ExportTripResponse]
+	suggestPacking   *connect.Client[trip.SuggestPackingRequest, trip.SuggestPackingResponse]
 }
 
 // SaveTrip calls loci.trip.TripService.SaveTrip.
@@ -256,6 +270,11 @@ func (c *tripServiceClient) ExportTrip(ctx context.Context, req *connect.Request
 	return c.exportTrip.CallUnary(ctx, req)
 }
 
+// SuggestPacking calls loci.trip.TripService.SuggestPacking.
+func (c *tripServiceClient) SuggestPacking(ctx context.Context, req *connect.Request[trip.SuggestPackingRequest]) (*connect.Response[trip.SuggestPackingResponse], error) {
+	return c.suggestPacking.CallUnary(ctx, req)
+}
+
 // TripServiceHandler is an implementation of the loci.trip.TripService service.
 type TripServiceHandler interface {
 	SaveTrip(context.Context, *connect.Request[trip.SaveTripRequest]) (*connect.Response[trip.TripDraft], error)
@@ -270,6 +289,9 @@ type TripServiceHandler interface {
 	RemoveStop(context.Context, *connect.Request[trip.RemoveStopRequest]) (*connect.Response[trip.TripDraft], error)
 	ReplaceStop(context.Context, *connect.Request[trip.ReplaceStopRequest]) (*connect.Response[trip.TripDraft], error)
 	ExportTrip(context.Context, *connect.Request[trip.ExportTripRequest]) (*connect.Response[trip.ExportTripResponse], error)
+	// SuggestPacking derives a packing list from the trip: its length, its cities'
+	// forecasts, the driving between them, and the traveller's stated interests.
+	SuggestPacking(context.Context, *connect.Request[trip.SuggestPackingRequest]) (*connect.Response[trip.SuggestPackingResponse], error)
 }
 
 // NewTripServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -350,6 +372,12 @@ func NewTripServiceHandler(svc TripServiceHandler, opts ...connect.HandlerOption
 		connect.WithSchema(tripServiceExportTripMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
+	tripServiceSuggestPackingHandler := connect.NewUnaryHandler(
+		TripServiceSuggestPackingProcedure,
+		svc.SuggestPacking,
+		connect.WithSchema(tripServiceSuggestPackingMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/loci.trip.TripService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case TripServiceSaveTripProcedure:
@@ -376,6 +404,8 @@ func NewTripServiceHandler(svc TripServiceHandler, opts ...connect.HandlerOption
 			tripServiceReplaceStopHandler.ServeHTTP(w, r)
 		case TripServiceExportTripProcedure:
 			tripServiceExportTripHandler.ServeHTTP(w, r)
+		case TripServiceSuggestPackingProcedure:
+			tripServiceSuggestPackingHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -431,4 +461,8 @@ func (UnimplementedTripServiceHandler) ReplaceStop(context.Context, *connect.Req
 
 func (UnimplementedTripServiceHandler) ExportTrip(context.Context, *connect.Request[trip.ExportTripRequest]) (*connect.Response[trip.ExportTripResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.trip.TripService.ExportTrip is not implemented"))
+}
+
+func (UnimplementedTripServiceHandler) SuggestPacking(context.Context, *connect.Request[trip.SuggestPackingRequest]) (*connect.Response[trip.SuggestPackingResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("loci.trip.TripService.SuggestPacking is not implemented"))
 }

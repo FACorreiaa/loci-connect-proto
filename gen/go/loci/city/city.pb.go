@@ -386,9 +386,12 @@ func (x *GetCityResponse) GetCity() *CityDetail {
 
 // SearchCitiesRequest for searching cities
 type SearchCitiesRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Query         string                 `protobuf:"bytes,1,opt,name=query,proto3" json:"query,omitempty"`
-	Limit         *int32                 `protobuf:"varint,2,opt,name=limit,proto3,oneof" json:"limit,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Empty means "browse": the server returns the first alphabetical page. The
+	// client's own city picker calls it that way on mount, so a min_len of 1 made
+	// that initial load fail validation before it ever reached the query.
+	Query         string `protobuf:"bytes,1,opt,name=query,proto3" json:"query,omitempty"`
+	Limit         *int32 `protobuf:"varint,2,opt,name=limit,proto3,oneof" json:"limit,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -534,10 +537,9 @@ const file_loci_city_city_proto_rawDesc = "" +
 	"\n" +
 	"identifier\x12\x05\xbaH\x02\b\x01\"<\n" +
 	"\x0fGetCityResponse\x12)\n" +
-	"\x04city\x18\x01 \x01(\v2\x15.loci.city.CityDetailR\x04city\"j\n" +
-	"\x13SearchCitiesRequest\x12 \n" +
-	"\x05query\x18\x01 \x01(\tB\n" +
-	"\xbaH\ar\x05\x10\x01\x18\xc8\x01R\x05query\x12'\n" +
+	"\x04city\x18\x01 \x01(\v2\x15.loci.city.CityDetailR\x04city\"h\n" +
+	"\x13SearchCitiesRequest\x12\x1e\n" +
+	"\x05query\x18\x01 \x01(\tB\b\xbaH\x05r\x03\x18\xc8\x01R\x05query\x12'\n" +
 	"\x05limit\x18\x02 \x01(\x05B\f\xbaH\t\xd8\x01\x01\x1a\x04\x18d(\x01H\x00R\x05limit\x88\x01\x01B\b\n" +
 	"\x06_limit\"E\n" +
 	"\x14SearchCitiesResponse\x12-\n" +

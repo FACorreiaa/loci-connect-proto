@@ -3044,6 +3044,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.list.UpdateListItemResponse'
+  /loci.localcontext.LocalContextService/GetGoScore:
+    post:
+      tags:
+        - loci.localcontext.LocalContextService
+      summary: GetGoScore
+      description: GetGoScore answers "should I go this weekend?" for one destination.
+      operationId: loci.localcontext.LocalContextService.GetGoScore
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.localcontext.GetGoScoreRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.localcontext.GetGoScoreResponse'
   /loci.localcontext.LocalContextService/GetLocalContext:
     post:
       tags:
@@ -5743,6 +5779,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.trip.ShareTripResponse'
+  /loci.trip.TripService/SuggestPacking:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: SuggestPacking
+      description: |-
+        SuggestPacking derives a packing list from the trip: its length, its cities'
+         forecasts, the driving between them, and the traveller's stated interests.
+      operationId: loci.trip.TripService.SuggestPacking
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.SuggestPackingRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.SuggestPackingResponse'
   /loci.user.UserService/DeleteAccount:
     post:
       tags:
@@ -8399,7 +8473,10 @@ components:
           type: string
           title: query
           maxLength: 200
-          minLength: 1
+          description: |-
+            Empty means "browse": the server returns the first alphabetical page. The
+             client's own city picker calls it that way on mount, so a min_len of 1 made
+             that initial load fail validation before it ever reached the query.
         limit:
           type:
             - integer
@@ -8671,6 +8748,12 @@ components:
           type: string
           title: eat_snippet
           maxLength: 500
+        goScore:
+          title: go_score
+          description: |-
+            The go/no-go judgement for this city in the requested window, computed from
+             the same weather, travel and POI data shown in this column.
+          $ref: '#/components/schemas/loci.localcontext.GoScore'
       title: CityCompareColumn
       additionalProperties: false
       description: CityCompareColumn is one candidate city's side-by-side summary.
@@ -8715,7 +8798,7 @@ components:
             maxLength: 200
             minLength: 1
           title: candidate_city_names
-          maxItems: 3
+          maxItems: 8
           minItems: 2
         startDate:
           title: start_date
@@ -8754,6 +8837,10 @@ components:
         dualCityOption:
           title: dual_city_option
           $ref: '#/components/schemas/loci.compare.v1.DualCityOption'
+        multiCityPlan:
+          title: multi_city_plan
+          description: The general plan. Prefer this over dual_city_option.
+          $ref: '#/components/schemas/loci.compare.v1.MultiCityPlan'
         recommendation:
           title: recommendation
           $ref: '#/components/schemas/loci.compare.v1.CompareRecommendation'
@@ -8764,6 +8851,21 @@ components:
       title: CompareWeekendResponse
       additionalProperties: false
       description: CompareWeekendResponse holds columns plus an optional dual-city outline.
+    loci.compare.v1.DroppedCity:
+      type: object
+      properties:
+        cityName:
+          type: string
+          title: city_name
+          maxLength: 200
+          minLength: 1
+        reason:
+          type: string
+          title: reason
+          maxLength: 500
+      title: DroppedCity
+      additionalProperties: false
+      description: DroppedCity is a candidate the planner left out, and why.
     loci.compare.v1.DualCityOption:
       type: object
       properties:
@@ -8784,7 +8886,108 @@ components:
           title: pro_only
       title: DualCityOption
       additionalProperties: false
-      description: DualCityOption describes whether a two-city weekend is feasible.
+      description: |-
+        DualCityOption describes whether a two-city weekend is feasible.
+         Deprecated: use MultiCityPlan, which handles any number of cities and days.
+    loci.compare.v1.MultiCityPlan:
+      type: object
+      properties:
+        feasible:
+          type: boolean
+          title: feasible
+          description: False when not even one candidate fits the window.
+        cities:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.compare.v1.PlannedCity'
+          title: cities
+        dropped:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.compare.v1.DroppedCity'
+          title: dropped
+        legs:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.trip.TripLeg'
+          title: legs
+          description: Travel between the cities, in trip order, starting with the outbound leg.
+        totalTravelMins:
+          type: integer
+          title: total_travel_mins
+          minimum: 0
+          format: int32
+        travelShare:
+          type: number
+          title: travel_share
+          maximum: 1
+          minimum: 0
+          format: double
+          description: Share of the whole window spent travelling, 0-1.
+        outline:
+          type: string
+          title: outline
+          maxLength: 2000
+          description: One-line summary a UI can show without walking the structure.
+        warnings:
+          type: array
+          items:
+            type: string
+          title: warnings
+          description: Things that are legal but worth saying out loud (travel-heavy, thin days).
+        proOnly:
+          type: boolean
+          title: pro_only
+          description: Gated behind Pro, like the dual-city outline it replaces.
+      title: MultiCityPlan
+      additionalProperties: false
+      description: |-
+        MultiCityPlan is a route through any number of cities over any number of days.
+         It generalises DualCityOption, which only ever answered "can I do these two in
+         a weekend?".
+    loci.compare.v1.PlannedCity:
+      type: object
+      properties:
+        cityName:
+          type: string
+          title: city_name
+          maxLength: 200
+          minLength: 1
+        cityId:
+          type:
+            - string
+            - "null"
+          title: city_id
+          maxLength: 100
+          minLength: 1
+        lat:
+          type: number
+          title: lat
+          maximum: 90
+          minimum: -90
+          format: double
+        lon:
+          type: number
+          title: lon
+          maximum: 180
+          minimum: -180
+          format: double
+        dayNumbers:
+          type: array
+          items:
+            type: integer
+            format: int32
+          title: day_numbers
+          description: Days assigned to this city, in trip order.
+        goScore:
+          oneOf:
+            - $ref: '#/components/schemas/loci.localcontext.GoScore'
+            - type: "null"
+          title: go_score
+          description: The city's go-score, so the route can be justified rather than asserted.
+      title: PlannedCity
+      additionalProperties: false
+      description: PlannedCity is one city in a multi-city route, with the days it gets.
     loci.compare.v1.TransportLink:
       type: object
       properties:
@@ -12410,6 +12613,76 @@ components:
         - ALERT_KIND_HOLIDAY
         - ALERT_KIND_STRIKE
       description: AlertKind classifies a trip-time heads-up.
+    loci.localcontext.GetGoScoreRequest:
+      type: object
+      properties:
+        cityName:
+          type:
+            - string
+            - "null"
+          title: city_name
+          maxLength: 200
+          description: Destination, by name (fuzzy-matched) or by coordinates.
+        latitude:
+          type:
+            - number
+            - "null"
+          title: latitude
+          maximum: 90
+          minimum: -90
+          format: double
+        longitude:
+          type:
+            - number
+            - "null"
+          title: longitude
+          maximum: 180
+          minimum: -180
+          format: double
+        originLat:
+          type:
+            - number
+            - "null"
+          title: origin_lat
+          maximum: 90
+          minimum: -90
+          format: double
+          description: Where the traveller starts from, used for travel time.
+        originLon:
+          type:
+            - number
+            - "null"
+          title: origin_lon
+          maximum: 180
+          minimum: -180
+          format: double
+        start:
+          oneOf:
+            - $ref: '#/components/schemas/google.protobuf.Timestamp'
+            - type: "null"
+          title: start
+          description: Trip window. Defaults to a 48-hour weekend when omitted.
+        end:
+          oneOf:
+            - $ref: '#/components/schemas/google.protobuf.Timestamp'
+            - type: "null"
+          title: end
+      title: GetGoScoreRequest
+      additionalProperties: false
+      description: GetGoScoreRequest asks whether a city is worth the trip in a given window.
+    loci.localcontext.GetGoScoreResponse:
+      type: object
+      properties:
+        score:
+          title: score
+          $ref: '#/components/schemas/loci.localcontext.GoScore'
+        cityName:
+          type: string
+          title: city_name
+          maxLength: 200
+      title: GetGoScoreResponse
+      additionalProperties: false
+      description: GetGoScoreResponse carries the verdict and the resolved destination.
     loci.localcontext.GetLocalContextRequest:
       type: object
       properties:
@@ -12435,6 +12708,39 @@ components:
       title: GetLocalContextRequest
       additionalProperties: false
       description: GetLocalContextRequest asks for weather + alerts near a point.
+    loci.localcontext.GoScore:
+      type: object
+      properties:
+        score:
+          type: integer
+          title: score
+          maximum: 100
+          minimum: 0
+          format: int32
+        verdict:
+          type: string
+          title: verdict
+          maxLength: 20
+          minLength: 1
+          description: One of "go", "maybe", "skip".
+        factors:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.localcontext.ScoreFactor'
+          title: factors
+        summary:
+          type: string
+          title: summary
+          maxLength: 300
+        hasEstimatedInputs:
+          type: boolean
+          title: has_estimated_inputs
+          description: |-
+            True when any input was a stub rather than real provider data. Clients MUST
+             label the score as estimated when this is set.
+      title: GoScore
+      additionalProperties: false
+      description: GoScore answers "should I go here, in this window?".
     loci.localcontext.LocalAlert:
       type: object
       properties:
@@ -12480,6 +12786,37 @@ components:
       title: LocalContext
       additionalProperties: false
       description: LocalContext is the trip-time local information for a location.
+    loci.localcontext.ScoreFactor:
+      type: object
+      properties:
+        label:
+          type: string
+          title: label
+          maxLength: 100
+          minLength: 1
+        contribution:
+          type: integer
+          title: contribution
+          format: int32
+          description: Signed points this dimension contributed (negative for disruptions).
+        maxContribution:
+          type: integer
+          title: max_contribution
+          minimum: 0
+          format: int32
+          description: |-
+            Ceiling for this dimension, so a client can render "22 / 40" or a
+             proportional bar without hardcoding the weights.
+        detail:
+          type: string
+          title: detail
+          maxLength: 500
+      title: ScoreFactor
+      additionalProperties: false
+      description: |-
+        ScoreFactor is one dimension of the go/no-go judgement, with its reasoning.
+         The score is always shown WITH these: a bare number is not an explanation,
+         and a user who disagrees with it should be able to see why it landed there.
     loci.localcontext.WeatherDay:
       type: object
       properties:
@@ -15895,7 +16232,9 @@ components:
           type: string
           title: user_id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Ignored by the server, which takes the author from the auth token. Kept
+             for wire compatibility; do not require it — clients correctly omit it.
         poiId:
           type: string
           title: poi_id
@@ -15912,7 +16251,6 @@ components:
           type: string
           title: title
           maxLength: 200
-          minLength: 1
         content:
           type: string
           title: content
@@ -15939,6 +16277,7 @@ components:
           maxLength: 10
           minLength: 2
           pattern: ^[a-z]{2}(-[A-Z]{2})?$
+          description: Optional. Empty means "unspecified"; when set it must be an ISO 639-1 code.
         contentType:
           title: content_type
           description: 'NEW: Support for all content types Type of content being reviewed'
@@ -15947,8 +16286,9 @@ components:
           type: string
           title: content_id
           maxLength: 100
-          minLength: 1
-          description: ID of content
+          description: |-
+            Alternative to poi_id for non-POI content. Exactly one of the two is set,
+             so this cannot be required.
         contentName:
           type: string
           title: content_name
@@ -18825,6 +19165,45 @@ components:
           $ref: '#/components/schemas/loci.common.PaginationMetadata'
       title: ListTripsResponse
       additionalProperties: false
+    loci.trip.PackingCategory:
+      type: string
+      title: PackingCategory
+      enum:
+        - PACKING_CATEGORY_UNSPECIFIED
+        - PACKING_CATEGORY_ESSENTIALS
+        - PACKING_CATEGORY_CLOTHING
+        - PACKING_CATEGORY_WEATHER
+        - PACKING_CATEGORY_TECH
+        - PACKING_CATEGORY_HEALTH
+        - PACKING_CATEGORY_TRAVEL
+        - PACKING_CATEGORY_ACTIVITY
+      description: PackingCategory groups suggestions so a long list stays scannable.
+    loci.trip.PackingSuggestion:
+      type: object
+      properties:
+        text:
+          type: string
+          title: text
+          maxLength: 300
+          minLength: 1
+        category:
+          title: category
+          $ref: '#/components/schemas/loci.trip.PackingCategory'
+        reason:
+          type: string
+          title: reason
+          maxLength: 500
+          description: Empty for universal essentials, which need no justification.
+        essential:
+          type: boolean
+          title: essential
+          description: Things it would be genuinely bad to forget, so a client can lead with them.
+      title: PackingSuggestion
+      additionalProperties: false
+      description: |-
+        PackingSuggestion is one suggested item, with the reason this trip earned it.
+         The reason is not decoration: a suggestion the user cannot evaluate is noise,
+         and they need enough to disagree with it.
     loci.trip.RemoveStopRequest:
       type: object
       properties:
@@ -19004,6 +19383,40 @@ components:
           minLength: 1
       title: ShareTripResponse
       additionalProperties: false
+    loci.trip.SuggestPackingRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+      title: SuggestPackingRequest
+      additionalProperties: false
+      description: SuggestPackingRequest asks what to pack for a saved trip.
+    loci.trip.SuggestPackingResponse:
+      type: object
+      properties:
+        suggestions:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.trip.PackingSuggestion'
+          title: suggestions
+        weatherIsEstimated:
+          type: boolean
+          title: weather_is_estimated
+          description: |-
+            True when any city's forecast was a stub rather than real provider data, so
+             the client can label weather-driven items as estimated.
+        usedForecast:
+          type: boolean
+          title: used_forecast
+          description: |-
+            False when no forecast was available at all; weather-driven suggestions are
+             then absent rather than guessed.
+      title: SuggestPackingResponse
+      additionalProperties: false
+      description: SuggestPackingResponse carries the suggestions and how they were derived.
     loci.trip.TripConstraint:
       type: object
       properties:
@@ -19063,7 +19476,7 @@ components:
           type: string
           title: id
           maxLength: 100
-          minLength: 1
+          description: Empty on create; the database assigns it.
         dayNumber:
           type: integer
           title: day_number
@@ -19080,6 +19493,42 @@ components:
           items:
             $ref: '#/components/schemas/loci.trip.TripStop'
           title: stops
+        cityName:
+          type: string
+          title: city_name
+          maxLength: 200
+          description: |-
+            Which city this day is spent in. Empty means the trip's primary city, which
+             is how every single-city trip written before multi-city support looks.
+        cityId:
+          type:
+            - string
+            - "null"
+          title: city_id
+          maxLength: 100
+          minLength: 1
+        cityLat:
+          type:
+            - number
+            - "null"
+          title: city_lat
+          maximum: 90
+          minimum: -90
+          format: double
+        cityLon:
+          type:
+            - number
+            - "null"
+          title: city_lon
+          maximum: 180
+          minimum: -180
+          format: double
+        travelDay:
+          type: boolean
+          title: travel_day
+          description: |-
+            True when the day includes a move between cities, so the UI can show that
+             sightseeing time is reduced.
       title: TripDay
       additionalProperties: false
       description: TripDay is one day of a trip.
@@ -19090,7 +19539,10 @@ components:
           type: string
           title: id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Empty on create — the server assigns identity (repository.SaveTrip treats a
+             nil id as "new trip"). Requiring it made creating a trip impossible, which
+             is the one thing every trip has to do first.
         userId:
           type: string
           title: user_id
@@ -19128,6 +19580,14 @@ components:
           minimum: 0
           format: int64
           description: Monotonic version; incremented server-side on every successful SaveTrip.
+        legs:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.trip.TripLeg'
+          title: legs
+          description: |-
+            Travel between cities. Empty for a single-city trip. `city_name` above stays
+             the primary city (titles, exports) even when the trip spans several.
         sourceSessionId:
           type:
             - string
@@ -19151,6 +19611,79 @@ components:
         TripDraft is the full editable trip. `version` powers optimistic concurrency /
          merge-safe multi-device edits: SaveTrip rejects a write whose base version is
          stale.
+    loci.trip.TripLeg:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          maxLength: 100
+        fromName:
+          type: string
+          title: from_name
+          maxLength: 200
+          minLength: 1
+        toName:
+          type: string
+          title: to_name
+          maxLength: 200
+          minLength: 1
+        fromLat:
+          type: number
+          title: from_lat
+          maximum: 90
+          minimum: -90
+          format: double
+        fromLon:
+          type: number
+          title: from_lon
+          maximum: 180
+          minimum: -180
+          format: double
+        toLat:
+          type: number
+          title: to_lat
+          maximum: 90
+          minimum: -90
+          format: double
+        toLon:
+          type: number
+          title: to_lon
+          maximum: 180
+          minimum: -180
+          format: double
+        distanceKm:
+          type: number
+          title: distance_km
+          minimum: 0
+          format: double
+        durationMins:
+          type: integer
+          title: duration_mins
+          minimum: 0
+          format: int32
+        afterDay:
+          type: integer
+          title: after_day
+          minimum: 0
+          format: int32
+          description: The day at whose end this leg happens. 0 is the outbound leg from home.
+        mode:
+          type: string
+          title: mode
+          maxLength: 40
+          description: '"drive" today; rail/air slot in without changing the shape.'
+        bookingUrl:
+          type:
+            - string
+            - "null"
+          title: booking_url
+          maxLength: 2048
+          minLength: 1
+          format: uri
+      title: TripLeg
+      additionalProperties: false
+      description: TripLeg is travel between two consecutive places in a multi-city trip.
     loci.trip.TripPace:
       type: string
       title: TripPace
@@ -19201,7 +19734,9 @@ components:
           type: string
           title: id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Empty on create; the database assigns it. Clients may send their own id when
+             editing an existing stop.
         poiId:
           type: string
           title: poi_id
@@ -19697,6 +20232,11 @@ tags:
     description: |-
       LocalContextService surfaces trip-time context (weather now; closures/holidays/
        strikes are stubbed behind the same contract until real providers are wired).
+  - name: loci.trip.TripService
+    description: |-
+      TripService persists and mutates editable day-by-day trips. All mutations that
+       take base_version enforce optimistic concurrency and return the updated
+       TripDraft (or affected sub-entity) with the bumped version.
   - name: loci.compare.v1.CompareService
     description: CompareService compares weekend destinations side-by-side.
   - name: loci.custom_auth.CustomAuthService
@@ -19726,10 +20266,5 @@ tags:
     description: StatisticsService provides analytics and statistics functionality
   - name: loci.tags.TagsService
     description: Service definition matching your tagsService interface
-  - name: loci.trip.TripService
-    description: |-
-      TripService persists and mutates editable day-by-day trips. All mutations that
-       take base_version enforce optimistic concurrency and return the updated
-       TripDraft (or affected sub-entity) with the bumped version.
   - name: loci.user.UserService
     description: UserService defines user-related RPCs
