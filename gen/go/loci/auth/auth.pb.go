@@ -162,15 +162,28 @@ func (x *LoginRequest) GetPassword() string {
 	return ""
 }
 
-// LoginResponse after successful login
+// LoginResponse after successful login.
+//
+// Login has two possible outcomes now that MFA exists. When the user has no
+// confirmed second factor, this carries the token pair as before. When they do,
+// it carries mfa_required + mfa_token and NO tokens: the session is only half
+// authenticated until VerifyMFA succeeds.
 type LoginResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	AccessToken   string                 `protobuf:"bytes,1,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
-	RefreshToken  string                 `protobuf:"bytes,2,opt,name=refresh_token,json=refreshToken,proto3" json:"refresh_token,omitempty"`
-	Message       string                 `protobuf:"bytes,3,opt,name=message,proto3" json:"message,omitempty"`
-	UserId        string                 `protobuf:"bytes,4,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Username      string                 `protobuf:"bytes,5,opt,name=username,proto3" json:"username,omitempty"`
-	Email         string                 `protobuf:"bytes,6,opt,name=email,proto3" json:"email,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Empty when mfa_required is true — the tokens do not exist yet at that point.
+	// The old min_len: 16 constraint made an MFA challenge literally unsendable.
+	AccessToken  string `protobuf:"bytes,1,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
+	RefreshToken string `protobuf:"bytes,2,opt,name=refresh_token,json=refreshToken,proto3" json:"refresh_token,omitempty"`
+	Message      string `protobuf:"bytes,3,opt,name=message,proto3" json:"message,omitempty"`
+	UserId       string `protobuf:"bytes,4,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Username     string `protobuf:"bytes,5,opt,name=username,proto3" json:"username,omitempty"`
+	Email        string `protobuf:"bytes,6,opt,name=email,proto3" json:"email,omitempty"`
+	// True when the password was correct but a second factor is still required.
+	MfaRequired bool `protobuf:"varint,7,opt,name=mfa_required,json=mfaRequired,proto3" json:"mfa_required,omitempty"`
+	// Short-lived, single-purpose challenge token. It proves the password step was
+	// passed and is the ONLY thing VerifyMFA accepts; it grants no API access of
+	// its own.
+	MfaToken      *string `protobuf:"bytes,8,opt,name=mfa_token,json=mfaToken,proto3,oneof" json:"mfa_token,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -247,6 +260,541 @@ func (x *LoginResponse) GetEmail() string {
 	return ""
 }
 
+func (x *LoginResponse) GetMfaRequired() bool {
+	if x != nil {
+		return x.MfaRequired
+	}
+	return false
+}
+
+func (x *LoginResponse) GetMfaToken() string {
+	if x != nil && x.MfaToken != nil {
+		return *x.MfaToken
+	}
+	return ""
+}
+
+// VerifyMFARequest completes a login that was challenged for a second factor.
+type VerifyMFARequest struct {
+	state    protoimpl.MessageState `protogen:"open.v1"`
+	MfaToken string                 `protobuf:"bytes,1,opt,name=mfa_token,json=mfaToken,proto3" json:"mfa_token,omitempty"`
+	// A 6-digit TOTP code, or a recovery code. Exactly one must be set.
+	//
+	// The length range spans both: 6 digits for TOTP, 11 characters for a
+	// dash-separated recovery code, with slack for how people retype them.
+	Code          *string `protobuf:"bytes,2,opt,name=code,proto3,oneof" json:"code,omitempty"`
+	RecoveryCode  *string `protobuf:"bytes,3,opt,name=recovery_code,json=recoveryCode,proto3,oneof" json:"recovery_code,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *VerifyMFARequest) Reset() {
+	*x = VerifyMFARequest{}
+	mi := &file_loci_auth_auth_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VerifyMFARequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VerifyMFARequest) ProtoMessage() {}
+
+func (x *VerifyMFARequest) ProtoReflect() protoreflect.Message {
+	mi := &file_loci_auth_auth_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VerifyMFARequest.ProtoReflect.Descriptor instead.
+func (*VerifyMFARequest) Descriptor() ([]byte, []int) {
+	return file_loci_auth_auth_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *VerifyMFARequest) GetMfaToken() string {
+	if x != nil {
+		return x.MfaToken
+	}
+	return ""
+}
+
+func (x *VerifyMFARequest) GetCode() string {
+	if x != nil && x.Code != nil {
+		return *x.Code
+	}
+	return ""
+}
+
+func (x *VerifyMFARequest) GetRecoveryCode() string {
+	if x != nil && x.RecoveryCode != nil {
+		return *x.RecoveryCode
+	}
+	return ""
+}
+
+// BeginMFAEnrollmentRequest starts enrolment for the calling user.
+// The user is taken from the auth token, never from the request body.
+type BeginMFAEnrollmentRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BeginMFAEnrollmentRequest) Reset() {
+	*x = BeginMFAEnrollmentRequest{}
+	mi := &file_loci_auth_auth_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BeginMFAEnrollmentRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BeginMFAEnrollmentRequest) ProtoMessage() {}
+
+func (x *BeginMFAEnrollmentRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_loci_auth_auth_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BeginMFAEnrollmentRequest.ProtoReflect.Descriptor instead.
+func (*BeginMFAEnrollmentRequest) Descriptor() ([]byte, []int) {
+	return file_loci_auth_auth_proto_rawDescGZIP(), []int{4}
+}
+
+// BeginMFAEnrollmentResponse carries what the user needs to add the account to
+// an authenticator app. MFA is NOT active until ConfirmMFAEnrollment succeeds.
+type BeginMFAEnrollmentResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The otpauth:// URI to render as a QR code.
+	ProvisioningUri string `protobuf:"bytes,1,opt,name=provisioning_uri,json=provisioningUri,proto3" json:"provisioning_uri,omitempty"`
+	// The base32 secret, for manual entry when a camera is unavailable.
+	Secret        string `protobuf:"bytes,2,opt,name=secret,proto3" json:"secret,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BeginMFAEnrollmentResponse) Reset() {
+	*x = BeginMFAEnrollmentResponse{}
+	mi := &file_loci_auth_auth_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BeginMFAEnrollmentResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BeginMFAEnrollmentResponse) ProtoMessage() {}
+
+func (x *BeginMFAEnrollmentResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_loci_auth_auth_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BeginMFAEnrollmentResponse.ProtoReflect.Descriptor instead.
+func (*BeginMFAEnrollmentResponse) Descriptor() ([]byte, []int) {
+	return file_loci_auth_auth_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *BeginMFAEnrollmentResponse) GetProvisioningUri() string {
+	if x != nil {
+		return x.ProvisioningUri
+	}
+	return ""
+}
+
+func (x *BeginMFAEnrollmentResponse) GetSecret() string {
+	if x != nil {
+		return x.Secret
+	}
+	return ""
+}
+
+// ConfirmMFAEnrollmentRequest proves the user's app is generating valid codes.
+type ConfirmMFAEnrollmentRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Code          string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ConfirmMFAEnrollmentRequest) Reset() {
+	*x = ConfirmMFAEnrollmentRequest{}
+	mi := &file_loci_auth_auth_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ConfirmMFAEnrollmentRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ConfirmMFAEnrollmentRequest) ProtoMessage() {}
+
+func (x *ConfirmMFAEnrollmentRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_loci_auth_auth_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ConfirmMFAEnrollmentRequest.ProtoReflect.Descriptor instead.
+func (*ConfirmMFAEnrollmentRequest) Descriptor() ([]byte, []int) {
+	return file_loci_auth_auth_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *ConfirmMFAEnrollmentRequest) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+// ConfirmMFAEnrollmentResponse returns the recovery codes.
+type ConfirmMFAEnrollmentResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Plaintext recovery codes, returned exactly once. Only hashes are stored, so
+	// they cannot be shown again — the client must make the user save them here.
+	RecoveryCodes []string `protobuf:"bytes,1,rep,name=recovery_codes,json=recoveryCodes,proto3" json:"recovery_codes,omitempty"`
+	Message       string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ConfirmMFAEnrollmentResponse) Reset() {
+	*x = ConfirmMFAEnrollmentResponse{}
+	mi := &file_loci_auth_auth_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ConfirmMFAEnrollmentResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ConfirmMFAEnrollmentResponse) ProtoMessage() {}
+
+func (x *ConfirmMFAEnrollmentResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_loci_auth_auth_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ConfirmMFAEnrollmentResponse.ProtoReflect.Descriptor instead.
+func (*ConfirmMFAEnrollmentResponse) Descriptor() ([]byte, []int) {
+	return file_loci_auth_auth_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *ConfirmMFAEnrollmentResponse) GetRecoveryCodes() []string {
+	if x != nil {
+		return x.RecoveryCodes
+	}
+	return nil
+}
+
+func (x *ConfirmMFAEnrollmentResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+// DisableMFARequest turns MFA off. Requires a current code: an attacker with a
+// hijacked session must not be able to strip the second factor.
+type DisableMFARequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Code          *string                `protobuf:"bytes,1,opt,name=code,proto3,oneof" json:"code,omitempty"`
+	RecoveryCode  *string                `protobuf:"bytes,2,opt,name=recovery_code,json=recoveryCode,proto3,oneof" json:"recovery_code,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DisableMFARequest) Reset() {
+	*x = DisableMFARequest{}
+	mi := &file_loci_auth_auth_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DisableMFARequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DisableMFARequest) ProtoMessage() {}
+
+func (x *DisableMFARequest) ProtoReflect() protoreflect.Message {
+	mi := &file_loci_auth_auth_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DisableMFARequest.ProtoReflect.Descriptor instead.
+func (*DisableMFARequest) Descriptor() ([]byte, []int) {
+	return file_loci_auth_auth_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *DisableMFARequest) GetCode() string {
+	if x != nil && x.Code != nil {
+		return *x.Code
+	}
+	return ""
+}
+
+func (x *DisableMFARequest) GetRecoveryCode() string {
+	if x != nil && x.RecoveryCode != nil {
+		return *x.RecoveryCode
+	}
+	return ""
+}
+
+// RegenerateRecoveryCodesRequest replaces all existing codes. Also requires a
+// current code, for the same reason as disabling.
+type RegenerateRecoveryCodesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Code          string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RegenerateRecoveryCodesRequest) Reset() {
+	*x = RegenerateRecoveryCodesRequest{}
+	mi := &file_loci_auth_auth_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RegenerateRecoveryCodesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RegenerateRecoveryCodesRequest) ProtoMessage() {}
+
+func (x *RegenerateRecoveryCodesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_loci_auth_auth_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RegenerateRecoveryCodesRequest.ProtoReflect.Descriptor instead.
+func (*RegenerateRecoveryCodesRequest) Descriptor() ([]byte, []int) {
+	return file_loci_auth_auth_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *RegenerateRecoveryCodesRequest) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+// RegenerateRecoveryCodesResponse returns the new codes and invalidates the old.
+type RegenerateRecoveryCodesResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	RecoveryCodes []string               `protobuf:"bytes,1,rep,name=recovery_codes,json=recoveryCodes,proto3" json:"recovery_codes,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RegenerateRecoveryCodesResponse) Reset() {
+	*x = RegenerateRecoveryCodesResponse{}
+	mi := &file_loci_auth_auth_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RegenerateRecoveryCodesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RegenerateRecoveryCodesResponse) ProtoMessage() {}
+
+func (x *RegenerateRecoveryCodesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_loci_auth_auth_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RegenerateRecoveryCodesResponse.ProtoReflect.Descriptor instead.
+func (*RegenerateRecoveryCodesResponse) Descriptor() ([]byte, []int) {
+	return file_loci_auth_auth_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *RegenerateRecoveryCodesResponse) GetRecoveryCodes() []string {
+	if x != nil {
+		return x.RecoveryCodes
+	}
+	return nil
+}
+
+func (x *RegenerateRecoveryCodesResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+// GetMFAStatusRequest reports the calling user's MFA state, for Settings.
+type GetMFAStatusRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetMFAStatusRequest) Reset() {
+	*x = GetMFAStatusRequest{}
+	mi := &file_loci_auth_auth_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetMFAStatusRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetMFAStatusRequest) ProtoMessage() {}
+
+func (x *GetMFAStatusRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_loci_auth_auth_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetMFAStatusRequest.ProtoReflect.Descriptor instead.
+func (*GetMFAStatusRequest) Descriptor() ([]byte, []int) {
+	return file_loci_auth_auth_proto_rawDescGZIP(), []int{11}
+}
+
+type GetMFAStatusResponse struct {
+	state   protoimpl.MessageState `protogen:"open.v1"`
+	Enabled bool                   `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	// How many unused recovery codes remain. Surfacing this lets the UI nudge a
+	// user who is down to their last code, before they are locked out.
+	RecoveryCodesRemaining int32                  `protobuf:"varint,2,opt,name=recovery_codes_remaining,json=recoveryCodesRemaining,proto3" json:"recovery_codes_remaining,omitempty"`
+	EnrolledAt             *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=enrolled_at,json=enrolledAt,proto3,oneof" json:"enrolled_at,omitempty"`
+	// True when policy requires MFA for this user's role, so the UI can explain
+	// why disabling is refused.
+	RequiredByPolicy bool `protobuf:"varint,4,opt,name=required_by_policy,json=requiredByPolicy,proto3" json:"required_by_policy,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *GetMFAStatusResponse) Reset() {
+	*x = GetMFAStatusResponse{}
+	mi := &file_loci_auth_auth_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetMFAStatusResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetMFAStatusResponse) ProtoMessage() {}
+
+func (x *GetMFAStatusResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_loci_auth_auth_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetMFAStatusResponse.ProtoReflect.Descriptor instead.
+func (*GetMFAStatusResponse) Descriptor() ([]byte, []int) {
+	return file_loci_auth_auth_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *GetMFAStatusResponse) GetEnabled() bool {
+	if x != nil {
+		return x.Enabled
+	}
+	return false
+}
+
+func (x *GetMFAStatusResponse) GetRecoveryCodesRemaining() int32 {
+	if x != nil {
+		return x.RecoveryCodesRemaining
+	}
+	return 0
+}
+
+func (x *GetMFAStatusResponse) GetEnrolledAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.EnrolledAt
+	}
+	return nil
+}
+
+func (x *GetMFAStatusResponse) GetRequiredByPolicy() bool {
+	if x != nil {
+		return x.RequiredByPolicy
+	}
+	return false
+}
+
 // RegisterRequest for user registration
 type RegisterRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -260,7 +808,7 @@ type RegisterRequest struct {
 
 func (x *RegisterRequest) Reset() {
 	*x = RegisterRequest{}
-	mi := &file_loci_auth_auth_proto_msgTypes[3]
+	mi := &file_loci_auth_auth_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -272,7 +820,7 @@ func (x *RegisterRequest) String() string {
 func (*RegisterRequest) ProtoMessage() {}
 
 func (x *RegisterRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_loci_auth_auth_proto_msgTypes[3]
+	mi := &file_loci_auth_auth_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -285,7 +833,7 @@ func (x *RegisterRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RegisterRequest.ProtoReflect.Descriptor instead.
 func (*RegisterRequest) Descriptor() ([]byte, []int) {
-	return file_loci_auth_auth_proto_rawDescGZIP(), []int{3}
+	return file_loci_auth_auth_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *RegisterRequest) GetUsername() string {
@@ -326,7 +874,7 @@ type RefreshTokenRequest struct {
 
 func (x *RefreshTokenRequest) Reset() {
 	*x = RefreshTokenRequest{}
-	mi := &file_loci_auth_auth_proto_msgTypes[4]
+	mi := &file_loci_auth_auth_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -338,7 +886,7 @@ func (x *RefreshTokenRequest) String() string {
 func (*RefreshTokenRequest) ProtoMessage() {}
 
 func (x *RefreshTokenRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_loci_auth_auth_proto_msgTypes[4]
+	mi := &file_loci_auth_auth_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -351,7 +899,7 @@ func (x *RefreshTokenRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RefreshTokenRequest.ProtoReflect.Descriptor instead.
 func (*RefreshTokenRequest) Descriptor() ([]byte, []int) {
-	return file_loci_auth_auth_proto_rawDescGZIP(), []int{4}
+	return file_loci_auth_auth_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *RefreshTokenRequest) GetRefreshToken() string {
@@ -372,7 +920,7 @@ type TokenResponse struct {
 
 func (x *TokenResponse) Reset() {
 	*x = TokenResponse{}
-	mi := &file_loci_auth_auth_proto_msgTypes[5]
+	mi := &file_loci_auth_auth_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -384,7 +932,7 @@ func (x *TokenResponse) String() string {
 func (*TokenResponse) ProtoMessage() {}
 
 func (x *TokenResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_loci_auth_auth_proto_msgTypes[5]
+	mi := &file_loci_auth_auth_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -397,7 +945,7 @@ func (x *TokenResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TokenResponse.ProtoReflect.Descriptor instead.
 func (*TokenResponse) Descriptor() ([]byte, []int) {
-	return file_loci_auth_auth_proto_rawDescGZIP(), []int{5}
+	return file_loci_auth_auth_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *TokenResponse) GetAccessToken() string {
@@ -424,7 +972,7 @@ type ValidateSessionRequest struct {
 
 func (x *ValidateSessionRequest) Reset() {
 	*x = ValidateSessionRequest{}
-	mi := &file_loci_auth_auth_proto_msgTypes[6]
+	mi := &file_loci_auth_auth_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -436,7 +984,7 @@ func (x *ValidateSessionRequest) String() string {
 func (*ValidateSessionRequest) ProtoMessage() {}
 
 func (x *ValidateSessionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_loci_auth_auth_proto_msgTypes[6]
+	mi := &file_loci_auth_auth_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -449,7 +997,7 @@ func (x *ValidateSessionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ValidateSessionRequest.ProtoReflect.Descriptor instead.
 func (*ValidateSessionRequest) Descriptor() ([]byte, []int) {
-	return file_loci_auth_auth_proto_rawDescGZIP(), []int{6}
+	return file_loci_auth_auth_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *ValidateSessionRequest) GetSessionId() string {
@@ -472,7 +1020,7 @@ type ValidateSessionResponse struct {
 
 func (x *ValidateSessionResponse) Reset() {
 	*x = ValidateSessionResponse{}
-	mi := &file_loci_auth_auth_proto_msgTypes[7]
+	mi := &file_loci_auth_auth_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -484,7 +1032,7 @@ func (x *ValidateSessionResponse) String() string {
 func (*ValidateSessionResponse) ProtoMessage() {}
 
 func (x *ValidateSessionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_loci_auth_auth_proto_msgTypes[7]
+	mi := &file_loci_auth_auth_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -497,7 +1045,7 @@ func (x *ValidateSessionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ValidateSessionResponse.ProtoReflect.Descriptor instead.
 func (*ValidateSessionResponse) Descriptor() ([]byte, []int) {
-	return file_loci_auth_auth_proto_rawDescGZIP(), []int{7}
+	return file_loci_auth_auth_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *ValidateSessionResponse) GetValid() bool {
@@ -539,7 +1087,7 @@ type ChangePasswordRequest struct {
 
 func (x *ChangePasswordRequest) Reset() {
 	*x = ChangePasswordRequest{}
-	mi := &file_loci_auth_auth_proto_msgTypes[8]
+	mi := &file_loci_auth_auth_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -551,7 +1099,7 @@ func (x *ChangePasswordRequest) String() string {
 func (*ChangePasswordRequest) ProtoMessage() {}
 
 func (x *ChangePasswordRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_loci_auth_auth_proto_msgTypes[8]
+	mi := &file_loci_auth_auth_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -564,7 +1112,7 @@ func (x *ChangePasswordRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChangePasswordRequest.ProtoReflect.Descriptor instead.
 func (*ChangePasswordRequest) Descriptor() ([]byte, []int) {
-	return file_loci_auth_auth_proto_rawDescGZIP(), []int{8}
+	return file_loci_auth_auth_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *ChangePasswordRequest) GetOldPassword() string {
@@ -592,7 +1140,7 @@ type ChangeEmailRequest struct {
 
 func (x *ChangeEmailRequest) Reset() {
 	*x = ChangeEmailRequest{}
-	mi := &file_loci_auth_auth_proto_msgTypes[9]
+	mi := &file_loci_auth_auth_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -604,7 +1152,7 @@ func (x *ChangeEmailRequest) String() string {
 func (*ChangeEmailRequest) ProtoMessage() {}
 
 func (x *ChangeEmailRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_loci_auth_auth_proto_msgTypes[9]
+	mi := &file_loci_auth_auth_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -617,7 +1165,7 @@ func (x *ChangeEmailRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChangeEmailRequest.ProtoReflect.Descriptor instead.
 func (*ChangeEmailRequest) Descriptor() ([]byte, []int) {
-	return file_loci_auth_auth_proto_rawDescGZIP(), []int{9}
+	return file_loci_auth_auth_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *ChangeEmailRequest) GetPassword() string {
@@ -644,7 +1192,7 @@ type LogoutRequest struct {
 
 func (x *LogoutRequest) Reset() {
 	*x = LogoutRequest{}
-	mi := &file_loci_auth_auth_proto_msgTypes[10]
+	mi := &file_loci_auth_auth_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -656,7 +1204,7 @@ func (x *LogoutRequest) String() string {
 func (*LogoutRequest) ProtoMessage() {}
 
 func (x *LogoutRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_loci_auth_auth_proto_msgTypes[10]
+	mi := &file_loci_auth_auth_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -669,7 +1217,7 @@ func (x *LogoutRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LogoutRequest.ProtoReflect.Descriptor instead.
 func (*LogoutRequest) Descriptor() ([]byte, []int) {
-	return file_loci_auth_auth_proto_rawDescGZIP(), []int{10}
+	return file_loci_auth_auth_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *LogoutRequest) GetRefreshToken() string {
@@ -689,7 +1237,7 @@ type ForgotPasswordRequest struct {
 
 func (x *ForgotPasswordRequest) Reset() {
 	*x = ForgotPasswordRequest{}
-	mi := &file_loci_auth_auth_proto_msgTypes[11]
+	mi := &file_loci_auth_auth_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -701,7 +1249,7 @@ func (x *ForgotPasswordRequest) String() string {
 func (*ForgotPasswordRequest) ProtoMessage() {}
 
 func (x *ForgotPasswordRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_loci_auth_auth_proto_msgTypes[11]
+	mi := &file_loci_auth_auth_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -714,7 +1262,7 @@ func (x *ForgotPasswordRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ForgotPasswordRequest.ProtoReflect.Descriptor instead.
 func (*ForgotPasswordRequest) Descriptor() ([]byte, []int) {
-	return file_loci_auth_auth_proto_rawDescGZIP(), []int{11}
+	return file_loci_auth_auth_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *ForgotPasswordRequest) GetEmail() string {
@@ -735,7 +1283,7 @@ type ResetPasswordRequest struct {
 
 func (x *ResetPasswordRequest) Reset() {
 	*x = ResetPasswordRequest{}
-	mi := &file_loci_auth_auth_proto_msgTypes[12]
+	mi := &file_loci_auth_auth_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -747,7 +1295,7 @@ func (x *ResetPasswordRequest) String() string {
 func (*ResetPasswordRequest) ProtoMessage() {}
 
 func (x *ResetPasswordRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_loci_auth_auth_proto_msgTypes[12]
+	mi := &file_loci_auth_auth_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -760,7 +1308,7 @@ func (x *ResetPasswordRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResetPasswordRequest.ProtoReflect.Descriptor instead.
 func (*ResetPasswordRequest) Descriptor() ([]byte, []int) {
-	return file_loci_auth_auth_proto_rawDescGZIP(), []int{12}
+	return file_loci_auth_auth_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *ResetPasswordRequest) GetToken() string {
@@ -789,7 +1337,7 @@ type Session struct {
 
 func (x *Session) Reset() {
 	*x = Session{}
-	mi := &file_loci_auth_auth_proto_msgTypes[13]
+	mi := &file_loci_auth_auth_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -801,7 +1349,7 @@ func (x *Session) String() string {
 func (*Session) ProtoMessage() {}
 
 func (x *Session) ProtoReflect() protoreflect.Message {
-	mi := &file_loci_auth_auth_proto_msgTypes[13]
+	mi := &file_loci_auth_auth_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -814,7 +1362,7 @@ func (x *Session) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Session.ProtoReflect.Descriptor instead.
 func (*Session) Descriptor() ([]byte, []int) {
-	return file_loci_auth_auth_proto_rawDescGZIP(), []int{13}
+	return file_loci_auth_auth_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *Session) GetId() string {
@@ -856,7 +1404,7 @@ type Claims struct {
 
 func (x *Claims) Reset() {
 	*x = Claims{}
-	mi := &file_loci_auth_auth_proto_msgTypes[14]
+	mi := &file_loci_auth_auth_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -868,7 +1416,7 @@ func (x *Claims) String() string {
 func (*Claims) ProtoMessage() {}
 
 func (x *Claims) ProtoReflect() protoreflect.Message {
-	mi := &file_loci_auth_auth_proto_msgTypes[14]
+	mi := &file_loci_auth_auth_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -881,7 +1429,7 @@ func (x *Claims) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Claims.ProtoReflect.Descriptor instead.
 func (*Claims) Descriptor() ([]byte, []int) {
-	return file_loci_auth_auth_proto_rawDescGZIP(), []int{14}
+	return file_loci_auth_auth_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *Claims) GetUserId() string {
@@ -964,15 +1512,62 @@ const file_loci_auth_auth_proto_rawDesc = "" +
 	"\fLoginRequest\x12\x1d\n" +
 	"\x05email\x18\x01 \x01(\tB\a\xbaH\x04r\x02`\x01R\x05email\x12&\n" +
 	"\bpassword\x18\x02 \x01(\tB\n" +
-	"\xbaH\ar\x05\x10\b\x18\xc8\x01R\bpassword\"\x8b\x02\n" +
-	"\rLoginResponse\x12*\n" +
-	"\faccess_token\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x10R\vaccessToken\x12,\n" +
-	"\rrefresh_token\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x10R\frefreshToken\x12$\n" +
+	"\xbaH\ar\x05\x10\b\x18\xc8\x01R\bpassword\"\xf3\x02\n" +
+	"\rLoginResponse\x12-\n" +
+	"\faccess_token\x18\x01 \x01(\tB\n" +
+	"\xbaH\a\xd8\x01\x01r\x02\x10\x10R\vaccessToken\x12/\n" +
+	"\rrefresh_token\x18\x02 \x01(\tB\n" +
+	"\xbaH\a\xd8\x01\x01r\x02\x10\x10R\frefreshToken\x12$\n" +
 	"\amessage\x18\x03 \x01(\tB\n" +
 	"\xbaH\ar\x05\x10\x01\x18\xf4\x03R\amessage\x12\"\n" +
 	"\auser_id\x18\x04 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x06userId\x127\n" +
 	"\busername\x18\x05 \x01(\tB\x1b\xbaH\x18r\x16\x10\x01\x18d2\x10^[a-zA-Z0-9_-]+$R\busername\x12\x1d\n" +
-	"\x05email\x18\x06 \x01(\tB\a\xbaH\x04r\x02`\x01R\x05email\"\xc1\x01\n" +
+	"\x05email\x18\x06 \x01(\tB\a\xbaH\x04r\x02`\x01R\x05email\x12!\n" +
+	"\fmfa_required\x18\a \x01(\bR\vmfaRequired\x12/\n" +
+	"\tmfa_token\x18\b \x01(\tB\r\xbaH\n" +
+	"\xd8\x01\x01r\x05\x10\x10\x18\x80 H\x00R\bmfaToken\x88\x01\x01B\f\n" +
+	"\n" +
+	"_mfa_token\"\xb5\x01\n" +
+	"\x10VerifyMFARequest\x12'\n" +
+	"\tmfa_token\x18\x01 \x01(\tB\n" +
+	"\xbaH\ar\x05\x10\x10\x18\x80 R\bmfaToken\x12%\n" +
+	"\x04code\x18\x02 \x01(\tB\f\xbaH\t\xd8\x01\x01r\x04\x10\x06\x18\x14H\x00R\x04code\x88\x01\x01\x126\n" +
+	"\rrecovery_code\x18\x03 \x01(\tB\f\xbaH\t\xd8\x01\x01r\x04\x10\x06\x18\x14H\x01R\frecoveryCode\x88\x01\x01B\a\n" +
+	"\x05_codeB\x10\n" +
+	"\x0e_recovery_code\"\x1b\n" +
+	"\x19BeginMFAEnrollmentRequest\"w\n" +
+	"\x1aBeginMFAEnrollmentResponse\x125\n" +
+	"\x10provisioning_uri\x18\x01 \x01(\tB\n" +
+	"\xbaH\ar\x05\x10\x01\x18\x80\x10R\x0fprovisioningUri\x12\"\n" +
+	"\x06secret\x18\x02 \x01(\tB\n" +
+	"\xbaH\ar\x05\x10\x10\x18\x80\x01R\x06secret\"<\n" +
+	"\x1bConfirmMFAEnrollmentRequest\x12\x1d\n" +
+	"\x04code\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x06\x18\x14R\x04code\"w\n" +
+	"\x1cConfirmMFAEnrollmentResponse\x121\n" +
+	"\x0erecovery_codes\x18\x01 \x03(\tB\n" +
+	"\xbaH\a\x92\x01\x04\b\x01\x10\x14R\rrecoveryCodes\x12$\n" +
+	"\amessage\x18\x02 \x01(\tB\n" +
+	"\xbaH\ar\x05\x10\x01\x18\xf4\x03R\amessage\"\x8d\x01\n" +
+	"\x11DisableMFARequest\x12%\n" +
+	"\x04code\x18\x01 \x01(\tB\f\xbaH\t\xd8\x01\x01r\x04\x10\x06\x18\x14H\x00R\x04code\x88\x01\x01\x126\n" +
+	"\rrecovery_code\x18\x02 \x01(\tB\f\xbaH\t\xd8\x01\x01r\x04\x10\x06\x18\x14H\x01R\frecoveryCode\x88\x01\x01B\a\n" +
+	"\x05_codeB\x10\n" +
+	"\x0e_recovery_code\"?\n" +
+	"\x1eRegenerateRecoveryCodesRequest\x12\x1d\n" +
+	"\x04code\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x06\x18\x14R\x04code\"z\n" +
+	"\x1fRegenerateRecoveryCodesResponse\x121\n" +
+	"\x0erecovery_codes\x18\x01 \x03(\tB\n" +
+	"\xbaH\a\x92\x01\x04\b\x01\x10\x14R\rrecoveryCodes\x12$\n" +
+	"\amessage\x18\x02 \x01(\tB\n" +
+	"\xbaH\ar\x05\x10\x01\x18\xf4\x03R\amessage\"\x15\n" +
+	"\x13GetMFAStatusRequest\"\xf3\x01\n" +
+	"\x14GetMFAStatusResponse\x12\x18\n" +
+	"\aenabled\x18\x01 \x01(\bR\aenabled\x12A\n" +
+	"\x18recovery_codes_remaining\x18\x02 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x16recoveryCodesRemaining\x12@\n" +
+	"\venrolled_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\n" +
+	"enrolledAt\x88\x01\x01\x12,\n" +
+	"\x12required_by_policy\x18\x04 \x01(\bR\x10requiredByPolicyB\x0e\n" +
+	"\f_enrolled_at\"\xc1\x01\n" +
 	"\x0fRegisterRequest\x127\n" +
 	"\busername\x18\x01 \x01(\tB\x1b\xbaH\x18r\x16\x10\x03\x18d2\x10^[a-zA-Z0-9_-]+$R\busername\x12\x1d\n" +
 	"\x05email\x18\x02 \x01(\tB\a\xbaH\x04r\x02`\x01R\x05email\x12&\n" +
@@ -1036,7 +1631,7 @@ const file_loci_auth_auth_proto_rawDesc = "" +
 	"\tissued_at\x18\t \x01(\x03B\a\xbaH\x04\"\x02 \x00R\bissuedAtB\x14\n" +
 	"\x12_subscription_planB\x16\n" +
 	"\x14_subscription_statusB\b\n" +
-	"\x06_scope2\x8b\x05\n" +
+	"\x06_scope2\xa1\t\n" +
 	"\vAuthService\x12:\n" +
 	"\x05Login\x12\x17.loci.auth.LoginRequest\x1a\x18.loci.auth.LoginResponse\x12=\n" +
 	"\bRegister\x12\x1a.loci.auth.RegisterRequest\x1a\x15.loci.common.Response\x12H\n" +
@@ -1046,7 +1641,14 @@ const file_loci_auth_auth_proto_rawDesc = "" +
 	"\vChangeEmail\x12\x1d.loci.auth.ChangeEmailRequest\x1a\x15.loci.common.Response\x129\n" +
 	"\x06Logout\x12\x18.loci.auth.LogoutRequest\x1a\x15.loci.common.Response\x12I\n" +
 	"\x0eForgotPassword\x12 .loci.auth.ForgotPasswordRequest\x1a\x15.loci.common.Response\x12G\n" +
-	"\rResetPassword\x12\x1f.loci.auth.ResetPasswordRequest\x1a\x15.loci.common.ResponseB@Z>github.com/FACorreiaa/loci-connect-proto/gen/go/loci/auth;authb\x06proto3"
+	"\rResetPassword\x12\x1f.loci.auth.ResetPasswordRequest\x1a\x15.loci.common.Response\x12B\n" +
+	"\tVerifyMFA\x12\x1b.loci.auth.VerifyMFARequest\x1a\x18.loci.auth.LoginResponse\x12a\n" +
+	"\x12BeginMFAEnrollment\x12$.loci.auth.BeginMFAEnrollmentRequest\x1a%.loci.auth.BeginMFAEnrollmentResponse\x12g\n" +
+	"\x14ConfirmMFAEnrollment\x12&.loci.auth.ConfirmMFAEnrollmentRequest\x1a'.loci.auth.ConfirmMFAEnrollmentResponse\x12A\n" +
+	"\n" +
+	"DisableMFA\x12\x1c.loci.auth.DisableMFARequest\x1a\x15.loci.common.Response\x12p\n" +
+	"\x17RegenerateRecoveryCodes\x12).loci.auth.RegenerateRecoveryCodesRequest\x1a*.loci.auth.RegenerateRecoveryCodesResponse\x12O\n" +
+	"\fGetMFAStatus\x12\x1e.loci.auth.GetMFAStatusRequest\x1a\x1f.loci.auth.GetMFAStatusResponseB@Z>github.com/FACorreiaa/loci-connect-proto/gen/go/loci/auth;authb\x06proto3"
 
 var (
 	file_loci_auth_auth_proto_rawDescOnce sync.Once
@@ -1060,52 +1662,75 @@ func file_loci_auth_auth_proto_rawDescGZIP() []byte {
 	return file_loci_auth_auth_proto_rawDescData
 }
 
-var file_loci_auth_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
+var file_loci_auth_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 25)
 var file_loci_auth_auth_proto_goTypes = []any{
-	(*UserAuth)(nil),                // 0: loci.auth.UserAuth
-	(*LoginRequest)(nil),            // 1: loci.auth.LoginRequest
-	(*LoginResponse)(nil),           // 2: loci.auth.LoginResponse
-	(*RegisterRequest)(nil),         // 3: loci.auth.RegisterRequest
-	(*RefreshTokenRequest)(nil),     // 4: loci.auth.RefreshTokenRequest
-	(*TokenResponse)(nil),           // 5: loci.auth.TokenResponse
-	(*ValidateSessionRequest)(nil),  // 6: loci.auth.ValidateSessionRequest
-	(*ValidateSessionResponse)(nil), // 7: loci.auth.ValidateSessionResponse
-	(*ChangePasswordRequest)(nil),   // 8: loci.auth.ChangePasswordRequest
-	(*ChangeEmailRequest)(nil),      // 9: loci.auth.ChangeEmailRequest
-	(*LogoutRequest)(nil),           // 10: loci.auth.LogoutRequest
-	(*ForgotPasswordRequest)(nil),   // 11: loci.auth.ForgotPasswordRequest
-	(*ResetPasswordRequest)(nil),    // 12: loci.auth.ResetPasswordRequest
-	(*Session)(nil),                 // 13: loci.auth.Session
-	(*Claims)(nil),                  // 14: loci.auth.Claims
-	(*timestamppb.Timestamp)(nil),   // 15: google.protobuf.Timestamp
-	(*common.Response)(nil),         // 16: loci.common.Response
+	(*UserAuth)(nil),                        // 0: loci.auth.UserAuth
+	(*LoginRequest)(nil),                    // 1: loci.auth.LoginRequest
+	(*LoginResponse)(nil),                   // 2: loci.auth.LoginResponse
+	(*VerifyMFARequest)(nil),                // 3: loci.auth.VerifyMFARequest
+	(*BeginMFAEnrollmentRequest)(nil),       // 4: loci.auth.BeginMFAEnrollmentRequest
+	(*BeginMFAEnrollmentResponse)(nil),      // 5: loci.auth.BeginMFAEnrollmentResponse
+	(*ConfirmMFAEnrollmentRequest)(nil),     // 6: loci.auth.ConfirmMFAEnrollmentRequest
+	(*ConfirmMFAEnrollmentResponse)(nil),    // 7: loci.auth.ConfirmMFAEnrollmentResponse
+	(*DisableMFARequest)(nil),               // 8: loci.auth.DisableMFARequest
+	(*RegenerateRecoveryCodesRequest)(nil),  // 9: loci.auth.RegenerateRecoveryCodesRequest
+	(*RegenerateRecoveryCodesResponse)(nil), // 10: loci.auth.RegenerateRecoveryCodesResponse
+	(*GetMFAStatusRequest)(nil),             // 11: loci.auth.GetMFAStatusRequest
+	(*GetMFAStatusResponse)(nil),            // 12: loci.auth.GetMFAStatusResponse
+	(*RegisterRequest)(nil),                 // 13: loci.auth.RegisterRequest
+	(*RefreshTokenRequest)(nil),             // 14: loci.auth.RefreshTokenRequest
+	(*TokenResponse)(nil),                   // 15: loci.auth.TokenResponse
+	(*ValidateSessionRequest)(nil),          // 16: loci.auth.ValidateSessionRequest
+	(*ValidateSessionResponse)(nil),         // 17: loci.auth.ValidateSessionResponse
+	(*ChangePasswordRequest)(nil),           // 18: loci.auth.ChangePasswordRequest
+	(*ChangeEmailRequest)(nil),              // 19: loci.auth.ChangeEmailRequest
+	(*LogoutRequest)(nil),                   // 20: loci.auth.LogoutRequest
+	(*ForgotPasswordRequest)(nil),           // 21: loci.auth.ForgotPasswordRequest
+	(*ResetPasswordRequest)(nil),            // 22: loci.auth.ResetPasswordRequest
+	(*Session)(nil),                         // 23: loci.auth.Session
+	(*Claims)(nil),                          // 24: loci.auth.Claims
+	(*timestamppb.Timestamp)(nil),           // 25: google.protobuf.Timestamp
+	(*common.Response)(nil),                 // 26: loci.common.Response
 }
 var file_loci_auth_auth_proto_depIdxs = []int32{
-	15, // 0: loci.auth.UserAuth.created_at:type_name -> google.protobuf.Timestamp
-	15, // 1: loci.auth.UserAuth.updated_at:type_name -> google.protobuf.Timestamp
-	1,  // 2: loci.auth.AuthService.Login:input_type -> loci.auth.LoginRequest
-	3,  // 3: loci.auth.AuthService.Register:input_type -> loci.auth.RegisterRequest
-	4,  // 4: loci.auth.AuthService.RefreshToken:input_type -> loci.auth.RefreshTokenRequest
-	6,  // 5: loci.auth.AuthService.ValidateSession:input_type -> loci.auth.ValidateSessionRequest
-	8,  // 6: loci.auth.AuthService.ChangePassword:input_type -> loci.auth.ChangePasswordRequest
-	9,  // 7: loci.auth.AuthService.ChangeEmail:input_type -> loci.auth.ChangeEmailRequest
-	10, // 8: loci.auth.AuthService.Logout:input_type -> loci.auth.LogoutRequest
-	11, // 9: loci.auth.AuthService.ForgotPassword:input_type -> loci.auth.ForgotPasswordRequest
-	12, // 10: loci.auth.AuthService.ResetPassword:input_type -> loci.auth.ResetPasswordRequest
-	2,  // 11: loci.auth.AuthService.Login:output_type -> loci.auth.LoginResponse
-	16, // 12: loci.auth.AuthService.Register:output_type -> loci.common.Response
-	5,  // 13: loci.auth.AuthService.RefreshToken:output_type -> loci.auth.TokenResponse
-	7,  // 14: loci.auth.AuthService.ValidateSession:output_type -> loci.auth.ValidateSessionResponse
-	16, // 15: loci.auth.AuthService.ChangePassword:output_type -> loci.common.Response
-	16, // 16: loci.auth.AuthService.ChangeEmail:output_type -> loci.common.Response
-	16, // 17: loci.auth.AuthService.Logout:output_type -> loci.common.Response
-	16, // 18: loci.auth.AuthService.ForgotPassword:output_type -> loci.common.Response
-	16, // 19: loci.auth.AuthService.ResetPassword:output_type -> loci.common.Response
-	11, // [11:20] is the sub-list for method output_type
-	2,  // [2:11] is the sub-list for method input_type
-	2,  // [2:2] is the sub-list for extension type_name
-	2,  // [2:2] is the sub-list for extension extendee
-	0,  // [0:2] is the sub-list for field type_name
+	25, // 0: loci.auth.UserAuth.created_at:type_name -> google.protobuf.Timestamp
+	25, // 1: loci.auth.UserAuth.updated_at:type_name -> google.protobuf.Timestamp
+	25, // 2: loci.auth.GetMFAStatusResponse.enrolled_at:type_name -> google.protobuf.Timestamp
+	1,  // 3: loci.auth.AuthService.Login:input_type -> loci.auth.LoginRequest
+	13, // 4: loci.auth.AuthService.Register:input_type -> loci.auth.RegisterRequest
+	14, // 5: loci.auth.AuthService.RefreshToken:input_type -> loci.auth.RefreshTokenRequest
+	16, // 6: loci.auth.AuthService.ValidateSession:input_type -> loci.auth.ValidateSessionRequest
+	18, // 7: loci.auth.AuthService.ChangePassword:input_type -> loci.auth.ChangePasswordRequest
+	19, // 8: loci.auth.AuthService.ChangeEmail:input_type -> loci.auth.ChangeEmailRequest
+	20, // 9: loci.auth.AuthService.Logout:input_type -> loci.auth.LogoutRequest
+	21, // 10: loci.auth.AuthService.ForgotPassword:input_type -> loci.auth.ForgotPasswordRequest
+	22, // 11: loci.auth.AuthService.ResetPassword:input_type -> loci.auth.ResetPasswordRequest
+	3,  // 12: loci.auth.AuthService.VerifyMFA:input_type -> loci.auth.VerifyMFARequest
+	4,  // 13: loci.auth.AuthService.BeginMFAEnrollment:input_type -> loci.auth.BeginMFAEnrollmentRequest
+	6,  // 14: loci.auth.AuthService.ConfirmMFAEnrollment:input_type -> loci.auth.ConfirmMFAEnrollmentRequest
+	8,  // 15: loci.auth.AuthService.DisableMFA:input_type -> loci.auth.DisableMFARequest
+	9,  // 16: loci.auth.AuthService.RegenerateRecoveryCodes:input_type -> loci.auth.RegenerateRecoveryCodesRequest
+	11, // 17: loci.auth.AuthService.GetMFAStatus:input_type -> loci.auth.GetMFAStatusRequest
+	2,  // 18: loci.auth.AuthService.Login:output_type -> loci.auth.LoginResponse
+	26, // 19: loci.auth.AuthService.Register:output_type -> loci.common.Response
+	15, // 20: loci.auth.AuthService.RefreshToken:output_type -> loci.auth.TokenResponse
+	17, // 21: loci.auth.AuthService.ValidateSession:output_type -> loci.auth.ValidateSessionResponse
+	26, // 22: loci.auth.AuthService.ChangePassword:output_type -> loci.common.Response
+	26, // 23: loci.auth.AuthService.ChangeEmail:output_type -> loci.common.Response
+	26, // 24: loci.auth.AuthService.Logout:output_type -> loci.common.Response
+	26, // 25: loci.auth.AuthService.ForgotPassword:output_type -> loci.common.Response
+	26, // 26: loci.auth.AuthService.ResetPassword:output_type -> loci.common.Response
+	2,  // 27: loci.auth.AuthService.VerifyMFA:output_type -> loci.auth.LoginResponse
+	5,  // 28: loci.auth.AuthService.BeginMFAEnrollment:output_type -> loci.auth.BeginMFAEnrollmentResponse
+	7,  // 29: loci.auth.AuthService.ConfirmMFAEnrollment:output_type -> loci.auth.ConfirmMFAEnrollmentResponse
+	26, // 30: loci.auth.AuthService.DisableMFA:output_type -> loci.common.Response
+	10, // 31: loci.auth.AuthService.RegenerateRecoveryCodes:output_type -> loci.auth.RegenerateRecoveryCodesResponse
+	12, // 32: loci.auth.AuthService.GetMFAStatus:output_type -> loci.auth.GetMFAStatusResponse
+	18, // [18:33] is the sub-list for method output_type
+	3,  // [3:18] is the sub-list for method input_type
+	3,  // [3:3] is the sub-list for extension type_name
+	3,  // [3:3] is the sub-list for extension extendee
+	0,  // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_loci_auth_auth_proto_init() }
@@ -1113,16 +1738,20 @@ func file_loci_auth_auth_proto_init() {
 	if File_loci_auth_auth_proto != nil {
 		return
 	}
+	file_loci_auth_auth_proto_msgTypes[2].OneofWrappers = []any{}
 	file_loci_auth_auth_proto_msgTypes[3].OneofWrappers = []any{}
-	file_loci_auth_auth_proto_msgTypes[7].OneofWrappers = []any{}
-	file_loci_auth_auth_proto_msgTypes[14].OneofWrappers = []any{}
+	file_loci_auth_auth_proto_msgTypes[8].OneofWrappers = []any{}
+	file_loci_auth_auth_proto_msgTypes[12].OneofWrappers = []any{}
+	file_loci_auth_auth_proto_msgTypes[13].OneofWrappers = []any{}
+	file_loci_auth_auth_proto_msgTypes[17].OneofWrappers = []any{}
+	file_loci_auth_auth_proto_msgTypes[24].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_loci_auth_auth_proto_rawDesc), len(file_loci_auth_auth_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   15,
+			NumMessages:   25,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

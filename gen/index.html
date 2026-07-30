@@ -344,6 +344,14 @@
             <ul>
               
                 <li>
+                  <a href="#loci.auth.BeginMFAEnrollmentRequest"><span class="badge">M</span>BeginMFAEnrollmentRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.auth.BeginMFAEnrollmentResponse"><span class="badge">M</span>BeginMFAEnrollmentResponse</a>
+                </li>
+              
+                <li>
                   <a href="#loci.auth.ChangeEmailRequest"><span class="badge">M</span>ChangeEmailRequest</a>
                 </li>
               
@@ -356,7 +364,27 @@
                 </li>
               
                 <li>
+                  <a href="#loci.auth.ConfirmMFAEnrollmentRequest"><span class="badge">M</span>ConfirmMFAEnrollmentRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.auth.ConfirmMFAEnrollmentResponse"><span class="badge">M</span>ConfirmMFAEnrollmentResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.auth.DisableMFARequest"><span class="badge">M</span>DisableMFARequest</a>
+                </li>
+              
+                <li>
                   <a href="#loci.auth.ForgotPasswordRequest"><span class="badge">M</span>ForgotPasswordRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.auth.GetMFAStatusRequest"><span class="badge">M</span>GetMFAStatusRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.auth.GetMFAStatusResponse"><span class="badge">M</span>GetMFAStatusResponse</a>
                 </li>
               
                 <li>
@@ -373,6 +401,14 @@
               
                 <li>
                   <a href="#loci.auth.RefreshTokenRequest"><span class="badge">M</span>RefreshTokenRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.auth.RegenerateRecoveryCodesRequest"><span class="badge">M</span>RegenerateRecoveryCodesRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.auth.RegenerateRecoveryCodesResponse"><span class="badge">M</span>RegenerateRecoveryCodesResponse</a>
                 </li>
               
                 <li>
@@ -401,6 +437,10 @@
               
                 <li>
                   <a href="#loci.auth.ValidateSessionResponse"><span class="badge">M</span>ValidateSessionResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.auth.VerifyMFARequest"><span class="badge">M</span>VerifyMFARequest</a>
                 </li>
               
               
@@ -3931,6 +3971,44 @@ once in the response and never stored server-side.</p></td>
       <p></p>
 
       
+        <h3 id="loci.auth.BeginMFAEnrollmentRequest">BeginMFAEnrollmentRequest</h3>
+        <p>BeginMFAEnrollmentRequest starts enrolment for the calling user.</p><p>The user is taken from the auth token, never from the request body.</p>
+
+        
+
+        
+      
+        <h3 id="loci.auth.BeginMFAEnrollmentResponse">BeginMFAEnrollmentResponse</h3>
+        <p>BeginMFAEnrollmentResponse carries what the user needs to add the account to</p><p>an authenticator app. MFA is NOT active until ConfirmMFAEnrollment succeeds.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>provisioning_uri</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The otpauth:// URI to render as a QR code. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>secret</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The base32 secret, for manual entry when a camera is unavailable. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.auth.ChangeEmailRequest">ChangeEmailRequest</h3>
         <p>ChangeEmailRequest for changing email</p>
 
@@ -4073,6 +4151,93 @@ once in the response and never stored server-side.</p></td>
 
         
       
+        <h3 id="loci.auth.ConfirmMFAEnrollmentRequest">ConfirmMFAEnrollmentRequest</h3>
+        <p>ConfirmMFAEnrollmentRequest proves the user's app is generating valid codes.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>code</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.auth.ConfirmMFAEnrollmentResponse">ConfirmMFAEnrollmentResponse</h3>
+        <p>ConfirmMFAEnrollmentResponse returns the recovery codes.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>recovery_codes</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>Plaintext recovery codes, returned exactly once. Only hashes are stored, so
+they cannot be shown again — the client must make the user save them here. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>message</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.auth.DisableMFARequest">DisableMFARequest</h3>
+        <p>DisableMFARequest turns MFA off. Requires a current code: an attacker with a</p><p>hijacked session must not be able to strip the second factor.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>code</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>recovery_code</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.auth.ForgotPasswordRequest">ForgotPasswordRequest</h3>
         <p>ForgotPasswordRequest for initiating password reset</p>
 
@@ -4088,6 +4253,60 @@ once in the response and never stored server-side.</p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.auth.GetMFAStatusRequest">GetMFAStatusRequest</h3>
+        <p>GetMFAStatusRequest reports the calling user's MFA state, for Settings.</p>
+
+        
+
+        
+      
+        <h3 id="loci.auth.GetMFAStatusResponse">GetMFAStatusResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>enabled</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>recovery_codes_remaining</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>How many unused recovery codes remain. Surfacing this lets the UI nudge a
+user who is down to their last code, before they are locked out. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>enrolled_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>required_by_policy</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>True when policy requires MFA for this user&#39;s role, so the UI can explain
+why disabling is refused. </p></td>
                 </tr>
               
             </tbody>
@@ -4129,7 +4348,7 @@ once in the response and never stored server-side.</p></td>
         
       
         <h3 id="loci.auth.LoginResponse">LoginResponse</h3>
-        <p>LoginResponse after successful login</p>
+        <p>LoginResponse after successful login.</p><p>Login has two possible outcomes now that MFA exists. When the user has no</p><p>confirmed second factor, this carries the token pair as before. When they do,</p><p>it carries mfa_required + mfa_token and NO tokens: the session is only half</p><p>authenticated until VerifyMFA succeeds.</p>
 
         
           <table class="field-table">
@@ -4142,7 +4361,8 @@ once in the response and never stored server-side.</p></td>
                   <td>access_token</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Empty when mfa_required is true — the tokens do not exist yet at that point.
+The old min_len: 16 constraint made an MFA challenge literally unsendable. </p></td>
                 </tr>
               
                 <tr>
@@ -4178,6 +4398,22 @@ once in the response and never stored server-side.</p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>mfa_required</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>True when the password was correct but a second factor is still required. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>mfa_token</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>Short-lived, single-purpose challenge token. It proves the password step was
+passed and is the ONLY thing VerifyMFA accepts; it grants no API access of
+its own. </p></td>
                 </tr>
               
             </tbody>
@@ -4223,6 +4459,61 @@ once in the response and never stored server-side.</p></td>
               
                 <tr>
                   <td>refresh_token</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.auth.RegenerateRecoveryCodesRequest">RegenerateRecoveryCodesRequest</h3>
+        <p>RegenerateRecoveryCodesRequest replaces all existing codes. Also requires a</p><p>current code, for the same reason as disabling.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>code</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.auth.RegenerateRecoveryCodesResponse">RegenerateRecoveryCodesResponse</h3>
+        <p>RegenerateRecoveryCodesResponse returns the new codes and invalidates the old.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>recovery_codes</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>message</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
@@ -4508,6 +4799,47 @@ once in the response and never stored server-side.</p></td>
 
         
       
+        <h3 id="loci.auth.VerifyMFARequest">VerifyMFARequest</h3>
+        <p>VerifyMFARequest completes a login that was challenged for a second factor.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>mfa_token</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>code</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>A 6-digit TOTP code, or a recovery code. Exactly one must be set.
+
+The length range spans both: 6 digits for TOTP, 11 characters for a
+dash-separated recovery code, with slack for how people retype them. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>recovery_code</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
 
       
 
@@ -4582,6 +4914,51 @@ once in the response and never stored server-side.</p></td>
                 <td>ResetPassword</td>
                 <td><a href="#loci.auth.ResetPasswordRequest">ResetPasswordRequest</a></td>
                 <td><a href="#loci.common.Response">.loci.common.Response</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>VerifyMFA</td>
+                <td><a href="#loci.auth.VerifyMFARequest">VerifyMFARequest</a></td>
+                <td><a href="#loci.auth.LoginResponse">LoginResponse</a></td>
+                <td><p>Multi-factor auth.
+
+VerifyMFA is unauthenticated by design: it completes a login, so the caller
+has no access token yet. It authenticates via the mfa_token from Login.</p></td>
+              </tr>
+            
+              <tr>
+                <td>BeginMFAEnrollment</td>
+                <td><a href="#loci.auth.BeginMFAEnrollmentRequest">BeginMFAEnrollmentRequest</a></td>
+                <td><a href="#loci.auth.BeginMFAEnrollmentResponse">BeginMFAEnrollmentResponse</a></td>
+                <td><p>The rest require a valid access token; the user is taken from it.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ConfirmMFAEnrollment</td>
+                <td><a href="#loci.auth.ConfirmMFAEnrollmentRequest">ConfirmMFAEnrollmentRequest</a></td>
+                <td><a href="#loci.auth.ConfirmMFAEnrollmentResponse">ConfirmMFAEnrollmentResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>DisableMFA</td>
+                <td><a href="#loci.auth.DisableMFARequest">DisableMFARequest</a></td>
+                <td><a href="#loci.common.Response">.loci.common.Response</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>RegenerateRecoveryCodes</td>
+                <td><a href="#loci.auth.RegenerateRecoveryCodesRequest">RegenerateRecoveryCodesRequest</a></td>
+                <td><a href="#loci.auth.RegenerateRecoveryCodesResponse">RegenerateRecoveryCodesResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>GetMFAStatus</td>
+                <td><a href="#loci.auth.GetMFAStatusRequest">GetMFAStatusRequest</a></td>
+                <td><a href="#loci.auth.GetMFAStatusResponse">GetMFAStatusResponse</a></td>
                 <td><p></p></td>
               </tr>
             
