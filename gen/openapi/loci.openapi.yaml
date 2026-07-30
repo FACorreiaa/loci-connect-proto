@@ -219,6 +219,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.apikey.RevokeApiKeyResponse'
+  /loci.auth.AuthService/BeginMFAEnrollment:
+    post:
+      tags:
+        - loci.auth.AuthService
+      summary: BeginMFAEnrollment
+      description: The rest require a valid access token; the user is taken from it.
+      operationId: loci.auth.AuthService.BeginMFAEnrollment
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.auth.BeginMFAEnrollmentRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.auth.BeginMFAEnrollmentResponse'
   /loci.auth.AuthService/ChangeEmail:
     post:
       tags:
@@ -289,6 +325,76 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.common.Response'
+  /loci.auth.AuthService/ConfirmMFAEnrollment:
+    post:
+      tags:
+        - loci.auth.AuthService
+      summary: ConfirmMFAEnrollment
+      operationId: loci.auth.AuthService.ConfirmMFAEnrollment
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.auth.ConfirmMFAEnrollmentRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.auth.ConfirmMFAEnrollmentResponse'
+  /loci.auth.AuthService/DisableMFA:
+    post:
+      tags:
+        - loci.auth.AuthService
+      summary: DisableMFA
+      operationId: loci.auth.AuthService.DisableMFA
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.auth.DisableMFARequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.common.Response'
   /loci.auth.AuthService/ForgotPassword:
     post:
       tags:
@@ -325,6 +431,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.common.Response'
+  /loci.auth.AuthService/GetMFAStatus:
+    post:
+      tags:
+        - loci.auth.AuthService
+      summary: GetMFAStatus
+      operationId: loci.auth.AuthService.GetMFAStatus
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.auth.GetMFAStatusRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.auth.GetMFAStatusResponse'
   /loci.auth.AuthService/Login:
     post:
       tags:
@@ -430,6 +571,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.auth.TokenResponse'
+  /loci.auth.AuthService/RegenerateRecoveryCodes:
+    post:
+      tags:
+        - loci.auth.AuthService
+      summary: RegenerateRecoveryCodes
+      operationId: loci.auth.AuthService.RegenerateRecoveryCodes
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.auth.RegenerateRecoveryCodesRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.auth.RegenerateRecoveryCodesResponse'
   /loci.auth.AuthService/Register:
     post:
       tags:
@@ -535,6 +711,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.auth.ValidateSessionResponse'
+  /loci.auth.AuthService/VerifyMFA:
+    post:
+      tags:
+        - loci.auth.AuthService
+      summary: Multi-factor auth.
+      description: |-
+        VerifyMFA is unauthenticated by design: it completes a login, so the caller
+         has no access token yet. It authenticates via the mfa_token from Login.
+      operationId: loci.auth.AuthService.VerifyMFA
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.auth.VerifyMFARequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.auth.LoginResponse'
   /loci.chat.ChatService/BookmarkItinerary:
     post:
       tags:
@@ -6542,6 +6756,33 @@ components:
       type: object
       title: RevokeApiKeyResponse
       additionalProperties: false
+    loci.auth.BeginMFAEnrollmentRequest:
+      type: object
+      title: BeginMFAEnrollmentRequest
+      additionalProperties: false
+      description: |-
+        BeginMFAEnrollmentRequest starts enrolment for the calling user.
+         The user is taken from the auth token, never from the request body.
+    loci.auth.BeginMFAEnrollmentResponse:
+      type: object
+      properties:
+        provisioningUri:
+          type: string
+          title: provisioning_uri
+          maxLength: 2048
+          minLength: 1
+          description: The otpauth:// URI to render as a QR code.
+        secret:
+          type: string
+          title: secret
+          maxLength: 128
+          minLength: 16
+          description: The base32 secret, for manual entry when a camera is unavailable.
+      title: BeginMFAEnrollmentResponse
+      additionalProperties: false
+      description: |-
+        BeginMFAEnrollmentResponse carries what the user needs to add the account to
+         an authenticator app. MFA is NOT active until ConfirmMFAEnrollment succeeds.
     loci.auth.ChangeEmailRequest:
       type: object
       properties:
@@ -6634,6 +6875,60 @@ components:
       title: Claims
       additionalProperties: false
       description: Claims represents JWT claims
+    loci.auth.ConfirmMFAEnrollmentRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          title: code
+          maxLength: 20
+          minLength: 6
+      title: ConfirmMFAEnrollmentRequest
+      additionalProperties: false
+      description: ConfirmMFAEnrollmentRequest proves the user's app is generating valid codes.
+    loci.auth.ConfirmMFAEnrollmentResponse:
+      type: object
+      properties:
+        recoveryCodes:
+          type: array
+          items:
+            type: string
+          title: recovery_codes
+          maxItems: 20
+          minItems: 1
+          description: |-
+            Plaintext recovery codes, returned exactly once. Only hashes are stored, so
+             they cannot be shown again — the client must make the user save them here.
+        message:
+          type: string
+          title: message
+          maxLength: 500
+          minLength: 1
+      title: ConfirmMFAEnrollmentResponse
+      additionalProperties: false
+      description: ConfirmMFAEnrollmentResponse returns the recovery codes.
+    loci.auth.DisableMFARequest:
+      type: object
+      properties:
+        code:
+          type:
+            - string
+            - "null"
+          title: code
+          maxLength: 20
+          minLength: 6
+        recoveryCode:
+          type:
+            - string
+            - "null"
+          title: recovery_code
+          maxLength: 20
+          minLength: 6
+      title: DisableMFARequest
+      additionalProperties: false
+      description: |-
+        DisableMFARequest turns MFA off. Requires a current code: an attacker with a
+         hijacked session must not be able to strip the second factor.
     loci.auth.ForgotPasswordRequest:
       type: object
       properties:
@@ -6644,6 +6939,38 @@ components:
       title: ForgotPasswordRequest
       additionalProperties: false
       description: ForgotPasswordRequest for initiating password reset
+    loci.auth.GetMFAStatusRequest:
+      type: object
+      title: GetMFAStatusRequest
+      additionalProperties: false
+      description: GetMFAStatusRequest reports the calling user's MFA state, for Settings.
+    loci.auth.GetMFAStatusResponse:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          title: enabled
+        recoveryCodesRemaining:
+          type: integer
+          title: recovery_codes_remaining
+          minimum: 0
+          format: int32
+          description: |-
+            How many unused recovery codes remain. Surfacing this lets the UI nudge a
+             user who is down to their last code, before they are locked out.
+        enrolledAt:
+          oneOf:
+            - $ref: '#/components/schemas/google.protobuf.Timestamp'
+            - type: "null"
+          title: enrolled_at
+        requiredByPolicy:
+          type: boolean
+          title: required_by_policy
+          description: |-
+            True when policy requires MFA for this user's role, so the UI can explain
+             why disabling is refused.
+      title: GetMFAStatusResponse
+      additionalProperties: false
     loci.auth.LoginRequest:
       type: object
       properties:
@@ -6666,6 +6993,9 @@ components:
           type: string
           title: access_token
           minLength: 16
+          description: |-
+            Empty when mfa_required is true — the tokens do not exist yet at that point.
+             The old min_len: 16 constraint made an MFA challenge literally unsendable.
         refreshToken:
           type: string
           title: refresh_token
@@ -6690,9 +7020,30 @@ components:
           type: string
           title: email
           format: email
+        mfaRequired:
+          type: boolean
+          title: mfa_required
+          description: True when the password was correct but a second factor is still required.
+        mfaToken:
+          type:
+            - string
+            - "null"
+          title: mfa_token
+          maxLength: 4096
+          minLength: 16
+          description: |-
+            Short-lived, single-purpose challenge token. It proves the password step was
+             passed and is the ONLY thing VerifyMFA accepts; it grants no API access of
+             its own.
       title: LoginResponse
       additionalProperties: false
-      description: LoginResponse after successful login
+      description: |-
+        LoginResponse after successful login.
+
+         Login has two possible outcomes now that MFA exists. When the user has no
+         confirmed second factor, this carries the token pair as before. When they do,
+         it carries mfa_required + mfa_token and NO tokens: the session is only half
+         authenticated until VerifyMFA succeeds.
     loci.auth.LogoutRequest:
       type: object
       properties:
@@ -6713,6 +7064,37 @@ components:
       title: RefreshTokenRequest
       additionalProperties: false
       description: RefreshTokenRequest for refreshing tokens
+    loci.auth.RegenerateRecoveryCodesRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          title: code
+          maxLength: 20
+          minLength: 6
+      title: RegenerateRecoveryCodesRequest
+      additionalProperties: false
+      description: |-
+        RegenerateRecoveryCodesRequest replaces all existing codes. Also requires a
+         current code, for the same reason as disabling.
+    loci.auth.RegenerateRecoveryCodesResponse:
+      type: object
+      properties:
+        recoveryCodes:
+          type: array
+          items:
+            type: string
+          title: recovery_codes
+          maxItems: 20
+          minItems: 1
+        message:
+          type: string
+          title: message
+          maxLength: 500
+          minLength: 1
+      title: RegenerateRecoveryCodesResponse
+      additionalProperties: false
+      description: RegenerateRecoveryCodesResponse returns the new codes and invalidates the old.
     loci.auth.RegisterRequest:
       type: object
       properties:
@@ -6868,6 +7250,36 @@ components:
       title: ValidateSessionResponse
       additionalProperties: false
       description: ValidateSessionResponse for session validation result
+    loci.auth.VerifyMFARequest:
+      type: object
+      properties:
+        mfaToken:
+          type: string
+          title: mfa_token
+          maxLength: 4096
+          minLength: 16
+        code:
+          type:
+            - string
+            - "null"
+          title: code
+          maxLength: 20
+          minLength: 6
+          description: |-
+            A 6-digit TOTP code, or a recovery code. Exactly one must be set.
+
+             The length range spans both: 6 digits for TOTP, 11 characters for a
+             dash-separated recovery code, with slack for how people retype them.
+        recoveryCode:
+          type:
+            - string
+            - "null"
+          title: recovery_code
+          maxLength: 20
+          minLength: 6
+      title: VerifyMFARequest
+      additionalProperties: false
+      description: VerifyMFARequest completes a login that was challenged for a second factor.
     loci.chat.AIItineraryResponse:
       type: object
       properties:
