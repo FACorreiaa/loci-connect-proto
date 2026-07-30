@@ -191,6 +191,10 @@ export declare const GetCityResponseSchema: GenMessage<GetCityResponse>;
  */
 export declare type SearchCitiesRequest = Message<"loci.city.SearchCitiesRequest"> & {
   /**
+   * Empty means "browse": the server returns the first alphabetical page. The
+   * client's own city picker calls it that way on mount, so a min_len of 1 made
+   * that initial load fail validation before it ever reached the query.
+   *
    * @generated from field: string query = 1;
    */
   query: string;

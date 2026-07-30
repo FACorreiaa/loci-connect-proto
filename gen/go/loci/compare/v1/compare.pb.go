@@ -10,6 +10,7 @@ import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
 	localcontext "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/localcontext"
 	poi "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/poi"
+	trip "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/trip"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -227,8 +228,11 @@ type CityCompareColumn struct {
 	TransportOptions   []*TransportLink           `protobuf:"bytes,14,rep,name=transport_options,json=transportOptions,proto3" json:"transport_options,omitempty"`
 	StaySnippet        string                     `protobuf:"bytes,15,opt,name=stay_snippet,json=staySnippet,proto3" json:"stay_snippet,omitempty"`
 	EatSnippet         string                     `protobuf:"bytes,16,opt,name=eat_snippet,json=eatSnippet,proto3" json:"eat_snippet,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
+	// The go/no-go judgement for this city in the requested window, computed from
+	// the same weather, travel and POI data shown in this column.
+	GoScore       *localcontext.GoScore `protobuf:"bytes,17,opt,name=go_score,json=goScore,proto3" json:"go_score,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CityCompareColumn) Reset() {
@@ -373,7 +377,272 @@ func (x *CityCompareColumn) GetEatSnippet() string {
 	return ""
 }
 
+func (x *CityCompareColumn) GetGoScore() *localcontext.GoScore {
+	if x != nil {
+		return x.GoScore
+	}
+	return nil
+}
+
+// PlannedCity is one city in a multi-city route, with the days it gets.
+type PlannedCity struct {
+	state    protoimpl.MessageState `protogen:"open.v1"`
+	CityName string                 `protobuf:"bytes,1,opt,name=city_name,json=cityName,proto3" json:"city_name,omitempty"`
+	CityId   *string                `protobuf:"bytes,2,opt,name=city_id,json=cityId,proto3,oneof" json:"city_id,omitempty"`
+	Lat      float64                `protobuf:"fixed64,3,opt,name=lat,proto3" json:"lat,omitempty"`
+	Lon      float64                `protobuf:"fixed64,4,opt,name=lon,proto3" json:"lon,omitempty"`
+	// Days assigned to this city, in trip order.
+	DayNumbers []int32 `protobuf:"varint,5,rep,packed,name=day_numbers,json=dayNumbers,proto3" json:"day_numbers,omitempty"`
+	// The city's go-score, so the route can be justified rather than asserted.
+	GoScore       *localcontext.GoScore `protobuf:"bytes,6,opt,name=go_score,json=goScore,proto3,oneof" json:"go_score,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PlannedCity) Reset() {
+	*x = PlannedCity{}
+	mi := &file_loci_compare_v1_compare_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PlannedCity) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PlannedCity) ProtoMessage() {}
+
+func (x *PlannedCity) ProtoReflect() protoreflect.Message {
+	mi := &file_loci_compare_v1_compare_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PlannedCity.ProtoReflect.Descriptor instead.
+func (*PlannedCity) Descriptor() ([]byte, []int) {
+	return file_loci_compare_v1_compare_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *PlannedCity) GetCityName() string {
+	if x != nil {
+		return x.CityName
+	}
+	return ""
+}
+
+func (x *PlannedCity) GetCityId() string {
+	if x != nil && x.CityId != nil {
+		return *x.CityId
+	}
+	return ""
+}
+
+func (x *PlannedCity) GetLat() float64 {
+	if x != nil {
+		return x.Lat
+	}
+	return 0
+}
+
+func (x *PlannedCity) GetLon() float64 {
+	if x != nil {
+		return x.Lon
+	}
+	return 0
+}
+
+func (x *PlannedCity) GetDayNumbers() []int32 {
+	if x != nil {
+		return x.DayNumbers
+	}
+	return nil
+}
+
+func (x *PlannedCity) GetGoScore() *localcontext.GoScore {
+	if x != nil {
+		return x.GoScore
+	}
+	return nil
+}
+
+// DroppedCity is a candidate the planner left out, and why.
+type DroppedCity struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	CityName      string                 `protobuf:"bytes,1,opt,name=city_name,json=cityName,proto3" json:"city_name,omitempty"`
+	Reason        string                 `protobuf:"bytes,2,opt,name=reason,proto3" json:"reason,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DroppedCity) Reset() {
+	*x = DroppedCity{}
+	mi := &file_loci_compare_v1_compare_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DroppedCity) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DroppedCity) ProtoMessage() {}
+
+func (x *DroppedCity) ProtoReflect() protoreflect.Message {
+	mi := &file_loci_compare_v1_compare_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DroppedCity.ProtoReflect.Descriptor instead.
+func (*DroppedCity) Descriptor() ([]byte, []int) {
+	return file_loci_compare_v1_compare_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *DroppedCity) GetCityName() string {
+	if x != nil {
+		return x.CityName
+	}
+	return ""
+}
+
+func (x *DroppedCity) GetReason() string {
+	if x != nil {
+		return x.Reason
+	}
+	return ""
+}
+
+// MultiCityPlan is a route through any number of cities over any number of days.
+// It generalises DualCityOption, which only ever answered "can I do these two in
+// a weekend?".
+type MultiCityPlan struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// False when not even one candidate fits the window.
+	Feasible bool           `protobuf:"varint,1,opt,name=feasible,proto3" json:"feasible,omitempty"`
+	Cities   []*PlannedCity `protobuf:"bytes,2,rep,name=cities,proto3" json:"cities,omitempty"`
+	Dropped  []*DroppedCity `protobuf:"bytes,3,rep,name=dropped,proto3" json:"dropped,omitempty"`
+	// Travel between the cities, in trip order, starting with the outbound leg.
+	Legs            []*trip.TripLeg `protobuf:"bytes,4,rep,name=legs,proto3" json:"legs,omitempty"`
+	TotalTravelMins int32           `protobuf:"varint,5,opt,name=total_travel_mins,json=totalTravelMins,proto3" json:"total_travel_mins,omitempty"`
+	// Share of the whole window spent travelling, 0-1.
+	TravelShare float64 `protobuf:"fixed64,6,opt,name=travel_share,json=travelShare,proto3" json:"travel_share,omitempty"`
+	// One-line summary a UI can show without walking the structure.
+	Outline string `protobuf:"bytes,7,opt,name=outline,proto3" json:"outline,omitempty"`
+	// Things that are legal but worth saying out loud (travel-heavy, thin days).
+	Warnings []string `protobuf:"bytes,8,rep,name=warnings,proto3" json:"warnings,omitempty"`
+	// Gated behind Pro, like the dual-city outline it replaces.
+	ProOnly       bool `protobuf:"varint,9,opt,name=pro_only,json=proOnly,proto3" json:"pro_only,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MultiCityPlan) Reset() {
+	*x = MultiCityPlan{}
+	mi := &file_loci_compare_v1_compare_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MultiCityPlan) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MultiCityPlan) ProtoMessage() {}
+
+func (x *MultiCityPlan) ProtoReflect() protoreflect.Message {
+	mi := &file_loci_compare_v1_compare_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MultiCityPlan.ProtoReflect.Descriptor instead.
+func (*MultiCityPlan) Descriptor() ([]byte, []int) {
+	return file_loci_compare_v1_compare_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *MultiCityPlan) GetFeasible() bool {
+	if x != nil {
+		return x.Feasible
+	}
+	return false
+}
+
+func (x *MultiCityPlan) GetCities() []*PlannedCity {
+	if x != nil {
+		return x.Cities
+	}
+	return nil
+}
+
+func (x *MultiCityPlan) GetDropped() []*DroppedCity {
+	if x != nil {
+		return x.Dropped
+	}
+	return nil
+}
+
+func (x *MultiCityPlan) GetLegs() []*trip.TripLeg {
+	if x != nil {
+		return x.Legs
+	}
+	return nil
+}
+
+func (x *MultiCityPlan) GetTotalTravelMins() int32 {
+	if x != nil {
+		return x.TotalTravelMins
+	}
+	return 0
+}
+
+func (x *MultiCityPlan) GetTravelShare() float64 {
+	if x != nil {
+		return x.TravelShare
+	}
+	return 0
+}
+
+func (x *MultiCityPlan) GetOutline() string {
+	if x != nil {
+		return x.Outline
+	}
+	return ""
+}
+
+func (x *MultiCityPlan) GetWarnings() []string {
+	if x != nil {
+		return x.Warnings
+	}
+	return nil
+}
+
+func (x *MultiCityPlan) GetProOnly() bool {
+	if x != nil {
+		return x.ProOnly
+	}
+	return false
+}
+
 // DualCityOption describes whether a two-city weekend is feasible.
+// Deprecated: use MultiCityPlan, which handles any number of cities and days.
 type DualCityOption struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	Feasible        bool                   `protobuf:"varint,1,opt,name=feasible,proto3" json:"feasible,omitempty"`
@@ -386,7 +655,7 @@ type DualCityOption struct {
 
 func (x *DualCityOption) Reset() {
 	*x = DualCityOption{}
-	mi := &file_loci_compare_v1_compare_proto_msgTypes[3]
+	mi := &file_loci_compare_v1_compare_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -398,7 +667,7 @@ func (x *DualCityOption) String() string {
 func (*DualCityOption) ProtoMessage() {}
 
 func (x *DualCityOption) ProtoReflect() protoreflect.Message {
-	mi := &file_loci_compare_v1_compare_proto_msgTypes[3]
+	mi := &file_loci_compare_v1_compare_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -411,7 +680,7 @@ func (x *DualCityOption) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DualCityOption.ProtoReflect.Descriptor instead.
 func (*DualCityOption) Descriptor() ([]byte, []int) {
-	return file_loci_compare_v1_compare_proto_rawDescGZIP(), []int{3}
+	return file_loci_compare_v1_compare_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *DualCityOption) GetFeasible() bool {
@@ -458,7 +727,7 @@ type CompareWeekendRequest struct {
 
 func (x *CompareWeekendRequest) Reset() {
 	*x = CompareWeekendRequest{}
-	mi := &file_loci_compare_v1_compare_proto_msgTypes[4]
+	mi := &file_loci_compare_v1_compare_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -470,7 +739,7 @@ func (x *CompareWeekendRequest) String() string {
 func (*CompareWeekendRequest) ProtoMessage() {}
 
 func (x *CompareWeekendRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_loci_compare_v1_compare_proto_msgTypes[4]
+	mi := &file_loci_compare_v1_compare_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -483,7 +752,7 @@ func (x *CompareWeekendRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CompareWeekendRequest.ProtoReflect.Descriptor instead.
 func (*CompareWeekendRequest) Descriptor() ([]byte, []int) {
-	return file_loci_compare_v1_compare_proto_rawDescGZIP(), []int{4}
+	return file_loci_compare_v1_compare_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *CompareWeekendRequest) GetOriginCity() string {
@@ -537,21 +806,23 @@ func (x *CompareWeekendRequest) GetProfileId() string {
 
 // CompareWeekendResponse holds columns plus an optional dual-city outline.
 type CompareWeekendResponse struct {
-	state                protoimpl.MessageState `protogen:"open.v1"`
-	OriginCity           string                 `protobuf:"bytes,1,opt,name=origin_city,json=originCity,proto3" json:"origin_city,omitempty"`
-	OriginLat            float64                `protobuf:"fixed64,2,opt,name=origin_lat,json=originLat,proto3" json:"origin_lat,omitempty"`
-	OriginLon            float64                `protobuf:"fixed64,3,opt,name=origin_lon,json=originLon,proto3" json:"origin_lon,omitempty"`
-	Columns              []*CityCompareColumn   `protobuf:"bytes,4,rep,name=columns,proto3" json:"columns,omitempty"`
-	DualCityOption       *DualCityOption        `protobuf:"bytes,5,opt,name=dual_city_option,json=dualCityOption,proto3" json:"dual_city_option,omitempty"`
-	Recommendation       CompareRecommendation  `protobuf:"varint,6,opt,name=recommendation,proto3,enum=loci.compare.v1.CompareRecommendation" json:"recommendation,omitempty"`
-	RecommendationReason string                 `protobuf:"bytes,7,opt,name=recommendation_reason,json=recommendationReason,proto3" json:"recommendation_reason,omitempty"`
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	OriginCity     string                 `protobuf:"bytes,1,opt,name=origin_city,json=originCity,proto3" json:"origin_city,omitempty"`
+	OriginLat      float64                `protobuf:"fixed64,2,opt,name=origin_lat,json=originLat,proto3" json:"origin_lat,omitempty"`
+	OriginLon      float64                `protobuf:"fixed64,3,opt,name=origin_lon,json=originLon,proto3" json:"origin_lon,omitempty"`
+	Columns        []*CityCompareColumn   `protobuf:"bytes,4,rep,name=columns,proto3" json:"columns,omitempty"`
+	DualCityOption *DualCityOption        `protobuf:"bytes,5,opt,name=dual_city_option,json=dualCityOption,proto3" json:"dual_city_option,omitempty"`
+	// The general plan. Prefer this over dual_city_option.
+	MultiCityPlan        *MultiCityPlan        `protobuf:"bytes,15,opt,name=multi_city_plan,json=multiCityPlan,proto3" json:"multi_city_plan,omitempty"`
+	Recommendation       CompareRecommendation `protobuf:"varint,6,opt,name=recommendation,proto3,enum=loci.compare.v1.CompareRecommendation" json:"recommendation,omitempty"`
+	RecommendationReason string                `protobuf:"bytes,7,opt,name=recommendation_reason,json=recommendationReason,proto3" json:"recommendation_reason,omitempty"`
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
 
 func (x *CompareWeekendResponse) Reset() {
 	*x = CompareWeekendResponse{}
-	mi := &file_loci_compare_v1_compare_proto_msgTypes[5]
+	mi := &file_loci_compare_v1_compare_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -563,7 +834,7 @@ func (x *CompareWeekendResponse) String() string {
 func (*CompareWeekendResponse) ProtoMessage() {}
 
 func (x *CompareWeekendResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_loci_compare_v1_compare_proto_msgTypes[5]
+	mi := &file_loci_compare_v1_compare_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -576,7 +847,7 @@ func (x *CompareWeekendResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CompareWeekendResponse.ProtoReflect.Descriptor instead.
 func (*CompareWeekendResponse) Descriptor() ([]byte, []int) {
-	return file_loci_compare_v1_compare_proto_rawDescGZIP(), []int{5}
+	return file_loci_compare_v1_compare_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *CompareWeekendResponse) GetOriginCity() string {
@@ -614,6 +885,13 @@ func (x *CompareWeekendResponse) GetDualCityOption() *DualCityOption {
 	return nil
 }
 
+func (x *CompareWeekendResponse) GetMultiCityPlan() *MultiCityPlan {
+	if x != nil {
+		return x.MultiCityPlan
+	}
+	return nil
+}
+
 func (x *CompareWeekendResponse) GetRecommendation() CompareRecommendation {
 	if x != nil {
 		return x.Recommendation
@@ -632,7 +910,7 @@ var File_loci_compare_v1_compare_proto protoreflect.FileDescriptor
 
 const file_loci_compare_v1_compare_proto_rawDesc = "" +
 	"\n" +
-	"\x1dloci/compare/v1/compare.proto\x12\x0floci.compare.v1\x1a\x1bbuf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a$loci/localcontext/localcontext.proto\x1a\x12loci/poi/poi.proto\"w\n" +
+	"\x1dloci/compare/v1/compare.proto\x12\x0floci.compare.v1\x1a\x1bbuf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a$loci/localcontext/localcontext.proto\x1a\x12loci/poi/poi.proto\x1a\x14loci/trip/trip.proto\"w\n" +
 	"\vBookingLink\x12%\n" +
 	"\bprovider\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\bprovider\x12 \n" +
 	"\x05label\x18\x02 \x01(\tB\n" +
@@ -644,7 +922,7 @@ const file_loci_compare_v1_compare_proto_rawDesc = "" +
 	"\asummary\x18\x02 \x01(\tB\b\xbaH\x05r\x03\x18\xac\x02R\asummary\x12,\n" +
 	"\rduration_mins\x18\x03 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\fdurationMins\x12\"\n" +
 	"\x03url\x18\x04 \x01(\tB\v\xbaH\br\x06\x18\x80\x10\x88\x01\x01H\x00R\x03url\x88\x01\x01B\x06\n" +
-	"\x04_url\"\xd0\x05\n" +
+	"\x04_url\"\x87\x06\n" +
 	"\x11CityCompareColumn\x12'\n" +
 	"\tcity_name\x18\x01 \x01(\tB\n" +
 	"\xbaH\ar\x05\x10\x01\x18\xc8\x01R\bcityName\x12 \n" +
@@ -668,7 +946,34 @@ const file_loci_compare_v1_compare_proto_rawDesc = "" +
 	"\x11transport_options\x18\x0e \x03(\v2\x1e.loci.compare.v1.TransportLinkR\x10transportOptions\x12+\n" +
 	"\fstay_snippet\x18\x0f \x01(\tB\b\xbaH\x05r\x03\x18\xf4\x03R\vstaySnippet\x12)\n" +
 	"\veat_snippet\x18\x10 \x01(\tB\b\xbaH\x05r\x03\x18\xf4\x03R\n" +
-	"eatSnippet\"\xa0\x01\n" +
+	"eatSnippet\x125\n" +
+	"\bgo_score\x18\x11 \x01(\v2\x1a.loci.localcontext.GoScoreR\agoScore\"\xae\x02\n" +
+	"\vPlannedCity\x12'\n" +
+	"\tcity_name\x18\x01 \x01(\tB\n" +
+	"\xbaH\ar\x05\x10\x01\x18\xc8\x01R\bcityName\x12*\n" +
+	"\acity_id\x18\x02 \x01(\tB\f\xbaH\t\xd8\x01\x01r\x04\x10\x01\x18dH\x00R\x06cityId\x88\x01\x01\x12)\n" +
+	"\x03lat\x18\x03 \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x80V@)\x00\x00\x00\x00\x00\x80V\xc0R\x03lat\x12)\n" +
+	"\x03lon\x18\x04 \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x80f@)\x00\x00\x00\x00\x00\x80f\xc0R\x03lon\x12\x1f\n" +
+	"\vday_numbers\x18\x05 \x03(\x05R\n" +
+	"dayNumbers\x12:\n" +
+	"\bgo_score\x18\x06 \x01(\v2\x1a.loci.localcontext.GoScoreH\x01R\agoScore\x88\x01\x01B\n" +
+	"\n" +
+	"\b_city_idB\v\n" +
+	"\t_go_score\"X\n" +
+	"\vDroppedCity\x12'\n" +
+	"\tcity_name\x18\x01 \x01(\tB\n" +
+	"\xbaH\ar\x05\x10\x01\x18\xc8\x01R\bcityName\x12 \n" +
+	"\x06reason\x18\x02 \x01(\tB\b\xbaH\x05r\x03\x18\xf4\x03R\x06reason\"\x8d\x03\n" +
+	"\rMultiCityPlan\x12\x1a\n" +
+	"\bfeasible\x18\x01 \x01(\bR\bfeasible\x124\n" +
+	"\x06cities\x18\x02 \x03(\v2\x1c.loci.compare.v1.PlannedCityR\x06cities\x126\n" +
+	"\adropped\x18\x03 \x03(\v2\x1c.loci.compare.v1.DroppedCityR\adropped\x12&\n" +
+	"\x04legs\x18\x04 \x03(\v2\x12.loci.trip.TripLegR\x04legs\x123\n" +
+	"\x11total_travel_mins\x18\x05 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x0ftotalTravelMins\x12:\n" +
+	"\ftravel_share\x18\x06 \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00\xf0?)\x00\x00\x00\x00\x00\x00\x00\x00R\vtravelShare\x12\"\n" +
+	"\aoutline\x18\a \x01(\tB\b\xbaH\x05r\x03\x18\xd0\x0fR\aoutline\x12\x1a\n" +
+	"\bwarnings\x18\b \x03(\tR\bwarnings\x12\x19\n" +
+	"\bpro_only\x18\t \x01(\bR\aproOnly\"\xa0\x01\n" +
 	"\x0eDualCityOption\x12\x1a\n" +
 	"\bfeasible\x18\x01 \x01(\bR\bfeasible\x12\"\n" +
 	"\aoutline\x18\x02 \x01(\tB\b\xbaH\x05r\x03\x18\xd0\x0fR\aoutline\x123\n" +
@@ -681,7 +986,7 @@ const file_loci_compare_v1_compare_proto_rawDesc = "" +
 	"origin_lat\x18\x02 \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x80V@)\x00\x00\x00\x00\x00\x80V\xc0H\x01R\toriginLat\x88\x01\x01\x12;\n" +
 	"\n" +
 	"origin_lon\x18\x03 \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x80f@)\x00\x00\x00\x00\x00\x80f\xc0H\x02R\toriginLon\x88\x01\x01\x12E\n" +
-	"\x14candidate_city_names\x18\x04 \x03(\tB\x13\xbaH\x10\x92\x01\r\b\x02\x10\x03\"\ar\x05\x10\x01\x18\xc8\x01R\x12candidateCityNames\x129\n" +
+	"\x14candidate_city_names\x18\x04 \x03(\tB\x13\xbaH\x10\x92\x01\r\b\x02\x10\b\"\ar\x05\x10\x01\x18\xc8\x01R\x12candidateCityNames\x129\n" +
 	"\n" +
 	"start_date\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tstartDate\x125\n" +
 	"\bend_date\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\aendDate\x12+\n" +
@@ -690,7 +995,7 @@ const file_loci_compare_v1_compare_proto_rawDesc = "" +
 	"\f_origin_cityB\r\n" +
 	"\v_origin_latB\r\n" +
 	"\v_origin_lonB\r\n" +
-	"\v_profile_id\"\x8f\x03\n" +
+	"\v_profile_id\"\xd7\x03\n" +
 	"\x16CompareWeekendResponse\x12\x1f\n" +
 	"\vorigin_city\x18\x01 \x01(\tR\n" +
 	"originCity\x12\x1d\n" +
@@ -699,7 +1004,8 @@ const file_loci_compare_v1_compare_proto_rawDesc = "" +
 	"\n" +
 	"origin_lon\x18\x03 \x01(\x01R\toriginLon\x12<\n" +
 	"\acolumns\x18\x04 \x03(\v2\".loci.compare.v1.CityCompareColumnR\acolumns\x12I\n" +
-	"\x10dual_city_option\x18\x05 \x01(\v2\x1f.loci.compare.v1.DualCityOptionR\x0edualCityOption\x12N\n" +
+	"\x10dual_city_option\x18\x05 \x01(\v2\x1f.loci.compare.v1.DualCityOptionR\x0edualCityOption\x12F\n" +
+	"\x0fmulti_city_plan\x18\x0f \x01(\v2\x1e.loci.compare.v1.MultiCityPlanR\rmultiCityPlan\x12N\n" +
 	"\x0erecommendation\x18\x06 \x01(\x0e2&.loci.compare.v1.CompareRecommendationR\x0erecommendation\x12=\n" +
 	"\x15recommendation_reason\x18\a \x01(\tB\b\xbaH\x05r\x03\x18\xe8\aR\x14recommendationReason*\xa5\x01\n" +
 	"\x15CompareRecommendation\x12&\n" +
@@ -723,36 +1029,47 @@ func file_loci_compare_v1_compare_proto_rawDescGZIP() []byte {
 }
 
 var file_loci_compare_v1_compare_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_loci_compare_v1_compare_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_loci_compare_v1_compare_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_loci_compare_v1_compare_proto_goTypes = []any{
 	(CompareRecommendation)(0),      // 0: loci.compare.v1.CompareRecommendation
 	(*BookingLink)(nil),             // 1: loci.compare.v1.BookingLink
 	(*TransportLink)(nil),           // 2: loci.compare.v1.TransportLink
 	(*CityCompareColumn)(nil),       // 3: loci.compare.v1.CityCompareColumn
-	(*DualCityOption)(nil),          // 4: loci.compare.v1.DualCityOption
-	(*CompareWeekendRequest)(nil),   // 5: loci.compare.v1.CompareWeekendRequest
-	(*CompareWeekendResponse)(nil),  // 6: loci.compare.v1.CompareWeekendResponse
-	(*localcontext.WeatherDay)(nil), // 7: loci.localcontext.WeatherDay
-	(*poi.POIDetailedInfo)(nil),     // 8: loci.poi.POIDetailedInfo
-	(*timestamppb.Timestamp)(nil),   // 9: google.protobuf.Timestamp
+	(*PlannedCity)(nil),             // 4: loci.compare.v1.PlannedCity
+	(*DroppedCity)(nil),             // 5: loci.compare.v1.DroppedCity
+	(*MultiCityPlan)(nil),           // 6: loci.compare.v1.MultiCityPlan
+	(*DualCityOption)(nil),          // 7: loci.compare.v1.DualCityOption
+	(*CompareWeekendRequest)(nil),   // 8: loci.compare.v1.CompareWeekendRequest
+	(*CompareWeekendResponse)(nil),  // 9: loci.compare.v1.CompareWeekendResponse
+	(*localcontext.WeatherDay)(nil), // 10: loci.localcontext.WeatherDay
+	(*poi.POIDetailedInfo)(nil),     // 11: loci.poi.POIDetailedInfo
+	(*localcontext.GoScore)(nil),    // 12: loci.localcontext.GoScore
+	(*trip.TripLeg)(nil),            // 13: loci.trip.TripLeg
+	(*timestamppb.Timestamp)(nil),   // 14: google.protobuf.Timestamp
 }
 var file_loci_compare_v1_compare_proto_depIdxs = []int32{
-	7,  // 0: loci.compare.v1.CityCompareColumn.weather:type_name -> loci.localcontext.WeatherDay
-	8,  // 1: loci.compare.v1.CityCompareColumn.top_pois:type_name -> loci.poi.POIDetailedInfo
+	10, // 0: loci.compare.v1.CityCompareColumn.weather:type_name -> loci.localcontext.WeatherDay
+	11, // 1: loci.compare.v1.CityCompareColumn.top_pois:type_name -> loci.poi.POIDetailedInfo
 	1,  // 2: loci.compare.v1.CityCompareColumn.booking_options:type_name -> loci.compare.v1.BookingLink
 	2,  // 3: loci.compare.v1.CityCompareColumn.transport_options:type_name -> loci.compare.v1.TransportLink
-	9,  // 4: loci.compare.v1.CompareWeekendRequest.start_date:type_name -> google.protobuf.Timestamp
-	9,  // 5: loci.compare.v1.CompareWeekendRequest.end_date:type_name -> google.protobuf.Timestamp
-	3,  // 6: loci.compare.v1.CompareWeekendResponse.columns:type_name -> loci.compare.v1.CityCompareColumn
-	4,  // 7: loci.compare.v1.CompareWeekendResponse.dual_city_option:type_name -> loci.compare.v1.DualCityOption
-	0,  // 8: loci.compare.v1.CompareWeekendResponse.recommendation:type_name -> loci.compare.v1.CompareRecommendation
-	5,  // 9: loci.compare.v1.CompareService.CompareWeekend:input_type -> loci.compare.v1.CompareWeekendRequest
-	6,  // 10: loci.compare.v1.CompareService.CompareWeekend:output_type -> loci.compare.v1.CompareWeekendResponse
-	10, // [10:11] is the sub-list for method output_type
-	9,  // [9:10] is the sub-list for method input_type
-	9,  // [9:9] is the sub-list for extension type_name
-	9,  // [9:9] is the sub-list for extension extendee
-	0,  // [0:9] is the sub-list for field type_name
+	12, // 4: loci.compare.v1.CityCompareColumn.go_score:type_name -> loci.localcontext.GoScore
+	12, // 5: loci.compare.v1.PlannedCity.go_score:type_name -> loci.localcontext.GoScore
+	4,  // 6: loci.compare.v1.MultiCityPlan.cities:type_name -> loci.compare.v1.PlannedCity
+	5,  // 7: loci.compare.v1.MultiCityPlan.dropped:type_name -> loci.compare.v1.DroppedCity
+	13, // 8: loci.compare.v1.MultiCityPlan.legs:type_name -> loci.trip.TripLeg
+	14, // 9: loci.compare.v1.CompareWeekendRequest.start_date:type_name -> google.protobuf.Timestamp
+	14, // 10: loci.compare.v1.CompareWeekendRequest.end_date:type_name -> google.protobuf.Timestamp
+	3,  // 11: loci.compare.v1.CompareWeekendResponse.columns:type_name -> loci.compare.v1.CityCompareColumn
+	7,  // 12: loci.compare.v1.CompareWeekendResponse.dual_city_option:type_name -> loci.compare.v1.DualCityOption
+	6,  // 13: loci.compare.v1.CompareWeekendResponse.multi_city_plan:type_name -> loci.compare.v1.MultiCityPlan
+	0,  // 14: loci.compare.v1.CompareWeekendResponse.recommendation:type_name -> loci.compare.v1.CompareRecommendation
+	8,  // 15: loci.compare.v1.CompareService.CompareWeekend:input_type -> loci.compare.v1.CompareWeekendRequest
+	9,  // 16: loci.compare.v1.CompareService.CompareWeekend:output_type -> loci.compare.v1.CompareWeekendResponse
+	16, // [16:17] is the sub-list for method output_type
+	15, // [15:16] is the sub-list for method input_type
+	15, // [15:15] is the sub-list for extension type_name
+	15, // [15:15] is the sub-list for extension extendee
+	0,  // [0:15] is the sub-list for field type_name
 }
 
 func init() { file_loci_compare_v1_compare_proto_init() }
@@ -761,14 +1078,15 @@ func file_loci_compare_v1_compare_proto_init() {
 		return
 	}
 	file_loci_compare_v1_compare_proto_msgTypes[1].OneofWrappers = []any{}
-	file_loci_compare_v1_compare_proto_msgTypes[4].OneofWrappers = []any{}
+	file_loci_compare_v1_compare_proto_msgTypes[3].OneofWrappers = []any{}
+	file_loci_compare_v1_compare_proto_msgTypes[7].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_loci_compare_v1_compare_proto_rawDesc), len(file_loci_compare_v1_compare_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   6,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

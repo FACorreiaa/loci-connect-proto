@@ -144,6 +144,166 @@ export declare type LocalContext = Message<"loci.localcontext.LocalContext"> & {
 export declare const LocalContextSchema: GenMessage<LocalContext>;
 
 /**
+ * ScoreFactor is one dimension of the go/no-go judgement, with its reasoning.
+ * The score is always shown WITH these: a bare number is not an explanation,
+ * and a user who disagrees with it should be able to see why it landed there.
+ *
+ * @generated from message loci.localcontext.ScoreFactor
+ */
+export declare type ScoreFactor = Message<"loci.localcontext.ScoreFactor"> & {
+  /**
+   * @generated from field: string label = 1;
+   */
+  label: string;
+
+  /**
+   * Signed points this dimension contributed (negative for disruptions).
+   *
+   * @generated from field: int32 contribution = 2;
+   */
+  contribution: number;
+
+  /**
+   * Ceiling for this dimension, so a client can render "22 / 40" or a
+   * proportional bar without hardcoding the weights.
+   *
+   * @generated from field: int32 max_contribution = 3;
+   */
+  maxContribution: number;
+
+  /**
+   * @generated from field: string detail = 4;
+   */
+  detail: string;
+};
+
+/**
+ * Describes the message loci.localcontext.ScoreFactor.
+ * Use `create(ScoreFactorSchema)` to create a new message.
+ */
+export declare const ScoreFactorSchema: GenMessage<ScoreFactor>;
+
+/**
+ * GoScore answers "should I go here, in this window?".
+ *
+ * @generated from message loci.localcontext.GoScore
+ */
+export declare type GoScore = Message<"loci.localcontext.GoScore"> & {
+  /**
+   * @generated from field: int32 score = 1;
+   */
+  score: number;
+
+  /**
+   * One of "go", "maybe", "skip".
+   *
+   * @generated from field: string verdict = 2;
+   */
+  verdict: string;
+
+  /**
+   * @generated from field: repeated loci.localcontext.ScoreFactor factors = 3;
+   */
+  factors: ScoreFactor[];
+
+  /**
+   * @generated from field: string summary = 4;
+   */
+  summary: string;
+
+  /**
+   * True when any input was a stub rather than real provider data. Clients MUST
+   * label the score as estimated when this is set.
+   *
+   * @generated from field: bool has_estimated_inputs = 5;
+   */
+  hasEstimatedInputs: boolean;
+};
+
+/**
+ * Describes the message loci.localcontext.GoScore.
+ * Use `create(GoScoreSchema)` to create a new message.
+ */
+export declare const GoScoreSchema: GenMessage<GoScore>;
+
+/**
+ * GetGoScoreRequest asks whether a city is worth the trip in a given window.
+ *
+ * @generated from message loci.localcontext.GetGoScoreRequest
+ */
+export declare type GetGoScoreRequest = Message<"loci.localcontext.GetGoScoreRequest"> & {
+  /**
+   * Destination, by name (fuzzy-matched) or by coordinates.
+   *
+   * @generated from field: optional string city_name = 1;
+   */
+  cityName?: string;
+
+  /**
+   * @generated from field: optional double latitude = 2;
+   */
+  latitude?: number;
+
+  /**
+   * @generated from field: optional double longitude = 3;
+   */
+  longitude?: number;
+
+  /**
+   * Where the traveller starts from, used for travel time.
+   *
+   * @generated from field: optional double origin_lat = 4;
+   */
+  originLat?: number;
+
+  /**
+   * @generated from field: optional double origin_lon = 5;
+   */
+  originLon?: number;
+
+  /**
+   * Trip window. Defaults to a 48-hour weekend when omitted.
+   *
+   * @generated from field: optional google.protobuf.Timestamp start = 6;
+   */
+  start?: Timestamp;
+
+  /**
+   * @generated from field: optional google.protobuf.Timestamp end = 7;
+   */
+  end?: Timestamp;
+};
+
+/**
+ * Describes the message loci.localcontext.GetGoScoreRequest.
+ * Use `create(GetGoScoreRequestSchema)` to create a new message.
+ */
+export declare const GetGoScoreRequestSchema: GenMessage<GetGoScoreRequest>;
+
+/**
+ * GetGoScoreResponse carries the verdict and the resolved destination.
+ *
+ * @generated from message loci.localcontext.GetGoScoreResponse
+ */
+export declare type GetGoScoreResponse = Message<"loci.localcontext.GetGoScoreResponse"> & {
+  /**
+   * @generated from field: loci.localcontext.GoScore score = 1;
+   */
+  score?: GoScore;
+
+  /**
+   * @generated from field: string city_name = 2;
+   */
+  cityName: string;
+};
+
+/**
+ * Describes the message loci.localcontext.GetGoScoreResponse.
+ * Use `create(GetGoScoreResponseSchema)` to create a new message.
+ */
+export declare const GetGoScoreResponseSchema: GenMessage<GetGoScoreResponse>;
+
+/**
  * AlertKind classifies a trip-time heads-up.
  *
  * @generated from enum loci.localcontext.AlertKind
@@ -189,6 +349,16 @@ export declare const LocalContextService: GenService<{
     methodKind: "unary";
     input: typeof GetLocalContextRequestSchema;
     output: typeof LocalContextSchema;
+  },
+  /**
+   * GetGoScore answers "should I go this weekend?" for one destination.
+   *
+   * @generated from rpc loci.localcontext.LocalContextService.GetGoScore
+   */
+  getGoScore: {
+    methodKind: "unary";
+    input: typeof GetGoScoreRequestSchema;
+    output: typeof GetGoScoreResponseSchema;
   },
 }>;
 
