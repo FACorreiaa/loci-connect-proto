@@ -2692,6 +2692,89 @@
         
           
           <li>
+            <a href="#loci%2ftravelhistory%2ftravelhistory.proto">loci/travelhistory/travelhistory.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#loci.travelhistory.DeleteVisitRequest"><span class="badge">M</span>DeleteVisitRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.travelhistory.DeleteVisitResponse"><span class="badge">M</span>DeleteVisitResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.travelhistory.GetGlobeDataRequest"><span class="badge">M</span>GetGlobeDataRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.travelhistory.GetGlobeDataResponse"><span class="badge">M</span>GetGlobeDataResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.travelhistory.GetTravelSummaryRequest"><span class="badge">M</span>GetTravelSummaryRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.travelhistory.GetTravelSummaryResponse"><span class="badge">M</span>GetTravelSummaryResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.travelhistory.GlobeArc"><span class="badge">M</span>GlobeArc</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.travelhistory.ListVisitedCitiesRequest"><span class="badge">M</span>ListVisitedCitiesRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.travelhistory.ListVisitedCitiesResponse"><span class="badge">M</span>ListVisitedCitiesResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.travelhistory.ListVisitedPOIsRequest"><span class="badge">M</span>ListVisitedPOIsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.travelhistory.ListVisitedPOIsResponse"><span class="badge">M</span>ListVisitedPOIsResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.travelhistory.RecordVisitRequest"><span class="badge">M</span>RecordVisitRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.travelhistory.RecordVisitResponse"><span class="badge">M</span>RecordVisitResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.travelhistory.TravelSummary"><span class="badge">M</span>TravelSummary</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.travelhistory.VisitedCity"><span class="badge">M</span>VisitedCity</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.travelhistory.VisitedPOI"><span class="badge">M</span>VisitedPOI</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#loci.travelhistory.VisitSource"><span class="badge">E</span>VisitSource</a>
+                </li>
+              
+              
+              
+                <li>
+                  <a href="#loci.travelhistory.TravelHistoryService"><span class="badge">S</span>TravelHistoryService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#loci%2fuser%2fuser.proto">loci/user/user.proto</a>
             <ul>
               
@@ -30014,6 +30097,880 @@ Note: Renamed from &#34;Update&#34; to &#34;UpdateTag&#34; for RPC clarity</p></
                 <td><a href="#loci.tags.DeleteTagRequest">DeleteTagRequest</a></td>
                 <td><a href="#loci.tags.DeleteTagResponse">DeleteTagResponse</a></td>
                 <td><p>DeleteTag deletes a specific tag</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="loci/travelhistory/travelhistory.proto">loci/travelhistory/travelhistory.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="loci.travelhistory.DeleteVisitRequest">DeleteVisitRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.travelhistory.DeleteVisitResponse">DeleteVisitResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>deleted</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.travelhistory.GetGlobeDataRequest">GetGlobeDataRequest</h3>
+        <p>GetGlobeDataRequest asks for everything the globe dashboard renders in ONE</p><p>round trip. Splitting this across three calls makes a single screen wait on</p><p>three sequential auth + query cycles.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>limit</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Max cities to return. Defaults to 500 when zero. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>period_days</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Comparison window for the summary deltas. Defaults to 365 when zero. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.travelhistory.GetGlobeDataResponse">GetGlobeDataResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>cities</td>
+                  <td><a href="#loci.travelhistory.VisitedCity">VisitedCity</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>arcs</td>
+                  <td><a href="#loci.travelhistory.GlobeArc">GlobeArc</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>summary</td>
+                  <td><a href="#loci.travelhistory.TravelSummary">TravelSummary</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>backfilled</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>True when the lazy backfill has completed for this user. The client uses
+this to tell &#34;you have been nowhere yet&#34; apart from &#34;we have not looked&#34;. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.travelhistory.GetTravelSummaryRequest">GetTravelSummaryRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>period_days</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Comparison window width. Defaults to 365 when zero. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.travelhistory.GetTravelSummaryResponse">GetTravelSummaryResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>summary</td>
+                  <td><a href="#loci.travelhistory.TravelSummary">TravelSummary</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.travelhistory.GlobeArc">GlobeArc</h3>
+        <p>GlobeArc is one leg between two placed points, ready to draw as a great</p><p>circle. Sourced from real TripLeg rows — never synthesised between cities</p><p>that merely appear in the same trip.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>from_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>to_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>from_lat</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>from_lon</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>to_lat</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>to_lon</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>distance_km</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>mode</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Transport mode as stored on the leg (&#34;fly&#34;, &#34;drive&#34;, &#34;rail&#34;, ...). Empty
+when the trip did not record one. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>occurred_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.travelhistory.ListVisitedCitiesRequest">ListVisitedCitiesRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>page</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>page_size</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.travelhistory.ListVisitedCitiesResponse">ListVisitedCitiesResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>cities</td>
+                  <td><a href="#loci.travelhistory.VisitedCity">VisitedCity</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>total</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.travelhistory.ListVisitedPOIsRequest">ListVisitedPOIsRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>city_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Restrict to one city. Empty means all cities. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>page</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>page_size</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.travelhistory.ListVisitedPOIsResponse">ListVisitedPOIsResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>pois</td>
+                  <td><a href="#loci.travelhistory.VisitedPOI">VisitedPOI</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>total</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.travelhistory.RecordVisitRequest">RecordVisitRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>city_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>latitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>longitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>poi_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>poi_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>visited_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td>optional</td>
+                  <td><p>Defaults to server time when omitted. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.travelhistory.RecordVisitResponse">RecordVisitResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>city</td>
+                  <td><a href="#loci.travelhistory.VisitedCity">VisitedCity</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.travelhistory.TravelSummary">TravelSummary</h3>
+        <p>TravelSummary backs the dashboard statistics rail.</p><p>The *_prev_period fields exist so the rail renders a REAL delta. Without them</p><p>a trend arrow can only be invented, and an invented metric is exactly what</p><p>this service was built to remove.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>cities_visited</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>countries_visited</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>pois_visited</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>distance_km</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p>Great-circle sum over visits in chronological order. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>trips_completed</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>first_visit_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_visit_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>cities_visited_prev_period</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>The same window one period earlier. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>countries_visited_prev_period</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>pois_visited_prev_period</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>period_days</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Width of the comparison window actually used, in days. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.travelhistory.VisitedCity">VisitedCity</h3>
+        <p>VisitedCity is one city a traveller has actually been to. Coordinates are</p><p>required because the globe plots these directly; a city we cannot place is</p><p>not recorded rather than being placed at 0,0.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Empty when the city is named but not yet resolved against the cities table. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>country</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Empty when unresolved. Never inferred from coordinates — that needs a
+reverse geocode we do not have, and a guessed country is a fabricated one. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>country_code</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>latitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>longitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>source</td>
+                  <td><a href="#loci.travelhistory.VisitSource">VisitSource</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>first_visit_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_visit_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>visit_count</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.travelhistory.VisitedPOI">VisitedPOI</h3>
+        <p>VisitedPOI is a single confirmed stop. Kept per-visit (not rolled up) so the</p><p>city totals can be RECOMPUTED from evidence rather than trusted.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>poi_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>poi_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>latitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td>optional</td>
+                  <td><p>Optional: a POI we hold no coordinates for is still a real visit. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>longitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>source</td>
+                  <td><a href="#loci.travelhistory.VisitSource">VisitSource</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>visited_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+        <h3 id="loci.travelhistory.VisitSource">VisitSource</h3>
+        <p>VisitSource records HOW a visit came to be known, so any row can be explained</p><p>and undone. Before this service existed, "places visited" was a denormalised</p><p>counter and a hard-coded placeholder; provenance is what stops that recurring.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>VISIT_SOURCE_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>VISIT_SOURCE_TRIP</td>
+                <td>1</td>
+                <td><p>Derived from a saved trip whose day carried a real, past date.</p></td>
+              </tr>
+            
+              <tr>
+                <td>VISIT_SOURCE_VISIT_EVENT</td>
+                <td>2</td>
+                <td><p>Derived from a RECOMMENDATION_EVENT_TYPE_VISIT_CONFIRMED / _RATED event.</p></td>
+              </tr>
+            
+              <tr>
+                <td>VISIT_SOURCE_MANUAL</td>
+                <td>3</td>
+                <td><p>Entered by the traveller.</p></td>
+              </tr>
+            
+              <tr>
+                <td>VISIT_SOURCE_BACKFILL</td>
+                <td>4</td>
+                <td><p>Written by the one-time lazy backfill over pre-existing signals.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+
+      
+
+      
+        <h3 id="loci.travelhistory.TravelHistoryService">TravelHistoryService</h3>
+        <p>TravelHistoryService is the source of truth for where a traveller has</p><p>actually been. It replaces two fabrications: statistics'</p><p>visited_cities_count (a hard-coded hotels+restaurants sum) and</p><p>users.places_visited (a counter with no backing rows).</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>ListVisitedCities</td>
+                <td><a href="#loci.travelhistory.ListVisitedCitiesRequest">ListVisitedCitiesRequest</a></td>
+                <td><a href="#loci.travelhistory.ListVisitedCitiesResponse">ListVisitedCitiesResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ListVisitedPOIs</td>
+                <td><a href="#loci.travelhistory.ListVisitedPOIsRequest">ListVisitedPOIsRequest</a></td>
+                <td><a href="#loci.travelhistory.ListVisitedPOIsResponse">ListVisitedPOIsResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>GetTravelSummary</td>
+                <td><a href="#loci.travelhistory.GetTravelSummaryRequest">GetTravelSummaryRequest</a></td>
+                <td><a href="#loci.travelhistory.GetTravelSummaryResponse">GetTravelSummaryResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>RecordVisit</td>
+                <td><a href="#loci.travelhistory.RecordVisitRequest">RecordVisitRequest</a></td>
+                <td><a href="#loci.travelhistory.RecordVisitResponse">RecordVisitResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>DeleteVisit</td>
+                <td><a href="#loci.travelhistory.DeleteVisitRequest">DeleteVisitRequest</a></td>
+                <td><a href="#loci.travelhistory.DeleteVisitResponse">DeleteVisitResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>GetGlobeData</td>
+                <td><a href="#loci.travelhistory.GetGlobeDataRequest">GetGlobeDataRequest</a></td>
+                <td><a href="#loci.travelhistory.GetGlobeDataResponse">GetGlobeDataResponse</a></td>
+                <td><p>GetGlobeData fills the entire globe dashboard in one call.</p></td>
               </tr>
             
           </tbody>

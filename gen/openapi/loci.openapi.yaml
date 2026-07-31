@@ -5573,6 +5573,217 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.tags.UpdateTagResponse'
+  /loci.travelhistory.TravelHistoryService/DeleteVisit:
+    post:
+      tags:
+        - loci.travelhistory.TravelHistoryService
+      summary: DeleteVisit
+      operationId: loci.travelhistory.TravelHistoryService.DeleteVisit
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.travelhistory.DeleteVisitRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.travelhistory.DeleteVisitResponse'
+  /loci.travelhistory.TravelHistoryService/GetGlobeData:
+    post:
+      tags:
+        - loci.travelhistory.TravelHistoryService
+      summary: GetGlobeData
+      description: GetGlobeData fills the entire globe dashboard in one call.
+      operationId: loci.travelhistory.TravelHistoryService.GetGlobeData
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.travelhistory.GetGlobeDataRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.travelhistory.GetGlobeDataResponse'
+  /loci.travelhistory.TravelHistoryService/GetTravelSummary:
+    post:
+      tags:
+        - loci.travelhistory.TravelHistoryService
+      summary: GetTravelSummary
+      operationId: loci.travelhistory.TravelHistoryService.GetTravelSummary
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.travelhistory.GetTravelSummaryRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.travelhistory.GetTravelSummaryResponse'
+  /loci.travelhistory.TravelHistoryService/ListVisitedCities:
+    post:
+      tags:
+        - loci.travelhistory.TravelHistoryService
+      summary: ListVisitedCities
+      operationId: loci.travelhistory.TravelHistoryService.ListVisitedCities
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.travelhistory.ListVisitedCitiesRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.travelhistory.ListVisitedCitiesResponse'
+  /loci.travelhistory.TravelHistoryService/ListVisitedPOIs:
+    post:
+      tags:
+        - loci.travelhistory.TravelHistoryService
+      summary: ListVisitedPOIs
+      operationId: loci.travelhistory.TravelHistoryService.ListVisitedPOIs
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.travelhistory.ListVisitedPOIsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.travelhistory.ListVisitedPOIsResponse'
+  /loci.travelhistory.TravelHistoryService/RecordVisit:
+    post:
+      tags:
+        - loci.travelhistory.TravelHistoryService
+      summary: RecordVisit
+      operationId: loci.travelhistory.TravelHistoryService.RecordVisit
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.travelhistory.RecordVisitRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.travelhistory.RecordVisitResponse'
   /loci.trip.TripService/AddStop:
     post:
       tags:
@@ -19437,6 +19648,448 @@ components:
           title: success
       title: UpdateTagResponse
       additionalProperties: false
+    loci.travelhistory.DeleteVisitRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          maxLength: 36
+          minLength: 1
+      title: DeleteVisitRequest
+      additionalProperties: false
+    loci.travelhistory.DeleteVisitResponse:
+      type: object
+      properties:
+        deleted:
+          type: boolean
+          title: deleted
+      title: DeleteVisitResponse
+      additionalProperties: false
+    loci.travelhistory.GetGlobeDataRequest:
+      type: object
+      properties:
+        limit:
+          type: integer
+          title: limit
+          maximum: 2000
+          minimum: 0
+          format: int32
+          description: Max cities to return. Defaults to 500 when zero.
+        periodDays:
+          type: integer
+          title: period_days
+          maximum: 3650
+          minimum: 0
+          format: int32
+          description: Comparison window for the summary deltas. Defaults to 365 when zero.
+      title: GetGlobeDataRequest
+      additionalProperties: false
+      description: |-
+        GetGlobeDataRequest asks for everything the globe dashboard renders in ONE
+         round trip. Splitting this across three calls makes a single screen wait on
+         three sequential auth + query cycles.
+    loci.travelhistory.GetGlobeDataResponse:
+      type: object
+      properties:
+        cities:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.travelhistory.VisitedCity'
+          title: cities
+        arcs:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.travelhistory.GlobeArc'
+          title: arcs
+        summary:
+          title: summary
+          $ref: '#/components/schemas/loci.travelhistory.TravelSummary'
+        backfilled:
+          type: boolean
+          title: backfilled
+          description: |-
+            True when the lazy backfill has completed for this user. The client uses
+             this to tell "you have been nowhere yet" apart from "we have not looked".
+      title: GetGlobeDataResponse
+      additionalProperties: false
+    loci.travelhistory.GetTravelSummaryRequest:
+      type: object
+      properties:
+        periodDays:
+          type: integer
+          title: period_days
+          maximum: 3650
+          minimum: 0
+          format: int32
+          description: Comparison window width. Defaults to 365 when zero.
+      title: GetTravelSummaryRequest
+      additionalProperties: false
+    loci.travelhistory.GetTravelSummaryResponse:
+      type: object
+      properties:
+        summary:
+          title: summary
+          $ref: '#/components/schemas/loci.travelhistory.TravelSummary'
+      title: GetTravelSummaryResponse
+      additionalProperties: false
+    loci.travelhistory.GlobeArc:
+      type: object
+      properties:
+        fromName:
+          type: string
+          title: from_name
+          maxLength: 200
+        toName:
+          type: string
+          title: to_name
+          maxLength: 200
+        fromLat:
+          type: number
+          title: from_lat
+          maximum: 90
+          minimum: -90
+          format: double
+        fromLon:
+          type: number
+          title: from_lon
+          maximum: 180
+          minimum: -180
+          format: double
+        toLat:
+          type: number
+          title: to_lat
+          maximum: 90
+          minimum: -90
+          format: double
+        toLon:
+          type: number
+          title: to_lon
+          maximum: 180
+          minimum: -180
+          format: double
+        distanceKm:
+          type: number
+          title: distance_km
+          minimum: 0
+          format: double
+        tripId:
+          type: string
+          title: trip_id
+        mode:
+          type: string
+          title: mode
+          maxLength: 50
+          description: |-
+            Transport mode as stored on the leg ("fly", "drive", "rail", ...). Empty
+             when the trip did not record one.
+        occurredAt:
+          title: occurred_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: GlobeArc
+      additionalProperties: false
+      description: |-
+        GlobeArc is one leg between two placed points, ready to draw as a great
+         circle. Sourced from real TripLeg rows — never synthesised between cities
+         that merely appear in the same trip.
+    loci.travelhistory.ListVisitedCitiesRequest:
+      type: object
+      properties:
+        page:
+          type: integer
+          title: page
+          minimum: 0
+          format: int32
+        pageSize:
+          type: integer
+          title: page_size
+          maximum: 500
+          minimum: 0
+          format: int32
+      title: ListVisitedCitiesRequest
+      additionalProperties: false
+    loci.travelhistory.ListVisitedCitiesResponse:
+      type: object
+      properties:
+        cities:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.travelhistory.VisitedCity'
+          title: cities
+        total:
+          type: integer
+          title: total
+          format: int32
+      title: ListVisitedCitiesResponse
+      additionalProperties: false
+    loci.travelhistory.ListVisitedPOIsRequest:
+      type: object
+      properties:
+        cityId:
+          type: string
+          title: city_id
+          description: Restrict to one city. Empty means all cities.
+        page:
+          type: integer
+          title: page
+          minimum: 0
+          format: int32
+        pageSize:
+          type: integer
+          title: page_size
+          maximum: 500
+          minimum: 0
+          format: int32
+      title: ListVisitedPOIsRequest
+      additionalProperties: false
+    loci.travelhistory.ListVisitedPOIsResponse:
+      type: object
+      properties:
+        pois:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.travelhistory.VisitedPOI'
+          title: pois
+        total:
+          type: integer
+          title: total
+          format: int32
+      title: ListVisitedPOIsResponse
+      additionalProperties: false
+    loci.travelhistory.RecordVisitRequest:
+      type: object
+      properties:
+        cityId:
+          type: string
+          title: city_id
+        cityName:
+          type: string
+          title: city_name
+          maxLength: 200
+          minLength: 1
+        latitude:
+          type: number
+          title: latitude
+          maximum: 90
+          minimum: -90
+          format: double
+        longitude:
+          type: number
+          title: longitude
+          maximum: 180
+          minimum: -180
+          format: double
+        tripId:
+          type: string
+          title: trip_id
+        poiId:
+          type:
+            - string
+            - "null"
+          title: poi_id
+          maxLength: 200
+        poiName:
+          type:
+            - string
+            - "null"
+          title: poi_name
+          maxLength: 300
+        visitedAt:
+          oneOf:
+            - $ref: '#/components/schemas/google.protobuf.Timestamp'
+            - type: "null"
+          title: visited_at
+          description: Defaults to server time when omitted.
+      title: RecordVisitRequest
+      additionalProperties: false
+    loci.travelhistory.RecordVisitResponse:
+      type: object
+      properties:
+        city:
+          title: city
+          $ref: '#/components/schemas/loci.travelhistory.VisitedCity'
+      title: RecordVisitResponse
+      additionalProperties: false
+    loci.travelhistory.TravelSummary:
+      type: object
+      properties:
+        citiesVisited:
+          type: integer
+          title: cities_visited
+          format: int32
+        countriesVisited:
+          type: integer
+          title: countries_visited
+          format: int32
+        poisVisited:
+          type: integer
+          title: pois_visited
+          format: int32
+        distanceKm:
+          type: number
+          title: distance_km
+          format: double
+          description: Great-circle sum over visits in chronological order.
+        tripsCompleted:
+          type: integer
+          title: trips_completed
+          format: int32
+        firstVisitAt:
+          title: first_visit_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        lastVisitAt:
+          title: last_visit_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        citiesVisitedPrevPeriod:
+          type: integer
+          title: cities_visited_prev_period
+          format: int32
+          description: The same window one period earlier.
+        countriesVisitedPrevPeriod:
+          type: integer
+          title: countries_visited_prev_period
+          format: int32
+        poisVisitedPrevPeriod:
+          type: integer
+          title: pois_visited_prev_period
+          format: int32
+        periodDays:
+          type: integer
+          title: period_days
+          format: int32
+          description: Width of the comparison window actually used, in days.
+      title: TravelSummary
+      additionalProperties: false
+      description: |-
+        TravelSummary backs the dashboard statistics rail.
+
+         The *_prev_period fields exist so the rail renders a REAL delta. Without them
+         a trend arrow can only be invented, and an invented metric is exactly what
+         this service was built to remove.
+    loci.travelhistory.VisitSource:
+      type: string
+      title: VisitSource
+      enum:
+        - VISIT_SOURCE_UNSPECIFIED
+        - VISIT_SOURCE_TRIP
+        - VISIT_SOURCE_VISIT_EVENT
+        - VISIT_SOURCE_MANUAL
+        - VISIT_SOURCE_BACKFILL
+      description: |-
+        VisitSource records HOW a visit came to be known, so any row can be explained
+         and undone. Before this service existed, "places visited" was a denormalised
+         counter and a hard-coded placeholder; provenance is what stops that recurring.
+    loci.travelhistory.VisitedCity:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+        cityId:
+          type: string
+          title: city_id
+          description: Empty when the city is named but not yet resolved against the cities table.
+        cityName:
+          type: string
+          title: city_name
+          maxLength: 200
+          minLength: 1
+        country:
+          type: string
+          title: country
+          maxLength: 200
+          description: |-
+            Empty when unresolved. Never inferred from coordinates — that needs a
+             reverse geocode we do not have, and a guessed country is a fabricated one.
+        countryCode:
+          type: string
+          title: country_code
+          maxLength: 2
+        latitude:
+          type: number
+          title: latitude
+          maximum: 90
+          minimum: -90
+          format: double
+        longitude:
+          type: number
+          title: longitude
+          maximum: 180
+          minimum: -180
+          format: double
+        source:
+          title: source
+          $ref: '#/components/schemas/loci.travelhistory.VisitSource'
+        tripId:
+          type: string
+          title: trip_id
+        firstVisitAt:
+          title: first_visit_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        lastVisitAt:
+          title: last_visit_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        visitCount:
+          type: integer
+          title: visit_count
+          minimum: 1
+          format: int32
+      title: VisitedCity
+      additionalProperties: false
+      description: |-
+        VisitedCity is one city a traveller has actually been to. Coordinates are
+         required because the globe plots these directly; a city we cannot place is
+         not recorded rather than being placed at 0,0.
+    loci.travelhistory.VisitedPOI:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+        poiId:
+          type: string
+          title: poi_id
+          maxLength: 200
+          minLength: 1
+        poiName:
+          type: string
+          title: poi_name
+          maxLength: 300
+        cityName:
+          type: string
+          title: city_name
+          maxLength: 200
+        latitude:
+          type:
+            - number
+            - "null"
+          title: latitude
+          maximum: 90
+          minimum: -90
+          format: double
+          description: 'Optional: a POI we hold no coordinates for is still a real visit.'
+        longitude:
+          type:
+            - number
+            - "null"
+          title: longitude
+          maximum: 180
+          minimum: -180
+          format: double
+        tripId:
+          type: string
+          title: trip_id
+        source:
+          title: source
+          $ref: '#/components/schemas/loci.travelhistory.VisitSource'
+        visitedAt:
+          title: visited_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: VisitedPOI
+      additionalProperties: false
+      description: |-
+        VisitedPOI is a single confirmed stop. Kept per-visit (not rolled up) so the
+         city totals can be RECOMPUTED from evidence rather than trusted.
     loci.trip.AddStopRequest:
       type: object
       properties:
@@ -20678,5 +21331,11 @@ tags:
     description: StatisticsService provides analytics and statistics functionality
   - name: loci.tags.TagsService
     description: Service definition matching your tagsService interface
+  - name: loci.travelhistory.TravelHistoryService
+    description: |-
+      TravelHistoryService is the source of truth for where a traveller has
+       actually been. It replaces two fabrications: statistics'
+       visited_cities_count (a hard-coded hotels+restaurants sum) and
+       users.places_visited (a counter with no backing rows).
   - name: loci.user.UserService
     description: UserService defines user-related RPCs
