@@ -1,0 +1,187 @@
+syntax = "proto3";
+
+package loci.travelhistory;
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/travelhistory;travelhistory";
+
+import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+
+// VisitSource records HOW a visit came to be known, so any row can be explained
+// and undone. Before this service existed, "places visited" was a denormalised
+// counter and a hard-coded placeholder; provenance is what stops that recurring.
+enum VisitSource {
+  VISIT_SOURCE_UNSPECIFIED = 0;
+  // Derived from a saved trip whose day carried a real, past date.
+  VISIT_SOURCE_TRIP = 1;
+  // Derived from a RECOMMENDATION_EVENT_TYPE_VISIT_CONFIRMED / _RATED event.
+  VISIT_SOURCE_VISIT_EVENT = 2;
+  // Entered by the traveller.
+  VISIT_SOURCE_MANUAL = 3;
+  // Written by the one-time lazy backfill over pre-existing signals.
+  VISIT_SOURCE_BACKFILL = 4;
+}
+
+// VisitedCity is one city a traveller has actually been to. Coordinates are
+// required because the globe plots these directly; a city we cannot place is
+// not recorded rather than being placed at 0,0.
+message VisitedCity {
+  string id = 1;
+  // Empty when the city is named but not yet resolved against the cities table.
+  string city_id = 2;
+  string city_name = 3 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  // Empty when unresolved. Never inferred from coordinates — that needs a
+  // reverse geocode we do not have, and a guessed country is a fabricated one.
+  string country = 4 [(buf.validate.field).string = {max_len: 200}];
+  string country_code = 5 [(buf.validate.field).string = {max_len: 2}];
+  double latitude = 6 [(buf.validate.field).double = {gte: -90, lte: 90}];
+  double longitude = 7 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  VisitSource source = 8 [(buf.validate.field).enum = {defined_only: true}];
+  string trip_id = 9;
+  google.protobuf.Timestamp first_visit_at = 10;
+  google.protobuf.Timestamp last_visit_at = 11;
+  int32 visit_count = 12 [(buf.validate.field).int32 = {gte: 1}];
+}
+
+// VisitedPOI is a single confirmed stop. Kept per-visit (not rolled up) so the
+// city totals can be RECOMPUTED from evidence rather than trusted.
+message VisitedPOI {
+  string id = 1;
+  string poi_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string poi_name = 3 [(buf.validate.field).string = {max_len: 300}];
+  string city_name = 4 [(buf.validate.field).string = {max_len: 200}];
+  // Optional: a POI we hold no coordinates for is still a real visit.
+  optional double latitude = 5 [(buf.validate.field).double = {gte: -90, lte: 90}];
+  optional double longitude = 6 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  string trip_id = 7;
+  VisitSource source = 8 [(buf.validate.field).enum = {defined_only: true}];
+  google.protobuf.Timestamp visited_at = 9;
+}
+
+// TravelSummary backs the dashboard statistics rail.
+//
+// The *_prev_period fields exist so the rail renders a REAL delta. Without them
+// a trend arrow can only be invented, and an invented metric is exactly what
+// this service was built to remove.
+message TravelSummary {
+  int32 cities_visited = 1;
+  int32 countries_visited = 2;
+  int32 pois_visited = 3;
+  // Great-circle sum over visits in chronological order.
+  double distance_km = 4;
+  int32 trips_completed = 5;
+  google.protobuf.Timestamp first_visit_at = 6;
+  google.protobuf.Timestamp last_visit_at = 7;
+  // The same window one period earlier.
+  int32 cities_visited_prev_period = 8;
+  int32 countries_visited_prev_period = 9;
+  int32 pois_visited_prev_period = 10;
+  // Width of the comparison window actually used, in days.
+  int32 period_days = 11;
+}
+
+// GlobeArc is one leg between two placed points, ready to draw as a great
+// circle. Sourced from real TripLeg rows — never synthesised between cities
+// that merely appear in the same trip.
+message GlobeArc {
+  string from_name = 1 [(buf.validate.field).string = {max_len: 200}];
+  string to_name = 2 [(buf.validate.field).string = {max_len: 200}];
+  double from_lat = 3 [(buf.validate.field).double = {gte: -90, lte: 90}];
+  double from_lon = 4 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  double to_lat = 5 [(buf.validate.field).double = {gte: -90, lte: 90}];
+  double to_lon = 6 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  double distance_km = 7 [(buf.validate.field).double = {gte: 0}];
+  string trip_id = 8;
+  // Transport mode as stored on the leg ("fly", "drive", "rail", ...). Empty
+  // when the trip did not record one.
+  string mode = 9 [(buf.validate.field).string = {max_len: 50}];
+  google.protobuf.Timestamp occurred_at = 10;
+}
+
+message ListVisitedCitiesRequest {
+  int32 page = 1 [(buf.validate.field).int32 = {gte: 0}];
+  int32 page_size = 2 [(buf.validate.field).int32 = {gte: 0, lte: 500}];
+}
+
+message ListVisitedCitiesResponse {
+  repeated VisitedCity cities = 1;
+  int32 total = 2;
+}
+
+message ListVisitedPOIsRequest {
+  // Restrict to one city. Empty means all cities.
+  string city_id = 1;
+  int32 page = 2 [(buf.validate.field).int32 = {gte: 0}];
+  int32 page_size = 3 [(buf.validate.field).int32 = {gte: 0, lte: 500}];
+}
+
+message ListVisitedPOIsResponse {
+  repeated VisitedPOI pois = 1;
+  int32 total = 2;
+}
+
+message GetTravelSummaryRequest {
+  // Comparison window width. Defaults to 365 when zero.
+  int32 period_days = 1 [(buf.validate.field).int32 = {gte: 0, lte: 3650}];
+}
+
+message GetTravelSummaryResponse {
+  TravelSummary summary = 1;
+}
+
+message RecordVisitRequest {
+  string city_id = 1;
+  string city_name = 2 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  double latitude = 3 [(buf.validate.field).double = {gte: -90, lte: 90}];
+  double longitude = 4 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  string trip_id = 5;
+  optional string poi_id = 6 [(buf.validate.field).string = {max_len: 200}];
+  optional string poi_name = 7 [(buf.validate.field).string = {max_len: 300}];
+  // Defaults to server time when omitted.
+  optional google.protobuf.Timestamp visited_at = 8;
+}
+
+message RecordVisitResponse {
+  VisitedCity city = 1;
+}
+
+message DeleteVisitRequest {
+  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 36}];
+}
+
+message DeleteVisitResponse {
+  bool deleted = 1;
+}
+
+// GetGlobeDataRequest asks for everything the globe dashboard renders in ONE
+// round trip. Splitting this across three calls makes a single screen wait on
+// three sequential auth + query cycles.
+message GetGlobeDataRequest {
+  // Max cities to return. Defaults to 500 when zero.
+  int32 limit = 1 [(buf.validate.field).int32 = {gte: 0, lte: 2000}];
+  // Comparison window for the summary deltas. Defaults to 365 when zero.
+  int32 period_days = 2 [(buf.validate.field).int32 = {gte: 0, lte: 3650}];
+}
+
+message GetGlobeDataResponse {
+  repeated VisitedCity cities = 1;
+  repeated GlobeArc arcs = 2;
+  TravelSummary summary = 3;
+  // True when the lazy backfill has completed for this user. The client uses
+  // this to tell "you have been nowhere yet" apart from "we have not looked".
+  bool backfilled = 4;
+}
+
+// TravelHistoryService is the source of truth for where a traveller has
+// actually been. It replaces two fabrications: statistics'
+// visited_cities_count (a hard-coded hotels+restaurants sum) and
+// users.places_visited (a counter with no backing rows).
+service TravelHistoryService {
+  rpc ListVisitedCities(ListVisitedCitiesRequest) returns (ListVisitedCitiesResponse);
+  rpc ListVisitedPOIs(ListVisitedPOIsRequest) returns (ListVisitedPOIsResponse);
+  rpc GetTravelSummary(GetTravelSummaryRequest) returns (GetTravelSummaryResponse);
+  rpc RecordVisit(RecordVisitRequest) returns (RecordVisitResponse);
+  rpc DeleteVisit(DeleteVisitRequest) returns (DeleteVisitResponse);
+  // GetGlobeData fills the entire globe dashboard in one call.
+  rpc GetGlobeData(GetGlobeDataRequest) returns (GetGlobeDataResponse);
+}
