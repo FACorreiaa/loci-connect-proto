@@ -2258,7 +2258,7 @@ const file_loci_recents_recents_proto_rawDesc = "" +
 	"\x13GetCityInteractions\x12(.loci.recents.GetCityInteractionsRequest\x1a).loci.recents.GetCityInteractionsResponse\x12d\n" +
 	"\x11RecordInteraction\x12&.loci.recents.RecordInteractionRequest\x1a'.loci.recents.RecordInteractionResponse\x12p\n" +
 	"\x15GetInteractionHistory\x12*.loci.recents.GetInteractionHistoryRequest\x1a+.loci.recents.GetInteractionHistoryResponse\x12d\n" +
-	"\x11GetFrequentPlaces\x12&.loci.recents.GetFrequentPlacesRequest\x1a'.loci.recents.GetFrequentPlacesResponseBHZFgithub.com/FACorreiaa/loci-connect-proto/gen/go/loci/recents;recentsv1b\x06proto3"
+	"\x11GetFrequentPlaces\x12&.loci.recents.GetFrequentPlacesRequest\x1a'.loci.recents.GetFrequentPlacesResponseBKZIgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/recents;recentsv1b\x06proto3"
 
 var (
 	file_loci_recents_recents_proto_rawDescOnce sync.Once

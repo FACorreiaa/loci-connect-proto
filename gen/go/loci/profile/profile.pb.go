@@ -8,8 +8,8 @@ package profile
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
-	common "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/common"
-	interest "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/interest"
+	common "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/common"
+	interest "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/interest"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -2384,7 +2384,7 @@ const file_loci_profile_profile_proto_rawDesc = "" +
 	"\x14GetDiningPreferences\x12).loci.profile.GetDomainPreferencesRequest\x1a'.loci.profile.DiningPreferencesResponse\x12n\n" +
 	"\x16GetActivityPreferences\x12).loci.profile.GetDomainPreferencesRequest\x1a).loci.profile.ActivityPreferencesResponse\x12p\n" +
 	"\x17GetItineraryPreferences\x12).loci.profile.GetDomainPreferencesRequest\x1a*.loci.profile.ItineraryPreferencesResponse\x12d\n" +
-	"\x12GetCombinedFilters\x12'.loci.profile.GetCombinedFiltersRequest\x1a%.loci.profile.CombinedFiltersResponseBFZDgithub.com/FACorreiaa/loci-connect-proto/gen/go/loci/profile;profileb\x06proto3"
+	"\x12GetCombinedFilters\x12'.loci.profile.GetCombinedFiltersRequest\x1a%.loci.profile.CombinedFiltersResponseBIZGgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/profile;profileb\x06proto3"
 
 var (
 	file_loci_profile_profile_proto_rawDescOnce sync.Once

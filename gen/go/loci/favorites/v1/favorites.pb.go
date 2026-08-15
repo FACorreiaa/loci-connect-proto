@@ -8,7 +8,7 @@ package favoritesv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
-	recommendation "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/recommendation"
+	recommendation "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/recommendation"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -2405,7 +2405,7 @@ const file_loci_favorites_v1_favorites_proto_rawDesc = "" +
 	"\x0fGetHotelDetails\x12).loci.favorites.v1.GetHotelDetailsRequest\x1a*.loci.favorites.v1.GetHotelDetailsResponse\x12w\n" +
 	"\x14GetRestaurantDetails\x12..loci.favorites.v1.GetRestaurantDetailsRequest\x1a/.loci.favorites.v1.GetRestaurantDetailsResponse\x12h\n" +
 	"\x0fGetNearbyHotels\x12).loci.favorites.v1.GetNearbyHotelsRequest\x1a*.loci.favorites.v1.GetNearbyHotelsResponse\x12w\n" +
-	"\x14GetNearbyRestaurants\x12..loci.favorites.v1.GetNearbyRestaurantsRequest\x1a/.loci.favorites.v1.GetNearbyRestaurantsResponseBOZMgithub.com/FACorreiaa/loci-connect-proto/gen/go/loci/favorites/v1;favoritesv1b\x06proto3"
+	"\x14GetNearbyRestaurants\x12..loci.favorites.v1.GetNearbyRestaurantsRequest\x1a/.loci.favorites.v1.GetNearbyRestaurantsResponseBRZPgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/favorites/v1;favoritesv1b\x06proto3"
 
 var (
 	file_loci_favorites_v1_favorites_proto_rawDescOnce sync.Once

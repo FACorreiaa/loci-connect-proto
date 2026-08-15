@@ -8,10 +8,10 @@ package chat
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
-	city "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/city"
-	common "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/common"
-	poi "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/poi"
-	profile "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/profile"
+	city "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/city"
+	common "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/common"
+	poi "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/poi"
+	profile "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/profile"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -4140,7 +4140,7 @@ const file_loci_chat_chat_proto_rawDesc = "" +
 	"\x11BookmarkItinerary\x12\x1a.loci.chat.BookmarkRequest\x1a\x1b.loci.chat.BookmarkResponse\x12I\n" +
 	"\x0eRemoveBookmark\x12\x1a.loci.chat.BookmarkRequest\x1a\x1b.loci.chat.BookmarkResponse\x12>\n" +
 	"\n" +
-	"StreamChat\x12\x16.loci.chat.ChatRequest\x1a\x16.loci.chat.StreamEvent0\x01B@Z>github.com/FACorreiaa/loci-connect-proto/gen/go/loci/chat;chatb\x06proto3"
+	"StreamChat\x12\x16.loci.chat.ChatRequest\x1a\x16.loci.chat.StreamEvent0\x01BCZAgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/chat;chatb\x06proto3"
 
 var (
 	file_loci_chat_chat_proto_rawDescOnce sync.Once

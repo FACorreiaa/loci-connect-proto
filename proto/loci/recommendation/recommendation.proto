@@ -5,7 +5,7 @@ package loci.recommendation;
 import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/recommendation;recommendation";
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/recommendation;recommendation";
 
 // RecommendationChannel identifies where a recommendation was delivered.
 enum RecommendationChannel {

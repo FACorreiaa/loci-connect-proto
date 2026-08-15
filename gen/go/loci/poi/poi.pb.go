@@ -8,9 +8,9 @@ package poi
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
-	common "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/common"
-	place "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/place"
-	recommendation "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/recommendation"
+	common "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/common"
+	place "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/place"
+	recommendation "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/recommendation"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -1292,7 +1292,7 @@ const file_loci_poi_poi_proto_rawDesc = "" +
 	"\n" +
 	"POIService\x12D\n" +
 	"\tSearchPOI\x12\x1a.loci.poi.SearchPOIRequest\x1a\x1b.loci.poi.SearchPOIResponse\x12;\n" +
-	"\x06GetPOI\x12\x17.loci.poi.GetPOIRequest\x1a\x18.loci.poi.GetPOIResponseB>Z<github.com/FACorreiaa/loci-connect-proto/gen/go/loci/poi;poib\x06proto3"
+	"\x06GetPOI\x12\x17.loci.poi.GetPOIRequest\x1a\x18.loci.poi.GetPOIResponseBAZ?github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/poi;poib\x06proto3"
 
 var (
 	file_loci_poi_poi_proto_rawDescOnce sync.Once

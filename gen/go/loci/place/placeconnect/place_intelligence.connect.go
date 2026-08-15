@@ -8,7 +8,7 @@ import (
 	connect "connectrpc.com/connect"
 	context "context"
 	errors "errors"
-	place "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/place"
+	place "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/place"
 	http "net/http"
 	strings "strings"
 )

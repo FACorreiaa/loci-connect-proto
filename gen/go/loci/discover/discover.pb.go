@@ -8,8 +8,8 @@ package discover
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
-	chat "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/chat"
-	common "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/common"
+	chat "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/chat"
+	common "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -969,7 +969,7 @@ const file_loci_discover_discover_proto_rawDesc = "" +
 	"\vGetTrending\x12!.loci.discover.GetTrendingRequest\x1a\".loci.discover.GetTrendingResponse\x12T\n" +
 	"\vGetFeatured\x12!.loci.discover.GetFeaturedRequest\x1a\".loci.discover.GetFeaturedResponse\x12o\n" +
 	"\x14GetRecentDiscoveries\x12*.loci.discover.GetRecentDiscoveriesRequest\x1a+.loci.discover.GetRecentDiscoveriesResponse\x12i\n" +
-	"\x12GetCategoryResults\x12(.loci.discover.GetCategoryResultsRequest\x1a).loci.discover.GetCategoryResultsResponseBHZFgithub.com/FACorreiaa/loci-connect-proto/gen/go/loci/discover;discoverb\x06proto3"
+	"\x12GetCategoryResults\x12(.loci.discover.GetCategoryResultsRequest\x1a).loci.discover.GetCategoryResultsResponseBKZIgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/discover;discoverb\x06proto3"
 
 var (
 	file_loci_discover_discover_proto_rawDescOnce sync.Once

@@ -5,7 +5,7 @@ package loci.place;
 import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/place;place";
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/place;place";
 
 enum PlaceFactField {
   PLACE_FACT_FIELD_UNSPECIFIED = 0;

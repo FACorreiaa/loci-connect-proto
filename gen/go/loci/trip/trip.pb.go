@@ -8,9 +8,9 @@ package trip
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
-	common "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/common"
-	poi "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/poi"
-	recommendation "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/recommendation"
+	common "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/common"
+	poi "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/poi"
+	recommendation "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/recommendation"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -2161,7 +2161,7 @@ const file_loci_trip_trip_proto_rawDesc = "" +
 	"\vReplaceStop\x12\x1d.loci.trip.ReplaceStopRequest\x1a\x14.loci.trip.TripDraft\x12I\n" +
 	"\n" +
 	"ExportTrip\x12\x1c.loci.trip.ExportTripRequest\x1a\x1d.loci.trip.ExportTripResponse\x12U\n" +
-	"\x0eSuggestPacking\x12 .loci.trip.SuggestPackingRequest\x1a!.loci.trip.SuggestPackingResponseB@Z>github.com/FACorreiaa/loci-connect-proto/gen/go/loci/trip;tripb\x06proto3"
+	"\x0eSuggestPacking\x12 .loci.trip.SuggestPackingRequest\x1a!.loci.trip.SuggestPackingResponseBCZAgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/trip;tripb\x06proto3"
 
 var (
 	file_loci_trip_trip_proto_rawDescOnce sync.Once

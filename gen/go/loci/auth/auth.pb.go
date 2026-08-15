@@ -8,7 +8,7 @@ package auth
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
-	common "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/common"
+	common "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -1648,7 +1648,7 @@ const file_loci_auth_auth_proto_rawDesc = "" +
 	"\n" +
 	"DisableMFA\x12\x1c.loci.auth.DisableMFARequest\x1a\x15.loci.common.Response\x12p\n" +
 	"\x17RegenerateRecoveryCodes\x12).loci.auth.RegenerateRecoveryCodesRequest\x1a*.loci.auth.RegenerateRecoveryCodesResponse\x12O\n" +
-	"\fGetMFAStatus\x12\x1e.loci.auth.GetMFAStatusRequest\x1a\x1f.loci.auth.GetMFAStatusResponseB@Z>github.com/FACorreiaa/loci-connect-proto/gen/go/loci/auth;authb\x06proto3"
+	"\fGetMFAStatus\x12\x1e.loci.auth.GetMFAStatusRequest\x1a\x1f.loci.auth.GetMFAStatusResponseBCZAgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/auth;authb\x06proto3"
 
 var (
 	file_loci_auth_auth_proto_rawDescOnce sync.Once

@@ -937,7 +937,7 @@ const file_ai_poi_v1_ai_poi_service_proto_rawDesc = "" +
 	"\fAiPoiService\x12L\n" +
 	"\vHealthCheck\x12\x1d.ai_poi.v1.HealthCheckRequest\x1a\x1e.ai_poi.v1.HealthCheckResponse\x12U\n" +
 	"\x0eGetServiceInfo\x12 .ai_poi.v1.GetServiceInfoRequest\x1a!.ai_poi.v1.GetServiceInfoResponse\x12X\n" +
-	"\x0fGetFeatureFlags\x12!.ai_poi.v1.GetFeatureFlagsRequest\x1a\".ai_poi.v1.GetFeatureFlagsResponseBDZBgithub.com/FACorreiaa/loci-connect-proto/gen/go/ai_poi/v1;ai_poiv1b\x06proto3"
+	"\x0fGetFeatureFlags\x12!.ai_poi.v1.GetFeatureFlagsRequest\x1a\".ai_poi.v1.GetFeatureFlagsResponseBGZEgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/ai_poi/v1;ai_poiv1b\x06proto3"
 
 var (
 	file_ai_poi_v1_ai_poi_service_proto_rawDescOnce sync.Once

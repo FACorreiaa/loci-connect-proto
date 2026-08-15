@@ -1,4 +1,4 @@
-module github.com/FACorreiaa/loci-connect-proto
+module github.com/FACorreiaa/loci-connect-proto/v5
 
 go 1.25.4
 

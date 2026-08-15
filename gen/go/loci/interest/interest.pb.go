@@ -8,7 +8,7 @@ package interest
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
-	common "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/common"
+	common "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -697,7 +697,7 @@ const file_loci_interest_interest_proto_rawDesc = "" +
 	"\x0eCreateInterest\x12$.loci.interest.CreateInterestRequest\x1a\x15.loci.common.Response\x12M\n" +
 	"\x0eUpdateInterest\x12$.loci.interest.UpdateInterestRequest\x1a\x15.loci.common.Response\x12M\n" +
 	"\x11AddInterestToUser\x12!.loci.interest.AddInterestRequest\x1a\x15.loci.common.Response\x12[\n" +
-	"\x15UpdatePreferenceLevel\x12+.loci.interest.UpdatePreferenceLevelRequest\x1a\x15.loci.common.ResponseBHZFgithub.com/FACorreiaa/loci-connect-proto/gen/go/loci/interest;interestb\x06proto3"
+	"\x15UpdatePreferenceLevel\x12+.loci.interest.UpdatePreferenceLevelRequest\x1a\x15.loci.common.ResponseBKZIgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/interest;interestb\x06proto3"
 
 var (
 	file_loci_interest_interest_proto_rawDescOnce sync.Once

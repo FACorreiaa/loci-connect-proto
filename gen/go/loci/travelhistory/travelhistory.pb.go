@@ -1385,7 +1385,7 @@ const file_loci_travelhistory_travelhistory_proto_rawDesc = "" +
 	"\x10GetTravelSummary\x12+.loci.travelhistory.GetTravelSummaryRequest\x1a,.loci.travelhistory.GetTravelSummaryResponse\x12^\n" +
 	"\vRecordVisit\x12&.loci.travelhistory.RecordVisitRequest\x1a'.loci.travelhistory.RecordVisitResponse\x12^\n" +
 	"\vDeleteVisit\x12&.loci.travelhistory.DeleteVisitRequest\x1a'.loci.travelhistory.DeleteVisitResponse\x12a\n" +
-	"\fGetGlobeData\x12'.loci.travelhistory.GetGlobeDataRequest\x1a(.loci.travelhistory.GetGlobeDataResponseBRZPgithub.com/FACorreiaa/loci-connect-proto/gen/go/loci/travelhistory;travelhistoryb\x06proto3"
+	"\fGetGlobeData\x12'.loci.travelhistory.GetGlobeDataRequest\x1a(.loci.travelhistory.GetGlobeDataResponseBUZSgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/travelhistory;travelhistoryb\x06proto3"
 
 var (
 	file_loci_travelhistory_travelhistory_proto_rawDescOnce sync.Once

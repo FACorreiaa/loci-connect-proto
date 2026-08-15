@@ -1243,7 +1243,7 @@ const file_loci_share_share_proto_rawDesc = "" +
 	"\fShareService\x12]\n" +
 	"\x10GetShareMetadata\x12#.loci.share.GetShareMetadataRequest\x1a$.loci.share.GetShareMetadataResponse\x12Z\n" +
 	"\x0fCreateShareLink\x12\".loci.share.CreateShareLinkRequest\x1a#.loci.share.CreateShareLinkResponse\x12]\n" +
-	"\x10GetSharedContent\x12#.loci.share.GetSharedContentRequest\x1a$.loci.share.GetSharedContentResponseBDZBgithub.com/FACorreiaa/loci-connect-proto/gen/go/loci/share;sharev1b\x06proto3"
+	"\x10GetSharedContent\x12#.loci.share.GetSharedContentRequest\x1a$.loci.share.GetSharedContentResponseBGZEgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/share;sharev1b\x06proto3"
 
 var (
 	file_loci_share_share_proto_rawDescOnce sync.Once

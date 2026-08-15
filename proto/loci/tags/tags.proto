@@ -4,7 +4,7 @@ package loci.tags;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/tags;tagsv1";
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/tags;tagsv1";
 
 // Service definition matching your tagsService interface
 service TagsService {

@@ -3534,7 +3534,7 @@ const file_loci_statistics_statistics_proto_rawDesc = "" +
 	"\x18GetDetailedPOIStatistics\x120.loci.statistics.GetDetailedPOIStatisticsRequest\x1a1.loci.statistics.GetDetailedPOIStatisticsResponse\x12\x7f\n" +
 	"\x18GetLandingPageStatistics\x120.loci.statistics.GetLandingPageStatisticsRequest\x1a1.loci.statistics.GetLandingPageStatisticsResponse\x12\x7f\n" +
 	"\x18GetUserActivityAnalytics\x120.loci.statistics.GetUserActivityAnalyticsRequest\x1a1.loci.statistics.GetUserActivityAnalyticsResponse\x12m\n" +
-	"\x12GetSystemAnalytics\x12*.loci.statistics.GetSystemAnalyticsRequest\x1a+.loci.statistics.GetSystemAnalyticsResponseBNZLgithub.com/FACorreiaa/loci-connect-proto/gen/go/loci/statistics;statisticsv1b\x06proto3"
+	"\x12GetSystemAnalytics\x12*.loci.statistics.GetSystemAnalyticsRequest\x1a+.loci.statistics.GetSystemAnalyticsResponseBQZOgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/statistics;statisticsv1b\x06proto3"
 
 var (
 	file_loci_statistics_statistics_proto_rawDescOnce sync.Once

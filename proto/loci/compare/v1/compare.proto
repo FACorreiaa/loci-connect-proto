@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package loci.compare.v1;
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/compare/v1;comparev1";
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/compare/v1;comparev1";
 
 import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";

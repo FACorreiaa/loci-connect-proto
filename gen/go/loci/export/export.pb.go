@@ -1412,7 +1412,7 @@ const file_loci_export_export_proto_rawDesc = "" +
 	"\x16ExportRestaurantsToPDF\x12%.loci.export.ExportRestaurantsRequest\x1a\x1e.loci.export.ExportPDFResponse\x12]\n" +
 	"\x15ExportActivitiesToPDF\x12$.loci.export.ExportActivitiesRequest\x1a\x1e.loci.export.ExportPDFResponse\x12[\n" +
 	"\x14ExportItineraryToPDF\x12#.loci.export.ExportItineraryRequest\x1a\x1e.loci.export.ExportPDFResponse\x12Q\n" +
-	"\x0fExportListToPDF\x12\x1e.loci.export.ExportListRequest\x1a\x1e.loci.export.ExportPDFResponseBFZDgithub.com/FACorreiaa/loci-connect-proto/gen/go/loci/export;exportv1b\x06proto3"
+	"\x0fExportListToPDF\x12\x1e.loci.export.ExportListRequest\x1a\x1e.loci.export.ExportPDFResponseBIZGgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/export;exportv1b\x06proto3"
 
 var (
 	file_loci_export_export_proto_rawDescOnce sync.Once

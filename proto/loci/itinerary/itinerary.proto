@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package loci.itinerary;
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/itinerary;itinerary";
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/itinerary;itinerary";
 
 
 import "buf/validate/validate.proto";

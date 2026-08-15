@@ -8,8 +8,8 @@ package itinerary
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
-	common "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/common"
-	poi "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/poi"
+	common "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/common"
+	poi "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/poi"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -1965,7 +1965,7 @@ const file_loci_itinerary_itinerary_proto_rawDesc = "" +
 	"\fGetItinerary\x12#.loci.itinerary.GetItineraryRequest\x1a$.loci.itinerary.GetItineraryResponse\x12P\n" +
 	"\x0fUpdateItinerary\x12&.loci.itinerary.UpdateItineraryRequest\x1a\x15.loci.common.Response\x12K\n" +
 	"\x11BookmarkItinerary\x12\x1f.loci.itinerary.BookmarkRequest\x1a\x15.loci.common.Response\x12N\n" +
-	"\x0eDeleteBookmark\x12%.loci.itinerary.DeleteBookmarkRequest\x1a\x15.loci.common.ResponseBJZHgithub.com/FACorreiaa/loci-connect-proto/gen/go/loci/itinerary;itineraryb\x06proto3"
+	"\x0eDeleteBookmark\x12%.loci.itinerary.DeleteBookmarkRequest\x1a\x15.loci.common.ResponseBMZKgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/itinerary;itineraryb\x06proto3"
 
 var (
 	file_loci_itinerary_itinerary_proto_rawDescOnce sync.Once

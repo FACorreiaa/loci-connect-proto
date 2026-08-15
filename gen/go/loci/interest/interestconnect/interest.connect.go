@@ -8,8 +8,8 @@ import (
 	connect "connectrpc.com/connect"
 	context "context"
 	errors "errors"
-	common "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/common"
-	interest "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/interest"
+	common "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/common"
+	interest "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/interest"
 	http "net/http"
 	strings "strings"
 )

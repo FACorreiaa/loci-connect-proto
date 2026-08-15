@@ -822,7 +822,7 @@ const file_loci_tags_tags_proto_rawDesc = "" +
 	"\x06GetTag\x12\x18.loci.tags.GetTagRequest\x1a\x19.loci.tags.GetTagResponse\x12F\n" +
 	"\tCreateTag\x12\x1b.loci.tags.CreateTagRequest\x1a\x1c.loci.tags.CreateTagResponse\x12F\n" +
 	"\tUpdateTag\x12\x1b.loci.tags.UpdateTagRequest\x1a\x1c.loci.tags.UpdateTagResponse\x12F\n" +
-	"\tDeleteTag\x12\x1b.loci.tags.DeleteTagRequest\x1a\x1c.loci.tags.DeleteTagResponseBBZ@github.com/FACorreiaa/loci-connect-proto/gen/go/loci/tags;tagsv1b\x06proto3"
+	"\tDeleteTag\x12\x1b.loci.tags.DeleteTagRequest\x1a\x1c.loci.tags.DeleteTagResponseBEZCgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/tags;tagsv1b\x06proto3"
 
 var (
 	file_loci_tags_tags_proto_rawDescOnce sync.Once
