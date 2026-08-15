@@ -30,11 +30,17 @@ type ApiKey struct {
 	// Human-readable label chosen by the user, e.g. "Claude Desktop".
 	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	// First characters of the key (e.g. "loci_sk_a1b2") for display.
-	KeyPrefix     string                 `protobuf:"bytes,3,opt,name=key_prefix,json=keyPrefix,proto3" json:"key_prefix,omitempty"`
-	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	LastUsedAt    *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=last_used_at,json=lastUsedAt,proto3,oneof" json:"last_used_at,omitempty"`
-	ExpiresAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=expires_at,json=expiresAt,proto3,oneof" json:"expires_at,omitempty"`
-	RevokedAt     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=revoked_at,json=revokedAt,proto3,oneof" json:"revoked_at,omitempty"`
+	KeyPrefix  string                 `protobuf:"bytes,3,opt,name=key_prefix,json=keyPrefix,proto3" json:"key_prefix,omitempty"`
+	CreatedAt  *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	LastUsedAt *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=last_used_at,json=lastUsedAt,proto3,oneof" json:"last_used_at,omitempty"`
+	ExpiresAt  *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=expires_at,json=expiresAt,proto3,oneof" json:"expires_at,omitempty"`
+	RevokedAt  *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=revoked_at,json=revokedAt,proto3,oneof" json:"revoked_at,omitempty"`
+	// What this key is allowed to do. A key authenticates as its owning user,
+	// so scopes are the only thing narrowing it from full account access.
+	//
+	// Known values: "read", "write", "write:generate". No scope implies another —
+	// a key that must read and write is minted with both.
+	Scopes        []string `protobuf:"bytes,8,rep,name=scopes,proto3" json:"scopes,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -118,11 +124,23 @@ func (x *ApiKey) GetRevokedAt() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *ApiKey) GetScopes() []string {
+	if x != nil {
+		return x.Scopes
+	}
+	return nil
+}
+
 type CreateApiKeyRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	Name  string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// Optional expiry; omitted means the key does not expire.
-	ExpiresAt     *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=expires_at,json=expiresAt,proto3,oneof" json:"expires_at,omitempty"`
+	ExpiresAt *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=expires_at,json=expiresAt,proto3,oneof" json:"expires_at,omitempty"`
+	// Capabilities to grant. Omitted means read-only, which is the safe default:
+	// a caller that does not know about scopes gets a key that cannot change or
+	// spend anything. An unrecognised scope is rejected rather than dropped, so a
+	// caller never receives a key weaker than they believe they hold.
+	Scopes        []string `protobuf:"bytes,3,rep,name=scopes,proto3" json:"scopes,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -167,6 +185,13 @@ func (x *CreateApiKeyRequest) GetName() string {
 func (x *CreateApiKeyRequest) GetExpiresAt() *timestamppb.Timestamp {
 	if x != nil {
 		return x.ExpiresAt
+	}
+	return nil
+}
+
+func (x *CreateApiKeyRequest) GetScopes() []string {
+	if x != nil {
+		return x.Scopes
 	}
 	return nil
 }
@@ -388,7 +413,7 @@ var File_loci_apikey_apikey_proto protoreflect.FileDescriptor
 
 const file_loci_apikey_apikey_proto_rawDesc = "" +
 	"\n" +
-	"\x18loci/apikey/apikey.proto\x12\vloci.apikey\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bbuf/validate/validate.proto\"\x97\x03\n" +
+	"\x18loci/apikey/apikey.proto\x12\vloci.apikey\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bbuf/validate/validate.proto\"\xb9\x03\n" +
 	"\x06ApiKey\x12\x19\n" +
 	"\x02id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x02id\x12\x1d\n" +
 	"\x04name\x18\x02 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x04name\x12&\n" +
@@ -401,14 +426,16 @@ const file_loci_apikey_apikey_proto_rawDesc = "" +
 	"\n" +
 	"expires_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampH\x01R\texpiresAt\x88\x01\x01\x12>\n" +
 	"\n" +
-	"revoked_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampH\x02R\trevokedAt\x88\x01\x01B\x0f\n" +
+	"revoked_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampH\x02R\trevokedAt\x88\x01\x01\x12 \n" +
+	"\x06scopes\x18\b \x03(\tB\b\xbaH\x05\x92\x01\x02\x10\bR\x06scopesB\x0f\n" +
 	"\r_last_used_atB\r\n" +
 	"\v_expires_atB\r\n" +
-	"\v_revoked_at\"\x83\x01\n" +
+	"\v_revoked_at\"\xa5\x01\n" +
 	"\x13CreateApiKeyRequest\x12\x1d\n" +
 	"\x04name\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x04name\x12>\n" +
 	"\n" +
-	"expires_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\texpiresAt\x88\x01\x01B\r\n" +
+	"expires_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\texpiresAt\x88\x01\x01\x12 \n" +
+	"\x06scopes\x18\x03 \x03(\tB\b\xbaH\x05\x92\x01\x02\x10\bR\x06scopesB\r\n" +
 	"\v_expires_at\"i\n" +
 	"\x14CreateApiKeyResponse\x12,\n" +
 	"\aapi_key\x18\x01 \x01(\v2\x13.loci.apikey.ApiKeyR\x06apiKey\x12#\n" +

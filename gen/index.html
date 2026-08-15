@@ -1930,6 +1930,53 @@
         
           
           <li>
+            <a href="#loci%2fmemory%2fmemory.proto">loci/memory/memory.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#loci.memory.Evidence"><span class="badge">M</span>Evidence</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.memory.ForgetEvidenceRequest"><span class="badge">M</span>ForgetEvidenceRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.memory.ForgetEvidenceResponse"><span class="badge">M</span>ForgetEvidenceResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.memory.ForgetTraitRequest"><span class="badge">M</span>ForgetTraitRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.memory.ForgetTraitResponse"><span class="badge">M</span>ForgetTraitResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.memory.GetMemoryRequest"><span class="badge">M</span>GetMemoryRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.memory.GetMemoryResponse"><span class="badge">M</span>GetMemoryResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.memory.Trait"><span class="badge">M</span>Trait</a>
+                </li>
+              
+              
+              
+              
+                <li>
+                  <a href="#loci.memory.MemoryService"><span class="badge">S</span>MemoryService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#loci%2fpayment%2fv1%2fpayment.proto">loci/payment/v1/payment.proto</a>
             <ul>
               
@@ -3595,6 +3642,17 @@
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>scopes</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>What this key is allowed to do. A key authenticates as its owning user,
+so scopes are the only thing narrowing it from full account access.
+
+Known values: &#34;read&#34;, &#34;write&#34;, &#34;write:generate&#34;. No scope implies another —
+a key that must read and write is minted with both. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -3624,6 +3682,16 @@
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td>optional</td>
                   <td><p>Optional expiry; omitted means the key does not expire. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>scopes</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>Capabilities to grant. Omitted means read-only, which is the safe default:
+a caller that does not know about scopes gets a key that cannot change or
+spend anything. An unrecognised scope is rejected rather than dropped, so a
+caller never receives a key weaker than they believe they hold. </p></td>
                 </tr>
               
             </tbody>
@@ -21631,6 +21699,361 @@ the same weather, travel and POI data shown in this column. </p></td>
                 <td><a href="#loci.list.SearchPublicListsRequest">SearchPublicListsRequest</a></td>
                 <td><a href="#loci.list.SearchPublicListsResponse">SearchPublicListsResponse</a></td>
                 <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="loci/memory/memory.proto">loci/memory/memory.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="loci.memory.Evidence">Evidence</h3>
+        <p>Evidence is one recorded action that contributed to a belief.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>feedback_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier to pass to ForgetEvidence. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>event</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>What the user did: saved, skipped, visited, favorited, reordered, exported. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>weight</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p>Signed. A negative weight means this action was evidence *against* the
+trait — skipping a recommendation counts. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>poi_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>poi_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Human-readable so the user reads &#34;you saved Bar Alta&#34;, not a uuid. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>occurred_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.memory.ForgetEvidenceRequest">ForgetEvidenceRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>feedback_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>feedback_id from Evidence. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.memory.ForgetEvidenceResponse">ForgetEvidenceResponse</h3>
+        <p></p>
+
+        
+
+        
+      
+        <h3 id="loci.memory.ForgetTraitRequest">ForgetTraitRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trait_key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.memory.ForgetTraitResponse">ForgetTraitResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>signals_removed</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>How many underlying signals were removed along with the trait. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.memory.GetMemoryRequest">GetMemoryRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>include_evidence</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Include the actions behind each trait. Opt-in because the evidence join is
+far larger than the traits themselves. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.memory.GetMemoryResponse">GetMemoryResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>traits</td>
+                  <td><a href="#loci.memory.Trait">Trait</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>personalization_enabled</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Whether the user has learning switched on. When false Loci keeps the record
+but stops using it to rank anything. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>has_vector</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Whether a preference embedding exists. Derived state: deleting it costs
+nothing that cannot be rebuilt. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>signal_count</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_signal_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>generated_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.memory.Trait">Trait</h3>
+        <p>Trait is one thing Loci believes, with what taught it.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>label</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>score</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p>-1..1. Negative is an aversion, not a weak preference. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>confidence</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p>0..1, rising with the number of signals. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>evidence_count</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>updated_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>evidence</td>
+                  <td><a href="#loci.memory.Evidence">Evidence</a></td>
+                  <td>repeated</td>
+                  <td><p>Populated only when include_evidence was set on the request. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+
+      
+
+      
+        <h3 id="loci.memory.MemoryService">MemoryService</h3>
+        <p>MemoryService exposes what Loci has learned about a person, the evidence</p><p>behind each belief, and the ability to remove any of it.</p><p>The learning loop was complete and opaque: signals went in, a preference</p><p>vector and a set of taste traits came out, and the only control was a single</p><p>button that erased everything. These RPCs make the profile inspectable and</p><p>editable at the granularity of one belief, or one action.</p><p>Deleting evidence rebuilds the derived vector and traits from whatever</p><p>remains, so removing one belief cannot leave the rest inconsistent with the</p><p>record that produced them.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>GetMemory</td>
+                <td><a href="#loci.memory.GetMemoryRequest">GetMemoryRequest</a></td>
+                <td><a href="#loci.memory.GetMemoryResponse">GetMemoryResponse</a></td>
+                <td><p>GetMemory returns the caller&#39;s learned profile.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ForgetTrait</td>
+                <td><a href="#loci.memory.ForgetTraitRequest">ForgetTraitRequest</a></td>
+                <td><a href="#loci.memory.ForgetTraitResponse">ForgetTraitResponse</a></td>
+                <td><p>ForgetTrait removes a belief and the signals that produced it. Deleting the
+trait alone would be undone by the next recompute, so this reaches the
+evidence.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ForgetEvidence</td>
+                <td><a href="#loci.memory.ForgetEvidenceRequest">ForgetEvidenceRequest</a></td>
+                <td><a href="#loci.memory.ForgetEvidenceResponse">ForgetEvidenceResponse</a></td>
+                <td><p>ForgetEvidence removes a single recorded action, leaving an otherwise
+accurate belief intact.</p></td>
               </tr>
             
           </tbody>
