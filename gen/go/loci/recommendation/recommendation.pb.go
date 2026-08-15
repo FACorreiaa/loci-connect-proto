@@ -1051,7 +1051,7 @@ const file_loci_recommendation_recommendation_proto_rawDesc = "" +
 	"\x1aGetPersonalizationSettings\x126.loci.recommendation.GetPersonalizationSettingsRequest\x1a,.loci.recommendation.PersonalizationSettings\x12\x88\x01\n" +
 	"\x1dUpdatePersonalizationSettings\x129.loci.recommendation.UpdatePersonalizationSettingsRequest\x1a,.loci.recommendation.PersonalizationSettings\x12a\n" +
 	"\x0fGetTasteProfile\x12+.loci.recommendation.GetTasteProfileRequest\x1a!.loci.recommendation.TasteProfile\x12r\n" +
-	"\x11ResetTasteProfile\x12-.loci.recommendation.ResetTasteProfileRequest\x1a..loci.recommendation.ResetTasteProfileResponseBTZRgithub.com/FACorreiaa/loci-connect-proto/gen/go/loci/recommendation;recommendationb\x06proto3"
+	"\x11ResetTasteProfile\x12-.loci.recommendation.ResetTasteProfileRequest\x1a..loci.recommendation.ResetTasteProfileResponseBWZUgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/recommendation;recommendationb\x06proto3"
 
 var (
 	file_loci_recommendation_recommendation_proto_rawDescOnce sync.Once

@@ -5,7 +5,7 @@ package loci.memory;
 import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/memory;memoryv1";
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/memory;memoryv1";
 
 // MemoryService exposes what Loci has learned about a person, the evidence
 // behind each belief, and the ability to remove any of it.

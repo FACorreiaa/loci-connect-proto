@@ -720,7 +720,7 @@ const file_loci_localcontext_localcontext_proto_rawDesc = "" +
 	"\x13LocalContextService\x12]\n" +
 	"\x0fGetLocalContext\x12).loci.localcontext.GetLocalContextRequest\x1a\x1f.loci.localcontext.LocalContext\x12Y\n" +
 	"\n" +
-	"GetGoScore\x12$.loci.localcontext.GetGoScoreRequest\x1a%.loci.localcontext.GetGoScoreResponseBPZNgithub.com/FACorreiaa/loci-connect-proto/gen/go/loci/localcontext;localcontextb\x06proto3"
+	"GetGoScore\x12$.loci.localcontext.GetGoScoreRequest\x1a%.loci.localcontext.GetGoScoreResponseBSZQgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/localcontext;localcontextb\x06proto3"
 
 var (
 	file_loci_localcontext_localcontext_proto_rawDescOnce sync.Once

@@ -8,7 +8,7 @@ package listv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
-	recommendation "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/recommendation"
+	recommendation "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/recommendation"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -3465,7 +3465,7 @@ const file_loci_list_list_proto_rawDesc = "" +
 	"\n" +
 	"UnsaveList\x12\x1c.loci.list.UnsaveListRequest\x1a\x1d.loci.list.UnsaveListResponse\x12R\n" +
 	"\rGetSavedLists\x12\x1f.loci.list.GetSavedListsRequest\x1a .loci.list.GetSavedListsResponse\x12^\n" +
-	"\x11SearchPublicLists\x12#.loci.list.SearchPublicListsRequest\x1a$.loci.list.SearchPublicListsResponseBBZ@github.com/FACorreiaa/loci-connect-proto/gen/go/loci/list;listv1b\x06proto3"
+	"\x11SearchPublicLists\x12#.loci.list.SearchPublicListsRequest\x1a$.loci.list.SearchPublicListsResponseBEZCgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/list;listv1b\x06proto3"
 
 var (
 	file_loci_list_list_proto_rawDescOnce sync.Once

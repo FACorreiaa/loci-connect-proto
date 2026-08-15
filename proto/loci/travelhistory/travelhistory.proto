@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package loci.travelhistory;
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/travelhistory;travelhistory";
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/travelhistory;travelhistory";
 
 import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";

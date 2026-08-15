@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package loci.common;
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/common;common";
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/common;common";
 
 
 import "buf/validate/validate.proto";

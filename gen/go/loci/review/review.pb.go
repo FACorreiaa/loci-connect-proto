@@ -8,7 +8,7 @@ package reviewv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
-	common "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/common"
+	common "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -3243,7 +3243,7 @@ const file_loci_review_review_proto_rawDesc = "" +
 	"LikeReview\x12\x1e.loci.review.LikeReviewRequest\x1a\x1f.loci.review.LikeReviewResponse\x12S\n" +
 	"\fReportReview\x12 .loci.review.ReportReviewRequest\x1a!.loci.review.ReportReviewResponse\x12h\n" +
 	"\x13GetReviewStatistics\x12'.loci.review.GetReviewStatisticsRequest\x1a(.loci.review.GetReviewStatisticsResponse\x12_\n" +
-	"\x10GetRecentReviews\x12$.loci.review.GetRecentReviewsRequest\x1a%.loci.review.GetRecentReviewsResponseBFZDgithub.com/FACorreiaa/loci-connect-proto/gen/go/loci/review;reviewv1b\x06proto3"
+	"\x10GetRecentReviews\x12$.loci.review.GetRecentReviewsRequest\x1a%.loci.review.GetRecentReviewsResponseBIZGgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/review;reviewv1b\x06proto3"
 
 var (
 	file_loci_review_review_proto_rawDescOnce sync.Once

@@ -546,7 +546,7 @@ const file_loci_city_city_proto_rawDesc = "" +
 	"\x06cities\x18\x01 \x03(\v2\x15.loci.city.CityDetailR\x06cities2\xa0\x01\n" +
 	"\vCityService\x12@\n" +
 	"\aGetCity\x12\x19.loci.city.GetCityRequest\x1a\x1a.loci.city.GetCityResponse\x12O\n" +
-	"\fSearchCities\x12\x1e.loci.city.SearchCitiesRequest\x1a\x1f.loci.city.SearchCitiesResponseB@Z>github.com/FACorreiaa/loci-connect-proto/gen/go/loci/city;cityb\x06proto3"
+	"\fSearchCities\x12\x1e.loci.city.SearchCitiesRequest\x1a\x1f.loci.city.SearchCitiesResponseBCZAgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/city;cityb\x06proto3"
 
 var (
 	file_loci_city_city_proto_rawDescOnce sync.Once

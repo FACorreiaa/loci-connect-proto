@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package loci.chat;
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/chat;chat";
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/chat;chat";
 
 
 import "buf/validate/validate.proto";

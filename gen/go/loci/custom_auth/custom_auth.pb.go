@@ -592,7 +592,7 @@ const file_loci_custom_auth_custom_auth_proto_rawDesc = "" +
 	"\vGetOAuthURL\x12$.loci.custom_auth.GetOAuthURLRequest\x1a%.loci.custom_auth.GetOAuthURLResponse\x12`\n" +
 	"\rOAuthCallback\x12&.loci.custom_auth.OAuthCallbackRequest\x1a'.loci.custom_auth.OAuthCallbackResponse\x12x\n" +
 	"\x15SendPhoneVerification\x12..loci.custom_auth.SendPhoneVerificationRequest\x1a/.loci.custom_auth.SendPhoneVerificationResponse\x12Z\n" +
-	"\vVerifyPhone\x12$.loci.custom_auth.VerifyPhoneRequest\x1a%.loci.custom_auth.VerifyPhoneResponseBMZKgithub.com/FACorreiaa/loci-connect-proto/gen/go/loci/custom_auth;customauthb\x06proto3"
+	"\vVerifyPhone\x12$.loci.custom_auth.VerifyPhoneRequest\x1a%.loci.custom_auth.VerifyPhoneResponseBPZNgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/custom_auth;customauthb\x06proto3"
 
 var (
 	file_loci_custom_auth_custom_auth_proto_rawDescOnce sync.Once

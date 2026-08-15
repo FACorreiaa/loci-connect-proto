@@ -578,7 +578,7 @@ const file_loci_memory_memory_proto_rawDesc = "" +
 	"\rMemoryService\x12J\n" +
 	"\tGetMemory\x12\x1d.loci.memory.GetMemoryRequest\x1a\x1e.loci.memory.GetMemoryResponse\x12P\n" +
 	"\vForgetTrait\x12\x1f.loci.memory.ForgetTraitRequest\x1a .loci.memory.ForgetTraitResponse\x12Y\n" +
-	"\x0eForgetEvidence\x12\".loci.memory.ForgetEvidenceRequest\x1a#.loci.memory.ForgetEvidenceResponseBFZDgithub.com/FACorreiaa/loci-connect-proto/gen/go/loci/memory;memoryv1b\x06proto3"
+	"\x0eForgetEvidence\x12\".loci.memory.ForgetEvidenceRequest\x1a#.loci.memory.ForgetEvidenceResponseBIZGgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/memory;memoryv1b\x06proto3"
 
 var (
 	file_loci_memory_memory_proto_rawDescOnce sync.Once

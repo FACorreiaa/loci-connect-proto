@@ -169,7 +169,7 @@ const file_loci_entitlement_v1_entitlement_proto_rawDesc = "" +
 	"\vexport_full\x18\a \x01(\bR\n" +
 	"exportFull2w\n" +
 	"\x12EntitlementService\x12a\n" +
-	"\x0fGetEntitlements\x12+.loci.entitlement.v1.GetEntitlementsRequest\x1a!.loci.entitlement.v1.EntitlementsBSZQgithub.com/FACorreiaa/loci-connect-proto/gen/go/loci/entitlement/v1;entitlementv1b\x06proto3"
+	"\x0fGetEntitlements\x12+.loci.entitlement.v1.GetEntitlementsRequest\x1a!.loci.entitlement.v1.EntitlementsBVZTgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/entitlement/v1;entitlementv1b\x06proto3"
 
 var (
 	file_loci_entitlement_v1_entitlement_proto_rawDescOnce sync.Once

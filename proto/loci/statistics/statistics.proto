@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package loci.statistics;
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/statistics;statisticsv1";
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/statistics;statisticsv1";
 
 import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";

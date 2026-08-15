@@ -449,7 +449,7 @@ const file_loci_apikey_apikey_proto_rawDesc = "" +
 	"\rApiKeyService\x12S\n" +
 	"\fCreateApiKey\x12 .loci.apikey.CreateApiKeyRequest\x1a!.loci.apikey.CreateApiKeyResponse\x12P\n" +
 	"\vListApiKeys\x12\x1f.loci.apikey.ListApiKeysRequest\x1a .loci.apikey.ListApiKeysResponse\x12S\n" +
-	"\fRevokeApiKey\x12 .loci.apikey.RevokeApiKeyRequest\x1a!.loci.apikey.RevokeApiKeyResponseBFZDgithub.com/FACorreiaa/loci-connect-proto/gen/go/loci/apikey;apikeyv1b\x06proto3"
+	"\fRevokeApiKey\x12 .loci.apikey.RevokeApiKeyRequest\x1a!.loci.apikey.RevokeApiKeyResponseBIZGgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/apikey;apikeyv1b\x06proto3"
 
 var (
 	file_loci_apikey_apikey_proto_rawDescOnce sync.Once

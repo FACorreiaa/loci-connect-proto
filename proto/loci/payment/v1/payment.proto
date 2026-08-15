@@ -4,7 +4,7 @@ package loci.payment.v1;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/payment/v1;paymentv1";
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/payment/v1;paymentv1";
 
 service PaymentService {
   // Payments

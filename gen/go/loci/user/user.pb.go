@@ -8,7 +8,7 @@ package user
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
-	common "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/common"
+	common "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -929,7 +929,7 @@ const file_loci_user_user_proto_rawDesc = "" +
 	"\x0eGetUserProfile\x12 .loci.user.GetUserProfileRequest\x1a!.loci.user.GetUserProfileResponse\x12O\n" +
 	"\x11UpdateUserProfile\x12#.loci.user.UpdateUserProfileRequest\x1a\x15.loci.common.Response\x12U\n" +
 	"\x0eExportUserData\x12 .loci.user.ExportUserDataRequest\x1a!.loci.user.ExportUserDataResponse\x12G\n" +
-	"\rDeleteAccount\x12\x1f.loci.user.DeleteAccountRequest\x1a\x15.loci.common.ResponseB@Z>github.com/FACorreiaa/loci-connect-proto/gen/go/loci/user;userb\x06proto3"
+	"\rDeleteAccount\x12\x1f.loci.user.DeleteAccountRequest\x1a\x15.loci.common.ResponseBCZAgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/user;userb\x06proto3"
 
 var (
 	file_loci_user_user_proto_rawDescOnce sync.Once

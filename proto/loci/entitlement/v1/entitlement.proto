@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package loci.entitlement.v1;
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/entitlement/v1;entitlementv1";
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/entitlement/v1;entitlementv1";
 
 // EntitlementService exposes freemium usage counters for the signed-in user.
 // Limits of -1 mean unlimited (Pro).

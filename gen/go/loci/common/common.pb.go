@@ -439,7 +439,7 @@ const file_loci_common_common_proto_rawDesc = "" +
 	"\x03min\x18\x01 \x01(\x01H\x00R\x03min\x88\x01\x01\x12\x15\n" +
 	"\x03max\x18\x02 \x01(\x01H\x01R\x03max\x88\x01\x01B\x06\n" +
 	"\x04_minB\x06\n" +
-	"\x04_maxBDZBgithub.com/FACorreiaa/loci-connect-proto/gen/go/loci/common;commonb\x06proto3"
+	"\x04_maxBGZEgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/common;commonb\x06proto3"
 
 var (
 	file_loci_common_common_proto_rawDescOnce sync.Once

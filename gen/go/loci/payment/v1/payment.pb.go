@@ -1895,7 +1895,7 @@ const file_loci_payment_v1_payment_proto_rawDesc = "" +
 	"\x14GetUserSubscriptions\x12,.loci.payment.v1.GetUserSubscriptionsRequest\x1a-.loci.payment.v1.GetUserSubscriptionsResponse\x12d\n" +
 	"\x0fGetSubscription\x12'.loci.payment.v1.GetSubscriptionRequest\x1a(.loci.payment.v1.GetSubscriptionResponse\x12v\n" +
 	"\x15CreateCheckoutSession\x12-.loci.payment.v1.CreateCheckoutSessionRequest\x1a..loci.payment.v1.CreateCheckoutSessionResponse\x12\x88\x01\n" +
-	"\x1bCreateCustomerPortalSession\x123.loci.payment.v1.CreateCustomerPortalSessionRequest\x1a4.loci.payment.v1.CreateCustomerPortalSessionResponseBKZIgithub.com/FACorreiaa/loci-connect-proto/gen/go/loci/payment/v1;paymentv1b\x06proto3"
+	"\x1bCreateCustomerPortalSession\x123.loci.payment.v1.CreateCustomerPortalSessionRequest\x1a4.loci.payment.v1.CreateCustomerPortalSessionResponseBNZLgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/payment/v1;paymentv1b\x06proto3"
 
 var (
 	file_loci_payment_v1_payment_proto_rawDescOnce sync.Once

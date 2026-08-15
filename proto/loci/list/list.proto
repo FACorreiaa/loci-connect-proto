@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package loci.list;
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/list;listv1";
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/list;listv1";
 
 import "google/protobuf/timestamp.proto";
 import "buf/validate/validate.proto";

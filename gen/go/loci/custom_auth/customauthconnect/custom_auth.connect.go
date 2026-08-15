@@ -8,7 +8,7 @@ import (
 	connect "connectrpc.com/connect"
 	context "context"
 	errors "errors"
-	custom_auth "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/custom_auth"
+	custom_auth "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/custom_auth"
 	http "net/http"
 	strings "strings"
 )

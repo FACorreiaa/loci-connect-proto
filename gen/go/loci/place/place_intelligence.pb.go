@@ -792,7 +792,7 @@ const file_loci_place_place_intelligence_proto_rawDesc = "" +
 	"\rGetPlaceFacts\x12 .loci.place.GetPlaceFactsRequest\x1a\x16.loci.place.PlaceFacts\x12l\n" +
 	"\x15ListVerificationTasks\x12(.loci.place.ListVerificationTasksRequest\x1a).loci.place.ListVerificationTasksResponse\x12]\n" +
 	"\x10SubmitPlaceClaim\x12#.loci.place.SubmitPlaceClaimRequest\x1a$.loci.place.SubmitPlaceClaimResponse\x12e\n" +
-	"\x17GetMyContributorProfile\x12*.loci.place.GetMyContributorProfileRequest\x1a\x1e.loci.place.ContributorProfileBBZ@github.com/FACorreiaa/loci-connect-proto/gen/go/loci/place;placeb\x06proto3"
+	"\x17GetMyContributorProfile\x12*.loci.place.GetMyContributorProfileRequest\x1a\x1e.loci.place.ContributorProfileBEZCgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/place;placeb\x06proto3"
 
 var (
 	file_loci_place_place_intelligence_proto_rawDescOnce sync.Once

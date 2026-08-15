@@ -8,9 +8,9 @@ package comparev1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
-	localcontext "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/localcontext"
-	poi "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/poi"
-	trip "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/trip"
+	localcontext "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/localcontext"
+	poi "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/poi"
+	trip "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/trip"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -1014,7 +1014,7 @@ const file_loci_compare_v1_compare_proto_rawDesc = "" +
 	"\x1dCOMPARE_RECOMMENDATION_SECOND\x10\x02\x12\x1f\n" +
 	"\x1bCOMPARE_RECOMMENDATION_BOTH\x10\x032s\n" +
 	"\x0eCompareService\x12a\n" +
-	"\x0eCompareWeekend\x12&.loci.compare.v1.CompareWeekendRequest\x1a'.loci.compare.v1.CompareWeekendResponseBKZIgithub.com/FACorreiaa/loci-connect-proto/gen/go/loci/compare/v1;comparev1b\x06proto3"
+	"\x0eCompareWeekend\x12&.loci.compare.v1.CompareWeekendRequest\x1a'.loci.compare.v1.CompareWeekendResponseBNZLgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/compare/v1;comparev1b\x06proto3"
 
 var (
 	file_loci_compare_v1_compare_proto_rawDescOnce sync.Once
