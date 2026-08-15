@@ -1,0 +1,97 @@
+syntax = "proto3";
+
+package loci.memory;
+
+import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/gen/go/loci/memory;memoryv1";
+
+// MemoryService exposes what Loci has learned about a person, the evidence
+// behind each belief, and the ability to remove any of it.
+//
+// The learning loop was complete and opaque: signals went in, a preference
+// vector and a set of taste traits came out, and the only control was a single
+// button that erased everything. These RPCs make the profile inspectable and
+// editable at the granularity of one belief, or one action.
+//
+// Deleting evidence rebuilds the derived vector and traits from whatever
+// remains, so removing one belief cannot leave the rest inconsistent with the
+// record that produced them.
+service MemoryService {
+  // GetMemory returns the caller's learned profile.
+  rpc GetMemory(GetMemoryRequest) returns (GetMemoryResponse);
+  // ForgetTrait removes a belief and the signals that produced it. Deleting the
+  // trait alone would be undone by the next recompute, so this reaches the
+  // evidence.
+  rpc ForgetTrait(ForgetTraitRequest) returns (ForgetTraitResponse);
+  // ForgetEvidence removes a single recorded action, leaving an otherwise
+  // accurate belief intact.
+  rpc ForgetEvidence(ForgetEvidenceRequest) returns (ForgetEvidenceResponse);
+}
+
+// Evidence is one recorded action that contributed to a belief.
+message Evidence {
+  string id = 1;
+  // Identifier to pass to ForgetEvidence.
+  string feedback_id = 2;
+  // What the user did: saved, skipped, visited, favorited, reordered, exported.
+  string event = 3;
+  // Signed. A negative weight means this action was evidence *against* the
+  // trait — skipping a recommendation counts.
+  double weight = 4;
+  string poi_id = 5;
+  // Human-readable so the user reads "you saved Bar Alta", not a uuid.
+  string poi_name = 6;
+  string city_name = 7;
+  google.protobuf.Timestamp occurred_at = 8;
+}
+
+// Trait is one thing Loci believes, with what taught it.
+message Trait {
+  string key = 1;
+  string label = 2;
+  // -1..1. Negative is an aversion, not a weak preference.
+  double score = 3;
+  // 0..1, rising with the number of signals.
+  double confidence = 4;
+  int32 evidence_count = 5;
+  google.protobuf.Timestamp updated_at = 6;
+  // Populated only when include_evidence was set on the request.
+  repeated Evidence evidence = 7;
+}
+
+message GetMemoryRequest {
+  // Include the actions behind each trait. Opt-in because the evidence join is
+  // far larger than the traits themselves.
+  bool include_evidence = 1;
+}
+
+message GetMemoryResponse {
+  repeated Trait traits = 1;
+  // Whether the user has learning switched on. When false Loci keeps the record
+  // but stops using it to rank anything.
+  bool personalization_enabled = 2;
+  // Whether a preference embedding exists. Derived state: deleting it costs
+  // nothing that cannot be rebuilt.
+  bool has_vector = 3;
+  int32 signal_count = 4;
+  optional google.protobuf.Timestamp last_signal_at = 5;
+  google.protobuf.Timestamp generated_at = 6;
+}
+
+message ForgetTraitRequest {
+  string trait_key = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+}
+
+message ForgetTraitResponse {
+  // How many underlying signals were removed along with the trait.
+  int32 signals_removed = 1;
+}
+
+message ForgetEvidenceRequest {
+  // feedback_id from Evidence.
+  string feedback_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+}
+
+message ForgetEvidenceResponse {}

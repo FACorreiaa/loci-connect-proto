@@ -55,6 +55,17 @@ export declare type ApiKey = Message<"loci.apikey.ApiKey"> & {
    * @generated from field: optional google.protobuf.Timestamp revoked_at = 7;
    */
   revokedAt?: Timestamp;
+
+  /**
+   * What this key is allowed to do. A key authenticates as its owning user,
+   * so scopes are the only thing narrowing it from full account access.
+   *
+   * Known values: "read", "write", "write:generate". No scope implies another —
+   * a key that must read and write is minted with both.
+   *
+   * @generated from field: repeated string scopes = 8;
+   */
+  scopes: string[];
 };
 
 /**
@@ -78,6 +89,16 @@ export declare type CreateApiKeyRequest = Message<"loci.apikey.CreateApiKeyReque
    * @generated from field: optional google.protobuf.Timestamp expires_at = 2;
    */
   expiresAt?: Timestamp;
+
+  /**
+   * Capabilities to grant. Omitted means read-only, which is the safe default:
+   * a caller that does not know about scopes gets a key that cannot change or
+   * spend anything. An unrecognised scope is rejected rather than dropped, so a
+   * caller never receives a key weaker than they believe they hold.
+   *
+   * @generated from field: repeated string scopes = 3;
+   */
+  scopes: string[];
 };
 
 /**
