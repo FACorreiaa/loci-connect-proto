@@ -187,6 +187,16 @@ export declare type POIDetailedInfo = Message<"loci.poi.POIDetailedInfo"> & {
    * @generated from field: optional loci.place.PlaceFacts verified_facts = 32;
    */
   verifiedFacts?: PlaceFacts;
+
+  /**
+   * Whether this place was cited from Loci's own retrieved evidence rather than
+   * recalled by the model. False does not mean the place is fake — it means Loci
+   * did not verify it against its own data, so it must not be presented as
+   * verified. Absent on responses produced before grounding existed.
+   *
+   * @generated from field: optional bool grounded = 33;
+   */
+  grounded?: boolean;
 };
 
 /**
@@ -285,6 +295,13 @@ export declare type HotelDetailedInfo = Message<"loci.poi.HotelDetailedInfo"> & 
    * @generated from field: optional loci.recommendation.RecommendationTrace recommendation_trace = 17;
    */
   recommendationTrace?: RecommendationTrace;
+
+  /**
+   * See POIDetailedInfo.grounded.
+   *
+   * @generated from field: optional bool grounded = 18;
+   */
+  grounded?: boolean;
 };
 
 /**
@@ -388,6 +405,13 @@ export declare type RestaurantDetailedInfo = Message<"loci.poi.RestaurantDetaile
    * @generated from field: optional loci.recommendation.RecommendationTrace recommendation_trace = 18;
    */
   recommendationTrace?: RecommendationTrace;
+
+  /**
+   * See POIDetailedInfo.grounded.
+   *
+   * @generated from field: optional bool grounded = 19;
+   */
+  grounded?: boolean;
 };
 
 /**

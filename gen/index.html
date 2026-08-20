@@ -6880,6 +6880,13 @@ that initial load fail validation before it ever reached the query. </p></td>
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>grounded</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td>optional</td>
+                  <td><p>See POIDetailedInfo.grounded. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -7123,6 +7130,16 @@ was less sure); missing_data names fields that couldn&#39;t be verified (e.g.
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>grounded</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td>optional</td>
+                  <td><p>Whether this place was cited from Loci&#39;s own retrieved evidence rather than
+recalled by the model. False does not mean the place is fake — it means Loci
+did not verify it against its own data, so it must not be presented as
+verified. Absent on responses produced before grounding existed. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -7333,6 +7350,13 @@ was less sure); missing_data names fields that couldn&#39;t be verified (e.g.
                   <td><a href="#loci.recommendation.RecommendationTrace">loci.recommendation.RecommendationTrace</a></td>
                   <td>optional</td>
                   <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>grounded</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td>optional</td>
+                  <td><p>See POIDetailedInfo.grounded. </p></td>
                 </tr>
               
             </tbody>

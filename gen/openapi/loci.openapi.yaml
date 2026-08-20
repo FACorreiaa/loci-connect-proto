@@ -14591,6 +14591,12 @@ components:
             - $ref: '#/components/schemas/loci.recommendation.RecommendationTrace'
             - type: "null"
           title: recommendation_trace
+        grounded:
+          type:
+            - boolean
+            - "null"
+          title: grounded
+          description: See POIDetailedInfo.grounded.
       title: HotelDetailedInfo
       additionalProperties: false
       description: HotelDetailedInfo represents hotel-specific information
@@ -14800,6 +14806,16 @@ components:
             - $ref: '#/components/schemas/loci.place.PlaceFacts'
             - type: "null"
           title: verified_facts
+        grounded:
+          type:
+            - boolean
+            - "null"
+          title: grounded
+          description: |-
+            Whether this place was cited from Loci's own retrieved evidence rather than
+             recalled by the model. False does not mean the place is fake — it means Loci
+             did not verify it against its own data, so it must not be presented as
+             verified. Absent on responses produced before grounding existed.
       title: POIDetailedInfo
       required:
         - createdAt
@@ -14960,6 +14976,12 @@ components:
             - $ref: '#/components/schemas/loci.recommendation.RecommendationTrace'
             - type: "null"
           title: recommendation_trace
+        grounded:
+          type:
+            - boolean
+            - "null"
+          title: grounded
+          description: See POIDetailedInfo.grounded.
       title: RestaurantDetailedInfo
       additionalProperties: false
       description: RestaurantDetailedInfo represents restaurant-specific information

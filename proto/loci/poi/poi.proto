@@ -99,6 +99,12 @@ message POIDetailedInfo {
   }];
   optional loci.recommendation.RecommendationTrace recommendation_trace = 31;
   optional loci.place.PlaceFacts verified_facts = 32;
+
+  // Whether this place was cited from Loci's own retrieved evidence rather than
+  // recalled by the model. False does not mean the place is fake — it means Loci
+  // did not verify it against its own data, so it must not be presented as
+  // verified. Absent on responses produced before grounding existed.
+  optional bool grounded = 33;
 }
 
 // HotelDetailedInfo represents hotel-specific information
@@ -138,6 +144,10 @@ message HotelDetailedInfo {
   }];
   string llm_interaction_id = 16 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   optional loci.recommendation.RecommendationTrace recommendation_trace = 17;
+
+  // See POIDetailedInfo.grounded.
+  optional bool grounded = 18;
+
 }
 
 // RestaurantDetailedInfo represents restaurant-specific information
@@ -184,6 +194,10 @@ message RestaurantDetailedInfo {
   double rating = 16 [(buf.validate.field).double = {gte: 0, lte: 5}];
   string llm_interaction_id = 17 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   optional loci.recommendation.RecommendationTrace recommendation_trace = 18;
+
+  // See POIDetailedInfo.grounded.
+  optional bool grounded = 19;
+
 }
 
 // POIFilters for filtering POIs
