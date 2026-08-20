@@ -1,4 +1,4 @@
-.PHONY: lint generate push ontology bruno tag push-tag release
+.PHONY: lint lint-go hooks generate push ontology bruno tag push-tag release
 
 GO ?= go
 GOFLAGS ?= -mod=mod
@@ -39,3 +39,9 @@ push-tag: ## Push a git tag to the remote: make push-tag VERSION=v1.0.0
 	git push $(REMOTE) $(VERSION)
 
 release: tag push-tag push ## Tag, push the tag, and publish to the Buf Schema Registry: make release VERSION=v1.0.0
+
+hooks: ## Install versioned git hooks (.githooks → core.hooksPath)
+	bash scripts/install-hooks.sh
+
+lint-go: ## Run golangci-lint over the Go sources
+	golangci-lint run
