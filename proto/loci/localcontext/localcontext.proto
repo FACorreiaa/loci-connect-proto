@@ -8,11 +8,20 @@ import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
 
 // AlertKind classifies a trip-time heads-up.
+//
+// Values are only ever appended. Reordering or removing one silently changes
+// the meaning of data already on the wire.
 enum AlertKind {
   ALERT_KIND_UNSPECIFIED = 0;
   ALERT_KIND_CLOSURE = 1;
   ALERT_KIND_HOLIDAY = 2;
   ALERT_KIND_STRIKE = 3;
+  // A natural hazard near the destination — wildfire, cyclone, flood,
+  // earthquake, volcanic activity.
+  ALERT_KIND_HAZARD = 4;
+  ALERT_KIND_AIR_QUALITY = 5;
+  ALERT_KIND_TRANSIT = 6;
+  ALERT_KIND_ADVISORY = 7;
 }
 
 // WeatherDay is a one-day forecast summary.
@@ -24,12 +33,33 @@ message WeatherDay {
   double precip_prob = 5 [(buf.validate.field).double = {gte: 0, lte: 1}];
 }
 
-// LocalAlert warns about something affecting a trip day (closure/holiday/strike).
+// LocalAlert warns about something affecting a trip day (closure/holiday/
+// hazard/strike).
 message LocalAlert {
   AlertKind kind = 1 [(buf.validate.field).enum = {defined_only: true}];
   string title = 2 [(buf.validate.field).string = {min_len: 1, max_len: 300}];
   string detail = 3 [(buf.validate.field).string = {max_len: 1000}];
   optional google.protobuf.Timestamp date = 4;
+
+  // How much this should count against the trip, 0..1.
+  //
+  // The server grades alerts rather than treating them alike — a public holiday
+  // and a red-level wildfire are not the same news — and the go-score's
+  // disruption penalty scales with this. Clients should use it to rank and to
+  // colour, never to decide whether to show an alert at all.
+  double severity = 5 [(buf.validate.field).double = {gte: 0, lte: 1}];
+
+  // Which provider reported it ("nager", "gdacs", "usgs"). Shown so a user can
+  // see who says so, and so a noisy feed is identifiable from the response
+  // rather than only from server logs.
+  string source = 6 [(buf.validate.field).string = {max_len: 50}];
+
+  // Where the alert is, when it has a place — a wildfire, a cyclone, an
+  // earthquake. Absent for anything country-scoped: a public holiday has no
+  // coordinates, and inventing some to make it mappable would be a lie.
+  // Only alerts carrying both can be drawn as map pins.
+  optional double latitude = 7 [(buf.validate.field).double = {gte: -90, lte: 90}];
+  optional double longitude = 8 [(buf.validate.field).double = {gte: -180, lte: 180}];
 }
 
 // GetLocalContextRequest asks for weather + alerts near a point.
@@ -94,8 +124,8 @@ message GetGoScoreResponse {
   string city_name = 2 [(buf.validate.field).string = {max_len: 200}];
 }
 
-// LocalContextService surfaces trip-time context (weather now; closures/holidays/
-// strikes are stubbed behind the same contract until real providers are wired).
+// LocalContextService surfaces trip-time context: weather, plus live alerts
+// from public-holiday and natural-hazard providers.
 service LocalContextService {
   rpc GetLocalContext(GetLocalContextRequest) returns (LocalContext);
   // GetGoScore answers "should I go this weekend?" for one destination.
