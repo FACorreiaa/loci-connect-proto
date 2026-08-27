@@ -50,7 +50,8 @@ export declare type WeatherDay = Message<"loci.localcontext.WeatherDay"> & {
 export declare const WeatherDaySchema: GenMessage<WeatherDay>;
 
 /**
- * LocalAlert warns about something affecting a trip day (closure/holiday/strike).
+ * LocalAlert warns about something affecting a trip day (closure/holiday/
+ * hazard/strike).
  *
  * @generated from message loci.localcontext.LocalAlert
  */
@@ -74,6 +75,42 @@ export declare type LocalAlert = Message<"loci.localcontext.LocalAlert"> & {
    * @generated from field: optional google.protobuf.Timestamp date = 4;
    */
   date?: Timestamp;
+
+  /**
+   * How much this should count against the trip, 0..1.
+   *
+   * The server grades alerts rather than treating them alike — a public holiday
+   * and a red-level wildfire are not the same news — and the go-score's
+   * disruption penalty scales with this. Clients should use it to rank and to
+   * colour, never to decide whether to show an alert at all.
+   *
+   * @generated from field: double severity = 5;
+   */
+  severity: number;
+
+  /**
+   * Which provider reported it ("nager", "gdacs", "usgs"). Shown so a user can
+   * see who says so, and so a noisy feed is identifiable from the response
+   * rather than only from server logs.
+   *
+   * @generated from field: string source = 6;
+   */
+  source: string;
+
+  /**
+   * Where the alert is, when it has a place — a wildfire, a cyclone, an
+   * earthquake. Absent for anything country-scoped: a public holiday has no
+   * coordinates, and inventing some to make it mappable would be a lie.
+   * Only alerts carrying both can be drawn as map pins.
+   *
+   * @generated from field: optional double latitude = 7;
+   */
+  latitude?: number;
+
+  /**
+   * @generated from field: optional double longitude = 8;
+   */
+  longitude?: number;
 };
 
 /**
@@ -306,6 +343,9 @@ export declare const GetGoScoreResponseSchema: GenMessage<GetGoScoreResponse>;
 /**
  * AlertKind classifies a trip-time heads-up.
  *
+ * Values are only ever appended. Reordering or removing one silently changes
+ * the meaning of data already on the wire.
+ *
  * @generated from enum loci.localcontext.AlertKind
  */
 export enum AlertKind {
@@ -328,6 +368,29 @@ export enum AlertKind {
    * @generated from enum value: ALERT_KIND_STRIKE = 3;
    */
   STRIKE = 3,
+
+  /**
+   * A natural hazard near the destination — wildfire, cyclone, flood,
+   * earthquake, volcanic activity.
+   *
+   * @generated from enum value: ALERT_KIND_HAZARD = 4;
+   */
+  HAZARD = 4,
+
+  /**
+   * @generated from enum value: ALERT_KIND_AIR_QUALITY = 5;
+   */
+  AIR_QUALITY = 5,
+
+  /**
+   * @generated from enum value: ALERT_KIND_TRANSIT = 6;
+   */
+  TRANSIT = 6,
+
+  /**
+   * @generated from enum value: ALERT_KIND_ADVISORY = 7;
+   */
+  ADVISORY = 7,
 }
 
 /**
@@ -336,8 +399,8 @@ export enum AlertKind {
 export declare const AlertKindSchema: GenEnum<AlertKind>;
 
 /**
- * LocalContextService surfaces trip-time context (weather now; closures/holidays/
- * strikes are stubbed behind the same contract until real providers are wired).
+ * LocalContextService surfaces trip-time context: weather, plus live alerts
+ * from public-holiday and natural-hazard providers.
  *
  * @generated from service loci.localcontext.LocalContextService
  */

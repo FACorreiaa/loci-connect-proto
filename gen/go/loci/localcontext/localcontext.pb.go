@@ -24,6 +24,9 @@ const (
 )
 
 // AlertKind classifies a trip-time heads-up.
+//
+// Values are only ever appended. Reordering or removing one silently changes
+// the meaning of data already on the wire.
 type AlertKind int32
 
 const (
@@ -31,6 +34,12 @@ const (
 	AlertKind_ALERT_KIND_CLOSURE     AlertKind = 1
 	AlertKind_ALERT_KIND_HOLIDAY     AlertKind = 2
 	AlertKind_ALERT_KIND_STRIKE      AlertKind = 3
+	// A natural hazard near the destination — wildfire, cyclone, flood,
+	// earthquake, volcanic activity.
+	AlertKind_ALERT_KIND_HAZARD      AlertKind = 4
+	AlertKind_ALERT_KIND_AIR_QUALITY AlertKind = 5
+	AlertKind_ALERT_KIND_TRANSIT     AlertKind = 6
+	AlertKind_ALERT_KIND_ADVISORY    AlertKind = 7
 )
 
 // Enum value maps for AlertKind.
@@ -40,12 +49,20 @@ var (
 		1: "ALERT_KIND_CLOSURE",
 		2: "ALERT_KIND_HOLIDAY",
 		3: "ALERT_KIND_STRIKE",
+		4: "ALERT_KIND_HAZARD",
+		5: "ALERT_KIND_AIR_QUALITY",
+		6: "ALERT_KIND_TRANSIT",
+		7: "ALERT_KIND_ADVISORY",
 	}
 	AlertKind_value = map[string]int32{
 		"ALERT_KIND_UNSPECIFIED": 0,
 		"ALERT_KIND_CLOSURE":     1,
 		"ALERT_KIND_HOLIDAY":     2,
 		"ALERT_KIND_STRIKE":      3,
+		"ALERT_KIND_HAZARD":      4,
+		"ALERT_KIND_AIR_QUALITY": 5,
+		"ALERT_KIND_TRANSIT":     6,
+		"ALERT_KIND_ADVISORY":    7,
 	}
 )
 
@@ -153,13 +170,31 @@ func (x *WeatherDay) GetPrecipProb() float64 {
 	return 0
 }
 
-// LocalAlert warns about something affecting a trip day (closure/holiday/strike).
+// LocalAlert warns about something affecting a trip day (closure/holiday/
+// hazard/strike).
 type LocalAlert struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Kind          AlertKind              `protobuf:"varint,1,opt,name=kind,proto3,enum=loci.localcontext.AlertKind" json:"kind,omitempty"`
-	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
-	Detail        string                 `protobuf:"bytes,3,opt,name=detail,proto3" json:"detail,omitempty"`
-	Date          *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=date,proto3,oneof" json:"date,omitempty"`
+	state  protoimpl.MessageState `protogen:"open.v1"`
+	Kind   AlertKind              `protobuf:"varint,1,opt,name=kind,proto3,enum=loci.localcontext.AlertKind" json:"kind,omitempty"`
+	Title  string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
+	Detail string                 `protobuf:"bytes,3,opt,name=detail,proto3" json:"detail,omitempty"`
+	Date   *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=date,proto3,oneof" json:"date,omitempty"`
+	// How much this should count against the trip, 0..1.
+	//
+	// The server grades alerts rather than treating them alike — a public holiday
+	// and a red-level wildfire are not the same news — and the go-score's
+	// disruption penalty scales with this. Clients should use it to rank and to
+	// colour, never to decide whether to show an alert at all.
+	Severity float64 `protobuf:"fixed64,5,opt,name=severity,proto3" json:"severity,omitempty"`
+	// Which provider reported it ("nager", "gdacs", "usgs"). Shown so a user can
+	// see who says so, and so a noisy feed is identifiable from the response
+	// rather than only from server logs.
+	Source string `protobuf:"bytes,6,opt,name=source,proto3" json:"source,omitempty"`
+	// Where the alert is, when it has a place — a wildfire, a cyclone, an
+	// earthquake. Absent for anything country-scoped: a public holiday has no
+	// coordinates, and inventing some to make it mappable would be a lie.
+	// Only alerts carrying both can be drawn as map pins.
+	Latitude      *float64 `protobuf:"fixed64,7,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
+	Longitude     *float64 `protobuf:"fixed64,8,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -220,6 +255,34 @@ func (x *LocalAlert) GetDate() *timestamppb.Timestamp {
 		return x.Date
 	}
 	return nil
+}
+
+func (x *LocalAlert) GetSeverity() float64 {
+	if x != nil {
+		return x.Severity
+	}
+	return 0
+}
+
+func (x *LocalAlert) GetSource() string {
+	if x != nil {
+		return x.Source
+	}
+	return ""
+}
+
+func (x *LocalAlert) GetLatitude() float64 {
+	if x != nil && x.Latitude != nil {
+		return *x.Latitude
+	}
+	return 0
+}
+
+func (x *LocalAlert) GetLongitude() float64 {
+	if x != nil && x.Longitude != nil {
+		return *x.Longitude
+	}
+	return 0
 }
 
 // GetLocalContextRequest asks for weather + alerts near a point.
@@ -662,15 +725,22 @@ const file_loci_localcontext_localcontext_proto_rawDesc = "" +
 	"\x05low_c\x18\x03 \x01(\x01R\x04lowC\x12%\n" +
 	"\tcondition\x18\x04 \x01(\tB\a\xbaH\x04r\x02\x18dR\tcondition\x128\n" +
 	"\vprecip_prob\x18\x05 \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00\xf0?)\x00\x00\x00\x00\x00\x00\x00\x00R\n" +
-	"precipProb\"\xca\x01\n" +
+	"precipProb\"\xb1\x03\n" +
 	"\n" +
 	"LocalAlert\x12:\n" +
 	"\x04kind\x18\x01 \x01(\x0e2\x1c.loci.localcontext.AlertKindB\b\xbaH\x05\x82\x01\x02\x10\x01R\x04kind\x12 \n" +
 	"\x05title\x18\x02 \x01(\tB\n" +
 	"\xbaH\ar\x05\x10\x01\x18\xac\x02R\x05title\x12 \n" +
 	"\x06detail\x18\x03 \x01(\tB\b\xbaH\x05r\x03\x18\xe8\aR\x06detail\x123\n" +
-	"\x04date\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\x04date\x88\x01\x01B\a\n" +
-	"\x05_date\"\xa3\x01\n" +
+	"\x04date\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\x04date\x88\x01\x01\x123\n" +
+	"\bseverity\x18\x05 \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00\xf0?)\x00\x00\x00\x00\x00\x00\x00\x00R\bseverity\x12\x1f\n" +
+	"\x06source\x18\x06 \x01(\tB\a\xbaH\x04r\x02\x182R\x06source\x128\n" +
+	"\blatitude\x18\a \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x80V@)\x00\x00\x00\x00\x00\x80V\xc0H\x01R\blatitude\x88\x01\x01\x12:\n" +
+	"\tlongitude\x18\b \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x80f@)\x00\x00\x00\x00\x00\x80f\xc0H\x02R\tlongitude\x88\x01\x01B\a\n" +
+	"\x05_dateB\v\n" +
+	"\t_latitudeB\f\n" +
+	"\n" +
+	"_longitude\"\xa3\x01\n" +
 	"\x16GetLocalContextRequest\x123\n" +
 	"\blatitude\x18\x01 \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x80V@)\x00\x00\x00\x00\x00\x80V\xc0R\blatitude\x125\n" +
 	"\tlongitude\x18\x02 \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x80f@)\x00\x00\x00\x00\x00\x80f\xc0R\tlongitude\x12\x1d\n" +
@@ -711,12 +781,16 @@ const file_loci_localcontext_localcontext_proto_rawDesc = "" +
 	"\x04_end\"m\n" +
 	"\x12GetGoScoreResponse\x120\n" +
 	"\x05score\x18\x01 \x01(\v2\x1a.loci.localcontext.GoScoreR\x05score\x12%\n" +
-	"\tcity_name\x18\x02 \x01(\tB\b\xbaH\x05r\x03\x18\xc8\x01R\bcityName*n\n" +
+	"\tcity_name\x18\x02 \x01(\tB\b\xbaH\x05r\x03\x18\xc8\x01R\bcityName*\xd2\x01\n" +
 	"\tAlertKind\x12\x1a\n" +
 	"\x16ALERT_KIND_UNSPECIFIED\x10\x00\x12\x16\n" +
 	"\x12ALERT_KIND_CLOSURE\x10\x01\x12\x16\n" +
 	"\x12ALERT_KIND_HOLIDAY\x10\x02\x12\x15\n" +
-	"\x11ALERT_KIND_STRIKE\x10\x032\xcf\x01\n" +
+	"\x11ALERT_KIND_STRIKE\x10\x03\x12\x15\n" +
+	"\x11ALERT_KIND_HAZARD\x10\x04\x12\x1a\n" +
+	"\x16ALERT_KIND_AIR_QUALITY\x10\x05\x12\x16\n" +
+	"\x12ALERT_KIND_TRANSIT\x10\x06\x12\x17\n" +
+	"\x13ALERT_KIND_ADVISORY\x10\a2\xcf\x01\n" +
 	"\x13LocalContextService\x12]\n" +
 	"\x0fGetLocalContext\x12).loci.localcontext.GetLocalContextRequest\x1a\x1f.loci.localcontext.LocalContext\x12Y\n" +
 	"\n" +

@@ -12330,7 +12330,7 @@ label the score as estimated when this is set. </p></td>
         
       
         <h3 id="loci.localcontext.LocalAlert">LocalAlert</h3>
-        <p>LocalAlert warns about something affecting a trip day (closure/holiday/strike).</p>
+        <p>LocalAlert warns about something affecting a trip day (closure/holiday/</p><p>hazard/strike).</p>
 
         
           <table class="field-table">
@@ -12363,6 +12363,44 @@ label the score as estimated when this is set. </p></td>
                 <tr>
                   <td>date</td>
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>severity</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p>How much this should count against the trip, 0..1.
+
+The server grades alerts rather than treating them alike — a public holiday
+and a red-level wildfire are not the same news — and the go-score&#39;s
+disruption penalty scales with this. Clients should use it to rank and to
+colour, never to decide whether to show an alert at all. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>source</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Which provider reported it (&#34;nager&#34;, &#34;gdacs&#34;, &#34;usgs&#34;). Shown so a user can
+see who says so, and so a noisy feed is identifiable from the response
+rather than only from server logs. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>latitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td>optional</td>
+                  <td><p>Where the alert is, when it has a place — a wildfire, a cyclone, an
+earthquake. Absent for anything country-scoped: a public holiday has no
+coordinates, and inventing some to make it mappable would be a lie.
+Only alerts carrying both can be drawn as map pins. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>longitude</td>
+                  <td><a href="#double">double</a></td>
                   <td>optional</td>
                   <td><p> </p></td>
                 </tr>
@@ -12514,7 +12552,7 @@ proportional bar without hardcoding the weights. </p></td>
 
       
         <h3 id="loci.localcontext.AlertKind">AlertKind</h3>
-        <p>AlertKind classifies a trip-time heads-up.</p>
+        <p>AlertKind classifies a trip-time heads-up.</p><p>Values are only ever appended. Reordering or removing one silently changes</p><p>the meaning of data already on the wire.</p>
         <table class="enum-table">
           <thead>
             <tr><td>Name</td><td>Number</td><td>Description</td></tr>
@@ -12545,6 +12583,31 @@ proportional bar without hardcoding the weights. </p></td>
                 <td><p></p></td>
               </tr>
             
+              <tr>
+                <td>ALERT_KIND_HAZARD</td>
+                <td>4</td>
+                <td><p>A natural hazard near the destination — wildfire, cyclone, flood,
+earthquake, volcanic activity.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ALERT_KIND_AIR_QUALITY</td>
+                <td>5</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ALERT_KIND_TRANSIT</td>
+                <td>6</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ALERT_KIND_ADVISORY</td>
+                <td>7</td>
+                <td><p></p></td>
+              </tr>
+            
           </tbody>
         </table>
       
@@ -12553,7 +12616,7 @@ proportional bar without hardcoding the weights. </p></td>
 
       
         <h3 id="loci.localcontext.LocalContextService">LocalContextService</h3>
-        <p>LocalContextService surfaces trip-time context (weather now; closures/holidays/</p><p>strikes are stubbed behind the same contract until real providers are wired).</p>
+        <p>LocalContextService surfaces trip-time context: weather, plus live alerts</p><p>from public-holiday and natural-hazard providers.</p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
