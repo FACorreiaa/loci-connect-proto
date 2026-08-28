@@ -1060,6 +1060,30 @@
             <ul>
               
                 <li>
+                  <a href="#loci.localcontext.DriveCostEstimate"><span class="badge">M</span>DriveCostEstimate</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.localcontext.EstimateDriveCostRequest"><span class="badge">M</span>EstimateDriveCostRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.localcontext.EstimateDriveCostResponse"><span class="badge">M</span>EstimateDriveCostResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.localcontext.FxRate"><span class="badge">M</span>FxRate</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.localcontext.GetFxRatesRequest"><span class="badge">M</span>GetFxRatesRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.localcontext.GetFxRatesResponse"><span class="badge">M</span>GetFxRatesResponse</a>
+                </li>
+              
+                <li>
                   <a href="#loci.localcontext.GetGoScoreRequest"><span class="badge">M</span>GetGoScoreRequest</a>
                 </li>
               
@@ -12141,6 +12165,233 @@ starting a new turn; consumers dedup by StreamEvent.event_id. </p></td>
       <p></p>
 
       
+        <h3 id="loci.localcontext.DriveCostEstimate">DriveCostEstimate</h3>
+        <p>DriveCostEstimate prices the fuel for a driving leg.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>distance_km</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>litres</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>cost</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>currency</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>assumptions</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>What the number rests on, in words. Always populated: a bare figure about
+someone&#39;s money invites either misplaced trust or dismissal, and only the
+assumptions let a user correct it against their own car. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.localcontext.EstimateDriveCostRequest">EstimateDriveCostRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>distance_km</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>currency</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>ISO-4217 for the result. Defaults to the server&#39;s configured base. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.localcontext.EstimateDriveCostResponse">EstimateDriveCostResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>estimate</td>
+                  <td><a href="#loci.localcontext.DriveCostEstimate">DriveCostEstimate</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.localcontext.FxRate">FxRate</h3>
+        <p>FxRate is one currency pair at a point in time.</p><p>Reference rates republished from the ECB. They are exact rather than</p><p>modelled, but the ECB publishes only 30 currencies — anywhere else returns no</p><p>rate at all, because a made-up number about someone's money is worse than</p><p>none.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>base</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>quote</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>rate</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>as_of</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The day the rate was published. Shown so a user can tell a Friday rate read
+on a Sunday for what it is. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.localcontext.GetFxRatesRequest">GetFxRatesRequest</h3>
+        <p>GetFxRatesRequest asks what the traveller's money is worth at a destination.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>base</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>ISO-4217. Defaults to the server&#39;s configured base when empty. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>quotes</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>Explicit quote currencies. When empty, country_code is used instead. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>country_code</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>ISO-3166 alpha-2. A convenience so a caller holding a destination does not
+have to know its currency. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.localcontext.GetFxRatesResponse">GetFxRatesResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>rates</td>
+                  <td><a href="#loci.localcontext.FxRate">FxRate</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>unsupported</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>Currencies that were asked for, or implied by country_code, that the ECB
+does not publish. Returned rather than dropped so a client can say &#34;no rate
+available&#34; instead of silently showing nothing. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.localcontext.GetGoScoreRequest">GetGoScoreRequest</h3>
         <p>GetGoScoreRequest asks whether a city is worth the trip in a given window.</p>
 
@@ -12635,6 +12886,20 @@ earthquake, volcanic activity.</p></td>
                 <td><a href="#loci.localcontext.GetGoScoreRequest">GetGoScoreRequest</a></td>
                 <td><a href="#loci.localcontext.GetGoScoreResponse">GetGoScoreResponse</a></td>
                 <td><p>GetGoScore answers &#34;should I go this weekend?&#34; for one destination.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetFxRates</td>
+                <td><a href="#loci.localcontext.GetFxRatesRequest">GetFxRatesRequest</a></td>
+                <td><a href="#loci.localcontext.GetFxRatesResponse">GetFxRatesResponse</a></td>
+                <td><p>GetFxRates answers &#34;what is my money worth there?&#34;.</p></td>
+              </tr>
+            
+              <tr>
+                <td>EstimateDriveCost</td>
+                <td><a href="#loci.localcontext.EstimateDriveCostRequest">EstimateDriveCostRequest</a></td>
+                <td><a href="#loci.localcontext.EstimateDriveCostResponse">EstimateDriveCostResponse</a></td>
+                <td><p>EstimateDriveCost prices the fuel for a driving leg.</p></td>
               </tr>
             
           </tbody>
