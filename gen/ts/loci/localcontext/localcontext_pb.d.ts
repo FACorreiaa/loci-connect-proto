@@ -341,6 +341,188 @@ export declare type GetGoScoreResponse = Message<"loci.localcontext.GetGoScoreRe
 export declare const GetGoScoreResponseSchema: GenMessage<GetGoScoreResponse>;
 
 /**
+ * FxRate is one currency pair at a point in time.
+ *
+ * Reference rates republished from the ECB. They are exact rather than
+ * modelled, but the ECB publishes only 30 currencies — anywhere else returns no
+ * rate at all, because a made-up number about someone's money is worse than
+ * none.
+ *
+ * @generated from message loci.localcontext.FxRate
+ */
+export declare type FxRate = Message<"loci.localcontext.FxRate"> & {
+  /**
+   * @generated from field: string base = 1;
+   */
+  base: string;
+
+  /**
+   * @generated from field: string quote = 2;
+   */
+  quote: string;
+
+  /**
+   * @generated from field: double rate = 3;
+   */
+  rate: number;
+
+  /**
+   * The day the rate was published. Shown so a user can tell a Friday rate read
+   * on a Sunday for what it is.
+   *
+   * @generated from field: google.protobuf.Timestamp as_of = 4;
+   */
+  asOf?: Timestamp;
+};
+
+/**
+ * Describes the message loci.localcontext.FxRate.
+ * Use `create(FxRateSchema)` to create a new message.
+ */
+export declare const FxRateSchema: GenMessage<FxRate>;
+
+/**
+ * GetFxRatesRequest asks what the traveller's money is worth at a destination.
+ *
+ * @generated from message loci.localcontext.GetFxRatesRequest
+ */
+export declare type GetFxRatesRequest = Message<"loci.localcontext.GetFxRatesRequest"> & {
+  /**
+   * ISO-4217. Defaults to the server's configured base when empty.
+   *
+   * @generated from field: optional string base = 1;
+   */
+  base?: string;
+
+  /**
+   * Explicit quote currencies. When empty, country_code is used instead.
+   *
+   * @generated from field: repeated string quotes = 2;
+   */
+  quotes: string[];
+
+  /**
+   * ISO-3166 alpha-2. A convenience so a caller holding a destination does not
+   * have to know its currency.
+   *
+   * @generated from field: optional string country_code = 3;
+   */
+  countryCode?: string;
+};
+
+/**
+ * Describes the message loci.localcontext.GetFxRatesRequest.
+ * Use `create(GetFxRatesRequestSchema)` to create a new message.
+ */
+export declare const GetFxRatesRequestSchema: GenMessage<GetFxRatesRequest>;
+
+/**
+ * @generated from message loci.localcontext.GetFxRatesResponse
+ */
+export declare type GetFxRatesResponse = Message<"loci.localcontext.GetFxRatesResponse"> & {
+  /**
+   * @generated from field: repeated loci.localcontext.FxRate rates = 1;
+   */
+  rates: FxRate[];
+
+  /**
+   * Currencies that were asked for, or implied by country_code, that the ECB
+   * does not publish. Returned rather than dropped so a client can say "no rate
+   * available" instead of silently showing nothing.
+   *
+   * @generated from field: repeated string unsupported = 2;
+   */
+  unsupported: string[];
+};
+
+/**
+ * Describes the message loci.localcontext.GetFxRatesResponse.
+ * Use `create(GetFxRatesResponseSchema)` to create a new message.
+ */
+export declare const GetFxRatesResponseSchema: GenMessage<GetFxRatesResponse>;
+
+/**
+ * DriveCostEstimate prices the fuel for a driving leg.
+ *
+ * @generated from message loci.localcontext.DriveCostEstimate
+ */
+export declare type DriveCostEstimate = Message<"loci.localcontext.DriveCostEstimate"> & {
+  /**
+   * @generated from field: double distance_km = 1;
+   */
+  distanceKm: number;
+
+  /**
+   * @generated from field: double litres = 2;
+   */
+  litres: number;
+
+  /**
+   * @generated from field: double cost = 3;
+   */
+  cost: number;
+
+  /**
+   * @generated from field: string currency = 4;
+   */
+  currency: string;
+
+  /**
+   * What the number rests on, in words. Always populated: a bare figure about
+   * someone's money invites either misplaced trust or dismissal, and only the
+   * assumptions let a user correct it against their own car.
+   *
+   * @generated from field: string assumptions = 5;
+   */
+  assumptions: string;
+};
+
+/**
+ * Describes the message loci.localcontext.DriveCostEstimate.
+ * Use `create(DriveCostEstimateSchema)` to create a new message.
+ */
+export declare const DriveCostEstimateSchema: GenMessage<DriveCostEstimate>;
+
+/**
+ * @generated from message loci.localcontext.EstimateDriveCostRequest
+ */
+export declare type EstimateDriveCostRequest = Message<"loci.localcontext.EstimateDriveCostRequest"> & {
+  /**
+   * @generated from field: double distance_km = 1;
+   */
+  distanceKm: number;
+
+  /**
+   * ISO-4217 for the result. Defaults to the server's configured base.
+   *
+   * @generated from field: optional string currency = 2;
+   */
+  currency?: string;
+};
+
+/**
+ * Describes the message loci.localcontext.EstimateDriveCostRequest.
+ * Use `create(EstimateDriveCostRequestSchema)` to create a new message.
+ */
+export declare const EstimateDriveCostRequestSchema: GenMessage<EstimateDriveCostRequest>;
+
+/**
+ * @generated from message loci.localcontext.EstimateDriveCostResponse
+ */
+export declare type EstimateDriveCostResponse = Message<"loci.localcontext.EstimateDriveCostResponse"> & {
+  /**
+   * @generated from field: loci.localcontext.DriveCostEstimate estimate = 1;
+   */
+  estimate?: DriveCostEstimate;
+};
+
+/**
+ * Describes the message loci.localcontext.EstimateDriveCostResponse.
+ * Use `create(EstimateDriveCostResponseSchema)` to create a new message.
+ */
+export declare const EstimateDriveCostResponseSchema: GenMessage<EstimateDriveCostResponse>;
+
+/**
  * AlertKind classifies a trip-time heads-up.
  *
  * Values are only ever appended. Reordering or removing one silently changes
@@ -422,6 +604,26 @@ export declare const LocalContextService: GenService<{
     methodKind: "unary";
     input: typeof GetGoScoreRequestSchema;
     output: typeof GetGoScoreResponseSchema;
+  },
+  /**
+   * GetFxRates answers "what is my money worth there?".
+   *
+   * @generated from rpc loci.localcontext.LocalContextService.GetFxRates
+   */
+  getFxRates: {
+    methodKind: "unary";
+    input: typeof GetFxRatesRequestSchema;
+    output: typeof GetFxRatesResponseSchema;
+  },
+  /**
+   * EstimateDriveCost prices the fuel for a driving leg.
+   *
+   * @generated from rpc loci.localcontext.LocalContextService.EstimateDriveCost
+   */
+  estimateDriveCost: {
+    methodKind: "unary";
+    input: typeof EstimateDriveCostRequestSchema;
+    output: typeof EstimateDriveCostResponseSchema;
   },
 }>;
 

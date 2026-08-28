@@ -3258,6 +3258,78 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.list.UpdateListItemResponse'
+  /loci.localcontext.LocalContextService/EstimateDriveCost:
+    post:
+      tags:
+        - loci.localcontext.LocalContextService
+      summary: EstimateDriveCost
+      description: EstimateDriveCost prices the fuel for a driving leg.
+      operationId: loci.localcontext.LocalContextService.EstimateDriveCost
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.localcontext.EstimateDriveCostRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.localcontext.EstimateDriveCostResponse'
+  /loci.localcontext.LocalContextService/GetFxRates:
+    post:
+      tags:
+        - loci.localcontext.LocalContextService
+      summary: GetFxRates
+      description: GetFxRates answers "what is my money worth there?".
+      operationId: loci.localcontext.LocalContextService.GetFxRates
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.localcontext.GetFxRatesRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.localcontext.GetFxRatesResponse'
   /loci.localcontext.LocalContextService/GetGoScore:
     post:
       tags:
@@ -13380,6 +13452,142 @@ components:
 
          Values are only ever appended. Reordering or removing one silently changes
          the meaning of data already on the wire.
+    loci.localcontext.DriveCostEstimate:
+      type: object
+      properties:
+        distanceKm:
+          type: number
+          title: distance_km
+          format: double
+        litres:
+          type: number
+          title: litres
+          format: double
+        cost:
+          type: number
+          title: cost
+          format: double
+        currency:
+          type: string
+          title: currency
+          maxLength: 3
+        assumptions:
+          type: string
+          title: assumptions
+          maxLength: 500
+          description: |-
+            What the number rests on, in words. Always populated: a bare figure about
+             someone's money invites either misplaced trust or dismissal, and only the
+             assumptions let a user correct it against their own car.
+      title: DriveCostEstimate
+      additionalProperties: false
+      description: DriveCostEstimate prices the fuel for a driving leg.
+    loci.localcontext.EstimateDriveCostRequest:
+      type: object
+      properties:
+        distanceKm:
+          type: number
+          title: distance_km
+          minimum: 0
+          format: double
+        currency:
+          type:
+            - string
+            - "null"
+          title: currency
+          maxLength: 3
+          description: ISO-4217 for the result. Defaults to the server's configured base.
+      title: EstimateDriveCostRequest
+      additionalProperties: false
+    loci.localcontext.EstimateDriveCostResponse:
+      type: object
+      properties:
+        estimate:
+          title: estimate
+          $ref: '#/components/schemas/loci.localcontext.DriveCostEstimate'
+      title: EstimateDriveCostResponse
+      additionalProperties: false
+    loci.localcontext.FxRate:
+      type: object
+      properties:
+        base:
+          type: string
+          title: base
+          maxLength: 3
+          minLength: 3
+        quote:
+          type: string
+          title: quote
+          maxLength: 3
+          minLength: 3
+        rate:
+          exclusiveMinimum: 0
+          type: number
+          title: rate
+          format: double
+        asOf:
+          title: as_of
+          description: |-
+            The day the rate was published. Shown so a user can tell a Friday rate read
+             on a Sunday for what it is.
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: FxRate
+      additionalProperties: false
+      description: |-
+        FxRate is one currency pair at a point in time.
+
+         Reference rates republished from the ECB. They are exact rather than
+         modelled, but the ECB publishes only 30 currencies — anywhere else returns no
+         rate at all, because a made-up number about someone's money is worse than
+         none.
+    loci.localcontext.GetFxRatesRequest:
+      type: object
+      properties:
+        base:
+          type:
+            - string
+            - "null"
+          title: base
+          maxLength: 3
+          description: ISO-4217. Defaults to the server's configured base when empty.
+        quotes:
+          type: array
+          items:
+            type: string
+          title: quotes
+          maxItems: 10
+          description: Explicit quote currencies. When empty, country_code is used instead.
+        countryCode:
+          type:
+            - string
+            - "null"
+          title: country_code
+          maxLength: 2
+          description: |-
+            ISO-3166 alpha-2. A convenience so a caller holding a destination does not
+             have to know its currency.
+      title: GetFxRatesRequest
+      additionalProperties: false
+      description: GetFxRatesRequest asks what the traveller's money is worth at a destination.
+    loci.localcontext.GetFxRatesResponse:
+      type: object
+      properties:
+        rates:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.localcontext.FxRate'
+          title: rates
+        unsupported:
+          type: array
+          items:
+            type: string
+          title: unsupported
+          description: |-
+            Currencies that were asked for, or implied by country_code, that the ECB
+             does not publish. Returned rather than dropped so a client can say "no rate
+             available" instead of silently showing nothing.
+      title: GetFxRatesResponse
+      additionalProperties: false
     loci.localcontext.GetGoScoreRequest:
       type: object
       properties:

@@ -124,10 +124,70 @@ message GetGoScoreResponse {
   string city_name = 2 [(buf.validate.field).string = {max_len: 200}];
 }
 
+// FxRate is one currency pair at a point in time.
+//
+// Reference rates republished from the ECB. They are exact rather than
+// modelled, but the ECB publishes only 30 currencies — anywhere else returns no
+// rate at all, because a made-up number about someone's money is worse than
+// none.
+message FxRate {
+  string base = 1 [(buf.validate.field).string.len = 3];
+  string quote = 2 [(buf.validate.field).string.len = 3];
+  double rate = 3 [(buf.validate.field).double = {gt: 0}];
+  // The day the rate was published. Shown so a user can tell a Friday rate read
+  // on a Sunday for what it is.
+  google.protobuf.Timestamp as_of = 4;
+}
+
+// GetFxRatesRequest asks what the traveller's money is worth at a destination.
+message GetFxRatesRequest {
+  // ISO-4217. Defaults to the server's configured base when empty.
+  optional string base = 1 [(buf.validate.field).string = {max_len: 3}];
+  // Explicit quote currencies. When empty, country_code is used instead.
+  repeated string quotes = 2 [(buf.validate.field).repeated = {max_items: 10}];
+  // ISO-3166 alpha-2. A convenience so a caller holding a destination does not
+  // have to know its currency.
+  optional string country_code = 3 [(buf.validate.field).string = {max_len: 2}];
+}
+
+message GetFxRatesResponse {
+  repeated FxRate rates = 1;
+  // Currencies that were asked for, or implied by country_code, that the ECB
+  // does not publish. Returned rather than dropped so a client can say "no rate
+  // available" instead of silently showing nothing.
+  repeated string unsupported = 2;
+}
+
+// DriveCostEstimate prices the fuel for a driving leg.
+message DriveCostEstimate {
+  double distance_km = 1;
+  double litres = 2;
+  double cost = 3;
+  string currency = 4 [(buf.validate.field).string = {max_len: 3}];
+  // What the number rests on, in words. Always populated: a bare figure about
+  // someone's money invites either misplaced trust or dismissal, and only the
+  // assumptions let a user correct it against their own car.
+  string assumptions = 5 [(buf.validate.field).string = {max_len: 500}];
+}
+
+message EstimateDriveCostRequest {
+  double distance_km = 1 [(buf.validate.field).double = {gte: 0}];
+  // ISO-4217 for the result. Defaults to the server's configured base.
+  optional string currency = 2 [(buf.validate.field).string = {max_len: 3}];
+}
+
+message EstimateDriveCostResponse {
+  DriveCostEstimate estimate = 1;
+}
+
 // LocalContextService surfaces trip-time context: weather, plus live alerts
 // from public-holiday and natural-hazard providers.
 service LocalContextService {
   rpc GetLocalContext(GetLocalContextRequest) returns (LocalContext);
   // GetGoScore answers "should I go this weekend?" for one destination.
   rpc GetGoScore(GetGoScoreRequest) returns (GetGoScoreResponse);
+  // GetFxRates answers "what is my money worth there?".
+  rpc GetFxRates(GetFxRatesRequest) returns (GetFxRatesResponse);
+  // EstimateDriveCost prices the fuel for a driving leg.
+  rpc EstimateDriveCost(EstimateDriveCostRequest) returns (EstimateDriveCostResponse);
 }
