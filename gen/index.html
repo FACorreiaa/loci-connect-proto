@@ -12352,6 +12352,28 @@ on a Sunday for what it is. </p></td>
 have to know its currency. </p></td>
                 </tr>
               
+                <tr>
+                  <td>latitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td>optional</td>
+                  <td><p>Coordinates, resolved to a country server-side.
+
+The most useful entry point in practice: a client holding a destination
+usually has its coordinates, and often only a display country name like
+&#34;Portugal&#34; rather than an ISO code. Resolving that name client-side would
+mean duplicating a country table that already exists on the server, so the
+server does it with the same geocoder it runs for alerts.
+
+Ignored when country_code or quotes are supplied. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>longitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
             </tbody>
           </table>
 

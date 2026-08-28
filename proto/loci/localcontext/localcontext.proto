@@ -148,6 +148,18 @@ message GetFxRatesRequest {
   // ISO-3166 alpha-2. A convenience so a caller holding a destination does not
   // have to know its currency.
   optional string country_code = 3 [(buf.validate.field).string = {max_len: 2}];
+
+  // Coordinates, resolved to a country server-side.
+  //
+  // The most useful entry point in practice: a client holding a destination
+  // usually has its coordinates, and often only a display country name like
+  // "Portugal" rather than an ISO code. Resolving that name client-side would
+  // mean duplicating a country table that already exists on the server, so the
+  // server does it with the same geocoder it runs for alerts.
+  //
+  // Ignored when country_code or quotes are supplied.
+  optional double latitude = 4 [(buf.validate.field).double = {gte: -90, lte: 90}];
+  optional double longitude = 5 [(buf.validate.field).double = {gte: -180, lte: 180}];
 }
 
 message GetFxRatesResponse {

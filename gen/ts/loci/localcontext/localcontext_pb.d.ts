@@ -408,6 +408,26 @@ export declare type GetFxRatesRequest = Message<"loci.localcontext.GetFxRatesReq
    * @generated from field: optional string country_code = 3;
    */
   countryCode?: string;
+
+  /**
+   * Coordinates, resolved to a country server-side.
+   *
+   * The most useful entry point in practice: a client holding a destination
+   * usually has its coordinates, and often only a display country name like
+   * "Portugal" rather than an ISO code. Resolving that name client-side would
+   * mean duplicating a country table that already exists on the server, so the
+   * server does it with the same geocoder it runs for alerts.
+   *
+   * Ignored when country_code or quotes are supplied.
+   *
+   * @generated from field: optional double latitude = 4;
+   */
+  latitude?: number;
+
+  /**
+   * @generated from field: optional double longitude = 5;
+   */
+  longitude?: number;
 };
 
 /**
