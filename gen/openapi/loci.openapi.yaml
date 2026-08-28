@@ -13566,6 +13566,32 @@ components:
           description: |-
             ISO-3166 alpha-2. A convenience so a caller holding a destination does not
              have to know its currency.
+        latitude:
+          type:
+            - number
+            - "null"
+          title: latitude
+          maximum: 90
+          minimum: -90
+          format: double
+          description: |-
+            Coordinates, resolved to a country server-side.
+
+             The most useful entry point in practice: a client holding a destination
+             usually has its coordinates, and often only a display country name like
+             "Portugal" rather than an ISO code. Resolving that name client-side would
+             mean duplicating a country table that already exists on the server, so the
+             server does it with the same geocoder it runs for alerts.
+
+             Ignored when country_code or quotes are supplied.
+        longitude:
+          type:
+            - number
+            - "null"
+          title: longitude
+          maximum: 180
+          minimum: -180
+          format: double
       title: GetFxRatesRequest
       additionalProperties: false
       description: GetFxRatesRequest asks what the traveller's money is worth at a destination.

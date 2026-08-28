@@ -798,7 +798,18 @@ type GetFxRatesRequest struct {
 	Quotes []string `protobuf:"bytes,2,rep,name=quotes,proto3" json:"quotes,omitempty"`
 	// ISO-3166 alpha-2. A convenience so a caller holding a destination does not
 	// have to know its currency.
-	CountryCode   *string `protobuf:"bytes,3,opt,name=country_code,json=countryCode,proto3,oneof" json:"country_code,omitempty"`
+	CountryCode *string `protobuf:"bytes,3,opt,name=country_code,json=countryCode,proto3,oneof" json:"country_code,omitempty"`
+	// Coordinates, resolved to a country server-side.
+	//
+	// The most useful entry point in practice: a client holding a destination
+	// usually has its coordinates, and often only a display country name like
+	// "Portugal" rather than an ISO code. Resolving that name client-side would
+	// mean duplicating a country table that already exists on the server, so the
+	// server does it with the same geocoder it runs for alerts.
+	//
+	// Ignored when country_code or quotes are supplied.
+	Latitude      *float64 `protobuf:"fixed64,4,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
+	Longitude     *float64 `protobuf:"fixed64,5,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -852,6 +863,20 @@ func (x *GetFxRatesRequest) GetCountryCode() string {
 		return *x.CountryCode
 	}
 	return ""
+}
+
+func (x *GetFxRatesRequest) GetLatitude() float64 {
+	if x != nil && x.Latitude != nil {
+		return *x.Latitude
+	}
+	return 0
+}
+
+func (x *GetFxRatesRequest) GetLongitude() float64 {
+	if x != nil && x.Longitude != nil {
+		return *x.Longitude
+	}
+	return 0
 }
 
 type GetFxRatesResponse struct {
@@ -1159,14 +1184,19 @@ const file_loci_localcontext_localcontext_proto_rawDesc = "" +
 	"\x04base\x18\x01 \x01(\tB\b\xbaH\x05r\x03\x98\x01\x03R\x04base\x12\x1e\n" +
 	"\x05quote\x18\x02 \x01(\tB\b\xbaH\x05r\x03\x98\x01\x03R\x05quote\x12\"\n" +
 	"\x04rate\x18\x03 \x01(\x01B\x0e\xbaH\v\x12\t!\x00\x00\x00\x00\x00\x00\x00\x00R\x04rate\x12/\n" +
-	"\x05as_of\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\x04asOf\"\xa2\x01\n" +
+	"\x05as_of\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\x04asOf\"\xb3\x02\n" +
 	"\x11GetFxRatesRequest\x12 \n" +
 	"\x04base\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x18\x03H\x00R\x04base\x88\x01\x01\x12 \n" +
 	"\x06quotes\x18\x02 \x03(\tB\b\xbaH\x05\x92\x01\x02\x10\n" +
 	"R\x06quotes\x12/\n" +
-	"\fcountry_code\x18\x03 \x01(\tB\a\xbaH\x04r\x02\x18\x02H\x01R\vcountryCode\x88\x01\x01B\a\n" +
+	"\fcountry_code\x18\x03 \x01(\tB\a\xbaH\x04r\x02\x18\x02H\x01R\vcountryCode\x88\x01\x01\x128\n" +
+	"\blatitude\x18\x04 \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x80V@)\x00\x00\x00\x00\x00\x80V\xc0H\x02R\blatitude\x88\x01\x01\x12:\n" +
+	"\tlongitude\x18\x05 \x01(\x01B\x17\xbaH\x14\x12\x12\x19\x00\x00\x00\x00\x00\x80f@)\x00\x00\x00\x00\x00\x80f\xc0H\x03R\tlongitude\x88\x01\x01B\a\n" +
 	"\x05_baseB\x0f\n" +
-	"\r_country_code\"g\n" +
+	"\r_country_codeB\v\n" +
+	"\t_latitudeB\f\n" +
+	"\n" +
+	"_longitude\"g\n" +
 	"\x12GetFxRatesResponse\x12/\n" +
 	"\x05rates\x18\x01 \x03(\v2\x19.loci.localcontext.FxRateR\x05rates\x12 \n" +
 	"\vunsupported\x18\x02 \x03(\tR\vunsupported\"\xb1\x01\n" +
