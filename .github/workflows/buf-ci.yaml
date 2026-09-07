@@ -16,6 +16,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Full history. The breaking-change step below compares against
+          # `.git#branch=main`, and the default shallow clone fetches only the
+          # ref under test, so main is not present and buf cannot resolve it.
+          fetch-depth: 0
 
       - uses: actions/setup-go@v5
         with:
