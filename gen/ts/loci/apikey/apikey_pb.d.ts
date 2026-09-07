@@ -66,6 +66,19 @@ export declare type ApiKey = Message<"loci.apikey.ApiKey"> & {
    * @generated from field: repeated string scopes = 8;
    */
   scopes: string[];
+
+  /**
+   * Which client the setup instructions were generated for. Presentation only:
+   * nothing about authentication varies by kind, and a key issued for one
+   * client works in any of them. It exists so the settings page can show what
+   * a key was minted for, which is how somebody decides which one to revoke.
+   *
+   * Known values: "claude_code", "codex", "hermes", "other". Empty means
+   * "other", so keys minted before this field existed still render.
+   *
+   * @generated from field: string client_kind = 9;
+   */
+  clientKind: string;
 };
 
 /**
@@ -99,6 +112,15 @@ export declare type CreateApiKeyRequest = Message<"loci.apikey.CreateApiKeyReque
    * @generated from field: repeated string scopes = 3;
    */
   scopes: string[];
+
+  /**
+   * Which client this key is being minted for. Omitted means "other".
+   * An unrecognised value is rejected rather than stored, so the settings page
+   * cannot end up displaying a kind it has no name or icon for.
+   *
+   * @generated from field: string client_kind = 4;
+   */
+  clientKind: string;
 };
 
 /**
@@ -187,6 +209,70 @@ export declare type RevokeApiKeyResponse = Message<"loci.apikey.RevokeApiKeyResp
 export declare const RevokeApiKeyResponseSchema: GenMessage<RevokeApiKeyResponse>;
 
 /**
+ * @generated from message loci.apikey.GetSetupInstructionsRequest
+ */
+export declare type GetSetupInstructionsRequest = Message<"loci.apikey.GetSetupInstructionsRequest"> & {
+  /**
+   * Which client to write the instructions for. Omitted means "other", which
+   * gets the generic MCP configuration rather than a vendor's CLI.
+   *
+   * @generated from field: string client_kind = 1;
+   */
+  clientKind: string;
+};
+
+/**
+ * Describes the message loci.apikey.GetSetupInstructionsRequest.
+ * Use `create(GetSetupInstructionsRequestSchema)` to create a new message.
+ */
+export declare const GetSetupInstructionsRequestSchema: GenMessage<GetSetupInstructionsRequest>;
+
+/**
+ * @generated from message loci.apikey.GetSetupInstructionsResponse
+ */
+export declare type GetSetupInstructionsResponse = Message<"loci.apikey.GetSetupInstructionsResponse"> & {
+  /**
+   * The MCP endpoint these instructions point at, so the page does not have to
+   * know the server's own address.
+   *
+   * @generated from field: string endpoint = 1;
+   */
+  endpoint: string;
+
+  /**
+   * A single shell command that registers the server, for clients that have
+   * one. Empty when the client has no CLI.
+   *
+   * @generated from field: string one_command = 2;
+   */
+  oneCommand: string;
+
+  /**
+   * An .mcp.json fragment, for clients configured by file. The key is
+   * referenced through an environment variable rather than inlined, because
+   * that file is committed far more often than people expect.
+   *
+   * @generated from field: string mcp_json = 3;
+   */
+  mcpJson: string;
+
+  /**
+   * Prose to hand to an agent so it configures itself, naming the read-only
+   * tools it should verify with. It tells the agent not to call the generating
+   * tools while checking, since those spend the owner's daily quota.
+   *
+   * @generated from field: string setup_prompt = 4;
+   */
+  setupPrompt: string;
+};
+
+/**
+ * Describes the message loci.apikey.GetSetupInstructionsResponse.
+ * Use `create(GetSetupInstructionsResponseSchema)` to create a new message.
+ */
+export declare const GetSetupInstructionsResponseSchema: GenMessage<GetSetupInstructionsResponse>;
+
+/**
  * ApiKeyService manages long-lived API keys for programmatic access
  * (MCP clients, integrations). Keys authenticate as the owning user.
  *
@@ -223,6 +309,22 @@ export declare const ApiKeyService: GenService<{
     methodKind: "unary";
     input: typeof RevokeApiKeyRequestSchema;
     output: typeof RevokeApiKeyResponseSchema;
+  },
+  /**
+   * GetSetupInstructions returns the copyable snippets that connect one kind
+   * of agent to Loci's MCP endpoint.
+   *
+   * Deliberately takes no key and returns none. The snippets carry a
+   * placeholder, so the settings page can show somebody exactly what they are
+   * about to run before any key exists — and so this call, which is made every
+   * time the page is opened, never has a secret in its response.
+   *
+   * @generated from rpc loci.apikey.ApiKeyService.GetSetupInstructions
+   */
+  getSetupInstructions: {
+    methodKind: "unary";
+    input: typeof GetSetupInstructionsRequestSchema;
+    output: typeof GetSetupInstructionsResponseSchema;
   },
 }>;
 

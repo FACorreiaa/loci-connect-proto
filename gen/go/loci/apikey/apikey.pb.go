@@ -40,7 +40,15 @@ type ApiKey struct {
 	//
 	// Known values: "read", "write", "write:generate". No scope implies another —
 	// a key that must read and write is minted with both.
-	Scopes        []string `protobuf:"bytes,8,rep,name=scopes,proto3" json:"scopes,omitempty"`
+	Scopes []string `protobuf:"bytes,8,rep,name=scopes,proto3" json:"scopes,omitempty"`
+	// Which client the setup instructions were generated for. Presentation only:
+	// nothing about authentication varies by kind, and a key issued for one
+	// client works in any of them. It exists so the settings page can show what
+	// a key was minted for, which is how somebody decides which one to revoke.
+	//
+	// Known values: "claude_code", "codex", "hermes", "other". Empty means
+	// "other", so keys minted before this field existed still render.
+	ClientKind    string `protobuf:"bytes,9,opt,name=client_kind,json=clientKind,proto3" json:"client_kind,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -131,6 +139,13 @@ func (x *ApiKey) GetScopes() []string {
 	return nil
 }
 
+func (x *ApiKey) GetClientKind() string {
+	if x != nil {
+		return x.ClientKind
+	}
+	return ""
+}
+
 type CreateApiKeyRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	Name  string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
@@ -140,7 +155,11 @@ type CreateApiKeyRequest struct {
 	// a caller that does not know about scopes gets a key that cannot change or
 	// spend anything. An unrecognised scope is rejected rather than dropped, so a
 	// caller never receives a key weaker than they believe they hold.
-	Scopes        []string `protobuf:"bytes,3,rep,name=scopes,proto3" json:"scopes,omitempty"`
+	Scopes []string `protobuf:"bytes,3,rep,name=scopes,proto3" json:"scopes,omitempty"`
+	// Which client this key is being minted for. Omitted means "other".
+	// An unrecognised value is rejected rather than stored, so the settings page
+	// cannot end up displaying a kind it has no name or icon for.
+	ClientKind    string `protobuf:"bytes,4,opt,name=client_kind,json=clientKind,proto3" json:"client_kind,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -194,6 +213,13 @@ func (x *CreateApiKeyRequest) GetScopes() []string {
 		return x.Scopes
 	}
 	return nil
+}
+
+func (x *CreateApiKeyRequest) GetClientKind() string {
+	if x != nil {
+		return x.ClientKind
+	}
+	return ""
 }
 
 type CreateApiKeyResponse struct {
@@ -409,11 +435,135 @@ func (*RevokeApiKeyResponse) Descriptor() ([]byte, []int) {
 	return file_loci_apikey_apikey_proto_rawDescGZIP(), []int{6}
 }
 
+type GetSetupInstructionsRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Which client to write the instructions for. Omitted means "other", which
+	// gets the generic MCP configuration rather than a vendor's CLI.
+	ClientKind    string `protobuf:"bytes,1,opt,name=client_kind,json=clientKind,proto3" json:"client_kind,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetSetupInstructionsRequest) Reset() {
+	*x = GetSetupInstructionsRequest{}
+	mi := &file_loci_apikey_apikey_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSetupInstructionsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSetupInstructionsRequest) ProtoMessage() {}
+
+func (x *GetSetupInstructionsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_loci_apikey_apikey_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSetupInstructionsRequest.ProtoReflect.Descriptor instead.
+func (*GetSetupInstructionsRequest) Descriptor() ([]byte, []int) {
+	return file_loci_apikey_apikey_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *GetSetupInstructionsRequest) GetClientKind() string {
+	if x != nil {
+		return x.ClientKind
+	}
+	return ""
+}
+
+type GetSetupInstructionsResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The MCP endpoint these instructions point at, so the page does not have to
+	// know the server's own address.
+	Endpoint string `protobuf:"bytes,1,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
+	// A single shell command that registers the server, for clients that have
+	// one. Empty when the client has no CLI.
+	OneCommand string `protobuf:"bytes,2,opt,name=one_command,json=oneCommand,proto3" json:"one_command,omitempty"`
+	// An .mcp.json fragment, for clients configured by file. The key is
+	// referenced through an environment variable rather than inlined, because
+	// that file is committed far more often than people expect.
+	McpJson string `protobuf:"bytes,3,opt,name=mcp_json,json=mcpJson,proto3" json:"mcp_json,omitempty"`
+	// Prose to hand to an agent so it configures itself, naming the read-only
+	// tools it should verify with. It tells the agent not to call the generating
+	// tools while checking, since those spend the owner's daily quota.
+	SetupPrompt   string `protobuf:"bytes,4,opt,name=setup_prompt,json=setupPrompt,proto3" json:"setup_prompt,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetSetupInstructionsResponse) Reset() {
+	*x = GetSetupInstructionsResponse{}
+	mi := &file_loci_apikey_apikey_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSetupInstructionsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSetupInstructionsResponse) ProtoMessage() {}
+
+func (x *GetSetupInstructionsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_loci_apikey_apikey_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSetupInstructionsResponse.ProtoReflect.Descriptor instead.
+func (*GetSetupInstructionsResponse) Descriptor() ([]byte, []int) {
+	return file_loci_apikey_apikey_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *GetSetupInstructionsResponse) GetEndpoint() string {
+	if x != nil {
+		return x.Endpoint
+	}
+	return ""
+}
+
+func (x *GetSetupInstructionsResponse) GetOneCommand() string {
+	if x != nil {
+		return x.OneCommand
+	}
+	return ""
+}
+
+func (x *GetSetupInstructionsResponse) GetMcpJson() string {
+	if x != nil {
+		return x.McpJson
+	}
+	return ""
+}
+
+func (x *GetSetupInstructionsResponse) GetSetupPrompt() string {
+	if x != nil {
+		return x.SetupPrompt
+	}
+	return ""
+}
+
 var File_loci_apikey_apikey_proto protoreflect.FileDescriptor
 
 const file_loci_apikey_apikey_proto_rawDesc = "" +
 	"\n" +
-	"\x18loci/apikey/apikey.proto\x12\vloci.apikey\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bbuf/validate/validate.proto\"\xb9\x03\n" +
+	"\x18loci/apikey/apikey.proto\x12\vloci.apikey\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bbuf/validate/validate.proto\"\xe3\x03\n" +
 	"\x06ApiKey\x12\x19\n" +
 	"\x02id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x02id\x12\x1d\n" +
 	"\x04name\x18\x02 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x04name\x12&\n" +
@@ -427,15 +577,19 @@ const file_loci_apikey_apikey_proto_rawDesc = "" +
 	"expires_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampH\x01R\texpiresAt\x88\x01\x01\x12>\n" +
 	"\n" +
 	"revoked_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampH\x02R\trevokedAt\x88\x01\x01\x12 \n" +
-	"\x06scopes\x18\b \x03(\tB\b\xbaH\x05\x92\x01\x02\x10\bR\x06scopesB\x0f\n" +
+	"\x06scopes\x18\b \x03(\tB\b\xbaH\x05\x92\x01\x02\x10\bR\x06scopes\x12(\n" +
+	"\vclient_kind\x18\t \x01(\tB\a\xbaH\x04r\x02\x18 R\n" +
+	"clientKindB\x0f\n" +
 	"\r_last_used_atB\r\n" +
 	"\v_expires_atB\r\n" +
-	"\v_revoked_at\"\xa5\x01\n" +
+	"\v_revoked_at\"\xcf\x01\n" +
 	"\x13CreateApiKeyRequest\x12\x1d\n" +
 	"\x04name\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x04name\x12>\n" +
 	"\n" +
 	"expires_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\texpiresAt\x88\x01\x01\x12 \n" +
-	"\x06scopes\x18\x03 \x03(\tB\b\xbaH\x05\x92\x01\x02\x10\bR\x06scopesB\r\n" +
+	"\x06scopes\x18\x03 \x03(\tB\b\xbaH\x05\x92\x01\x02\x10\bR\x06scopes\x12(\n" +
+	"\vclient_kind\x18\x04 \x01(\tB\a\xbaH\x04r\x02\x18 R\n" +
+	"clientKindB\r\n" +
 	"\v_expires_at\"i\n" +
 	"\x14CreateApiKeyResponse\x12,\n" +
 	"\aapi_key\x18\x01 \x01(\v2\x13.loci.apikey.ApiKeyR\x06apiKey\x12#\n" +
@@ -445,11 +599,21 @@ const file_loci_apikey_apikey_proto_rawDesc = "" +
 	"\bapi_keys\x18\x01 \x03(\v2\x13.loci.apikey.ApiKeyR\aapiKeys\"0\n" +
 	"\x13RevokeApiKeyRequest\x12\x19\n" +
 	"\x02id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x02id\"\x16\n" +
-	"\x14RevokeApiKeyResponse2\x8b\x02\n" +
+	"\x14RevokeApiKeyResponse\"G\n" +
+	"\x1bGetSetupInstructionsRequest\x12(\n" +
+	"\vclient_kind\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x18 R\n" +
+	"clientKind\"\x99\x01\n" +
+	"\x1cGetSetupInstructionsResponse\x12\x1a\n" +
+	"\bendpoint\x18\x01 \x01(\tR\bendpoint\x12\x1f\n" +
+	"\vone_command\x18\x02 \x01(\tR\n" +
+	"oneCommand\x12\x19\n" +
+	"\bmcp_json\x18\x03 \x01(\tR\amcpJson\x12!\n" +
+	"\fsetup_prompt\x18\x04 \x01(\tR\vsetupPrompt2\xf8\x02\n" +
 	"\rApiKeyService\x12S\n" +
 	"\fCreateApiKey\x12 .loci.apikey.CreateApiKeyRequest\x1a!.loci.apikey.CreateApiKeyResponse\x12P\n" +
 	"\vListApiKeys\x12\x1f.loci.apikey.ListApiKeysRequest\x1a .loci.apikey.ListApiKeysResponse\x12S\n" +
-	"\fRevokeApiKey\x12 .loci.apikey.RevokeApiKeyRequest\x1a!.loci.apikey.RevokeApiKeyResponseBIZGgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/apikey;apikeyv1b\x06proto3"
+	"\fRevokeApiKey\x12 .loci.apikey.RevokeApiKeyRequest\x1a!.loci.apikey.RevokeApiKeyResponse\x12k\n" +
+	"\x14GetSetupInstructions\x12(.loci.apikey.GetSetupInstructionsRequest\x1a).loci.apikey.GetSetupInstructionsResponseBIZGgithub.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/apikey;apikeyv1b\x06proto3"
 
 var (
 	file_loci_apikey_apikey_proto_rawDescOnce sync.Once
@@ -463,33 +627,37 @@ func file_loci_apikey_apikey_proto_rawDescGZIP() []byte {
 	return file_loci_apikey_apikey_proto_rawDescData
 }
 
-var file_loci_apikey_apikey_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_loci_apikey_apikey_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_loci_apikey_apikey_proto_goTypes = []any{
-	(*ApiKey)(nil),                // 0: loci.apikey.ApiKey
-	(*CreateApiKeyRequest)(nil),   // 1: loci.apikey.CreateApiKeyRequest
-	(*CreateApiKeyResponse)(nil),  // 2: loci.apikey.CreateApiKeyResponse
-	(*ListApiKeysRequest)(nil),    // 3: loci.apikey.ListApiKeysRequest
-	(*ListApiKeysResponse)(nil),   // 4: loci.apikey.ListApiKeysResponse
-	(*RevokeApiKeyRequest)(nil),   // 5: loci.apikey.RevokeApiKeyRequest
-	(*RevokeApiKeyResponse)(nil),  // 6: loci.apikey.RevokeApiKeyResponse
-	(*timestamppb.Timestamp)(nil), // 7: google.protobuf.Timestamp
+	(*ApiKey)(nil),                       // 0: loci.apikey.ApiKey
+	(*CreateApiKeyRequest)(nil),          // 1: loci.apikey.CreateApiKeyRequest
+	(*CreateApiKeyResponse)(nil),         // 2: loci.apikey.CreateApiKeyResponse
+	(*ListApiKeysRequest)(nil),           // 3: loci.apikey.ListApiKeysRequest
+	(*ListApiKeysResponse)(nil),          // 4: loci.apikey.ListApiKeysResponse
+	(*RevokeApiKeyRequest)(nil),          // 5: loci.apikey.RevokeApiKeyRequest
+	(*RevokeApiKeyResponse)(nil),         // 6: loci.apikey.RevokeApiKeyResponse
+	(*GetSetupInstructionsRequest)(nil),  // 7: loci.apikey.GetSetupInstructionsRequest
+	(*GetSetupInstructionsResponse)(nil), // 8: loci.apikey.GetSetupInstructionsResponse
+	(*timestamppb.Timestamp)(nil),        // 9: google.protobuf.Timestamp
 }
 var file_loci_apikey_apikey_proto_depIdxs = []int32{
-	7,  // 0: loci.apikey.ApiKey.created_at:type_name -> google.protobuf.Timestamp
-	7,  // 1: loci.apikey.ApiKey.last_used_at:type_name -> google.protobuf.Timestamp
-	7,  // 2: loci.apikey.ApiKey.expires_at:type_name -> google.protobuf.Timestamp
-	7,  // 3: loci.apikey.ApiKey.revoked_at:type_name -> google.protobuf.Timestamp
-	7,  // 4: loci.apikey.CreateApiKeyRequest.expires_at:type_name -> google.protobuf.Timestamp
+	9,  // 0: loci.apikey.ApiKey.created_at:type_name -> google.protobuf.Timestamp
+	9,  // 1: loci.apikey.ApiKey.last_used_at:type_name -> google.protobuf.Timestamp
+	9,  // 2: loci.apikey.ApiKey.expires_at:type_name -> google.protobuf.Timestamp
+	9,  // 3: loci.apikey.ApiKey.revoked_at:type_name -> google.protobuf.Timestamp
+	9,  // 4: loci.apikey.CreateApiKeyRequest.expires_at:type_name -> google.protobuf.Timestamp
 	0,  // 5: loci.apikey.CreateApiKeyResponse.api_key:type_name -> loci.apikey.ApiKey
 	0,  // 6: loci.apikey.ListApiKeysResponse.api_keys:type_name -> loci.apikey.ApiKey
 	1,  // 7: loci.apikey.ApiKeyService.CreateApiKey:input_type -> loci.apikey.CreateApiKeyRequest
 	3,  // 8: loci.apikey.ApiKeyService.ListApiKeys:input_type -> loci.apikey.ListApiKeysRequest
 	5,  // 9: loci.apikey.ApiKeyService.RevokeApiKey:input_type -> loci.apikey.RevokeApiKeyRequest
-	2,  // 10: loci.apikey.ApiKeyService.CreateApiKey:output_type -> loci.apikey.CreateApiKeyResponse
-	4,  // 11: loci.apikey.ApiKeyService.ListApiKeys:output_type -> loci.apikey.ListApiKeysResponse
-	6,  // 12: loci.apikey.ApiKeyService.RevokeApiKey:output_type -> loci.apikey.RevokeApiKeyResponse
-	10, // [10:13] is the sub-list for method output_type
-	7,  // [7:10] is the sub-list for method input_type
+	7,  // 10: loci.apikey.ApiKeyService.GetSetupInstructions:input_type -> loci.apikey.GetSetupInstructionsRequest
+	2,  // 11: loci.apikey.ApiKeyService.CreateApiKey:output_type -> loci.apikey.CreateApiKeyResponse
+	4,  // 12: loci.apikey.ApiKeyService.ListApiKeys:output_type -> loci.apikey.ListApiKeysResponse
+	6,  // 13: loci.apikey.ApiKeyService.RevokeApiKey:output_type -> loci.apikey.RevokeApiKeyResponse
+	8,  // 14: loci.apikey.ApiKeyService.GetSetupInstructions:output_type -> loci.apikey.GetSetupInstructionsResponse
+	11, // [11:15] is the sub-list for method output_type
+	7,  // [7:11] is the sub-list for method input_type
 	7,  // [7:7] is the sub-list for extension type_name
 	7,  // [7:7] is the sub-list for extension extendee
 	0,  // [0:7] is the sub-list for field type_name
@@ -508,7 +676,7 @@ func file_loci_apikey_apikey_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_loci_apikey_apikey_proto_rawDesc), len(file_loci_apikey_apikey_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

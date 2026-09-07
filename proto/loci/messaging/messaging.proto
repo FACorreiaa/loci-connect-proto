@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+package loci.messaging;
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/messaging;messagingv1";
+
+import "google/protobuf/timestamp.proto";
+import "buf/validate/validate.proto";
+
+// MessagingService links a chat platform to a Loci account, so somebody can
+// ask for an itinerary from their phone and have it continue in the web app.
+//
+// Only the linking half lives here. Inbound messages arrive from the platform,
+// not from this API, and the bot answers them there.
+service MessagingService {
+  // GetLink reports whether a platform is linked to the caller's account.
+  rpc GetLink(GetLinkRequest) returns (GetLinkResponse);
+  // CreateLinkCode issues a short-lived, single-use code to send to the bot.
+  //
+  // This is the only moment an unlinked chat can reach an account, so the code
+  // is deliberately weak on its own: it is typed by hand into a chat window,
+  // and what makes that safe is the expiry, the single use, and a rate limit
+  // on redemption rather than its length.
+  rpc CreateLinkCode(CreateLinkCodeRequest) returns (CreateLinkCodeResponse);
+  // Unlink disconnects the chat. The conversation history stays with the
+  // account; only the route to it is removed.
+  rpc Unlink(UnlinkRequest) returns (UnlinkResponse);
+}
+
+// A linked chat.
+message Link {
+  // Which platform, e.g. "telegram".
+  string platform = 1 [(buf.validate.field).string = {min_len: 1, max_len: 32}];
+  // How the person is addressed on that platform, for display. Not the chat
+  // id: that identifies a conversation the account does not need to see.
+  string display_name = 2 [(buf.validate.field).string = {max_len: 200}];
+  google.protobuf.Timestamp linked_at = 3;
+  // Absent means linked but never used, which is how the settings page tells a
+  // live connection from one set up and forgotten.
+  optional google.protobuf.Timestamp last_seen_at = 4;
+}
+
+message GetLinkRequest {
+  string platform = 1 [(buf.validate.field).string = {min_len: 1, max_len: 32}];
+}
+
+message GetLinkResponse {
+  // Absent when the platform is not linked.
+  optional Link link = 1;
+  // Where to send the code. Empty when no bot is configured on this server, in
+  // which case the page explains the absence rather than issuing a code that
+  // nothing can redeem.
+  string bot_handle = 2 [(buf.validate.field).string = {max_len: 100}];
+}
+
+message CreateLinkCodeRequest {
+  string platform = 1 [(buf.validate.field).string = {min_len: 1, max_len: 32}];
+}
+
+message CreateLinkCodeResponse {
+  // Shown once. Only its hash is stored, so a database dump cannot be
+  // redeemed.
+  string code = 1 [(buf.validate.field).string = {min_len: 1, max_len: 32}];
+  google.protobuf.Timestamp expires_at = 2;
+  string bot_handle = 3 [(buf.validate.field).string = {max_len: 100}];
+}
+
+message UnlinkRequest {
+  string platform = 1 [(buf.validate.field).string = {min_len: 1, max_len: 32}];
+}
+
+message UnlinkResponse {}

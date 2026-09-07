@@ -17,6 +17,14 @@ service ApiKeyService {
   rpc ListApiKeys(ListApiKeysRequest) returns (ListApiKeysResponse);
   // RevokeApiKey permanently disables a key.
   rpc RevokeApiKey(RevokeApiKeyRequest) returns (RevokeApiKeyResponse);
+  // GetSetupInstructions returns the copyable snippets that connect one kind
+  // of agent to Loci's MCP endpoint.
+  //
+  // Deliberately takes no key and returns none. The snippets carry a
+  // placeholder, so the settings page can show somebody exactly what they are
+  // about to run before any key exists — and so this call, which is made every
+  // time the page is opened, never has a secret in its response.
+  rpc GetSetupInstructions(GetSetupInstructionsRequest) returns (GetSetupInstructionsResponse);
 }
 
 // Metadata about an API key. The plaintext secret is never included.
@@ -36,6 +44,14 @@ message ApiKey {
   // Known values: "read", "write", "write:generate". No scope implies another —
   // a key that must read and write is minted with both.
   repeated string scopes = 8 [(buf.validate.field).repeated = {max_items: 8}];
+  // Which client the setup instructions were generated for. Presentation only:
+  // nothing about authentication varies by kind, and a key issued for one
+  // client works in any of them. It exists so the settings page can show what
+  // a key was minted for, which is how somebody decides which one to revoke.
+  //
+  // Known values: "claude_code", "codex", "hermes", "other". Empty means
+  // "other", so keys minted before this field existed still render.
+  string client_kind = 9 [(buf.validate.field).string = {max_len: 32}];
 }
 
 message CreateApiKeyRequest {
@@ -47,6 +63,10 @@ message CreateApiKeyRequest {
   // spend anything. An unrecognised scope is rejected rather than dropped, so a
   // caller never receives a key weaker than they believe they hold.
   repeated string scopes = 3 [(buf.validate.field).repeated = {max_items: 8}];
+  // Which client this key is being minted for. Omitted means "other".
+  // An unrecognised value is rejected rather than stored, so the settings page
+  // cannot end up displaying a kind it has no name or icon for.
+  string client_kind = 4 [(buf.validate.field).string = {max_len: 32}];
 }
 
 message CreateApiKeyResponse {
@@ -66,3 +86,26 @@ message RevokeApiKeyRequest {
 }
 
 message RevokeApiKeyResponse {}
+
+message GetSetupInstructionsRequest {
+  // Which client to write the instructions for. Omitted means "other", which
+  // gets the generic MCP configuration rather than a vendor's CLI.
+  string client_kind = 1 [(buf.validate.field).string = {max_len: 32}];
+}
+
+message GetSetupInstructionsResponse {
+  // The MCP endpoint these instructions point at, so the page does not have to
+  // know the server's own address.
+  string endpoint = 1;
+  // A single shell command that registers the server, for clients that have
+  // one. Empty when the client has no CLI.
+  string one_command = 2;
+  // An .mcp.json fragment, for clients configured by file. The key is
+  // referenced through an environment variable rather than inlined, because
+  // that file is committed far more often than people expect.
+  string mcp_json = 3;
+  // Prose to hand to an agent so it configures itself, naming the read-only
+  // tools it should verify with. It tells the agent not to call the generating
+  // tools while checking, since those spend the owner's daily quota.
+  string setup_prompt = 4;
+}
