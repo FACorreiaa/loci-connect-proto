@@ -30,7 +30,6 @@ message List {
   bool is_public = 6;
   bool is_itinerary = 7;
   optional string parent_list_id = 8 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   string city_id = 9 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
@@ -50,18 +49,15 @@ message ListItem {
   string notes = 6 [(buf.validate.field).string = {max_len: 4000}
   ];
   optional int32 day_number = 7 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 1}
   }];
   optional google.protobuf.Timestamp time_slot = 8;
   optional int32 duration = 9 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 0}
   }];
   google.protobuf.Timestamp created_at = 10 [(buf.validate.field).required = true];
   google.protobuf.Timestamp updated_at = 11 [(buf.validate.field).required = true];
   optional string source_llm_interaction_id = 12 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   string item_ai_description = 13 [(buf.validate.field).string = {max_len: 4000}
@@ -88,20 +84,16 @@ message UserSavedItinerary {
   string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   string user_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   optional string source_llm_interaction_id = 3 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   optional string session_id = 4 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 200}
   }];
   optional string primary_city_id = 5 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   string title = 6 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   optional string description = 7 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 4000}
   }];
   string markdown_content = 8 [(buf.validate.field).string = {min_len: 1}];
@@ -110,11 +102,9 @@ message UserSavedItinerary {
     items: {string: {min_len: 1, max_len: 100}}
   }];
   optional int32 estimated_duration_days = 10 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 1}
   }];
   optional int32 estimated_cost_level = 11 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 0, lte: 10}
   }];
   bool is_public = 12;
@@ -127,7 +117,6 @@ message CreateListRequest {
   string name = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   string description = 2 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
   optional string city_id = 3 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   bool is_itinerary = 4;
@@ -138,20 +127,16 @@ message CreateListRequest {
 message UpdateListRequest {
   string list_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   optional string name = 2 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 200}
   }];
   optional string description = 3 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 4000}
   }];
   optional string image_url = 4 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 2048}
   }];
   optional bool is_public = 5;
   optional string city_id = 6 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
 }
@@ -165,16 +150,13 @@ message AddListItemRequest {
   string notes = 5 [(buf.validate.field).string = {max_len: 4000}
   ];
   optional int32 day_number = 6 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 1}
   }];
   optional google.protobuf.Timestamp time_slot = 7;
   optional int32 duration_minutes = 8 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 0}
   }];
   optional string source_llm_interaction_id = 9 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   string item_ai_description = 10 [(buf.validate.field).string = {max_len: 4000}
@@ -186,32 +168,25 @@ message UpdateListItemRequest {
   string list_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   string item_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   optional ContentType content_type = 3 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     enum: {defined_only: true}
   }];
   optional int32 position = 4 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 0}
   }];
   optional string notes = 5 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {max_len: 4000}
   }];
   optional int32 day_number = 6 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 1}
   }];
   optional google.protobuf.Timestamp time_slot = 7;
   optional int32 duration_minutes = 8 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 0}
   }];
   optional string source_llm_interaction_id = 9 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   optional string item_ai_description = 10 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {max_len: 4000}
   }];
 }
@@ -220,11 +195,9 @@ message UpdateListItemRequest {
 message UpdateItineraryRequest {
   string itinerary_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   optional string title = 2 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 200}
   }];
   optional string description = 3 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 4000}
   }];
   repeated string tags = 4 [(buf.validate.field).repeated = {
@@ -232,16 +205,13 @@ message UpdateItineraryRequest {
     items: {string: {min_len: 1, max_len: 100}}
   }];
   optional int32 estimated_duration_days = 5 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 1}
   }];
   optional int32 estimated_cost_level = 6 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 0, lte: 10}
   }];
   optional bool is_public = 7;
   optional string markdown_content = 8 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1}
   }];
 }
@@ -254,7 +224,6 @@ message BookmarkRequest {
   string primary_city_name = 4 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   string title = 5 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   optional string description = 6 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 4000}
   }];
   repeated string tags = 7 [(buf.validate.field).repeated = {
@@ -278,7 +247,6 @@ message GetListResponse {
 // GetUserListsRequest for retrieving user's lists
 message GetUserListsRequest {
   optional string user_id = 1 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   optional bool itineraries_only = 2;
@@ -294,7 +262,6 @@ message GetUserListsResponse {
 // GetUserItinerariesRequest for retrieving user's itineraries
 message GetUserItinerariesRequest {
   optional string user_id = 1 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   loci.common.PaginationRequest pagination = 2 [(buf.validate.field).required = true];

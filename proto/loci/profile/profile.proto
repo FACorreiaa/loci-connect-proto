@@ -53,7 +53,6 @@ message AccommodationPreferences {
     items: {string: {min_len: 1, max_len: 100}}
   }];
   optional string chain_preference = 8 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   repeated string cancellation_policy = 9 [(buf.validate.field).repeated = {
@@ -61,7 +60,6 @@ message AccommodationPreferences {
     items: {string: {min_len: 1, max_len: 100}}
   }];
   optional string booking_flexibility = 10 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   google.protobuf.Timestamp created_at = 11 [(buf.validate.field).required = true];
@@ -96,7 +94,6 @@ message DiningPreferences {
   bool michelin_rated = 9;
   bool local_recommendations = 10;
   optional string chain_vs_local = 11 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   bool organic_preference = 12;
@@ -114,19 +111,15 @@ message ActivityPreferences {
     items: {string: {min_len: 1, max_len: 100}}
   }];
   optional string physical_activity_level = 4 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   optional string indoor_outdoor_preference = 5 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   optional string cultural_immersion_level = 6 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   optional string must_see_vs_hidden_gems = 7 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   bool educational_preference = 8;
@@ -149,23 +142,18 @@ message ItineraryPreferences {
   string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   string user_preference_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   optional string planning_style = 3 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   optional string preferred_pace = 4 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   optional string time_flexibility = 5 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   optional string morning_vs_evening = 6 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   optional string weekend_vs_weekday = 7 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   repeated string preferred_seasons = 8 [(buf.validate.field).repeated = {
@@ -174,11 +162,9 @@ message ItineraryPreferences {
   }];
   bool avoid_peak_season = 9;
   optional string adventure_vs_relaxation = 10 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   optional string spontaneous_vs_planned = 11 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   google.protobuf.Timestamp created_at = 12 [(buf.validate.field).required = true];
@@ -210,11 +196,9 @@ message UserPreferenceProfile {
   repeated loci.interest.Interest interests = 15;
   repeated loci.interest.Tags tags = 16;
   optional double user_latitude = 17 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     double: {gte: -90, lte: 90}
   }];
   optional double user_longitude = 18 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     double: {gte: -180, lte: 180}
   }];
   optional AccommodationPreferences accommodation_preferences = 19;
@@ -230,19 +214,15 @@ message CreateUserPreferenceProfileRequest {
   string profile_name = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   optional bool is_default = 2;
   optional double search_radius_km = 3 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     double: {gte: 0}
   }];
   optional DayPreference preferred_time = 4 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     enum: {defined_only: true}
   }];
   optional int32 budget_level = 5 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 0, lte: 10}
   }];
   optional SearchPace preferred_pace = 6 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     enum: {defined_only: true}
   }];
   optional bool prefer_accessible_pois = 7;
@@ -253,7 +233,6 @@ message CreateUserPreferenceProfileRequest {
     items: {string: {min_len: 1, max_len: 100}}
   }];
   optional TransportPreference preferred_transport = 11 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     enum: {defined_only: true}
   }];
   repeated string dietary_needs = 12 [(buf.validate.field).repeated = {
@@ -278,24 +257,19 @@ message CreateUserPreferenceProfileRequest {
 message UpdateUserPreferenceProfileRequest {
   string profile_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   optional string profile_name = 2 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 200}
   }];
   optional bool is_default = 3;
   optional double search_radius_km = 4 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     double: {gte: 0}
   }];
   optional DayPreference preferred_time = 5 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     enum: {defined_only: true}
   }];
   optional int32 budget_level = 6 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 0, lte: 10}
   }];
   optional SearchPace preferred_pace = 7 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     enum: {defined_only: true}
   }];
   optional bool prefer_accessible_pois = 8;
@@ -306,7 +280,6 @@ message UpdateUserPreferenceProfileRequest {
     items: {string: {min_len: 1, max_len: 100}}
   }];
   optional TransportPreference preferred_transport = 12 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     enum: {defined_only: true}
   }];
   repeated string dietary_needs = 13 [(buf.validate.field).repeated = {
@@ -330,7 +303,6 @@ message UpdateUserPreferenceProfileRequest {
 // GetUserPreferenceProfilesRequest for retrieving user preference profiles
 message GetUserPreferenceProfilesRequest {
   optional string user_id = 1 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
 }

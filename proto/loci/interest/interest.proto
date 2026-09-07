@@ -14,7 +14,6 @@ message Interest {
   string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   string name = 2 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   optional string description = 3 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 1000}
   }];
   optional bool active = 4;
@@ -29,11 +28,9 @@ message Tags {
   string name = 2 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   string tag_type = 3 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   optional string description = 4 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 1000}
   }];
   optional string source = 5 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   optional bool active = 6;
@@ -45,7 +42,6 @@ message Tags {
 message CreateInterestRequest {
   string name = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   optional string description = 2 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 1000}
   }];
   bool active = 3;
@@ -55,11 +51,9 @@ message CreateInterestRequest {
 message UpdateInterestRequest {
   string interest_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   optional string name = 2 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 200}
   }];
   optional string description = 3 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 1000}
   }];
   optional bool active = 4;
@@ -88,7 +82,6 @@ message GetInterestsResponse {
 // GetUserInterestsRequest for retrieving user interests
 message GetUserInterestsRequest {
   optional string user_id = 1 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
 }

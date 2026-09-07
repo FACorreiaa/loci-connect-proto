@@ -67,7 +67,6 @@ message LoginResponse {
   // passed and is the ONLY thing VerifyMFA accepts; it grants no API access of
   // its own.
   optional string mfa_token = 8 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 16, max_len: 4096}
   }];
 }
@@ -81,11 +80,9 @@ message VerifyMFARequest {
   // The length range spans both: 6 digits for TOTP, 11 characters for a
   // dash-separated recovery code, with slack for how people retype them.
   optional string code = 2 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 6, max_len: 20}
   }];
   optional string recovery_code = 3 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 6, max_len: 20}
   }];
 }
@@ -121,11 +118,9 @@ message ConfirmMFAEnrollmentResponse {
 // hijacked session must not be able to strip the second factor.
 message DisableMFARequest {
   optional string code = 1 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 6, max_len: 20}
   }];
   optional string recovery_code = 2 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 6, max_len: 20}
   }];
 }
@@ -174,7 +169,6 @@ message RegisterRequest {
     }
   ];
   optional string role = 4 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
 }
@@ -199,15 +193,12 @@ message ValidateSessionRequest {
 message ValidateSessionResponse {
   bool valid = 1;
   optional string user_id = 2 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   optional string username = 3 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100, pattern: "^[a-zA-Z0-9_-]+$"}
   }];
   optional string email = 4 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {email: true}
   }];
 }
@@ -272,15 +263,12 @@ message Claims {
   string email = 3 [(buf.validate.field).string.email = true];
   string role = 4 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   optional string subscription_plan = 5 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   optional string subscription_status = 6 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   optional string scope = 7 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 200}
   }];
   int64 expires_at = 8 [(buf.validate.field).int64 = {gt: 0}];

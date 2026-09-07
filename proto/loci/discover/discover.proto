@@ -34,15 +34,12 @@ message DiscoverResult {
   string description = 6 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
   string address = 7 [(buf.validate.field).string = {min_len: 1, max_len: 500}];
   optional string website = 8 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 2048, uri: true}
   }];
   optional string phone_number = 9 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 50, pattern: "^\\+?[1-9]\\d{1,14}$"}
   }];
   optional string opening_hours = 10 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 500}
   }];
   string price_level = 11 [(buf.validate.field).string = {min_len: 1, max_len: 50}];
@@ -56,11 +53,9 @@ message DiscoverResult {
     items: {string: {min_len: 1, max_len: 2048, uri: true}}
   }];
   optional string cuisine_type = 15 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   optional string star_rating = 16 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 20}
   }];
 }
@@ -85,7 +80,6 @@ message GetDiscoverPageResponse {
 // GetTrendingRequest for retrieving trending discoveries
 message GetTrendingRequest {
   optional int32 limit = 1 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 1, lte: 100}
   }];
 }
@@ -98,7 +92,6 @@ message GetTrendingResponse {
 // GetFeaturedRequest for retrieving featured collections
 message GetFeaturedRequest {
   optional int32 limit = 1 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 1, lte: 100}
   }];
 }
@@ -111,7 +104,6 @@ message GetFeaturedResponse {
 // GetRecentDiscoveriesRequest for retrieving recent discoveries
 message GetRecentDiscoveriesRequest {
   optional string user_id = 1 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   loci.common.PaginationRequest pagination = 2 [(buf.validate.field).required = true];
@@ -127,7 +119,6 @@ message GetRecentDiscoveriesResponse {
 message GetCategoryResultsRequest {
   string category = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   optional string city_name = 2 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 200}
   }];
   loci.common.PaginationRequest pagination = 3 [(buf.validate.field).required = true];

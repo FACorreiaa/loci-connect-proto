@@ -93,7 +93,6 @@ message LlmInteraction {
   string user_id = 3 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   string profile_id = 4 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   optional string city_name = 5 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 200}
   }];
   string prompt = 6 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
@@ -113,15 +112,12 @@ message LlmInteraction {
   int32 latency_ms = 14 [(buf.validate.field).int32 = {gte: 0}];
   google.protobuf.Timestamp timestamp = 15 [(buf.validate.field).required = true];
   optional double latitude = 16 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     double: {gte: -90, lte: 90}
   }];
   optional double longitude = 17 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     double: {gte: -180, lte: 180}
   }];
   optional double distance = 18 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     double: {gte: 0}
   }];
 }
@@ -139,12 +135,10 @@ message ConversationMessage {
 // MessageMetadata contains additional metadata for messages
 message MessageMetadata {
   optional string llm_interaction_id = 1 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   int32 modified_poi_count = 2 [(buf.validate.field).int32 = {gte: 0}];
   optional string request_type = 3 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
 }
@@ -254,34 +248,28 @@ message ChatSession {
 // ChatRequest for sending a message
 message ChatRequest {
   optional string session_id = 1 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 200}
   }];
   string message = 2 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
   optional string city_name = 3 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {max_len: 200}
   }];
   optional UserLocation user_location = 4;
   optional string profile_id = 5 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   // trip_id binds a stream to a persisted TripDraft (Slice 2). Optional.
   optional string trip_id = 6 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   // resume_token requests replay of an interrupted stream from the last acked
   // event. When set, the server resumes the referenced session instead of
   // starting a new turn; consumers dedup by StreamEvent.event_id.
   optional string resume_token = 7 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 200}
   }];
   // request_id is a client-generated idempotency/tracing id echoed on events.
   optional string request_id = 8 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
 }
@@ -307,7 +295,6 @@ message StreamError {
   bool retryable = 3;
   // retry_after_ms hints the client when to retry (e.g. rate-limit/quota).
   optional int32 retry_after_ms = 4 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 0}
   }];
 }
@@ -317,7 +304,6 @@ message StartPayload {
   string session_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   DomainType domain = 2 [(buf.validate.field).enum = {defined_only: true}];
   optional string city_name = 3 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {max_len: 200}
   }];
 }
@@ -328,7 +314,6 @@ message StartPayload {
 message TokenPayload {
   string text = 1 [(buf.validate.field).string = {max_len: 16000}];
   optional int32 part = 2 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 0}
   }];
 }
@@ -337,7 +322,6 @@ message TokenPayload {
 message ProgressPayload {
   string stage = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   optional int32 percent = 2 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 0, lte: 100}
   }];
 }
@@ -400,7 +384,6 @@ message StreamEvent {
   StreamEventType event_type = 9 [(buf.validate.field).enum = {defined_only: true}];
   // request_id echoes ChatRequest.request_id for client-side correlation.
   optional string request_id = 10 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
 
@@ -440,29 +423,24 @@ message NavigationData {
 
 message UserLocation {
   optional double latitude = 1 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     double: {gte: -90, lte: 90}
   }];
   optional double longitude = 2 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     double: {gte: -180, lte: 180}
   }];
 }
 // StartChatRequest for starting a new chat session
 message StartChatRequest {
   optional string city_name = 1 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {max_len: 200}
   }];
   optional DomainType context_type = 2 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     enum: {defined_only: true}
   }];
   string initial_message = 3 [(buf.validate.field).string = {min_len: 1, max_len: 4000}
   ];
   optional UserLocation user_location = 4;
   optional string profile_id = 5 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
 }
@@ -472,7 +450,6 @@ message ContinueChatRequest {
   string session_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   string message = 2 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
   optional string city_name = 3 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {max_len: 200}
   }];
   DomainType context_type = 4 [(buf.validate.field).enum = {defined_only: true}];
@@ -491,7 +468,6 @@ message GetChatSessionResponse {
 // GetChatSessionsRequest for retrieving multiple chat sessions
 message GetChatSessionsRequest {
   optional string user_id = 1 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   loci.common.PaginationRequest pagination = 2 [(buf.validate.field).required = true];
@@ -509,12 +485,10 @@ message RecentInteraction {
   string user_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   string city_name = 3 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   optional string city_id = 4 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   string prompt = 5 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
   optional string response_text = 6 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 4000}
   }];
   string model_used = 7 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
@@ -538,11 +512,9 @@ message CityInteractions {
   }];
   string title = 7 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   optional int32 total_favorites = 8 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 0}
   }];
   optional int32 total_itineraries = 9 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 0}
   }];
 }
@@ -550,7 +522,6 @@ message CityInteractions {
 // GetRecentInteractionsRequest for retrieving recent interactions
 message GetRecentInteractionsRequest {
   optional string user_id = 1 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   loci.common.PaginationRequest pagination = 2 [(buf.validate.field).required = true];
@@ -571,28 +542,22 @@ message BookmarkRequest {
   }];
   bool is_public = 4;
   optional string session_id = 5 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 200}
   }];
   optional string llm_interaction_id = 6 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   optional string primary_city_name = 7 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {max_len: 200}
   }];
   optional string primary_city_id = 8 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   // Specific IDs for items
   optional string poi_id = 9 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   optional string itinerary_id = 10 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
 }
@@ -605,7 +570,6 @@ message BookmarkResponse {
 
 message GetBookmarksRequest {
   optional string user_id = 1 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   loci.common.PaginationRequest pagination = 2 [(buf.validate.field).required = true];

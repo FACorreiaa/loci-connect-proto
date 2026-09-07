@@ -22,13 +22,11 @@ enum TripPace {
 // user's search profile for this specific trip.
 message TripConstraint {
   optional int32 budget_level = 1 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 1, lte: 4}
   }];
   TripPace pace = 2 [(buf.validate.field).enum = {defined_only: true}];
   // mobility: e.g. "walking", "wheelchair", "transit", "car".
   optional string mobility = 3 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   repeated string interests = 4 [(buf.validate.field).repeated = {
@@ -37,11 +35,9 @@ message TripConstraint {
   }];
   // Daily active window, minutes from midnight (e.g. 540 = 09:00).
   optional int32 day_start_minute = 5 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 0, lte: 1440}
   }];
   optional int32 day_end_minute = 6 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 0, lte: 1440}
   }];
 }
@@ -58,17 +54,14 @@ message TripStop {
   string name = 4 [(buf.validate.field).string = {min_len: 1, max_len: 300}];
   // start_minute is minutes from midnight for the stop's start.
   optional int32 start_minute = 5 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 0, lte: 1440}
   }];
   // duration_minutes is how long to spend here.
   optional int32 duration_minutes = 6 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 0}
   }];
   string notes = 7 [(buf.validate.field).string = {max_len: 4000}];
   optional string booking_url = 8 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 2048, uri: true}
   }];
   // Hydrated POI details for rendering (read side only; not persisted here).
@@ -89,15 +82,12 @@ message TripDay {
   // is how every single-city trip written before multi-city support looks.
   string city_name = 5 [(buf.validate.field).string = {max_len: 200}];
   optional string city_id = 6 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   optional double city_lat = 7 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     double: {gte: -90, lte: 90}
   }];
   optional double city_lon = 8 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     double: {gte: -180, lte: 180}
   }];
   // True when the day includes a move between cities, so the UI can show that
@@ -121,7 +111,6 @@ message TripLeg {
   // "drive" today; rail/air slot in without changing the shape.
   string mode = 11 [(buf.validate.field).string = {max_len: 40}];
   optional string booking_url = 12 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 2048, uri: true}
   }];
 }
@@ -136,7 +125,6 @@ message TripDraft {
   string id = 1 [(buf.validate.field).string = {max_len: 100}];
   string user_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   optional string city_id = 3 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   string city_name = 4 [(buf.validate.field).string = {max_len: 200}];
@@ -150,7 +138,6 @@ message TripDraft {
   repeated TripLeg legs = 12;
   // Session that generated the initial draft, if any.
   optional string source_session_id = 9 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 200}
   }];
   google.protobuf.Timestamp created_at = 10 [(buf.validate.field).required = true];
@@ -263,7 +250,6 @@ message EditStopDurationRequest {
   string trip_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   string stop_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   optional int32 start_minute = 3 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 0, lte: 1440}
   }];
   int32 duration_minutes = 4 [(buf.validate.field).int32 = {gte: 0}];

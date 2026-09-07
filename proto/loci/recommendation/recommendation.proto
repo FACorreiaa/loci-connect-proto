@@ -76,21 +76,18 @@ message RecommendationEvent {
   RecommendationTrace trace = 3 [(buf.validate.field).required = true];
   google.protobuf.Timestamp occurred_at = 4 [(buf.validate.field).required = true];
   optional string poi_id = 5 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE
     string: {
       min_len: 1
       max_len: 100
     }
   }];
   optional string trip_id = 6 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE
     string: {
       min_len: 1
       max_len: 100
     }
   }];
   optional int32 rating = 7 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE
     int32: {
       gte: 1
       lte: 5

@@ -23,48 +23,37 @@ message UserProfile {
   string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   string email = 2 [(buf.validate.field).string.email = true];
   optional string username = 3 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100, pattern: "^[a-zA-Z0-9_-]+$"}
   }];
   optional string firstname = 4 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   optional string lastname = 5 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   optional string phone_number = 6 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 50, pattern: "^\\+?[1-9]\\d{1,14}$"}
   }];
   optional int32 age = 7 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 0, lte: 120}
   }];
   optional string city = 8 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 200}
   }];
   optional string country = 9 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   optional string about_you = 10 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 1000}
   }];
   optional string bio = 11 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 1000}
   }];
   optional string location = 12 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 200}
   }];
   google.protobuf.Timestamp joined_date = 13 [(buf.validate.field).required = true];
   optional string avatar = 14 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 2048, uri: true}
   }];
   repeated string interests = 15 [(buf.validate.field).repeated = {
@@ -77,22 +66,18 @@ message UserProfile {
   }];
   optional UserStats stats = 17;
   optional string display_name = 18 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 150}
   }];
   optional string profile_image_url = 19 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 2048, uri: true}
   }];
   bool is_active = 20;
   optional google.protobuf.Timestamp email_verified_at = 21;
   optional google.protobuf.Timestamp last_login_at = 22;
   optional string theme = 23 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 50}
   }];
   optional string language = 24 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 2, max_len: 10, pattern: "^[a-z]{2}(-[A-Z]{2})?$"}
   }];
   google.protobuf.Timestamp created_at = 25 [(buf.validate.field).required = true];
@@ -102,51 +87,39 @@ message UserProfile {
 // UpdateProfileParams for updating user profile
 message UpdateProfileParams {
   optional string username = 1 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100, pattern: "^[a-zA-Z0-9_-]+$"}
   }];
   optional string phone_number = 2 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 50, pattern: "^\\+?[1-9]\\d{1,14}$"}
   }];
   optional string email = 3 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {email: true}
   }];
   optional string display_name = 4 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 150}
   }];
   optional string profile_image_url = 5 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 2048, uri: true}
   }];
   optional string firstname = 6 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   optional string lastname = 7 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   optional int32 age = 8 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 0, lte: 120}
   }];
   optional string city = 9 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 200}
   }];
   optional string country = 10 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   optional string about_you = 11 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 1000}
   }];
   optional string location = 12 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 200}
   }];
   repeated string interests = 13 [(buf.validate.field).repeated = {
@@ -158,7 +131,6 @@ message UpdateProfileParams {
     items: {string: {min_len: 1, max_len: 100}}
   }];
   optional string theme = 15 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {
       min_len: 3,
       max_len: 50,
@@ -166,7 +138,6 @@ message UpdateProfileParams {
     }
   }];
   optional string language = 16 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 2, max_len: 10, pattern: "^[a-z]{2}(-[A-Z]{2})?$"}
   }];
 }
@@ -174,7 +145,6 @@ message UpdateProfileParams {
 // GetUserProfileRequest for retrieving user profile
 message GetUserProfileRequest {
   optional string user_id = 1 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }]; // If empty, get authenticated user's profile
 }

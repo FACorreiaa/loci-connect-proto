@@ -18,16 +18,13 @@ message POIDetailedInfo {
   string city_id = 3 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
   string name = 4 [(buf.validate.field).string = {min_len: 1, max_len: 300}];
   optional string description_poi = 5 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 4000}
   }];
   double distance = 6 [(buf.validate.field).double = {gte: 0}];
   optional double latitude = 7 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     double: {gte: -90, lte: 90}
   }];
   optional double longitude = 8 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     double: {gte: -180, lte: 180}
   }];
   string category = 9 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
@@ -65,28 +62,23 @@ message POIDetailedInfo {
     items: {string: {min_len: 1, max_len: 100}}
   }];
   optional int32 priority = 22 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 0}
   }];
   google.protobuf.Timestamp created_at = 23 [(buf.validate.field).required = true];
   optional string cuisine_type = 24 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }]; // For restaurants
   optional string star_rating = 25 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 20}
   }];  // For hotels
   string amenities = 26 [(buf.validate.field).string = {min_len: 1, max_len: 2000}];
   optional string source = 27 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   // Trust/transparency (Slice 3). uncertainty_score is 0..1 (higher = the model
   // was less sure); missing_data names fields that couldn't be verified (e.g.
   // "hours", "price"); recommendation_rationale is a short "why this" note.
   optional double uncertainty_score = 28 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     double: {gte: 0, lte: 1}
   }];
   repeated string missing_data = 29 [(buf.validate.field).repeated = {
@@ -94,7 +86,6 @@ message POIDetailedInfo {
     items: {string: {min_len: 1, max_len: 50}}
   }];
   optional string recommendation_rationale = 30 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 1000}
   }];
   optional loci.recommendation.RecommendationTrace recommendation_trace = 31;
@@ -118,19 +109,15 @@ message HotelDetailedInfo {
   string description = 7 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
   string address = 8 [(buf.validate.field).string = {min_len: 1, max_len: 500}];
   optional string phone_number = 9 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 50, pattern: "^\\+?[1-9]\\d{1,14}$"}
   }];
   optional string website = 10 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 2048, uri: true}
   }];
   optional string opening_hours = 11 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 500}
   }];
   optional string price_range = 12 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 50}
   }];
   double rating = 13 [(buf.validate.field).double = {gte: 0, lte: 5}];
@@ -160,27 +147,21 @@ message RestaurantDetailedInfo {
   string category = 6 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
   string description = 7 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
   optional string address = 8 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 500}
   }];
   optional string website = 9 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 2048, uri: true}
   }];
   optional string phone_number = 10 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 50, pattern: "^\\+?[1-9]\\d{1,14}$"}
   }];
   optional string opening_hours = 11 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 500}
   }];
   optional string price_level = 12 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 50}
   }];
   optional string cuisine_type = 13 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   repeated string tags = 14 [(buf.validate.field).repeated = {
@@ -203,15 +184,12 @@ message RestaurantDetailedInfo {
 // POIFilters for filtering POIs
 message POIFilters {
   optional string city = 1 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 200}
   }];
   optional string category = 2 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 200}
   }];
   optional string price_range = 3 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 50}
   }];
 }
@@ -223,11 +201,9 @@ message SearchPOIRequest {
   double latitude = 3 [(buf.validate.field).double = {gte: -90, lte: 90}];
   double longitude = 4 [(buf.validate.field).double = {gte: -180, lte: 180}];
   optional double radius_km = 5 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     double: {gt: 0}
   }];
   optional string search_text = 6 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 500}
   }];
   repeated string search_tags = 7 [(buf.validate.field).repeated = {
@@ -235,27 +211,21 @@ message SearchPOIRequest {
     items: {string: {min_len: 1, max_len: 100}}
   }];
   optional string search_type = 8 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   optional string sort_by = 9 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 100}
   }];
   optional string sort_order = 10 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {in: ["asc", "desc"]}
   }];
   optional double min_rating = 11 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     double: {gte: 0, lte: 5}
   }];
   optional string min_price = 12 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     string: {min_len: 1, max_len: 50}
   }];
   optional int32 min_guests = 13 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 1}
   }];
 }
