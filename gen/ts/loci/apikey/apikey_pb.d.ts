@@ -66,6 +66,19 @@ export declare type ApiKey = Message<"loci.apikey.ApiKey"> & {
    * @generated from field: repeated string scopes = 8;
    */
   scopes: string[];
+
+  /**
+   * Which client the setup instructions were generated for. Presentation only:
+   * nothing about authentication varies by kind, and a key issued for one
+   * client works in any of them. It exists so the settings page can show what
+   * a key was minted for, which is how somebody decides which one to revoke.
+   *
+   * Known values: "claude_code", "codex", "hermes", "other". Empty means
+   * "other", so keys minted before this field existed still render.
+   *
+   * @generated from field: string client_kind = 9;
+   */
+  clientKind: string;
 };
 
 /**
@@ -99,6 +112,15 @@ export declare type CreateApiKeyRequest = Message<"loci.apikey.CreateApiKeyReque
    * @generated from field: repeated string scopes = 3;
    */
   scopes: string[];
+
+  /**
+   * Which client this key is being minted for. Omitted means "other".
+   * An unrecognised value is rejected rather than stored, so the settings page
+   * cannot end up displaying a kind it has no name or icon for.
+   *
+   * @generated from field: string client_kind = 4;
+   */
+  clientKind: string;
 };
 
 /**
@@ -122,6 +144,19 @@ export declare type CreateApiKeyResponse = Message<"loci.apikey.CreateApiKeyResp
    * @generated from field: string plaintext_key = 2;
    */
   plaintextKey: string;
+
+  /**
+   * Setup instructions carrying the real key, so somebody can copy a working
+   * configuration in the one moment the key exists to put in it.
+   *
+   * This is the only message here that contains a live credential, and it is
+   * the response to the request that minted it. GetSetupInstructions returns
+   * the same text with a placeholder, which is why the page can be opened
+   * repeatedly without a secret crossing the wire.
+   *
+   * @generated from field: loci.apikey.SetupInstructions setup = 3;
+   */
+  setup?: SetupInstructions;
 };
 
 /**
@@ -187,6 +222,139 @@ export declare type RevokeApiKeyResponse = Message<"loci.apikey.RevokeApiKeyResp
 export declare const RevokeApiKeyResponseSchema: GenMessage<RevokeApiKeyResponse>;
 
 /**
+ * @generated from message loci.apikey.GetSetupInstructionsRequest
+ */
+export declare type GetSetupInstructionsRequest = Message<"loci.apikey.GetSetupInstructionsRequest"> & {
+  /**
+   * Which client to write the instructions for. Omitted means "other", which
+   * gets the two facts any MCP client needs rather than a vendor's CLI.
+   *
+   * @generated from field: string client_kind = 1;
+   */
+  clientKind: string;
+};
+
+/**
+ * Describes the message loci.apikey.GetSetupInstructionsRequest.
+ * Use `create(GetSetupInstructionsRequestSchema)` to create a new message.
+ */
+export declare const GetSetupInstructionsRequestSchema: GenMessage<GetSetupInstructionsRequest>;
+
+/**
+ * @generated from message loci.apikey.GetSetupInstructionsResponse
+ */
+export declare type GetSetupInstructionsResponse = Message<"loci.apikey.GetSetupInstructionsResponse"> & {
+  /**
+   * @generated from field: loci.apikey.SetupInstructions instructions = 1;
+   */
+  instructions?: SetupInstructions;
+};
+
+/**
+ * Describes the message loci.apikey.GetSetupInstructionsResponse.
+ * Use `create(GetSetupInstructionsResponseSchema)` to create a new message.
+ */
+export declare const GetSetupInstructionsResponseSchema: GenMessage<GetSetupInstructionsResponse>;
+
+/**
+ * Everything somebody needs to point one agent at Loci: the configuration they
+ * edit, and the prompt they hand to the agent instead of editing anything.
+ *
+ * The shape is per client rather than one JSON blob because the clients do not
+ * agree: Claude Code takes a header inline, Codex reads the key from a named
+ * environment variable and writes TOML, and a Hermes gateway is configured at a
+ * prompt. Flattening those into one format would mean writing instructions that
+ * are wrong for two of the three.
+ *
+ * @generated from message loci.apikey.SetupInstructions
+ */
+export declare type SetupInstructions = Message<"loci.apikey.SetupInstructions"> & {
+  /**
+   * @generated from field: string client_kind = 1;
+   */
+  clientKind: string;
+
+  /**
+   * The MCP endpoint, so the page does not have to know the server's address.
+   *
+   * @generated from field: string endpoint = 2;
+   */
+  endpoint: string;
+
+  /**
+   * The configuration to copy. config_label names what it is ("one command",
+   * "connection details") and config_lang is the syntax, for the copy block's
+   * heading and highlighting.
+   *
+   * @generated from field: string config_label = 3;
+   */
+  configLabel: string;
+
+  /**
+   * @generated from field: string config_lang = 4;
+   */
+  configLang: string;
+
+  /**
+   * @generated from field: string config = 5;
+   */
+  config: string;
+
+  /**
+   * The same configuration with the key read from an environment variable
+   * rather than written into the file, and the line that sets it. Empty for
+   * clients whose configuration is not a file anyone commits.
+   *
+   * Not an advanced option: .mcp.json lives in a project root and is committed
+   * routinely, so offering only the literal form is how a key reaches a public
+   * repository.
+   *
+   * @generated from field: string safe_label = 6;
+   */
+  safeLabel: string;
+
+  /**
+   * @generated from field: string safe_lang = 7;
+   */
+  safeLang: string;
+
+  /**
+   * @generated from field: string safe = 8;
+   */
+  safe: string;
+
+  /**
+   * Why the second form exists, which differs by client: for one it is an
+   * alternative to a literal key in a committed file, for another it is the
+   * only form there is.
+   *
+   * @generated from field: string safe_note = 9;
+   */
+  safeNote: string;
+
+  /**
+   * @generated from field: string export_line = 10;
+   */
+  exportLine: string;
+
+  /**
+   * Text to paste into an agent that is already running, so it configures
+   * itself. It names the read-only tools to verify with and tells the agent not
+   * to call the generating ones while checking, since those spend the owner's
+   * daily quota.
+   *
+   * @generated from field: string prompt = 11;
+   */
+  prompt: string;
+};
+
+/**
+ * Describes the message loci.apikey.SetupInstructions.
+ * Use `create(SetupInstructionsSchema)` to create a new message.
+ */
+export declare const SetupInstructionsSchema: GenMessage<SetupInstructions>;
+
+/**
  * ApiKeyService manages long-lived API keys for programmatic access
  * (MCP clients, integrations). Keys authenticate as the owning user.
  *
@@ -223,6 +391,22 @@ export declare const ApiKeyService: GenService<{
     methodKind: "unary";
     input: typeof RevokeApiKeyRequestSchema;
     output: typeof RevokeApiKeyResponseSchema;
+  },
+  /**
+   * GetSetupInstructions previews how one kind of agent is connected.
+   *
+   * Deliberately takes no key and returns none: the snippets carry a
+   * placeholder. It exists so the page can answer "what am I signing up for"
+   * without minting a credential to answer it, and so the call it makes every
+   * time it is opened never has a secret in its response. The real
+   * instructions come back from CreateApiKey.
+   *
+   * @generated from rpc loci.apikey.ApiKeyService.GetSetupInstructions
+   */
+  getSetupInstructions: {
+    methodKind: "unary";
+    input: typeof GetSetupInstructionsRequestSchema;
+    output: typeof GetSetupInstructionsResponseSchema;
   },
 }>;
 

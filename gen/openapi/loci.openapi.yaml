@@ -109,6 +109,196 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ai_poi.v1.HealthCheckResponse'
+  /loci.aicreds.AiCredentialService/DeleteCredential:
+    post:
+      tags:
+        - loci.aicreds.AiCredentialService
+      summary: DeleteCredential
+      description: DeleteCredential returns the account to Loci's own provider.
+      operationId: loci.aicreds.AiCredentialService.DeleteCredential
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.aicreds.DeleteCredentialRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.aicreds.DeleteCredentialResponse'
+  /loci.aicreds.AiCredentialService/GetCredential:
+    post:
+      tags:
+        - loci.aicreds.AiCredentialService
+      summary: GetCredential
+      description: |-
+        GetCredential returns the caller's stored credential, without its key.
+         Answers NOT_FOUND when the account runs on Loci's own provider, which is
+         the ordinary case rather than an error.
+      operationId: loci.aicreds.AiCredentialService.GetCredential
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.aicreds.GetCredentialRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.aicreds.GetCredentialResponse'
+  /loci.aicreds.AiCredentialService/ListProviders:
+    post:
+      tags:
+        - loci.aicreds.AiCredentialService
+      summary: ListProviders
+      description: |-
+        ListProviders returns the backends a key may be brought for, so the
+         settings page renders the catalogue the server actually supports rather
+         than a copy of it that can drift.
+      operationId: loci.aicreds.AiCredentialService.ListProviders
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.aicreds.ListProvidersRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.aicreds.ListProvidersResponse'
+  /loci.aicreds.AiCredentialService/SaveCredential:
+    post:
+      tags:
+        - loci.aicreds.AiCredentialService
+      summary: SaveCredential
+      description: SaveCredential stores or replaces the credential.
+      operationId: loci.aicreds.AiCredentialService.SaveCredential
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.aicreds.SaveCredentialRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.aicreds.SaveCredentialResponse'
+  /loci.aicreds.AiCredentialService/VerifyCredential:
+    post:
+      tags:
+        - loci.aicreds.AiCredentialService
+      summary: VerifyCredential
+      description: |-
+        VerifyCredential makes one cheap call against the stored credential and
+         records the outcome. It exists so somebody learns their key is wrong while
+         they are still looking at the form, rather than from an itinerary that
+         quietly came from Loci's provider instead.
+      operationId: loci.aicreds.AiCredentialService.VerifyCredential
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.aicreds.VerifyCredentialRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.aicreds.VerifyCredentialResponse'
   /loci.apikey.ApiKeyService/CreateApiKey:
     post:
       tags:
@@ -147,6 +337,47 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.apikey.CreateApiKeyResponse'
+  /loci.apikey.ApiKeyService/GetSetupInstructions:
+    post:
+      tags:
+        - loci.apikey.ApiKeyService
+      summary: GetSetupInstructions previews how one kind of agent is connected.
+      description: |-
+        Deliberately takes no key and returns none: the snippets carry a
+         placeholder. It exists so the page can answer "what am I signing up for"
+         without minting a credential to answer it, and so the call it makes every
+         time it is opened never has a secret in its response. The real
+         instructions come back from CreateApiKey.
+      operationId: loci.apikey.ApiKeyService.GetSetupInstructions
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.apikey.GetSetupInstructionsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.apikey.GetSetupInstructionsResponse'
   /loci.apikey.ApiKeyService/ListApiKeys:
     post:
       tags:
@@ -2063,6 +2294,153 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.favorites.v1.RemoveFromFavoritesResponse'
+  /loci.integrations.IntegrationService/Connect:
+    post:
+      tags:
+        - loci.integrations.IntegrationService
+      summary: Connect
+      description: Connect registers or replaces one.
+      operationId: loci.integrations.IntegrationService.Connect
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.integrations.ConnectRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.integrations.ConnectResponse'
+  /loci.integrations.IntegrationService/Disconnect:
+    post:
+      tags:
+        - loci.integrations.IntegrationService
+      summary: Disconnect
+      description: Disconnect removes one.
+      operationId: loci.integrations.IntegrationService.Disconnect
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.integrations.DisconnectRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.integrations.DisconnectResponse'
+  /loci.integrations.IntegrationService/ListConnections:
+    post:
+      tags:
+        - loci.integrations.IntegrationService
+      summary: ListConnections
+      description: ListConnections returns the caller's registered servers, without tokens.
+      operationId: loci.integrations.IntegrationService.ListConnections
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.integrations.ListConnectionsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.integrations.ListConnectionsResponse'
+  /loci.integrations.IntegrationService/TestConnection:
+    post:
+      tags:
+        - loci.integrations.IntegrationService
+      summary: TestConnection
+      description: |-
+        TestConnection dials the server and lists its tools, so somebody can see
+         it working before it is relied on rather than discovering it was wrong
+         through an itinerary that silently lacked their calendar.
+      operationId: loci.integrations.IntegrationService.TestConnection
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.integrations.TestConnectionRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.integrations.TestConnectionResponse'
   /loci.interest.InterestService/AddInterestToUser:
     post:
       tags:
@@ -3514,6 +3892,120 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.memory.GetMemoryResponse'
+  /loci.messaging.MessagingService/CreateLinkCode:
+    post:
+      tags:
+        - loci.messaging.MessagingService
+      summary: CreateLinkCode issues a short-lived, single-use code to send to the bot.
+      description: |-
+        This is the only moment an unlinked chat can reach an account, so the code
+         is deliberately weak on its own: it is typed by hand into a chat window,
+         and what makes that safe is the expiry, the single use, and a rate limit
+         on redemption rather than its length.
+      operationId: loci.messaging.MessagingService.CreateLinkCode
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.messaging.CreateLinkCodeRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.messaging.CreateLinkCodeResponse'
+  /loci.messaging.MessagingService/GetLink:
+    post:
+      tags:
+        - loci.messaging.MessagingService
+      summary: GetLink
+      description: GetLink reports whether a platform is linked to the caller's account.
+      operationId: loci.messaging.MessagingService.GetLink
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.messaging.GetLinkRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.messaging.GetLinkResponse'
+  /loci.messaging.MessagingService/Unlink:
+    post:
+      tags:
+        - loci.messaging.MessagingService
+      summary: Unlink
+      description: |-
+        Unlink disconnects the chat. The conversation history stays with the
+         account; only the route to it is removed.
+      operationId: loci.messaging.MessagingService.Unlink
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.messaging.UnlinkRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.messaging.UnlinkResponse'
   /loci.payment.v1.PaymentService/CancelSubscription:
     post:
       tags:
@@ -7056,6 +7548,215 @@ components:
          the Joda Time's [`ISODateTimeFormat.dateTime()`](
          http://www.joda.org/joda-time/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime%2D%2D
          ) to obtain a formatter capable of generating timestamps in this format.
+    loci.aicreds.Credential:
+      type: object
+      properties:
+        provider:
+          type: string
+          title: provider
+          maxLength: 32
+          minLength: 1
+        keyHint:
+          type: string
+          title: key_hint
+          maxLength: 8
+          description: |-
+            The last few characters of the stored key, for "a key ending a203 is
+             stored". Never the key.
+        model:
+          type: string
+          title: model
+          maxLength: 500
+          description: Empty means the provider's default model is in use.
+        baseUrl:
+          type: string
+          title: base_url
+          maxLength: 500
+          description: Set only for providers that require one.
+        lastError:
+          type: string
+          title: last_error
+          maxLength: 500
+          description: |-
+            Why the last call on this credential failed, empty when it did not. The
+             page shows it because the alternative is an account that silently falls
+             back to Loci's provider while still reporting the user's key as in use.
+        lastErrorAt:
+          oneOf:
+            - $ref: '#/components/schemas/google.protobuf.Timestamp'
+            - type: "null"
+          title: last_error_at
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        updatedAt:
+          title: updated_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: Credential
+      additionalProperties: false
+      description: A stored credential, without the credential.
+    loci.aicreds.DeleteCredentialRequest:
+      type: object
+      title: DeleteCredentialRequest
+      additionalProperties: false
+    loci.aicreds.DeleteCredentialResponse:
+      type: object
+      title: DeleteCredentialResponse
+      additionalProperties: false
+    loci.aicreds.GetCredentialRequest:
+      type: object
+      title: GetCredentialRequest
+      additionalProperties: false
+    loci.aicreds.GetCredentialResponse:
+      type: object
+      properties:
+        credential:
+          title: credential
+          $ref: '#/components/schemas/loci.aicreds.Credential'
+        enabled:
+          type: boolean
+          title: enabled
+          description: |-
+            False when the server has no encryption key configured. The page explains
+             the absence instead of offering a form that cannot store anything.
+      title: GetCredentialResponse
+      additionalProperties: false
+    loci.aicreds.ListProvidersRequest:
+      type: object
+      title: ListProvidersRequest
+      additionalProperties: false
+    loci.aicreds.ListProvidersResponse:
+      type: object
+      properties:
+        providers:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.aicreds.Provider'
+          title: providers
+        enabled:
+          type: boolean
+          title: enabled
+          description: |-
+            False when the server has no encryption key configured, in which case the
+             list is informational and nothing can be saved.
+      title: ListProvidersResponse
+      additionalProperties: false
+    loci.aicreds.Provider:
+      type: object
+      properties:
+        name:
+          type: string
+          title: name
+          maxLength: 32
+          minLength: 1
+          description: Stable identifier, e.g. "openrouter". This is what a credential stores.
+        label:
+          type: string
+          title: label
+          maxLength: 100
+          minLength: 1
+          description: How it is written for a person, e.g. "xAI (Grok)".
+        defaultModel:
+          type: string
+          title: default_model
+          maxLength: 200
+          description: Used when the user leaves the model blank.
+        keyHint:
+          type: string
+          title: key_hint
+          maxLength: 100
+          description: |-
+            The shape of the credential, shown as the field placeholder so somebody
+             can tell at a glance whether they pasted the right thing.
+        note:
+          type: string
+          title: note
+          maxLength: 300
+          description: One line under the option in the settings page. May be empty.
+        requiresBaseUrl:
+          type: boolean
+          title: requires_base_url
+          description: |-
+            Whether this backend has no public address and the user must name theirs.
+             True only for a self-hosted gateway; the form shows a URL field for it,
+             and the server refuses addresses it will not dial.
+        supportsVerification:
+          type: boolean
+          title: supports_verification
+          description: |-
+            Whether the server can check a key for this provider before storing it.
+             False where no endpoint distinguishes a bad key from a malformed request,
+             which is most of them — the page says so rather than implying a check
+             happened.
+      title: Provider
+      additionalProperties: false
+      description: One backend a user may bring a key for.
+    loci.aicreds.SaveCredentialRequest:
+      type: object
+      properties:
+        provider:
+          type: string
+          title: provider
+          maxLength: 32
+          minLength: 1
+        apiKey:
+          type: string
+          title: api_key
+          maxLength: 1024
+          description: |-
+            Write-only, and never returned by any method here.
+
+             Empty means "keep the key already stored", which is what the form sends
+             when somebody edits only the model. It is refused across a provider
+             change: a key issued by one backend is not a key for another, and carrying
+             it over would store a credential guaranteed to fail.
+        model:
+          type: string
+          title: model
+          maxLength: 500
+          description: Empty means the provider's default.
+        baseUrl:
+          type: string
+          title: base_url
+          maxLength: 500
+          description: |-
+            Read only for providers with requires_base_url. Validated before it is
+             stored and again before it is dialled: loopback, link-local and cloud
+             metadata addresses are refused.
+      title: SaveCredentialRequest
+      additionalProperties: false
+    loci.aicreds.SaveCredentialResponse:
+      type: object
+      properties:
+        credential:
+          title: credential
+          $ref: '#/components/schemas/loci.aicreds.Credential'
+      title: SaveCredentialResponse
+      additionalProperties: false
+    loci.aicreds.VerifyCredentialRequest:
+      type: object
+      title: VerifyCredentialRequest
+      additionalProperties: false
+    loci.aicreds.VerifyCredentialResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          title: ok
+        error:
+          type: string
+          title: error
+          maxLength: 500
+          description: Why the check failed, in terms the owner can act on. Empty when ok.
+        checked:
+          type: boolean
+          title: checked
+          description: |-
+            False when this provider has no endpoint that distinguishes a bad key from
+             a malformed request. The key is stored unverified and the page says so,
+             rather than reporting a pass that was never tested.
+      title: VerifyCredentialResponse
+      additionalProperties: false
     loci.apikey.ApiKey:
       type: object
       properties:
@@ -7105,6 +7806,18 @@ components:
 
              Known values: "read", "write", "write:generate". No scope implies another —
              a key that must read and write is minted with both.
+        clientKind:
+          type: string
+          title: client_kind
+          maxLength: 32
+          description: |-
+            Which client the setup instructions were generated for. Presentation only:
+             nothing about authentication varies by kind, and a key issued for one
+             client works in any of them. It exists so the settings page can show what
+             a key was minted for, which is how somebody decides which one to revoke.
+
+             Known values: "claude_code", "codex", "hermes", "other". Empty means
+             "other", so keys minted before this field existed still render.
       title: ApiKey
       additionalProperties: false
       description: Metadata about an API key. The plaintext secret is never included.
@@ -7133,6 +7846,14 @@ components:
              a caller that does not know about scopes gets a key that cannot change or
              spend anything. An unrecognised scope is rejected rather than dropped, so a
              caller never receives a key weaker than they believe they hold.
+        clientKind:
+          type: string
+          title: client_kind
+          maxLength: 32
+          description: |-
+            Which client this key is being minted for. Omitted means "other".
+             An unrecognised value is rejected rather than stored, so the settings page
+             cannot end up displaying a kind it has no name or icon for.
       title: CreateApiKeyRequest
       additionalProperties: false
     loci.apikey.CreateApiKeyResponse:
@@ -7145,7 +7866,38 @@ components:
           type: string
           title: plaintext_key
           description: The full secret key ("loci_sk_..."). Shown once; store it now.
+        setup:
+          title: setup
+          description: |-
+            Setup instructions carrying the real key, so somebody can copy a working
+             configuration in the one moment the key exists to put in it.
+
+             This is the only message here that contains a live credential, and it is
+             the response to the request that minted it. GetSetupInstructions returns
+             the same text with a placeholder, which is why the page can be opened
+             repeatedly without a secret crossing the wire.
+          $ref: '#/components/schemas/loci.apikey.SetupInstructions'
       title: CreateApiKeyResponse
+      additionalProperties: false
+    loci.apikey.GetSetupInstructionsRequest:
+      type: object
+      properties:
+        clientKind:
+          type: string
+          title: client_kind
+          maxLength: 32
+          description: |-
+            Which client to write the instructions for. Omitted means "other", which
+             gets the two facts any MCP client needs rather than a vendor's CLI.
+      title: GetSetupInstructionsRequest
+      additionalProperties: false
+    loci.apikey.GetSetupInstructionsResponse:
+      type: object
+      properties:
+        instructions:
+          title: instructions
+          $ref: '#/components/schemas/loci.apikey.SetupInstructions'
+      title: GetSetupInstructionsResponse
       additionalProperties: false
     loci.apikey.ListApiKeysRequest:
       type: object
@@ -7175,6 +7927,86 @@ components:
       type: object
       title: RevokeApiKeyResponse
       additionalProperties: false
+    loci.apikey.SetupInstructions:
+      type: object
+      properties:
+        clientKind:
+          type: string
+          title: client_kind
+          maxLength: 32
+        endpoint:
+          type: string
+          title: endpoint
+          maxLength: 500
+          description: The MCP endpoint, so the page does not have to know the server's address.
+        configLabel:
+          type: string
+          title: config_label
+          maxLength: 100
+          description: |-
+            The configuration to copy. config_label names what it is ("one command",
+             "connection details") and config_lang is the syntax, for the copy block's
+             heading and highlighting.
+        configLang:
+          type: string
+          title: config_lang
+          maxLength: 16
+        config:
+          type: string
+          title: config
+          maxLength: 4096
+        safeLabel:
+          type: string
+          title: safe_label
+          maxLength: 100
+          description: |-
+            The same configuration with the key read from an environment variable
+             rather than written into the file, and the line that sets it. Empty for
+             clients whose configuration is not a file anyone commits.
+
+             Not an advanced option: .mcp.json lives in a project root and is committed
+             routinely, so offering only the literal form is how a key reaches a public
+             repository.
+        safeLang:
+          type: string
+          title: safe_lang
+          maxLength: 16
+        safe:
+          type: string
+          title: safe
+          maxLength: 4096
+        safeNote:
+          type: string
+          title: safe_note
+          maxLength: 500
+          description: |-
+            Why the second form exists, which differs by client: for one it is an
+             alternative to a literal key in a committed file, for another it is the
+             only form there is.
+        exportLine:
+          type: string
+          title: export_line
+          maxLength: 500
+        prompt:
+          type: string
+          title: prompt
+          maxLength: 4096
+          description: |-
+            Text to paste into an agent that is already running, so it configures
+             itself. It names the read-only tools to verify with and tells the agent not
+             to call the generating ones while checking, since those spend the owner's
+             daily quota.
+      title: SetupInstructions
+      additionalProperties: false
+      description: |-
+        Everything somebody needs to point one agent at Loci: the configuration they
+         edit, and the prompt they hand to the agent instead of editing anything.
+
+         The shape is per client rather than one JSON blob because the clients do not
+         agree: Claude Code takes a header inline, Codex reads the key from a named
+         environment variable and writes TOML, and a Hermes gateway is configured at a
+         prompt. Flattening those into one format would mean writing instructions that
+         are wrong for two of the three.
     loci.auth.BeginMFAEnrollmentRequest:
       type: object
       title: BeginMFAEnrollmentRequest
@@ -11430,6 +12262,140 @@ components:
           title: desserts
       title: RestaurantMenu
       additionalProperties: false
+    loci.integrations.ConnectRequest:
+      type: object
+      properties:
+        provider:
+          type: string
+          title: provider
+          maxLength: 32
+          minLength: 1
+        endpoint:
+          type: string
+          title: endpoint
+          maxLength: 500
+          minLength: 1
+          description: |-
+            Refused if it resolves to loopback, link-local or cloud metadata: this is
+             an address Loci will make requests to on the user's behalf.
+        accessToken:
+          type: string
+          title: access_token
+          maxLength: 4096
+          description: |-
+            Write-only, sealed at rest, and never returned. Empty means the server
+             needs no token, or — when one is already stored — that it should be kept.
+      title: ConnectRequest
+      additionalProperties: false
+    loci.integrations.ConnectResponse:
+      type: object
+      properties:
+        connection:
+          title: connection
+          $ref: '#/components/schemas/loci.integrations.Connection'
+      title: ConnectResponse
+      additionalProperties: false
+    loci.integrations.Connection:
+      type: object
+      properties:
+        provider:
+          type: string
+          title: provider
+          maxLength: 32
+          minLength: 1
+          description: |-
+            Which integration this is, e.g. "hermes" or "calendar". One per provider
+             per account.
+        endpoint:
+          type: string
+          title: endpoint
+          maxLength: 500
+          description: The MCP endpoint. Shown back so somebody can check what they typed.
+        hasToken:
+          type: boolean
+          title: has_token
+          description: Whether a token is stored. The token itself is never returned.
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        lastSeenAt:
+          oneOf:
+            - $ref: '#/components/schemas/google.protobuf.Timestamp'
+            - type: "null"
+          title: last_seen_at
+          description: Absent means registered but never reached.
+        lastError:
+          type: string
+          title: last_error
+          maxLength: 500
+          description: Why the last call failed, empty when it did not.
+      title: Connection
+      additionalProperties: false
+      description: A registered external MCP server.
+    loci.integrations.DisconnectRequest:
+      type: object
+      properties:
+        provider:
+          type: string
+          title: provider
+          maxLength: 32
+          minLength: 1
+      title: DisconnectRequest
+      additionalProperties: false
+    loci.integrations.DisconnectResponse:
+      type: object
+      title: DisconnectResponse
+      additionalProperties: false
+    loci.integrations.ListConnectionsRequest:
+      type: object
+      title: ListConnectionsRequest
+      additionalProperties: false
+    loci.integrations.ListConnectionsResponse:
+      type: object
+      properties:
+        connections:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.integrations.Connection'
+          title: connections
+        enabled:
+          type: boolean
+          title: enabled
+          description: |-
+            False when the server has no encryption key configured, so no token can be
+             stored and the page says so.
+      title: ListConnectionsResponse
+      additionalProperties: false
+    loci.integrations.TestConnectionRequest:
+      type: object
+      properties:
+        provider:
+          type: string
+          title: provider
+          maxLength: 32
+          minLength: 1
+      title: TestConnectionRequest
+      additionalProperties: false
+    loci.integrations.TestConnectionResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          title: ok
+        toolNames:
+          type: array
+          items:
+            type: string
+          title: tool_names
+          maxItems: 200
+          description: The tools the server offered, so somebody can see it is the one they meant.
+        error:
+          type: string
+          title: error
+          maxLength: 500
+          description: Why the dial failed, in terms the owner can act on. Empty when ok.
+      title: TestConnectionResponse
+      additionalProperties: false
     loci.interest.AddInterestRequest:
       type: object
       properties:
@@ -14043,6 +15009,109 @@ components:
       title: Trait
       additionalProperties: false
       description: Trait is one thing Loci believes, with what taught it.
+    loci.messaging.CreateLinkCodeRequest:
+      type: object
+      properties:
+        platform:
+          type: string
+          title: platform
+          maxLength: 32
+          minLength: 1
+      title: CreateLinkCodeRequest
+      additionalProperties: false
+    loci.messaging.CreateLinkCodeResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          title: code
+          maxLength: 32
+          minLength: 1
+          description: |-
+            Shown once. Only its hash is stored, so a database dump cannot be
+             redeemed.
+        expiresAt:
+          title: expires_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        botHandle:
+          type: string
+          title: bot_handle
+          maxLength: 100
+      title: CreateLinkCodeResponse
+      additionalProperties: false
+    loci.messaging.GetLinkRequest:
+      type: object
+      properties:
+        platform:
+          type: string
+          title: platform
+          maxLength: 32
+          minLength: 1
+      title: GetLinkRequest
+      additionalProperties: false
+    loci.messaging.GetLinkResponse:
+      type: object
+      properties:
+        link:
+          oneOf:
+            - $ref: '#/components/schemas/loci.messaging.Link'
+            - type: "null"
+          title: link
+          description: Absent when the platform is not linked.
+        botHandle:
+          type: string
+          title: bot_handle
+          maxLength: 100
+          description: |-
+            Where to send the code. Empty when no bot is configured on this server, in
+             which case the page explains the absence rather than issuing a code that
+             nothing can redeem.
+      title: GetLinkResponse
+      additionalProperties: false
+    loci.messaging.Link:
+      type: object
+      properties:
+        platform:
+          type: string
+          title: platform
+          maxLength: 32
+          minLength: 1
+          description: Which platform, e.g. "telegram".
+        displayName:
+          type: string
+          title: display_name
+          maxLength: 200
+          description: |-
+            How the person is addressed on that platform, for display. Not the chat
+             id: that identifies a conversation the account does not need to see.
+        linkedAt:
+          title: linked_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        lastSeenAt:
+          oneOf:
+            - $ref: '#/components/schemas/google.protobuf.Timestamp'
+            - type: "null"
+          title: last_seen_at
+          description: |-
+            Absent means linked but never used, which is how the settings page tells a
+             live connection from one set up and forgotten.
+      title: Link
+      additionalProperties: false
+      description: A linked chat.
+    loci.messaging.UnlinkRequest:
+      type: object
+      properties:
+        platform:
+          type: string
+          title: platform
+          maxLength: 32
+          minLength: 1
+      title: UnlinkRequest
+      additionalProperties: false
+    loci.messaging.UnlinkResponse:
+      type: object
+      title: UnlinkResponse
+      additionalProperties: false
     loci.payment.v1.CancelSubscriptionRequest:
       type: object
       properties:
@@ -21871,6 +22940,16 @@ tags:
     description: |-
       Main AI POI API Gateway Service
        This service can act as a unified entry point to all sub-services
+  - name: loci.aicreds.AiCredentialService
+    description: |-
+      AiCredentialService manages the model-provider credential a user brought
+       themselves, so their account runs on their key rather than Loci's.
+
+       Nothing in this file carries a key back to the client. The plaintext is
+       write-only: it goes in on SaveCredential and is never returned, not even to
+       the account that stored it. What comes back is a hint — the last few
+       characters — which is enough to answer "is the stored key the one I am
+       looking at" and useless for anything else.
   - name: loci.apikey.ApiKeyService
     description: |-
       ApiKeyService manages long-lived API keys for programmatic access
@@ -21912,6 +22991,15 @@ tags:
     description: ExportService handles PDF export for various content types
   - name: loci.favorites.v1.FavoritesService
     description: FavoritesService provides favorites management functionality
+  - name: loci.integrations.IntegrationService
+    description: |-
+      IntegrationService registers external MCP servers that Loci may call on the
+       user's behalf while planning — their own Hermes instance, a calendar.
+
+       This is the direction Loci does not usually run in. Everywhere else it is the
+       MCP server and an agent calls it; here it is the client, dialling an address
+       somebody typed. That is why the endpoint is validated before it is stored and
+       again before it is used, and why the token is write-only.
   - name: loci.itinerary.ItineraryService
     description: ItineraryService defines itinerary-related RPCs
   - name: loci.list.ListService
@@ -21929,6 +23017,13 @@ tags:
        Deleting evidence rebuilds the derived vector and traits from whatever
        remains, so removing one belief cannot leave the rest inconsistent with the
        record that produced them.
+  - name: loci.messaging.MessagingService
+    description: |-
+      MessagingService links a chat platform to a Loci account, so somebody can
+       ask for an itinerary from their phone and have it continue in the web app.
+
+       Only the linking half lives here. Inbound messages arrive from the platform,
+       not from this API, and the bot answers them there.
   - name: loci.payment.v1.PaymentService
   - name: loci.recents.RecentsService
     description: RecentsService provides recent user interactions and activity tracking

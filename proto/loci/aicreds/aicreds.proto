@@ -1,0 +1,134 @@
+syntax = "proto3";
+
+package loci.aicreds;
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/aicreds;aicredsv1";
+
+import "google/protobuf/timestamp.proto";
+import "buf/validate/validate.proto";
+
+// AiCredentialService manages the model-provider credential a user brought
+// themselves, so their account runs on their key rather than Loci's.
+//
+// Nothing in this file carries a key back to the client. The plaintext is
+// write-only: it goes in on SaveCredential and is never returned, not even to
+// the account that stored it. What comes back is a hint — the last few
+// characters — which is enough to answer "is the stored key the one I am
+// looking at" and useless for anything else.
+service AiCredentialService {
+  // GetCredential returns the caller's stored credential, without its key.
+  // Answers NOT_FOUND when the account runs on Loci's own provider, which is
+  // the ordinary case rather than an error.
+  rpc GetCredential(GetCredentialRequest) returns (GetCredentialResponse);
+  // SaveCredential stores or replaces the credential.
+  rpc SaveCredential(SaveCredentialRequest) returns (SaveCredentialResponse);
+  // DeleteCredential returns the account to Loci's own provider.
+  rpc DeleteCredential(DeleteCredentialRequest) returns (DeleteCredentialResponse);
+  // ListProviders returns the backends a key may be brought for, so the
+  // settings page renders the catalogue the server actually supports rather
+  // than a copy of it that can drift.
+  rpc ListProviders(ListProvidersRequest) returns (ListProvidersResponse);
+  // VerifyCredential makes one cheap call against the stored credential and
+  // records the outcome. It exists so somebody learns their key is wrong while
+  // they are still looking at the form, rather than from an itinerary that
+  // quietly came from Loci's provider instead.
+  rpc VerifyCredential(VerifyCredentialRequest) returns (VerifyCredentialResponse);
+}
+
+// One backend a user may bring a key for.
+message Provider {
+  // Stable identifier, e.g. "openrouter". This is what a credential stores.
+  string name = 1 [(buf.validate.field).string = {min_len: 1, max_len: 32}];
+  // How it is written for a person, e.g. "xAI (Grok)".
+  string label = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  // Used when the user leaves the model blank.
+  string default_model = 3 [(buf.validate.field).string = {max_len: 200}];
+  // The shape of the credential, shown as the field placeholder so somebody
+  // can tell at a glance whether they pasted the right thing.
+  string key_hint = 4 [(buf.validate.field).string = {max_len: 100}];
+  // One line under the option in the settings page. May be empty.
+  string note = 5 [(buf.validate.field).string = {max_len: 300}];
+  // Whether this backend has no public address and the user must name theirs.
+  // True only for a self-hosted gateway; the form shows a URL field for it,
+  // and the server refuses addresses it will not dial.
+  bool requires_base_url = 6;
+  // Whether the server can check a key for this provider before storing it.
+  // False where no endpoint distinguishes a bad key from a malformed request,
+  // which is most of them — the page says so rather than implying a check
+  // happened.
+  bool supports_verification = 7;
+}
+
+// A stored credential, without the credential.
+message Credential {
+  string provider = 1 [(buf.validate.field).string = {min_len: 1, max_len: 32}];
+  // The last few characters of the stored key, for "a key ending a203 is
+  // stored". Never the key.
+  string key_hint = 2 [(buf.validate.field).string = {max_len: 8}];
+  // Empty means the provider's default model is in use.
+  string model = 3 [(buf.validate.field).string = {max_len: 500}];
+  // Set only for providers that require one.
+  string base_url = 4 [(buf.validate.field).string = {max_len: 500}];
+  // Why the last call on this credential failed, empty when it did not. The
+  // page shows it because the alternative is an account that silently falls
+  // back to Loci's provider while still reporting the user's key as in use.
+  string last_error = 5 [(buf.validate.field).string = {max_len: 500}];
+  optional google.protobuf.Timestamp last_error_at = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+}
+
+message GetCredentialRequest {}
+
+message GetCredentialResponse {
+  Credential credential = 1;
+  // False when the server has no encryption key configured. The page explains
+  // the absence instead of offering a form that cannot store anything.
+  bool enabled = 2;
+}
+
+message SaveCredentialRequest {
+  string provider = 1 [(buf.validate.field).string = {min_len: 1, max_len: 32}];
+  // Write-only, and never returned by any method here.
+  //
+  // Empty means "keep the key already stored", which is what the form sends
+  // when somebody edits only the model. It is refused across a provider
+  // change: a key issued by one backend is not a key for another, and carrying
+  // it over would store a credential guaranteed to fail.
+  string api_key = 2 [(buf.validate.field).string = {max_len: 1024}];
+  // Empty means the provider's default.
+  string model = 3 [(buf.validate.field).string = {max_len: 500}];
+  // Read only for providers with requires_base_url. Validated before it is
+  // stored and again before it is dialled: loopback, link-local and cloud
+  // metadata addresses are refused.
+  string base_url = 4 [(buf.validate.field).string = {max_len: 500}];
+}
+
+message SaveCredentialResponse {
+  Credential credential = 1;
+}
+
+message DeleteCredentialRequest {}
+
+message DeleteCredentialResponse {}
+
+message ListProvidersRequest {}
+
+message ListProvidersResponse {
+  repeated Provider providers = 1;
+  // False when the server has no encryption key configured, in which case the
+  // list is informational and nothing can be saved.
+  bool enabled = 2;
+}
+
+message VerifyCredentialRequest {}
+
+message VerifyCredentialResponse {
+  bool ok = 1;
+  // Why the check failed, in terms the owner can act on. Empty when ok.
+  string error = 2 [(buf.validate.field).string = {max_len: 500}];
+  // False when this provider has no endpoint that distinguishes a bad key from
+  // a malformed request. The key is stored unverified and the page says so,
+  // rather than reporting a pass that was never tested.
+  bool checked = 3;
+}

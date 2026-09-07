@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+package loci.integrations;
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/integrations;integrationsv1";
+
+import "google/protobuf/timestamp.proto";
+import "buf/validate/validate.proto";
+
+// IntegrationService registers external MCP servers that Loci may call on the
+// user's behalf while planning — their own Hermes instance, a calendar.
+//
+// This is the direction Loci does not usually run in. Everywhere else it is the
+// MCP server and an agent calls it; here it is the client, dialling an address
+// somebody typed. That is why the endpoint is validated before it is stored and
+// again before it is used, and why the token is write-only.
+service IntegrationService {
+  // ListConnections returns the caller's registered servers, without tokens.
+  rpc ListConnections(ListConnectionsRequest) returns (ListConnectionsResponse);
+  // Connect registers or replaces one.
+  rpc Connect(ConnectRequest) returns (ConnectResponse);
+  // Disconnect removes one.
+  rpc Disconnect(DisconnectRequest) returns (DisconnectResponse);
+  // TestConnection dials the server and lists its tools, so somebody can see
+  // it working before it is relied on rather than discovering it was wrong
+  // through an itinerary that silently lacked their calendar.
+  rpc TestConnection(TestConnectionRequest) returns (TestConnectionResponse);
+}
+
+// A registered external MCP server.
+message Connection {
+  // Which integration this is, e.g. "hermes" or "calendar". One per provider
+  // per account.
+  string provider = 1 [(buf.validate.field).string = {min_len: 1, max_len: 32}];
+  // The MCP endpoint. Shown back so somebody can check what they typed.
+  string endpoint = 2 [(buf.validate.field).string = {max_len: 500}];
+  // Whether a token is stored. The token itself is never returned.
+  bool has_token = 3;
+  google.protobuf.Timestamp created_at = 4;
+  // Absent means registered but never reached.
+  optional google.protobuf.Timestamp last_seen_at = 5;
+  // Why the last call failed, empty when it did not.
+  string last_error = 6 [(buf.validate.field).string = {max_len: 500}];
+}
+
+message ListConnectionsRequest {}
+
+message ListConnectionsResponse {
+  repeated Connection connections = 1;
+  // False when the server has no encryption key configured, so no token can be
+  // stored and the page says so.
+  bool enabled = 2;
+}
+
+message ConnectRequest {
+  string provider = 1 [(buf.validate.field).string = {min_len: 1, max_len: 32}];
+  // Refused if it resolves to loopback, link-local or cloud metadata: this is
+  // an address Loci will make requests to on the user's behalf.
+  string endpoint = 2 [(buf.validate.field).string = {min_len: 1, max_len: 500}];
+  // Write-only, sealed at rest, and never returned. Empty means the server
+  // needs no token, or — when one is already stored — that it should be kept.
+  string access_token = 3 [(buf.validate.field).string = {max_len: 4096}];
+}
+
+message ConnectResponse {
+  Connection connection = 1;
+}
+
+message DisconnectRequest {
+  string provider = 1 [(buf.validate.field).string = {min_len: 1, max_len: 32}];
+}
+
+message DisconnectResponse {}
+
+message TestConnectionRequest {
+  string provider = 1 [(buf.validate.field).string = {min_len: 1, max_len: 32}];
+}
+
+message TestConnectionResponse {
+  bool ok = 1;
+  // The tools the server offered, so somebody can see it is the one they meant.
+  repeated string tool_names = 2 [(buf.validate.field).repeated = {max_items: 200}];
+  // Why the dial failed, in terms the owner can act on. Empty when ok.
+  string error = 3 [(buf.validate.field).string = {max_len: 500}];
+}
