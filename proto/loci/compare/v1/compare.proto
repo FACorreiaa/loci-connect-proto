@@ -2,13 +2,13 @@ syntax = "proto3";
 
 package loci.compare.v1;
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/compare/v1;comparev1";
-
 import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
 import "loci/localcontext/localcontext.proto";
 import "loci/poi/poi.proto";
 import "loci/trip/trip.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/compare/v1;comparev1";
 
 // CompareRecommendation is the server's pick among candidates (or both).
 enum CompareRecommendation {
@@ -20,22 +20,41 @@ enum CompareRecommendation {
 
 // BookingLink is a partner deeplink (Booking.com, TheFork, etc.).
 message BookingLink {
-  string provider = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  string label = 2 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
-  string url = 3 [(buf.validate.field).string = {min_len: 1, max_len: 2048, uri: true}];
+  string provider = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string label = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
+  string url = 3 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 2048
+    uri: true
+  }];
 }
 
 // TransportLink is a ride/transit deeplink or estimate.
 message TransportLink {
-  string mode = 1 [(buf.validate.field).string = {min_len: 1, max_len: 50}];
+  string mode = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 50
+  }];
   string summary = 2 [(buf.validate.field).string = {max_len: 300}];
   int32 duration_mins = 3 [(buf.validate.field).int32 = {gte: 0}];
-  optional string url = 4 [(buf.validate.field).string = {max_len: 2048, uri: true}];
+  optional string url = 4 [(buf.validate.field).string = {
+    max_len: 2048
+    uri: true
+  }];
 }
 
 // CityCompareColumn is one candidate city's side-by-side summary.
 message CityCompareColumn {
-  string city_name = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string city_name = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
   string city_id = 2 [(buf.validate.field).string = {max_len: 100}];
   string country = 3 [(buf.validate.field).string = {max_len: 200}];
   double center_lat = 4;
@@ -58,12 +77,24 @@ message CityCompareColumn {
 
 // PlannedCity is one city in a multi-city route, with the days it gets.
 message PlannedCity {
-  string city_name = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
-  optional string city_id = 2 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 100}
+  string city_name = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
   }];
-  double lat = 3 [(buf.validate.field).double = {gte: -90, lte: 90}];
-  double lon = 4 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  optional string city_id = 2 [(buf.validate.field) = {
+    string: {
+      min_len: 1
+      max_len: 100
+    }
+  }];
+  double lat = 3 [(buf.validate.field).double = {
+    gte: -90
+    lte: 90
+  }];
+  double lon = 4 [(buf.validate.field).double = {
+    gte: -180
+    lte: 180
+  }];
   // Days assigned to this city, in trip order.
   repeated int32 day_numbers = 5;
   // The city's go-score, so the route can be justified rather than asserted.
@@ -72,7 +103,10 @@ message PlannedCity {
 
 // DroppedCity is a candidate the planner left out, and why.
 message DroppedCity {
-  string city_name = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string city_name = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
   string reason = 2 [(buf.validate.field).string = {max_len: 500}];
 }
 
@@ -88,7 +122,10 @@ message MultiCityPlan {
   repeated loci.trip.TripLeg legs = 4;
   int32 total_travel_mins = 5 [(buf.validate.field).int32 = {gte: 0}];
   // Share of the whole window spent travelling, 0-1.
-  double travel_share = 6 [(buf.validate.field).double = {gte: 0, lte: 1}];
+  double travel_share = 6 [(buf.validate.field).double = {
+    gte: 0
+    lte: 1
+  }];
   // One-line summary a UI can show without walking the structure.
   string outline = 7 [(buf.validate.field).string = {max_len: 2000}];
   // Things that are legal but worth saying out loud (travel-heavy, thin days).
@@ -109,12 +146,23 @@ message DualCityOption {
 // CompareWeekendRequest compares 2–3 candidate cities for a short trip window.
 message CompareWeekendRequest {
   optional string origin_city = 1 [(buf.validate.field).string = {max_len: 200}];
-  optional double origin_lat = 2 [(buf.validate.field).double = {gte: -90, lte: 90}];
-  optional double origin_lon = 3 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  optional double origin_lat = 2 [(buf.validate.field).double = {
+    gte: -90
+    lte: 90
+  }];
+  optional double origin_lon = 3 [(buf.validate.field).double = {
+    gte: -180
+    lte: 180
+  }];
   repeated string candidate_city_names = 4 [(buf.validate.field).repeated = {
-    min_items: 2,
-    max_items: 8,
-    items: {string: {min_len: 1, max_len: 200}}
+    min_items: 2
+    max_items: 8
+    items: {
+      string: {
+        min_len: 1
+        max_len: 200
+      }
+    }
   }];
   google.protobuf.Timestamp start_date = 5;
   google.protobuf.Timestamp end_date = 6;

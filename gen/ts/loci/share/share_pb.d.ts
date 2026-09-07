@@ -467,7 +467,7 @@ export declare type ItineraryContent = Message<"loci.share.ItineraryContent"> & 
 export declare const ItineraryContentSchema: GenMessage<ItineraryContent>;
 
 /**
- * List content for sharing  
+ * List content for sharing
  *
  * @generated from message loci.share.ListContent
  */

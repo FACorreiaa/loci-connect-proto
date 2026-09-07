@@ -81,7 +81,10 @@ message GetMemoryResponse {
 }
 
 message ForgetTraitRequest {
-  string trait_key = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string trait_key = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
 }
 
 message ForgetTraitResponse {
@@ -91,7 +94,10 @@ message ForgetTraitResponse {
 
 message ForgetEvidenceRequest {
   // feedback_id from Evidence.
-  string feedback_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string feedback_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
 }
 
 message ForgetEvidenceResponse {}

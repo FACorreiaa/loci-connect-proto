@@ -2,10 +2,10 @@ syntax = "proto3";
 
 package loci.travelhistory;
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/travelhistory;travelhistory";
-
 import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/travelhistory;travelhistory";
 
 // VisitSource records HOW a visit came to be known, so any row can be explained
 // and undone. Before this service existed, "places visited" was a denormalised
@@ -29,13 +29,22 @@ message VisitedCity {
   string id = 1;
   // Empty when the city is named but not yet resolved against the cities table.
   string city_id = 2;
-  string city_name = 3 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string city_name = 3 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
   // Empty when unresolved. Never inferred from coordinates — that needs a
   // reverse geocode we do not have, and a guessed country is a fabricated one.
   string country = 4 [(buf.validate.field).string = {max_len: 200}];
   string country_code = 5 [(buf.validate.field).string = {max_len: 2}];
-  double latitude = 6 [(buf.validate.field).double = {gte: -90, lte: 90}];
-  double longitude = 7 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  double latitude = 6 [(buf.validate.field).double = {
+    gte: -90
+    lte: 90
+  }];
+  double longitude = 7 [(buf.validate.field).double = {
+    gte: -180
+    lte: 180
+  }];
   VisitSource source = 8 [(buf.validate.field).enum = {defined_only: true}];
   string trip_id = 9;
   google.protobuf.Timestamp first_visit_at = 10;
@@ -47,12 +56,21 @@ message VisitedCity {
 // city totals can be RECOMPUTED from evidence rather than trusted.
 message VisitedPOI {
   string id = 1;
-  string poi_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string poi_id = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
   string poi_name = 3 [(buf.validate.field).string = {max_len: 300}];
   string city_name = 4 [(buf.validate.field).string = {max_len: 200}];
   // Optional: a POI we hold no coordinates for is still a real visit.
-  optional double latitude = 5 [(buf.validate.field).double = {gte: -90, lte: 90}];
-  optional double longitude = 6 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  optional double latitude = 5 [(buf.validate.field).double = {
+    gte: -90
+    lte: 90
+  }];
+  optional double longitude = 6 [(buf.validate.field).double = {
+    gte: -180
+    lte: 180
+  }];
   string trip_id = 7;
   VisitSource source = 8 [(buf.validate.field).enum = {defined_only: true}];
   google.protobuf.Timestamp visited_at = 9;
@@ -86,10 +104,22 @@ message TravelSummary {
 message GlobeArc {
   string from_name = 1 [(buf.validate.field).string = {max_len: 200}];
   string to_name = 2 [(buf.validate.field).string = {max_len: 200}];
-  double from_lat = 3 [(buf.validate.field).double = {gte: -90, lte: 90}];
-  double from_lon = 4 [(buf.validate.field).double = {gte: -180, lte: 180}];
-  double to_lat = 5 [(buf.validate.field).double = {gte: -90, lte: 90}];
-  double to_lon = 6 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  double from_lat = 3 [(buf.validate.field).double = {
+    gte: -90
+    lte: 90
+  }];
+  double from_lon = 4 [(buf.validate.field).double = {
+    gte: -180
+    lte: 180
+  }];
+  double to_lat = 5 [(buf.validate.field).double = {
+    gte: -90
+    lte: 90
+  }];
+  double to_lon = 6 [(buf.validate.field).double = {
+    gte: -180
+    lte: 180
+  }];
   double distance_km = 7 [(buf.validate.field).double = {gte: 0}];
   string trip_id = 8;
   // Transport mode as stored on the leg ("fly", "drive", "rail", ...). Empty
@@ -100,7 +130,10 @@ message GlobeArc {
 
 message ListVisitedCitiesRequest {
   int32 page = 1 [(buf.validate.field).int32 = {gte: 0}];
-  int32 page_size = 2 [(buf.validate.field).int32 = {gte: 0, lte: 500}];
+  int32 page_size = 2 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 500
+  }];
 }
 
 message ListVisitedCitiesResponse {
@@ -112,7 +145,10 @@ message ListVisitedPOIsRequest {
   // Restrict to one city. Empty means all cities.
   string city_id = 1;
   int32 page = 2 [(buf.validate.field).int32 = {gte: 0}];
-  int32 page_size = 3 [(buf.validate.field).int32 = {gte: 0, lte: 500}];
+  int32 page_size = 3 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 500
+  }];
 }
 
 message ListVisitedPOIsResponse {
@@ -122,7 +158,10 @@ message ListVisitedPOIsResponse {
 
 message GetTravelSummaryRequest {
   // Comparison window width. Defaults to 365 when zero.
-  int32 period_days = 1 [(buf.validate.field).int32 = {gte: 0, lte: 3650}];
+  int32 period_days = 1 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 3650
+  }];
 }
 
 message GetTravelSummaryResponse {
@@ -131,9 +170,18 @@ message GetTravelSummaryResponse {
 
 message RecordVisitRequest {
   string city_id = 1;
-  string city_name = 2 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
-  double latitude = 3 [(buf.validate.field).double = {gte: -90, lte: 90}];
-  double longitude = 4 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  string city_name = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
+  double latitude = 3 [(buf.validate.field).double = {
+    gte: -90
+    lte: 90
+  }];
+  double longitude = 4 [(buf.validate.field).double = {
+    gte: -180
+    lte: 180
+  }];
   string trip_id = 5;
   optional string poi_id = 6 [(buf.validate.field).string = {max_len: 200}];
   optional string poi_name = 7 [(buf.validate.field).string = {max_len: 300}];
@@ -146,7 +194,10 @@ message RecordVisitResponse {
 }
 
 message DeleteVisitRequest {
-  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 36}];
+  string id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 36
+  }];
 }
 
 message DeleteVisitResponse {
@@ -158,9 +209,15 @@ message DeleteVisitResponse {
 // three sequential auth + query cycles.
 message GetGlobeDataRequest {
   // Max cities to return. Defaults to 500 when zero.
-  int32 limit = 1 [(buf.validate.field).int32 = {gte: 0, lte: 2000}];
+  int32 limit = 1 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 2000
+  }];
   // Comparison window for the summary deltas. Defaults to 365 when zero.
-  int32 period_days = 2 [(buf.validate.field).int32 = {gte: 0, lte: 3650}];
+  int32 period_days = 2 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 3650
+  }];
 }
 
 message GetGlobeDataResponse {

@@ -2,27 +2,27 @@ syntax = "proto3";
 
 package loci.export;
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/export;exportv1";
-
 import "buf/validate/validate.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/export;exportv1";
 
 // ExportService handles PDF export for various content types
 service ExportService {
   // Export POIs to PDF (for selected items from discover/nearme/favorites)
   rpc ExportPOIsToPDF(ExportPOIsRequest) returns (ExportPDFResponse);
-  
+
   // Export Hotels to PDF
   rpc ExportHotelsToPDF(ExportHotelsRequest) returns (ExportPDFResponse);
-  
+
   // Export Restaurants to PDF
   rpc ExportRestaurantsToPDF(ExportRestaurantsRequest) returns (ExportPDFResponse);
-  
+
   // Export Activities to PDF
   rpc ExportActivitiesToPDF(ExportActivitiesRequest) returns (ExportPDFResponse);
-  
+
   // Export Itinerary to PDF
   rpc ExportItineraryToPDF(ExportItineraryRequest) returns (ExportPDFResponse);
-  
+
   // Export List to PDF
   rpc ExportListToPDF(ExportListRequest) returns (ExportPDFResponse);
 }
@@ -37,7 +37,10 @@ enum ExportFormat {
 // POI for export (simplified structure)
 message ExportPOI {
   string id = 1;
-  string name = 2 [(buf.validate.field).string = {min_len: 1, max_len: 300}];
+  string name = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 300
+  }];
   string category = 3;
   string description = 4;
   string address = 5;
@@ -53,7 +56,10 @@ message ExportPOI {
 // Hotel for export
 message ExportHotel {
   string id = 1;
-  string name = 2 [(buf.validate.field).string = {min_len: 1, max_len: 300}];
+  string name = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 300
+  }];
   string description = 3;
   string address = 4;
   double latitude = 5;
@@ -71,7 +77,10 @@ message ExportHotel {
 // Restaurant for export
 message ExportRestaurant {
   string id = 1;
-  string name = 2 [(buf.validate.field).string = {min_len: 1, max_len: 300}];
+  string name = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 300
+  }];
   string description = 3;
   string address = 4;
   double latitude = 5;
@@ -88,7 +97,10 @@ message ExportRestaurant {
 // Activity for export
 message ExportActivity {
   string id = 1;
-  string name = 2 [(buf.validate.field).string = {min_len: 1, max_len: 300}];
+  string name = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 300
+  }];
   string description = 3;
   string address = 4;
   double latitude = 5;
@@ -114,7 +126,10 @@ message ExportItineraryItem {
 // Itinerary for export
 message ExportItinerary {
   string id = 1;
-  string title = 2 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string title = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
   string description = 3;
   string city_name = 4;
   int32 total_days = 5;
@@ -123,27 +138,39 @@ message ExportItinerary {
 
 // Request messages
 message ExportPOIsRequest {
-  repeated ExportPOI pois = 1 [(buf.validate.field).repeated = {min_items: 1, max_items: 100}];
+  repeated ExportPOI pois = 1 [(buf.validate.field).repeated = {
+    min_items: 1
+    max_items: 100
+  }];
   string title = 2; // Optional title for the PDF
   ExportFormat format = 3;
 }
 
 message ExportHotelsRequest {
-  repeated ExportHotel hotels = 1 [(buf.validate.field).repeated = {min_items: 1, max_items: 100}];
+  repeated ExportHotel hotels = 1 [(buf.validate.field).repeated = {
+    min_items: 1
+    max_items: 100
+  }];
   string title = 2;
   string city_name = 3;
   ExportFormat format = 4;
 }
 
 message ExportRestaurantsRequest {
-  repeated ExportRestaurant restaurants = 1 [(buf.validate.field).repeated = {min_items: 1, max_items: 100}];
+  repeated ExportRestaurant restaurants = 1 [(buf.validate.field).repeated = {
+    min_items: 1
+    max_items: 100
+  }];
   string title = 2;
   string city_name = 3;
   ExportFormat format = 4;
 }
 
 message ExportActivitiesRequest {
-  repeated ExportActivity activities = 1 [(buf.validate.field).repeated = {min_items: 1, max_items: 100}];
+  repeated ExportActivity activities = 1 [(buf.validate.field).repeated = {
+    min_items: 1
+    max_items: 100
+  }];
   string title = 2;
   string city_name = 3;
   ExportFormat format = 4;
@@ -155,7 +182,10 @@ message ExportItineraryRequest {
 }
 
 message ExportListRequest {
-  string list_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string list_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
   string list_name = 2;
   repeated ExportPOI pois = 3;
   repeated ExportHotel hotels = 4;
@@ -166,7 +196,10 @@ message ExportListRequest {
 // Response message
 message ExportPDFResponse {
   bytes pdf_data = 1;
-  string filename = 2 [(buf.validate.field).string = {min_len: 1, max_len: 255}];
+  string filename = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 255
+  }];
   string content_type = 3;
   int64 size_bytes = 4;
 }

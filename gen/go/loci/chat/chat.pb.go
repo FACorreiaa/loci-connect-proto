@@ -3649,7 +3649,7 @@ var File_loci_chat_chat_proto protoreflect.FileDescriptor
 
 const file_loci_chat_chat_proto_rawDesc = "" +
 	"\n" +
-	"\x14loci/chat/chat.proto\x12\tloci.chat\x1a\x1bbuf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18loci/common/common.proto\x1a\x14loci/city/city.proto\x1a\x12loci/poi/poi.proto\x1a\x1aloci/profile/profile.proto\"\x97\a\n" +
+	"\x14loci/chat/chat.proto\x12\tloci.chat\x1a\x1bbuf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x14loci/city/city.proto\x1a\x18loci/common/common.proto\x1a\x12loci/poi/poi.proto\x1a\x1aloci/profile/profile.proto\"\x97\a\n" +
 	"\x0eLlmInteraction\x12\x19\n" +
 	"\x02id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18dR\x02id\x12)\n" +
 	"\n" +

@@ -2,61 +2,130 @@ syntax = "proto3";
 
 package loci.discover;
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/discover;discover";
-
-
 import "buf/validate/validate.proto";
-import "loci/common/common.proto";
 import "loci/chat/chat.proto";
+import "loci/common/common.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/discover;discover";
 
 // TrendingDiscovery represents a trending discovery/search
 message TrendingDiscovery {
-  string city_name = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string city_name = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
   int32 search_count = 2 [(buf.validate.field).int32 = {gte: 0}];
-  string emoji = 3 [(buf.validate.field).string = {min_len: 1, max_len: 8}];
+  string emoji = 3 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 8
+  }];
 }
 
 // FeaturedCollection represents a featured collection of POIs
 message FeaturedCollection {
-  string category = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  string title = 2 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string category = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string title = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
   int32 item_count = 3 [(buf.validate.field).int32 = {gte: 0}];
-  string emoji = 4 [(buf.validate.field).string = {min_len: 1, max_len: 8}];
+  string emoji = 4 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 8
+  }];
 }
 
 // DiscoverResult represents a single discovery result (POI)
 message DiscoverResult {
-  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  string name = 2 [(buf.validate.field).string = {min_len: 1, max_len: 300}];
-  double latitude = 3 [(buf.validate.field).double = {gte: -90, lte: 90}];
-  double longitude = 4 [(buf.validate.field).double = {gte: -180, lte: 180}];
-  string category = 5 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
-  string description = 6 [(buf.validate.field).string = {min_len: 1, max_len: 4000}];
-  string address = 7 [(buf.validate.field).string = {min_len: 1, max_len: 500}];
+  string id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string name = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 300
+  }];
+  double latitude = 3 [(buf.validate.field).double = {
+    gte: -90
+    lte: 90
+  }];
+  double longitude = 4 [(buf.validate.field).double = {
+    gte: -180
+    lte: 180
+  }];
+  string category = 5 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
+  string description = 6 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 4000
+  }];
+  string address = 7 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 500
+  }];
   optional string website = 8 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 2048, uri: true}
+    string: {
+      min_len: 1
+      max_len: 2048
+      uri: true
+    }
   }];
   optional string phone_number = 9 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 50, pattern: "^\\+?[1-9]\\d{1,14}$"}
+    string: {
+      min_len: 1
+      max_len: 50
+      pattern: "^\\+?[1-9]\\d{1,14}$"
+    }
   }];
   optional string opening_hours = 10 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 500}
+    string: {
+      min_len: 1
+      max_len: 500
+    }
   }];
-  string price_level = 11 [(buf.validate.field).string = {min_len: 1, max_len: 50}];
-  double rating = 12 [(buf.validate.field).double = {gte: 0, lte: 5}];
+  string price_level = 11 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 50
+  }];
+  double rating = 12 [(buf.validate.field).double = {
+    gte: 0
+    lte: 5
+  }];
   repeated string tags = 13 [(buf.validate.field).repeated = {
-    max_items: 30,
-    items: {string: {min_len: 1, max_len: 100}}
+    max_items: 30
+    items: {
+      string: {
+        min_len: 1
+        max_len: 100
+      }
+    }
   }];
   repeated string images = 14 [(buf.validate.field).repeated = {
-    max_items: 20,
-    items: {string: {min_len: 1, max_len: 2048, uri: true}}
+    max_items: 20
+    items: {
+      string: {
+        min_len: 1
+        max_len: 2048
+        uri: true
+      }
+    }
   }];
   optional string cuisine_type = 15 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 100}
+    string: {
+      min_len: 1
+      max_len: 100
+    }
   }];
   optional string star_rating = 16 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 20}
+    string: {
+      min_len: 1
+      max_len: 20
+    }
   }];
 }
 
@@ -80,7 +149,10 @@ message GetDiscoverPageResponse {
 // GetTrendingRequest for retrieving trending discoveries
 message GetTrendingRequest {
   optional int32 limit = 1 [(buf.validate.field) = {
-    int32: {gte: 1, lte: 100}
+    int32: {
+      gte: 1
+      lte: 100
+    }
   }];
 }
 
@@ -92,7 +164,10 @@ message GetTrendingResponse {
 // GetFeaturedRequest for retrieving featured collections
 message GetFeaturedRequest {
   optional int32 limit = 1 [(buf.validate.field) = {
-    int32: {gte: 1, lte: 100}
+    int32: {
+      gte: 1
+      lte: 100
+    }
   }];
 }
 
@@ -104,7 +179,10 @@ message GetFeaturedResponse {
 // GetRecentDiscoveriesRequest for retrieving recent discoveries
 message GetRecentDiscoveriesRequest {
   optional string user_id = 1 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 100}
+    string: {
+      min_len: 1
+      max_len: 100
+    }
   }];
   loci.common.PaginationRequest pagination = 2 [(buf.validate.field).required = true];
 }
@@ -117,9 +195,15 @@ message GetRecentDiscoveriesResponse {
 
 // GetCategoryResultsRequest for retrieving category results
 message GetCategoryResultsRequest {
-  string category = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string category = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
   optional string city_name = 2 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 200}
+    string: {
+      min_len: 1
+      max_len: 200
+    }
   }];
   loci.common.PaginationRequest pagination = 3 [(buf.validate.field).required = true];
 }

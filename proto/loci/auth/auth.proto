@@ -2,23 +2,28 @@ syntax = "proto3";
 
 package loci.auth;
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/auth;auth";
-
-
 import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
 import "loci/common/common.proto";
 
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/auth;auth";
+
 // UserAuth represents the core user entity
 message UserAuth {
-  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
   string username = 2 [(buf.validate.field).string = {
-    min_len: 1,
-    max_len: 100,
-    pattern: "^[a-zA-Z0-9_-]+$"  // Alphanumeric, underscore, hyphen only
+    min_len: 1
+    max_len: 100
+    pattern: "^[a-zA-Z0-9_-]+$" // Alphanumeric, underscore, hyphen only
   }];
   string email = 3 [(buf.validate.field).string.email = true];
-  string role = 4 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string role = 4 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
   google.protobuf.Timestamp created_at = 5 [(buf.validate.field).required = true];
   google.protobuf.Timestamp updated_at = 6 [(buf.validate.field).required = true];
 }
@@ -26,12 +31,10 @@ message UserAuth {
 // LoginRequest for user login
 message LoginRequest {
   string email = 1 [(buf.validate.field).string.email = true];
-  string password = 2 [
-    (buf.validate.field).string = {
-      min_len: 8,
-      max_len: 200
-    }
-  ];
+  string password = 2 [(buf.validate.field).string = {
+    min_len: 8
+    max_len: 200
+  }];
 }
 
 // LoginResponse after successful login.
@@ -44,19 +47,25 @@ message LoginResponse {
   // Empty when mfa_required is true — the tokens do not exist yet at that point.
   // The old min_len: 16 constraint made an MFA challenge literally unsendable.
   string access_token = 1 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
+    ignore: IGNORE_IF_ZERO_VALUE
     string: {min_len: 16}
   }];
   string refresh_token = 2 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
+    ignore: IGNORE_IF_ZERO_VALUE
     string: {min_len: 16}
   }];
-  string message = 3 [(buf.validate.field).string = {min_len: 1, max_len: 500}];
-  string user_id = 4 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string message = 3 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 500
+  }];
+  string user_id = 4 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
   string username = 5 [(buf.validate.field).string = {
-    min_len: 1,
-    max_len: 100,
-    pattern: "^[a-zA-Z0-9_-]+$"  // Alphanumeric, underscore, hyphen only
+    min_len: 1
+    max_len: 100
+    pattern: "^[a-zA-Z0-9_-]+$" // Alphanumeric, underscore, hyphen only
   }];
   string email = 6 [(buf.validate.field).string.email = true];
 
@@ -67,23 +76,35 @@ message LoginResponse {
   // passed and is the ONLY thing VerifyMFA accepts; it grants no API access of
   // its own.
   optional string mfa_token = 8 [(buf.validate.field) = {
-    string: {min_len: 16, max_len: 4096}
+    string: {
+      min_len: 16
+      max_len: 4096
+    }
   }];
 }
 
 // VerifyMFARequest completes a login that was challenged for a second factor.
 message VerifyMFARequest {
-  string mfa_token = 1 [(buf.validate.field).string = {min_len: 16, max_len: 4096}];
+  string mfa_token = 1 [(buf.validate.field).string = {
+    min_len: 16
+    max_len: 4096
+  }];
 
   // A 6-digit TOTP code, or a recovery code. Exactly one must be set.
   //
   // The length range spans both: 6 digits for TOTP, 11 characters for a
   // dash-separated recovery code, with slack for how people retype them.
   optional string code = 2 [(buf.validate.field) = {
-    string: {min_len: 6, max_len: 20}
+    string: {
+      min_len: 6
+      max_len: 20
+    }
   }];
   optional string recovery_code = 3 [(buf.validate.field) = {
-    string: {min_len: 6, max_len: 20}
+    string: {
+      min_len: 6
+      max_len: 20
+    }
   }];
 }
 
@@ -95,46 +116,76 @@ message BeginMFAEnrollmentRequest {}
 // an authenticator app. MFA is NOT active until ConfirmMFAEnrollment succeeds.
 message BeginMFAEnrollmentResponse {
   // The otpauth:// URI to render as a QR code.
-  string provisioning_uri = 1 [(buf.validate.field).string = {min_len: 1, max_len: 2048}];
+  string provisioning_uri = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 2048
+  }];
 
   // The base32 secret, for manual entry when a camera is unavailable.
-  string secret = 2 [(buf.validate.field).string = {min_len: 16, max_len: 128}];
+  string secret = 2 [(buf.validate.field).string = {
+    min_len: 16
+    max_len: 128
+  }];
 }
 
 // ConfirmMFAEnrollmentRequest proves the user's app is generating valid codes.
 message ConfirmMFAEnrollmentRequest {
-  string code = 1 [(buf.validate.field).string = {min_len: 6, max_len: 20}];
+  string code = 1 [(buf.validate.field).string = {
+    min_len: 6
+    max_len: 20
+  }];
 }
 
 // ConfirmMFAEnrollmentResponse returns the recovery codes.
 message ConfirmMFAEnrollmentResponse {
   // Plaintext recovery codes, returned exactly once. Only hashes are stored, so
   // they cannot be shown again — the client must make the user save them here.
-  repeated string recovery_codes = 1 [(buf.validate.field).repeated = {min_items: 1, max_items: 20}];
-  string message = 2 [(buf.validate.field).string = {min_len: 1, max_len: 500}];
+  repeated string recovery_codes = 1 [(buf.validate.field).repeated = {
+    min_items: 1
+    max_items: 20
+  }];
+  string message = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 500
+  }];
 }
 
 // DisableMFARequest turns MFA off. Requires a current code: an attacker with a
 // hijacked session must not be able to strip the second factor.
 message DisableMFARequest {
   optional string code = 1 [(buf.validate.field) = {
-    string: {min_len: 6, max_len: 20}
+    string: {
+      min_len: 6
+      max_len: 20
+    }
   }];
   optional string recovery_code = 2 [(buf.validate.field) = {
-    string: {min_len: 6, max_len: 20}
+    string: {
+      min_len: 6
+      max_len: 20
+    }
   }];
 }
 
 // RegenerateRecoveryCodesRequest replaces all existing codes. Also requires a
 // current code, for the same reason as disabling.
 message RegenerateRecoveryCodesRequest {
-  string code = 1 [(buf.validate.field).string = {min_len: 6, max_len: 20}];
+  string code = 1 [(buf.validate.field).string = {
+    min_len: 6
+    max_len: 20
+  }];
 }
 
 // RegenerateRecoveryCodesResponse returns the new codes and invalidates the old.
 message RegenerateRecoveryCodesResponse {
-  repeated string recovery_codes = 1 [(buf.validate.field).repeated = {min_items: 1, max_items: 20}];
-  string message = 2 [(buf.validate.field).string = {min_len: 1, max_len: 500}];
+  repeated string recovery_codes = 1 [(buf.validate.field).repeated = {
+    min_items: 1
+    max_items: 20
+  }];
+  string message = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 500
+  }];
 }
 
 // GetMFAStatusRequest reports the calling user's MFA state, for Settings.
@@ -157,19 +208,20 @@ message GetMFAStatusResponse {
 // RegisterRequest for user registration
 message RegisterRequest {
   string username = 1 [(buf.validate.field).string = {
-    min_len: 3,
-    max_len: 100,
-    pattern: "^[a-zA-Z0-9_-]+$"  // Alphanumeric, underscore, hyphen only
+    min_len: 3
+    max_len: 100
+    pattern: "^[a-zA-Z0-9_-]+$" // Alphanumeric, underscore, hyphen only
   }];
   string email = 2 [(buf.validate.field).string.email = true];
-  string password = 3 [
-    (buf.validate.field).string = {
-      min_len: 8,
-      max_len: 200
-    }
-  ];
+  string password = 3 [(buf.validate.field).string = {
+    min_len: 8
+    max_len: 200
+  }];
   optional string role = 4 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 100}
+    string: {
+      min_len: 1
+      max_len: 100
+    }
   }];
 }
 
@@ -186,37 +238,49 @@ message TokenResponse {
 
 // ValidateSessionRequest for session validation
 message ValidateSessionRequest {
-  string session_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string session_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
 }
 
 // ValidateSessionResponse for session validation result
 message ValidateSessionResponse {
   bool valid = 1;
   optional string user_id = 2 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 100}
+    string: {
+      min_len: 1
+      max_len: 100
+    }
   }];
   optional string username = 3 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 100, pattern: "^[a-zA-Z0-9_-]+$"}
+    string: {
+      min_len: 1
+      max_len: 100
+      pattern: "^[a-zA-Z0-9_-]+$"
+    }
   }];
-  optional string email = 4 [(buf.validate.field) = {
-    string: {email: true}
-  }];
+  optional string email = 4 [(buf.validate.field) = {string: {email: true}}];
 }
 
 // ChangePasswordRequest for changing password
 message ChangePasswordRequest {
-  string old_password = 1 [(buf.validate.field).string = {min_len: 8, max_len: 200}];
-  string new_password = 2 [
-    (buf.validate.field).string = {
-      min_len: 8,
-      max_len: 200
-    }
-  ];
+  string old_password = 1 [(buf.validate.field).string = {
+    min_len: 8
+    max_len: 200
+  }];
+  string new_password = 2 [(buf.validate.field).string = {
+    min_len: 8
+    max_len: 200
+  }];
 }
 
 // ChangeEmailRequest for changing email
 message ChangeEmailRequest {
-  string password = 1 [(buf.validate.field).string = {min_len: 8, max_len: 200}];
+  string password = 1 [(buf.validate.field).string = {
+    min_len: 8
+    max_len: 200
+  }];
   string new_email = 2 [(buf.validate.field).string.email = true];
 }
 
@@ -232,44 +296,63 @@ message ForgotPasswordRequest {
 
 // ResetPasswordRequest for completing password reset with token
 message ResetPasswordRequest {
-  string token = 1 [(buf.validate.field).string = {min_len: 32, max_len: 128}];
-  string new_password = 2 [
-    (buf.validate.field).string = {
-      min_len: 8,
-      max_len: 200
-    }
-  ];
+  string token = 1 [(buf.validate.field).string = {
+    min_len: 32
+    max_len: 128
+  }];
+  string new_password = 2 [(buf.validate.field).string = {
+    min_len: 8
+    max_len: 200
+  }];
 }
 
 // Session represents session data
 message Session {
-  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
   string username = 2 [(buf.validate.field).string = {
-    min_len: 1,
-    max_len: 100,
-    pattern: "^[a-zA-Z0-9_-]+$"  // Alphanumeric, underscore, hyphen only
+    min_len: 1
+    max_len: 100
+    pattern: "^[a-zA-Z0-9_-]+$" // Alphanumeric, underscore, hyphen only
   }];
   string email = 3 [(buf.validate.field).string.email = true];
 }
 
 // Claims represents JWT claims
 message Claims {
-  string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string user_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
   string username = 2 [(buf.validate.field).string = {
-    min_len: 1,
-    max_len: 100,
-    pattern: "^[a-zA-Z0-9_-]+$"  // Alphanumeric, underscore, hyphen only
+    min_len: 1
+    max_len: 100
+    pattern: "^[a-zA-Z0-9_-]+$" // Alphanumeric, underscore, hyphen only
   }];
   string email = 3 [(buf.validate.field).string.email = true];
-  string role = 4 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string role = 4 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
   optional string subscription_plan = 5 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 100}
+    string: {
+      min_len: 1
+      max_len: 100
+    }
   }];
   optional string subscription_status = 6 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 100}
+    string: {
+      min_len: 1
+      max_len: 100
+    }
   }];
   optional string scope = 7 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 200}
+    string: {
+      min_len: 1
+      max_len: 200
+    }
   }];
   int64 expires_at = 8 [(buf.validate.field).int64 = {gt: 0}];
   int64 issued_at = 9 [(buf.validate.field).int64 = {gt: 0}];

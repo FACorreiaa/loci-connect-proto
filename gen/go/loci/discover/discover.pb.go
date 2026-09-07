@@ -874,7 +874,7 @@ var File_loci_discover_discover_proto protoreflect.FileDescriptor
 
 const file_loci_discover_discover_proto_rawDesc = "" +
 	"\n" +
-	"\x1cloci/discover/discover.proto\x12\rloci.discover\x1a\x1bbuf/validate/validate.proto\x1a\x18loci/common/common.proto\x1a\x14loci/chat/chat.proto\"\x89\x01\n" +
+	"\x1cloci/discover/discover.proto\x12\rloci.discover\x1a\x1bbuf/validate/validate.proto\x1a\x14loci/chat/chat.proto\x1a\x18loci/common/common.proto\"\x89\x01\n" +
 	"\x11TrendingDiscovery\x12'\n" +
 	"\tcity_name\x18\x01 \x01(\tB\n" +
 	"\xbaH\ar\x05\x10\x01\x18\xc8\x01R\bcityName\x12*\n" +

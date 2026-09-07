@@ -2,12 +2,11 @@ syntax = "proto3";
 
 package loci.user;
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/user;user";
-
-
 import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
 import "loci/common/common.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/user;user";
 
 // UserStats contains user statistics
 message UserStats {
@@ -20,65 +19,128 @@ message UserStats {
 
 // UserProfile represents a user's profile
 message UserProfile {
-  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
   string email = 2 [(buf.validate.field).string.email = true];
   optional string username = 3 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 100, pattern: "^[a-zA-Z0-9_-]+$"}
+    string: {
+      min_len: 1
+      max_len: 100
+      pattern: "^[a-zA-Z0-9_-]+$"
+    }
   }];
   optional string firstname = 4 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 100}
+    string: {
+      min_len: 1
+      max_len: 100
+    }
   }];
   optional string lastname = 5 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 100}
+    string: {
+      min_len: 1
+      max_len: 100
+    }
   }];
   optional string phone_number = 6 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 50, pattern: "^\\+?[1-9]\\d{1,14}$"}
+    string: {
+      min_len: 1
+      max_len: 50
+      pattern: "^\\+?[1-9]\\d{1,14}$"
+    }
   }];
   optional int32 age = 7 [(buf.validate.field) = {
-    int32: {gte: 0, lte: 120}
+    int32: {
+      gte: 0
+      lte: 120
+    }
   }];
   optional string city = 8 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 200}
+    string: {
+      min_len: 1
+      max_len: 200
+    }
   }];
   optional string country = 9 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 100}
+    string: {
+      min_len: 1
+      max_len: 100
+    }
   }];
   optional string about_you = 10 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 1000}
+    string: {
+      min_len: 1
+      max_len: 1000
+    }
   }];
   optional string bio = 11 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 1000}
+    string: {
+      min_len: 1
+      max_len: 1000
+    }
   }];
   optional string location = 12 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 200}
+    string: {
+      min_len: 1
+      max_len: 200
+    }
   }];
   google.protobuf.Timestamp joined_date = 13 [(buf.validate.field).required = true];
   optional string avatar = 14 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 2048, uri: true}
+    string: {
+      min_len: 1
+      max_len: 2048
+      uri: true
+    }
   }];
   repeated string interests = 15 [(buf.validate.field).repeated = {
-    max_items: 50,
-    items: {string: {min_len: 1, max_len: 100}}
+    max_items: 50
+    items: {
+      string: {
+        min_len: 1
+        max_len: 100
+      }
+    }
   }];
   repeated string badges = 16 [(buf.validate.field).repeated = {
-    max_items: 100,
-    items: {string: {min_len: 1, max_len: 100}}
+    max_items: 100
+    items: {
+      string: {
+        min_len: 1
+        max_len: 100
+      }
+    }
   }];
   optional UserStats stats = 17;
   optional string display_name = 18 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 150}
+    string: {
+      min_len: 1
+      max_len: 150
+    }
   }];
   optional string profile_image_url = 19 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 2048, uri: true}
+    string: {
+      min_len: 1
+      max_len: 2048
+      uri: true
+    }
   }];
   bool is_active = 20;
   optional google.protobuf.Timestamp email_verified_at = 21;
   optional google.protobuf.Timestamp last_login_at = 22;
   optional string theme = 23 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 50}
+    string: {
+      min_len: 1
+      max_len: 50
+    }
   }];
   optional string language = 24 [(buf.validate.field) = {
-    string: {min_len: 2, max_len: 10, pattern: "^[a-z]{2}(-[A-Z]{2})?$"}
+    string: {
+      min_len: 2
+      max_len: 10
+      pattern: "^[a-z]{2}(-[A-Z]{2})?$"
+    }
   }];
   google.protobuf.Timestamp created_at = 25 [(buf.validate.field).required = true];
   google.protobuf.Timestamp updated_at = 26 [(buf.validate.field).required = true];
@@ -87,65 +149,116 @@ message UserProfile {
 // UpdateProfileParams for updating user profile
 message UpdateProfileParams {
   optional string username = 1 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 100, pattern: "^[a-zA-Z0-9_-]+$"}
+    string: {
+      min_len: 1
+      max_len: 100
+      pattern: "^[a-zA-Z0-9_-]+$"
+    }
   }];
   optional string phone_number = 2 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 50, pattern: "^\\+?[1-9]\\d{1,14}$"}
+    string: {
+      min_len: 1
+      max_len: 50
+      pattern: "^\\+?[1-9]\\d{1,14}$"
+    }
   }];
-  optional string email = 3 [(buf.validate.field) = {
-    string: {email: true}
-  }];
+  optional string email = 3 [(buf.validate.field) = {string: {email: true}}];
   optional string display_name = 4 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 150}
+    string: {
+      min_len: 1
+      max_len: 150
+    }
   }];
   optional string profile_image_url = 5 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 2048, uri: true}
+    string: {
+      min_len: 1
+      max_len: 2048
+      uri: true
+    }
   }];
   optional string firstname = 6 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 100}
+    string: {
+      min_len: 1
+      max_len: 100
+    }
   }];
   optional string lastname = 7 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 100}
+    string: {
+      min_len: 1
+      max_len: 100
+    }
   }];
   optional int32 age = 8 [(buf.validate.field) = {
-    int32: {gte: 0, lte: 120}
+    int32: {
+      gte: 0
+      lte: 120
+    }
   }];
   optional string city = 9 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 200}
+    string: {
+      min_len: 1
+      max_len: 200
+    }
   }];
   optional string country = 10 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 100}
+    string: {
+      min_len: 1
+      max_len: 100
+    }
   }];
   optional string about_you = 11 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 1000}
+    string: {
+      min_len: 1
+      max_len: 1000
+    }
   }];
   optional string location = 12 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 200}
+    string: {
+      min_len: 1
+      max_len: 200
+    }
   }];
   repeated string interests = 13 [(buf.validate.field).repeated = {
-    max_items: 50,
-    items: {string: {min_len: 1, max_len: 100}}
+    max_items: 50
+    items: {
+      string: {
+        min_len: 1
+        max_len: 100
+      }
+    }
   }];
   repeated string badges = 14 [(buf.validate.field).repeated = {
-    max_items: 100,
-    items: {string: {min_len: 1, max_len: 100}}
+    max_items: 100
+    items: {
+      string: {
+        min_len: 1
+        max_len: 100
+      }
+    }
   }];
   optional string theme = 15 [(buf.validate.field) = {
     string: {
-      min_len: 3,
-      max_len: 50,
+      min_len: 3
+      max_len: 50
       pattern: "^(classic|modern|loci):(light|dark|system)$"
     }
   }];
   optional string language = 16 [(buf.validate.field) = {
-    string: {min_len: 2, max_len: 10, pattern: "^[a-z]{2}(-[A-Z]{2})?$"}
+    string: {
+      min_len: 2
+      max_len: 10
+      pattern: "^[a-z]{2}(-[A-Z]{2})?$"
+    }
   }];
 }
 
 // GetUserProfileRequest for retrieving user profile
 message GetUserProfileRequest {
   optional string user_id = 1 [(buf.validate.field) = {
-    string: {min_len: 1, max_len: 100}
+    string: {
+      min_len: 1
+      max_len: 100
+    }
   }]; // If empty, get authenticated user's profile
 }
 
@@ -164,16 +277,25 @@ message ExportUserDataRequest {}
 
 // ExportUserDataResponse carries the exported data as a downloadable blob (JSON).
 message ExportUserDataResponse {
-  bytes data = 1 [(buf.validate.field).bytes = {max_len: 52428800}];  // 50MB cap
-  string content_type = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  string filename = 3 [(buf.validate.field).string = {min_len: 1, max_len: 300}];
+  bytes data = 1 [(buf.validate.field).bytes = {max_len: 52428800}]; // 50MB cap
+  string content_type = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string filename = 3 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 300
+  }];
 }
 
 // DeleteAccountRequest permanently deletes the caller's account and all owned
 // data. `confirmation` must equal the literal "DELETE" to guard against
 // accidental calls.
 message DeleteAccountRequest {
-  string confirmation = 1 [(buf.validate.field).string = {min_len: 1, max_len: 20}];
+  string confirmation = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 20
+  }];
 }
 
 // UserService defines user-related RPCs
