@@ -71,7 +71,9 @@ message ServiceInfo {
     }
   ]; // "development", "staging", "production"
   map<string, string> configuration = 7 [(buf.validate.field).map = {
-    keys: {string: {min_len: 1}}
+    keys: {
+      string: {min_len: 1}
+    }
     values: {
       ignore: IGNORE_IF_ZERO_VALUE
       string: {min_len: 1}
@@ -125,7 +127,9 @@ message GetFeatureFlagsRequest {
     }
   ]; // "web", "ios", "android"
   map<string, string> user_attributes = 4 [(buf.validate.field).map = {
-    keys: {string: {min_len: 1}}
+    keys: {
+      string: {min_len: 1}
+    }
     values: {
       ignore: IGNORE_IF_ZERO_VALUE
       string: {min_len: 1}
@@ -136,7 +140,9 @@ message GetFeatureFlagsRequest {
 message GetFeatureFlagsResponse {
   repeated FeatureFlag flags = 1;
   map<string, string> experiments = 2 [(buf.validate.field).map = {
-    keys: {string: {min_len: 1}}
+    keys: {
+      string: {min_len: 1}
+    }
     values: {
       ignore: IGNORE_IF_ZERO_VALUE
       string: {min_len: 1}
@@ -174,7 +180,9 @@ message ComponentHealth {
   ];
   double response_time_ms = 4 [(buf.validate.field).double = {gte: 0}];
   map<string, string> metrics = 5 [(buf.validate.field).map = {
-    keys: {string: {min_len: 1}}
+    keys: {
+      string: {min_len: 1}
+    }
     values: {
       ignore: IGNORE_IF_ZERO_VALUE
       string: {min_len: 1}

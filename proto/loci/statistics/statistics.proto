@@ -206,8 +206,12 @@ message RecentInteraction {
     max_len: 200
   }];
   map<string, string> metadata = 5 [(buf.validate.field).map = {
-    keys: {string: {min_len: 1}}
-    values: {string: {min_len: 1}}
+    keys: {
+      string: {min_len: 1}
+    }
+    values: {
+      string: {min_len: 1}
+    }
   }];
 }
 
@@ -436,8 +440,12 @@ message SystemAlert {
     ]
   }]; // "low", "medium", "high", "critical"
   map<string, string> details = 4 [(buf.validate.field).map = {
-    keys: {string: {min_len: 1}}
-    values: {string: {min_len: 1}}
+    keys: {
+      string: {min_len: 1}
+    }
+    values: {
+      string: {min_len: 1}
+    }
   }];
 }
 

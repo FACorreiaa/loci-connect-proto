@@ -74,8 +74,12 @@ message POIDetailedInfo {
     uri: true
   }];
   map<string, string> opening_hours = 15 [(buf.validate.field).map = {
-    keys: {string: {min_len: 1}}
-    values: {string: {min_len: 1}}
+    keys: {
+      string: {min_len: 1}
+    }
+    values: {
+      string: {min_len: 1}
+    }
   }];
   repeated string images = 16 [(buf.validate.field).repeated = {
     max_items: 20
@@ -117,7 +121,9 @@ message POIDetailedInfo {
       }
     }
   }];
-  optional int32 priority = 22 [(buf.validate.field) = {int32: {gte: 0}}];
+  optional int32 priority = 22 [(buf.validate.field) = {
+    int32: {gte: 0}
+  }];
   google.protobuf.Timestamp created_at = 23 [(buf.validate.field).required = true];
   optional string cuisine_type = 24 [(buf.validate.field) = {
     string: {
@@ -409,7 +415,9 @@ message SearchPOIRequest {
     gte: -180
     lte: 180
   }];
-  optional double radius_km = 5 [(buf.validate.field) = {double: {gt: 0}}];
+  optional double radius_km = 5 [(buf.validate.field) = {
+    double: {gt: 0}
+  }];
   optional string search_text = 6 [(buf.validate.field) = {
     string: {
       min_len: 1
@@ -457,7 +465,9 @@ message SearchPOIRequest {
       max_len: 50
     }
   }];
-  optional int32 min_guests = 13 [(buf.validate.field) = {int32: {gte: 1}}];
+  optional int32 min_guests = 13 [(buf.validate.field) = {
+    int32: {gte: 1}
+  }];
 }
 
 // SearchPOIResponse for POI search results

@@ -81,8 +81,12 @@ message InteractionContext {
     max_len: 2048
   }];
   map<string, string> custom_properties = 7 [(buf.validate.field).map = {
-    keys: {string: {min_len: 1}}
-    values: {string: {min_len: 1}}
+    keys: {
+      string: {min_len: 1}
+    }
+    values: {
+      string: {min_len: 1}
+    }
   }];
 }
 
@@ -322,8 +326,12 @@ message RecordInteractionRequest {
   }];
   InteractionContext context = 7 [(buf.validate.field).required = true];
   map<string, string> metadata = 8 [(buf.validate.field).map = {
-    keys: {string: {min_len: 1}}
-    values: {string: {min_len: 1}}
+    keys: {
+      string: {min_len: 1}
+    }
+    values: {
+      string: {min_len: 1}
+    }
   }];
 }
 

@@ -162,7 +162,9 @@ message UpdateProfileParams {
       pattern: "^\\+?[1-9]\\d{1,14}$"
     }
   }];
-  optional string email = 3 [(buf.validate.field) = {string: {email: true}}];
+  optional string email = 3 [(buf.validate.field) = {
+    string: {email: true}
+  }];
   optional string display_name = 4 [(buf.validate.field) = {
     string: {
       min_len: 1

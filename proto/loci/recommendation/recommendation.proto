@@ -101,7 +101,9 @@ message RecommendationEvent {
         max_len: 50
       }
     }
-    values: {string: {max_len: 500}}
+    values: {
+      string: {max_len: 500}
+    }
   }];
 }
 

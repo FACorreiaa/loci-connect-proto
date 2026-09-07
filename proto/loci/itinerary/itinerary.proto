@@ -75,9 +75,13 @@ message ListItem {
   ContentType content_type = 4 [(buf.validate.field).enum = {defined_only: true}];
   int32 position = 5 [(buf.validate.field).int32 = {gte: 0}];
   string notes = 6 [(buf.validate.field).string = {max_len: 4000}];
-  optional int32 day_number = 7 [(buf.validate.field) = {int32: {gte: 1}}];
+  optional int32 day_number = 7 [(buf.validate.field) = {
+    int32: {gte: 1}
+  }];
   optional google.protobuf.Timestamp time_slot = 8;
-  optional int32 duration = 9 [(buf.validate.field) = {int32: {gte: 0}}];
+  optional int32 duration = 9 [(buf.validate.field) = {
+    int32: {gte: 0}
+  }];
   google.protobuf.Timestamp created_at = 10 [(buf.validate.field).required = true];
   google.protobuf.Timestamp updated_at = 11 [(buf.validate.field).required = true];
   optional string source_llm_interaction_id = 12 [(buf.validate.field) = {
@@ -152,7 +156,9 @@ message UserSavedItinerary {
       }
     }
   }];
-  optional int32 estimated_duration_days = 10 [(buf.validate.field) = {int32: {gte: 1}}];
+  optional int32 estimated_duration_days = 10 [(buf.validate.field) = {
+    int32: {gte: 1}
+  }];
   optional int32 estimated_cost_level = 11 [(buf.validate.field) = {
     int32: {
       gte: 0
@@ -230,9 +236,13 @@ message AddListItemRequest {
   ContentType content_type = 3 [(buf.validate.field).enum = {defined_only: true}];
   int32 position = 4 [(buf.validate.field).int32 = {gte: 0}];
   string notes = 5 [(buf.validate.field).string = {max_len: 4000}];
-  optional int32 day_number = 6 [(buf.validate.field) = {int32: {gte: 1}}];
+  optional int32 day_number = 6 [(buf.validate.field) = {
+    int32: {gte: 1}
+  }];
   optional google.protobuf.Timestamp time_slot = 7;
-  optional int32 duration_minutes = 8 [(buf.validate.field) = {int32: {gte: 0}}];
+  optional int32 duration_minutes = 8 [(buf.validate.field) = {
+    int32: {gte: 0}
+  }];
   optional string source_llm_interaction_id = 9 [(buf.validate.field) = {
     string: {
       min_len: 1
@@ -252,19 +262,31 @@ message UpdateListItemRequest {
     min_len: 1
     max_len: 100
   }];
-  optional ContentType content_type = 3 [(buf.validate.field) = {enum: {defined_only: true}}];
-  optional int32 position = 4 [(buf.validate.field) = {int32: {gte: 0}}];
-  optional string notes = 5 [(buf.validate.field) = {string: {max_len: 4000}}];
-  optional int32 day_number = 6 [(buf.validate.field) = {int32: {gte: 1}}];
+  optional ContentType content_type = 3 [(buf.validate.field) = {
+    enum: {defined_only: true}
+  }];
+  optional int32 position = 4 [(buf.validate.field) = {
+    int32: {gte: 0}
+  }];
+  optional string notes = 5 [(buf.validate.field) = {
+    string: {max_len: 4000}
+  }];
+  optional int32 day_number = 6 [(buf.validate.field) = {
+    int32: {gte: 1}
+  }];
   optional google.protobuf.Timestamp time_slot = 7;
-  optional int32 duration_minutes = 8 [(buf.validate.field) = {int32: {gte: 0}}];
+  optional int32 duration_minutes = 8 [(buf.validate.field) = {
+    int32: {gte: 0}
+  }];
   optional string source_llm_interaction_id = 9 [(buf.validate.field) = {
     string: {
       min_len: 1
       max_len: 100
     }
   }];
-  optional string item_ai_description = 10 [(buf.validate.field) = {string: {max_len: 4000}}];
+  optional string item_ai_description = 10 [(buf.validate.field) = {
+    string: {max_len: 4000}
+  }];
 }
 
 // UpdateItineraryRequest for updating an itinerary
@@ -294,7 +316,9 @@ message UpdateItineraryRequest {
       }
     }
   }];
-  optional int32 estimated_duration_days = 5 [(buf.validate.field) = {int32: {gte: 1}}];
+  optional int32 estimated_duration_days = 5 [(buf.validate.field) = {
+    int32: {gte: 1}
+  }];
   optional int32 estimated_cost_level = 6 [(buf.validate.field) = {
     int32: {
       gte: 0
@@ -302,7 +326,9 @@ message UpdateItineraryRequest {
     }
   }];
   optional bool is_public = 7;
-  optional string markdown_content = 8 [(buf.validate.field) = {string: {min_len: 1}}];
+  optional string markdown_content = 8 [(buf.validate.field) = {
+    string: {min_len: 1}
+  }];
 }
 
 // BookmarkRequest for bookmarking an itinerary

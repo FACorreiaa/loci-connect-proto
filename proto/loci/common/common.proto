@@ -9,8 +9,12 @@ option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/com
 // Generic response wrapper for API responses
 message Response {
   bool success = 1;
-  optional string message = 2 [(buf.validate.field) = {string: {max_len: 1000}}];
-  optional string error = 3 [(buf.validate.field) = {string: {max_len: 1000}}];
+  optional string message = 2 [(buf.validate.field) = {
+    string: {max_len: 1000}
+  }];
+  optional string error = 3 [(buf.validate.field) = {
+    string: {max_len: 1000}
+  }];
 }
 
 // Generic error response
@@ -24,8 +28,12 @@ message ErrorResponse {
     max_len: 500
   }];
   map<string, string> details = 3 [(buf.validate.field).map = {
-    keys: {string: {min_len: 1}}
-    values: {string: {min_len: 1}}
+    keys: {
+      string: {min_len: 1}
+    }
+    values: {
+      string: {min_len: 1}
+    }
   }];
 }
 

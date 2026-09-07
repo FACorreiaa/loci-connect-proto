@@ -25,6 +25,12 @@ jobs:
       - uses: bufbuild/buf-action@v1
         with:
           token: ${{ secrets.BUF_TOKEN }}
+          # Pinned deliberately. The action defaults to the newest buf, and
+          # `buf format` output changes between releases: 1.71 collapses a
+          # single-entry option onto one line and 1.72 expands it, so an
+          # untouched repo goes red the day a release lands. Bump this on
+          # purpose, reformat in the same commit.
+          version: 1.72.0
 
       # 2️⃣ Run lint check
       - name: Lint proto files

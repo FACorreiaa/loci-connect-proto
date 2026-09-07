@@ -80,7 +80,9 @@ message TripStop {
     }
   }];
   // duration_minutes is how long to spend here.
-  optional int32 duration_minutes = 6 [(buf.validate.field) = {int32: {gte: 0}}];
+  optional int32 duration_minutes = 6 [(buf.validate.field) = {
+    int32: {gte: 0}
+  }];
   string notes = 7 [(buf.validate.field).string = {max_len: 4000}];
   optional string booking_url = 8 [(buf.validate.field) = {
     string: {

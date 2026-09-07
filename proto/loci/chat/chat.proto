@@ -146,7 +146,9 @@ message LlmInteraction {
       lte: 180
     }
   }];
-  optional double distance = 18 [(buf.validate.field) = {double: {gte: 0}}];
+  optional double distance = 18 [(buf.validate.field) = {
+    double: {gte: 0}
+  }];
 }
 
 // ConversationMessage represents a single message in a conversation
@@ -356,7 +358,9 @@ message ChatRequest {
     min_len: 1
     max_len: 4000
   }];
-  optional string city_name = 3 [(buf.validate.field) = {string: {max_len: 200}}];
+  optional string city_name = 3 [(buf.validate.field) = {
+    string: {max_len: 200}
+  }];
   optional UserLocation user_location = 4;
   optional string profile_id = 5 [(buf.validate.field) = {
     string: {
@@ -426,7 +430,9 @@ message StreamError {
   }];
   bool retryable = 3;
   // retry_after_ms hints the client when to retry (e.g. rate-limit/quota).
-  optional int32 retry_after_ms = 4 [(buf.validate.field) = {int32: {gte: 0}}];
+  optional int32 retry_after_ms = 4 [(buf.validate.field) = {
+    int32: {gte: 0}
+  }];
 }
 
 // StartPayload opens a stream: the session it is bound to and the resolved domain.
@@ -436,7 +442,9 @@ message StartPayload {
     max_len: 200
   }];
   DomainType domain = 2 [(buf.validate.field).enum = {defined_only: true}];
-  optional string city_name = 3 [(buf.validate.field) = {string: {max_len: 200}}];
+  optional string city_name = 3 [(buf.validate.field) = {
+    string: {max_len: 200}
+  }];
 }
 
 // TokenPayload carries an incremental text token (STREAM_EVENT_TYPE_TOKEN) or an
@@ -444,7 +452,9 @@ message StartPayload {
 // producing worker so consumers can accumulate per-part.
 message TokenPayload {
   string text = 1 [(buf.validate.field).string = {max_len: 16000}];
-  optional int32 part = 2 [(buf.validate.field) = {int32: {gte: 0}}];
+  optional int32 part = 2 [(buf.validate.field) = {
+    int32: {gte: 0}
+  }];
 }
 
 // ProgressPayload reports pipeline progress for STREAM_EVENT_TYPE_PROGRESS.
@@ -576,8 +586,12 @@ message NavigationData {
     max_len: 100
   }];
   map<string, string> query_params = 3 [(buf.validate.field).map = {
-    keys: {string: {min_len: 1}}
-    values: {string: {min_len: 1}}
+    keys: {
+      string: {min_len: 1}
+    }
+    values: {
+      string: {min_len: 1}
+    }
   }];
 }
 
@@ -597,8 +611,12 @@ message UserLocation {
 }
 // StartChatRequest for starting a new chat session
 message StartChatRequest {
-  optional string city_name = 1 [(buf.validate.field) = {string: {max_len: 200}}];
-  optional DomainType context_type = 2 [(buf.validate.field) = {enum: {defined_only: true}}];
+  optional string city_name = 1 [(buf.validate.field) = {
+    string: {max_len: 200}
+  }];
+  optional DomainType context_type = 2 [(buf.validate.field) = {
+    enum: {defined_only: true}
+  }];
   string initial_message = 3 [(buf.validate.field).string = {
     min_len: 1
     max_len: 4000
@@ -622,7 +640,9 @@ message ContinueChatRequest {
     min_len: 1
     max_len: 4000
   }];
-  optional string city_name = 3 [(buf.validate.field) = {string: {max_len: 200}}];
+  optional string city_name = 3 [(buf.validate.field) = {
+    string: {max_len: 200}
+  }];
   DomainType context_type = 4 [(buf.validate.field).enum = {defined_only: true}];
 }
 
@@ -723,8 +743,12 @@ message CityInteractions {
     min_len: 1
     max_len: 200
   }];
-  optional int32 total_favorites = 8 [(buf.validate.field) = {int32: {gte: 0}}];
-  optional int32 total_itineraries = 9 [(buf.validate.field) = {int32: {gte: 0}}];
+  optional int32 total_favorites = 8 [(buf.validate.field) = {
+    int32: {gte: 0}
+  }];
+  optional int32 total_itineraries = 9 [(buf.validate.field) = {
+    int32: {gte: 0}
+  }];
 }
 
 // GetRecentInteractionsRequest for retrieving recent interactions
@@ -772,7 +796,9 @@ message BookmarkRequest {
       max_len: 100
     }
   }];
-  optional string primary_city_name = 7 [(buf.validate.field) = {string: {max_len: 200}}];
+  optional string primary_city_name = 7 [(buf.validate.field) = {
+    string: {max_len: 200}
+  }];
   optional string primary_city_id = 8 [(buf.validate.field) = {
     string: {
       min_len: 1

@@ -260,7 +260,9 @@ message ValidateSessionResponse {
       pattern: "^[a-zA-Z0-9_-]+$"
     }
   }];
-  optional string email = 4 [(buf.validate.field) = {string: {email: true}}];
+  optional string email = 4 [(buf.validate.field) = {
+    string: {email: true}
+  }];
 }
 
 // ChangePasswordRequest for changing password
