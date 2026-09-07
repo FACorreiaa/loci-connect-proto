@@ -341,14 +341,13 @@ paths:
     post:
       tags:
         - loci.apikey.ApiKeyService
-      summary: |-
-        GetSetupInstructions returns the copyable snippets that connect one kind
-         of agent to Loci's MCP endpoint.
+      summary: GetSetupInstructions previews how one kind of agent is connected.
       description: |-
-        Deliberately takes no key and returns none. The snippets carry a
-         placeholder, so the settings page can show somebody exactly what they are
-         about to run before any key exists — and so this call, which is made every
-         time the page is opened, never has a secret in its response.
+        Deliberately takes no key and returns none: the snippets carry a
+         placeholder. It exists so the page can answer "what am I signing up for"
+         without minting a credential to answer it, and so the call it makes every
+         time it is opened never has a secret in its response. The real
+         instructions come back from CreateApiKey.
       operationId: loci.apikey.ApiKeyService.GetSetupInstructions
       parameters:
         - name: Connect-Protocol-Version
@@ -7867,6 +7866,17 @@ components:
           type: string
           title: plaintext_key
           description: The full secret key ("loci_sk_..."). Shown once; store it now.
+        setup:
+          title: setup
+          description: |-
+            Setup instructions carrying the real key, so somebody can copy a working
+             configuration in the one moment the key exists to put in it.
+
+             This is the only message here that contains a live credential, and it is
+             the response to the request that minted it. GetSetupInstructions returns
+             the same text with a placeholder, which is why the page can be opened
+             repeatedly without a secret crossing the wire.
+          $ref: '#/components/schemas/loci.apikey.SetupInstructions'
       title: CreateApiKeyResponse
       additionalProperties: false
     loci.apikey.GetSetupInstructionsRequest:
@@ -7878,38 +7888,15 @@ components:
           maxLength: 32
           description: |-
             Which client to write the instructions for. Omitted means "other", which
-             gets the generic MCP configuration rather than a vendor's CLI.
+             gets the two facts any MCP client needs rather than a vendor's CLI.
       title: GetSetupInstructionsRequest
       additionalProperties: false
     loci.apikey.GetSetupInstructionsResponse:
       type: object
       properties:
-        endpoint:
-          type: string
-          title: endpoint
-          description: |-
-            The MCP endpoint these instructions point at, so the page does not have to
-             know the server's own address.
-        oneCommand:
-          type: string
-          title: one_command
-          description: |-
-            A single shell command that registers the server, for clients that have
-             one. Empty when the client has no CLI.
-        mcpJson:
-          type: string
-          title: mcp_json
-          description: |-
-            An .mcp.json fragment, for clients configured by file. The key is
-             referenced through an environment variable rather than inlined, because
-             that file is committed far more often than people expect.
-        setupPrompt:
-          type: string
-          title: setup_prompt
-          description: |-
-            Prose to hand to an agent so it configures itself, naming the read-only
-             tools it should verify with. It tells the agent not to call the generating
-             tools while checking, since those spend the owner's daily quota.
+        instructions:
+          title: instructions
+          $ref: '#/components/schemas/loci.apikey.SetupInstructions'
       title: GetSetupInstructionsResponse
       additionalProperties: false
     loci.apikey.ListApiKeysRequest:
@@ -7940,6 +7927,86 @@ components:
       type: object
       title: RevokeApiKeyResponse
       additionalProperties: false
+    loci.apikey.SetupInstructions:
+      type: object
+      properties:
+        clientKind:
+          type: string
+          title: client_kind
+          maxLength: 32
+        endpoint:
+          type: string
+          title: endpoint
+          maxLength: 500
+          description: The MCP endpoint, so the page does not have to know the server's address.
+        configLabel:
+          type: string
+          title: config_label
+          maxLength: 100
+          description: |-
+            The configuration to copy. config_label names what it is ("one command",
+             "connection details") and config_lang is the syntax, for the copy block's
+             heading and highlighting.
+        configLang:
+          type: string
+          title: config_lang
+          maxLength: 16
+        config:
+          type: string
+          title: config
+          maxLength: 4096
+        safeLabel:
+          type: string
+          title: safe_label
+          maxLength: 100
+          description: |-
+            The same configuration with the key read from an environment variable
+             rather than written into the file, and the line that sets it. Empty for
+             clients whose configuration is not a file anyone commits.
+
+             Not an advanced option: .mcp.json lives in a project root and is committed
+             routinely, so offering only the literal form is how a key reaches a public
+             repository.
+        safeLang:
+          type: string
+          title: safe_lang
+          maxLength: 16
+        safe:
+          type: string
+          title: safe
+          maxLength: 4096
+        safeNote:
+          type: string
+          title: safe_note
+          maxLength: 500
+          description: |-
+            Why the second form exists, which differs by client: for one it is an
+             alternative to a literal key in a committed file, for another it is the
+             only form there is.
+        exportLine:
+          type: string
+          title: export_line
+          maxLength: 500
+        prompt:
+          type: string
+          title: prompt
+          maxLength: 4096
+          description: |-
+            Text to paste into an agent that is already running, so it configures
+             itself. It names the read-only tools to verify with and tells the agent not
+             to call the generating ones while checking, since those spend the owner's
+             daily quota.
+      title: SetupInstructions
+      additionalProperties: false
+      description: |-
+        Everything somebody needs to point one agent at Loci: the configuration they
+         edit, and the prompt they hand to the agent instead of editing anything.
+
+         The shape is per client rather than one JSON blob because the clients do not
+         agree: Claude Code takes a header inline, Codex reads the key from a named
+         environment variable and writes TOML, and a Hermes gateway is configured at a
+         prompt. Flattening those into one format would mean writing instructions that
+         are wrong for two of the three.
     loci.auth.BeginMFAEnrollmentRequest:
       type: object
       title: BeginMFAEnrollmentRequest

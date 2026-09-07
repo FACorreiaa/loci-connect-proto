@@ -17,13 +17,13 @@ service ApiKeyService {
   rpc ListApiKeys(ListApiKeysRequest) returns (ListApiKeysResponse);
   // RevokeApiKey permanently disables a key.
   rpc RevokeApiKey(RevokeApiKeyRequest) returns (RevokeApiKeyResponse);
-  // GetSetupInstructions returns the copyable snippets that connect one kind
-  // of agent to Loci's MCP endpoint.
+  // GetSetupInstructions previews how one kind of agent is connected.
   //
-  // Deliberately takes no key and returns none. The snippets carry a
-  // placeholder, so the settings page can show somebody exactly what they are
-  // about to run before any key exists — and so this call, which is made every
-  // time the page is opened, never has a secret in its response.
+  // Deliberately takes no key and returns none: the snippets carry a
+  // placeholder. It exists so the page can answer "what am I signing up for"
+  // without minting a credential to answer it, and so the call it makes every
+  // time it is opened never has a secret in its response. The real
+  // instructions come back from CreateApiKey.
   rpc GetSetupInstructions(GetSetupInstructionsRequest) returns (GetSetupInstructionsResponse);
 }
 
@@ -73,6 +73,14 @@ message CreateApiKeyResponse {
   ApiKey api_key = 1;
   // The full secret key ("loci_sk_..."). Shown once; store it now.
   string plaintext_key = 2;
+  // Setup instructions carrying the real key, so somebody can copy a working
+  // configuration in the one moment the key exists to put in it.
+  //
+  // This is the only message here that contains a live credential, and it is
+  // the response to the request that minted it. GetSetupInstructions returns
+  // the same text with a placeholder, which is why the page can be opened
+  // repeatedly without a secret crossing the wire.
+  SetupInstructions setup = 3;
 }
 
 message ListApiKeysRequest {}
@@ -89,23 +97,53 @@ message RevokeApiKeyResponse {}
 
 message GetSetupInstructionsRequest {
   // Which client to write the instructions for. Omitted means "other", which
-  // gets the generic MCP configuration rather than a vendor's CLI.
+  // gets the two facts any MCP client needs rather than a vendor's CLI.
   string client_kind = 1 [(buf.validate.field).string = {max_len: 32}];
 }
 
 message GetSetupInstructionsResponse {
-  // The MCP endpoint these instructions point at, so the page does not have to
-  // know the server's own address.
-  string endpoint = 1;
-  // A single shell command that registers the server, for clients that have
-  // one. Empty when the client has no CLI.
-  string one_command = 2;
-  // An .mcp.json fragment, for clients configured by file. The key is
-  // referenced through an environment variable rather than inlined, because
-  // that file is committed far more often than people expect.
-  string mcp_json = 3;
-  // Prose to hand to an agent so it configures itself, naming the read-only
-  // tools it should verify with. It tells the agent not to call the generating
-  // tools while checking, since those spend the owner's daily quota.
-  string setup_prompt = 4;
+  SetupInstructions instructions = 1;
+}
+
+// Everything somebody needs to point one agent at Loci: the configuration they
+// edit, and the prompt they hand to the agent instead of editing anything.
+//
+// The shape is per client rather than one JSON blob because the clients do not
+// agree: Claude Code takes a header inline, Codex reads the key from a named
+// environment variable and writes TOML, and a Hermes gateway is configured at a
+// prompt. Flattening those into one format would mean writing instructions that
+// are wrong for two of the three.
+message SetupInstructions {
+  string client_kind = 1 [(buf.validate.field).string = {max_len: 32}];
+  // The MCP endpoint, so the page does not have to know the server's address.
+  string endpoint = 2 [(buf.validate.field).string = {max_len: 500}];
+
+  // The configuration to copy. config_label names what it is ("one command",
+  // "connection details") and config_lang is the syntax, for the copy block's
+  // heading and highlighting.
+  string config_label = 3 [(buf.validate.field).string = {max_len: 100}];
+  string config_lang = 4 [(buf.validate.field).string = {max_len: 16}];
+  string config = 5 [(buf.validate.field).string = {max_len: 4096}];
+
+  // The same configuration with the key read from an environment variable
+  // rather than written into the file, and the line that sets it. Empty for
+  // clients whose configuration is not a file anyone commits.
+  //
+  // Not an advanced option: .mcp.json lives in a project root and is committed
+  // routinely, so offering only the literal form is how a key reaches a public
+  // repository.
+  string safe_label = 6 [(buf.validate.field).string = {max_len: 100}];
+  string safe_lang = 7 [(buf.validate.field).string = {max_len: 16}];
+  string safe = 8 [(buf.validate.field).string = {max_len: 4096}];
+  // Why the second form exists, which differs by client: for one it is an
+  // alternative to a literal key in a committed file, for another it is the
+  // only form there is.
+  string safe_note = 9 [(buf.validate.field).string = {max_len: 500}];
+  string export_line = 10 [(buf.validate.field).string = {max_len: 500}];
+
+  // Text to paste into an agent that is already running, so it configures
+  // itself. It names the read-only tools to verify with and tells the agent not
+  // to call the generating ones while checking, since those spend the owner's
+  // daily quota.
+  string prompt = 11 [(buf.validate.field).string = {max_len: 4096}];
 }

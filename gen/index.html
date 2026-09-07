@@ -360,6 +360,10 @@
                   <a href="#loci.apikey.RevokeApiKeyResponse"><span class="badge">M</span>RevokeApiKeyResponse</a>
                 </li>
               
+                <li>
+                  <a href="#loci.apikey.SetupInstructions"><span class="badge">M</span>SetupInstructions</a>
+                </li>
+              
               
               
               
@@ -4367,6 +4371,19 @@ cannot end up displaying a kind it has no name or icon for. </p></td>
                   <td><p>The full secret key (&#34;loci_sk_...&#34;). Shown once; store it now. </p></td>
                 </tr>
               
+                <tr>
+                  <td>setup</td>
+                  <td><a href="#loci.apikey.SetupInstructions">SetupInstructions</a></td>
+                  <td></td>
+                  <td><p>Setup instructions carrying the real key, so somebody can copy a working
+configuration in the one moment the key exists to put in it.
+
+This is the only message here that contains a live credential, and it is
+the response to the request that minted it. GetSetupInstructions returns
+the same text with a placeholder, which is why the page can be opened
+repeatedly without a secret crossing the wire. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -4389,7 +4406,7 @@ cannot end up displaying a kind it has no name or icon for. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Which client to write the instructions for. Omitted means &#34;other&#34;, which
-gets the generic MCP configuration rather than a vendor&#39;s CLI. </p></td>
+gets the two facts any MCP client needs rather than a vendor&#39;s CLI. </p></td>
                 </tr>
               
             </tbody>
@@ -4410,37 +4427,10 @@ gets the generic MCP configuration rather than a vendor&#39;s CLI. </p></td>
             <tbody>
               
                 <tr>
-                  <td>endpoint</td>
-                  <td><a href="#string">string</a></td>
+                  <td>instructions</td>
+                  <td><a href="#loci.apikey.SetupInstructions">SetupInstructions</a></td>
                   <td></td>
-                  <td><p>The MCP endpoint these instructions point at, so the page does not have to
-know the server&#39;s own address. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>one_command</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>A single shell command that registers the server, for clients that have
-one. Empty when the client has no CLI. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>mcp_json</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>An .mcp.json fragment, for clients configured by file. The key is
-referenced through an environment variable rather than inlined, because
-that file is committed far more often than people expect. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>setup_prompt</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Prose to hand to an agent so it configures itself, naming the read-only
-tools it should verify with. It tells the agent not to call the generating
-tools while checking, since those spend the owner&#39;s daily quota. </p></td>
+                  <td><p> </p></td>
                 </tr>
               
             </tbody>
@@ -4512,6 +4502,113 @@ tools while checking, since those spend the owner&#39;s daily quota. </p></td>
 
         
       
+        <h3 id="loci.apikey.SetupInstructions">SetupInstructions</h3>
+        <p>Everything somebody needs to point one agent at Loci: the configuration they</p><p>edit, and the prompt they hand to the agent instead of editing anything.</p><p>The shape is per client rather than one JSON blob because the clients do not</p><p>agree: Claude Code takes a header inline, Codex reads the key from a named</p><p>environment variable and writes TOML, and a Hermes gateway is configured at a</p><p>prompt. Flattening those into one format would mean writing instructions that</p><p>are wrong for two of the three.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>client_kind</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>endpoint</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The MCP endpoint, so the page does not have to know the server&#39;s address. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>config_label</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The configuration to copy. config_label names what it is (&#34;one command&#34;,
+&#34;connection details&#34;) and config_lang is the syntax, for the copy block&#39;s
+heading and highlighting. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>config_lang</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>config</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>safe_label</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The same configuration with the key read from an environment variable
+rather than written into the file, and the line that sets it. Empty for
+clients whose configuration is not a file anyone commits.
+
+Not an advanced option: .mcp.json lives in a project root and is committed
+routinely, so offering only the literal form is how a key reaches a public
+repository. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>safe_lang</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>safe</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>safe_note</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Why the second form exists, which differs by client: for one it is an
+alternative to a literal key in a committed file, for another it is the
+only form there is. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>export_line</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>prompt</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Text to paste into an agent that is already running, so it configures
+itself. It names the read-only tools to verify with and tells the agent not
+to call the generating ones while checking, since those spend the owner&#39;s
+daily quota. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
 
       
 
@@ -4552,13 +4649,13 @@ once in the response and never stored server-side.</p></td>
                 <td>GetSetupInstructions</td>
                 <td><a href="#loci.apikey.GetSetupInstructionsRequest">GetSetupInstructionsRequest</a></td>
                 <td><a href="#loci.apikey.GetSetupInstructionsResponse">GetSetupInstructionsResponse</a></td>
-                <td><p>GetSetupInstructions returns the copyable snippets that connect one kind
-of agent to Loci&#39;s MCP endpoint.
+                <td><p>GetSetupInstructions previews how one kind of agent is connected.
 
-Deliberately takes no key and returns none. The snippets carry a
-placeholder, so the settings page can show somebody exactly what they are
-about to run before any key exists — and so this call, which is made every
-time the page is opened, never has a secret in its response.</p></td>
+Deliberately takes no key and returns none: the snippets carry a
+placeholder. It exists so the page can answer &#34;what am I signing up for&#34;
+without minting a credential to answer it, and so the call it makes every
+time it is opened never has a secret in its response. The real
+instructions come back from CreateApiKey.</p></td>
               </tr>
             
           </tbody>
