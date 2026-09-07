@@ -17,9 +17,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          # Full history. The breaking-change step below compares against
-          # `.git#branch=main`, and the default shallow clone fetches only the
-          # ref under test, so main is not present and buf cannot resolve it.
+          # Full history. The breaking-change step below reads main out of the
+          # local clone, and the default shallow fetch brings down only the ref
+          # under test.
           fetch-depth: 0
 
       - uses: actions/setup-go@v5
@@ -42,8 +42,11 @@ jobs:
         run: buf lint
 
       # 3️⃣ Verify breaking changes against last release (optional but recommended)
+      # `ref=origin/main`, not `branch=main`: checkout leaves the remote-tracking
+      # ref behind but no local branch of that name, so asking for the branch
+      # fails with "couldn't find remote ref main" even with full history.
       - name: Check breaking changes
-        run: buf breaking --against '.git#branch=main'
+        run: buf breaking --against '.git#ref=origin/main'
 
       # 5️⃣ Push to Buf Schema Registry (only on main)
       - name: Push to Buf Schema Registry
