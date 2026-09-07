@@ -144,6 +144,28 @@ message UserProfile {
   }];
   google.protobuf.Timestamp created_at = 25 [(buf.validate.field).required = true];
   google.protobuf.Timestamp updated_at = 26 [(buf.validate.field).required = true];
+
+  // IANA zone name, e.g. "Atlantic/Madeira". Unset means the client falls back
+  // to the browser's own guess, which is all there is before somebody sets one.
+  //
+  // Held server-side rather than in the browser because it has to be readable
+  // without one: a quiet hour, or anything else scheduled, is meaningless
+  // without knowing whose evening it is.
+  optional string timezone = 27 [(buf.validate.field) = {
+    string: {
+      min_len: 3
+      max_len: 64
+      pattern: "^[A-Za-z][A-Za-z0-9+_-]*(/[A-Za-z0-9+_-]+)*$"
+    }
+  }];
+
+  // "metric" or "imperial". Unset means metric, which is what every distance
+  // Loci computes is already in.
+  optional string units = 28 [(buf.validate.field).string.pattern = "^(metric|imperial)$"];
+
+  // ISO 4217, e.g. "EUR". Unset means EUR, which is what prices were hardcoded
+  // to before this existed.
+  optional string currency = 29 [(buf.validate.field).string.pattern = "^[A-Z]{3}$"];
 }
 
 // UpdateProfileParams for updating user profile
@@ -252,6 +274,24 @@ message UpdateProfileParams {
       pattern: "^[a-z]{2}(-[A-Z]{2})?$"
     }
   }];
+
+  // The pattern accepts the shape of an IANA zone name, not the list: that
+  // list ships with the operating system and changes without us.
+  optional string timezone = 17 [(buf.validate.field) = {
+    string: {
+      min_len: 3
+      max_len: 64
+      pattern: "^[A-Za-z][A-Za-z0-9+_-]*(/[A-Za-z0-9+_-]+)*$"
+    }
+  }];
+
+  // "metric" or "imperial". Unset means metric, which is what every distance
+  // Loci computes is already in.
+  optional string units = 18 [(buf.validate.field).string.pattern = "^(metric|imperial)$"];
+
+  // ISO 4217, e.g. "EUR". Unset means EUR, which is what prices were hardcoded
+  // to before this existed.
+  optional string currency = 19 [(buf.validate.field).string.pattern = "^[A-Z]{3}$"];
 }
 
 // GetUserProfileRequest for retrieving user profile
