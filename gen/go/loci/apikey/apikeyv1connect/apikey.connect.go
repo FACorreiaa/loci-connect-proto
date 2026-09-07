@@ -65,13 +65,13 @@ type ApiKeyServiceClient interface {
 	ListApiKeys(context.Context, *connect.Request[apikey.ListApiKeysRequest]) (*connect.Response[apikey.ListApiKeysResponse], error)
 	// RevokeApiKey permanently disables a key.
 	RevokeApiKey(context.Context, *connect.Request[apikey.RevokeApiKeyRequest]) (*connect.Response[apikey.RevokeApiKeyResponse], error)
-	// GetSetupInstructions returns the copyable snippets that connect one kind
-	// of agent to Loci's MCP endpoint.
+	// GetSetupInstructions previews how one kind of agent is connected.
 	//
-	// Deliberately takes no key and returns none. The snippets carry a
-	// placeholder, so the settings page can show somebody exactly what they are
-	// about to run before any key exists — and so this call, which is made every
-	// time the page is opened, never has a secret in its response.
+	// Deliberately takes no key and returns none: the snippets carry a
+	// placeholder. It exists so the page can answer "what am I signing up for"
+	// without minting a credential to answer it, and so the call it makes every
+	// time it is opened never has a secret in its response. The real
+	// instructions come back from CreateApiKey.
 	GetSetupInstructions(context.Context, *connect.Request[apikey.GetSetupInstructionsRequest]) (*connect.Response[apikey.GetSetupInstructionsResponse], error)
 }
 
@@ -149,13 +149,13 @@ type ApiKeyServiceHandler interface {
 	ListApiKeys(context.Context, *connect.Request[apikey.ListApiKeysRequest]) (*connect.Response[apikey.ListApiKeysResponse], error)
 	// RevokeApiKey permanently disables a key.
 	RevokeApiKey(context.Context, *connect.Request[apikey.RevokeApiKeyRequest]) (*connect.Response[apikey.RevokeApiKeyResponse], error)
-	// GetSetupInstructions returns the copyable snippets that connect one kind
-	// of agent to Loci's MCP endpoint.
+	// GetSetupInstructions previews how one kind of agent is connected.
 	//
-	// Deliberately takes no key and returns none. The snippets carry a
-	// placeholder, so the settings page can show somebody exactly what they are
-	// about to run before any key exists — and so this call, which is made every
-	// time the page is opened, never has a secret in its response.
+	// Deliberately takes no key and returns none: the snippets carry a
+	// placeholder. It exists so the page can answer "what am I signing up for"
+	// without minting a credential to answer it, and so the call it makes every
+	// time it is opened never has a secret in its response. The real
+	// instructions come back from CreateApiKey.
 	GetSetupInstructions(context.Context, *connect.Request[apikey.GetSetupInstructionsRequest]) (*connect.Response[apikey.GetSetupInstructionsResponse], error)
 }
 
