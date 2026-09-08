@@ -22714,6 +22714,35 @@ components:
           maxLength: 10
           minLength: 2
           pattern: ^[a-z]{2}(-[A-Z]{2})?$
+        timezone:
+          type:
+            - string
+            - "null"
+          title: timezone
+          maxLength: 64
+          minLength: 3
+          pattern: ^[A-Za-z][A-Za-z0-9+_-]*(/[A-Za-z0-9+_-]+)*$
+          description: |-
+            The pattern accepts the shape of an IANA zone name, not the list: that
+             list ships with the operating system and changes without us.
+        units:
+          type:
+            - string
+            - "null"
+          title: units
+          pattern: ^(metric|imperial)$
+          description: |-
+            "metric" or "imperial". Unset means metric, which is what every distance
+             Loci computes is already in.
+        currency:
+          type:
+            - string
+            - "null"
+          title: currency
+          pattern: ^[A-Z]{3}$
+          description: |-
+            ISO 4217, e.g. "EUR". Unset means EUR, which is what prices were hardcoded
+             to before this existed.
       title: UpdateProfileParams
       additionalProperties: false
       description: UpdateProfileParams for updating user profile
@@ -22896,6 +22925,39 @@ components:
         updatedAt:
           title: updated_at
           $ref: '#/components/schemas/google.protobuf.Timestamp'
+        timezone:
+          type:
+            - string
+            - "null"
+          title: timezone
+          maxLength: 64
+          minLength: 3
+          pattern: ^[A-Za-z][A-Za-z0-9+_-]*(/[A-Za-z0-9+_-]+)*$
+          description: |-
+            IANA zone name, e.g. "Atlantic/Madeira". Unset means the client falls back
+             to the browser's own guess, which is all there is before somebody sets one.
+
+             Held server-side rather than in the browser because it has to be readable
+             without one: a quiet hour, or anything else scheduled, is meaningless
+             without knowing whose evening it is.
+        units:
+          type:
+            - string
+            - "null"
+          title: units
+          pattern: ^(metric|imperial)$
+          description: |-
+            "metric" or "imperial". Unset means metric, which is what every distance
+             Loci computes is already in.
+        currency:
+          type:
+            - string
+            - "null"
+          title: currency
+          pattern: ^[A-Z]{3}$
+          description: |-
+            ISO 4217, e.g. "EUR". Unset means EUR, which is what prices were hardcoded
+             to before this existed.
       title: UserProfile
       required:
         - joinedDate
