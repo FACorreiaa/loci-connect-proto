@@ -2,10 +2,10 @@ syntax = "proto3";
 
 package loci.aicreds;
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/aicreds;aicredsv1";
-
-import "google/protobuf/timestamp.proto";
 import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/aicreds;aicredsv1";
 
 // AiCredentialService manages the model-provider credential a user brought
 // themselves, so their account runs on their key rather than Loci's.
@@ -38,9 +38,15 @@ service AiCredentialService {
 // One backend a user may bring a key for.
 message Provider {
   // Stable identifier, e.g. "openrouter". This is what a credential stores.
-  string name = 1 [(buf.validate.field).string = {min_len: 1, max_len: 32}];
+  string name = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 32
+  }];
   // How it is written for a person, e.g. "xAI (Grok)".
-  string label = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string label = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
   // Used when the user leaves the model blank.
   string default_model = 3 [(buf.validate.field).string = {max_len: 200}];
   // The shape of the credential, shown as the field placeholder so somebody
@@ -61,7 +67,10 @@ message Provider {
 
 // A stored credential, without the credential.
 message Credential {
-  string provider = 1 [(buf.validate.field).string = {min_len: 1, max_len: 32}];
+  string provider = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 32
+  }];
   // The last few characters of the stored key, for "a key ending a203 is
   // stored". Never the key.
   string key_hint = 2 [(buf.validate.field).string = {max_len: 8}];
@@ -88,7 +97,10 @@ message GetCredentialResponse {
 }
 
 message SaveCredentialRequest {
-  string provider = 1 [(buf.validate.field).string = {min_len: 1, max_len: 32}];
+  string provider = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 32
+  }];
   // Write-only, and never returned by any method here.
   //
   // Empty means "keep the key already stored", which is what the form sends

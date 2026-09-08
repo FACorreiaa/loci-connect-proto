@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package loci.favorites.v1;
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/favorites/v1;favoritesv1";
-
-import "google/protobuf/timestamp.proto";
 import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
 import "loci/recommendation/recommendation.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/favorites/v1;favoritesv1";
 
 // Content type for favorites
 enum ContentType {
@@ -21,7 +21,7 @@ enum ContentType {
 message FavoriteItem {
   string id = 1;
   string user_id = 2;
-  string item_id = 3;  // The ID of the POI/hotel/restaurant/itinerary
+  string item_id = 3; // The ID of the POI/hotel/restaurant/itinerary
   string item_name = 4;
   ContentType content_type = 5;
   string notes = 6;
@@ -39,28 +39,28 @@ message FavoriteItem {
 service FavoritesService {
   // Add an item to favorites
   rpc AddToFavorites(AddToFavoritesRequest) returns (AddToFavoritesResponse);
-  
+
   // Remove an item from favorites
   rpc RemoveFromFavorites(RemoveFromFavoritesRequest) returns (RemoveFromFavoritesResponse);
-  
+
   // Get all favorites for a user
   rpc GetFavorites(GetFavoritesRequest) returns (GetFavoritesResponse);
-  
+
   // Check if an item is favorited
   rpc IsFavorited(IsFavoritedRequest) returns (IsFavoritedResponse);
-  
+
   // Get favorites count
   rpc GetFavoritesCount(GetFavoritesCountRequest) returns (GetFavoritesCountResponse);
-  
+
   // Get hotel details
   rpc GetHotelDetails(GetHotelDetailsRequest) returns (GetHotelDetailsResponse);
-  
+
   // Get restaurant details
   rpc GetRestaurantDetails(GetRestaurantDetailsRequest) returns (GetRestaurantDetailsResponse);
-  
+
   // Get nearby hotels
   rpc GetNearbyHotels(GetNearbyHotelsRequest) returns (GetNearbyHotelsResponse);
-  
+
   // Get nearby restaurants
   rpc GetNearbyRestaurants(GetNearbyRestaurantsRequest) returns (GetNearbyRestaurantsResponse);
 }
@@ -78,7 +78,7 @@ message AddToFavoritesRequest {
   double longitude = 9;
   double rating = 10;
   string category = 11;
-  string llm_interaction_id = 12;  // Optional: link to LLM interaction
+  string llm_interaction_id = 12; // Optional: link to LLM interaction
   optional loci.recommendation.RecommendationTrace recommendation_trace = 13;
 }
 
@@ -103,7 +103,7 @@ message RemoveFromFavoritesResponse {
 // GetFavorites
 message GetFavoritesRequest {
   string user_id = 1 [(buf.validate.field).string.min_len = 1];
-  ContentType content_type = 2;  // Optional: filter by type (0 = all)
+  ContentType content_type = 2; // Optional: filter by type (0 = all)
   int32 limit = 3;
   int32 offset = 4;
 }
@@ -127,7 +127,7 @@ message IsFavoritedResponse {
 // GetFavoritesCount
 message GetFavoritesCountRequest {
   string user_id = 1 [(buf.validate.field).string.min_len = 1];
-  ContentType content_type = 2;  // Optional: filter by type (0 = all)
+  ContentType content_type = 2; // Optional: filter by type (0 = all)
 }
 
 message GetFavoritesCountResponse {
@@ -156,7 +156,7 @@ message HotelDetails {
   string website = 15;
   string llm_interaction_id = 16;
   google.protobuf.Timestamp created_at = 17;
-  
+
   // Extended fields for detail page
   string check_in = 18;
   string check_out = 19;
@@ -202,8 +202,8 @@ message GetHotelDetailsResponse {
 message GetNearbyHotelsRequest {
   double latitude = 1;
   double longitude = 2;
-  double radius_km = 3;  // Optional, default 5km
-  int32 limit = 4;       // Optional, default 20
+  double radius_km = 3; // Optional, default 5km
+  int32 limit = 4; // Optional, default 20
 }
 
 message GetNearbyHotelsResponse {
@@ -233,7 +233,7 @@ message RestaurantDetails {
   string website = 15;
   string llm_interaction_id = 16;
   google.protobuf.Timestamp created_at = 17;
-  
+
   // Extended fields for detail page
   int32 review_count = 18;
   bool is_open = 19;
@@ -279,8 +279,8 @@ message GetRestaurantDetailsResponse {
 message GetNearbyRestaurantsRequest {
   double latitude = 1;
   double longitude = 2;
-  double radius_km = 3;  // Optional, default 5km
-  int32 limit = 4;       // Optional, default 20
+  double radius_km = 3; // Optional, default 5km
+  int32 limit = 4; // Optional, default 20
 }
 
 message GetNearbyRestaurantsResponse {

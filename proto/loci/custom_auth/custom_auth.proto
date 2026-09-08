@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package loci.custom_auth;
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/custom_auth;customauth";
-
 import "buf/validate/validate.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/custom_auth;customauth";
 
 // OAuthProvider enum for supported OAuth providers
 enum OAuthProvider {
@@ -19,8 +19,14 @@ enum OAuthProvider {
 
 // GetOAuthURLRequest for initiating OAuth flow
 message GetOAuthURLRequest {
-  OAuthProvider provider = 1 [(buf.validate.field).enum = {defined_only: true, not_in: [0]}];
-  string redirect_uri = 2 [(buf.validate.field).string = {min_len: 1, max_len: 500}];
+  OAuthProvider provider = 1 [(buf.validate.field).enum = {
+    defined_only: true
+    not_in: [0]
+  }];
+  string redirect_uri = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 500
+  }];
 }
 
 // GetOAuthURLResponse returns the OAuth authorization URL
@@ -31,7 +37,10 @@ message GetOAuthURLResponse {
 
 // OAuthCallbackRequest for handling OAuth callback
 message OAuthCallbackRequest {
-  OAuthProvider provider = 1 [(buf.validate.field).enum = {defined_only: true, not_in: [0]}];
+  OAuthProvider provider = 1 [(buf.validate.field).enum = {
+    defined_only: true
+    not_in: [0]
+  }];
   string code = 2 [(buf.validate.field).string = {min_len: 1}];
   string state = 3 [(buf.validate.field).string = {min_len: 1}];
 }
@@ -53,8 +62,8 @@ message OAuthCallbackResponse {
 // SendPhoneVerificationRequest for initiating phone auth
 message SendPhoneVerificationRequest {
   string phone_number = 1 [(buf.validate.field).string = {
-    min_len: 10,
-    max_len: 20,
+    min_len: 10
+    max_len: 20
     pattern: "^\\+[1-9]\\d{1,14}$"
   }];
 }
@@ -68,11 +77,14 @@ message SendPhoneVerificationResponse {
 // VerifyPhoneRequest for verifying phone code
 message VerifyPhoneRequest {
   string phone_number = 1 [(buf.validate.field).string = {
-    min_len: 10,
-    max_len: 20,
+    min_len: 10
+    max_len: 20
     pattern: "^\\+[1-9]\\d{1,14}$"
   }];
-  string code = 2 [(buf.validate.field).string = {min_len: 4, max_len: 8}];
+  string code = 2 [(buf.validate.field).string = {
+    min_len: 4
+    max_len: 8
+  }];
 }
 
 // VerifyPhoneResponse returns tokens after phone verification
@@ -92,7 +104,7 @@ service CustomAuthService {
   // OAuth authentication
   rpc GetOAuthURL(GetOAuthURLRequest) returns (GetOAuthURLResponse);
   rpc OAuthCallback(OAuthCallbackRequest) returns (OAuthCallbackResponse);
-  
+
   // Phone authentication
   rpc SendPhoneVerification(SendPhoneVerificationRequest) returns (SendPhoneVerificationResponse);
   rpc VerifyPhone(VerifyPhoneRequest) returns (VerifyPhoneResponse);

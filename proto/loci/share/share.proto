@@ -2,19 +2,19 @@ syntax = "proto3";
 
 package loci.share;
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/share;sharev1";
-
-import "google/protobuf/timestamp.proto";
 import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/share;sharev1";
 
 // ShareService provides functionality for sharing content
 service ShareService {
   // Get share metadata for a shared item (for OG tags generation)
   rpc GetShareMetadata(GetShareMetadataRequest) returns (GetShareMetadataResponse);
-  
+
   // Create a share link for an item
   rpc CreateShareLink(CreateShareLinkRequest) returns (CreateShareLinkResponse);
-  
+
   // Get shared content by share code (public endpoint)
   rpc GetSharedContent(GetSharedContentRequest) returns (GetSharedContentResponse);
 }
@@ -45,7 +45,10 @@ message ShareMetadata {
 
 // Request to get share metadata
 message GetShareMetadataRequest {
-  string share_code = 1 [(buf.validate.field).string = {min_len: 1, max_len: 50}];
+  string share_code = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 50
+  }];
 }
 
 // Response with share metadata
@@ -57,10 +60,19 @@ message GetShareMetadataResponse {
 
 // Request to create a share link
 message CreateShareLinkRequest {
-  string user_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string user_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
   ShareContentType content_type = 2 [(buf.validate.field).enum = {defined_only: true}];
-  string content_id = 3 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  string title = 4 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
+  string content_id = 3 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string title = 4 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
   string description = 5 [(buf.validate.field).string = {max_len: 500}];
   string image_url = 6 [(buf.validate.field).string = {max_len: 2048}];
 }
@@ -75,7 +87,10 @@ message CreateShareLinkResponse {
 
 // Request to get shared content
 message GetSharedContentRequest {
-  string share_code = 1 [(buf.validate.field).string = {min_len: 1, max_len: 50}];
+  string share_code = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 50
+  }];
 }
 
 // Shared content details
@@ -137,7 +152,7 @@ message ItineraryContent {
   int32 stop_count = 6;
 }
 
-// List content for sharing  
+// List content for sharing
 message ListContent {
   string id = 1;
   string name = 2;

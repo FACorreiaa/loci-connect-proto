@@ -2,10 +2,10 @@ syntax = "proto3";
 
 package loci.messaging;
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/messaging;messagingv1";
-
-import "google/protobuf/timestamp.proto";
 import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/messaging;messagingv1";
 
 // MessagingService links a chat platform to a Loci account, so somebody can
 // ask for an itinerary from their phone and have it continue in the web app.
@@ -30,7 +30,10 @@ service MessagingService {
 // A linked chat.
 message Link {
   // Which platform, e.g. "telegram".
-  string platform = 1 [(buf.validate.field).string = {min_len: 1, max_len: 32}];
+  string platform = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 32
+  }];
   // How the person is addressed on that platform, for display. Not the chat
   // id: that identifies a conversation the account does not need to see.
   string display_name = 2 [(buf.validate.field).string = {max_len: 200}];
@@ -41,7 +44,10 @@ message Link {
 }
 
 message GetLinkRequest {
-  string platform = 1 [(buf.validate.field).string = {min_len: 1, max_len: 32}];
+  string platform = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 32
+  }];
 }
 
 message GetLinkResponse {
@@ -54,19 +60,28 @@ message GetLinkResponse {
 }
 
 message CreateLinkCodeRequest {
-  string platform = 1 [(buf.validate.field).string = {min_len: 1, max_len: 32}];
+  string platform = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 32
+  }];
 }
 
 message CreateLinkCodeResponse {
   // Shown once. Only its hash is stored, so a database dump cannot be
   // redeemed.
-  string code = 1 [(buf.validate.field).string = {min_len: 1, max_len: 32}];
+  string code = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 32
+  }];
   google.protobuf.Timestamp expires_at = 2;
   string bot_handle = 3 [(buf.validate.field).string = {max_len: 100}];
 }
 
 message UnlinkRequest {
-  string platform = 1 [(buf.validate.field).string = {min_len: 1, max_len: 32}];
+  string platform = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 32
+  }];
 }
 
 message UnlinkResponse {}

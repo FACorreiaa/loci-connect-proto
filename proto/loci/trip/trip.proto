@@ -2,13 +2,13 @@ syntax = "proto3";
 
 package loci.trip;
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/trip;trip";
-
 import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
 import "loci/common/common.proto";
 import "loci/poi/poi.proto";
 import "loci/recommendation/recommendation.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/trip;trip";
 
 // TripPace is how densely a day is packed.
 enum TripPace {
@@ -22,27 +22,40 @@ enum TripPace {
 // user's search profile for this specific trip.
 message TripConstraint {
   optional int32 budget_level = 1 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
-    int32: {gte: 1, lte: 4}
+    int32: {
+      gte: 1
+      lte: 4
+    }
   }];
   TripPace pace = 2 [(buf.validate.field).enum = {defined_only: true}];
   // mobility: e.g. "walking", "wheelchair", "transit", "car".
   optional string mobility = 3 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
-    string: {min_len: 1, max_len: 100}
+    string: {
+      min_len: 1
+      max_len: 100
+    }
   }];
   repeated string interests = 4 [(buf.validate.field).repeated = {
-    max_items: 50,
-    items: {string: {min_len: 1, max_len: 100}}
+    max_items: 50
+    items: {
+      string: {
+        min_len: 1
+        max_len: 100
+      }
+    }
   }];
   // Daily active window, minutes from midnight (e.g. 540 = 09:00).
   optional int32 day_start_minute = 5 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
-    int32: {gte: 0, lte: 1440}
+    int32: {
+      gte: 0
+      lte: 1440
+    }
   }];
   optional int32 day_end_minute = 6 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
-    int32: {gte: 0, lte: 1440}
+    int32: {
+      gte: 0
+      lte: 1440
+    }
   }];
 }
 
@@ -55,21 +68,28 @@ message TripStop {
   // order_index positions the stop within its day (0-based).
   int32 order_index = 3 [(buf.validate.field).int32 = {gte: 0}];
   // Display name; user-editable (RenameStop) and defaults to the POI name.
-  string name = 4 [(buf.validate.field).string = {min_len: 1, max_len: 300}];
+  string name = 4 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 300
+  }];
   // start_minute is minutes from midnight for the stop's start.
   optional int32 start_minute = 5 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
-    int32: {gte: 0, lte: 1440}
+    int32: {
+      gte: 0
+      lte: 1440
+    }
   }];
   // duration_minutes is how long to spend here.
   optional int32 duration_minutes = 6 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
     int32: {gte: 0}
   }];
   string notes = 7 [(buf.validate.field).string = {max_len: 4000}];
   optional string booking_url = 8 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
-    string: {min_len: 1, max_len: 2048, uri: true}
+    string: {
+      min_len: 1
+      max_len: 2048
+      uri: true
+    }
   }];
   // Hydrated POI details for rendering (read side only; not persisted here).
   optional loci.poi.POIDetailedInfo poi = 9;
@@ -89,16 +109,22 @@ message TripDay {
   // is how every single-city trip written before multi-city support looks.
   string city_name = 5 [(buf.validate.field).string = {max_len: 200}];
   optional string city_id = 6 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
-    string: {min_len: 1, max_len: 100}
+    string: {
+      min_len: 1
+      max_len: 100
+    }
   }];
   optional double city_lat = 7 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
-    double: {gte: -90, lte: 90}
+    double: {
+      gte: -90
+      lte: 90
+    }
   }];
   optional double city_lon = 8 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
-    double: {gte: -180, lte: 180}
+    double: {
+      gte: -180
+      lte: 180
+    }
   }];
   // True when the day includes a move between cities, so the UI can show that
   // sightseeing time is reduced.
@@ -108,12 +134,30 @@ message TripDay {
 // TripLeg is travel between two consecutive places in a multi-city trip.
 message TripLeg {
   string id = 1 [(buf.validate.field).string = {max_len: 100}];
-  string from_name = 2 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
-  string to_name = 3 [(buf.validate.field).string = {min_len: 1, max_len: 200}];
-  double from_lat = 4 [(buf.validate.field).double = {gte: -90, lte: 90}];
-  double from_lon = 5 [(buf.validate.field).double = {gte: -180, lte: 180}];
-  double to_lat = 6 [(buf.validate.field).double = {gte: -90, lte: 90}];
-  double to_lon = 7 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  string from_name = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
+  string to_name = 3 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
+  double from_lat = 4 [(buf.validate.field).double = {
+    gte: -90
+    lte: 90
+  }];
+  double from_lon = 5 [(buf.validate.field).double = {
+    gte: -180
+    lte: 180
+  }];
+  double to_lat = 6 [(buf.validate.field).double = {
+    gte: -90
+    lte: 90
+  }];
+  double to_lon = 7 [(buf.validate.field).double = {
+    gte: -180
+    lte: 180
+  }];
   double distance_km = 8 [(buf.validate.field).double = {gte: 0}];
   int32 duration_mins = 9 [(buf.validate.field).int32 = {gte: 0}];
   // The day at whose end this leg happens. 0 is the outbound leg from home.
@@ -121,8 +165,11 @@ message TripLeg {
   // "drive" today; rail/air slot in without changing the shape.
   string mode = 11 [(buf.validate.field).string = {max_len: 40}];
   optional string booking_url = 12 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
-    string: {min_len: 1, max_len: 2048, uri: true}
+    string: {
+      min_len: 1
+      max_len: 2048
+      uri: true
+    }
   }];
 }
 
@@ -134,13 +181,21 @@ message TripDraft {
   // nil id as "new trip"). Requiring it made creating a trip impossible, which
   // is the one thing every trip has to do first.
   string id = 1 [(buf.validate.field).string = {max_len: 100}];
-  string user_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string user_id = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
   optional string city_id = 3 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
-    string: {min_len: 1, max_len: 100}
+    string: {
+      min_len: 1
+      max_len: 100
+    }
   }];
   string city_name = 4 [(buf.validate.field).string = {max_len: 200}];
-  string title = 5 [(buf.validate.field).string = {min_len: 1, max_len: 300}];
+  string title = 5 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 300
+  }];
   TripConstraint constraints = 6;
   repeated TripDay days = 7;
   // Monotonic version; incremented server-side on every successful SaveTrip.
@@ -150,8 +205,10 @@ message TripDraft {
   repeated TripLeg legs = 12;
   // Session that generated the initial draft, if any.
   optional string source_session_id = 9 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
-    string: {min_len: 1, max_len: 200}
+    string: {
+      min_len: 1
+      max_len: 200
+    }
   }];
   google.protobuf.Timestamp created_at = 10 [(buf.validate.field).required = true];
   google.protobuf.Timestamp updated_at = 11 [(buf.validate.field).required = true];
@@ -160,8 +217,14 @@ message TripDraft {
 // TripSnapshot is an immutable point-in-time copy of a trip, written on each
 // save so a device can reconcile against a known base version.
 message TripSnapshot {
-  string id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  string trip_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string trip_id = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
   int64 version = 3 [(buf.validate.field).int64 = {gte: 0}];
   TripDraft trip = 4 [(buf.validate.field).required = true];
   google.protobuf.Timestamp created_at = 5 [(buf.validate.field).required = true];
@@ -183,7 +246,10 @@ enum PackingCategory {
 // The reason is not decoration: a suggestion the user cannot evaluate is noise,
 // and they need enough to disagree with it.
 message PackingSuggestion {
-  string text = 1 [(buf.validate.field).string = {min_len: 1, max_len: 300}];
+  string text = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 300
+  }];
   PackingCategory category = 2 [(buf.validate.field).enum = {defined_only: true}];
   // Empty for universal essentials, which need no justification.
   string reason = 3 [(buf.validate.field).string = {max_len: 500}];
@@ -193,7 +259,10 @@ message PackingSuggestion {
 
 // SuggestPackingRequest asks what to pack for a saved trip.
 message SuggestPackingRequest {
-  string trip_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string trip_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
 }
 
 // SuggestPackingResponse carries the suggestions and how they were derived.
@@ -218,7 +287,10 @@ message SaveTripRequest {
 }
 
 message GetTripRequest {
-  string trip_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string trip_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
 }
 
 message ListTripsRequest {
@@ -231,67 +303,125 @@ message ListTripsResponse {
 }
 
 message ShareTripRequest {
-  string trip_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string trip_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
   bool is_public = 2;
 }
 
 message ShareTripResponse {
-  string share_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  string share_url = 2 [(buf.validate.field).string = {min_len: 1, max_len: 2048}];
+  string share_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string share_url = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 2048
+  }];
 }
 
 message ReorderStopsRequest {
-  string trip_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  string day_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string trip_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string day_id = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
   // Stop ids in their new order.
   repeated string ordered_stop_ids = 3 [(buf.validate.field).repeated = {
-    min_items: 1,
-    max_items: 100,
-    items: {string: {min_len: 1, max_len: 100}}
+    min_items: 1
+    max_items: 100
+    items: {
+      string: {
+        min_len: 1
+        max_len: 100
+      }
+    }
   }];
   int64 base_version = 4 [(buf.validate.field).int64 = {gte: 0}];
 }
 
 message RenameStopRequest {
-  string trip_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  string stop_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  string name = 3 [(buf.validate.field).string = {min_len: 1, max_len: 300}];
+  string trip_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string stop_id = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string name = 3 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 300
+  }];
   int64 base_version = 4 [(buf.validate.field).int64 = {gte: 0}];
 }
 
 message EditStopDurationRequest {
-  string trip_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  string stop_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string trip_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string stop_id = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
   optional int32 start_minute = 3 [(buf.validate.field) = {
-    ignore: IGNORE_IF_ZERO_VALUE,
-    int32: {gte: 0, lte: 1440}
+    int32: {
+      gte: 0
+      lte: 1440
+    }
   }];
   int32 duration_minutes = 4 [(buf.validate.field).int32 = {gte: 0}];
   int64 base_version = 5 [(buf.validate.field).int64 = {gte: 0}];
 }
 
 message SetConstraintRequest {
-  string trip_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string trip_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
   TripConstraint constraints = 2 [(buf.validate.field).required = true];
   int64 base_version = 3 [(buf.validate.field).int64 = {gte: 0}];
 }
 
 message AddStopRequest {
-  string trip_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  string day_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string trip_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string day_id = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
   TripStop stop = 3 [(buf.validate.field).required = true];
   int64 base_version = 4 [(buf.validate.field).int64 = {gte: 0}];
 }
 
 message RemoveStopRequest {
-  string trip_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  string stop_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string trip_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string stop_id = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
   int64 base_version = 3 [(buf.validate.field).int64 = {gte: 0}];
 }
 
 message ReplaceStopRequest {
-  string trip_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  string stop_id = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string trip_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string stop_id = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
   TripStop replacement = 3 [(buf.validate.field).required = true];
   int64 base_version = 4 [(buf.validate.field).int64 = {gte: 0}];
 }
@@ -301,18 +431,27 @@ enum ExportFormat {
   EXPORT_FORMAT_UNSPECIFIED = 0;
   EXPORT_FORMAT_ICS = 1;
   EXPORT_FORMAT_PDF = 2;
-  EXPORT_FORMAT_MARKDOWN = 3;  // Premium — full itinerary as Markdown
+  EXPORT_FORMAT_MARKDOWN = 3; // Premium — full itinerary as Markdown
 }
 
 message ExportTripRequest {
-  string trip_id = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string trip_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
   ExportFormat format = 2 [(buf.validate.field).enum = {defined_only: true}];
 }
 
 message ExportTripResponse {
-  bytes data = 1 [(buf.validate.field).bytes = {max_len: 10485760}];  // 10MB cap
-  string content_type = 2 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
-  string filename = 3 [(buf.validate.field).string = {min_len: 1, max_len: 300}];
+  bytes data = 1 [(buf.validate.field).bytes = {max_len: 10485760}]; // 10MB cap
+  string content_type = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string filename = 3 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 300
+  }];
 }
 
 // TripService persists and mutates editable day-by-day trips. All mutations that
