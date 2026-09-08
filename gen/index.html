@@ -33388,6 +33388,30 @@ reverse geocode we do not have, and a guessed country is a fabricated one. </p><
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>timezone</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>The pattern accepts the shape of an IANA zone name, not the list: that
+list ships with the operating system and changes without us. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>units</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>&#34;metric&#34; or &#34;imperial&#34;. Unset means metric, which is what every distance
+Loci computes is already in. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>currency</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>ISO 4217, e.g. &#34;EUR&#34;. Unset means EUR, which is what prices were hardcoded
+to before this existed. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -33609,6 +33633,34 @@ reverse geocode we do not have, and a guessed country is a fabricated one. </p><
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
                   <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>timezone</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>IANA zone name, e.g. &#34;Atlantic/Madeira&#34;. Unset means the client falls back
+to the browser&#39;s own guess, which is all there is before somebody sets one.
+
+Held server-side rather than in the browser because it has to be readable
+without one: a quiet hour, or anything else scheduled, is meaningless
+without knowing whose evening it is. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>units</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>&#34;metric&#34; or &#34;imperial&#34;. Unset means metric, which is what every distance
+Loci computes is already in. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>currency</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>ISO 4217, e.g. &#34;EUR&#34;. Unset means EUR, which is what prices were hardcoded
+to before this existed. </p></td>
                 </tr>
               
             </tbody>

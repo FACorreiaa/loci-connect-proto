@@ -185,6 +185,34 @@ export declare type UserProfile = Message<"loci.user.UserProfile"> & {
    * @generated from field: google.protobuf.Timestamp updated_at = 26;
    */
   updatedAt?: Timestamp;
+
+  /**
+   * IANA zone name, e.g. "Atlantic/Madeira". Unset means the client falls back
+   * to the browser's own guess, which is all there is before somebody sets one.
+   *
+   * Held server-side rather than in the browser because it has to be readable
+   * without one: a quiet hour, or anything else scheduled, is meaningless
+   * without knowing whose evening it is.
+   *
+   * @generated from field: optional string timezone = 27;
+   */
+  timezone?: string;
+
+  /**
+   * "metric" or "imperial". Unset means metric, which is what every distance
+   * Loci computes is already in.
+   *
+   * @generated from field: optional string units = 28;
+   */
+  units?: string;
+
+  /**
+   * ISO 4217, e.g. "EUR". Unset means EUR, which is what prices were hardcoded
+   * to before this existed.
+   *
+   * @generated from field: optional string currency = 29;
+   */
+  currency?: string;
 };
 
 /**
@@ -278,6 +306,30 @@ export declare type UpdateProfileParams = Message<"loci.user.UpdateProfileParams
    * @generated from field: optional string language = 16;
    */
   language?: string;
+
+  /**
+   * The pattern accepts the shape of an IANA zone name, not the list: that
+   * list ships with the operating system and changes without us.
+   *
+   * @generated from field: optional string timezone = 17;
+   */
+  timezone?: string;
+
+  /**
+   * "metric" or "imperial". Unset means metric, which is what every distance
+   * Loci computes is already in.
+   *
+   * @generated from field: optional string units = 18;
+   */
+  units?: string;
+
+  /**
+   * ISO 4217, e.g. "EUR". Unset means EUR, which is what prices were hardcoded
+   * to before this existed.
+   *
+   * @generated from field: optional string currency = 19;
+   */
+  currency?: string;
 };
 
 /**
