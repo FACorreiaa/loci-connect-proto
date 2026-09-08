@@ -2,10 +2,10 @@ syntax = "proto3";
 
 package loci.localcontext;
 
-option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/localcontext;localcontext";
-
 import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/localcontext;localcontext";
 
 // AlertKind classifies a trip-time heads-up.
 //
@@ -30,14 +30,20 @@ message WeatherDay {
   double high_c = 2;
   double low_c = 3;
   string condition = 4 [(buf.validate.field).string = {max_len: 100}];
-  double precip_prob = 5 [(buf.validate.field).double = {gte: 0, lte: 1}];
+  double precip_prob = 5 [(buf.validate.field).double = {
+    gte: 0
+    lte: 1
+  }];
 }
 
 // LocalAlert warns about something affecting a trip day (closure/holiday/
 // hazard/strike).
 message LocalAlert {
   AlertKind kind = 1 [(buf.validate.field).enum = {defined_only: true}];
-  string title = 2 [(buf.validate.field).string = {min_len: 1, max_len: 300}];
+  string title = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 300
+  }];
   string detail = 3 [(buf.validate.field).string = {max_len: 1000}];
   optional google.protobuf.Timestamp date = 4;
 
@@ -47,7 +53,10 @@ message LocalAlert {
   // and a red-level wildfire are not the same news — and the go-score's
   // disruption penalty scales with this. Clients should use it to rank and to
   // colour, never to decide whether to show an alert at all.
-  double severity = 5 [(buf.validate.field).double = {gte: 0, lte: 1}];
+  double severity = 5 [(buf.validate.field).double = {
+    gte: 0
+    lte: 1
+  }];
 
   // Which provider reported it ("nager", "gdacs", "usgs"). Shown so a user can
   // see who says so, and so a noisy feed is identifiable from the response
@@ -58,16 +67,31 @@ message LocalAlert {
   // earthquake. Absent for anything country-scoped: a public holiday has no
   // coordinates, and inventing some to make it mappable would be a lie.
   // Only alerts carrying both can be drawn as map pins.
-  optional double latitude = 7 [(buf.validate.field).double = {gte: -90, lte: 90}];
-  optional double longitude = 8 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  optional double latitude = 7 [(buf.validate.field).double = {
+    gte: -90
+    lte: 90
+  }];
+  optional double longitude = 8 [(buf.validate.field).double = {
+    gte: -180
+    lte: 180
+  }];
 }
 
 // GetLocalContextRequest asks for weather + alerts near a point.
 message GetLocalContextRequest {
-  double latitude = 1 [(buf.validate.field).double = {gte: -90, lte: 90}];
-  double longitude = 2 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  double latitude = 1 [(buf.validate.field).double = {
+    gte: -90
+    lte: 90
+  }];
+  double longitude = 2 [(buf.validate.field).double = {
+    gte: -180
+    lte: 180
+  }];
   // Forecast horizon in days (server clamps to what the provider supports).
-  int32 days = 3 [(buf.validate.field).int32 = {gte: 0, lte: 16}];
+  int32 days = 3 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 16
+  }];
 }
 
 // LocalContext is the trip-time local information for a location.
@@ -83,7 +107,10 @@ message LocalContext {
 // The score is always shown WITH these: a bare number is not an explanation,
 // and a user who disagrees with it should be able to see why it landed there.
 message ScoreFactor {
-  string label = 1 [(buf.validate.field).string = {min_len: 1, max_len: 100}];
+  string label = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
   // Signed points this dimension contributed (negative for disruptions).
   int32 contribution = 2;
   // Ceiling for this dimension, so a client can render "22 / 40" or a
@@ -94,9 +121,15 @@ message ScoreFactor {
 
 // GoScore answers "should I go here, in this window?".
 message GoScore {
-  int32 score = 1 [(buf.validate.field).int32 = {gte: 0, lte: 100}];
+  int32 score = 1 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 100
+  }];
   // One of "go", "maybe", "skip".
-  string verdict = 2 [(buf.validate.field).string = {min_len: 1, max_len: 20}];
+  string verdict = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 20
+  }];
   repeated ScoreFactor factors = 3;
   string summary = 4 [(buf.validate.field).string = {max_len: 300}];
   // True when any input was a stub rather than real provider data. Clients MUST
@@ -108,11 +141,23 @@ message GoScore {
 message GetGoScoreRequest {
   // Destination, by name (fuzzy-matched) or by coordinates.
   optional string city_name = 1 [(buf.validate.field).string = {max_len: 200}];
-  optional double latitude = 2 [(buf.validate.field).double = {gte: -90, lte: 90}];
-  optional double longitude = 3 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  optional double latitude = 2 [(buf.validate.field).double = {
+    gte: -90
+    lte: 90
+  }];
+  optional double longitude = 3 [(buf.validate.field).double = {
+    gte: -180
+    lte: 180
+  }];
   // Where the traveller starts from, used for travel time.
-  optional double origin_lat = 4 [(buf.validate.field).double = {gte: -90, lte: 90}];
-  optional double origin_lon = 5 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  optional double origin_lat = 4 [(buf.validate.field).double = {
+    gte: -90
+    lte: 90
+  }];
+  optional double origin_lon = 5 [(buf.validate.field).double = {
+    gte: -180
+    lte: 180
+  }];
   // Trip window. Defaults to a 48-hour weekend when omitted.
   optional google.protobuf.Timestamp start = 6;
   optional google.protobuf.Timestamp end = 7;
@@ -158,8 +203,14 @@ message GetFxRatesRequest {
   // server does it with the same geocoder it runs for alerts.
   //
   // Ignored when country_code or quotes are supplied.
-  optional double latitude = 4 [(buf.validate.field).double = {gte: -90, lte: 90}];
-  optional double longitude = 5 [(buf.validate.field).double = {gte: -180, lte: 180}];
+  optional double latitude = 4 [(buf.validate.field).double = {
+    gte: -90
+    lte: 90
+  }];
+  optional double longitude = 5 [(buf.validate.field).double = {
+    gte: -180
+    lte: 180
+  }];
 }
 
 message GetFxRatesResponse {

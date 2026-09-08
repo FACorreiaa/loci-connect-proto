@@ -191,24 +191,24 @@ message SubscriptionUsage {
 // --- Checkout Session ---
 
 message CreateCheckoutSessionRequest {
-  string price_id = 1;         // Stripe Price ID (price_xxx)
-  string success_url = 2;      // URL to redirect on success
-  string cancel_url = 3;       // URL to redirect on cancel
-  string mode = 4;             // "subscription" or "payment"
+  string price_id = 1; // Stripe Price ID (price_xxx)
+  string success_url = 2; // URL to redirect on success
+  string cancel_url = 3; // URL to redirect on cancel
+  string mode = 4; // "subscription" or "payment"
 }
 
 message CreateCheckoutSessionResponse {
-  string session_id = 1;       // Stripe Checkout Session ID
-  string url = 2;              // Redirect URL for the user
+  string session_id = 1; // Stripe Checkout Session ID
+  string url = 2; // Redirect URL for the user
 }
 
 // --- Customer Portal Session ---
 
 message CreateCustomerPortalSessionRequest {
-  string return_url = 1;       // URL to return to after portal session
+  string return_url = 1; // URL to return to after portal session
 }
 
 message CreateCustomerPortalSessionResponse {
-  string session_id = 1;       // Stripe Portal Session ID
-  string url = 2;              // Redirect URL for the user
+  string session_id = 1; // Stripe Portal Session ID
+  string url = 2; // Redirect URL for the user
 }
