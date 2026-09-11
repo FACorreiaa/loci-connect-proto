@@ -15954,7 +15954,6 @@ components:
           description: See POIDetailedInfo.grounded.
       title: HotelDetailedInfo
       additionalProperties: false
-      description: HotelDetailedInfo represents hotel-specific information
     loci.poi.POIDetailedInfo:
       type: object
       properties:
@@ -16055,6 +16054,11 @@ components:
             format: uri
           title: images
           maxItems: 20
+          description: |-
+            Image URLs alone. Kept for the surfaces that already read it, and for a
+             picture whose terms need no credit. Anything under a licence that requires
+             attribution must be read from image_credits instead — a URL on its own
+             cannot be displayed lawfully.
         priceRange:
           type: string
           title: price_range
@@ -16171,6 +16175,19 @@ components:
              recalled by the model. False does not mean the place is fake — it means Loci
              did not verify it against its own data, so it must not be presented as
              verified. Absent on responses produced before grounding existed.
+        imageCredits:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.poi.POIImage'
+          title: image_credits
+          maxItems: 20
+          description: |-
+            Pictures with the credit they cannot be shown without.
+
+             Wikimedia Commons content is CC BY-SA and similar: displaying the image
+             without naming its author and licence breaches the terms it was offered
+             under. The URL and its credit therefore travel together — a client that
+             renders one renders the other.
       title: POIDetailedInfo
       required:
         - createdAt
@@ -16214,6 +16231,41 @@ components:
       title: POIFilters
       additionalProperties: false
       description: POIFilters for filtering POIs
+    loci.poi.POIImage:
+      type: object
+      properties:
+        url:
+          type: string
+          title: url
+          maxLength: 2048
+          minLength: 1
+          format: uri
+        source:
+          type: string
+          title: source
+          maxLength: 64
+          description: Where the file came from, e.g. "wikimedia".
+        licence:
+          type: string
+          title: licence
+          maxLength: 256
+          minLength: 1
+          description: Both are required by the licence, so both are required here.
+        attribution:
+          type: string
+          title: attribution
+          maxLength: 512
+          minLength: 1
+        sourcePageUrl:
+          type: string
+          title: source_page_url
+          maxLength: 2048
+          description: The file's description page, for the credit line to link to.
+      title: POIImage
+      additionalProperties: false
+      description: |-
+        HotelDetailedInfo represents hotel-specific information
+         POIImage is one picture of a place, carrying what must be displayed with it.
     loci.poi.RestaurantDetailedInfo:
       type: object
       properties:
