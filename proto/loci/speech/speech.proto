@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package loci.speech;
+
+import "buf/validate/validate.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/speech;speechv1";
+
+// SpeechService turns a recording into the words in it, so somebody can say
+// what they want instead of typing it.
+//
+// Transcription only, and deliberately: the transcript goes back to whoever
+// spoke it rather than straight into a question. Speech recognition mangles
+// place names, and "Alfama" heard as "alarm" produces a confident itinerary
+// for the wrong city. Handing the words back first lets that be corrected in
+// the second it takes, instead of being discovered a minute later.
+//
+// What happens with the transcript afterwards is ChatService's job. Asking a
+// question is still one thing, whether it was typed or spoken.
+service SpeechService {
+  // Transcribe returns what was said in a recording.
+  rpc Transcribe(TranscribeRequest) returns (TranscribeResponse);
+}
+
+message TranscribeRequest {
+  // The recording. Ten megabytes is far more than a minute of speech in any
+  // sane encoding, and far less than anything worth buffering from a caller.
+  bytes audio = 1 [(buf.validate.field).bytes = {
+    min_len: 1
+    max_len: 10485760
+  }];
+  // What the bytes are, e.g. "audio/wav" or "audio/ogg". Required: the model
+  // is told this rather than sniffing it, and guessing wrong reads as a
+  // recording full of noise.
+  string mime_type = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+}
+
+message TranscribeResponse {
+  // What was said. Empty when there was no speech in the recording, which is
+  // an ordinary outcome — a pocket, or a minute of traffic — and not an error.
+  string text = 1 [(buf.validate.field).string = {max_len: 10000}];
+}
