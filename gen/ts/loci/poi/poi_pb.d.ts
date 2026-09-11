@@ -96,6 +96,11 @@ export declare type POIDetailedInfo = Message<"loci.poi.POIDetailedInfo"> & {
   openingHours: { [key: string]: string };
 
   /**
+   * Image URLs alone. Kept for the surfaces that already read it, and for a
+   * picture whose terms need no credit. Anything under a licence that requires
+   * attribution must be read from image_credits instead — a URL on its own
+   * cannot be displayed lawfully.
+   *
    * @generated from field: repeated string images = 16;
    */
   images: string[];
@@ -197,6 +202,18 @@ export declare type POIDetailedInfo = Message<"loci.poi.POIDetailedInfo"> & {
    * @generated from field: optional bool grounded = 33;
    */
   grounded?: boolean;
+
+  /**
+   * Pictures with the credit they cannot be shown without.
+   *
+   * Wikimedia Commons content is CC BY-SA and similar: displaying the image
+   * without naming its author and licence breaches the terms it was offered
+   * under. The URL and its credit therefore travel together — a client that
+   * renders one renders the other.
+   *
+   * @generated from field: repeated loci.poi.POIImage image_credits = 34;
+   */
+  imageCredits: POIImage[];
 };
 
 /**
@@ -207,7 +224,50 @@ export declare const POIDetailedInfoSchema: GenMessage<POIDetailedInfo>;
 
 /**
  * HotelDetailedInfo represents hotel-specific information
+ * POIImage is one picture of a place, carrying what must be displayed with it.
  *
+ * @generated from message loci.poi.POIImage
+ */
+export declare type POIImage = Message<"loci.poi.POIImage"> & {
+  /**
+   * @generated from field: string url = 1;
+   */
+  url: string;
+
+  /**
+   * Where the file came from, e.g. "wikimedia".
+   *
+   * @generated from field: string source = 2;
+   */
+  source: string;
+
+  /**
+   * Both are required by the licence, so both are required here.
+   *
+   * @generated from field: string licence = 3;
+   */
+  licence: string;
+
+  /**
+   * @generated from field: string attribution = 4;
+   */
+  attribution: string;
+
+  /**
+   * The file's description page, for the credit line to link to.
+   *
+   * @generated from field: string source_page_url = 5;
+   */
+  sourcePageUrl: string;
+};
+
+/**
+ * Describes the message loci.poi.POIImage.
+ * Use `create(POIImageSchema)` to create a new message.
+ */
+export declare const POIImageSchema: GenMessage<POIImage>;
+
+/**
  * @generated from message loci.poi.HotelDetailedInfo
  */
 export declare type HotelDetailedInfo = Message<"loci.poi.HotelDetailedInfo"> & {
