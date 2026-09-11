@@ -81,6 +81,10 @@ message POIDetailedInfo {
       string: {min_len: 1}
     }
   }];
+  // Image URLs alone. Kept for the surfaces that already read it, and for a
+  // picture whose terms need no credit. Anything under a licence that requires
+  // attribution must be read from image_credits instead — a URL on its own
+  // cannot be displayed lawfully.
   repeated string images = 16 [(buf.validate.field).repeated = {
     max_items: 20
     items: {
@@ -179,9 +183,42 @@ message POIDetailedInfo {
   // did not verify it against its own data, so it must not be presented as
   // verified. Absent on responses produced before grounding existed.
   optional bool grounded = 33;
+
+  // Pictures with the credit they cannot be shown without.
+  //
+  // Wikimedia Commons content is CC BY-SA and similar: displaying the image
+  // without naming its author and licence breaches the terms it was offered
+  // under. The URL and its credit therefore travel together — a client that
+  // renders one renders the other.
+  repeated POIImage image_credits = 34 [(buf.validate.field).repeated = {max_items: 20}];
 }
 
 // HotelDetailedInfo represents hotel-specific information
+// POIImage is one picture of a place, carrying what must be displayed with it.
+message POIImage {
+  string url = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 2048
+    uri: true
+  }];
+
+  // Where the file came from, e.g. "wikimedia".
+  string source = 2 [(buf.validate.field).string = {max_len: 64}];
+
+  // Both are required by the licence, so both are required here.
+  string licence = 3 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 256
+  }];
+  string attribution = 4 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 512
+  }];
+
+  // The file's description page, for the credit line to link to.
+  string source_page_url = 5 [(buf.validate.field).string = {max_len: 2048}];
+}
+
 message HotelDetailedInfo {
   string id = 1 [(buf.validate.field).string = {
     min_len: 1

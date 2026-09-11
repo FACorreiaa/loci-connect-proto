@@ -743,6 +743,10 @@
                 </li>
               
                 <li>
+                  <a href="#loci.poi.POIImage"><span class="badge">M</span>POIImage</a>
+                </li>
+              
+                <li>
                   <a href="#loci.poi.RestaurantDetailedInfo"><span class="badge">M</span>RestaurantDetailedInfo</a>
                 </li>
               
@@ -7580,7 +7584,7 @@ that initial load fail validation before it ever reached the query. </p></td>
         
       
         <h3 id="loci.poi.HotelDetailedInfo">HotelDetailedInfo</h3>
-        <p>HotelDetailedInfo represents hotel-specific information</p>
+        <p></p>
 
         
           <table class="field-table">
@@ -7841,7 +7845,10 @@ that initial load fail validation before it ever reached the query. </p></td>
                   <td>images</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p> </p></td>
+                  <td><p>Image URLs alone. Kept for the surfaces that already read it, and for a
+picture whose terms need no credit. Anything under a licence that requires
+attribution must be read from image_credits instead — a URL on its own
+cannot be displayed lawfully. </p></td>
                 </tr>
               
                 <tr>
@@ -7968,6 +7975,18 @@ did not verify it against its own data, so it must not be presented as
 verified. Absent on responses produced before grounding existed. </p></td>
                 </tr>
               
+                <tr>
+                  <td>image_credits</td>
+                  <td><a href="#loci.poi.POIImage">POIImage</a></td>
+                  <td>repeated</td>
+                  <td><p>Pictures with the credit they cannot be shown without.
+
+Wikimedia Commons content is CC BY-SA and similar: displaying the image
+without naming its author and licence breaches the terms it was offered
+under. The URL and its credit therefore travel together — a client that
+renders one renders the other. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -8035,6 +8054,58 @@ verified. Absent on responses produced before grounding existed. </p></td>
                   <td><a href="#string">string</a></td>
                   <td>optional</td>
                   <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.poi.POIImage">POIImage</h3>
+        <p>HotelDetailedInfo represents hotel-specific information</p><p>POIImage is one picture of a place, carrying what must be displayed with it.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>source</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Where the file came from, e.g. &#34;wikimedia&#34;. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>licence</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Both are required by the licence, so both are required here. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>attribution</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>source_page_url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The file&#39;s description page, for the credit line to link to. </p></td>
                 </tr>
               
             </tbody>
