@@ -2670,6 +2670,29 @@
         
           
           <li>
+            <a href="#loci%2fspeech%2fspeech.proto">loci/speech/speech.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#loci.speech.TranscribeRequest"><span class="badge">M</span>TranscribeRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.speech.TranscribeResponse"><span class="badge">M</span>TranscribeResponse</a>
+                </li>
+              
+              
+              
+              
+                <li>
+                  <a href="#loci.speech.SpeechService"><span class="badge">S</span>SpeechService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#loci%2fstatistics%2fstatistics.proto">loci/statistics/statistics.proto</a>
             <ul>
               
@@ -29568,6 +29591,98 @@ Type of content being reviewed </p></td>
                 <td><a href="#loci.share.GetSharedContentRequest">GetSharedContentRequest</a></td>
                 <td><a href="#loci.share.GetSharedContentResponse">GetSharedContentResponse</a></td>
                 <td><p>Get shared content by share code (public endpoint)</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="loci/speech/speech.proto">loci/speech/speech.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="loci.speech.TranscribeRequest">TranscribeRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>audio</td>
+                  <td><a href="#bytes">bytes</a></td>
+                  <td></td>
+                  <td><p>The recording. Ten megabytes is far more than a minute of speech in any
+sane encoding, and far less than anything worth buffering from a caller. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>mime_type</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>What the bytes are, e.g. &#34;audio/wav&#34; or &#34;audio/ogg&#34;. Required: the model
+is told this rather than sniffing it, and guessing wrong reads as a
+recording full of noise. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.speech.TranscribeResponse">TranscribeResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>text</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>What was said. Empty when there was no speech in the recording, which is
+an ordinary outcome — a pocket, or a minute of traffic — and not an error. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+
+      
+
+      
+        <h3 id="loci.speech.SpeechService">SpeechService</h3>
+        <p>SpeechService turns a recording into the words in it, so somebody can say</p><p>what they want instead of typing it.</p><p>Transcription only, and deliberately: the transcript goes back to whoever</p><p>spoke it rather than straight into a question. Speech recognition mangles</p><p>place names, and "Alfama" heard as "alarm" produces a confident itinerary</p><p>for the wrong city. Handing the words back first lets that be corrected in</p><p>the second it takes, instead of being discovered a minute later.</p><p>What happens with the transcript afterwards is ChatService's job. Asking a</p><p>question is still one thing, whether it was typed or spoken.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>Transcribe</td>
+                <td><a href="#loci.speech.TranscribeRequest">TranscribeRequest</a></td>
+                <td><a href="#loci.speech.TranscribeResponse">TranscribeResponse</a></td>
+                <td><p>Transcribe returns what was said in a recording.</p></td>
               </tr>
             
           </tbody>

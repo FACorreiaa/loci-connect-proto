@@ -5887,6 +5887,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.share.GetSharedContentResponse'
+  /loci.speech.SpeechService/Transcribe:
+    post:
+      tags:
+        - loci.speech.SpeechService
+      summary: Transcribe
+      description: Transcribe returns what was said in a recording.
+      operationId: loci.speech.SpeechService.Transcribe
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.speech.TranscribeRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.speech.TranscribeResponse'
   /loci.statistics.StatisticsService/GetDetailedPOIStatistics:
     post:
       tags:
@@ -19909,6 +19945,42 @@ components:
       title: SharedContent
       additionalProperties: false
       description: Shared content details
+    loci.speech.TranscribeRequest:
+      type: object
+      properties:
+        audio:
+          type: string
+          title: audio
+          maxLength: 10485760
+          minLength: 1
+          format: byte
+          description: |
+            The recording. Ten megabytes is far more than a minute of speech in any
+             sane encoding, and far less than anything worth buffering from a caller.
+            bytes.const = []
+        mimeType:
+          type: string
+          title: mime_type
+          maxLength: 100
+          minLength: 1
+          description: |-
+            What the bytes are, e.g. "audio/wav" or "audio/ogg". Required: the model
+             is told this rather than sniffing it, and guessing wrong reads as a
+             recording full of noise.
+      title: TranscribeRequest
+      additionalProperties: false
+    loci.speech.TranscribeResponse:
+      type: object
+      properties:
+        text:
+          type: string
+          title: text
+          maxLength: 10000
+          description: |-
+            What was said. Empty when there was no speech in the recording, which is
+             an ordinary outcome — a pocket, or a minute of traffic — and not an error.
+      title: TranscribeResponse
+      additionalProperties: false
     loci.statistics.AchievementBadges:
       type: object
       properties:
@@ -23145,6 +23217,19 @@ tags:
     description: ReviewService provides review and rating functionality for POIs
   - name: loci.share.ShareService
     description: ShareService provides functionality for sharing content
+  - name: loci.speech.SpeechService
+    description: |-
+      SpeechService turns a recording into the words in it, so somebody can say
+       what they want instead of typing it.
+
+       Transcription only, and deliberately: the transcript goes back to whoever
+       spoke it rather than straight into a question. Speech recognition mangles
+       place names, and "Alfama" heard as "alarm" produces a confident itinerary
+       for the wrong city. Handing the words back first lets that be corrected in
+       the second it takes, instead of being discovered a minute later.
+
+       What happens with the transcript afterwards is ChatService's job. Asking a
+       question is still one thing, whether it was typed or spoken.
   - name: loci.statistics.StatisticsService
     description: StatisticsService provides analytics and statistics functionality
   - name: loci.tags.TagsService
