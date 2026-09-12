@@ -244,6 +244,17 @@ message AIItineraryResponse {
   repeated loci.poi.POIDetailedInfo points_of_interest = 3;
   repeated loci.poi.POIDetailedInfo restaurants = 4;
   repeated loci.poi.POIDetailedInfo bars = 5;
+
+  // How many days this plan covers, as read from the traveller's request.
+  //
+  // Clients used to infer days by chunking the list four at a time, which is
+  // the inverse of what it should be: a four-day trip with twenty-four places
+  // became six days. Zero on answers produced before this existed, and on
+  // answers to requests that are not trips.
+  int32 planned_days = 6 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 60
+  }];
 }
 
 // AiCityResponse represents a complete AI city response
@@ -659,6 +670,44 @@ message GetChatSessionResponse {
   ChatSession session = 1;
 }
 
+// Which list of a session's stored answer a page is read from.
+//
+// Hotels and restaurants are returned as POIs like everything else, because
+// that is how the stream already delivers them: a page has to look like what
+// the first payload looked like.
+enum SessionPOISection {
+  // Itinerary stops, falling back to the general list when a session has no
+  // itinerary — the same rule the trip builder applies.
+  SESSION_POI_SECTION_UNSPECIFIED = 0;
+  SESSION_POI_SECTION_ITINERARY = 1;
+  SESSION_POI_SECTION_GENERAL = 2;
+  SESSION_POI_SECTION_RESTAURANTS = 3;
+  SESSION_POI_SECTION_HOTELS = 4;
+  SESSION_POI_SECTION_ACTIVITIES = 5;
+}
+
+// GetSessionPOIsRequest reads one page of an answer that has already been
+// generated and stored. It never reaches a model and never spends quota.
+message GetSessionPOIsRequest {
+  string session_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
+  loci.common.PaginationRequest pagination = 2 [(buf.validate.field).required = true];
+  SessionPOISection section = 3 [(buf.validate.field).enum = {defined_only: true}];
+}
+
+message GetSessionPOIsResponse {
+  repeated loci.poi.POIDetailedInfo points_of_interest = 1;
+  loci.common.PaginationMetadata pagination = 2;
+  // Echoed back, so a caller that sent UNSPECIFIED learns which list it got.
+  SessionPOISection section = 3 [(buf.validate.field).enum = {defined_only: true}];
+  int32 planned_days = 4 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 60
+  }];
+}
+
 // GetChatSessionsRequest for retrieving multiple chat sessions
 message GetChatSessionsRequest {
   optional string user_id = 1 [(buf.validate.field) = {
@@ -845,6 +894,9 @@ service ChatService {
   rpc GetChatSession(GetChatSessionRequest) returns (GetChatSessionResponse);
   rpc GetChatSessions(GetChatSessionsRequest) returns (GetChatSessionsResponse);
   rpc GetRecentInteractions(GetRecentInteractionsRequest) returns (GetRecentInteractionsResponse);
+  // Reads a page of a stored answer. Generation stays a single up-front call;
+  // only delivery is paged.
+  rpc GetSessionPOIs(GetSessionPOIsRequest) returns (GetSessionPOIsResponse);
   rpc EndSession(GetChatSessionRequest) returns (loci.common.Response);
 
   // Bookmarking RPCs

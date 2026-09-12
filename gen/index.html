@@ -1020,6 +1020,14 @@
                 </li>
               
                 <li>
+                  <a href="#loci.chat.GetSessionPOIsRequest"><span class="badge">M</span>GetSessionPOIsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.GetSessionPOIsResponse"><span class="badge">M</span>GetSessionPOIsResponse</a>
+                </li>
+              
+                <li>
                   <a href="#loci.chat.HotelsPayload"><span class="badge">M</span>HotelsPayload</a>
                 </li>
               
@@ -1114,6 +1122,10 @@
               
                 <li>
                   <a href="#loci.chat.MessageType"><span class="badge">E</span>MessageType</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.SessionPOISection"><span class="badge">E</span>SessionPOISection</a>
                 </li>
               
                 <li>
@@ -7999,6 +8011,21 @@ verified. Absent on responses produced before grounding existed. </p></td>
                 </tr>
               
                 <tr>
+                  <td>day</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td>optional</td>
+                  <td><p>day places this POI on a day of the trip, 1-based.
+
+The server assigns it: a model asked to number N days will skip one,
+number from zero, or invent a day 12 in a four-day trip, and the clients
+group on this field. It travels on the POI rather than on the itinerary
+envelope because a page of POIs is delivered without that envelope.
+
+Absent for POIs that are not part of a plan (a search result, a nearby
+lookup), in which case clients fall back to chunking by index. </p></td>
+                </tr>
+              
+                <tr>
                   <td>image_credits</td>
                   <td><a href="#loci.poi.POIImage">POIImage</a></td>
                   <td>repeated</td>
@@ -10507,6 +10534,18 @@ renders one renders the other. </p></td>
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>planned_days</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>How many days this plan covers, as read from the traveller&#39;s request.
+
+Clients used to infer days by chunking the list four at a time, which is
+the inverse of what it should be: a four-day trip with twenty-four places
+became six days. Zero on answers produced before this existed, and on
+answers to requests that are not trips. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -11447,6 +11486,89 @@ starting a new turn; consumers dedup by StreamEvent.event_id. </p></td>
                 <tr>
                   <td>pagination</td>
                   <td><a href="#loci.common.PaginationMetadata">loci.common.PaginationMetadata</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.GetSessionPOIsRequest">GetSessionPOIsRequest</h3>
+        <p>GetSessionPOIsRequest reads one page of an answer that has already been</p><p>generated and stored. It never reaches a model and never spends quota.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>session_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>pagination</td>
+                  <td><a href="#loci.common.PaginationRequest">loci.common.PaginationRequest</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>section</td>
+                  <td><a href="#loci.chat.SessionPOISection">SessionPOISection</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.GetSessionPOIsResponse">GetSessionPOIsResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>points_of_interest</td>
+                  <td><a href="#loci.poi.POIDetailedInfo">loci.poi.POIDetailedInfo</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>pagination</td>
+                  <td><a href="#loci.common.PaginationMetadata">loci.common.PaginationMetadata</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>section</td>
+                  <td><a href="#loci.chat.SessionPOISection">SessionPOISection</a></td>
+                  <td></td>
+                  <td><p>Echoed back, so a caller that sent UNSPECIFIED learns which list it got. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>planned_days</td>
+                  <td><a href="#int32">int32</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -12845,6 +12967,54 @@ starting a new turn; consumers dedup by StreamEvent.event_id. </p></td>
           </tbody>
         </table>
       
+        <h3 id="loci.chat.SessionPOISection">SessionPOISection</h3>
+        <p>Which list of a session's stored answer a page is read from.</p><p>Hotels and restaurants are returned as POIs like everything else, because</p><p>that is how the stream already delivers them: a page has to look like what</p><p>the first payload looked like.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>SESSION_POI_SECTION_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p>Itinerary stops, falling back to the general list when a session has no
+itinerary — the same rule the trip builder applies.</p></td>
+              </tr>
+            
+              <tr>
+                <td>SESSION_POI_SECTION_ITINERARY</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>SESSION_POI_SECTION_GENERAL</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>SESSION_POI_SECTION_RESTAURANTS</td>
+                <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>SESSION_POI_SECTION_HOTELS</td>
+                <td>4</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>SESSION_POI_SECTION_ACTIVITIES</td>
+                <td>5</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
         <h3 id="loci.chat.SessionStatus">SessionStatus</h3>
         <p></p>
         <table class="enum-table">
@@ -13014,6 +13184,14 @@ starting a new turn; consumers dedup by StreamEvent.event_id. </p></td>
                 <td><a href="#loci.chat.GetRecentInteractionsRequest">GetRecentInteractionsRequest</a></td>
                 <td><a href="#loci.chat.GetRecentInteractionsResponse">GetRecentInteractionsResponse</a></td>
                 <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>GetSessionPOIs</td>
+                <td><a href="#loci.chat.GetSessionPOIsRequest">GetSessionPOIsRequest</a></td>
+                <td><a href="#loci.chat.GetSessionPOIsResponse">GetSessionPOIsResponse</a></td>
+                <td><p>Reads a page of a stored answer. Generation stays a single up-front call;
+only delivery is paged.</p></td>
               </tr>
             
               <tr>

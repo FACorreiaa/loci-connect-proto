@@ -204,6 +204,21 @@ export declare type POIDetailedInfo = Message<"loci.poi.POIDetailedInfo"> & {
   grounded?: boolean;
 
   /**
+   * day places this POI on a day of the trip, 1-based.
+   *
+   * The server assigns it: a model asked to number N days will skip one,
+   * number from zero, or invent a day 12 in a four-day trip, and the clients
+   * group on this field. It travels on the POI rather than on the itinerary
+   * envelope because a page of POIs is delivered without that envelope.
+   *
+   * Absent for POIs that are not part of a plan (a search result, a nearby
+   * lookup), in which case clients fall back to chunking by index.
+   *
+   * @generated from field: optional int32 day = 35;
+   */
+  day?: number;
+
+  /**
    * Pictures with the credit they cannot be shown without.
    *
    * Wikimedia Commons content is CC BY-SA and similar: displaying the image

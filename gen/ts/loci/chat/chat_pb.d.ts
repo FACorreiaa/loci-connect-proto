@@ -300,6 +300,18 @@ export declare type AIItineraryResponse = Message<"loci.chat.AIItineraryResponse
    * @generated from field: repeated loci.poi.POIDetailedInfo bars = 5;
    */
   bars: POIDetailedInfo[];
+
+  /**
+   * How many days this plan covers, as read from the traveller's request.
+   *
+   * Clients used to infer days by chunking the list four at a time, which is
+   * the inverse of what it should be: a four-day trip with twenty-four places
+   * became six days. Zero on answers produced before this existed, and on
+   * answers to requests that are not trips.
+   *
+   * @generated from field: int32 planned_days = 6;
+   */
+  plannedDays: number;
 };
 
 /**
@@ -1239,6 +1251,68 @@ export declare type GetChatSessionResponse = Message<"loci.chat.GetChatSessionRe
 export declare const GetChatSessionResponseSchema: GenMessage<GetChatSessionResponse>;
 
 /**
+ * GetSessionPOIsRequest reads one page of an answer that has already been
+ * generated and stored. It never reaches a model and never spends quota.
+ *
+ * @generated from message loci.chat.GetSessionPOIsRequest
+ */
+export declare type GetSessionPOIsRequest = Message<"loci.chat.GetSessionPOIsRequest"> & {
+  /**
+   * @generated from field: string session_id = 1;
+   */
+  sessionId: string;
+
+  /**
+   * @generated from field: loci.common.PaginationRequest pagination = 2;
+   */
+  pagination?: PaginationRequest;
+
+  /**
+   * @generated from field: loci.chat.SessionPOISection section = 3;
+   */
+  section: SessionPOISection;
+};
+
+/**
+ * Describes the message loci.chat.GetSessionPOIsRequest.
+ * Use `create(GetSessionPOIsRequestSchema)` to create a new message.
+ */
+export declare const GetSessionPOIsRequestSchema: GenMessage<GetSessionPOIsRequest>;
+
+/**
+ * @generated from message loci.chat.GetSessionPOIsResponse
+ */
+export declare type GetSessionPOIsResponse = Message<"loci.chat.GetSessionPOIsResponse"> & {
+  /**
+   * @generated from field: repeated loci.poi.POIDetailedInfo points_of_interest = 1;
+   */
+  pointsOfInterest: POIDetailedInfo[];
+
+  /**
+   * @generated from field: loci.common.PaginationMetadata pagination = 2;
+   */
+  pagination?: PaginationMetadata;
+
+  /**
+   * Echoed back, so a caller that sent UNSPECIFIED learns which list it got.
+   *
+   * @generated from field: loci.chat.SessionPOISection section = 3;
+   */
+  section: SessionPOISection;
+
+  /**
+   * @generated from field: int32 planned_days = 4;
+   */
+  plannedDays: number;
+};
+
+/**
+ * Describes the message loci.chat.GetSessionPOIsResponse.
+ * Use `create(GetSessionPOIsResponseSchema)` to create a new message.
+ */
+export declare const GetSessionPOIsResponseSchema: GenMessage<GetSessionPOIsResponse>;
+
+/**
  * GetChatSessionsRequest for retrieving multiple chat sessions
  *
  * @generated from message loci.chat.GetChatSessionsRequest
@@ -1904,6 +1978,55 @@ export enum StreamEventType {
 export declare const StreamEventTypeSchema: GenEnum<StreamEventType>;
 
 /**
+ * Which list of a session's stored answer a page is read from.
+ *
+ * Hotels and restaurants are returned as POIs like everything else, because
+ * that is how the stream already delivers them: a page has to look like what
+ * the first payload looked like.
+ *
+ * @generated from enum loci.chat.SessionPOISection
+ */
+export enum SessionPOISection {
+  /**
+   * Itinerary stops, falling back to the general list when a session has no
+   * itinerary — the same rule the trip builder applies.
+   *
+   * @generated from enum value: SESSION_POI_SECTION_UNSPECIFIED = 0;
+   */
+  SESSION_POI_SECTION_UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: SESSION_POI_SECTION_ITINERARY = 1;
+   */
+  SESSION_POI_SECTION_ITINERARY = 1,
+
+  /**
+   * @generated from enum value: SESSION_POI_SECTION_GENERAL = 2;
+   */
+  SESSION_POI_SECTION_GENERAL = 2,
+
+  /**
+   * @generated from enum value: SESSION_POI_SECTION_RESTAURANTS = 3;
+   */
+  SESSION_POI_SECTION_RESTAURANTS = 3,
+
+  /**
+   * @generated from enum value: SESSION_POI_SECTION_HOTELS = 4;
+   */
+  SESSION_POI_SECTION_HOTELS = 4,
+
+  /**
+   * @generated from enum value: SESSION_POI_SECTION_ACTIVITIES = 5;
+   */
+  SESSION_POI_SECTION_ACTIVITIES = 5,
+}
+
+/**
+ * Describes the enum loci.chat.SessionPOISection.
+ */
+export declare const SessionPOISectionSchema: GenEnum<SessionPOISection>;
+
+/**
  * @generated from service loci.chat.ChatService
  */
 export declare const ChatService: GenService<{
@@ -1946,6 +2069,17 @@ export declare const ChatService: GenService<{
     methodKind: "unary";
     input: typeof GetRecentInteractionsRequestSchema;
     output: typeof GetRecentInteractionsResponseSchema;
+  },
+  /**
+   * Reads a page of a stored answer. Generation stays a single up-front call;
+   * only delivery is paged.
+   *
+   * @generated from rpc loci.chat.ChatService.GetSessionPOIs
+   */
+  getSessionPOIs: {
+    methodKind: "unary";
+    input: typeof GetSessionPOIsRequestSchema;
+    output: typeof GetSessionPOIsResponseSchema;
   },
   /**
    * @generated from rpc loci.chat.ChatService.EndSession

@@ -1226,6 +1226,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.chat.GetRecentInteractionsResponse'
+  /loci.chat.ChatService/GetSessionPOIs:
+    post:
+      tags:
+        - loci.chat.ChatService
+      summary: GetSessionPOIs
+      description: |-
+        Reads a page of a stored answer. Generation stays a single up-front call;
+         only delivery is paged.
+      operationId: loci.chat.ChatService.GetSessionPOIs
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.chat.GetSessionPOIsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.chat.GetSessionPOIsResponse'
   /loci.chat.ChatService/RemoveBookmark:
     post:
       tags:
@@ -8595,6 +8633,19 @@ components:
           items:
             $ref: '#/components/schemas/loci.poi.POIDetailedInfo'
           title: bars
+        plannedDays:
+          type: integer
+          title: planned_days
+          maximum: 60
+          minimum: 0
+          format: int32
+          description: |-
+            How many days this plan covers, as read from the traveller's request.
+
+             Clients used to infer days by chunking the list four at a time, which is
+             the inverse of what it should be: a four-day trip with twenty-four places
+             became six days. Zero on answers produced before this existed, and on
+             answers to requests that are not trips.
       title: AIItineraryResponse
       additionalProperties: false
       description: AIItineraryResponse represents an AI-generated itinerary response
@@ -9167,6 +9218,50 @@ components:
       title: GetRecentInteractionsResponse
       additionalProperties: false
       description: GetRecentInteractionsResponse for recent interactions retrieval
+    loci.chat.GetSessionPOIsRequest:
+      type: object
+      properties:
+        sessionId:
+          type: string
+          title: session_id
+          maxLength: 200
+          minLength: 1
+        pagination:
+          title: pagination
+          $ref: '#/components/schemas/loci.common.PaginationRequest'
+        section:
+          title: section
+          $ref: '#/components/schemas/loci.chat.SessionPOISection'
+      title: GetSessionPOIsRequest
+      required:
+        - pagination
+      additionalProperties: false
+      description: |-
+        GetSessionPOIsRequest reads one page of an answer that has already been
+         generated and stored. It never reaches a model and never spends quota.
+    loci.chat.GetSessionPOIsResponse:
+      type: object
+      properties:
+        pointsOfInterest:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.poi.POIDetailedInfo'
+          title: points_of_interest
+        pagination:
+          title: pagination
+          $ref: '#/components/schemas/loci.common.PaginationMetadata'
+        section:
+          title: section
+          description: Echoed back, so a caller that sent UNSPECIFIED learns which list it got.
+          $ref: '#/components/schemas/loci.chat.SessionPOISection'
+        plannedDays:
+          type: integer
+          title: planned_days
+          maximum: 60
+          minimum: 0
+          format: int32
+      title: GetSessionPOIsResponse
+      additionalProperties: false
     loci.chat.HotelsPayload:
       type: object
       properties:
@@ -9684,6 +9779,22 @@ components:
       title: SessionEngagementMetrics
       additionalProperties: false
       description: SessionEngagementMetrics contains engagement metrics
+    loci.chat.SessionPOISection:
+      type: string
+      title: SessionPOISection
+      enum:
+        - SESSION_POI_SECTION_UNSPECIFIED
+        - SESSION_POI_SECTION_ITINERARY
+        - SESSION_POI_SECTION_GENERAL
+        - SESSION_POI_SECTION_RESTAURANTS
+        - SESSION_POI_SECTION_HOTELS
+        - SESSION_POI_SECTION_ACTIVITIES
+      description: |-
+        Which list of a session's stored answer a page is read from.
+
+         Hotels and restaurants are returned as POIs like everything else, because
+         that is how the stream already delivers them: a page has to look like what
+         the first payload looked like.
     loci.chat.SessionPerformanceMetrics:
       type: object
       properties:
@@ -16211,6 +16322,24 @@ components:
              recalled by the model. False does not mean the place is fake — it means Loci
              did not verify it against its own data, so it must not be presented as
              verified. Absent on responses produced before grounding existed.
+        day:
+          type:
+            - integer
+            - "null"
+          title: day
+          maximum: 60
+          minimum: 1
+          format: int32
+          description: |-
+            day places this POI on a day of the trip, 1-based.
+
+             The server assigns it: a model asked to number N days will skip one,
+             number from zero, or invent a day 12 in a four-day trip, and the clients
+             group on this field. It travels on the POI rather than on the itinerary
+             envelope because a page of POIs is delivered without that envelope.
+
+             Absent for POIs that are not part of a plan (a search result, a nearby
+             lookup), in which case clients fall back to chunking by index.
         imageCredits:
           type: array
           items:
