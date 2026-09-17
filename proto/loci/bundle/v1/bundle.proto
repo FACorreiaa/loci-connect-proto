@@ -1,0 +1,213 @@
+syntax = "proto3";
+
+package loci.bundle.v1;
+
+import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+import "loci/common/common.proto";
+import "loci/trip/trip.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/bundle/v1;bundlev1";
+
+// BundleStatus is where a pack sits in the authoring pipeline. Only PUBLISHED
+// packs are ever returned to a client; the rest exist so a generated draft can
+// be read and approved by a human before anyone can buy it.
+//
+// RETIRED is not deletion. A pack someone has paid for stays readable by its
+// owners forever, so withdrawing one from sale moves it here rather than
+// removing it.
+enum BundleStatus {
+  BUNDLE_STATUS_UNSPECIFIED = 0;
+  BUNDLE_STATUS_DRAFT = 1;
+  BUNDLE_STATUS_APPROVED = 2;
+  BUNDLE_STATUS_PUBLISHED = 3;
+  BUNDLE_STATUS_RETIRED = 4;
+}
+
+// Bundle is the catalog entry for a pre-made itinerary: everything needed to
+// render a card in a list, without any of the day-by-day content.
+message Bundle {
+  string id = 1 [(buf.validate.field).string = {max_len: 100}];
+  // Stable, human-readable handle used in the URL (`/packs/<slug>`). This is
+  // the lookup key clients use, not the uuid, so a pack keeps its address.
+  string slug = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
+  string title = 3 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 300
+  }];
+  string summary = 4 [(buf.validate.field).string = {max_len: 2000}];
+
+  // City is carried by name as well as id: a pack must still render its own
+  // header if the city row is ever merged away underneath it.
+  optional string city_id = 5 [(buf.validate.field) = {
+    string: {
+      min_len: 1
+      max_len: 100
+    }
+  }];
+  string city_name = 6 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
+  // ISO 3166-1 alpha-2, for the flag.
+  string country_code = 7 [(buf.validate.field).string = {max_len: 2}];
+
+  // theme is the taste this pack is cut for: food, art, outdoors,
+  // architecture, nightlife, family.
+  string theme = 8 [(buf.validate.field).string = {max_len: 50}];
+  // Months (1-12) the pack is in season for. Mirrors SeasonalPick.months on
+  // the client, which is where the seed list comes from.
+  repeated int32 months = 9 [(buf.validate.field).repeated = {
+    max_items: 12
+    items: {
+      int32: {
+        gte: 1
+        lte: 12
+      }
+    }
+  }];
+
+  int32 day_count = 10 [(buf.validate.field).int32 = {gte: 0}];
+  int32 stop_count = 11 [(buf.validate.field).int32 = {gte: 0}];
+  optional string cover_image_url = 12 [(buf.validate.field) = {
+    string: {
+      min_len: 1
+      max_len: 2048
+      uri: true
+    }
+  }];
+
+  // is_paid says whether the days past the first cost money. Price is carried
+  // per response rather than per row because every pack shares one price
+  // today; a client must never send a price back to the server.
+  bool is_paid = 13;
+  int32 price_cents = 14 [(buf.validate.field).int32 = {gte: 0}];
+  string currency = 15 [(buf.validate.field).string = {max_len: 3}];
+  // owned is false for anonymous callers and for a signed-in caller who has
+  // not bought this pack. Free packs report true.
+  bool owned = 16;
+
+  google.protobuf.Timestamp published_at = 17;
+}
+
+// BundleDay is one day of a pack. Stops reuse loci.trip.TripStop so a pack
+// renders through the same components a generated trip does, and so claiming
+// one is a straight copy rather than a translation.
+message BundleDay {
+  int32 day_number = 1 [(buf.validate.field).int32 = {gte: 1}];
+  string title = 2 [(buf.validate.field).string = {max_len: 300}];
+  repeated loci.trip.TripStop stops = 3;
+}
+
+// BundleDetail is one pack with as much of its content as the caller is
+// entitled to see.
+//
+// The gate is applied server-side: for a paid pack the caller does not own,
+// `days` holds day 1 only and the rest are simply absent from the wire.
+// Sending every day and hiding some in the UI would put the paid content in
+// the response body for anyone with devtools.
+message BundleDetail {
+  Bundle bundle = 1;
+  repeated BundleDay days = 2;
+  // How many days were withheld. Zero when the caller can see all of them.
+  int32 locked_day_count = 3 [(buf.validate.field).int32 = {gte: 0}];
+}
+
+message ListBundlesRequest {
+  // All filters are optional and AND together.
+  optional string city_name = 1 [(buf.validate.field) = {
+    string: {
+      min_len: 1
+      max_len: 200
+    }
+  }];
+  optional string theme = 2 [(buf.validate.field) = {
+    string: {
+      min_len: 1
+      max_len: 50
+    }
+  }];
+  // Month (1-12) the trip is for; matches against Bundle.months.
+  optional int32 month = 3 [(buf.validate.field) = {
+    int32: {
+      gte: 1
+      lte: 12
+    }
+  }];
+  optional bool only_free = 4;
+  loci.common.PaginationRequest pagination = 5;
+}
+
+message ListBundlesResponse {
+  repeated Bundle bundles = 1;
+  loci.common.PaginationMetadata pagination = 2;
+}
+
+message GetBundleRequest {
+  string slug = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
+}
+
+message CreateBundleCheckoutRequest {
+  // The pack to buy. The server resolves the price itself — deliberately no
+  // price or mode field here, so a client cannot name its own amount.
+  string bundle_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string success_url = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 2048
+    uri: true
+  }];
+  string cancel_url = 3 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 2048
+    uri: true
+  }];
+}
+
+message CreateBundleCheckoutResponse {
+  string session_id = 1;
+  string url = 2;
+}
+
+message ClaimBundleRequest {
+  string bundle_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+}
+
+message ClaimBundleResponse {
+  // The new trip written for the caller, ready to edit like any other.
+  string trip_id = 1;
+}
+
+message ListMyBundlesRequest {
+  loci.common.PaginationRequest pagination = 1;
+}
+
+message ListMyBundlesResponse {
+  repeated Bundle bundles = 1;
+  loci.common.PaginationMetadata pagination = 2;
+}
+
+// BundleService serves the City Packs catalog: pre-made itineraries written
+// offline and published by hand.
+//
+// ListBundles and GetBundle are public. They still read the caller's identity
+// when a token happens to be present, which is how one endpoint can serve a
+// teaser to a stranger and the whole pack to someone who bought it.
+service BundleService {
+  rpc ListBundles(ListBundlesRequest) returns (ListBundlesResponse);
+  rpc GetBundle(GetBundleRequest) returns (BundleDetail);
+  rpc CreateBundleCheckout(CreateBundleCheckoutRequest) returns (CreateBundleCheckoutResponse);
+  rpc ClaimBundle(ClaimBundleRequest) returns (ClaimBundleResponse);
+  rpc ListMyBundles(ListMyBundlesRequest) returns (ListMyBundlesResponse);
+}
