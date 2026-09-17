@@ -245,6 +245,46 @@ message EstimateDriveCostResponse {
 
 // LocalContextService surfaces trip-time context: weather, plus live alerts
 // from public-holiday and natural-hazard providers.
+// NewsTickerItem is one breaking-news headline for the traveller's desk:
+// title, source, time and a link out. Never a body — the ticker links to the
+// publisher rather than republishing.
+message NewsTickerItem {
+  string id = 1 [(buf.validate.field).string = {min_len: 1}];
+  string title = 2 [(buf.validate.field).string = {min_len: 1}];
+  string url = 3;
+  string source = 4;
+  google.protobuf.Timestamp published_at = 5;
+  // ISO 3166-1 alpha-2 of the country this headline was selected for, or
+  // empty for a feed not tied to one.
+  string country_code = 6 [(buf.validate.field).string = {max_len: 2}];
+}
+
+message GetNewsTickerRequest {
+  int32 limit = 1 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 100
+  }];
+}
+
+message GetNewsTickerResponse {
+  repeated NewsTickerItem items = 1;
+  // False when the person switched the ticker off; items is then empty.
+  bool enabled = 2;
+  // True when at least one feed is serving cached headlines after a failed
+  // fetch upstream.
+  bool stale = 3;
+  // The countries whose news was selected: home, next trip, recently visited.
+  repeated string country_codes = 4;
+}
+
+message SetNewsTickerEnabledRequest {
+  bool enabled = 1;
+}
+
+message SetNewsTickerEnabledResponse {
+  bool enabled = 1;
+}
+
 service LocalContextService {
   rpc GetLocalContext(GetLocalContextRequest) returns (LocalContext);
   // GetGoScore answers "should I go this weekend?" for one destination.
@@ -253,4 +293,9 @@ service LocalContextService {
   rpc GetFxRates(GetFxRatesRequest) returns (GetFxRatesResponse);
   // EstimateDriveCost prices the fuel for a driving leg.
   rpc EstimateDriveCost(EstimateDriveCostRequest) returns (EstimateDriveCostResponse);
+  // GetNewsTicker is the breaking-news strip for the signed-in traveller:
+  // headlines for their home country, next destination and recent visits.
+  rpc GetNewsTicker(GetNewsTickerRequest) returns (GetNewsTickerResponse);
+  // SetNewsTickerEnabled is the per-user switch for that strip.
+  rpc SetNewsTickerEnabled(SetNewsTickerEnabledRequest) returns (SetNewsTickerEnabledResponse);
 }
