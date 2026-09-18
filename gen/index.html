@@ -26901,7 +26901,10 @@ account; only the route to it is removed.</p></td>
                   <td>sort_by</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>&#34;date&#34;, &#34;frequency&#34;, &#34;relevance&#34; </p></td>
+                  <td><p>Both default to the server&#39;s choice (date, descending) when unset, so an
+empty string has to pass. The `in` rule alone rejects it.
+
+&#34;date&#34;, &#34;frequency&#34;, &#34;relevance&#34; </p></td>
                 </tr>
               
                 <tr>
@@ -27251,7 +27254,10 @@ account; only the route to it is removed.</p></td>
                   <td>city_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>city_id and search_query are optional narrowings, so an unset one has to
+stay legal. Without IGNORE_IF_ZERO_VALUE the min_len rule fires on the
+empty default, and a caller filtering only by entity_types — the activity
+feed&#39;s type chips — is rejected for leaving these two blank. </p></td>
                 </tr>
               
                 <tr>

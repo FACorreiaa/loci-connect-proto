@@ -18661,7 +18661,9 @@ components:
             - date
             - frequency
             - relevance
-          description: '"date", "frequency", "relevance"'
+          description: |-
+            Both default to the server's choice (date, descending) when unset, so an
+             empty string has to pass. The `in` rule alone rejects it. "date", "frequency", "relevance"
         sortOrder:
           type: string
           title: sort_order
@@ -18858,6 +18860,11 @@ components:
           title: city_id
           maxLength: 100
           minLength: 1
+          description: |-
+            city_id and search_query are optional narrowings, so an unset one has to
+             stay legal. Without IGNORE_IF_ZERO_VALUE the min_len rule fires on the
+             empty default, and a caller filtering only by entity_types — the activity
+             feed's type chips — is rejected for leaving these two blank.
         startDate:
           title: start_date
           $ref: '#/components/schemas/google.protobuf.Timestamp'
