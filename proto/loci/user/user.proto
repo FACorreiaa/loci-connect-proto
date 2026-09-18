@@ -340,6 +340,30 @@ message DeleteAccountRequest {
   }];
 }
 
+// NotificationSettings are the per-account notification switches.
+//
+// These lived in localStorage, keyed by user id, because no RPC existed for
+// them — so they did not follow the account to another browser, and nothing
+// server-side could read them. The two flags mirror what the quick-settings
+// panel has always offered.
+//
+// This stores the preference. Delivery — actually sending a push or an email —
+// is a separate piece of work, and the UI must not imply otherwise while these
+// are only recorded.
+message NotificationSettings {
+  bool recommendations = 1;
+  bool trip_reminders = 2;
+  google.protobuf.Timestamp updated_at = 3;
+}
+
+message GetNotificationSettingsRequest {}
+
+message UpdateNotificationSettingsRequest {
+  // Absent means "leave this switch as it is".
+  optional bool recommendations = 1;
+  optional bool trip_reminders = 2;
+}
+
 // UserService defines user-related RPCs
 service UserService {
   rpc GetUserProfile(GetUserProfileRequest) returns (GetUserProfileResponse);
@@ -348,4 +372,8 @@ service UserService {
   // Data controls (GDPR-style self-service).
   rpc ExportUserData(ExportUserDataRequest) returns (ExportUserDataResponse);
   rpc DeleteAccount(DeleteAccountRequest) returns (loci.common.Response);
+
+  // Notification switches, stored against the account rather than the browser.
+  rpc GetNotificationSettings(GetNotificationSettingsRequest) returns (NotificationSettings);
+  rpc UpdateNotificationSettings(UpdateNotificationSettingsRequest) returns (NotificationSettings);
 }

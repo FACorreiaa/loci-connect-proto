@@ -556,6 +556,45 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.common.Response'
+  /loci.auth.AuthService/ConfirmEmailChange:
+    post:
+      tags:
+        - loci.auth.AuthService
+      summary: ConfirmEmailChange
+      description: |-
+        Completes an email change started by ChangeEmail. Unauthenticated: the
+         token from the confirmation mail is the credential, and the person may be
+         opening the link in a browser that is not signed in.
+      operationId: loci.auth.AuthService.ConfirmEmailChange
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.auth.ConfirmEmailChangeRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.common.Response'
   /loci.auth.AuthService/ConfirmMFAEnrollment:
     post:
       tags:
@@ -697,6 +736,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.auth.GetMFAStatusResponse'
+  /loci.auth.AuthService/ListSessions:
+    post:
+      tags:
+        - loci.auth.AuthService
+      summary: ListSessions
+      description: |-
+        Signed-in devices. The session rows have always carried user_agent and
+         client_ip; these are what let somebody see and end them.
+      operationId: loci.auth.AuthService.ListSessions
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.auth.ListSessionsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.auth.ListSessionsResponse'
   /loci.auth.AuthService/Login:
     post:
       tags:
@@ -893,6 +970,76 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/loci.auth.ResetPasswordRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.common.Response'
+  /loci.auth.AuthService/RevokeOtherSessions:
+    post:
+      tags:
+        - loci.auth.AuthService
+      summary: RevokeOtherSessions
+      operationId: loci.auth.AuthService.RevokeOtherSessions
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.auth.RevokeOtherSessionsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.common.Response'
+  /loci.auth.AuthService/RevokeSession:
+    post:
+      tags:
+        - loci.auth.AuthService
+      summary: RevokeSession
+      operationId: loci.auth.AuthService.RevokeSession
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.auth.RevokeSessionRequest'
         required: true
       responses:
         default:
@@ -2710,6 +2857,41 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/loci.interest.CreateInterestRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.common.Response'
+  /loci.interest.InterestService/DeleteInterest:
+    post:
+      tags:
+        - loci.interest.InterestService
+      summary: DeleteInterest
+      operationId: loci.interest.InterestService.DeleteInterest
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.interest.DeleteInterestRequest'
         required: true
       responses:
         default:
@@ -7313,6 +7495,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.user.ExportUserDataResponse'
+  /loci.user.UserService/GetNotificationSettings:
+    post:
+      tags:
+        - loci.user.UserService
+      summary: GetNotificationSettings
+      description: Notification switches, stored against the account rather than the browser.
+      operationId: loci.user.UserService.GetNotificationSettings
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.user.GetNotificationSettingsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.user.NotificationSettings'
   /loci.user.UserService/GetUserProfile:
     post:
       tags:
@@ -7348,6 +7566,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.user.GetUserProfileResponse'
+  /loci.user.UserService/UpdateNotificationSettings:
+    post:
+      tags:
+        - loci.user.UserService
+      summary: UpdateNotificationSettings
+      operationId: loci.user.UserService.UpdateNotificationSettings
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.user.UpdateNotificationSettingsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.user.NotificationSettings'
   /loci.user.UserService/UpdateUserProfile:
     post:
       tags:
@@ -8449,6 +8702,22 @@ components:
       title: Claims
       additionalProperties: false
       description: Claims represents JWT claims
+    loci.auth.ConfirmEmailChangeRequest:
+      type: object
+      properties:
+        token:
+          type: string
+          title: token
+          maxLength: 512
+          minLength: 16
+      title: ConfirmEmailChangeRequest
+      additionalProperties: false
+      description: |-
+        ConfirmEmailChangeRequest completes an email change.
+
+         ChangeEmail used to swap the address outright, with nothing sent to the new
+         inbox to prove the person asking could read it. The change is now staged and
+         only takes effect when the token mailed to the new address comes back here.
     loci.auth.ConfirmMFAEnrollmentRequest:
       type: object
       properties:
@@ -8481,6 +8750,48 @@ components:
       title: ConfirmMFAEnrollmentResponse
       additionalProperties: false
       description: ConfirmMFAEnrollmentResponse returns the recovery codes.
+    loci.auth.DeviceSession:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          maxLength: 100
+          minLength: 1
+        userAgent:
+          type:
+            - string
+            - "null"
+          title: user_agent
+          maxLength: 512
+        clientIp:
+          type:
+            - string
+            - "null"
+          title: client_ip
+          maxLength: 64
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        expiresAt:
+          title: expires_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        current:
+          type: boolean
+          title: current
+          description: |-
+            True for the session making this call, so a client can label it and warn
+             before signing itself out.
+      title: DeviceSession
+      additionalProperties: false
+      description: |-
+        A signed-in session: one refresh token, with where it came from.
+
+         user_agent and client_ip have been recorded on every session since the table
+         was created; nothing ever read them back out, so there was no way for anyone
+         to see where their account was signed in.
+         Named DeviceSession because this package already has a Session, which is an
+         identity summary (id, username, email) and nothing to do with a sign-in.
     loci.auth.DisableMFARequest:
       type: object
       properties:
@@ -8544,6 +8855,39 @@ components:
             True when policy requires MFA for this user's role, so the UI can explain
              why disabling is refused.
       title: GetMFAStatusResponse
+      additionalProperties: false
+    loci.auth.ListSessionsRequest:
+      type: object
+      properties:
+        refreshToken:
+          type:
+            - string
+            - "null"
+          title: refresh_token
+          minLength: 16
+      title: ListSessionsRequest
+      additionalProperties: false
+      description: |-
+        The caller's own refresh token, so the session it belongs to can be marked
+         current.
+
+         Access tokens are stateless JWTs and carry nothing that maps back to a
+         session row, so without this there is no way to tell which of the listed
+         sessions is the one asking. A "sign out my other devices" button that cannot
+         identify the current session signs the user out of the device they are
+         holding.
+
+         Optional: a caller that only wants the list can omit it and get no session
+         marked current.
+    loci.auth.ListSessionsResponse:
+      type: object
+      properties:
+        sessions:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.auth.DeviceSession'
+          title: sessions
+      title: ListSessionsResponse
       additionalProperties: false
     loci.auth.LoginRequest:
       type: object
@@ -8713,6 +9057,31 @@ components:
       title: ResetPasswordRequest
       additionalProperties: false
       description: ResetPasswordRequest for completing password reset with token
+    loci.auth.RevokeOtherSessionsRequest:
+      type: object
+      properties:
+        refreshToken:
+          type: string
+          title: refresh_token
+          minLength: 16
+      title: RevokeOtherSessionsRequest
+      additionalProperties: false
+      description: |-
+        RevokeOtherSessions signs out everywhere except the caller's own session.
+
+         The refresh token is required here rather than optional: without it the RPC
+         cannot tell which session to spare, and the only safe reading of "revoke the
+         others" with no "others" defined is to revoke nothing.
+    loci.auth.RevokeSessionRequest:
+      type: object
+      properties:
+        sessionId:
+          type: string
+          title: session_id
+          maxLength: 100
+          minLength: 1
+      title: RevokeSessionRequest
+      additionalProperties: false
     loci.auth.Session:
       type: object
       properties:
@@ -13138,6 +13507,23 @@ components:
       title: CreateInterestRequest
       additionalProperties: false
       description: CreateInterestRequest for creating a new interest
+    loci.interest.DeleteInterestRequest:
+      type: object
+      properties:
+        interestId:
+          type: string
+          title: interest_id
+          maxLength: 100
+          minLength: 1
+      title: DeleteInterestRequest
+      additionalProperties: false
+      description: |-
+        DeleteInterest removes one of the caller's own custom interests.
+
+         Deactivating an interest via UpdateInterest is a different thing: it stays in
+         the list, switched off. The client offered a delete button that called
+         UpdateInterest with active=false and reported "Interest deleted", which left
+         the interest exactly where it was.
     loci.interest.GetInterestsRequest:
       type: object
       properties:
@@ -23480,6 +23866,10 @@ components:
       title: ExportUserDataResponse
       additionalProperties: false
       description: ExportUserDataResponse carries the exported data as a downloadable blob (JSON).
+    loci.user.GetNotificationSettingsRequest:
+      type: object
+      title: GetNotificationSettingsRequest
+      additionalProperties: false
     loci.user.GetUserProfileRequest:
       type: object
       properties:
@@ -23503,6 +23893,47 @@ components:
       title: GetUserProfileResponse
       additionalProperties: false
       description: GetUserProfileResponse for user profile retrieval
+    loci.user.NotificationSettings:
+      type: object
+      properties:
+        recommendations:
+          type: boolean
+          title: recommendations
+        tripReminders:
+          type: boolean
+          title: trip_reminders
+        updatedAt:
+          title: updated_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: NotificationSettings
+      additionalProperties: false
+      description: |-
+        NotificationSettings are the per-account notification switches.
+
+         These lived in localStorage, keyed by user id, because no RPC existed for
+         them — so they did not follow the account to another browser, and nothing
+         server-side could read them. The two flags mirror what the quick-settings
+         panel has always offered.
+
+         This stores the preference. Delivery — actually sending a push or an email —
+         is a separate piece of work, and the UI must not imply otherwise while these
+         are only recorded.
+    loci.user.UpdateNotificationSettingsRequest:
+      type: object
+      properties:
+        recommendations:
+          type:
+            - boolean
+            - "null"
+          title: recommendations
+          description: Absent means "leave this switch as it is".
+        tripReminders:
+          type:
+            - boolean
+            - "null"
+          title: trip_reminders
+      title: UpdateNotificationSettingsRequest
+      additionalProperties: false
     loci.user.UpdateProfileParams:
       type: object
       properties:

@@ -283,6 +283,29 @@ export declare type GetUserInterestsResponse = Message<"loci.interest.GetUserInt
 export declare const GetUserInterestsResponseSchema: GenMessage<GetUserInterestsResponse>;
 
 /**
+ * DeleteInterest removes one of the caller's own custom interests.
+ *
+ * Deactivating an interest via UpdateInterest is a different thing: it stays in
+ * the list, switched off. The client offered a delete button that called
+ * UpdateInterest with active=false and reported "Interest deleted", which left
+ * the interest exactly where it was.
+ *
+ * @generated from message loci.interest.DeleteInterestRequest
+ */
+export declare type DeleteInterestRequest = Message<"loci.interest.DeleteInterestRequest"> & {
+  /**
+   * @generated from field: string interest_id = 1;
+   */
+  interestId: string;
+};
+
+/**
+ * Describes the message loci.interest.DeleteInterestRequest.
+ * Use `create(DeleteInterestRequestSchema)` to create a new message.
+ */
+export declare const DeleteInterestRequestSchema: GenMessage<DeleteInterestRequest>;
+
+/**
  * InterestService defines interest-related RPCs
  *
  * @generated from service loci.interest.InterestService
@@ -334,6 +357,14 @@ export declare const InterestService: GenService<{
   updatePreferenceLevel: {
     methodKind: "unary";
     input: typeof UpdatePreferenceLevelRequestSchema;
+    output: typeof ResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.interest.InterestService.DeleteInterest
+   */
+  deleteInterest: {
+    methodKind: "unary";
+    input: typeof DeleteInterestRequestSchema;
     output: typeof ResponseSchema;
   },
 }>;
