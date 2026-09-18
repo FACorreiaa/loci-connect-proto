@@ -8858,8 +8858,27 @@ components:
       additionalProperties: false
     loci.auth.ListSessionsRequest:
       type: object
+      properties:
+        refreshToken:
+          type:
+            - string
+            - "null"
+          title: refresh_token
+          minLength: 16
       title: ListSessionsRequest
       additionalProperties: false
+      description: |-
+        The caller's own refresh token, so the session it belongs to can be marked
+         current.
+
+         Access tokens are stateless JWTs and carry nothing that maps back to a
+         session row, so without this there is no way to tell which of the listed
+         sessions is the one asking. A "sign out my other devices" button that cannot
+         identify the current session signs the user out of the device they are
+         holding.
+
+         Optional: a caller that only wants the list can omit it and get no session
+         marked current.
     loci.auth.ListSessionsResponse:
       type: object
       properties:
@@ -9040,9 +9059,19 @@ components:
       description: ResetPasswordRequest for completing password reset with token
     loci.auth.RevokeOtherSessionsRequest:
       type: object
+      properties:
+        refreshToken:
+          type: string
+          title: refresh_token
+          minLength: 16
       title: RevokeOtherSessionsRequest
       additionalProperties: false
-      description: RevokeOtherSessions signs out everywhere except the caller's own session.
+      description: |-
+        RevokeOtherSessions signs out everywhere except the caller's own session.
+
+         The refresh token is required here rather than optional: without it the RPC
+         cannot tell which session to spare, and the only safe reading of "revoke the
+         others" with no "others" defined is to revoke nothing.
     loci.auth.RevokeSessionRequest:
       type: object
       properties:

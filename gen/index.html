@@ -5546,9 +5546,26 @@ why disabling is refused. </p></td>
         
       
         <h3 id="loci.auth.ListSessionsRequest">ListSessionsRequest</h3>
-        <p></p>
+        <p>The caller's own refresh token, so the session it belongs to can be marked</p><p>current.</p><p>Access tokens are stateless JWTs and carry nothing that maps back to a</p><p>session row, so without this there is no way to tell which of the listed</p><p>sessions is the one asking. A "sign out my other devices" button that cannot</p><p>identify the current session signs the user out of the device they are</p><p>holding.</p><p>Optional: a caller that only wants the list can omit it and get no session</p><p>marked current.</p>
 
         
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>refresh_token</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
 
         
       
@@ -5863,9 +5880,26 @@ its own. </p></td>
         
       
         <h3 id="loci.auth.RevokeOtherSessionsRequest">RevokeOtherSessionsRequest</h3>
-        <p>RevokeOtherSessions signs out everywhere except the caller's own session.</p>
+        <p>RevokeOtherSessions signs out everywhere except the caller's own session.</p><p>The refresh token is required here rather than optional: without it the RPC</p><p>cannot tell which session to spare, and the only safe reading of "revoke the</p><p>others" with no "others" defined is to revoke nothing.</p>
 
         
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>refresh_token</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
 
         
       
