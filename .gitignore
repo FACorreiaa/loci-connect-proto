@@ -1,3 +1,6 @@
 .env
 vendor
 .DS_Store
+
+# Toolchain installers are not source; one was committed by accident.
+*.pkg
