@@ -253,6 +253,209 @@ export declare type GetMyContributorProfileRequest = Message<"loci.place.GetMyCo
 export declare const GetMyContributorProfileRequestSchema: GenMessage<GetMyContributorProfileRequest>;
 
 /**
+ * @generated from message loci.place.SubmitPlaceRequest
+ */
+export declare type SubmitPlaceRequest = Message<"loci.place.SubmitPlaceRequest"> & {
+  /**
+   * @generated from field: string client_submission_id = 1;
+   */
+  clientSubmissionId: string;
+
+  /**
+   * @generated from field: string name = 2;
+   */
+  name: string;
+
+  /**
+   * Resolved server-side; the client cannot be relied on to know a city id.
+   *
+   * @generated from field: string city_name = 3;
+   */
+  cityName: string;
+
+  /**
+   * @generated from field: optional string country = 4;
+   */
+  country?: string;
+
+  /**
+   * @generated from field: optional string category = 5;
+   */
+  category?: string;
+
+  /**
+   * @generated from field: optional double latitude = 6;
+   */
+  latitude?: number;
+
+  /**
+   * @generated from field: optional double longitude = 7;
+   */
+  longitude?: number;
+
+  /**
+   * @generated from field: optional string address = 8;
+   */
+  address?: string;
+
+  /**
+   * @generated from field: optional string website = 9;
+   */
+  website?: string;
+};
+
+/**
+ * Describes the message loci.place.SubmitPlaceRequest.
+ * Use `create(SubmitPlaceRequestSchema)` to create a new message.
+ */
+export declare const SubmitPlaceRequestSchema: GenMessage<SubmitPlaceRequest>;
+
+/**
+ * @generated from message loci.place.SubmitPlaceResponse
+ */
+export declare type SubmitPlaceResponse = Message<"loci.place.SubmitPlaceResponse"> & {
+  /**
+   * @generated from field: string submission_id = 1;
+   */
+  submissionId: string;
+
+  /**
+   * @generated from field: loci.place.PlaceSubmissionStatus status = 2;
+   */
+  status: PlaceSubmissionStatus;
+
+  /**
+   * How many more distinct people must confirm before this becomes a place.
+   *
+   * @generated from field: int32 confirmations_needed = 3;
+   */
+  confirmationsNeeded: number;
+};
+
+/**
+ * Describes the message loci.place.SubmitPlaceResponse.
+ * Use `create(SubmitPlaceResponseSchema)` to create a new message.
+ */
+export declare const SubmitPlaceResponseSchema: GenMessage<SubmitPlaceResponse>;
+
+/**
+ * @generated from message loci.place.ConfirmPlaceRequest
+ */
+export declare type ConfirmPlaceRequest = Message<"loci.place.ConfirmPlaceRequest"> & {
+  /**
+   * @generated from field: string submission_id = 1;
+   */
+  submissionId: string;
+};
+
+/**
+ * Describes the message loci.place.ConfirmPlaceRequest.
+ * Use `create(ConfirmPlaceRequestSchema)` to create a new message.
+ */
+export declare const ConfirmPlaceRequestSchema: GenMessage<ConfirmPlaceRequest>;
+
+/**
+ * @generated from message loci.place.ConfirmPlaceResponse
+ */
+export declare type ConfirmPlaceResponse = Message<"loci.place.ConfirmPlaceResponse"> & {
+  /**
+   * @generated from field: loci.place.PlaceSubmissionStatus status = 1;
+   */
+  status: PlaceSubmissionStatus;
+
+  /**
+   * @generated from field: int32 confirmations_needed = 2;
+   */
+  confirmationsNeeded: number;
+
+  /**
+   * Set once promoted, so the client can link straight to the new place.
+   *
+   * @generated from field: optional string poi_id = 3;
+   */
+  poiId?: string;
+};
+
+/**
+ * Describes the message loci.place.ConfirmPlaceResponse.
+ * Use `create(ConfirmPlaceResponseSchema)` to create a new message.
+ */
+export declare const ConfirmPlaceResponseSchema: GenMessage<ConfirmPlaceResponse>;
+
+/**
+ * @generated from message loci.place.PendingPlace
+ */
+export declare type PendingPlace = Message<"loci.place.PendingPlace"> & {
+  /**
+   * @generated from field: string submission_id = 1;
+   */
+  submissionId: string;
+
+  /**
+   * @generated from field: string name = 2;
+   */
+  name: string;
+
+  /**
+   * @generated from field: string city_name = 3;
+   */
+  cityName: string;
+
+  /**
+   * @generated from field: optional string category = 4;
+   */
+  category?: string;
+
+  /**
+   * @generated from field: optional string address = 5;
+   */
+  address?: string;
+
+  /**
+   * @generated from field: int32 confirmations_needed = 6;
+   */
+  confirmationsNeeded: number;
+};
+
+/**
+ * Describes the message loci.place.PendingPlace.
+ * Use `create(PendingPlaceSchema)` to create a new message.
+ */
+export declare const PendingPlaceSchema: GenMessage<PendingPlace>;
+
+/**
+ * @generated from message loci.place.ListPendingPlacesRequest
+ */
+export declare type ListPendingPlacesRequest = Message<"loci.place.ListPendingPlacesRequest"> & {
+  /**
+   * @generated from field: int32 limit = 1;
+   */
+  limit: number;
+};
+
+/**
+ * Describes the message loci.place.ListPendingPlacesRequest.
+ * Use `create(ListPendingPlacesRequestSchema)` to create a new message.
+ */
+export declare const ListPendingPlacesRequestSchema: GenMessage<ListPendingPlacesRequest>;
+
+/**
+ * @generated from message loci.place.ListPendingPlacesResponse
+ */
+export declare type ListPendingPlacesResponse = Message<"loci.place.ListPendingPlacesResponse"> & {
+  /**
+   * @generated from field: repeated loci.place.PendingPlace places = 1;
+   */
+  places: PendingPlace[];
+};
+
+/**
+ * Describes the message loci.place.ListPendingPlacesResponse.
+ * Use `create(ListPendingPlacesResponseSchema)` to create a new message.
+ */
+export declare const ListPendingPlacesResponseSchema: GenMessage<ListPendingPlacesResponse>;
+
+/**
  * @generated from enum loci.place.PlaceFactField
  */
 export enum PlaceFactField {
@@ -348,6 +551,36 @@ export enum PlaceClaimStatus {
 export declare const PlaceClaimStatusSchema: GenEnum<PlaceClaimStatus>;
 
 /**
+ * @generated from enum loci.place.PlaceSubmissionStatus
+ */
+export enum PlaceSubmissionStatus {
+  /**
+   * @generated from enum value: PLACE_SUBMISSION_STATUS_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: PLACE_SUBMISSION_STATUS_PENDING = 1;
+   */
+  PENDING = 1,
+
+  /**
+   * @generated from enum value: PLACE_SUBMISSION_STATUS_ACCEPTED = 2;
+   */
+  ACCEPTED = 2,
+
+  /**
+   * @generated from enum value: PLACE_SUBMISSION_STATUS_REJECTED = 3;
+   */
+  REJECTED = 3,
+}
+
+/**
+ * Describes the enum loci.place.PlaceSubmissionStatus.
+ */
+export declare const PlaceSubmissionStatusSchema: GenEnum<PlaceSubmissionStatus>;
+
+/**
  * @generated from service loci.place.PlaceIntelligenceService
  */
 export declare const PlaceIntelligenceService: GenService<{
@@ -382,6 +615,30 @@ export declare const PlaceIntelligenceService: GenService<{
     methodKind: "unary";
     input: typeof GetMyContributorProfileRequestSchema;
     output: typeof ContributorProfileSchema;
+  },
+  /**
+   * @generated from rpc loci.place.PlaceIntelligenceService.SubmitPlace
+   */
+  submitPlace: {
+    methodKind: "unary";
+    input: typeof SubmitPlaceRequestSchema;
+    output: typeof SubmitPlaceResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.place.PlaceIntelligenceService.ConfirmPlace
+   */
+  confirmPlace: {
+    methodKind: "unary";
+    input: typeof ConfirmPlaceRequestSchema;
+    output: typeof ConfirmPlaceResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.place.PlaceIntelligenceService.ListPendingPlaces
+   */
+  listPendingPlaces: {
+    methodKind: "unary";
+    input: typeof ListPendingPlacesRequestSchema;
+    output: typeof ListPendingPlacesResponseSchema;
   },
 }>;
 

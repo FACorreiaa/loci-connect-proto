@@ -4900,6 +4900,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.payment.v1.RefundPaymentResponse'
+  /loci.place.PlaceIntelligenceService/ConfirmPlace:
+    post:
+      tags:
+        - loci.place.PlaceIntelligenceService
+      summary: ConfirmPlace
+      operationId: loci.place.PlaceIntelligenceService.ConfirmPlace
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.place.ConfirmPlaceRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.place.ConfirmPlaceResponse'
   /loci.place.PlaceIntelligenceService/GetMyContributorProfile:
     post:
       tags:
@@ -4970,6 +5005,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.place.PlaceFacts'
+  /loci.place.PlaceIntelligenceService/ListPendingPlaces:
+    post:
+      tags:
+        - loci.place.PlaceIntelligenceService
+      summary: ListPendingPlaces
+      operationId: loci.place.PlaceIntelligenceService.ListPendingPlaces
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.place.ListPendingPlacesRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.place.ListPendingPlacesResponse'
   /loci.place.PlaceIntelligenceService/ListVerificationTasks:
     post:
       tags:
@@ -5005,6 +5075,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.place.ListVerificationTasksResponse'
+  /loci.place.PlaceIntelligenceService/SubmitPlace:
+    post:
+      tags:
+        - loci.place.PlaceIntelligenceService
+      summary: SubmitPlace
+      operationId: loci.place.PlaceIntelligenceService.SubmitPlace
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.place.SubmitPlaceRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.place.SubmitPlaceResponse'
   /loci.place.PlaceIntelligenceService/SubmitPlaceClaim:
     post:
       tags:
@@ -16781,6 +16886,35 @@ components:
           format: int32
       title: SubscriptionUsage
       additionalProperties: false
+    loci.place.ConfirmPlaceRequest:
+      type: object
+      properties:
+        submissionId:
+          type: string
+          title: submission_id
+          maxLength: 100
+          minLength: 1
+          format: uuid
+      title: ConfirmPlaceRequest
+      additionalProperties: false
+    loci.place.ConfirmPlaceResponse:
+      type: object
+      properties:
+        status:
+          title: status
+          $ref: '#/components/schemas/loci.place.PlaceSubmissionStatus'
+        confirmationsNeeded:
+          type: integer
+          title: confirmations_needed
+          format: int32
+        poiId:
+          type:
+            - string
+            - "null"
+          title: poi_id
+          description: Set once promoted, so the client can link straight to the new place.
+      title: ConfirmPlaceResponse
+      additionalProperties: false
     loci.place.ContributorProfile:
       type: object
       properties:
@@ -16824,6 +16958,27 @@ components:
           minLength: 1
       title: GetPlaceFactsRequest
       additionalProperties: false
+    loci.place.ListPendingPlacesRequest:
+      type: object
+      properties:
+        limit:
+          type: integer
+          title: limit
+          maximum: 50
+          minimum: 1
+          format: int32
+      title: ListPendingPlacesRequest
+      additionalProperties: false
+    loci.place.ListPendingPlacesResponse:
+      type: object
+      properties:
+        places:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.place.PendingPlace'
+          title: places
+      title: ListPendingPlacesResponse
+      additionalProperties: false
     loci.place.ListVerificationTasksRequest:
       type: object
       properties:
@@ -16844,6 +16999,34 @@ components:
             $ref: '#/components/schemas/loci.place.VerificationTask'
           title: tasks
       title: ListVerificationTasksResponse
+      additionalProperties: false
+    loci.place.PendingPlace:
+      type: object
+      properties:
+        submissionId:
+          type: string
+          title: submission_id
+        name:
+          type: string
+          title: name
+        cityName:
+          type: string
+          title: city_name
+        category:
+          type:
+            - string
+            - "null"
+          title: category
+        address:
+          type:
+            - string
+            - "null"
+          title: address
+        confirmationsNeeded:
+          type: integer
+          title: confirmations_needed
+          format: int32
+      title: PendingPlace
       additionalProperties: false
     loci.place.PlaceClaimStatus:
       type: string
@@ -16916,6 +17099,14 @@ components:
           title: facts
       title: PlaceFacts
       additionalProperties: false
+    loci.place.PlaceSubmissionStatus:
+      type: string
+      title: PlaceSubmissionStatus
+      enum:
+        - PLACE_SUBMISSION_STATUS_UNSPECIFIED
+        - PLACE_SUBMISSION_STATUS_PENDING
+        - PLACE_SUBMISSION_STATUS_ACCEPTED
+        - PLACE_SUBMISSION_STATUS_REJECTED
     loci.place.SubmitPlaceClaimRequest:
       type: object
       properties:
@@ -16957,6 +17148,80 @@ components:
           title: status
           $ref: '#/components/schemas/loci.place.PlaceClaimStatus'
       title: SubmitPlaceClaimResponse
+      additionalProperties: false
+    loci.place.SubmitPlaceRequest:
+      type: object
+      properties:
+        clientSubmissionId:
+          type: string
+          title: client_submission_id
+          maxLength: 100
+          minLength: 1
+          format: uuid
+        name:
+          type: string
+          title: name
+          maxLength: 300
+          minLength: 2
+        cityName:
+          type: string
+          title: city_name
+          maxLength: 200
+          minLength: 1
+          description: Resolved server-side; the client cannot be relied on to know a city id.
+        country:
+          type:
+            - string
+            - "null"
+          title: country
+        category:
+          type:
+            - string
+            - "null"
+          title: category
+        latitude:
+          type:
+            - number
+            - "null"
+          title: latitude
+          maximum: 90
+          minimum: -90
+          format: double
+        longitude:
+          type:
+            - number
+            - "null"
+          title: longitude
+          maximum: 180
+          minimum: -180
+          format: double
+        address:
+          type:
+            - string
+            - "null"
+          title: address
+        website:
+          type:
+            - string
+            - "null"
+          title: website
+      title: SubmitPlaceRequest
+      additionalProperties: false
+    loci.place.SubmitPlaceResponse:
+      type: object
+      properties:
+        submissionId:
+          type: string
+          title: submission_id
+        status:
+          title: status
+          $ref: '#/components/schemas/loci.place.PlaceSubmissionStatus'
+        confirmationsNeeded:
+          type: integer
+          title: confirmations_needed
+          format: int32
+          description: How many more distinct people must confirm before this becomes a place.
+      title: SubmitPlaceResponse
       additionalProperties: false
     loci.place.VerificationTask:
       type: object

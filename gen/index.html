@@ -558,6 +558,14 @@
             <ul>
               
                 <li>
+                  <a href="#loci.place.ConfirmPlaceRequest"><span class="badge">M</span>ConfirmPlaceRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.place.ConfirmPlaceResponse"><span class="badge">M</span>ConfirmPlaceResponse</a>
+                </li>
+              
+                <li>
                   <a href="#loci.place.ContributorProfile"><span class="badge">M</span>ContributorProfile</a>
                 </li>
               
@@ -570,11 +578,23 @@
                 </li>
               
                 <li>
+                  <a href="#loci.place.ListPendingPlacesRequest"><span class="badge">M</span>ListPendingPlacesRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.place.ListPendingPlacesResponse"><span class="badge">M</span>ListPendingPlacesResponse</a>
+                </li>
+              
+                <li>
                   <a href="#loci.place.ListVerificationTasksRequest"><span class="badge">M</span>ListVerificationTasksRequest</a>
                 </li>
               
                 <li>
                   <a href="#loci.place.ListVerificationTasksResponse"><span class="badge">M</span>ListVerificationTasksResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.place.PendingPlace"><span class="badge">M</span>PendingPlace</a>
                 </li>
               
                 <li>
@@ -594,6 +614,14 @@
                 </li>
               
                 <li>
+                  <a href="#loci.place.SubmitPlaceRequest"><span class="badge">M</span>SubmitPlaceRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.place.SubmitPlaceResponse"><span class="badge">M</span>SubmitPlaceResponse</a>
+                </li>
+              
+                <li>
                   <a href="#loci.place.VerificationTask"><span class="badge">M</span>VerificationTask</a>
                 </li>
               
@@ -604,6 +632,10 @@
               
                 <li>
                   <a href="#loci.place.PlaceFactField"><span class="badge">E</span>PlaceFactField</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.place.PlaceSubmissionStatus"><span class="badge">E</span>PlaceSubmissionStatus</a>
                 </li>
               
               
@@ -6330,6 +6362,68 @@ client_ip; these are what let somebody see and end them.</p></td>
       <p></p>
 
       
+        <h3 id="loci.place.ConfirmPlaceRequest">ConfirmPlaceRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>submission_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.place.ConfirmPlaceResponse">ConfirmPlaceResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#loci.place.PlaceSubmissionStatus">PlaceSubmissionStatus</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>confirmations_needed</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>poi_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>Set once promoted, so the client can link straight to the new place. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.place.ContributorProfile">ContributorProfile</h3>
         <p></p>
 
@@ -6406,6 +6500,54 @@ client_ip; these are what let somebody see and end them.</p></td>
 
         
       
+        <h3 id="loci.place.ListPendingPlacesRequest">ListPendingPlacesRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>limit</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.place.ListPendingPlacesResponse">ListPendingPlacesResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>places</td>
+                  <td><a href="#loci.place.PendingPlace">PendingPlace</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.place.ListVerificationTasksRequest">ListVerificationTasksRequest</h3>
         <p></p>
 
@@ -6444,6 +6586,65 @@ client_ip; these are what let somebody see and end them.</p></td>
                   <td>tasks</td>
                   <td><a href="#loci.place.VerificationTask">VerificationTask</a></td>
                   <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.place.PendingPlace">PendingPlace</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>submission_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>category</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>address</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>confirmations_needed</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
                   <td><p> </p></td>
                 </tr>
               
@@ -6627,6 +6828,124 @@ client_ip; these are what let somebody see and end them.</p></td>
 
         
       
+        <h3 id="loci.place.SubmitPlaceRequest">SubmitPlaceRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>client_submission_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Resolved server-side; the client cannot be relied on to know a city id. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>country</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>category</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>latitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>longitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>address</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>website</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.place.SubmitPlaceResponse">SubmitPlaceResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>submission_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#loci.place.PlaceSubmissionStatus">PlaceSubmissionStatus</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>confirmations_needed</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>How many more distinct people must confirm before this becomes a place. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.place.VerificationTask">VerificationTask</h3>
         <p></p>
 
@@ -6786,6 +7105,41 @@ client_ip; these are what let somebody see and end them.</p></td>
           </tbody>
         </table>
       
+        <h3 id="loci.place.PlaceSubmissionStatus">PlaceSubmissionStatus</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>PLACE_SUBMISSION_STATUS_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>PLACE_SUBMISSION_STATUS_PENDING</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>PLACE_SUBMISSION_STATUS_ACCEPTED</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>PLACE_SUBMISSION_STATUS_REJECTED</td>
+                <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
 
       
 
@@ -6823,6 +7177,27 @@ client_ip; these are what let somebody see and end them.</p></td>
                 <td>GetMyContributorProfile</td>
                 <td><a href="#loci.place.GetMyContributorProfileRequest">GetMyContributorProfileRequest</a></td>
                 <td><a href="#loci.place.ContributorProfile">ContributorProfile</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>SubmitPlace</td>
+                <td><a href="#loci.place.SubmitPlaceRequest">SubmitPlaceRequest</a></td>
+                <td><a href="#loci.place.SubmitPlaceResponse">SubmitPlaceResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ConfirmPlace</td>
+                <td><a href="#loci.place.ConfirmPlaceRequest">ConfirmPlaceRequest</a></td>
+                <td><a href="#loci.place.ConfirmPlaceResponse">ConfirmPlaceResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ListPendingPlaces</td>
+                <td><a href="#loci.place.ListPendingPlacesRequest">ListPendingPlacesRequest</a></td>
+                <td><a href="#loci.place.ListPendingPlacesResponse">ListPendingPlacesResponse</a></td>
                 <td><p></p></td>
               </tr>
             
