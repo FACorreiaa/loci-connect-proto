@@ -128,9 +128,90 @@ message ContributorProfile {
 
 message GetMyContributorProfileRequest {}
 
+enum PlaceSubmissionStatus {
+  PLACE_SUBMISSION_STATUS_UNSPECIFIED = 0;
+  PLACE_SUBMISSION_STATUS_PENDING = 1;
+  PLACE_SUBMISSION_STATUS_ACCEPTED = 2;
+  PLACE_SUBMISSION_STATUS_REJECTED = 3;
+}
+
+message SubmitPlaceRequest {
+  string client_submission_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+    uuid: true
+  }];
+  string name = 2 [(buf.validate.field).string = {
+    min_len: 2
+    max_len: 300
+  }];
+  // Resolved server-side; the client cannot be relied on to know a city id.
+  string city_name = 3 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
+  optional string country = 4;
+  optional string category = 5;
+  optional double latitude = 6 [(buf.validate.field).double = {
+    gte: -90
+    lte: 90
+  }];
+  optional double longitude = 7 [(buf.validate.field).double = {
+    gte: -180
+    lte: 180
+  }];
+  optional string address = 8;
+  optional string website = 9;
+}
+
+message SubmitPlaceResponse {
+  string submission_id = 1;
+  PlaceSubmissionStatus status = 2;
+  // How many more distinct people must confirm before this becomes a place.
+  int32 confirmations_needed = 3;
+}
+
+message ConfirmPlaceRequest {
+  string submission_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+    uuid: true
+  }];
+}
+
+message ConfirmPlaceResponse {
+  PlaceSubmissionStatus status = 1;
+  int32 confirmations_needed = 2;
+  // Set once promoted, so the client can link straight to the new place.
+  optional string poi_id = 3;
+}
+
+message PendingPlace {
+  string submission_id = 1;
+  string name = 2;
+  string city_name = 3;
+  optional string category = 4;
+  optional string address = 5;
+  int32 confirmations_needed = 6;
+}
+
+message ListPendingPlacesRequest {
+  int32 limit = 1 [(buf.validate.field).int32 = {
+    gte: 1
+    lte: 50
+  }];
+}
+
+message ListPendingPlacesResponse {
+  repeated PendingPlace places = 1;
+}
+
 service PlaceIntelligenceService {
   rpc GetPlaceFacts(GetPlaceFactsRequest) returns (PlaceFacts);
   rpc ListVerificationTasks(ListVerificationTasksRequest) returns (ListVerificationTasksResponse);
   rpc SubmitPlaceClaim(SubmitPlaceClaimRequest) returns (SubmitPlaceClaimResponse);
   rpc GetMyContributorProfile(GetMyContributorProfileRequest) returns (ContributorProfile);
+  rpc SubmitPlace(SubmitPlaceRequest) returns (SubmitPlaceResponse);
+  rpc ConfirmPlace(ConfirmPlaceRequest) returns (ConfirmPlaceResponse);
+  rpc ListPendingPlaces(ListPendingPlacesRequest) returns (ListPendingPlacesResponse);
 }
