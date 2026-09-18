@@ -35,13 +35,21 @@ enum TransportPreference {
 
 // AccommodationPreferences represents accommodation-specific filters
 message AccommodationPreferences {
-  string id = 1 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
+  // Assigned by the server. Left empty on an update, so an empty value skips
+  // validation while a supplied one is still bounded: this message is both a
+  // response and a field of the create/update requests, and a client has no id
+  // to send.
+  string id = 1 [(buf.validate.field) = {
+    string: {max_len: 100}
+    ignore: IGNORE_IF_ZERO_VALUE
   }];
-  string user_preference_id = 2 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
+  // Assigned by the server. Left empty on an update, so an empty value skips
+  // validation while a supplied one is still bounded: this message is both a
+  // response and a field of the create/update requests, and a client has no id
+  // to send.
+  string user_preference_id = 2 [(buf.validate.field) = {
+    string: {max_len: 100}
+    ignore: IGNORE_IF_ZERO_VALUE
   }];
   repeated string accommodation_type = 3 [(buf.validate.field).repeated = {
     max_items: 10
@@ -93,19 +101,27 @@ message AccommodationPreferences {
       max_len: 100
     }
   }];
-  google.protobuf.Timestamp created_at = 11 [(buf.validate.field).required = true];
-  google.protobuf.Timestamp updated_at = 12 [(buf.validate.field).required = true];
+  google.protobuf.Timestamp created_at = 11;
+  google.protobuf.Timestamp updated_at = 12;
 }
 
 // DiningPreferences represents dining-specific filters
 message DiningPreferences {
-  string id = 1 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
+  // Assigned by the server. Left empty on an update, so an empty value skips
+  // validation while a supplied one is still bounded: this message is both a
+  // response and a field of the create/update requests, and a client has no id
+  // to send.
+  string id = 1 [(buf.validate.field) = {
+    string: {max_len: 100}
+    ignore: IGNORE_IF_ZERO_VALUE
   }];
-  string user_preference_id = 2 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
+  // Assigned by the server. Left empty on an update, so an empty value skips
+  // validation while a supplied one is still bounded: this message is both a
+  // response and a field of the create/update requests, and a client has no id
+  // to send.
+  string user_preference_id = 2 [(buf.validate.field) = {
+    string: {max_len: 100}
+    ignore: IGNORE_IF_ZERO_VALUE
   }];
   repeated string cuisine_types = 3 [(buf.validate.field).repeated = {
     max_items: 20
@@ -163,19 +179,27 @@ message DiningPreferences {
   }];
   bool organic_preference = 12;
   bool outdoor_seating_preferred = 13;
-  google.protobuf.Timestamp created_at = 14 [(buf.validate.field).required = true];
-  google.protobuf.Timestamp updated_at = 15 [(buf.validate.field).required = true];
+  google.protobuf.Timestamp created_at = 14;
+  google.protobuf.Timestamp updated_at = 15;
 }
 
 // ActivityPreferences represents activity-specific filters
 message ActivityPreferences {
-  string id = 1 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
+  // Assigned by the server. Left empty on an update, so an empty value skips
+  // validation while a supplied one is still bounded: this message is both a
+  // response and a field of the create/update requests, and a client has no id
+  // to send.
+  string id = 1 [(buf.validate.field) = {
+    string: {max_len: 100}
+    ignore: IGNORE_IF_ZERO_VALUE
   }];
-  string user_preference_id = 2 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
+  // Assigned by the server. Left empty on an update, so an empty value skips
+  // validation while a supplied one is still bounded: this message is both a
+  // response and a field of the create/update requests, and a client has no id
+  // to send.
+  string user_preference_id = 2 [(buf.validate.field) = {
+    string: {max_len: 100}
+    ignore: IGNORE_IF_ZERO_VALUE
   }];
   repeated string activity_categories = 3 [(buf.validate.field).repeated = {
     max_items: 20
@@ -231,19 +255,27 @@ message ActivityPreferences {
       }
     }
   }];
-  google.protobuf.Timestamp created_at = 13 [(buf.validate.field).required = true];
-  google.protobuf.Timestamp updated_at = 14 [(buf.validate.field).required = true];
+  google.protobuf.Timestamp created_at = 13;
+  google.protobuf.Timestamp updated_at = 14;
 }
 
 // ItineraryPreferences represents itinerary planning-specific filters
 message ItineraryPreferences {
-  string id = 1 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
+  // Assigned by the server. Left empty on an update, so an empty value skips
+  // validation while a supplied one is still bounded: this message is both a
+  // response and a field of the create/update requests, and a client has no id
+  // to send.
+  string id = 1 [(buf.validate.field) = {
+    string: {max_len: 100}
+    ignore: IGNORE_IF_ZERO_VALUE
   }];
-  string user_preference_id = 2 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
+  // Assigned by the server. Left empty on an update, so an empty value skips
+  // validation while a supplied one is still bounded: this message is both a
+  // response and a field of the create/update requests, and a client has no id
+  // to send.
+  string user_preference_id = 2 [(buf.validate.field) = {
+    string: {max_len: 100}
+    ignore: IGNORE_IF_ZERO_VALUE
   }];
   optional string planning_style = 3 [(buf.validate.field) = {
     string: {
@@ -297,8 +329,8 @@ message ItineraryPreferences {
       max_len: 100
     }
   }];
-  google.protobuf.Timestamp created_at = 12 [(buf.validate.field).required = true];
-  google.protobuf.Timestamp updated_at = 13 [(buf.validate.field).required = true];
+  google.protobuf.Timestamp created_at = 12;
+  google.protobuf.Timestamp updated_at = 13;
 }
 
 // UserPreferenceProfile represents a user's preference profile

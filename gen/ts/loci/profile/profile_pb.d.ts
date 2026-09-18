@@ -20,11 +20,21 @@ export declare const file_loci_profile_profile: GenFile;
  */
 export declare type AccommodationPreferences = Message<"loci.profile.AccommodationPreferences"> & {
   /**
+   * Assigned by the server. Left empty on an update, so an empty value skips
+   * validation while a supplied one is still bounded: this message is both a
+   * response and a field of the create/update requests, and a client has no id
+   * to send.
+   *
    * @generated from field: string id = 1;
    */
   id: string;
 
   /**
+   * Assigned by the server. Left empty on an update, so an empty value skips
+   * validation while a supplied one is still bounded: this message is both a
+   * response and a field of the create/update requests, and a client has no id
+   * to send.
+   *
    * @generated from field: string user_preference_id = 2;
    */
   userPreferenceId: string;
@@ -93,11 +103,21 @@ export declare const AccommodationPreferencesSchema: GenMessage<AccommodationPre
  */
 export declare type DiningPreferences = Message<"loci.profile.DiningPreferences"> & {
   /**
+   * Assigned by the server. Left empty on an update, so an empty value skips
+   * validation while a supplied one is still bounded: this message is both a
+   * response and a field of the create/update requests, and a client has no id
+   * to send.
+   *
    * @generated from field: string id = 1;
    */
   id: string;
 
   /**
+   * Assigned by the server. Left empty on an update, so an empty value skips
+   * validation while a supplied one is still bounded: this message is both a
+   * response and a field of the create/update requests, and a client has no id
+   * to send.
+   *
    * @generated from field: string user_preference_id = 2;
    */
   userPreferenceId: string;
@@ -181,11 +201,21 @@ export declare const DiningPreferencesSchema: GenMessage<DiningPreferences>;
  */
 export declare type ActivityPreferences = Message<"loci.profile.ActivityPreferences"> & {
   /**
+   * Assigned by the server. Left empty on an update, so an empty value skips
+   * validation while a supplied one is still bounded: this message is both a
+   * response and a field of the create/update requests, and a client has no id
+   * to send.
+   *
    * @generated from field: string id = 1;
    */
   id: string;
 
   /**
+   * Assigned by the server. Left empty on an update, so an empty value skips
+   * validation while a supplied one is still bounded: this message is both a
+   * response and a field of the create/update requests, and a client has no id
+   * to send.
+   *
    * @generated from field: string user_preference_id = 2;
    */
   userPreferenceId: string;
@@ -264,11 +294,21 @@ export declare const ActivityPreferencesSchema: GenMessage<ActivityPreferences>;
  */
 export declare type ItineraryPreferences = Message<"loci.profile.ItineraryPreferences"> & {
   /**
+   * Assigned by the server. Left empty on an update, so an empty value skips
+   * validation while a supplied one is still bounded: this message is both a
+   * response and a field of the create/update requests, and a client has no id
+   * to send.
+   *
    * @generated from field: string id = 1;
    */
   id: string;
 
   /**
+   * Assigned by the server. Left empty on an update, so an empty value skips
+   * validation while a supplied one is still bounded: this message is both a
+   * response and a field of the create/update requests, and a client has no id
+   * to send.
+   *
    * @generated from field: string user_preference_id = 2;
    */
   userPreferenceId: string;

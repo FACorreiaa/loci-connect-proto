@@ -17709,12 +17709,20 @@ components:
           type: string
           title: id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Assigned by the server. Left empty on an update, so an empty value skips
+             validation while a supplied one is still bounded: this message is both a
+             response and a field of the create/update requests, and a client has no id
+             to send.
         userPreferenceId:
           type: string
           title: user_preference_id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Assigned by the server. Left empty on an update, so an empty value skips
+             validation while a supplied one is still bounded: this message is both a
+             response and a field of the create/update requests, and a client has no id
+             to send.
         accommodationType:
           type: array
           items:
@@ -17778,9 +17786,6 @@ components:
           title: updated_at
           $ref: '#/components/schemas/google.protobuf.Timestamp'
       title: AccommodationPreferences
-      required:
-        - createdAt
-        - updatedAt
       additionalProperties: false
       description: AccommodationPreferences represents accommodation-specific filters
     loci.profile.AccommodationPreferencesResponse:
@@ -17804,12 +17809,20 @@ components:
           type: string
           title: id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Assigned by the server. Left empty on an update, so an empty value skips
+             validation while a supplied one is still bounded: this message is both a
+             response and a field of the create/update requests, and a client has no id
+             to send.
         userPreferenceId:
           type: string
           title: user_preference_id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Assigned by the server. Left empty on an update, so an empty value skips
+             validation while a supplied one is still bounded: this message is both a
+             response and a field of the create/update requests, and a client has no id
+             to send.
         activityCategories:
           type: array
           items:
@@ -17878,9 +17891,6 @@ components:
           title: updated_at
           $ref: '#/components/schemas/google.protobuf.Timestamp'
       title: ActivityPreferences
-      required:
-        - createdAt
-        - updatedAt
       additionalProperties: false
       description: ActivityPreferences represents activity-specific filters
     loci.profile.ActivityPreferencesResponse:
@@ -18071,12 +18081,20 @@ components:
           type: string
           title: id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Assigned by the server. Left empty on an update, so an empty value skips
+             validation while a supplied one is still bounded: this message is both a
+             response and a field of the create/update requests, and a client has no id
+             to send.
         userPreferenceId:
           type: string
           title: user_preference_id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Assigned by the server. Left empty on an update, so an empty value skips
+             validation while a supplied one is still bounded: this message is both a
+             response and a field of the create/update requests, and a client has no id
+             to send.
         cuisineTypes:
           type: array
           items:
@@ -18148,9 +18166,6 @@ components:
           title: updated_at
           $ref: '#/components/schemas/google.protobuf.Timestamp'
       title: DiningPreferences
-      required:
-        - createdAt
-        - updatedAt
       additionalProperties: false
       description: DiningPreferences represents dining-specific filters
     loci.profile.DiningPreferencesResponse:
@@ -18245,12 +18260,20 @@ components:
           type: string
           title: id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Assigned by the server. Left empty on an update, so an empty value skips
+             validation while a supplied one is still bounded: this message is both a
+             response and a field of the create/update requests, and a client has no id
+             to send.
         userPreferenceId:
           type: string
           title: user_preference_id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Assigned by the server. Left empty on an update, so an empty value skips
+             validation while a supplied one is still bounded: this message is both a
+             response and a field of the create/update requests, and a client has no id
+             to send.
         planningStyle:
           type:
             - string
@@ -18318,9 +18341,6 @@ components:
           title: updated_at
           $ref: '#/components/schemas/google.protobuf.Timestamp'
       title: ItineraryPreferences
-      required:
-        - createdAt
-        - updatedAt
       additionalProperties: false
       description: ItineraryPreferences represents itinerary planning-specific filters
     loci.profile.ItineraryPreferencesResponse:
