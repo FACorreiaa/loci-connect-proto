@@ -439,11 +439,19 @@
                 </li>
               
                 <li>
+                  <a href="#loci.auth.ConfirmEmailChangeRequest"><span class="badge">M</span>ConfirmEmailChangeRequest</a>
+                </li>
+              
+                <li>
                   <a href="#loci.auth.ConfirmMFAEnrollmentRequest"><span class="badge">M</span>ConfirmMFAEnrollmentRequest</a>
                 </li>
               
                 <li>
                   <a href="#loci.auth.ConfirmMFAEnrollmentResponse"><span class="badge">M</span>ConfirmMFAEnrollmentResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.auth.DeviceSession"><span class="badge">M</span>DeviceSession</a>
                 </li>
               
                 <li>
@@ -460,6 +468,14 @@
               
                 <li>
                   <a href="#loci.auth.GetMFAStatusResponse"><span class="badge">M</span>GetMFAStatusResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.auth.ListSessionsRequest"><span class="badge">M</span>ListSessionsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.auth.ListSessionsResponse"><span class="badge">M</span>ListSessionsResponse</a>
                 </li>
               
                 <li>
@@ -492,6 +508,14 @@
               
                 <li>
                   <a href="#loci.auth.ResetPasswordRequest"><span class="badge">M</span>ResetPasswordRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.auth.RevokeOtherSessionsRequest"><span class="badge">M</span>RevokeOtherSessionsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.auth.RevokeSessionRequest"><span class="badge">M</span>RevokeSessionRequest</a>
                 </li>
               
                 <li>
@@ -969,6 +993,10 @@
               
                 <li>
                   <a href="#loci.interest.CreateInterestRequest"><span class="badge">M</span>CreateInterestRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.interest.DeleteInterestRequest"><span class="badge">M</span>DeleteInterestRequest</a>
                 </li>
               
                 <li>
@@ -3157,11 +3185,23 @@
                 </li>
               
                 <li>
+                  <a href="#loci.user.GetNotificationSettingsRequest"><span class="badge">M</span>GetNotificationSettingsRequest</a>
+                </li>
+              
+                <li>
                   <a href="#loci.user.GetUserProfileRequest"><span class="badge">M</span>GetUserProfileRequest</a>
                 </li>
               
                 <li>
                   <a href="#loci.user.GetUserProfileResponse"><span class="badge">M</span>GetUserProfileResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.user.NotificationSettings"><span class="badge">M</span>NotificationSettings</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.user.UpdateNotificationSettingsRequest"><span class="badge">M</span>UpdateNotificationSettingsRequest</a>
                 </li>
               
                 <li>
@@ -5256,6 +5296,30 @@ instructions come back from CreateApiKey.</p></td>
 
         
       
+        <h3 id="loci.auth.ConfirmEmailChangeRequest">ConfirmEmailChangeRequest</h3>
+        <p>ConfirmEmailChangeRequest completes an email change.</p><p>ChangeEmail used to swap the address outright, with nothing sent to the new</p><p>inbox to prove the person asking could read it. The change is now staged and</p><p>only takes effect when the token mailed to the new address comes back here.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>token</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.auth.ConfirmMFAEnrollmentRequest">ConfirmMFAEnrollmentRequest</h3>
         <p>ConfirmMFAEnrollmentRequest proves the user's app is generating valid codes.</p>
 
@@ -5303,6 +5367,66 @@ they cannot be shown again — the client must make the user save them here. </p
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.auth.DeviceSession">DeviceSession</h3>
+        <p>A signed-in session: one refresh token, with where it came from.</p><p>user_agent and client_ip have been recorded on every session since the table</p><p>was created; nothing ever read them back out, so there was no way for anyone</p><p>to see where their account was signed in.</p><p>Named DeviceSession because this package already has a Session, which is an</p><p>identity summary (id, username, email) and nothing to do with a sign-in.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>user_agent</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>client_ip</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>expires_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>current</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>True for the session making this call, so a client can label it and warn
+before signing itself out. </p></td>
                 </tr>
               
             </tbody>
@@ -5412,6 +5536,37 @@ user who is down to their last code, before they are locked out. </p></td>
                   <td></td>
                   <td><p>True when policy requires MFA for this user&#39;s role, so the UI can explain
 why disabling is refused. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.auth.ListSessionsRequest">ListSessionsRequest</h3>
+        <p></p>
+
+        
+
+        
+      
+        <h3 id="loci.auth.ListSessionsResponse">ListSessionsResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>sessions</td>
+                  <td><a href="#loci.auth.DeviceSession">DeviceSession</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
                 </tr>
               
             </tbody>
@@ -5695,6 +5850,37 @@ its own. </p></td>
               
                 <tr>
                   <td>new_password</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.auth.RevokeOtherSessionsRequest">RevokeOtherSessionsRequest</h3>
+        <p>RevokeOtherSessions signs out everywhere except the caller's own session.</p>
+
+        
+
+        
+      
+        <h3 id="loci.auth.RevokeSessionRequest">RevokeSessionRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>session_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
@@ -6064,6 +6250,37 @@ has no access token yet. It authenticates via the mfa_token from Login.</p></td>
                 <td>GetMFAStatus</td>
                 <td><a href="#loci.auth.GetMFAStatusRequest">GetMFAStatusRequest</a></td>
                 <td><a href="#loci.auth.GetMFAStatusResponse">GetMFAStatusResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ConfirmEmailChange</td>
+                <td><a href="#loci.auth.ConfirmEmailChangeRequest">ConfirmEmailChangeRequest</a></td>
+                <td><a href="#loci.common.Response">.loci.common.Response</a></td>
+                <td><p>Completes an email change started by ChangeEmail. Unauthenticated: the
+token from the confirmation mail is the credential, and the person may be
+opening the link in a browser that is not signed in.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListSessions</td>
+                <td><a href="#loci.auth.ListSessionsRequest">ListSessionsRequest</a></td>
+                <td><a href="#loci.auth.ListSessionsResponse">ListSessionsResponse</a></td>
+                <td><p>Signed-in devices. The session rows have always carried user_agent and
+client_ip; these are what let somebody see and end them.</p></td>
+              </tr>
+            
+              <tr>
+                <td>RevokeSession</td>
+                <td><a href="#loci.auth.RevokeSessionRequest">RevokeSessionRequest</a></td>
+                <td><a href="#loci.common.Response">.loci.common.Response</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>RevokeOtherSessions</td>
+                <td><a href="#loci.auth.RevokeOtherSessionsRequest">RevokeOtherSessionsRequest</a></td>
+                <td><a href="#loci.common.Response">.loci.common.Response</a></td>
                 <td><p></p></td>
               </tr>
             
@@ -10636,6 +10853,30 @@ that initial load fail validation before it ever reached the query. </p></td>
 
         
       
+        <h3 id="loci.interest.DeleteInterestRequest">DeleteInterestRequest</h3>
+        <p>DeleteInterest removes one of the caller's own custom interests.</p><p>Deactivating an interest via UpdateInterest is a different thing: it stays in</p><p>the list, switched off. The client offered a delete button that called</p><p>UpdateInterest with active=false and reported "Interest deleted", which left</p><p>the interest exactly where it was.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>interest_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.interest.GetInterestsRequest">GetInterestsRequest</h3>
         <p>GetInterestsRequest for retrieving interests</p>
 
@@ -10992,6 +11233,13 @@ that initial load fail validation before it ever reached the query. </p></td>
               <tr>
                 <td>UpdatePreferenceLevel</td>
                 <td><a href="#loci.interest.UpdatePreferenceLevelRequest">UpdatePreferenceLevelRequest</a></td>
+                <td><a href="#loci.common.Response">.loci.common.Response</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>DeleteInterest</td>
+                <td><a href="#loci.interest.DeleteInterestRequest">DeleteInterestRequest</a></td>
                 <td><a href="#loci.common.Response">.loci.common.Response</a></td>
                 <td><p></p></td>
               </tr>
@@ -34469,6 +34717,13 @@ reverse geocode we do not have, and a guessed country is a fabricated one. </p><
 
         
       
+        <h3 id="loci.user.GetNotificationSettingsRequest">GetNotificationSettingsRequest</h3>
+        <p></p>
+
+        
+
+        
+      
         <h3 id="loci.user.GetUserProfileRequest">GetUserProfileRequest</h3>
         <p>GetUserProfileRequest for retrieving user profile</p>
 
@@ -34507,6 +34762,75 @@ reverse geocode we do not have, and a guessed country is a fabricated one. </p><
                   <td>profile</td>
                   <td><a href="#loci.user.UserProfile">UserProfile</a></td>
                   <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.user.NotificationSettings">NotificationSettings</h3>
+        <p>NotificationSettings are the per-account notification switches.</p><p>These lived in localStorage, keyed by user id, because no RPC existed for</p><p>them — so they did not follow the account to another browser, and nothing</p><p>server-side could read them. The two flags mirror what the quick-settings</p><p>panel has always offered.</p><p>This stores the preference. Delivery — actually sending a push or an email —</p><p>is a separate piece of work, and the UI must not imply otherwise while these</p><p>are only recorded.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>recommendations</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>trip_reminders</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>updated_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.user.UpdateNotificationSettingsRequest">UpdateNotificationSettingsRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>recommendations</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td>optional</td>
+                  <td><p>Absent means &#34;leave this switch as it is&#34;. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>trip_reminders</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td>optional</td>
                   <td><p> </p></td>
                 </tr>
               
@@ -35012,6 +35336,20 @@ to before this existed. </p></td>
                 <td>DeleteAccount</td>
                 <td><a href="#loci.user.DeleteAccountRequest">DeleteAccountRequest</a></td>
                 <td><a href="#loci.common.Response">.loci.common.Response</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>GetNotificationSettings</td>
+                <td><a href="#loci.user.GetNotificationSettingsRequest">GetNotificationSettingsRequest</a></td>
+                <td><a href="#loci.user.NotificationSettings">NotificationSettings</a></td>
+                <td><p>Notification switches, stored against the account rather than the browser.</p></td>
+              </tr>
+            
+              <tr>
+                <td>UpdateNotificationSettings</td>
+                <td><a href="#loci.user.UpdateNotificationSettingsRequest">UpdateNotificationSettingsRequest</a></td>
+                <td><a href="#loci.user.NotificationSettings">NotificationSettings</a></td>
                 <td><p></p></td>
               </tr>
             

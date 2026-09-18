@@ -459,6 +459,78 @@ export declare type DeleteAccountRequest = Message<"loci.user.DeleteAccountReque
 export declare const DeleteAccountRequestSchema: GenMessage<DeleteAccountRequest>;
 
 /**
+ * NotificationSettings are the per-account notification switches.
+ *
+ * These lived in localStorage, keyed by user id, because no RPC existed for
+ * them — so they did not follow the account to another browser, and nothing
+ * server-side could read them. The two flags mirror what the quick-settings
+ * panel has always offered.
+ *
+ * This stores the preference. Delivery — actually sending a push or an email —
+ * is a separate piece of work, and the UI must not imply otherwise while these
+ * are only recorded.
+ *
+ * @generated from message loci.user.NotificationSettings
+ */
+export declare type NotificationSettings = Message<"loci.user.NotificationSettings"> & {
+  /**
+   * @generated from field: bool recommendations = 1;
+   */
+  recommendations: boolean;
+
+  /**
+   * @generated from field: bool trip_reminders = 2;
+   */
+  tripReminders: boolean;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp updated_at = 3;
+   */
+  updatedAt?: Timestamp;
+};
+
+/**
+ * Describes the message loci.user.NotificationSettings.
+ * Use `create(NotificationSettingsSchema)` to create a new message.
+ */
+export declare const NotificationSettingsSchema: GenMessage<NotificationSettings>;
+
+/**
+ * @generated from message loci.user.GetNotificationSettingsRequest
+ */
+export declare type GetNotificationSettingsRequest = Message<"loci.user.GetNotificationSettingsRequest"> & {
+};
+
+/**
+ * Describes the message loci.user.GetNotificationSettingsRequest.
+ * Use `create(GetNotificationSettingsRequestSchema)` to create a new message.
+ */
+export declare const GetNotificationSettingsRequestSchema: GenMessage<GetNotificationSettingsRequest>;
+
+/**
+ * @generated from message loci.user.UpdateNotificationSettingsRequest
+ */
+export declare type UpdateNotificationSettingsRequest = Message<"loci.user.UpdateNotificationSettingsRequest"> & {
+  /**
+   * Absent means "leave this switch as it is".
+   *
+   * @generated from field: optional bool recommendations = 1;
+   */
+  recommendations?: boolean;
+
+  /**
+   * @generated from field: optional bool trip_reminders = 2;
+   */
+  tripReminders?: boolean;
+};
+
+/**
+ * Describes the message loci.user.UpdateNotificationSettingsRequest.
+ * Use `create(UpdateNotificationSettingsRequestSchema)` to create a new message.
+ */
+export declare const UpdateNotificationSettingsRequestSchema: GenMessage<UpdateNotificationSettingsRequest>;
+
+/**
  * UserService defines user-related RPCs
  *
  * @generated from service loci.user.UserService
@@ -497,6 +569,24 @@ export declare const UserService: GenService<{
     methodKind: "unary";
     input: typeof DeleteAccountRequestSchema;
     output: typeof ResponseSchema;
+  },
+  /**
+   * Notification switches, stored against the account rather than the browser.
+   *
+   * @generated from rpc loci.user.UserService.GetNotificationSettings
+   */
+  getNotificationSettings: {
+    methodKind: "unary";
+    input: typeof GetNotificationSettingsRequestSchema;
+    output: typeof NotificationSettingsSchema;
+  },
+  /**
+   * @generated from rpc loci.user.UserService.UpdateNotificationSettings
+   */
+  updateNotificationSettings: {
+    methodKind: "unary";
+    input: typeof UpdateNotificationSettingsRequestSchema;
+    output: typeof NotificationSettingsSchema;
   },
 }>;
 

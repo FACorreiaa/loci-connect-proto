@@ -554,6 +554,138 @@ export declare type ChangeEmailRequest = Message<"loci.auth.ChangeEmailRequest">
 export declare const ChangeEmailRequestSchema: GenMessage<ChangeEmailRequest>;
 
 /**
+ * ConfirmEmailChangeRequest completes an email change.
+ *
+ * ChangeEmail used to swap the address outright, with nothing sent to the new
+ * inbox to prove the person asking could read it. The change is now staged and
+ * only takes effect when the token mailed to the new address comes back here.
+ *
+ * @generated from message loci.auth.ConfirmEmailChangeRequest
+ */
+export declare type ConfirmEmailChangeRequest = Message<"loci.auth.ConfirmEmailChangeRequest"> & {
+  /**
+   * @generated from field: string token = 1;
+   */
+  token: string;
+};
+
+/**
+ * Describes the message loci.auth.ConfirmEmailChangeRequest.
+ * Use `create(ConfirmEmailChangeRequestSchema)` to create a new message.
+ */
+export declare const ConfirmEmailChangeRequestSchema: GenMessage<ConfirmEmailChangeRequest>;
+
+/**
+ * A signed-in session: one refresh token, with where it came from.
+ *
+ * user_agent and client_ip have been recorded on every session since the table
+ * was created; nothing ever read them back out, so there was no way for anyone
+ * to see where their account was signed in.
+ * Named DeviceSession because this package already has a Session, which is an
+ * identity summary (id, username, email) and nothing to do with a sign-in.
+ *
+ * @generated from message loci.auth.DeviceSession
+ */
+export declare type DeviceSession = Message<"loci.auth.DeviceSession"> & {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * @generated from field: optional string user_agent = 2;
+   */
+  userAgent?: string;
+
+  /**
+   * @generated from field: optional string client_ip = 3;
+   */
+  clientIp?: string;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp created_at = 4;
+   */
+  createdAt?: Timestamp;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp expires_at = 5;
+   */
+  expiresAt?: Timestamp;
+
+  /**
+   * True for the session making this call, so a client can label it and warn
+   * before signing itself out.
+   *
+   * @generated from field: bool current = 6;
+   */
+  current: boolean;
+};
+
+/**
+ * Describes the message loci.auth.DeviceSession.
+ * Use `create(DeviceSessionSchema)` to create a new message.
+ */
+export declare const DeviceSessionSchema: GenMessage<DeviceSession>;
+
+/**
+ * @generated from message loci.auth.ListSessionsRequest
+ */
+export declare type ListSessionsRequest = Message<"loci.auth.ListSessionsRequest"> & {
+};
+
+/**
+ * Describes the message loci.auth.ListSessionsRequest.
+ * Use `create(ListSessionsRequestSchema)` to create a new message.
+ */
+export declare const ListSessionsRequestSchema: GenMessage<ListSessionsRequest>;
+
+/**
+ * @generated from message loci.auth.ListSessionsResponse
+ */
+export declare type ListSessionsResponse = Message<"loci.auth.ListSessionsResponse"> & {
+  /**
+   * @generated from field: repeated loci.auth.DeviceSession sessions = 1;
+   */
+  sessions: DeviceSession[];
+};
+
+/**
+ * Describes the message loci.auth.ListSessionsResponse.
+ * Use `create(ListSessionsResponseSchema)` to create a new message.
+ */
+export declare const ListSessionsResponseSchema: GenMessage<ListSessionsResponse>;
+
+/**
+ * @generated from message loci.auth.RevokeSessionRequest
+ */
+export declare type RevokeSessionRequest = Message<"loci.auth.RevokeSessionRequest"> & {
+  /**
+   * @generated from field: string session_id = 1;
+   */
+  sessionId: string;
+};
+
+/**
+ * Describes the message loci.auth.RevokeSessionRequest.
+ * Use `create(RevokeSessionRequestSchema)` to create a new message.
+ */
+export declare const RevokeSessionRequestSchema: GenMessage<RevokeSessionRequest>;
+
+/**
+ * RevokeOtherSessions signs out everywhere except the caller's own session.
+ *
+ * @generated from message loci.auth.RevokeOtherSessionsRequest
+ */
+export declare type RevokeOtherSessionsRequest = Message<"loci.auth.RevokeOtherSessionsRequest"> & {
+};
+
+/**
+ * Describes the message loci.auth.RevokeOtherSessionsRequest.
+ * Use `create(RevokeOtherSessionsRequestSchema)` to create a new message.
+ */
+export declare const RevokeOtherSessionsRequestSchema: GenMessage<RevokeOtherSessionsRequest>;
+
+/**
  * LogoutRequest for logout
  *
  * @generated from message loci.auth.LogoutRequest
@@ -832,6 +964,45 @@ export declare const AuthService: GenService<{
     methodKind: "unary";
     input: typeof GetMFAStatusRequestSchema;
     output: typeof GetMFAStatusResponseSchema;
+  },
+  /**
+   * Completes an email change started by ChangeEmail. Unauthenticated: the
+   * token from the confirmation mail is the credential, and the person may be
+   * opening the link in a browser that is not signed in.
+   *
+   * @generated from rpc loci.auth.AuthService.ConfirmEmailChange
+   */
+  confirmEmailChange: {
+    methodKind: "unary";
+    input: typeof ConfirmEmailChangeRequestSchema;
+    output: typeof ResponseSchema;
+  },
+  /**
+   * Signed-in devices. The session rows have always carried user_agent and
+   * client_ip; these are what let somebody see and end them.
+   *
+   * @generated from rpc loci.auth.AuthService.ListSessions
+   */
+  listSessions: {
+    methodKind: "unary";
+    input: typeof ListSessionsRequestSchema;
+    output: typeof ListSessionsResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.auth.AuthService.RevokeSession
+   */
+  revokeSession: {
+    methodKind: "unary";
+    input: typeof RevokeSessionRequestSchema;
+    output: typeof ResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.auth.AuthService.RevokeOtherSessions
+   */
+  revokeOtherSessions: {
+    methodKind: "unary";
+    input: typeof RevokeOtherSessionsRequestSchema;
+    output: typeof ResponseSchema;
   },
 }>;
 
