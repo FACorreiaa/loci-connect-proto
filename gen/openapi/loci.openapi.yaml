@@ -980,6 +980,181 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.auth.LoginResponse'
+  /loci.bundle.v1.BundleService/ClaimBundle:
+    post:
+      tags:
+        - loci.bundle.v1.BundleService
+      summary: ClaimBundle
+      operationId: loci.bundle.v1.BundleService.ClaimBundle
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.bundle.v1.ClaimBundleRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.bundle.v1.ClaimBundleResponse'
+  /loci.bundle.v1.BundleService/CreateBundleCheckout:
+    post:
+      tags:
+        - loci.bundle.v1.BundleService
+      summary: CreateBundleCheckout
+      operationId: loci.bundle.v1.BundleService.CreateBundleCheckout
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.bundle.v1.CreateBundleCheckoutRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.bundle.v1.CreateBundleCheckoutResponse'
+  /loci.bundle.v1.BundleService/GetBundle:
+    post:
+      tags:
+        - loci.bundle.v1.BundleService
+      summary: GetBundle
+      operationId: loci.bundle.v1.BundleService.GetBundle
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.bundle.v1.GetBundleRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.bundle.v1.BundleDetail'
+  /loci.bundle.v1.BundleService/ListBundles:
+    post:
+      tags:
+        - loci.bundle.v1.BundleService
+      summary: ListBundles
+      operationId: loci.bundle.v1.BundleService.ListBundles
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.bundle.v1.ListBundlesRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.bundle.v1.ListBundlesResponse'
+  /loci.bundle.v1.BundleService/ListMyBundles:
+    post:
+      tags:
+        - loci.bundle.v1.BundleService
+      summary: ListMyBundles
+      operationId: loci.bundle.v1.BundleService.ListMyBundles
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.bundle.v1.ListMyBundlesRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.bundle.v1.ListMyBundlesResponse'
   /loci.chat.ChatService/BookmarkItinerary:
     post:
       tags:
@@ -3817,6 +3992,80 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.localcontext.LocalContext'
+  /loci.localcontext.LocalContextService/GetNewsTicker:
+    post:
+      tags:
+        - loci.localcontext.LocalContextService
+      summary: GetNewsTicker
+      description: |-
+        GetNewsTicker is the breaking-news strip for the signed-in traveller:
+         headlines for their home country, next destination and recent visits.
+      operationId: loci.localcontext.LocalContextService.GetNewsTicker
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.localcontext.GetNewsTickerRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.localcontext.GetNewsTickerResponse'
+  /loci.localcontext.LocalContextService/SetNewsTickerEnabled:
+    post:
+      tags:
+        - loci.localcontext.LocalContextService
+      summary: SetNewsTickerEnabled
+      description: SetNewsTickerEnabled is the per-user switch for that strip.
+      operationId: loci.localcontext.LocalContextService.SetNewsTickerEnabled
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.localcontext.SetNewsTickerEnabledRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.localcontext.SetNewsTickerEnabledResponse'
   /loci.memory.MemoryService/ForgetEvidence:
     post:
       tags:
@@ -8605,6 +8854,320 @@ components:
       title: VerifyMFARequest
       additionalProperties: false
       description: VerifyMFARequest completes a login that was challenged for a second factor.
+    loci.bundle.v1.Bundle:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          maxLength: 100
+        slug:
+          type: string
+          title: slug
+          maxLength: 200
+          minLength: 1
+          description: |-
+            Stable, human-readable handle used in the URL (`/packs/<slug>`). This is
+             the lookup key clients use, not the uuid, so a pack keeps its address.
+        title:
+          type: string
+          title: title
+          maxLength: 300
+          minLength: 1
+        summary:
+          type: string
+          title: summary
+          maxLength: 2000
+        cityId:
+          type:
+            - string
+            - "null"
+          title: city_id
+          maxLength: 100
+          minLength: 1
+          description: |-
+            City is carried by name as well as id: a pack must still render its own
+             header if the city row is ever merged away underneath it.
+        cityName:
+          type: string
+          title: city_name
+          maxLength: 200
+          minLength: 1
+        countryCode:
+          type: string
+          title: country_code
+          maxLength: 2
+          description: ISO 3166-1 alpha-2, for the flag.
+        theme:
+          type: string
+          title: theme
+          maxLength: 50
+          description: |-
+            theme is the taste this pack is cut for: food, art, outdoors,
+             architecture, nightlife, family.
+        months:
+          type: array
+          items:
+            type: integer
+            maximum: 12
+            minimum: 1
+            format: int32
+          title: months
+          maxItems: 12
+          description: |-
+            Months (1-12) the pack is in season for. Mirrors SeasonalPick.months on
+             the client, which is where the seed list comes from.
+        dayCount:
+          type: integer
+          title: day_count
+          minimum: 0
+          format: int32
+        stopCount:
+          type: integer
+          title: stop_count
+          minimum: 0
+          format: int32
+        coverImageUrl:
+          type:
+            - string
+            - "null"
+          title: cover_image_url
+          maxLength: 2048
+          minLength: 1
+          format: uri
+        isPaid:
+          type: boolean
+          title: is_paid
+          description: |-
+            is_paid says whether the days past the first cost money. Price is carried
+             per response rather than per row because every pack shares one price
+             today; a client must never send a price back to the server.
+        priceCents:
+          type: integer
+          title: price_cents
+          minimum: 0
+          format: int32
+        currency:
+          type: string
+          title: currency
+          maxLength: 3
+        owned:
+          type: boolean
+          title: owned
+          description: |-
+            owned is false for anonymous callers and for a signed-in caller who has
+             not bought this pack. Free packs report true.
+        publishedAt:
+          title: published_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: Bundle
+      additionalProperties: false
+      description: |-
+        Bundle is the catalog entry for a pre-made itinerary: everything needed to
+         render a card in a list, without any of the day-by-day content.
+    loci.bundle.v1.BundleDay:
+      type: object
+      properties:
+        dayNumber:
+          type: integer
+          title: day_number
+          minimum: 1
+          format: int32
+        title:
+          type: string
+          title: title
+          maxLength: 300
+        stops:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.trip.TripStop'
+          title: stops
+      title: BundleDay
+      additionalProperties: false
+      description: |-
+        BundleDay is one day of a pack. Stops reuse loci.trip.TripStop so a pack
+         renders through the same components a generated trip does, and so claiming
+         one is a straight copy rather than a translation.
+    loci.bundle.v1.BundleDetail:
+      type: object
+      properties:
+        bundle:
+          title: bundle
+          $ref: '#/components/schemas/loci.bundle.v1.Bundle'
+        days:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.bundle.v1.BundleDay'
+          title: days
+        lockedDayCount:
+          type: integer
+          title: locked_day_count
+          minimum: 0
+          format: int32
+          description: How many days were withheld. Zero when the caller can see all of them.
+      title: BundleDetail
+      additionalProperties: false
+      description: |-
+        BundleDetail is one pack with as much of its content as the caller is
+         entitled to see.
+
+         The gate is applied server-side: for a paid pack the caller does not own,
+         `days` holds day 1 only and the rest are simply absent from the wire.
+         Sending every day and hiding some in the UI would put the paid content in
+         the response body for anyone with devtools.
+    loci.bundle.v1.BundleStatus:
+      type: string
+      title: BundleStatus
+      enum:
+        - BUNDLE_STATUS_UNSPECIFIED
+        - BUNDLE_STATUS_DRAFT
+        - BUNDLE_STATUS_APPROVED
+        - BUNDLE_STATUS_PUBLISHED
+        - BUNDLE_STATUS_RETIRED
+      description: |-
+        BundleStatus is where a pack sits in the authoring pipeline. Only PUBLISHED
+         packs are ever returned to a client; the rest exist so a generated draft can
+         be read and approved by a human before anyone can buy it.
+
+         RETIRED is not deletion. A pack someone has paid for stays readable by its
+         owners forever, so withdrawing one from sale moves it here rather than
+         removing it.
+    loci.bundle.v1.ClaimBundleRequest:
+      type: object
+      properties:
+        bundleId:
+          type: string
+          title: bundle_id
+          maxLength: 100
+          minLength: 1
+      title: ClaimBundleRequest
+      additionalProperties: false
+    loci.bundle.v1.ClaimBundleResponse:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          description: The new trip written for the caller, ready to edit like any other.
+      title: ClaimBundleResponse
+      additionalProperties: false
+    loci.bundle.v1.CreateBundleCheckoutRequest:
+      type: object
+      properties:
+        bundleId:
+          type: string
+          title: bundle_id
+          maxLength: 100
+          minLength: 1
+          description: |-
+            The pack to buy. The server resolves the price itself — deliberately no
+             price or mode field here, so a client cannot name its own amount.
+        successUrl:
+          type: string
+          title: success_url
+          maxLength: 2048
+          minLength: 1
+          format: uri
+        cancelUrl:
+          type: string
+          title: cancel_url
+          maxLength: 2048
+          minLength: 1
+          format: uri
+      title: CreateBundleCheckoutRequest
+      additionalProperties: false
+    loci.bundle.v1.CreateBundleCheckoutResponse:
+      type: object
+      properties:
+        sessionId:
+          type: string
+          title: session_id
+        url:
+          type: string
+          title: url
+      title: CreateBundleCheckoutResponse
+      additionalProperties: false
+    loci.bundle.v1.GetBundleRequest:
+      type: object
+      properties:
+        slug:
+          type: string
+          title: slug
+          maxLength: 200
+          minLength: 1
+      title: GetBundleRequest
+      additionalProperties: false
+    loci.bundle.v1.ListBundlesRequest:
+      type: object
+      properties:
+        cityName:
+          type:
+            - string
+            - "null"
+          title: city_name
+          maxLength: 200
+          minLength: 1
+          description: All filters are optional and AND together.
+        theme:
+          type:
+            - string
+            - "null"
+          title: theme
+          maxLength: 50
+          minLength: 1
+        month:
+          type:
+            - integer
+            - "null"
+          title: month
+          maximum: 12
+          minimum: 1
+          format: int32
+          description: Month (1-12) the trip is for; matches against Bundle.months.
+        onlyFree:
+          type:
+            - boolean
+            - "null"
+          title: only_free
+        pagination:
+          title: pagination
+          $ref: '#/components/schemas/loci.common.PaginationRequest'
+      title: ListBundlesRequest
+      additionalProperties: false
+    loci.bundle.v1.ListBundlesResponse:
+      type: object
+      properties:
+        bundles:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.bundle.v1.Bundle'
+          title: bundles
+        pagination:
+          title: pagination
+          $ref: '#/components/schemas/loci.common.PaginationMetadata'
+      title: ListBundlesResponse
+      additionalProperties: false
+    loci.bundle.v1.ListMyBundlesRequest:
+      type: object
+      properties:
+        pagination:
+          title: pagination
+          $ref: '#/components/schemas/loci.common.PaginationRequest'
+      title: ListMyBundlesRequest
+      additionalProperties: false
+    loci.bundle.v1.ListMyBundlesResponse:
+      type: object
+      properties:
+        bundles:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.bundle.v1.Bundle'
+          title: bundles
+        pagination:
+          title: pagination
+          $ref: '#/components/schemas/loci.common.PaginationMetadata'
+      title: ListMyBundlesResponse
+      additionalProperties: false
     loci.chat.AIItineraryResponse:
       type: object
       properties:
@@ -14822,6 +15385,43 @@ components:
       title: GetLocalContextRequest
       additionalProperties: false
       description: GetLocalContextRequest asks for weather + alerts near a point.
+    loci.localcontext.GetNewsTickerRequest:
+      type: object
+      properties:
+        limit:
+          type: integer
+          title: limit
+          maximum: 100
+          minimum: 0
+          format: int32
+      title: GetNewsTickerRequest
+      additionalProperties: false
+    loci.localcontext.GetNewsTickerResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.localcontext.NewsTickerItem'
+          title: items
+        enabled:
+          type: boolean
+          title: enabled
+          description: False when the person switched the ticker off; items is then empty.
+        stale:
+          type: boolean
+          title: stale
+          description: |-
+            True when at least one feed is serving cached headlines after a failed
+             fetch upstream.
+        countryCodes:
+          type: array
+          items:
+            type: string
+          title: country_codes
+          description: 'The countries whose news was selected: home, next trip, recently visited.'
+      title: GetNewsTickerResponse
+      additionalProperties: false
     loci.localcontext.GoScore:
       type: object
       properties:
@@ -14944,6 +15544,41 @@ components:
       title: LocalContext
       additionalProperties: false
       description: LocalContext is the trip-time local information for a location.
+    loci.localcontext.NewsTickerItem:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          minLength: 1
+        title:
+          type: string
+          title: title
+          minLength: 1
+        url:
+          type: string
+          title: url
+        source:
+          type: string
+          title: source
+        publishedAt:
+          title: published_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        countryCode:
+          type: string
+          title: country_code
+          maxLength: 2
+          description: |-
+            ISO 3166-1 alpha-2 of the country this headline was selected for, or
+             empty for a feed not tied to one.
+      title: NewsTickerItem
+      additionalProperties: false
+      description: |-
+        LocalContextService surfaces trip-time context: weather, plus live alerts
+         from public-holiday and natural-hazard providers.
+         NewsTickerItem is one breaking-news headline for the traveller's desk:
+         title, source, time and a link out. Never a body — the ticker links to the
+         publisher rather than republishing.
     loci.localcontext.ScoreFactor:
       type: object
       properties:
@@ -14975,6 +15610,22 @@ components:
         ScoreFactor is one dimension of the go/no-go judgement, with its reasoning.
          The score is always shown WITH these: a bare number is not an explanation,
          and a user who disagrees with it should be able to see why it landed there.
+    loci.localcontext.SetNewsTickerEnabledRequest:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          title: enabled
+      title: SetNewsTickerEnabledRequest
+      additionalProperties: false
+    loci.localcontext.SetNewsTickerEnabledResponse:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          title: enabled
+      title: SetNewsTickerEnabledResponse
+      additionalProperties: false
     loci.localcontext.WeatherDay:
       type: object
       properties:
@@ -23271,27 +23922,32 @@ tags:
        (MCP clients, integrations). Keys authenticate as the owning user.
   - name: loci.auth.AuthService
     description: AuthService defines authentication-related RPCs
-  - name: loci.city.CityService
-    description: CityService defines city-related RPCs
   - name: loci.place.PlaceIntelligenceService
   - name: loci.recommendation.RecommendationService
     description: RecommendationService owns private learning controls and client-side exposure events.
   - name: loci.poi.POIService
     description: POIService defines POI-related RPCs
+  - name: loci.trip.TripService
+    description: |-
+      TripService persists and mutates editable day-by-day trips. All mutations that
+       take base_version enforce optimistic concurrency and return the updated
+       TripDraft (or affected sub-entity) with the bumped version.
+  - name: loci.bundle.v1.BundleService
+    description: |-
+      BundleService serves the City Packs catalog: pre-made itineraries written
+       offline and published by hand.
+
+       ListBundles and GetBundle are public. They still read the caller's identity
+       when a token happens to be present, which is how one endpoint can serve a
+       teaser to a stranger and the whole pack to someone who bought it.
+  - name: loci.city.CityService
+    description: CityService defines city-related RPCs
   - name: loci.interest.InterestService
     description: InterestService defines interest-related RPCs
   - name: loci.profile.ProfileService
     description: ProfileService defines profile-related RPCs
   - name: loci.chat.ChatService
   - name: loci.localcontext.LocalContextService
-    description: |-
-      LocalContextService surfaces trip-time context: weather, plus live alerts
-       from public-holiday and natural-hazard providers.
-  - name: loci.trip.TripService
-    description: |-
-      TripService persists and mutates editable day-by-day trips. All mutations that
-       take base_version enforce optimistic concurrency and return the updated
-       TripDraft (or affected sub-entity) with the bumped version.
   - name: loci.compare.v1.CompareService
     description: CompareService compares weekend destinations side-by-side.
   - name: loci.custom_auth.CustomAuthService
