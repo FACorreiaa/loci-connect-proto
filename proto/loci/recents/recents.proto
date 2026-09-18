@@ -197,16 +197,26 @@ message FrequentPlace {
 message InteractionFilter {
   repeated InteractionType interaction_types = 1 [(buf.validate.field).repeated.items.enum = {defined_only: true}];
   repeated string entity_types = 2;
-  string city_id = 3 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
-  }];
+  // city_id and search_query are optional narrowings, so an unset one has to
+  // stay legal. Without IGNORE_IF_ZERO_VALUE the min_len rule fires on the
+  // empty default, and a caller filtering only by entity_types — the activity
+  // feed's type chips — is rejected for leaving these two blank.
+  string city_id = 3 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {
+      min_len: 1
+      max_len: 100
+    }
+  ];
   google.protobuf.Timestamp start_date = 4;
   google.protobuf.Timestamp end_date = 5;
-  string search_query = 6 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 200
-  }];
+  string search_query = 6 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {
+      min_len: 1
+      max_len: 200
+    }
+  ];
   repeated string categories = 7;
 }
 
@@ -352,19 +362,27 @@ message GetInteractionHistoryRequest {
     lte: 200
   }];
   int32 offset = 4 [(buf.validate.field).int32 = {gte: 0}];
-  string sort_by = 5 [(buf.validate.field).string = {
-    in: [
-      "date",
-      "frequency",
-      "relevance"
-    ]
-  }]; // "date", "frequency", "relevance"
-  string sort_order = 6 [(buf.validate.field).string = {
-    in: [
-      "asc",
-      "desc"
-    ]
-  }]; // "asc", "desc"
+  // Both default to the server's choice (date, descending) when unset, so an
+  // empty string has to pass. The `in` rule alone rejects it.
+  string sort_by = 5 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {
+      in: [
+        "date",
+        "frequency",
+        "relevance"
+      ]
+    }
+  ]; // "date", "frequency", "relevance"
+  string sort_order = 6 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {
+      in: [
+        "asc",
+        "desc"
+      ]
+    }
+  ]; // "asc", "desc"
   bool include_analytics = 7;
 }
 

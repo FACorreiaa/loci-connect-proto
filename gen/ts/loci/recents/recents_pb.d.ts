@@ -400,6 +400,11 @@ export declare type InteractionFilter = Message<"loci.recents.InteractionFilter"
   entityTypes: string[];
 
   /**
+   * city_id and search_query are optional narrowings, so an unset one has to
+   * stay legal. Without IGNORE_IF_ZERO_VALUE the min_len rule fires on the
+   * empty default, and a caller filtering only by entity_types — the activity
+   * feed's type chips — is rejected for leaving these two blank.
+   *
    * @generated from field: string city_id = 3;
    */
   cityId: string;
@@ -804,6 +809,9 @@ export declare type GetInteractionHistoryRequest = Message<"loci.recents.GetInte
   offset: number;
 
   /**
+   * Both default to the server's choice (date, descending) when unset, so an
+   * empty string has to pass. The `in` rule alone rejects it.
+   *
    * "date", "frequency", "relevance"
    *
    * @generated from field: string sort_by = 5;
