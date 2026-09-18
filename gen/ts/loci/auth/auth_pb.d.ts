@@ -628,9 +628,25 @@ export declare type DeviceSession = Message<"loci.auth.DeviceSession"> & {
 export declare const DeviceSessionSchema: GenMessage<DeviceSession>;
 
 /**
+ * The caller's own refresh token, so the session it belongs to can be marked
+ * current.
+ *
+ * Access tokens are stateless JWTs and carry nothing that maps back to a
+ * session row, so without this there is no way to tell which of the listed
+ * sessions is the one asking. A "sign out my other devices" button that cannot
+ * identify the current session signs the user out of the device they are
+ * holding.
+ *
+ * Optional: a caller that only wants the list can omit it and get no session
+ * marked current.
+ *
  * @generated from message loci.auth.ListSessionsRequest
  */
 export declare type ListSessionsRequest = Message<"loci.auth.ListSessionsRequest"> & {
+  /**
+   * @generated from field: optional string refresh_token = 1;
+   */
+  refreshToken?: string;
 };
 
 /**
@@ -674,9 +690,17 @@ export declare const RevokeSessionRequestSchema: GenMessage<RevokeSessionRequest
 /**
  * RevokeOtherSessions signs out everywhere except the caller's own session.
  *
+ * The refresh token is required here rather than optional: without it the RPC
+ * cannot tell which session to spare, and the only safe reading of "revoke the
+ * others" with no "others" defined is to revoke nothing.
+ *
  * @generated from message loci.auth.RevokeOtherSessionsRequest
  */
 export declare type RevokeOtherSessionsRequest = Message<"loci.auth.RevokeOtherSessionsRequest"> & {
+  /**
+   * @generated from field: string refresh_token = 1;
+   */
+  refreshToken: string;
 };
 
 /**
