@@ -286,6 +286,59 @@ message ChangeEmailRequest {
   string new_email = 2 [(buf.validate.field).string.email = true];
 }
 
+// ConfirmEmailChangeRequest completes an email change.
+//
+// ChangeEmail used to swap the address outright, with nothing sent to the new
+// inbox to prove the person asking could read it. The change is now staged and
+// only takes effect when the token mailed to the new address comes back here.
+message ConfirmEmailChangeRequest {
+  string token = 1 [(buf.validate.field).string = {
+    min_len: 16
+    max_len: 512
+  }];
+}
+
+// A signed-in session: one refresh token, with where it came from.
+//
+// user_agent and client_ip have been recorded on every session since the table
+// was created; nothing ever read them back out, so there was no way for anyone
+// to see where their account was signed in.
+// Named DeviceSession because this package already has a Session, which is an
+// identity summary (id, username, email) and nothing to do with a sign-in.
+message DeviceSession {
+  string id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  optional string user_agent = 2 [(buf.validate.field) = {
+    string: {max_len: 512}
+  }];
+  optional string client_ip = 3 [(buf.validate.field) = {
+    string: {max_len: 64}
+  }];
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp expires_at = 5;
+  // True for the session making this call, so a client can label it and warn
+  // before signing itself out.
+  bool current = 6;
+}
+
+message ListSessionsRequest {}
+
+message ListSessionsResponse {
+  repeated DeviceSession sessions = 1;
+}
+
+message RevokeSessionRequest {
+  string session_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+}
+
+// RevokeOtherSessions signs out everywhere except the caller's own session.
+message RevokeOtherSessionsRequest {}
+
 // LogoutRequest for logout
 message LogoutRequest {
   string refresh_token = 1 [(buf.validate.field).string = {min_len: 16}];
@@ -385,4 +438,15 @@ service AuthService {
   rpc DisableMFA(DisableMFARequest) returns (loci.common.Response);
   rpc RegenerateRecoveryCodes(RegenerateRecoveryCodesRequest) returns (RegenerateRecoveryCodesResponse);
   rpc GetMFAStatus(GetMFAStatusRequest) returns (GetMFAStatusResponse);
+
+  // Completes an email change started by ChangeEmail. Unauthenticated: the
+  // token from the confirmation mail is the credential, and the person may be
+  // opening the link in a browser that is not signed in.
+  rpc ConfirmEmailChange(ConfirmEmailChangeRequest) returns (loci.common.Response);
+
+  // Signed-in devices. The session rows have always carried user_agent and
+  // client_ip; these are what let somebody see and end them.
+  rpc ListSessions(ListSessionsRequest) returns (ListSessionsResponse);
+  rpc RevokeSession(RevokeSessionRequest) returns (loci.common.Response);
+  rpc RevokeOtherSessions(RevokeOtherSessionsRequest) returns (loci.common.Response);
 }

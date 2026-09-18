@@ -141,6 +141,19 @@ message GetUserInterestsResponse {
   repeated Interest interests = 1;
 }
 
+// DeleteInterest removes one of the caller's own custom interests.
+//
+// Deactivating an interest via UpdateInterest is a different thing: it stays in
+// the list, switched off. The client offered a delete button that called
+// UpdateInterest with active=false and reported "Interest deleted", which left
+// the interest exactly where it was.
+message DeleteInterestRequest {
+  string interest_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+}
+
 // InterestService defines interest-related RPCs
 service InterestService {
   rpc GetInterests(GetInterestsRequest) returns (GetInterestsResponse);
@@ -149,4 +162,5 @@ service InterestService {
   rpc UpdateInterest(UpdateInterestRequest) returns (loci.common.Response);
   rpc AddInterestToUser(AddInterestRequest) returns (loci.common.Response);
   rpc UpdatePreferenceLevel(UpdatePreferenceLevelRequest) returns (loci.common.Response);
+  rpc DeleteInterest(DeleteInterestRequest) returns (loci.common.Response);
 }
