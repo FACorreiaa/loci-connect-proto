@@ -13,24 +13,12 @@ import SwiftProtobuf
 public protocol Loci_Share_ShareServiceClientInterface: Sendable {
 
     /// Get share metadata for a shared item (for OG tags generation)
-    @discardableResult
-    func `getShareMetadata`(request: Loci_Share_GetShareMetadataRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Share_GetShareMetadataResponse>) -> Void) -> Connect.Cancelable
-
-    /// Get share metadata for a shared item (for OG tags generation)
     @available(iOS 13, *)
     func `getShareMetadata`(request: Loci_Share_GetShareMetadataRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Share_GetShareMetadataResponse>
 
     /// Create a share link for an item
-    @discardableResult
-    func `createShareLink`(request: Loci_Share_CreateShareLinkRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Share_CreateShareLinkResponse>) -> Void) -> Connect.Cancelable
-
-    /// Create a share link for an item
     @available(iOS 13, *)
     func `createShareLink`(request: Loci_Share_CreateShareLinkRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Share_CreateShareLinkResponse>
-
-    /// Get shared content by share code (public endpoint)
-    @discardableResult
-    func `getSharedContent`(request: Loci_Share_GetSharedContentRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Share_GetSharedContentResponse>) -> Void) -> Connect.Cancelable
 
     /// Get shared content by share code (public endpoint)
     @available(iOS 13, *)
@@ -45,29 +33,14 @@ public final class Loci_Share_ShareServiceClient: Loci_Share_ShareServiceClientI
         self.client = client
     }
 
-    @discardableResult
-    public func `getShareMetadata`(request: Loci_Share_GetShareMetadataRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Share_GetShareMetadataResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.share.ShareService/GetShareMetadata", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getShareMetadata`(request: Loci_Share_GetShareMetadataRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Share_GetShareMetadataResponse> {
         return await self.client.unary(path: "/loci.share.ShareService/GetShareMetadata", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `createShareLink`(request: Loci_Share_CreateShareLinkRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Share_CreateShareLinkResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.share.ShareService/CreateShareLink", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `createShareLink`(request: Loci_Share_CreateShareLinkRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Share_CreateShareLinkResponse> {
         return await self.client.unary(path: "/loci.share.ShareService/CreateShareLink", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getSharedContent`(request: Loci_Share_GetSharedContentRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Share_GetSharedContentResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.share.ShareService/GetSharedContent", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

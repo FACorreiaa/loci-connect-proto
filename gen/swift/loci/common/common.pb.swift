@@ -15,13 +15,13 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// Generic response wrapper for API responses
-public nonisolated struct Loci_Common_Response: Sendable {
+public struct Loci_Common_Response: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -29,20 +29,20 @@ public nonisolated struct Loci_Common_Response: Sendable {
   public var success: Bool = false
 
   public var message: String {
-    get {_message ?? String()}
+    get {return _message ?? String()}
     set {_message = newValue}
   }
   /// Returns true if `message` has been explicitly set.
-  public var hasMessage: Bool {self._message != nil}
+  public var hasMessage: Bool {return self._message != nil}
   /// Clears the value of `message`. Subsequent reads from it will return its default value.
   public mutating func clearMessage() {self._message = nil}
 
   public var error: String {
-    get {_error ?? String()}
+    get {return _error ?? String()}
     set {_error = newValue}
   }
   /// Returns true if `error` has been explicitly set.
-  public var hasError: Bool {self._error != nil}
+  public var hasError: Bool {return self._error != nil}
   /// Clears the value of `error`. Subsequent reads from it will return its default value.
   public mutating func clearError() {self._error = nil}
 
@@ -55,7 +55,7 @@ public nonisolated struct Loci_Common_Response: Sendable {
 }
 
 /// Generic error response
-public nonisolated struct Loci_Common_ErrorResponse: Sendable {
+public struct Loci_Common_ErrorResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -72,7 +72,7 @@ public nonisolated struct Loci_Common_ErrorResponse: Sendable {
 }
 
 /// Pagination request parameters
-public nonisolated struct Loci_Common_PaginationRequest: Sendable {
+public struct Loci_Common_PaginationRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -82,20 +82,20 @@ public nonisolated struct Loci_Common_PaginationRequest: Sendable {
   public var pageSize: Int32 = 0
 
   public var sortBy: String {
-    get {_sortBy ?? String()}
+    get {return _sortBy ?? String()}
     set {_sortBy = newValue}
   }
   /// Returns true if `sortBy` has been explicitly set.
-  public var hasSortBy: Bool {self._sortBy != nil}
+  public var hasSortBy: Bool {return self._sortBy != nil}
   /// Clears the value of `sortBy`. Subsequent reads from it will return its default value.
   public mutating func clearSortBy() {self._sortBy = nil}
 
   public var sortOrder: String {
-    get {_sortOrder ?? String()}
+    get {return _sortOrder ?? String()}
     set {_sortOrder = newValue}
   }
   /// Returns true if `sortOrder` has been explicitly set.
-  public var hasSortOrder: Bool {self._sortOrder != nil}
+  public var hasSortOrder: Bool {return self._sortOrder != nil}
   /// Clears the value of `sortOrder`. Subsequent reads from it will return its default value.
   public mutating func clearSortOrder() {self._sortOrder = nil}
 
@@ -108,7 +108,7 @@ public nonisolated struct Loci_Common_PaginationRequest: Sendable {
 }
 
 /// Pagination metadata
-public nonisolated struct Loci_Common_PaginationMetadata: Sendable {
+public struct Loci_Common_PaginationMetadata: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -129,7 +129,7 @@ public nonisolated struct Loci_Common_PaginationMetadata: Sendable {
 }
 
 /// Geographic point
-public nonisolated struct Loci_Common_GeoPoint: Sendable {
+public struct Loci_Common_GeoPoint: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -144,26 +144,26 @@ public nonisolated struct Loci_Common_GeoPoint: Sendable {
 }
 
 /// Range filter for numeric values
-public nonisolated struct Loci_Common_RangeFilter: Sendable {
+public struct Loci_Common_RangeFilter: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var min: Double {
-    get {_min ?? 0}
+    get {return _min ?? 0}
     set {_min = newValue}
   }
   /// Returns true if `min` has been explicitly set.
-  public var hasMin: Bool {self._min != nil}
+  public var hasMin: Bool {return self._min != nil}
   /// Clears the value of `min`. Subsequent reads from it will return its default value.
   public mutating func clearMin() {self._min = nil}
 
   public var max: Double {
-    get {_max ?? 0}
+    get {return _max ?? 0}
     set {_max = newValue}
   }
   /// Returns true if `max` has been explicitly set.
-  public var hasMax: Bool {self._max != nil}
+  public var hasMax: Bool {return self._max != nil}
   /// Clears the value of `max`. Subsequent reads from it will return its default value.
   public mutating func clearMax() {self._max = nil}
 
@@ -177,11 +177,15 @@ public nonisolated struct Loci_Common_RangeFilter: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.common"
+fileprivate let _protobuf_package = "loci.common"
 
-nonisolated extension Loci_Common_Response: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Common_Response: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Response"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}success\0\u{1}message\0\u{1}error\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "success"),
+    2: .same(proto: "message"),
+    3: .same(proto: "error"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -223,9 +227,13 @@ nonisolated extension Loci_Common_Response: SwiftProtobuf.Message, SwiftProtobuf
   }
 }
 
-nonisolated extension Loci_Common_ErrorResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Common_ErrorResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ErrorResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}code\0\u{1}message\0\u{1}details\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "code"),
+    2: .same(proto: "message"),
+    3: .same(proto: "details"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -263,9 +271,14 @@ nonisolated extension Loci_Common_ErrorResponse: SwiftProtobuf.Message, SwiftPro
   }
 }
 
-nonisolated extension Loci_Common_PaginationRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Common_PaginationRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PaginationRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}page\0\u{3}page_size\0\u{3}sort_by\0\u{3}sort_order\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "page"),
+    2: .standard(proto: "page_size"),
+    3: .standard(proto: "sort_by"),
+    4: .standard(proto: "sort_order"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -312,9 +325,15 @@ nonisolated extension Loci_Common_PaginationRequest: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_Common_PaginationMetadata: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Common_PaginationMetadata: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PaginationMetadata"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}total_records\0\u{1}page\0\u{3}page_size\0\u{3}total_pages\0\u{3}has_more\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "total_records"),
+    2: .same(proto: "page"),
+    3: .standard(proto: "page_size"),
+    4: .standard(proto: "total_pages"),
+    5: .standard(proto: "has_more"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -362,9 +381,12 @@ nonisolated extension Loci_Common_PaginationMetadata: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Common_GeoPoint: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Common_GeoPoint: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GeoPoint"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}latitude\0\u{1}longitude\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "latitude"),
+    2: .same(proto: "longitude"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -397,9 +419,12 @@ nonisolated extension Loci_Common_GeoPoint: SwiftProtobuf.Message, SwiftProtobuf
   }
 }
 
-nonisolated extension Loci_Common_RangeFilter: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Common_RangeFilter: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RangeFilter"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}min\0\u{1}max\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "min"),
+    2: .same(proto: "max"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

@@ -15,13 +15,13 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// A registered external MCP server.
-public nonisolated struct Loci_Integrations_Connection: Sendable {
+public struct Loci_Integrations_Connection: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -37,21 +37,21 @@ public nonisolated struct Loci_Integrations_Connection: Sendable {
   public var hasToken_p: Bool = false
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {self._createdAt != nil}
+  public var hasCreatedAt: Bool {return self._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {self._createdAt = nil}
 
   /// Absent means registered but never reached.
   public var lastSeenAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_lastSeenAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _lastSeenAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_lastSeenAt = newValue}
   }
   /// Returns true if `lastSeenAt` has been explicitly set.
-  public var hasLastSeenAt: Bool {self._lastSeenAt != nil}
+  public var hasLastSeenAt: Bool {return self._lastSeenAt != nil}
   /// Clears the value of `lastSeenAt`. Subsequent reads from it will return its default value.
   public mutating func clearLastSeenAt() {self._lastSeenAt = nil}
 
@@ -66,7 +66,7 @@ public nonisolated struct Loci_Integrations_Connection: Sendable {
   fileprivate var _lastSeenAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-public nonisolated struct Loci_Integrations_ListConnectionsRequest: Sendable {
+public struct Loci_Integrations_ListConnectionsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -76,7 +76,7 @@ public nonisolated struct Loci_Integrations_ListConnectionsRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Integrations_ListConnectionsResponse: Sendable {
+public struct Loci_Integrations_ListConnectionsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -92,7 +92,7 @@ public nonisolated struct Loci_Integrations_ListConnectionsResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Integrations_ConnectRequest: Sendable {
+public struct Loci_Integrations_ConnectRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -112,17 +112,17 @@ public nonisolated struct Loci_Integrations_ConnectRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Integrations_ConnectResponse: Sendable {
+public struct Loci_Integrations_ConnectResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var connection: Loci_Integrations_Connection {
-    get {_connection ?? Loci_Integrations_Connection()}
+    get {return _connection ?? Loci_Integrations_Connection()}
     set {_connection = newValue}
   }
   /// Returns true if `connection` has been explicitly set.
-  public var hasConnection: Bool {self._connection != nil}
+  public var hasConnection: Bool {return self._connection != nil}
   /// Clears the value of `connection`. Subsequent reads from it will return its default value.
   public mutating func clearConnection() {self._connection = nil}
 
@@ -133,7 +133,7 @@ public nonisolated struct Loci_Integrations_ConnectResponse: Sendable {
   fileprivate var _connection: Loci_Integrations_Connection? = nil
 }
 
-public nonisolated struct Loci_Integrations_DisconnectRequest: Sendable {
+public struct Loci_Integrations_DisconnectRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -145,7 +145,7 @@ public nonisolated struct Loci_Integrations_DisconnectRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Integrations_DisconnectResponse: Sendable {
+public struct Loci_Integrations_DisconnectResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -155,7 +155,7 @@ public nonisolated struct Loci_Integrations_DisconnectResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Integrations_TestConnectionRequest: Sendable {
+public struct Loci_Integrations_TestConnectionRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -167,7 +167,7 @@ public nonisolated struct Loci_Integrations_TestConnectionRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Integrations_TestConnectionResponse: Sendable {
+public struct Loci_Integrations_TestConnectionResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -187,11 +187,18 @@ public nonisolated struct Loci_Integrations_TestConnectionResponse: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.integrations"
+fileprivate let _protobuf_package = "loci.integrations"
 
-nonisolated extension Loci_Integrations_Connection: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Integrations_Connection: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Connection"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}provider\0\u{1}endpoint\0\u{3}has_token\0\u{3}created_at\0\u{3}last_seen_at\0\u{3}last_error\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "provider"),
+    2: .same(proto: "endpoint"),
+    3: .standard(proto: "has_token"),
+    4: .standard(proto: "created_at"),
+    5: .standard(proto: "last_seen_at"),
+    6: .standard(proto: "last_error"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -248,7 +255,7 @@ nonisolated extension Loci_Integrations_Connection: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_Integrations_ListConnectionsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Integrations_ListConnectionsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListConnectionsRequest"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
@@ -267,9 +274,12 @@ nonisolated extension Loci_Integrations_ListConnectionsRequest: SwiftProtobuf.Me
   }
 }
 
-nonisolated extension Loci_Integrations_ListConnectionsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Integrations_ListConnectionsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListConnectionsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}connections\0\u{1}enabled\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "connections"),
+    2: .same(proto: "enabled"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -302,9 +312,13 @@ nonisolated extension Loci_Integrations_ListConnectionsResponse: SwiftProtobuf.M
   }
 }
 
-nonisolated extension Loci_Integrations_ConnectRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Integrations_ConnectRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ConnectRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}provider\0\u{1}endpoint\0\u{3}access_token\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "provider"),
+    2: .same(proto: "endpoint"),
+    3: .standard(proto: "access_token"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -342,9 +356,11 @@ nonisolated extension Loci_Integrations_ConnectRequest: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_Integrations_ConnectResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Integrations_ConnectResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ConnectResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}connection\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "connection"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -376,9 +392,11 @@ nonisolated extension Loci_Integrations_ConnectResponse: SwiftProtobuf.Message, 
   }
 }
 
-nonisolated extension Loci_Integrations_DisconnectRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Integrations_DisconnectRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DisconnectRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}provider\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "provider"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -406,7 +424,7 @@ nonisolated extension Loci_Integrations_DisconnectRequest: SwiftProtobuf.Message
   }
 }
 
-nonisolated extension Loci_Integrations_DisconnectResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Integrations_DisconnectResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DisconnectResponse"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
@@ -425,9 +443,11 @@ nonisolated extension Loci_Integrations_DisconnectResponse: SwiftProtobuf.Messag
   }
 }
 
-nonisolated extension Loci_Integrations_TestConnectionRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Integrations_TestConnectionRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".TestConnectionRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}provider\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "provider"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -455,9 +475,13 @@ nonisolated extension Loci_Integrations_TestConnectionRequest: SwiftProtobuf.Mes
   }
 }
 
-nonisolated extension Loci_Integrations_TestConnectionResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Integrations_TestConnectionResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".TestConnectionResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}ok\0\u{3}tool_names\0\u{1}error\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "ok"),
+    2: .standard(proto: "tool_names"),
+    3: .same(proto: "error"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

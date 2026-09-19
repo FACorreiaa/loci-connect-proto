@@ -15,39 +15,20 @@ import SwiftProtobuf
 /// users.places_visited (a counter with no backing rows).
 public protocol Loci_Travelhistory_TravelHistoryServiceClientInterface: Sendable {
 
-    @discardableResult
-    func `listVisitedCities`(request: Loci_Travelhistory_ListVisitedCitiesRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Travelhistory_ListVisitedCitiesResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `listVisitedCities`(request: Loci_Travelhistory_ListVisitedCitiesRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Travelhistory_ListVisitedCitiesResponse>
-
-    @discardableResult
-    func `listVisitedPois`(request: Loci_Travelhistory_ListVisitedPOIsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Travelhistory_ListVisitedPOIsResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `listVisitedPois`(request: Loci_Travelhistory_ListVisitedPOIsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Travelhistory_ListVisitedPOIsResponse>
 
-    @discardableResult
-    func `getTravelSummary`(request: Loci_Travelhistory_GetTravelSummaryRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Travelhistory_GetTravelSummaryResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `getTravelSummary`(request: Loci_Travelhistory_GetTravelSummaryRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Travelhistory_GetTravelSummaryResponse>
-
-    @discardableResult
-    func `recordVisit`(request: Loci_Travelhistory_RecordVisitRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Travelhistory_RecordVisitResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `recordVisit`(request: Loci_Travelhistory_RecordVisitRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Travelhistory_RecordVisitResponse>
 
-    @discardableResult
-    func `deleteVisit`(request: Loci_Travelhistory_DeleteVisitRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Travelhistory_DeleteVisitResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `deleteVisit`(request: Loci_Travelhistory_DeleteVisitRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Travelhistory_DeleteVisitResponse>
-
-    /// GetGlobeData fills the entire globe dashboard in one call.
-    @discardableResult
-    func `getGlobeData`(request: Loci_Travelhistory_GetGlobeDataRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Travelhistory_GetGlobeDataResponse>) -> Void) -> Connect.Cancelable
 
     /// GetGlobeData fills the entire globe dashboard in one call.
     @available(iOS 13, *)
@@ -62,19 +43,9 @@ public final class Loci_Travelhistory_TravelHistoryServiceClient: Loci_Travelhis
         self.client = client
     }
 
-    @discardableResult
-    public func `listVisitedCities`(request: Loci_Travelhistory_ListVisitedCitiesRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Travelhistory_ListVisitedCitiesResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.travelhistory.TravelHistoryService/ListVisitedCities", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `listVisitedCities`(request: Loci_Travelhistory_ListVisitedCitiesRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Travelhistory_ListVisitedCitiesResponse> {
         return await self.client.unary(path: "/loci.travelhistory.TravelHistoryService/ListVisitedCities", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `listVisitedPois`(request: Loci_Travelhistory_ListVisitedPOIsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Travelhistory_ListVisitedPOIsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.travelhistory.TravelHistoryService/ListVisitedPOIs", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -82,19 +53,9 @@ public final class Loci_Travelhistory_TravelHistoryServiceClient: Loci_Travelhis
         return await self.client.unary(path: "/loci.travelhistory.TravelHistoryService/ListVisitedPOIs", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getTravelSummary`(request: Loci_Travelhistory_GetTravelSummaryRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Travelhistory_GetTravelSummaryResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.travelhistory.TravelHistoryService/GetTravelSummary", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getTravelSummary`(request: Loci_Travelhistory_GetTravelSummaryRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Travelhistory_GetTravelSummaryResponse> {
         return await self.client.unary(path: "/loci.travelhistory.TravelHistoryService/GetTravelSummary", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `recordVisit`(request: Loci_Travelhistory_RecordVisitRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Travelhistory_RecordVisitResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.travelhistory.TravelHistoryService/RecordVisit", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -102,19 +63,9 @@ public final class Loci_Travelhistory_TravelHistoryServiceClient: Loci_Travelhis
         return await self.client.unary(path: "/loci.travelhistory.TravelHistoryService/RecordVisit", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `deleteVisit`(request: Loci_Travelhistory_DeleteVisitRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Travelhistory_DeleteVisitResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.travelhistory.TravelHistoryService/DeleteVisit", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `deleteVisit`(request: Loci_Travelhistory_DeleteVisitRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Travelhistory_DeleteVisitResponse> {
         return await self.client.unary(path: "/loci.travelhistory.TravelHistoryService/DeleteVisit", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getGlobeData`(request: Loci_Travelhistory_GetGlobeDataRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Travelhistory_GetGlobeDataResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.travelhistory.TravelHistoryService/GetGlobeData", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

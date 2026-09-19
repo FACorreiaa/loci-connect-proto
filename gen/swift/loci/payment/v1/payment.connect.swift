@@ -12,83 +12,42 @@ import SwiftProtobuf
 public protocol Loci_Payment_V1_PaymentServiceClientInterface: Sendable {
 
     /// Payments
-    @discardableResult
-    func `createPayment`(request: Loci_Payment_V1_CreatePaymentRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Payment_V1_CreatePaymentResponse>) -> Void) -> Connect.Cancelable
-
-    /// Payments
     @available(iOS 13, *)
     func `createPayment`(request: Loci_Payment_V1_CreatePaymentRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Payment_V1_CreatePaymentResponse>
-
-    @discardableResult
-    func `getPayment`(request: Loci_Payment_V1_GetPaymentRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Payment_V1_GetPaymentResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `getPayment`(request: Loci_Payment_V1_GetPaymentRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Payment_V1_GetPaymentResponse>
 
-    @discardableResult
-    func `getUserPayments`(request: Loci_Payment_V1_GetUserPaymentsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Payment_V1_GetUserPaymentsResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `getUserPayments`(request: Loci_Payment_V1_GetUserPaymentsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Payment_V1_GetUserPaymentsResponse>
-
-    /// Admin or constrained
-    @discardableResult
-    func `refundPayment`(request: Loci_Payment_V1_RefundPaymentRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Payment_V1_RefundPaymentResponse>) -> Void) -> Connect.Cancelable
 
     /// Admin or constrained
     @available(iOS 13, *)
     func `refundPayment`(request: Loci_Payment_V1_RefundPaymentRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Payment_V1_RefundPaymentResponse>
 
     /// Invoices
-    @discardableResult
-    func `getInvoice`(request: Loci_Payment_V1_GetInvoiceRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Payment_V1_Invoice>) -> Void) -> Connect.Cancelable
-
-    /// Invoices
     @available(iOS 13, *)
     func `getInvoice`(request: Loci_Payment_V1_GetInvoiceRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Payment_V1_Invoice>
-
-    @discardableResult
-    func `getUserInvoices`(request: Loci_Payment_V1_GetUserInvoicesRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Payment_V1_GetUserInvoicesResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `getUserInvoices`(request: Loci_Payment_V1_GetUserInvoicesRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Payment_V1_GetUserInvoicesResponse>
 
     /// Subscriptions
-    @discardableResult
-    func `createSubscription`(request: Loci_Payment_V1_CreateSubscriptionRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Payment_V1_CreateSubscriptionResponse>) -> Void) -> Connect.Cancelable
-
-    /// Subscriptions
     @available(iOS 13, *)
     func `createSubscription`(request: Loci_Payment_V1_CreateSubscriptionRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Payment_V1_CreateSubscriptionResponse>
-
-    @discardableResult
-    func `cancelSubscription`(request: Loci_Payment_V1_CancelSubscriptionRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Payment_V1_CancelSubscriptionResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `cancelSubscription`(request: Loci_Payment_V1_CancelSubscriptionRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Payment_V1_CancelSubscriptionResponse>
 
-    @discardableResult
-    func `getUserSubscriptions`(request: Loci_Payment_V1_GetUserSubscriptionsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Payment_V1_GetUserSubscriptionsResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `getUserSubscriptions`(request: Loci_Payment_V1_GetUserSubscriptionsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Payment_V1_GetUserSubscriptionsResponse>
-
-    @discardableResult
-    func `getSubscription`(request: Loci_Payment_V1_GetSubscriptionRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Payment_V1_GetSubscriptionResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `getSubscription`(request: Loci_Payment_V1_GetSubscriptionRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Payment_V1_GetSubscriptionResponse>
 
     /// Stripe Checkout & Portal
-    @discardableResult
-    func `createCheckoutSession`(request: Loci_Payment_V1_CreateCheckoutSessionRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Payment_V1_CreateCheckoutSessionResponse>) -> Void) -> Connect.Cancelable
-
-    /// Stripe Checkout & Portal
     @available(iOS 13, *)
     func `createCheckoutSession`(request: Loci_Payment_V1_CreateCheckoutSessionRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Payment_V1_CreateCheckoutSessionResponse>
-
-    @discardableResult
-    func `createCustomerPortalSession`(request: Loci_Payment_V1_CreateCustomerPortalSessionRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Payment_V1_CreateCustomerPortalSessionResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `createCustomerPortalSession`(request: Loci_Payment_V1_CreateCustomerPortalSessionRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Payment_V1_CreateCustomerPortalSessionResponse>
@@ -102,19 +61,9 @@ public final class Loci_Payment_V1_PaymentServiceClient: Loci_Payment_V1_Payment
         self.client = client
     }
 
-    @discardableResult
-    public func `createPayment`(request: Loci_Payment_V1_CreatePaymentRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Payment_V1_CreatePaymentResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.payment.v1.PaymentService/CreatePayment", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `createPayment`(request: Loci_Payment_V1_CreatePaymentRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Payment_V1_CreatePaymentResponse> {
         return await self.client.unary(path: "/loci.payment.v1.PaymentService/CreatePayment", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getPayment`(request: Loci_Payment_V1_GetPaymentRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Payment_V1_GetPaymentResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.payment.v1.PaymentService/GetPayment", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -122,19 +71,9 @@ public final class Loci_Payment_V1_PaymentServiceClient: Loci_Payment_V1_Payment
         return await self.client.unary(path: "/loci.payment.v1.PaymentService/GetPayment", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getUserPayments`(request: Loci_Payment_V1_GetUserPaymentsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Payment_V1_GetUserPaymentsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.payment.v1.PaymentService/GetUserPayments", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getUserPayments`(request: Loci_Payment_V1_GetUserPaymentsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Payment_V1_GetUserPaymentsResponse> {
         return await self.client.unary(path: "/loci.payment.v1.PaymentService/GetUserPayments", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `refundPayment`(request: Loci_Payment_V1_RefundPaymentRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Payment_V1_RefundPaymentResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.payment.v1.PaymentService/RefundPayment", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -142,19 +81,9 @@ public final class Loci_Payment_V1_PaymentServiceClient: Loci_Payment_V1_Payment
         return await self.client.unary(path: "/loci.payment.v1.PaymentService/RefundPayment", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getInvoice`(request: Loci_Payment_V1_GetInvoiceRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Payment_V1_Invoice>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.payment.v1.PaymentService/GetInvoice", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getInvoice`(request: Loci_Payment_V1_GetInvoiceRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Payment_V1_Invoice> {
         return await self.client.unary(path: "/loci.payment.v1.PaymentService/GetInvoice", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getUserInvoices`(request: Loci_Payment_V1_GetUserInvoicesRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Payment_V1_GetUserInvoicesResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.payment.v1.PaymentService/GetUserInvoices", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -162,19 +91,9 @@ public final class Loci_Payment_V1_PaymentServiceClient: Loci_Payment_V1_Payment
         return await self.client.unary(path: "/loci.payment.v1.PaymentService/GetUserInvoices", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `createSubscription`(request: Loci_Payment_V1_CreateSubscriptionRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Payment_V1_CreateSubscriptionResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.payment.v1.PaymentService/CreateSubscription", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `createSubscription`(request: Loci_Payment_V1_CreateSubscriptionRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Payment_V1_CreateSubscriptionResponse> {
         return await self.client.unary(path: "/loci.payment.v1.PaymentService/CreateSubscription", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `cancelSubscription`(request: Loci_Payment_V1_CancelSubscriptionRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Payment_V1_CancelSubscriptionResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.payment.v1.PaymentService/CancelSubscription", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -182,19 +101,9 @@ public final class Loci_Payment_V1_PaymentServiceClient: Loci_Payment_V1_Payment
         return await self.client.unary(path: "/loci.payment.v1.PaymentService/CancelSubscription", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getUserSubscriptions`(request: Loci_Payment_V1_GetUserSubscriptionsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Payment_V1_GetUserSubscriptionsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.payment.v1.PaymentService/GetUserSubscriptions", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getUserSubscriptions`(request: Loci_Payment_V1_GetUserSubscriptionsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Payment_V1_GetUserSubscriptionsResponse> {
         return await self.client.unary(path: "/loci.payment.v1.PaymentService/GetUserSubscriptions", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getSubscription`(request: Loci_Payment_V1_GetSubscriptionRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Payment_V1_GetSubscriptionResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.payment.v1.PaymentService/GetSubscription", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -202,19 +111,9 @@ public final class Loci_Payment_V1_PaymentServiceClient: Loci_Payment_V1_Payment
         return await self.client.unary(path: "/loci.payment.v1.PaymentService/GetSubscription", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `createCheckoutSession`(request: Loci_Payment_V1_CreateCheckoutSessionRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Payment_V1_CreateCheckoutSessionResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.payment.v1.PaymentService/CreateCheckoutSession", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `createCheckoutSession`(request: Loci_Payment_V1_CreateCheckoutSessionRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Payment_V1_CreateCheckoutSessionResponse> {
         return await self.client.unary(path: "/loci.payment.v1.PaymentService/CreateCheckoutSession", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `createCustomerPortalSession`(request: Loci_Payment_V1_CreateCustomerPortalSessionRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Payment_V1_CreateCustomerPortalSessionResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.payment.v1.PaymentService/CreateCustomerPortalSession", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

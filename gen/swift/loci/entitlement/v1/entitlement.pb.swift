@@ -15,12 +15,12 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
-public nonisolated struct Loci_Entitlement_V1_GetEntitlementsRequest: Sendable {
+public struct Loci_Entitlement_V1_GetEntitlementsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -30,7 +30,7 @@ public nonisolated struct Loci_Entitlement_V1_GetEntitlementsRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Entitlement_V1_Entitlements: Sendable {
+public struct Loci_Entitlement_V1_Entitlements: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -61,9 +61,9 @@ public nonisolated struct Loci_Entitlement_V1_Entitlements: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.entitlement.v1"
+fileprivate let _protobuf_package = "loci.entitlement.v1"
 
-nonisolated extension Loci_Entitlement_V1_GetEntitlementsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Entitlement_V1_GetEntitlementsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetEntitlementsRequest"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
@@ -82,9 +82,17 @@ nonisolated extension Loci_Entitlement_V1_GetEntitlementsRequest: SwiftProtobuf.
   }
 }
 
-nonisolated extension Loci_Entitlement_V1_Entitlements: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Entitlement_V1_Entitlements: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Entitlements"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}plan\0\u{3}lists_used\0\u{3}lists_limit\0\u{3}places_saved\0\u{3}places_limit\0\u{3}advanced_filters\0\u{3}export_full\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "plan"),
+    2: .standard(proto: "lists_used"),
+    3: .standard(proto: "lists_limit"),
+    4: .standard(proto: "places_saved"),
+    5: .standard(proto: "places_limit"),
+    6: .standard(proto: "advanced_filters"),
+    7: .standard(proto: "export_full"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

@@ -15,13 +15,13 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// CityDetail represents a city
-public nonisolated struct Loci_City_CityDetail: Sendable {
+public struct Loci_City_CityDetail: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -33,31 +33,31 @@ public nonisolated struct Loci_City_CityDetail: Sendable {
   public var country: String = String()
 
   public var stateProvince: String {
-    get {_stateProvince ?? String()}
+    get {return _stateProvince ?? String()}
     set {_stateProvince = newValue}
   }
   /// Returns true if `stateProvince` has been explicitly set.
-  public var hasStateProvince: Bool {self._stateProvince != nil}
+  public var hasStateProvince: Bool {return self._stateProvince != nil}
   /// Clears the value of `stateProvince`. Subsequent reads from it will return its default value.
   public mutating func clearStateProvince() {self._stateProvince = nil}
 
   public var aiSummary: String = String()
 
   public var centerLatitude: Double {
-    get {_centerLatitude ?? 0}
+    get {return _centerLatitude ?? 0}
     set {_centerLatitude = newValue}
   }
   /// Returns true if `centerLatitude` has been explicitly set.
-  public var hasCenterLatitude: Bool {self._centerLatitude != nil}
+  public var hasCenterLatitude: Bool {return self._centerLatitude != nil}
   /// Clears the value of `centerLatitude`. Subsequent reads from it will return its default value.
   public mutating func clearCenterLatitude() {self._centerLatitude = nil}
 
   public var centerLongitude: Double {
-    get {_centerLongitude ?? 0}
+    get {return _centerLongitude ?? 0}
     set {_centerLongitude = newValue}
   }
   /// Returns true if `centerLongitude` has been explicitly set.
-  public var hasCenterLongitude: Bool {self._centerLongitude != nil}
+  public var hasCenterLongitude: Bool {return self._centerLongitude != nil}
   /// Clears the value of `centerLongitude`. Subsequent reads from it will return its default value.
   public mutating func clearCenterLongitude() {self._centerLongitude = nil}
 
@@ -71,7 +71,7 @@ public nonisolated struct Loci_City_CityDetail: Sendable {
 }
 
 /// GeneralCityData contains general information about a city
-public nonisolated struct Loci_City_GeneralCityData: Sendable {
+public struct Loci_City_GeneralCityData: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -81,31 +81,31 @@ public nonisolated struct Loci_City_GeneralCityData: Sendable {
   public var country: String = String()
 
   public var stateProvince: String {
-    get {_stateProvince ?? String()}
+    get {return _stateProvince ?? String()}
     set {_stateProvince = newValue}
   }
   /// Returns true if `stateProvince` has been explicitly set.
-  public var hasStateProvince: Bool {self._stateProvince != nil}
+  public var hasStateProvince: Bool {return self._stateProvince != nil}
   /// Clears the value of `stateProvince`. Subsequent reads from it will return its default value.
   public mutating func clearStateProvince() {self._stateProvince = nil}
 
   public var description_p: String = String()
 
   public var centerLatitude: Double {
-    get {_centerLatitude ?? 0}
+    get {return _centerLatitude ?? 0}
     set {_centerLatitude = newValue}
   }
   /// Returns true if `centerLatitude` has been explicitly set.
-  public var hasCenterLatitude: Bool {self._centerLatitude != nil}
+  public var hasCenterLatitude: Bool {return self._centerLatitude != nil}
   /// Clears the value of `centerLatitude`. Subsequent reads from it will return its default value.
   public mutating func clearCenterLatitude() {self._centerLatitude = nil}
 
   public var centerLongitude: Double {
-    get {_centerLongitude ?? 0}
+    get {return _centerLongitude ?? 0}
     set {_centerLongitude = newValue}
   }
   /// Returns true if `centerLongitude` has been explicitly set.
-  public var hasCenterLongitude: Bool {self._centerLongitude != nil}
+  public var hasCenterLongitude: Bool {return self._centerLongitude != nil}
   /// Clears the value of `centerLongitude`. Subsequent reads from it will return its default value.
   public mutating func clearCenterLongitude() {self._centerLongitude = nil}
 
@@ -133,7 +133,7 @@ public nonisolated struct Loci_City_GeneralCityData: Sendable {
 }
 
 /// GetCityRequest for retrieving city details
-public nonisolated struct Loci_City_GetCityRequest: Sendable {
+public struct Loci_City_GetCityRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -158,7 +158,7 @@ public nonisolated struct Loci_City_GetCityRequest: Sendable {
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  public nonisolated enum OneOf_Identifier: Equatable, Sendable {
+  public enum OneOf_Identifier: Equatable, Sendable {
     case cityID(String)
     case cityName(String)
 
@@ -168,17 +168,17 @@ public nonisolated struct Loci_City_GetCityRequest: Sendable {
 }
 
 /// GetCityResponse for city details retrieval
-public nonisolated struct Loci_City_GetCityResponse: Sendable {
+public struct Loci_City_GetCityResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var city: Loci_City_CityDetail {
-    get {_city ?? Loci_City_CityDetail()}
+    get {return _city ?? Loci_City_CityDetail()}
     set {_city = newValue}
   }
   /// Returns true if `city` has been explicitly set.
-  public var hasCity: Bool {self._city != nil}
+  public var hasCity: Bool {return self._city != nil}
   /// Clears the value of `city`. Subsequent reads from it will return its default value.
   public mutating func clearCity() {self._city = nil}
 
@@ -190,7 +190,7 @@ public nonisolated struct Loci_City_GetCityResponse: Sendable {
 }
 
 /// SearchCitiesRequest for searching cities
-public nonisolated struct Loci_City_SearchCitiesRequest: Sendable {
+public struct Loci_City_SearchCitiesRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -201,11 +201,11 @@ public nonisolated struct Loci_City_SearchCitiesRequest: Sendable {
   public var query: String = String()
 
   public var limit: Int32 {
-    get {_limit ?? 0}
+    get {return _limit ?? 0}
     set {_limit = newValue}
   }
   /// Returns true if `limit` has been explicitly set.
-  public var hasLimit: Bool {self._limit != nil}
+  public var hasLimit: Bool {return self._limit != nil}
   /// Clears the value of `limit`. Subsequent reads from it will return its default value.
   public mutating func clearLimit() {self._limit = nil}
 
@@ -217,7 +217,7 @@ public nonisolated struct Loci_City_SearchCitiesRequest: Sendable {
 }
 
 /// SearchCitiesResponse for city search results
-public nonisolated struct Loci_City_SearchCitiesResponse: Sendable {
+public struct Loci_City_SearchCitiesResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -231,11 +231,19 @@ public nonisolated struct Loci_City_SearchCitiesResponse: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.city"
+fileprivate let _protobuf_package = "loci.city"
 
-nonisolated extension Loci_City_CityDetail: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_City_CityDetail: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CityDetail"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{1}country\0\u{3}state_province\0\u{3}ai_summary\0\u{3}center_latitude\0\u{3}center_longitude\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "name"),
+    3: .same(proto: "country"),
+    4: .standard(proto: "state_province"),
+    5: .standard(proto: "ai_summary"),
+    6: .standard(proto: "center_latitude"),
+    7: .standard(proto: "center_longitude"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -297,9 +305,23 @@ nonisolated extension Loci_City_CityDetail: SwiftProtobuf.Message, SwiftProtobuf
   }
 }
 
-nonisolated extension Loci_City_GeneralCityData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_City_GeneralCityData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GeneralCityData"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}city\0\u{1}country\0\u{3}state_province\0\u{1}description\0\u{3}center_latitude\0\u{3}center_longitude\0\u{1}population\0\u{1}area\0\u{1}timezone\0\u{1}language\0\u{1}weather\0\u{1}attractions\0\u{1}history\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "city"),
+    2: .same(proto: "country"),
+    3: .standard(proto: "state_province"),
+    4: .same(proto: "description"),
+    5: .standard(proto: "center_latitude"),
+    6: .standard(proto: "center_longitude"),
+    7: .same(proto: "population"),
+    8: .same(proto: "area"),
+    9: .same(proto: "timezone"),
+    10: .same(proto: "language"),
+    11: .same(proto: "weather"),
+    12: .same(proto: "attractions"),
+    13: .same(proto: "history"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -391,9 +413,12 @@ nonisolated extension Loci_City_GeneralCityData: SwiftProtobuf.Message, SwiftPro
   }
 }
 
-nonisolated extension Loci_City_GetCityRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_City_GetCityRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetCityRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}city_id\0\u{3}city_name\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "city_id"),
+    2: .standard(proto: "city_name"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -448,9 +473,11 @@ nonisolated extension Loci_City_GetCityRequest: SwiftProtobuf.Message, SwiftProt
   }
 }
 
-nonisolated extension Loci_City_GetCityResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_City_GetCityResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetCityResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}city\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "city"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -482,9 +509,12 @@ nonisolated extension Loci_City_GetCityResponse: SwiftProtobuf.Message, SwiftPro
   }
 }
 
-nonisolated extension Loci_City_SearchCitiesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_City_SearchCitiesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SearchCitiesRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}query\0\u{1}limit\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "query"),
+    2: .same(proto: "limit"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -521,9 +551,11 @@ nonisolated extension Loci_City_SearchCitiesRequest: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_City_SearchCitiesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_City_SearchCitiesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SearchCitiesResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}cities\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "cities"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

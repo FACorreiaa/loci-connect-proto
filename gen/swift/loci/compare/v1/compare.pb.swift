@@ -15,13 +15,13 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// CompareRecommendation is the server's pick among candidates (or both).
-public nonisolated enum Loci_Compare_V1_CompareRecommendation: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Compare_V1_CompareRecommendation: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case first // = 1
@@ -64,7 +64,7 @@ public nonisolated enum Loci_Compare_V1_CompareRecommendation: SwiftProtobuf.Enu
 }
 
 /// BookingLink is a partner deeplink (Booking.com, TheFork, etc.).
-public nonisolated struct Loci_Compare_V1_BookingLink: Sendable {
+public struct Loci_Compare_V1_BookingLink: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -81,7 +81,7 @@ public nonisolated struct Loci_Compare_V1_BookingLink: Sendable {
 }
 
 /// TransportLink is a ride/transit deeplink or estimate.
-public nonisolated struct Loci_Compare_V1_TransportLink: Sendable {
+public struct Loci_Compare_V1_TransportLink: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -93,11 +93,11 @@ public nonisolated struct Loci_Compare_V1_TransportLink: Sendable {
   public var durationMins: Int32 = 0
 
   public var url: String {
-    get {_url ?? String()}
+    get {return _url ?? String()}
     set {_url = newValue}
   }
   /// Returns true if `url` has been explicitly set.
-  public var hasURL: Bool {self._url != nil}
+  public var hasURL: Bool {return self._url != nil}
   /// Clears the value of `url`. Subsequent reads from it will return its default value.
   public mutating func clearURL() {self._url = nil}
 
@@ -109,99 +109,99 @@ public nonisolated struct Loci_Compare_V1_TransportLink: Sendable {
 }
 
 /// CityCompareColumn is one candidate city's side-by-side summary.
-public nonisolated struct Loci_Compare_V1_CityCompareColumn: @unchecked Sendable {
+public struct Loci_Compare_V1_CityCompareColumn: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var cityName: String {
-    get {_storage._cityName}
+    get {return _storage._cityName}
     set {_uniqueStorage()._cityName = newValue}
   }
 
   public var cityID: String {
-    get {_storage._cityID}
+    get {return _storage._cityID}
     set {_uniqueStorage()._cityID = newValue}
   }
 
   public var country: String {
-    get {_storage._country}
+    get {return _storage._country}
     set {_uniqueStorage()._country = newValue}
   }
 
   public var centerLat: Double {
-    get {_storage._centerLat}
+    get {return _storage._centerLat}
     set {_uniqueStorage()._centerLat = newValue}
   }
 
   public var centerLon: Double {
-    get {_storage._centerLon}
+    get {return _storage._centerLon}
     set {_uniqueStorage()._centerLon = newValue}
   }
 
   public var distanceKm: Double {
-    get {_storage._distanceKm}
+    get {return _storage._distanceKm}
     set {_uniqueStorage()._distanceKm = newValue}
   }
 
   public var travelMins: Int32 {
-    get {_storage._travelMins}
+    get {return _storage._travelMins}
     set {_uniqueStorage()._travelMins = newValue}
   }
 
   public var weather: [Loci_Localcontext_WeatherDay] {
-    get {_storage._weather}
+    get {return _storage._weather}
     set {_uniqueStorage()._weather = newValue}
   }
 
   public var weatherIsEstimated: Bool {
-    get {_storage._weatherIsEstimated}
+    get {return _storage._weatherIsEstimated}
     set {_uniqueStorage()._weatherIsEstimated = newValue}
   }
 
   public var topPois: [Loci_Poi_POIDetailedInfo] {
-    get {_storage._topPois}
+    get {return _storage._topPois}
     set {_uniqueStorage()._topPois = newValue}
   }
 
   public var pros: [String] {
-    get {_storage._pros}
+    get {return _storage._pros}
     set {_uniqueStorage()._pros = newValue}
   }
 
   public var cons: [String] {
-    get {_storage._cons}
+    get {return _storage._cons}
     set {_uniqueStorage()._cons = newValue}
   }
 
   public var bookingOptions: [Loci_Compare_V1_BookingLink] {
-    get {_storage._bookingOptions}
+    get {return _storage._bookingOptions}
     set {_uniqueStorage()._bookingOptions = newValue}
   }
 
   public var transportOptions: [Loci_Compare_V1_TransportLink] {
-    get {_storage._transportOptions}
+    get {return _storage._transportOptions}
     set {_uniqueStorage()._transportOptions = newValue}
   }
 
   public var staySnippet: String {
-    get {_storage._staySnippet}
+    get {return _storage._staySnippet}
     set {_uniqueStorage()._staySnippet = newValue}
   }
 
   public var eatSnippet: String {
-    get {_storage._eatSnippet}
+    get {return _storage._eatSnippet}
     set {_uniqueStorage()._eatSnippet = newValue}
   }
 
   /// The go/no-go judgement for this city in the requested window, computed from
   /// the same weather, travel and POI data shown in this column.
   public var goScore: Loci_Localcontext_GoScore {
-    get {_storage._goScore ?? Loci_Localcontext_GoScore()}
+    get {return _storage._goScore ?? Loci_Localcontext_GoScore()}
     set {_uniqueStorage()._goScore = newValue}
   }
   /// Returns true if `goScore` has been explicitly set.
-  public var hasGoScore: Bool {_storage._goScore != nil}
+  public var hasGoScore: Bool {return _storage._goScore != nil}
   /// Clears the value of `goScore`. Subsequent reads from it will return its default value.
   public mutating func clearGoScore() {_uniqueStorage()._goScore = nil}
 
@@ -213,7 +213,7 @@ public nonisolated struct Loci_Compare_V1_CityCompareColumn: @unchecked Sendable
 }
 
 /// PlannedCity is one city in a multi-city route, with the days it gets.
-public nonisolated struct Loci_Compare_V1_PlannedCity: Sendable {
+public struct Loci_Compare_V1_PlannedCity: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -221,11 +221,11 @@ public nonisolated struct Loci_Compare_V1_PlannedCity: Sendable {
   public var cityName: String = String()
 
   public var cityID: String {
-    get {_cityID ?? String()}
+    get {return _cityID ?? String()}
     set {_cityID = newValue}
   }
   /// Returns true if `cityID` has been explicitly set.
-  public var hasCityID: Bool {self._cityID != nil}
+  public var hasCityID: Bool {return self._cityID != nil}
   /// Clears the value of `cityID`. Subsequent reads from it will return its default value.
   public mutating func clearCityID() {self._cityID = nil}
 
@@ -238,11 +238,11 @@ public nonisolated struct Loci_Compare_V1_PlannedCity: Sendable {
 
   /// The city's go-score, so the route can be justified rather than asserted.
   public var goScore: Loci_Localcontext_GoScore {
-    get {_goScore ?? Loci_Localcontext_GoScore()}
+    get {return _goScore ?? Loci_Localcontext_GoScore()}
     set {_goScore = newValue}
   }
   /// Returns true if `goScore` has been explicitly set.
-  public var hasGoScore: Bool {self._goScore != nil}
+  public var hasGoScore: Bool {return self._goScore != nil}
   /// Clears the value of `goScore`. Subsequent reads from it will return its default value.
   public mutating func clearGoScore() {self._goScore = nil}
 
@@ -255,7 +255,7 @@ public nonisolated struct Loci_Compare_V1_PlannedCity: Sendable {
 }
 
 /// DroppedCity is a candidate the planner left out, and why.
-public nonisolated struct Loci_Compare_V1_DroppedCity: Sendable {
+public struct Loci_Compare_V1_DroppedCity: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -272,7 +272,7 @@ public nonisolated struct Loci_Compare_V1_DroppedCity: Sendable {
 /// MultiCityPlan is a route through any number of cities over any number of days.
 /// It generalises DualCityOption, which only ever answered "can I do these two in
 /// a weekend?".
-public nonisolated struct Loci_Compare_V1_MultiCityPlan: Sendable {
+public struct Loci_Compare_V1_MultiCityPlan: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -308,7 +308,7 @@ public nonisolated struct Loci_Compare_V1_MultiCityPlan: Sendable {
 
 /// DualCityOption describes whether a two-city weekend is feasible.
 /// Deprecated: use MultiCityPlan, which handles any number of cities and days.
-public nonisolated struct Loci_Compare_V1_DualCityOption: Sendable {
+public struct Loci_Compare_V1_DualCityOption: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -327,64 +327,64 @@ public nonisolated struct Loci_Compare_V1_DualCityOption: Sendable {
 }
 
 /// CompareWeekendRequest compares 2–3 candidate cities for a short trip window.
-public nonisolated struct Loci_Compare_V1_CompareWeekendRequest: Sendable {
+public struct Loci_Compare_V1_CompareWeekendRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var originCity: String {
-    get {_originCity ?? String()}
+    get {return _originCity ?? String()}
     set {_originCity = newValue}
   }
   /// Returns true if `originCity` has been explicitly set.
-  public var hasOriginCity: Bool {self._originCity != nil}
+  public var hasOriginCity: Bool {return self._originCity != nil}
   /// Clears the value of `originCity`. Subsequent reads from it will return its default value.
   public mutating func clearOriginCity() {self._originCity = nil}
 
   public var originLat: Double {
-    get {_originLat ?? 0}
+    get {return _originLat ?? 0}
     set {_originLat = newValue}
   }
   /// Returns true if `originLat` has been explicitly set.
-  public var hasOriginLat: Bool {self._originLat != nil}
+  public var hasOriginLat: Bool {return self._originLat != nil}
   /// Clears the value of `originLat`. Subsequent reads from it will return its default value.
   public mutating func clearOriginLat() {self._originLat = nil}
 
   public var originLon: Double {
-    get {_originLon ?? 0}
+    get {return _originLon ?? 0}
     set {_originLon = newValue}
   }
   /// Returns true if `originLon` has been explicitly set.
-  public var hasOriginLon: Bool {self._originLon != nil}
+  public var hasOriginLon: Bool {return self._originLon != nil}
   /// Clears the value of `originLon`. Subsequent reads from it will return its default value.
   public mutating func clearOriginLon() {self._originLon = nil}
 
   public var candidateCityNames: [String] = []
 
   public var startDate: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_startDate ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _startDate ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_startDate = newValue}
   }
   /// Returns true if `startDate` has been explicitly set.
-  public var hasStartDate: Bool {self._startDate != nil}
+  public var hasStartDate: Bool {return self._startDate != nil}
   /// Clears the value of `startDate`. Subsequent reads from it will return its default value.
   public mutating func clearStartDate() {self._startDate = nil}
 
   public var endDate: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_endDate ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _endDate ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_endDate = newValue}
   }
   /// Returns true if `endDate` has been explicitly set.
-  public var hasEndDate: Bool {self._endDate != nil}
+  public var hasEndDate: Bool {return self._endDate != nil}
   /// Clears the value of `endDate`. Subsequent reads from it will return its default value.
   public mutating func clearEndDate() {self._endDate = nil}
 
   public var profileID: String {
-    get {_profileID ?? String()}
+    get {return _profileID ?? String()}
     set {_profileID = newValue}
   }
   /// Returns true if `profileID` has been explicitly set.
-  public var hasProfileID: Bool {self._profileID != nil}
+  public var hasProfileID: Bool {return self._profileID != nil}
   /// Clears the value of `profileID`. Subsequent reads from it will return its default value.
   public mutating func clearProfileID() {self._profileID = nil}
 
@@ -401,57 +401,57 @@ public nonisolated struct Loci_Compare_V1_CompareWeekendRequest: Sendable {
 }
 
 /// CompareWeekendResponse holds columns plus an optional dual-city outline.
-public nonisolated struct Loci_Compare_V1_CompareWeekendResponse: @unchecked Sendable {
+public struct Loci_Compare_V1_CompareWeekendResponse: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var originCity: String {
-    get {_storage._originCity}
+    get {return _storage._originCity}
     set {_uniqueStorage()._originCity = newValue}
   }
 
   public var originLat: Double {
-    get {_storage._originLat}
+    get {return _storage._originLat}
     set {_uniqueStorage()._originLat = newValue}
   }
 
   public var originLon: Double {
-    get {_storage._originLon}
+    get {return _storage._originLon}
     set {_uniqueStorage()._originLon = newValue}
   }
 
   public var columns: [Loci_Compare_V1_CityCompareColumn] {
-    get {_storage._columns}
+    get {return _storage._columns}
     set {_uniqueStorage()._columns = newValue}
   }
 
   public var dualCityOption: Loci_Compare_V1_DualCityOption {
-    get {_storage._dualCityOption ?? Loci_Compare_V1_DualCityOption()}
+    get {return _storage._dualCityOption ?? Loci_Compare_V1_DualCityOption()}
     set {_uniqueStorage()._dualCityOption = newValue}
   }
   /// Returns true if `dualCityOption` has been explicitly set.
-  public var hasDualCityOption: Bool {_storage._dualCityOption != nil}
+  public var hasDualCityOption: Bool {return _storage._dualCityOption != nil}
   /// Clears the value of `dualCityOption`. Subsequent reads from it will return its default value.
   public mutating func clearDualCityOption() {_uniqueStorage()._dualCityOption = nil}
 
   /// The general plan. Prefer this over dual_city_option.
   public var multiCityPlan: Loci_Compare_V1_MultiCityPlan {
-    get {_storage._multiCityPlan ?? Loci_Compare_V1_MultiCityPlan()}
+    get {return _storage._multiCityPlan ?? Loci_Compare_V1_MultiCityPlan()}
     set {_uniqueStorage()._multiCityPlan = newValue}
   }
   /// Returns true if `multiCityPlan` has been explicitly set.
-  public var hasMultiCityPlan: Bool {_storage._multiCityPlan != nil}
+  public var hasMultiCityPlan: Bool {return _storage._multiCityPlan != nil}
   /// Clears the value of `multiCityPlan`. Subsequent reads from it will return its default value.
   public mutating func clearMultiCityPlan() {_uniqueStorage()._multiCityPlan = nil}
 
   public var recommendation: Loci_Compare_V1_CompareRecommendation {
-    get {_storage._recommendation}
+    get {return _storage._recommendation}
     set {_uniqueStorage()._recommendation = newValue}
   }
 
   public var recommendationReason: String {
-    get {_storage._recommendationReason}
+    get {return _storage._recommendationReason}
     set {_uniqueStorage()._recommendationReason = newValue}
   }
 
@@ -464,15 +464,24 @@ public nonisolated struct Loci_Compare_V1_CompareWeekendResponse: @unchecked Sen
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.compare.v1"
+fileprivate let _protobuf_package = "loci.compare.v1"
 
-nonisolated extension Loci_Compare_V1_CompareRecommendation: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0COMPARE_RECOMMENDATION_UNSPECIFIED\0\u{1}COMPARE_RECOMMENDATION_FIRST\0\u{1}COMPARE_RECOMMENDATION_SECOND\0\u{1}COMPARE_RECOMMENDATION_BOTH\0")
+extension Loci_Compare_V1_CompareRecommendation: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "COMPARE_RECOMMENDATION_UNSPECIFIED"),
+    1: .same(proto: "COMPARE_RECOMMENDATION_FIRST"),
+    2: .same(proto: "COMPARE_RECOMMENDATION_SECOND"),
+    3: .same(proto: "COMPARE_RECOMMENDATION_BOTH"),
+  ]
 }
 
-nonisolated extension Loci_Compare_V1_BookingLink: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Compare_V1_BookingLink: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".BookingLink"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}provider\0\u{1}label\0\u{1}url\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "provider"),
+    2: .same(proto: "label"),
+    3: .same(proto: "url"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -510,9 +519,14 @@ nonisolated extension Loci_Compare_V1_BookingLink: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension Loci_Compare_V1_TransportLink: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Compare_V1_TransportLink: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".TransportLink"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}mode\0\u{1}summary\0\u{3}duration_mins\0\u{1}url\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "mode"),
+    2: .same(proto: "summary"),
+    3: .standard(proto: "duration_mins"),
+    4: .same(proto: "url"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -559,9 +573,27 @@ nonisolated extension Loci_Compare_V1_TransportLink: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_Compare_V1_CityCompareColumn: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Compare_V1_CityCompareColumn: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CityCompareColumn"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}city_name\0\u{3}city_id\0\u{1}country\0\u{3}center_lat\0\u{3}center_lon\0\u{3}distance_km\0\u{3}travel_mins\0\u{1}weather\0\u{3}weather_is_estimated\0\u{3}top_pois\0\u{1}pros\0\u{1}cons\0\u{3}booking_options\0\u{3}transport_options\0\u{3}stay_snippet\0\u{3}eat_snippet\0\u{3}go_score\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "city_name"),
+    2: .standard(proto: "city_id"),
+    3: .same(proto: "country"),
+    4: .standard(proto: "center_lat"),
+    5: .standard(proto: "center_lon"),
+    6: .standard(proto: "distance_km"),
+    7: .standard(proto: "travel_mins"),
+    8: .same(proto: "weather"),
+    9: .standard(proto: "weather_is_estimated"),
+    10: .standard(proto: "top_pois"),
+    11: .same(proto: "pros"),
+    12: .same(proto: "cons"),
+    13: .standard(proto: "booking_options"),
+    14: .standard(proto: "transport_options"),
+    15: .standard(proto: "stay_snippet"),
+    16: .standard(proto: "eat_snippet"),
+    17: .standard(proto: "go_score"),
+  ]
 
   fileprivate class _StorageClass {
     var _cityName: String = String()
@@ -582,11 +614,15 @@ nonisolated extension Loci_Compare_V1_CityCompareColumn: SwiftProtobuf.Message, 
     var _eatSnippet: String = String()
     var _goScore: Loci_Localcontext_GoScore? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -741,9 +777,16 @@ nonisolated extension Loci_Compare_V1_CityCompareColumn: SwiftProtobuf.Message, 
   }
 }
 
-nonisolated extension Loci_Compare_V1_PlannedCity: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Compare_V1_PlannedCity: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PlannedCity"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}city_name\0\u{3}city_id\0\u{1}lat\0\u{1}lon\0\u{3}day_numbers\0\u{3}go_score\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "city_name"),
+    2: .standard(proto: "city_id"),
+    3: .same(proto: "lat"),
+    4: .same(proto: "lon"),
+    5: .standard(proto: "day_numbers"),
+    6: .standard(proto: "go_score"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -800,9 +843,12 @@ nonisolated extension Loci_Compare_V1_PlannedCity: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension Loci_Compare_V1_DroppedCity: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Compare_V1_DroppedCity: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DroppedCity"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}city_name\0\u{1}reason\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "city_name"),
+    2: .same(proto: "reason"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -835,9 +881,19 @@ nonisolated extension Loci_Compare_V1_DroppedCity: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension Loci_Compare_V1_MultiCityPlan: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Compare_V1_MultiCityPlan: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".MultiCityPlan"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}feasible\0\u{1}cities\0\u{1}dropped\0\u{1}legs\0\u{3}total_travel_mins\0\u{3}travel_share\0\u{1}outline\0\u{1}warnings\0\u{3}pro_only\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "feasible"),
+    2: .same(proto: "cities"),
+    3: .same(proto: "dropped"),
+    4: .same(proto: "legs"),
+    5: .standard(proto: "total_travel_mins"),
+    6: .standard(proto: "travel_share"),
+    7: .same(proto: "outline"),
+    8: .same(proto: "warnings"),
+    9: .standard(proto: "pro_only"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -905,9 +961,14 @@ nonisolated extension Loci_Compare_V1_MultiCityPlan: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_Compare_V1_DualCityOption: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Compare_V1_DualCityOption: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DualCityOption"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}feasible\0\u{1}outline\0\u{3}total_travel_mins\0\u{3}pro_only\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "feasible"),
+    2: .same(proto: "outline"),
+    3: .standard(proto: "total_travel_mins"),
+    4: .standard(proto: "pro_only"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -950,9 +1011,17 @@ nonisolated extension Loci_Compare_V1_DualCityOption: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Compare_V1_CompareWeekendRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Compare_V1_CompareWeekendRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CompareWeekendRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}origin_city\0\u{3}origin_lat\0\u{3}origin_lon\0\u{3}candidate_city_names\0\u{3}start_date\0\u{3}end_date\0\u{3}profile_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "origin_city"),
+    2: .standard(proto: "origin_lat"),
+    3: .standard(proto: "origin_lon"),
+    4: .standard(proto: "candidate_city_names"),
+    5: .standard(proto: "start_date"),
+    6: .standard(proto: "end_date"),
+    7: .standard(proto: "profile_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1014,9 +1083,18 @@ nonisolated extension Loci_Compare_V1_CompareWeekendRequest: SwiftProtobuf.Messa
   }
 }
 
-nonisolated extension Loci_Compare_V1_CompareWeekendResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Compare_V1_CompareWeekendResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CompareWeekendResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}origin_city\0\u{3}origin_lat\0\u{3}origin_lon\0\u{1}columns\0\u{3}dual_city_option\0\u{1}recommendation\0\u{3}recommendation_reason\0\u{4}\u{8}multi_city_plan\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "origin_city"),
+    2: .standard(proto: "origin_lat"),
+    3: .standard(proto: "origin_lon"),
+    4: .same(proto: "columns"),
+    5: .standard(proto: "dual_city_option"),
+    15: .standard(proto: "multi_city_plan"),
+    6: .same(proto: "recommendation"),
+    7: .standard(proto: "recommendation_reason"),
+  ]
 
   fileprivate class _StorageClass {
     var _originCity: String = String()
@@ -1028,11 +1106,15 @@ nonisolated extension Loci_Compare_V1_CompareWeekendResponse: SwiftProtobuf.Mess
     var _recommendation: Loci_Compare_V1_CompareRecommendation = .unspecified
     var _recommendationReason: String = String()
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 

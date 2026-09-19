@@ -13,71 +13,36 @@ import SwiftProtobuf
 public protocol Loci_Profile_ProfileServiceClientInterface: Sendable {
 
     /// Core profile operations
-    @discardableResult
-    func `getUserPreferenceProfiles`(request: Loci_Profile_GetUserPreferenceProfilesRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Profile_GetUserPreferenceProfilesResponse>) -> Void) -> Connect.Cancelable
-
-    /// Core profile operations
     @available(iOS 13, *)
     func `getUserPreferenceProfiles`(request: Loci_Profile_GetUserPreferenceProfilesRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Profile_GetUserPreferenceProfilesResponse>
-
-    @discardableResult
-    func `getUserPreferenceProfile`(request: Loci_Profile_GetUserPreferenceProfileRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Profile_GetUserPreferenceProfileResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `getUserPreferenceProfile`(request: Loci_Profile_GetUserPreferenceProfileRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Profile_GetUserPreferenceProfileResponse>
 
-    @discardableResult
-    func `createUserPreferenceProfile`(request: Loci_Profile_CreateUserPreferenceProfileRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `createUserPreferenceProfile`(request: Loci_Profile_CreateUserPreferenceProfileRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Common_Response>
-
-    @discardableResult
-    func `updateUserPreferenceProfile`(request: Loci_Profile_UpdateUserPreferenceProfileRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `updateUserPreferenceProfile`(request: Loci_Profile_UpdateUserPreferenceProfileRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Common_Response>
 
-    @discardableResult
-    func `deleteUserPreferenceProfile`(request: Loci_Profile_DeleteUserPreferenceProfileRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `deleteUserPreferenceProfile`(request: Loci_Profile_DeleteUserPreferenceProfileRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Common_Response>
-
-    @discardableResult
-    func `setDefaultProfile`(request: Loci_Profile_SetDefaultProfileRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `setDefaultProfile`(request: Loci_Profile_SetDefaultProfileRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Common_Response>
 
     /// Domain-specific preference queries
-    @discardableResult
-    func `getAccommodationPreferences`(request: Loci_Profile_GetDomainPreferencesRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Profile_AccommodationPreferencesResponse>) -> Void) -> Connect.Cancelable
-
-    /// Domain-specific preference queries
     @available(iOS 13, *)
     func `getAccommodationPreferences`(request: Loci_Profile_GetDomainPreferencesRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Profile_AccommodationPreferencesResponse>
-
-    @discardableResult
-    func `getDiningPreferences`(request: Loci_Profile_GetDomainPreferencesRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Profile_DiningPreferencesResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `getDiningPreferences`(request: Loci_Profile_GetDomainPreferencesRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Profile_DiningPreferencesResponse>
 
-    @discardableResult
-    func `getActivityPreferences`(request: Loci_Profile_GetDomainPreferencesRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Profile_ActivityPreferencesResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `getActivityPreferences`(request: Loci_Profile_GetDomainPreferencesRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Profile_ActivityPreferencesResponse>
 
-    @discardableResult
-    func `getItineraryPreferences`(request: Loci_Profile_GetDomainPreferencesRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Profile_ItineraryPreferencesResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `getItineraryPreferences`(request: Loci_Profile_GetDomainPreferencesRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Profile_ItineraryPreferencesResponse>
-
-    @discardableResult
-    func `getCombinedFilters`(request: Loci_Profile_GetCombinedFiltersRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Profile_CombinedFiltersResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `getCombinedFilters`(request: Loci_Profile_GetCombinedFiltersRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Profile_CombinedFiltersResponse>
@@ -91,19 +56,9 @@ public final class Loci_Profile_ProfileServiceClient: Loci_Profile_ProfileServic
         self.client = client
     }
 
-    @discardableResult
-    public func `getUserPreferenceProfiles`(request: Loci_Profile_GetUserPreferenceProfilesRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Profile_GetUserPreferenceProfilesResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.profile.ProfileService/GetUserPreferenceProfiles", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getUserPreferenceProfiles`(request: Loci_Profile_GetUserPreferenceProfilesRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Profile_GetUserPreferenceProfilesResponse> {
         return await self.client.unary(path: "/loci.profile.ProfileService/GetUserPreferenceProfiles", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getUserPreferenceProfile`(request: Loci_Profile_GetUserPreferenceProfileRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Profile_GetUserPreferenceProfileResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.profile.ProfileService/GetUserPreferenceProfile", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -111,19 +66,9 @@ public final class Loci_Profile_ProfileServiceClient: Loci_Profile_ProfileServic
         return await self.client.unary(path: "/loci.profile.ProfileService/GetUserPreferenceProfile", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `createUserPreferenceProfile`(request: Loci_Profile_CreateUserPreferenceProfileRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.profile.ProfileService/CreateUserPreferenceProfile", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `createUserPreferenceProfile`(request: Loci_Profile_CreateUserPreferenceProfileRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Common_Response> {
         return await self.client.unary(path: "/loci.profile.ProfileService/CreateUserPreferenceProfile", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `updateUserPreferenceProfile`(request: Loci_Profile_UpdateUserPreferenceProfileRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.profile.ProfileService/UpdateUserPreferenceProfile", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -131,19 +76,9 @@ public final class Loci_Profile_ProfileServiceClient: Loci_Profile_ProfileServic
         return await self.client.unary(path: "/loci.profile.ProfileService/UpdateUserPreferenceProfile", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `deleteUserPreferenceProfile`(request: Loci_Profile_DeleteUserPreferenceProfileRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.profile.ProfileService/DeleteUserPreferenceProfile", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `deleteUserPreferenceProfile`(request: Loci_Profile_DeleteUserPreferenceProfileRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Common_Response> {
         return await self.client.unary(path: "/loci.profile.ProfileService/DeleteUserPreferenceProfile", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `setDefaultProfile`(request: Loci_Profile_SetDefaultProfileRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.profile.ProfileService/SetDefaultProfile", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -151,19 +86,9 @@ public final class Loci_Profile_ProfileServiceClient: Loci_Profile_ProfileServic
         return await self.client.unary(path: "/loci.profile.ProfileService/SetDefaultProfile", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getAccommodationPreferences`(request: Loci_Profile_GetDomainPreferencesRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Profile_AccommodationPreferencesResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.profile.ProfileService/GetAccommodationPreferences", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getAccommodationPreferences`(request: Loci_Profile_GetDomainPreferencesRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Profile_AccommodationPreferencesResponse> {
         return await self.client.unary(path: "/loci.profile.ProfileService/GetAccommodationPreferences", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getDiningPreferences`(request: Loci_Profile_GetDomainPreferencesRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Profile_DiningPreferencesResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.profile.ProfileService/GetDiningPreferences", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -171,29 +96,14 @@ public final class Loci_Profile_ProfileServiceClient: Loci_Profile_ProfileServic
         return await self.client.unary(path: "/loci.profile.ProfileService/GetDiningPreferences", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getActivityPreferences`(request: Loci_Profile_GetDomainPreferencesRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Profile_ActivityPreferencesResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.profile.ProfileService/GetActivityPreferences", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getActivityPreferences`(request: Loci_Profile_GetDomainPreferencesRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Profile_ActivityPreferencesResponse> {
         return await self.client.unary(path: "/loci.profile.ProfileService/GetActivityPreferences", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getItineraryPreferences`(request: Loci_Profile_GetDomainPreferencesRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Profile_ItineraryPreferencesResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.profile.ProfileService/GetItineraryPreferences", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getItineraryPreferences`(request: Loci_Profile_GetDomainPreferencesRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Profile_ItineraryPreferencesResponse> {
         return await self.client.unary(path: "/loci.profile.ProfileService/GetItineraryPreferences", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getCombinedFilters`(request: Loci_Profile_GetCombinedFiltersRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Profile_CombinedFiltersResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.profile.ProfileService/GetCombinedFilters", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

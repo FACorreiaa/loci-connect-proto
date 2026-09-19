@@ -12,42 +12,22 @@ import SwiftProtobuf
 /// UserService defines user-related RPCs
 public protocol Loci_User_UserServiceClientInterface: Sendable {
 
-    @discardableResult
-    func `getUserProfile`(request: Loci_User_GetUserProfileRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_User_GetUserProfileResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `getUserProfile`(request: Loci_User_GetUserProfileRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_User_GetUserProfileResponse>
-
-    @discardableResult
-    func `updateUserProfile`(request: Loci_User_UpdateUserProfileRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `updateUserProfile`(request: Loci_User_UpdateUserProfileRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Common_Response>
 
     /// Data controls (GDPR-style self-service).
-    @discardableResult
-    func `exportUserData`(request: Loci_User_ExportUserDataRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_User_ExportUserDataResponse>) -> Void) -> Connect.Cancelable
-
-    /// Data controls (GDPR-style self-service).
     @available(iOS 13, *)
     func `exportUserData`(request: Loci_User_ExportUserDataRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_User_ExportUserDataResponse>
-
-    @discardableResult
-    func `deleteAccount`(request: Loci_User_DeleteAccountRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `deleteAccount`(request: Loci_User_DeleteAccountRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Common_Response>
 
     /// Notification switches, stored against the account rather than the browser.
-    @discardableResult
-    func `getNotificationSettings`(request: Loci_User_GetNotificationSettingsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_User_NotificationSettings>) -> Void) -> Connect.Cancelable
-
-    /// Notification switches, stored against the account rather than the browser.
     @available(iOS 13, *)
     func `getNotificationSettings`(request: Loci_User_GetNotificationSettingsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_User_NotificationSettings>
-
-    @discardableResult
-    func `updateNotificationSettings`(request: Loci_User_UpdateNotificationSettingsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_User_NotificationSettings>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `updateNotificationSettings`(request: Loci_User_UpdateNotificationSettingsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_User_NotificationSettings>
@@ -61,19 +41,9 @@ public final class Loci_User_UserServiceClient: Loci_User_UserServiceClientInter
         self.client = client
     }
 
-    @discardableResult
-    public func `getUserProfile`(request: Loci_User_GetUserProfileRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_User_GetUserProfileResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.user.UserService/GetUserProfile", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getUserProfile`(request: Loci_User_GetUserProfileRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_User_GetUserProfileResponse> {
         return await self.client.unary(path: "/loci.user.UserService/GetUserProfile", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `updateUserProfile`(request: Loci_User_UpdateUserProfileRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.user.UserService/UpdateUserProfile", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -81,19 +51,9 @@ public final class Loci_User_UserServiceClient: Loci_User_UserServiceClientInter
         return await self.client.unary(path: "/loci.user.UserService/UpdateUserProfile", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `exportUserData`(request: Loci_User_ExportUserDataRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_User_ExportUserDataResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.user.UserService/ExportUserData", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `exportUserData`(request: Loci_User_ExportUserDataRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_User_ExportUserDataResponse> {
         return await self.client.unary(path: "/loci.user.UserService/ExportUserData", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `deleteAccount`(request: Loci_User_DeleteAccountRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.user.UserService/DeleteAccount", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -101,19 +61,9 @@ public final class Loci_User_UserServiceClient: Loci_User_UserServiceClientInter
         return await self.client.unary(path: "/loci.user.UserService/DeleteAccount", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getNotificationSettings`(request: Loci_User_GetNotificationSettingsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_User_NotificationSettings>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.user.UserService/GetNotificationSettings", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getNotificationSettings`(request: Loci_User_GetNotificationSettingsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_User_NotificationSettings> {
         return await self.client.unary(path: "/loci.user.UserService/GetNotificationSettings", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `updateNotificationSettings`(request: Loci_User_UpdateNotificationSettingsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_User_NotificationSettings>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.user.UserService/UpdateNotificationSettings", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

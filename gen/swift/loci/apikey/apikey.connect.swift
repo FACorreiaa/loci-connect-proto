@@ -15,39 +15,16 @@ public protocol Loci_Apikey_ApiKeyServiceClientInterface: Sendable {
 
     /// CreateApiKey mints a new key. The plaintext key is returned exactly
     /// once in the response and never stored server-side.
-    @discardableResult
-    func `createApiKey`(request: Loci_Apikey_CreateApiKeyRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Apikey_CreateApiKeyResponse>) -> Void) -> Connect.Cancelable
-
-    /// CreateApiKey mints a new key. The plaintext key is returned exactly
-    /// once in the response and never stored server-side.
     @available(iOS 13, *)
     func `createApiKey`(request: Loci_Apikey_CreateApiKeyRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Apikey_CreateApiKeyResponse>
-
-    /// ListApiKeys returns metadata for the caller's keys (never plaintext).
-    @discardableResult
-    func `listApiKeys`(request: Loci_Apikey_ListApiKeysRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Apikey_ListApiKeysResponse>) -> Void) -> Connect.Cancelable
 
     /// ListApiKeys returns metadata for the caller's keys (never plaintext).
     @available(iOS 13, *)
     func `listApiKeys`(request: Loci_Apikey_ListApiKeysRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Apikey_ListApiKeysResponse>
 
     /// RevokeApiKey permanently disables a key.
-    @discardableResult
-    func `revokeApiKey`(request: Loci_Apikey_RevokeApiKeyRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Apikey_RevokeApiKeyResponse>) -> Void) -> Connect.Cancelable
-
-    /// RevokeApiKey permanently disables a key.
     @available(iOS 13, *)
     func `revokeApiKey`(request: Loci_Apikey_RevokeApiKeyRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Apikey_RevokeApiKeyResponse>
-
-    /// GetSetupInstructions previews how one kind of agent is connected.
-    ///
-    /// Deliberately takes no key and returns none: the snippets carry a
-    /// placeholder. It exists so the page can answer "what am I signing up for"
-    /// without minting a credential to answer it, and so the call it makes every
-    /// time it is opened never has a secret in its response. The real
-    /// instructions come back from CreateApiKey.
-    @discardableResult
-    func `getSetupInstructions`(request: Loci_Apikey_GetSetupInstructionsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Apikey_GetSetupInstructionsResponse>) -> Void) -> Connect.Cancelable
 
     /// GetSetupInstructions previews how one kind of agent is connected.
     ///
@@ -68,19 +45,9 @@ public final class Loci_Apikey_ApiKeyServiceClient: Loci_Apikey_ApiKeyServiceCli
         self.client = client
     }
 
-    @discardableResult
-    public func `createApiKey`(request: Loci_Apikey_CreateApiKeyRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Apikey_CreateApiKeyResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.apikey.ApiKeyService/CreateApiKey", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `createApiKey`(request: Loci_Apikey_CreateApiKeyRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Apikey_CreateApiKeyResponse> {
         return await self.client.unary(path: "/loci.apikey.ApiKeyService/CreateApiKey", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `listApiKeys`(request: Loci_Apikey_ListApiKeysRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Apikey_ListApiKeysResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.apikey.ApiKeyService/ListApiKeys", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -88,19 +55,9 @@ public final class Loci_Apikey_ApiKeyServiceClient: Loci_Apikey_ApiKeyServiceCli
         return await self.client.unary(path: "/loci.apikey.ApiKeyService/ListApiKeys", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `revokeApiKey`(request: Loci_Apikey_RevokeApiKeyRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Apikey_RevokeApiKeyResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.apikey.ApiKeyService/RevokeApiKey", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `revokeApiKey`(request: Loci_Apikey_RevokeApiKeyRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Apikey_RevokeApiKeyResponse> {
         return await self.client.unary(path: "/loci.apikey.ApiKeyService/RevokeApiKey", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getSetupInstructions`(request: Loci_Apikey_GetSetupInstructionsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Apikey_GetSetupInstructionsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.apikey.ApiKeyService/GetSetupInstructions", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

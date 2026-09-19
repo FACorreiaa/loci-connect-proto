@@ -8,11 +8,7 @@
 // For information on using the generated types, please see the documentation:
 //   https://github.com/apple/swift-protobuf/
 
-#if canImport(FoundationEssentials)
-import FoundationEssentials
-#else
 import Foundation
-#endif
 import SwiftProtobuf
 
 // If the compiler emits an error on this type, it is because this file
@@ -20,13 +16,13 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// Enums for chat types
-public nonisolated enum Loci_Chat_MessageRole: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Chat_MessageRole: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case user // = 1
@@ -68,7 +64,7 @@ public nonisolated enum Loci_Chat_MessageRole: SwiftProtobuf.Enum, Swift.CaseIte
 
 }
 
-public nonisolated enum Loci_Chat_MessageType: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Chat_MessageType: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case initialRequest // = 1
@@ -122,7 +118,7 @@ public nonisolated enum Loci_Chat_MessageType: SwiftProtobuf.Enum, Swift.CaseIte
 
 }
 
-public nonisolated enum Loci_Chat_SessionStatus: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Chat_SessionStatus: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case active // = 1
@@ -164,7 +160,7 @@ public nonisolated enum Loci_Chat_SessionStatus: SwiftProtobuf.Enum, Swift.CaseI
 
 }
 
-public nonisolated enum Loci_Chat_IntentType: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Chat_IntentType: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case initialRequest // = 1
@@ -258,7 +254,7 @@ public nonisolated enum Loci_Chat_IntentType: SwiftProtobuf.Enum, Swift.CaseIter
 
 }
 
-public nonisolated enum Loci_Chat_DomainType: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Chat_DomainType: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case general // = 1
@@ -315,7 +311,7 @@ public nonisolated enum Loci_Chat_DomainType: SwiftProtobuf.Enum, Swift.CaseIter
 /// StreamEventType is the typed discriminator for a StreamEvent. It replaces the
 /// old free-form string `type` field. The concrete payload (when present) is
 /// carried in StreamEvent.payload and its oneof case matches this enum.
-public nonisolated enum Loci_Chat_StreamEventType: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Chat_StreamEventType: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case start // = 1
@@ -402,7 +398,7 @@ public nonisolated enum Loci_Chat_StreamEventType: SwiftProtobuf.Enum, Swift.Cas
 /// Hotels and restaurants are returned as POIs like everything else, because
 /// that is how the stream already delivers them: a page has to look like what
 /// the first payload looked like.
-public nonisolated enum Loci_Chat_SessionPOISection: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Chat_SessionPOISection: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
 
   /// Itinerary stops, falling back to the general list when a session has no
@@ -456,118 +452,118 @@ public nonisolated enum Loci_Chat_SessionPOISection: SwiftProtobuf.Enum, Swift.C
 }
 
 /// LlmInteraction represents an interaction with the LLM
-public nonisolated struct Loci_Chat_LlmInteraction: @unchecked Sendable {
+public struct Loci_Chat_LlmInteraction: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var id: String {
-    get {_storage._id}
+    get {return _storage._id}
     set {_uniqueStorage()._id = newValue}
   }
 
   public var sessionID: String {
-    get {_storage._sessionID}
+    get {return _storage._sessionID}
     set {_uniqueStorage()._sessionID = newValue}
   }
 
   public var userID: String {
-    get {_storage._userID}
+    get {return _storage._userID}
     set {_uniqueStorage()._userID = newValue}
   }
 
   public var profileID: String {
-    get {_storage._profileID}
+    get {return _storage._profileID}
     set {_uniqueStorage()._profileID = newValue}
   }
 
   public var cityName: String {
-    get {_storage._cityName ?? String()}
+    get {return _storage._cityName ?? String()}
     set {_uniqueStorage()._cityName = newValue}
   }
   /// Returns true if `cityName` has been explicitly set.
-  public var hasCityName: Bool {_storage._cityName != nil}
+  public var hasCityName: Bool {return _storage._cityName != nil}
   /// Clears the value of `cityName`. Subsequent reads from it will return its default value.
   public mutating func clearCityName() {_uniqueStorage()._cityName = nil}
 
   public var prompt: String {
-    get {_storage._prompt}
+    get {return _storage._prompt}
     set {_uniqueStorage()._prompt = newValue}
   }
 
   public var requestPayload: Data {
-    get {_storage._requestPayload}
+    get {return _storage._requestPayload}
     set {_uniqueStorage()._requestPayload = newValue}
   }
 
   public var responseText: String {
-    get {_storage._responseText}
+    get {return _storage._responseText}
     set {_uniqueStorage()._responseText = newValue}
   }
 
   public var responsePayload: Data {
-    get {_storage._responsePayload}
+    get {return _storage._responsePayload}
     set {_uniqueStorage()._responsePayload = newValue}
   }
 
   public var modelUsed: String {
-    get {_storage._modelUsed}
+    get {return _storage._modelUsed}
     set {_uniqueStorage()._modelUsed = newValue}
   }
 
   public var promptTokens: Int32 {
-    get {_storage._promptTokens}
+    get {return _storage._promptTokens}
     set {_uniqueStorage()._promptTokens = newValue}
   }
 
   public var completionTokens: Int32 {
-    get {_storage._completionTokens}
+    get {return _storage._completionTokens}
     set {_uniqueStorage()._completionTokens = newValue}
   }
 
   public var totalTokens: Int32 {
-    get {_storage._totalTokens}
+    get {return _storage._totalTokens}
     set {_uniqueStorage()._totalTokens = newValue}
   }
 
   public var latencyMs: Int32 {
-    get {_storage._latencyMs}
+    get {return _storage._latencyMs}
     set {_uniqueStorage()._latencyMs = newValue}
   }
 
   public var timestamp: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._timestamp = newValue}
   }
   /// Returns true if `timestamp` has been explicitly set.
-  public var hasTimestamp: Bool {_storage._timestamp != nil}
+  public var hasTimestamp: Bool {return _storage._timestamp != nil}
   /// Clears the value of `timestamp`. Subsequent reads from it will return its default value.
   public mutating func clearTimestamp() {_uniqueStorage()._timestamp = nil}
 
   public var latitude: Double {
-    get {_storage._latitude ?? 0}
+    get {return _storage._latitude ?? 0}
     set {_uniqueStorage()._latitude = newValue}
   }
   /// Returns true if `latitude` has been explicitly set.
-  public var hasLatitude: Bool {_storage._latitude != nil}
+  public var hasLatitude: Bool {return _storage._latitude != nil}
   /// Clears the value of `latitude`. Subsequent reads from it will return its default value.
   public mutating func clearLatitude() {_uniqueStorage()._latitude = nil}
 
   public var longitude: Double {
-    get {_storage._longitude ?? 0}
+    get {return _storage._longitude ?? 0}
     set {_uniqueStorage()._longitude = newValue}
   }
   /// Returns true if `longitude` has been explicitly set.
-  public var hasLongitude: Bool {_storage._longitude != nil}
+  public var hasLongitude: Bool {return _storage._longitude != nil}
   /// Clears the value of `longitude`. Subsequent reads from it will return its default value.
   public mutating func clearLongitude() {_uniqueStorage()._longitude = nil}
 
   public var distance: Double {
-    get {_storage._distance ?? 0}
+    get {return _storage._distance ?? 0}
     set {_uniqueStorage()._distance = newValue}
   }
   /// Returns true if `distance` has been explicitly set.
-  public var hasDistance: Bool {_storage._distance != nil}
+  public var hasDistance: Bool {return _storage._distance != nil}
   /// Clears the value of `distance`. Subsequent reads from it will return its default value.
   public mutating func clearDistance() {_uniqueStorage()._distance = nil}
 
@@ -579,7 +575,7 @@ public nonisolated struct Loci_Chat_LlmInteraction: @unchecked Sendable {
 }
 
 /// ConversationMessage represents a single message in a conversation
-public nonisolated struct Loci_Chat_ConversationMessage: Sendable {
+public struct Loci_Chat_ConversationMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -593,20 +589,20 @@ public nonisolated struct Loci_Chat_ConversationMessage: Sendable {
   public var messageType: Loci_Chat_MessageType = .unspecified
 
   public var timestamp: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_timestamp = newValue}
   }
   /// Returns true if `timestamp` has been explicitly set.
-  public var hasTimestamp: Bool {self._timestamp != nil}
+  public var hasTimestamp: Bool {return self._timestamp != nil}
   /// Clears the value of `timestamp`. Subsequent reads from it will return its default value.
   public mutating func clearTimestamp() {self._timestamp = nil}
 
   public var metadata: Loci_Chat_MessageMetadata {
-    get {_metadata ?? Loci_Chat_MessageMetadata()}
+    get {return _metadata ?? Loci_Chat_MessageMetadata()}
     set {_metadata = newValue}
   }
   /// Returns true if `metadata` has been explicitly set.
-  public var hasMetadata: Bool {self._metadata != nil}
+  public var hasMetadata: Bool {return self._metadata != nil}
   /// Clears the value of `metadata`. Subsequent reads from it will return its default value.
   public mutating func clearMetadata() {self._metadata = nil}
 
@@ -619,28 +615,28 @@ public nonisolated struct Loci_Chat_ConversationMessage: Sendable {
 }
 
 /// MessageMetadata contains additional metadata for messages
-public nonisolated struct Loci_Chat_MessageMetadata: Sendable {
+public struct Loci_Chat_MessageMetadata: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var llmInteractionID: String {
-    get {_llmInteractionID ?? String()}
+    get {return _llmInteractionID ?? String()}
     set {_llmInteractionID = newValue}
   }
   /// Returns true if `llmInteractionID` has been explicitly set.
-  public var hasLlmInteractionID: Bool {self._llmInteractionID != nil}
+  public var hasLlmInteractionID: Bool {return self._llmInteractionID != nil}
   /// Clears the value of `llmInteractionID`. Subsequent reads from it will return its default value.
   public mutating func clearLlmInteractionID() {self._llmInteractionID = nil}
 
   public var modifiedPoiCount: Int32 = 0
 
   public var requestType: String {
-    get {_requestType ?? String()}
+    get {return _requestType ?? String()}
     set {_requestType = newValue}
   }
   /// Returns true if `requestType` has been explicitly set.
-  public var hasRequestType: Bool {self._requestType != nil}
+  public var hasRequestType: Bool {return self._requestType != nil}
   /// Clears the value of `requestType`. Subsequent reads from it will return its default value.
   public mutating func clearRequestType() {self._requestType = nil}
 
@@ -653,7 +649,7 @@ public nonisolated struct Loci_Chat_MessageMetadata: Sendable {
 }
 
 /// ModificationRecord represents a modification in the session
-public nonisolated struct Loci_Chat_ModificationRecord: Sendable {
+public struct Loci_Chat_ModificationRecord: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -663,11 +659,11 @@ public nonisolated struct Loci_Chat_ModificationRecord: Sendable {
   public var description_p: String = String()
 
   public var timestamp: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_timestamp = newValue}
   }
   /// Returns true if `timestamp` has been explicitly set.
-  public var hasTimestamp: Bool {self._timestamp != nil}
+  public var hasTimestamp: Bool {return self._timestamp != nil}
   /// Clears the value of `timestamp`. Subsequent reads from it will return its default value.
   public mutating func clearTimestamp() {self._timestamp = nil}
 
@@ -681,7 +677,7 @@ public nonisolated struct Loci_Chat_ModificationRecord: Sendable {
 }
 
 /// SessionContext contains context information for a session
-public nonisolated struct Loci_Chat_SessionContext: Sendable {
+public struct Loci_Chat_SessionContext: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -691,11 +687,11 @@ public nonisolated struct Loci_Chat_SessionContext: Sendable {
   public var lastCityID: String = String()
 
   public var userPreferences: Loci_Profile_UserPreferenceProfile {
-    get {_userPreferences ?? Loci_Profile_UserPreferenceProfile()}
+    get {return _userPreferences ?? Loci_Profile_UserPreferenceProfile()}
     set {_userPreferences = newValue}
   }
   /// Returns true if `userPreferences` has been explicitly set.
-  public var hasUserPreferences: Bool {self._userPreferences != nil}
+  public var hasUserPreferences: Bool {return self._userPreferences != nil}
   /// Clears the value of `userPreferences`. Subsequent reads from it will return its default value.
   public mutating func clearUserPreferences() {self._userPreferences = nil}
 
@@ -715,7 +711,7 @@ public nonisolated struct Loci_Chat_SessionContext: Sendable {
 }
 
 /// AIItineraryResponse represents an AI-generated itinerary response
-public nonisolated struct Loci_Chat_AIItineraryResponse: Sendable {
+public struct Loci_Chat_AIItineraryResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -744,36 +740,36 @@ public nonisolated struct Loci_Chat_AIItineraryResponse: Sendable {
 }
 
 /// AiCityResponse represents a complete AI city response
-public nonisolated struct Loci_Chat_AiCityResponse: @unchecked Sendable {
+public struct Loci_Chat_AiCityResponse: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var generalCityData: Loci_City_GeneralCityData {
-    get {_storage._generalCityData ?? Loci_City_GeneralCityData()}
+    get {return _storage._generalCityData ?? Loci_City_GeneralCityData()}
     set {_uniqueStorage()._generalCityData = newValue}
   }
   /// Returns true if `generalCityData` has been explicitly set.
-  public var hasGeneralCityData: Bool {_storage._generalCityData != nil}
+  public var hasGeneralCityData: Bool {return _storage._generalCityData != nil}
   /// Clears the value of `generalCityData`. Subsequent reads from it will return its default value.
   public mutating func clearGeneralCityData() {_uniqueStorage()._generalCityData = nil}
 
   public var pointsOfInterest: [Loci_Poi_POIDetailedInfo] {
-    get {_storage._pointsOfInterest}
+    get {return _storage._pointsOfInterest}
     set {_uniqueStorage()._pointsOfInterest = newValue}
   }
 
   public var itineraryResponse: Loci_Chat_AIItineraryResponse {
-    get {_storage._itineraryResponse ?? Loci_Chat_AIItineraryResponse()}
+    get {return _storage._itineraryResponse ?? Loci_Chat_AIItineraryResponse()}
     set {_uniqueStorage()._itineraryResponse = newValue}
   }
   /// Returns true if `itineraryResponse` has been explicitly set.
-  public var hasItineraryResponse: Bool {_storage._itineraryResponse != nil}
+  public var hasItineraryResponse: Bool {return _storage._itineraryResponse != nil}
   /// Clears the value of `itineraryResponse`. Subsequent reads from it will return its default value.
   public mutating func clearItineraryResponse() {_uniqueStorage()._itineraryResponse = nil}
 
   public var sessionID: String {
-    get {_storage._sessionID}
+    get {return _storage._sessionID}
     set {_uniqueStorage()._sessionID = newValue}
   }
 
@@ -785,7 +781,7 @@ public nonisolated struct Loci_Chat_AiCityResponse: @unchecked Sendable {
 }
 
 /// SessionPerformanceMetrics contains performance metrics
-public nonisolated struct Loci_Chat_SessionPerformanceMetrics: Sendable {
+public struct Loci_Chat_SessionPerformanceMetrics: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -808,7 +804,7 @@ public nonisolated struct Loci_Chat_SessionPerformanceMetrics: Sendable {
 }
 
 /// SessionContentMetrics contains content metrics
-public nonisolated struct Loci_Chat_SessionContentMetrics: Sendable {
+public struct Loci_Chat_SessionContentMetrics: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -833,7 +829,7 @@ public nonisolated struct Loci_Chat_SessionContentMetrics: Sendable {
 }
 
 /// SessionEngagementMetrics contains engagement metrics
-public nonisolated struct Loci_Chat_SessionEngagementMetrics: Sendable {
+public struct Loci_Chat_SessionEngagementMetrics: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -849,11 +845,11 @@ public nonisolated struct Loci_Chat_SessionEngagementMetrics: Sendable {
   public var avgMessageLength: Int32 = 0
 
   public var peakActivityTime: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_peakActivityTime ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _peakActivityTime ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_peakActivityTime = newValue}
   }
   /// Returns true if `peakActivityTime` has been explicitly set.
-  public var hasPeakActivityTime: Bool {self._peakActivityTime != nil}
+  public var hasPeakActivityTime: Bool {return self._peakActivityTime != nil}
   /// Clears the value of `peakActivityTime`. Subsequent reads from it will return its default value.
   public mutating func clearPeakActivityTime() {self._peakActivityTime = nil}
 
@@ -867,110 +863,110 @@ public nonisolated struct Loci_Chat_SessionEngagementMetrics: Sendable {
 }
 
 /// ChatSession represents a chat session
-public nonisolated struct Loci_Chat_ChatSession: @unchecked Sendable {
+public struct Loci_Chat_ChatSession: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var id: String {
-    get {_storage._id}
+    get {return _storage._id}
     set {_uniqueStorage()._id = newValue}
   }
 
   public var userID: String {
-    get {_storage._userID}
+    get {return _storage._userID}
     set {_uniqueStorage()._userID = newValue}
   }
 
   public var profileID: String {
-    get {_storage._profileID}
+    get {return _storage._profileID}
     set {_uniqueStorage()._profileID = newValue}
   }
 
   public var cityName: String {
-    get {_storage._cityName}
+    get {return _storage._cityName}
     set {_uniqueStorage()._cityName = newValue}
   }
 
   public var currentItinerary: Loci_Chat_AiCityResponse {
-    get {_storage._currentItinerary ?? Loci_Chat_AiCityResponse()}
+    get {return _storage._currentItinerary ?? Loci_Chat_AiCityResponse()}
     set {_uniqueStorage()._currentItinerary = newValue}
   }
   /// Returns true if `currentItinerary` has been explicitly set.
-  public var hasCurrentItinerary: Bool {_storage._currentItinerary != nil}
+  public var hasCurrentItinerary: Bool {return _storage._currentItinerary != nil}
   /// Clears the value of `currentItinerary`. Subsequent reads from it will return its default value.
   public mutating func clearCurrentItinerary() {_uniqueStorage()._currentItinerary = nil}
 
   public var conversationHistory: [Loci_Chat_ConversationMessage] {
-    get {_storage._conversationHistory}
+    get {return _storage._conversationHistory}
     set {_uniqueStorage()._conversationHistory = newValue}
   }
 
   public var sessionContext: Loci_Chat_SessionContext {
-    get {_storage._sessionContext ?? Loci_Chat_SessionContext()}
+    get {return _storage._sessionContext ?? Loci_Chat_SessionContext()}
     set {_uniqueStorage()._sessionContext = newValue}
   }
   /// Returns true if `sessionContext` has been explicitly set.
-  public var hasSessionContext: Bool {_storage._sessionContext != nil}
+  public var hasSessionContext: Bool {return _storage._sessionContext != nil}
   /// Clears the value of `sessionContext`. Subsequent reads from it will return its default value.
   public mutating func clearSessionContext() {_uniqueStorage()._sessionContext = nil}
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {_storage._createdAt != nil}
+  public var hasCreatedAt: Bool {return _storage._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {_uniqueStorage()._createdAt = nil}
 
   public var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  public var hasUpdatedAt: Bool {_storage._updatedAt != nil}
+  public var hasUpdatedAt: Bool {return _storage._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {_uniqueStorage()._updatedAt = nil}
 
   public var expiresAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._expiresAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._expiresAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._expiresAt = newValue}
   }
   /// Returns true if `expiresAt` has been explicitly set.
-  public var hasExpiresAt: Bool {_storage._expiresAt != nil}
+  public var hasExpiresAt: Bool {return _storage._expiresAt != nil}
   /// Clears the value of `expiresAt`. Subsequent reads from it will return its default value.
   public mutating func clearExpiresAt() {_uniqueStorage()._expiresAt = nil}
 
   public var status: Loci_Chat_SessionStatus {
-    get {_storage._status}
+    get {return _storage._status}
     set {_uniqueStorage()._status = newValue}
   }
 
   public var performanceMetrics: Loci_Chat_SessionPerformanceMetrics {
-    get {_storage._performanceMetrics ?? Loci_Chat_SessionPerformanceMetrics()}
+    get {return _storage._performanceMetrics ?? Loci_Chat_SessionPerformanceMetrics()}
     set {_uniqueStorage()._performanceMetrics = newValue}
   }
   /// Returns true if `performanceMetrics` has been explicitly set.
-  public var hasPerformanceMetrics: Bool {_storage._performanceMetrics != nil}
+  public var hasPerformanceMetrics: Bool {return _storage._performanceMetrics != nil}
   /// Clears the value of `performanceMetrics`. Subsequent reads from it will return its default value.
   public mutating func clearPerformanceMetrics() {_uniqueStorage()._performanceMetrics = nil}
 
   public var contentMetrics: Loci_Chat_SessionContentMetrics {
-    get {_storage._contentMetrics ?? Loci_Chat_SessionContentMetrics()}
+    get {return _storage._contentMetrics ?? Loci_Chat_SessionContentMetrics()}
     set {_uniqueStorage()._contentMetrics = newValue}
   }
   /// Returns true if `contentMetrics` has been explicitly set.
-  public var hasContentMetrics: Bool {_storage._contentMetrics != nil}
+  public var hasContentMetrics: Bool {return _storage._contentMetrics != nil}
   /// Clears the value of `contentMetrics`. Subsequent reads from it will return its default value.
   public mutating func clearContentMetrics() {_uniqueStorage()._contentMetrics = nil}
 
   public var engagementMetrics: Loci_Chat_SessionEngagementMetrics {
-    get {_storage._engagementMetrics ?? Loci_Chat_SessionEngagementMetrics()}
+    get {return _storage._engagementMetrics ?? Loci_Chat_SessionEngagementMetrics()}
     set {_uniqueStorage()._engagementMetrics = newValue}
   }
   /// Returns true if `engagementMetrics` has been explicitly set.
-  public var hasEngagementMetrics: Bool {_storage._engagementMetrics != nil}
+  public var hasEngagementMetrics: Bool {return _storage._engagementMetrics != nil}
   /// Clears the value of `engagementMetrics`. Subsequent reads from it will return its default value.
   public mutating func clearEngagementMetrics() {_uniqueStorage()._engagementMetrics = nil}
 
@@ -982,56 +978,56 @@ public nonisolated struct Loci_Chat_ChatSession: @unchecked Sendable {
 }
 
 /// ChatRequest for sending a message
-public nonisolated struct Loci_Chat_ChatRequest: Sendable {
+public struct Loci_Chat_ChatRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var sessionID: String {
-    get {_sessionID ?? String()}
+    get {return _sessionID ?? String()}
     set {_sessionID = newValue}
   }
   /// Returns true if `sessionID` has been explicitly set.
-  public var hasSessionID: Bool {self._sessionID != nil}
+  public var hasSessionID: Bool {return self._sessionID != nil}
   /// Clears the value of `sessionID`. Subsequent reads from it will return its default value.
   public mutating func clearSessionID() {self._sessionID = nil}
 
   public var message: String = String()
 
   public var cityName: String {
-    get {_cityName ?? String()}
+    get {return _cityName ?? String()}
     set {_cityName = newValue}
   }
   /// Returns true if `cityName` has been explicitly set.
-  public var hasCityName: Bool {self._cityName != nil}
+  public var hasCityName: Bool {return self._cityName != nil}
   /// Clears the value of `cityName`. Subsequent reads from it will return its default value.
   public mutating func clearCityName() {self._cityName = nil}
 
   public var userLocation: Loci_Chat_UserLocation {
-    get {_userLocation ?? Loci_Chat_UserLocation()}
+    get {return _userLocation ?? Loci_Chat_UserLocation()}
     set {_userLocation = newValue}
   }
   /// Returns true if `userLocation` has been explicitly set.
-  public var hasUserLocation: Bool {self._userLocation != nil}
+  public var hasUserLocation: Bool {return self._userLocation != nil}
   /// Clears the value of `userLocation`. Subsequent reads from it will return its default value.
   public mutating func clearUserLocation() {self._userLocation = nil}
 
   public var profileID: String {
-    get {_profileID ?? String()}
+    get {return _profileID ?? String()}
     set {_profileID = newValue}
   }
   /// Returns true if `profileID` has been explicitly set.
-  public var hasProfileID: Bool {self._profileID != nil}
+  public var hasProfileID: Bool {return self._profileID != nil}
   /// Clears the value of `profileID`. Subsequent reads from it will return its default value.
   public mutating func clearProfileID() {self._profileID = nil}
 
   /// trip_id binds a stream to a persisted TripDraft (Slice 2). Optional.
   public var tripID: String {
-    get {_tripID ?? String()}
+    get {return _tripID ?? String()}
     set {_tripID = newValue}
   }
   /// Returns true if `tripID` has been explicitly set.
-  public var hasTripID: Bool {self._tripID != nil}
+  public var hasTripID: Bool {return self._tripID != nil}
   /// Clears the value of `tripID`. Subsequent reads from it will return its default value.
   public mutating func clearTripID() {self._tripID = nil}
 
@@ -1039,21 +1035,21 @@ public nonisolated struct Loci_Chat_ChatRequest: Sendable {
   /// event. When set, the server resumes the referenced session instead of
   /// starting a new turn; consumers dedup by StreamEvent.event_id.
   public var resumeToken: String {
-    get {_resumeToken ?? String()}
+    get {return _resumeToken ?? String()}
     set {_resumeToken = newValue}
   }
   /// Returns true if `resumeToken` has been explicitly set.
-  public var hasResumeToken: Bool {self._resumeToken != nil}
+  public var hasResumeToken: Bool {return self._resumeToken != nil}
   /// Clears the value of `resumeToken`. Subsequent reads from it will return its default value.
   public mutating func clearResumeToken() {self._resumeToken = nil}
 
   /// request_id is a client-generated idempotency/tracing id echoed on events.
   public var requestID: String {
-    get {_requestID ?? String()}
+    get {return _requestID ?? String()}
     set {_requestID = newValue}
   }
   /// Returns true if `requestID` has been explicitly set.
-  public var hasRequestID: Bool {self._requestID != nil}
+  public var hasRequestID: Bool {return self._requestID != nil}
   /// Clears the value of `requestID`. Subsequent reads from it will return its default value.
   public mutating func clearRequestID() {self._requestID = nil}
 
@@ -1071,7 +1067,7 @@ public nonisolated struct Loci_Chat_ChatRequest: Sendable {
 }
 
 /// ChatResponse for chat response
-public nonisolated struct Loci_Chat_ChatResponse: Sendable {
+public struct Loci_Chat_ChatResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1081,11 +1077,11 @@ public nonisolated struct Loci_Chat_ChatResponse: Sendable {
   public var message: String = String()
 
   public var updatedItinerary: Loci_Chat_AiCityResponse {
-    get {_updatedItinerary ?? Loci_Chat_AiCityResponse()}
+    get {return _updatedItinerary ?? Loci_Chat_AiCityResponse()}
     set {_updatedItinerary = newValue}
   }
   /// Returns true if `updatedItinerary` has been explicitly set.
-  public var hasUpdatedItinerary: Bool {self._updatedItinerary != nil}
+  public var hasUpdatedItinerary: Bool {return self._updatedItinerary != nil}
   /// Clears the value of `updatedItinerary`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedItinerary() {self._updatedItinerary = nil}
 
@@ -1104,7 +1100,7 @@ public nonisolated struct Loci_Chat_ChatResponse: Sendable {
 
 /// StreamError is the typed error payload for STREAM_EVENT_TYPE_ERROR events.
 /// user_message is safe to render; internal_code is for logs/telemetry.
-public nonisolated struct Loci_Chat_StreamError: Sendable {
+public struct Loci_Chat_StreamError: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1117,11 +1113,11 @@ public nonisolated struct Loci_Chat_StreamError: Sendable {
 
   /// retry_after_ms hints the client when to retry (e.g. rate-limit/quota).
   public var retryAfterMs: Int32 {
-    get {_retryAfterMs ?? 0}
+    get {return _retryAfterMs ?? 0}
     set {_retryAfterMs = newValue}
   }
   /// Returns true if `retryAfterMs` has been explicitly set.
-  public var hasRetryAfterMs: Bool {self._retryAfterMs != nil}
+  public var hasRetryAfterMs: Bool {return self._retryAfterMs != nil}
   /// Clears the value of `retryAfterMs`. Subsequent reads from it will return its default value.
   public mutating func clearRetryAfterMs() {self._retryAfterMs = nil}
 
@@ -1133,7 +1129,7 @@ public nonisolated struct Loci_Chat_StreamError: Sendable {
 }
 
 /// StartPayload opens a stream: the session it is bound to and the resolved domain.
-public nonisolated struct Loci_Chat_StartPayload: Sendable {
+public struct Loci_Chat_StartPayload: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1143,11 +1139,11 @@ public nonisolated struct Loci_Chat_StartPayload: Sendable {
   public var domain: Loci_Chat_DomainType = .unspecified
 
   public var cityName: String {
-    get {_cityName ?? String()}
+    get {return _cityName ?? String()}
     set {_cityName = newValue}
   }
   /// Returns true if `cityName` has been explicitly set.
-  public var hasCityName: Bool {self._cityName != nil}
+  public var hasCityName: Bool {return self._cityName != nil}
   /// Clears the value of `cityName`. Subsequent reads from it will return its default value.
   public mutating func clearCityName() {self._cityName = nil}
 
@@ -1161,7 +1157,7 @@ public nonisolated struct Loci_Chat_StartPayload: Sendable {
 /// TokenPayload carries an incremental text token (STREAM_EVENT_TYPE_TOKEN) or an
 /// accumulated partial snapshot (STREAM_EVENT_TYPE_PARTIAL). `part` indexes the
 /// producing worker so consumers can accumulate per-part.
-public nonisolated struct Loci_Chat_TokenPayload: Sendable {
+public struct Loci_Chat_TokenPayload: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1169,11 +1165,11 @@ public nonisolated struct Loci_Chat_TokenPayload: Sendable {
   public var text: String = String()
 
   public var part: Int32 {
-    get {_part ?? 0}
+    get {return _part ?? 0}
     set {_part = newValue}
   }
   /// Returns true if `part` has been explicitly set.
-  public var hasPart: Bool {self._part != nil}
+  public var hasPart: Bool {return self._part != nil}
   /// Clears the value of `part`. Subsequent reads from it will return its default value.
   public mutating func clearPart() {self._part = nil}
 
@@ -1185,7 +1181,7 @@ public nonisolated struct Loci_Chat_TokenPayload: Sendable {
 }
 
 /// ProgressPayload reports pipeline progress for STREAM_EVENT_TYPE_PROGRESS.
-public nonisolated struct Loci_Chat_ProgressPayload: Sendable {
+public struct Loci_Chat_ProgressPayload: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1193,11 +1189,11 @@ public nonisolated struct Loci_Chat_ProgressPayload: Sendable {
   public var stage: String = String()
 
   public var percent: Int32 {
-    get {_percent ?? 0}
+    get {return _percent ?? 0}
     set {_percent = newValue}
   }
   /// Returns true if `percent` has been explicitly set.
-  public var hasPercent: Bool {self._percent != nil}
+  public var hasPercent: Bool {return self._percent != nil}
   /// Clears the value of `percent`. Subsequent reads from it will return its default value.
   public mutating func clearPercent() {self._percent = nil}
 
@@ -1208,17 +1204,17 @@ public nonisolated struct Loci_Chat_ProgressPayload: Sendable {
   fileprivate var _percent: Int32? = nil
 }
 
-public nonisolated struct Loci_Chat_CityDataPayload: Sendable {
+public struct Loci_Chat_CityDataPayload: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var generalCityData: Loci_City_GeneralCityData {
-    get {_generalCityData ?? Loci_City_GeneralCityData()}
+    get {return _generalCityData ?? Loci_City_GeneralCityData()}
     set {_generalCityData = newValue}
   }
   /// Returns true if `generalCityData` has been explicitly set.
-  public var hasGeneralCityData: Bool {self._generalCityData != nil}
+  public var hasGeneralCityData: Bool {return self._generalCityData != nil}
   /// Clears the value of `generalCityData`. Subsequent reads from it will return its default value.
   public mutating func clearGeneralCityData() {self._generalCityData = nil}
 
@@ -1231,7 +1227,7 @@ public nonisolated struct Loci_Chat_CityDataPayload: Sendable {
   fileprivate var _generalCityData: Loci_City_GeneralCityData? = nil
 }
 
-public nonisolated struct Loci_Chat_GeneralPoisPayload: Sendable {
+public struct Loci_Chat_GeneralPoisPayload: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1239,11 +1235,11 @@ public nonisolated struct Loci_Chat_GeneralPoisPayload: Sendable {
   public var pois: [Loci_Poi_POIDetailedInfo] = []
 
   public var generalCityData: Loci_City_GeneralCityData {
-    get {_generalCityData ?? Loci_City_GeneralCityData()}
+    get {return _generalCityData ?? Loci_City_GeneralCityData()}
     set {_generalCityData = newValue}
   }
   /// Returns true if `generalCityData` has been explicitly set.
-  public var hasGeneralCityData: Bool {self._generalCityData != nil}
+  public var hasGeneralCityData: Bool {return self._generalCityData != nil}
   /// Clears the value of `generalCityData`. Subsequent reads from it will return its default value.
   public mutating func clearGeneralCityData() {self._generalCityData = nil}
 
@@ -1259,7 +1255,7 @@ public nonisolated struct Loci_Chat_GeneralPoisPayload: Sendable {
 /// Hotels/restaurants are carried as POIDetailedInfo in Slice 1 (how the client
 /// already renders them); richer HotelDetailedInfo/RestaurantDetailedInfo typing
 /// can land in a later slice if domain-specific fields are needed.
-public nonisolated struct Loci_Chat_HotelsPayload: Sendable {
+public struct Loci_Chat_HotelsPayload: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1267,11 +1263,11 @@ public nonisolated struct Loci_Chat_HotelsPayload: Sendable {
   public var pois: [Loci_Poi_POIDetailedInfo] = []
 
   public var generalCityData: Loci_City_GeneralCityData {
-    get {_generalCityData ?? Loci_City_GeneralCityData()}
+    get {return _generalCityData ?? Loci_City_GeneralCityData()}
     set {_generalCityData = newValue}
   }
   /// Returns true if `generalCityData` has been explicitly set.
-  public var hasGeneralCityData: Bool {self._generalCityData != nil}
+  public var hasGeneralCityData: Bool {return self._generalCityData != nil}
   /// Clears the value of `generalCityData`. Subsequent reads from it will return its default value.
   public mutating func clearGeneralCityData() {self._generalCityData = nil}
 
@@ -1284,7 +1280,7 @@ public nonisolated struct Loci_Chat_HotelsPayload: Sendable {
   fileprivate var _generalCityData: Loci_City_GeneralCityData? = nil
 }
 
-public nonisolated struct Loci_Chat_RestaurantsPayload: Sendable {
+public struct Loci_Chat_RestaurantsPayload: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1292,11 +1288,11 @@ public nonisolated struct Loci_Chat_RestaurantsPayload: Sendable {
   public var pois: [Loci_Poi_POIDetailedInfo] = []
 
   public var generalCityData: Loci_City_GeneralCityData {
-    get {_generalCityData ?? Loci_City_GeneralCityData()}
+    get {return _generalCityData ?? Loci_City_GeneralCityData()}
     set {_generalCityData = newValue}
   }
   /// Returns true if `generalCityData` has been explicitly set.
-  public var hasGeneralCityData: Bool {self._generalCityData != nil}
+  public var hasGeneralCityData: Bool {return self._generalCityData != nil}
   /// Clears the value of `generalCityData`. Subsequent reads from it will return its default value.
   public mutating func clearGeneralCityData() {self._generalCityData = nil}
 
@@ -1309,7 +1305,7 @@ public nonisolated struct Loci_Chat_RestaurantsPayload: Sendable {
   fileprivate var _generalCityData: Loci_City_GeneralCityData? = nil
 }
 
-public nonisolated struct Loci_Chat_ActivitiesPayload: Sendable {
+public struct Loci_Chat_ActivitiesPayload: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1317,11 +1313,11 @@ public nonisolated struct Loci_Chat_ActivitiesPayload: Sendable {
   public var activities: [Loci_Poi_POIDetailedInfo] = []
 
   public var generalCityData: Loci_City_GeneralCityData {
-    get {_generalCityData ?? Loci_City_GeneralCityData()}
+    get {return _generalCityData ?? Loci_City_GeneralCityData()}
     set {_generalCityData = newValue}
   }
   /// Returns true if `generalCityData` has been explicitly set.
-  public var hasGeneralCityData: Bool {self._generalCityData != nil}
+  public var hasGeneralCityData: Bool {return self._generalCityData != nil}
   /// Clears the value of `generalCityData`. Subsequent reads from it will return its default value.
   public mutating func clearGeneralCityData() {self._generalCityData = nil}
 
@@ -1336,17 +1332,17 @@ public nonisolated struct Loci_Chat_ActivitiesPayload: Sendable {
 
 /// ItineraryPayload carries the full aggregate city response the itinerary view
 /// consumes (general_city_data + points_of_interest + itinerary_response).
-public nonisolated struct Loci_Chat_ItineraryPayload: Sendable {
+public struct Loci_Chat_ItineraryPayload: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var cityResponse: Loci_Chat_AiCityResponse {
-    get {_cityResponse ?? Loci_Chat_AiCityResponse()}
+    get {return _cityResponse ?? Loci_Chat_AiCityResponse()}
     set {_cityResponse = newValue}
   }
   /// Returns true if `cityResponse` has been explicitly set.
-  public var hasCityResponse: Bool {self._cityResponse != nil}
+  public var hasCityResponse: Bool {return self._cityResponse != nil}
   /// Clears the value of `cityResponse`. Subsequent reads from it will return its default value.
   public mutating func clearCityResponse() {self._cityResponse = nil}
 
@@ -1358,7 +1354,7 @@ public nonisolated struct Loci_Chat_ItineraryPayload: Sendable {
 }
 
 /// CompletePayload terminates a stream, optionally carrying the final aggregate.
-public nonisolated struct Loci_Chat_CompletePayload: Sendable {
+public struct Loci_Chat_CompletePayload: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1366,11 +1362,11 @@ public nonisolated struct Loci_Chat_CompletePayload: Sendable {
   public var sessionID: String = String()
 
   public var result: Loci_Chat_AiCityResponse {
-    get {_result ?? Loci_Chat_AiCityResponse()}
+    get {return _result ?? Loci_Chat_AiCityResponse()}
     set {_result = newValue}
   }
   /// Returns true if `result` has been explicitly set.
-  public var hasResult: Bool {self._result != nil}
+  public var hasResult: Bool {return self._result != nil}
   /// Clears the value of `result`. Subsequent reads from it will return its default value.
   public mutating func clearResult() {self._result = nil}
 
@@ -1384,56 +1380,56 @@ public nonisolated struct Loci_Chat_CompletePayload: Sendable {
 /// StreamEvent represents a streaming event. The old free-form `type` string
 /// (field 1), opaque `data` bytes (field 3), and `error` string (field 4) were
 /// replaced by the typed `event_type` enum + `payload` oneof below.
-public nonisolated struct Loci_Chat_StreamEvent: @unchecked Sendable {
+public struct Loci_Chat_StreamEvent: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var message: String {
-    get {_storage._message}
+    get {return _storage._message}
     set {_uniqueStorage()._message = newValue}
   }
 
   public var timestamp: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._timestamp = newValue}
   }
   /// Returns true if `timestamp` has been explicitly set.
-  public var hasTimestamp: Bool {_storage._timestamp != nil}
+  public var hasTimestamp: Bool {return _storage._timestamp != nil}
   /// Clears the value of `timestamp`. Subsequent reads from it will return its default value.
   public mutating func clearTimestamp() {_uniqueStorage()._timestamp = nil}
 
   public var eventID: String {
-    get {_storage._eventID}
+    get {return _storage._eventID}
     set {_uniqueStorage()._eventID = newValue}
   }
 
   public var isFinal: Bool {
-    get {_storage._isFinal}
+    get {return _storage._isFinal}
     set {_uniqueStorage()._isFinal = newValue}
   }
 
   public var navigation: Loci_Chat_NavigationData {
-    get {_storage._navigation ?? Loci_Chat_NavigationData()}
+    get {return _storage._navigation ?? Loci_Chat_NavigationData()}
     set {_uniqueStorage()._navigation = newValue}
   }
   /// Returns true if `navigation` has been explicitly set.
-  public var hasNavigation: Bool {_storage._navigation != nil}
+  public var hasNavigation: Bool {return _storage._navigation != nil}
   /// Clears the value of `navigation`. Subsequent reads from it will return its default value.
   public mutating func clearNavigation() {_uniqueStorage()._navigation = nil}
 
   public var eventType: Loci_Chat_StreamEventType {
-    get {_storage._eventType}
+    get {return _storage._eventType}
     set {_uniqueStorage()._eventType = newValue}
   }
 
   /// request_id echoes ChatRequest.request_id for client-side correlation.
   public var requestID: String {
-    get {_storage._requestID ?? String()}
+    get {return _storage._requestID ?? String()}
     set {_uniqueStorage()._requestID = newValue}
   }
   /// Returns true if `requestID` has been explicitly set.
-  public var hasRequestID: Bool {_storage._requestID != nil}
+  public var hasRequestID: Bool {return _storage._requestID != nil}
   /// Clears the value of `requestID`. Subsequent reads from it will return its default value.
   public mutating func clearRequestID() {_uniqueStorage()._requestID = nil}
 
@@ -1544,7 +1540,7 @@ public nonisolated struct Loci_Chat_StreamEvent: @unchecked Sendable {
 
   /// payload is the typed body; its oneof case matches event_type. Absent for
   /// events that carry no structured body (some progress/keepalive frames).
-  public nonisolated enum OneOf_Payload: Equatable, Sendable {
+  public enum OneOf_Payload: Equatable, Sendable {
     case start(Loci_Chat_StartPayload)
     case token(Loci_Chat_TokenPayload)
     case partial(Loci_Chat_TokenPayload)
@@ -1566,7 +1562,7 @@ public nonisolated struct Loci_Chat_StreamEvent: @unchecked Sendable {
 }
 
 /// NavigationData contains navigation information
-public nonisolated struct Loci_Chat_NavigationData: Sendable {
+public struct Loci_Chat_NavigationData: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1582,26 +1578,26 @@ public nonisolated struct Loci_Chat_NavigationData: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Chat_UserLocation: Sendable {
+public struct Loci_Chat_UserLocation: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var latitude: Double {
-    get {_latitude ?? 0}
+    get {return _latitude ?? 0}
     set {_latitude = newValue}
   }
   /// Returns true if `latitude` has been explicitly set.
-  public var hasLatitude: Bool {self._latitude != nil}
+  public var hasLatitude: Bool {return self._latitude != nil}
   /// Clears the value of `latitude`. Subsequent reads from it will return its default value.
   public mutating func clearLatitude() {self._latitude = nil}
 
   public var longitude: Double {
-    get {_longitude ?? 0}
+    get {return _longitude ?? 0}
     set {_longitude = newValue}
   }
   /// Returns true if `longitude` has been explicitly set.
-  public var hasLongitude: Bool {self._longitude != nil}
+  public var hasLongitude: Bool {return self._longitude != nil}
   /// Clears the value of `longitude`. Subsequent reads from it will return its default value.
   public mutating func clearLongitude() {self._longitude = nil}
 
@@ -1614,46 +1610,46 @@ public nonisolated struct Loci_Chat_UserLocation: Sendable {
 }
 
 /// StartChatRequest for starting a new chat session
-public nonisolated struct Loci_Chat_StartChatRequest: Sendable {
+public struct Loci_Chat_StartChatRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var cityName: String {
-    get {_cityName ?? String()}
+    get {return _cityName ?? String()}
     set {_cityName = newValue}
   }
   /// Returns true if `cityName` has been explicitly set.
-  public var hasCityName: Bool {self._cityName != nil}
+  public var hasCityName: Bool {return self._cityName != nil}
   /// Clears the value of `cityName`. Subsequent reads from it will return its default value.
   public mutating func clearCityName() {self._cityName = nil}
 
   public var contextType: Loci_Chat_DomainType {
-    get {_contextType ?? .unspecified}
+    get {return _contextType ?? .unspecified}
     set {_contextType = newValue}
   }
   /// Returns true if `contextType` has been explicitly set.
-  public var hasContextType: Bool {self._contextType != nil}
+  public var hasContextType: Bool {return self._contextType != nil}
   /// Clears the value of `contextType`. Subsequent reads from it will return its default value.
   public mutating func clearContextType() {self._contextType = nil}
 
   public var initialMessage: String = String()
 
   public var userLocation: Loci_Chat_UserLocation {
-    get {_userLocation ?? Loci_Chat_UserLocation()}
+    get {return _userLocation ?? Loci_Chat_UserLocation()}
     set {_userLocation = newValue}
   }
   /// Returns true if `userLocation` has been explicitly set.
-  public var hasUserLocation: Bool {self._userLocation != nil}
+  public var hasUserLocation: Bool {return self._userLocation != nil}
   /// Clears the value of `userLocation`. Subsequent reads from it will return its default value.
   public mutating func clearUserLocation() {self._userLocation = nil}
 
   public var profileID: String {
-    get {_profileID ?? String()}
+    get {return _profileID ?? String()}
     set {_profileID = newValue}
   }
   /// Returns true if `profileID` has been explicitly set.
-  public var hasProfileID: Bool {self._profileID != nil}
+  public var hasProfileID: Bool {return self._profileID != nil}
   /// Clears the value of `profileID`. Subsequent reads from it will return its default value.
   public mutating func clearProfileID() {self._profileID = nil}
 
@@ -1668,7 +1664,7 @@ public nonisolated struct Loci_Chat_StartChatRequest: Sendable {
 }
 
 /// ContinueChatRequest for continuing a chat session
-public nonisolated struct Loci_Chat_ContinueChatRequest: Sendable {
+public struct Loci_Chat_ContinueChatRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1678,11 +1674,11 @@ public nonisolated struct Loci_Chat_ContinueChatRequest: Sendable {
   public var message: String = String()
 
   public var cityName: String {
-    get {_cityName ?? String()}
+    get {return _cityName ?? String()}
     set {_cityName = newValue}
   }
   /// Returns true if `cityName` has been explicitly set.
-  public var hasCityName: Bool {self._cityName != nil}
+  public var hasCityName: Bool {return self._cityName != nil}
   /// Clears the value of `cityName`. Subsequent reads from it will return its default value.
   public mutating func clearCityName() {self._cityName = nil}
 
@@ -1696,7 +1692,7 @@ public nonisolated struct Loci_Chat_ContinueChatRequest: Sendable {
 }
 
 /// GetChatSessionRequest for retrieving a chat session
-public nonisolated struct Loci_Chat_GetChatSessionRequest: Sendable {
+public struct Loci_Chat_GetChatSessionRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1709,17 +1705,17 @@ public nonisolated struct Loci_Chat_GetChatSessionRequest: Sendable {
 }
 
 /// GetChatSessionResponse for chat session retrieval
-public nonisolated struct Loci_Chat_GetChatSessionResponse: Sendable {
+public struct Loci_Chat_GetChatSessionResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var session: Loci_Chat_ChatSession {
-    get {_session ?? Loci_Chat_ChatSession()}
+    get {return _session ?? Loci_Chat_ChatSession()}
     set {_session = newValue}
   }
   /// Returns true if `session` has been explicitly set.
-  public var hasSession: Bool {self._session != nil}
+  public var hasSession: Bool {return self._session != nil}
   /// Clears the value of `session`. Subsequent reads from it will return its default value.
   public mutating func clearSession() {self._session = nil}
 
@@ -1732,7 +1728,7 @@ public nonisolated struct Loci_Chat_GetChatSessionResponse: Sendable {
 
 /// GetSessionPOIsRequest reads one page of an answer that has already been
 /// generated and stored. It never reaches a model and never spends quota.
-public nonisolated struct Loci_Chat_GetSessionPOIsRequest: Sendable {
+public struct Loci_Chat_GetSessionPOIsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1740,11 +1736,11 @@ public nonisolated struct Loci_Chat_GetSessionPOIsRequest: Sendable {
   public var sessionID: String = String()
 
   public var pagination: Loci_Common_PaginationRequest {
-    get {_pagination ?? Loci_Common_PaginationRequest()}
+    get {return _pagination ?? Loci_Common_PaginationRequest()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
@@ -1757,7 +1753,7 @@ public nonisolated struct Loci_Chat_GetSessionPOIsRequest: Sendable {
   fileprivate var _pagination: Loci_Common_PaginationRequest? = nil
 }
 
-public nonisolated struct Loci_Chat_GetSessionPOIsResponse: Sendable {
+public struct Loci_Chat_GetSessionPOIsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1765,11 +1761,11 @@ public nonisolated struct Loci_Chat_GetSessionPOIsResponse: Sendable {
   public var pointsOfInterest: [Loci_Poi_POIDetailedInfo] = []
 
   public var pagination: Loci_Common_PaginationMetadata {
-    get {_pagination ?? Loci_Common_PaginationMetadata()}
+    get {return _pagination ?? Loci_Common_PaginationMetadata()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
@@ -1786,26 +1782,26 @@ public nonisolated struct Loci_Chat_GetSessionPOIsResponse: Sendable {
 }
 
 /// GetChatSessionsRequest for retrieving multiple chat sessions
-public nonisolated struct Loci_Chat_GetChatSessionsRequest: Sendable {
+public struct Loci_Chat_GetChatSessionsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var userID: String {
-    get {_userID ?? String()}
+    get {return _userID ?? String()}
     set {_userID = newValue}
   }
   /// Returns true if `userID` has been explicitly set.
-  public var hasUserID: Bool {self._userID != nil}
+  public var hasUserID: Bool {return self._userID != nil}
   /// Clears the value of `userID`. Subsequent reads from it will return its default value.
   public mutating func clearUserID() {self._userID = nil}
 
   public var pagination: Loci_Common_PaginationRequest {
-    get {_pagination ?? Loci_Common_PaginationRequest()}
+    get {return _pagination ?? Loci_Common_PaginationRequest()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
@@ -1818,7 +1814,7 @@ public nonisolated struct Loci_Chat_GetChatSessionsRequest: Sendable {
 }
 
 /// GetChatSessionsResponse for chat sessions retrieval
-public nonisolated struct Loci_Chat_GetChatSessionsResponse: Sendable {
+public struct Loci_Chat_GetChatSessionsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1826,11 +1822,11 @@ public nonisolated struct Loci_Chat_GetChatSessionsResponse: Sendable {
   public var sessions: [Loci_Chat_ChatSession] = []
 
   public var pagination: Loci_Common_PaginationMetadata {
-    get {_pagination ?? Loci_Common_PaginationMetadata()}
+    get {return _pagination ?? Loci_Common_PaginationMetadata()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
@@ -1842,7 +1838,7 @@ public nonisolated struct Loci_Chat_GetChatSessionsResponse: Sendable {
 }
 
 /// RecentInteraction represents a recent user interaction
-public nonisolated struct Loci_Chat_RecentInteraction: Sendable {
+public struct Loci_Chat_RecentInteraction: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1854,22 +1850,22 @@ public nonisolated struct Loci_Chat_RecentInteraction: Sendable {
   public var cityName: String = String()
 
   public var cityID: String {
-    get {_cityID ?? String()}
+    get {return _cityID ?? String()}
     set {_cityID = newValue}
   }
   /// Returns true if `cityID` has been explicitly set.
-  public var hasCityID: Bool {self._cityID != nil}
+  public var hasCityID: Bool {return self._cityID != nil}
   /// Clears the value of `cityID`. Subsequent reads from it will return its default value.
   public mutating func clearCityID() {self._cityID = nil}
 
   public var prompt: String = String()
 
   public var responseText: String {
-    get {_responseText ?? String()}
+    get {return _responseText ?? String()}
     set {_responseText = newValue}
   }
   /// Returns true if `responseText` has been explicitly set.
-  public var hasResponseText: Bool {self._responseText != nil}
+  public var hasResponseText: Bool {return self._responseText != nil}
   /// Clears the value of `responseText`. Subsequent reads from it will return its default value.
   public mutating func clearResponseText() {self._responseText = nil}
 
@@ -1878,11 +1874,11 @@ public nonisolated struct Loci_Chat_RecentInteraction: Sendable {
   public var latencyMs: Int32 = 0
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {self._createdAt != nil}
+  public var hasCreatedAt: Bool {return self._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {self._createdAt = nil}
 
@@ -1902,7 +1898,7 @@ public nonisolated struct Loci_Chat_RecentInteraction: Sendable {
 }
 
 /// CityInteractions groups interactions for a specific city
-public nonisolated struct Loci_Chat_CityInteractions: Sendable {
+public struct Loci_Chat_CityInteractions: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1916,11 +1912,11 @@ public nonisolated struct Loci_Chat_CityInteractions: Sendable {
   public var poiCount: Int32 = 0
 
   public var lastActivity: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_lastActivity ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _lastActivity ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_lastActivity = newValue}
   }
   /// Returns true if `lastActivity` has been explicitly set.
-  public var hasLastActivity: Bool {self._lastActivity != nil}
+  public var hasLastActivity: Bool {return self._lastActivity != nil}
   /// Clears the value of `lastActivity`. Subsequent reads from it will return its default value.
   public mutating func clearLastActivity() {self._lastActivity = nil}
 
@@ -1929,20 +1925,20 @@ public nonisolated struct Loci_Chat_CityInteractions: Sendable {
   public var title: String = String()
 
   public var totalFavorites: Int32 {
-    get {_totalFavorites ?? 0}
+    get {return _totalFavorites ?? 0}
     set {_totalFavorites = newValue}
   }
   /// Returns true if `totalFavorites` has been explicitly set.
-  public var hasTotalFavorites: Bool {self._totalFavorites != nil}
+  public var hasTotalFavorites: Bool {return self._totalFavorites != nil}
   /// Clears the value of `totalFavorites`. Subsequent reads from it will return its default value.
   public mutating func clearTotalFavorites() {self._totalFavorites = nil}
 
   public var totalItineraries: Int32 {
-    get {_totalItineraries ?? 0}
+    get {return _totalItineraries ?? 0}
     set {_totalItineraries = newValue}
   }
   /// Returns true if `totalItineraries` has been explicitly set.
-  public var hasTotalItineraries: Bool {self._totalItineraries != nil}
+  public var hasTotalItineraries: Bool {return self._totalItineraries != nil}
   /// Clears the value of `totalItineraries`. Subsequent reads from it will return its default value.
   public mutating func clearTotalItineraries() {self._totalItineraries = nil}
 
@@ -1956,26 +1952,26 @@ public nonisolated struct Loci_Chat_CityInteractions: Sendable {
 }
 
 /// GetRecentInteractionsRequest for retrieving recent interactions
-public nonisolated struct Loci_Chat_GetRecentInteractionsRequest: Sendable {
+public struct Loci_Chat_GetRecentInteractionsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var userID: String {
-    get {_userID ?? String()}
+    get {return _userID ?? String()}
     set {_userID = newValue}
   }
   /// Returns true if `userID` has been explicitly set.
-  public var hasUserID: Bool {self._userID != nil}
+  public var hasUserID: Bool {return self._userID != nil}
   /// Clears the value of `userID`. Subsequent reads from it will return its default value.
   public mutating func clearUserID() {self._userID = nil}
 
   public var pagination: Loci_Common_PaginationRequest {
-    get {_pagination ?? Loci_Common_PaginationRequest()}
+    get {return _pagination ?? Loci_Common_PaginationRequest()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
@@ -1988,7 +1984,7 @@ public nonisolated struct Loci_Chat_GetRecentInteractionsRequest: Sendable {
 }
 
 /// GetRecentInteractionsResponse for recent interactions retrieval
-public nonisolated struct Loci_Chat_GetRecentInteractionsResponse: Sendable {
+public struct Loci_Chat_GetRecentInteractionsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1996,11 +1992,11 @@ public nonisolated struct Loci_Chat_GetRecentInteractionsResponse: Sendable {
   public var cities: [Loci_Chat_CityInteractions] = []
 
   public var pagination: Loci_Common_PaginationMetadata {
-    get {_pagination ?? Loci_Common_PaginationMetadata()}
+    get {return _pagination ?? Loci_Common_PaginationMetadata()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
@@ -2012,7 +2008,7 @@ public nonisolated struct Loci_Chat_GetRecentInteractionsResponse: Sendable {
 }
 
 /// BookmarkRequest for bookmarking items
-public nonisolated struct Loci_Chat_BookmarkRequest: Sendable {
+public struct Loci_Chat_BookmarkRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -2026,57 +2022,57 @@ public nonisolated struct Loci_Chat_BookmarkRequest: Sendable {
   public var isPublic: Bool = false
 
   public var sessionID: String {
-    get {_sessionID ?? String()}
+    get {return _sessionID ?? String()}
     set {_sessionID = newValue}
   }
   /// Returns true if `sessionID` has been explicitly set.
-  public var hasSessionID: Bool {self._sessionID != nil}
+  public var hasSessionID: Bool {return self._sessionID != nil}
   /// Clears the value of `sessionID`. Subsequent reads from it will return its default value.
   public mutating func clearSessionID() {self._sessionID = nil}
 
   public var llmInteractionID: String {
-    get {_llmInteractionID ?? String()}
+    get {return _llmInteractionID ?? String()}
     set {_llmInteractionID = newValue}
   }
   /// Returns true if `llmInteractionID` has been explicitly set.
-  public var hasLlmInteractionID: Bool {self._llmInteractionID != nil}
+  public var hasLlmInteractionID: Bool {return self._llmInteractionID != nil}
   /// Clears the value of `llmInteractionID`. Subsequent reads from it will return its default value.
   public mutating func clearLlmInteractionID() {self._llmInteractionID = nil}
 
   public var primaryCityName: String {
-    get {_primaryCityName ?? String()}
+    get {return _primaryCityName ?? String()}
     set {_primaryCityName = newValue}
   }
   /// Returns true if `primaryCityName` has been explicitly set.
-  public var hasPrimaryCityName: Bool {self._primaryCityName != nil}
+  public var hasPrimaryCityName: Bool {return self._primaryCityName != nil}
   /// Clears the value of `primaryCityName`. Subsequent reads from it will return its default value.
   public mutating func clearPrimaryCityName() {self._primaryCityName = nil}
 
   public var primaryCityID: String {
-    get {_primaryCityID ?? String()}
+    get {return _primaryCityID ?? String()}
     set {_primaryCityID = newValue}
   }
   /// Returns true if `primaryCityID` has been explicitly set.
-  public var hasPrimaryCityID: Bool {self._primaryCityID != nil}
+  public var hasPrimaryCityID: Bool {return self._primaryCityID != nil}
   /// Clears the value of `primaryCityID`. Subsequent reads from it will return its default value.
   public mutating func clearPrimaryCityID() {self._primaryCityID = nil}
 
   /// Specific IDs for items
   public var poiID: String {
-    get {_poiID ?? String()}
+    get {return _poiID ?? String()}
     set {_poiID = newValue}
   }
   /// Returns true if `poiID` has been explicitly set.
-  public var hasPoiID: Bool {self._poiID != nil}
+  public var hasPoiID: Bool {return self._poiID != nil}
   /// Clears the value of `poiID`. Subsequent reads from it will return its default value.
   public mutating func clearPoiID() {self._poiID = nil}
 
   public var itineraryID: String {
-    get {_itineraryID ?? String()}
+    get {return _itineraryID ?? String()}
     set {_itineraryID = newValue}
   }
   /// Returns true if `itineraryID` has been explicitly set.
-  public var hasItineraryID: Bool {self._itineraryID != nil}
+  public var hasItineraryID: Bool {return self._itineraryID != nil}
   /// Clears the value of `itineraryID`. Subsequent reads from it will return its default value.
   public mutating func clearItineraryID() {self._itineraryID = nil}
 
@@ -2092,7 +2088,7 @@ public nonisolated struct Loci_Chat_BookmarkRequest: Sendable {
   fileprivate var _itineraryID: String? = nil
 }
 
-public nonisolated struct Loci_Chat_BookmarkResponse: Sendable {
+public struct Loci_Chat_BookmarkResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -2108,26 +2104,26 @@ public nonisolated struct Loci_Chat_BookmarkResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Chat_GetBookmarksRequest: Sendable {
+public struct Loci_Chat_GetBookmarksRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var userID: String {
-    get {_userID ?? String()}
+    get {return _userID ?? String()}
     set {_userID = newValue}
   }
   /// Returns true if `userID` has been explicitly set.
-  public var hasUserID: Bool {self._userID != nil}
+  public var hasUserID: Bool {return self._userID != nil}
   /// Clears the value of `userID`. Subsequent reads from it will return its default value.
   public mutating func clearUserID() {self._userID = nil}
 
   public var pagination: Loci_Common_PaginationRequest {
-    get {_pagination ?? Loci_Common_PaginationRequest()}
+    get {return _pagination ?? Loci_Common_PaginationRequest()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
@@ -2141,39 +2137,123 @@ public nonisolated struct Loci_Chat_GetBookmarksRequest: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.chat"
+fileprivate let _protobuf_package = "loci.chat"
 
-nonisolated extension Loci_Chat_MessageRole: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0MESSAGE_ROLE_UNSPECIFIED\0\u{1}MESSAGE_ROLE_USER\0\u{1}MESSAGE_ROLE_ASSISTANT\0\u{1}MESSAGE_ROLE_SYSTEM\0")
+extension Loci_Chat_MessageRole: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "MESSAGE_ROLE_UNSPECIFIED"),
+    1: .same(proto: "MESSAGE_ROLE_USER"),
+    2: .same(proto: "MESSAGE_ROLE_ASSISTANT"),
+    3: .same(proto: "MESSAGE_ROLE_SYSTEM"),
+  ]
 }
 
-nonisolated extension Loci_Chat_MessageType: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0MESSAGE_TYPE_UNSPECIFIED\0\u{1}MESSAGE_TYPE_INITIAL_REQUEST\0\u{1}MESSAGE_TYPE_MODIFICATION_REQUEST\0\u{1}MESSAGE_TYPE_RESPONSE\0\u{1}MESSAGE_TYPE_CLARIFICATION\0\u{1}MESSAGE_TYPE_ITINERARY_RESPONSE\0\u{1}MESSAGE_TYPE_ERROR\0")
+extension Loci_Chat_MessageType: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "MESSAGE_TYPE_UNSPECIFIED"),
+    1: .same(proto: "MESSAGE_TYPE_INITIAL_REQUEST"),
+    2: .same(proto: "MESSAGE_TYPE_MODIFICATION_REQUEST"),
+    3: .same(proto: "MESSAGE_TYPE_RESPONSE"),
+    4: .same(proto: "MESSAGE_TYPE_CLARIFICATION"),
+    5: .same(proto: "MESSAGE_TYPE_ITINERARY_RESPONSE"),
+    6: .same(proto: "MESSAGE_TYPE_ERROR"),
+  ]
 }
 
-nonisolated extension Loci_Chat_SessionStatus: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0SESSION_STATUS_UNSPECIFIED\0\u{1}SESSION_STATUS_ACTIVE\0\u{1}SESSION_STATUS_EXPIRED\0\u{1}SESSION_STATUS_CLOSED\0")
+extension Loci_Chat_SessionStatus: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "SESSION_STATUS_UNSPECIFIED"),
+    1: .same(proto: "SESSION_STATUS_ACTIVE"),
+    2: .same(proto: "SESSION_STATUS_EXPIRED"),
+    3: .same(proto: "SESSION_STATUS_CLOSED"),
+  ]
 }
 
-nonisolated extension Loci_Chat_IntentType: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0INTENT_TYPE_UNSPECIFIED\0\u{1}INTENT_TYPE_INITIAL_REQUEST\0\u{1}INTENT_TYPE_ADD_POI\0\u{1}INTENT_TYPE_REMOVE_POI\0\u{1}INTENT_TYPE_MODIFY_ITINERARY\0\u{1}INTENT_TYPE_CHANGE_PREFERENCES\0\u{1}INTENT_TYPE_ASK_QUESTION\0\u{1}INTENT_TYPE_CLARIFICATION\0\u{1}INTENT_TYPE_PROVIDE_FEEDBACK\0\u{1}INTENT_TYPE_CHIT_CHAT\0\u{1}INTENT_TYPE_GET_POI_DETAILS\0\u{1}INTENT_TYPE_FIND_HOTELS\0\u{1}INTENT_TYPE_FIND_RESTAURANTS\0\u{1}INTENT_TYPE_REPLACE_POI\0\u{1}INTENT_TYPE_CHANGE_DATE\0\u{1}INTENT_TYPE_CHANGE_LOCATION\0\u{1}INTENT_TYPE_SORT_ITINERARY\0")
+extension Loci_Chat_IntentType: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "INTENT_TYPE_UNSPECIFIED"),
+    1: .same(proto: "INTENT_TYPE_INITIAL_REQUEST"),
+    2: .same(proto: "INTENT_TYPE_ADD_POI"),
+    3: .same(proto: "INTENT_TYPE_REMOVE_POI"),
+    4: .same(proto: "INTENT_TYPE_MODIFY_ITINERARY"),
+    5: .same(proto: "INTENT_TYPE_CHANGE_PREFERENCES"),
+    6: .same(proto: "INTENT_TYPE_ASK_QUESTION"),
+    7: .same(proto: "INTENT_TYPE_CLARIFICATION"),
+    8: .same(proto: "INTENT_TYPE_PROVIDE_FEEDBACK"),
+    9: .same(proto: "INTENT_TYPE_CHIT_CHAT"),
+    10: .same(proto: "INTENT_TYPE_GET_POI_DETAILS"),
+    11: .same(proto: "INTENT_TYPE_FIND_HOTELS"),
+    12: .same(proto: "INTENT_TYPE_FIND_RESTAURANTS"),
+    13: .same(proto: "INTENT_TYPE_REPLACE_POI"),
+    14: .same(proto: "INTENT_TYPE_CHANGE_DATE"),
+    15: .same(proto: "INTENT_TYPE_CHANGE_LOCATION"),
+    16: .same(proto: "INTENT_TYPE_SORT_ITINERARY"),
+  ]
 }
 
-nonisolated extension Loci_Chat_DomainType: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0DOMAIN_TYPE_UNSPECIFIED\0\u{1}DOMAIN_TYPE_GENERAL\0\u{1}DOMAIN_TYPE_ACCOMMODATION\0\u{1}DOMAIN_TYPE_DINING\0\u{1}DOMAIN_TYPE_ACTIVITIES\0\u{1}DOMAIN_TYPE_ITINERARY\0\u{1}DOMAIN_TYPE_TRANSPORT\0")
+extension Loci_Chat_DomainType: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "DOMAIN_TYPE_UNSPECIFIED"),
+    1: .same(proto: "DOMAIN_TYPE_GENERAL"),
+    2: .same(proto: "DOMAIN_TYPE_ACCOMMODATION"),
+    3: .same(proto: "DOMAIN_TYPE_DINING"),
+    4: .same(proto: "DOMAIN_TYPE_ACTIVITIES"),
+    5: .same(proto: "DOMAIN_TYPE_ITINERARY"),
+    6: .same(proto: "DOMAIN_TYPE_TRANSPORT"),
+  ]
 }
 
-nonisolated extension Loci_Chat_StreamEventType: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0STREAM_EVENT_TYPE_UNSPECIFIED\0\u{1}STREAM_EVENT_TYPE_START\0\u{1}STREAM_EVENT_TYPE_TOKEN\0\u{1}STREAM_EVENT_TYPE_PARTIAL\0\u{1}STREAM_EVENT_TYPE_CITY_DATA\0\u{1}STREAM_EVENT_TYPE_ITINERARY\0\u{1}STREAM_EVENT_TYPE_GENERAL_POIS\0\u{1}STREAM_EVENT_TYPE_HOTELS\0\u{1}STREAM_EVENT_TYPE_RESTAURANTS\0\u{1}STREAM_EVENT_TYPE_ACTIVITIES\0\u{1}STREAM_EVENT_TYPE_PROGRESS\0\u{1}STREAM_EVENT_TYPE_ERROR\0\u{1}STREAM_EVENT_TYPE_COMPLETE\0")
+extension Loci_Chat_StreamEventType: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "STREAM_EVENT_TYPE_UNSPECIFIED"),
+    1: .same(proto: "STREAM_EVENT_TYPE_START"),
+    2: .same(proto: "STREAM_EVENT_TYPE_TOKEN"),
+    3: .same(proto: "STREAM_EVENT_TYPE_PARTIAL"),
+    4: .same(proto: "STREAM_EVENT_TYPE_CITY_DATA"),
+    5: .same(proto: "STREAM_EVENT_TYPE_ITINERARY"),
+    6: .same(proto: "STREAM_EVENT_TYPE_GENERAL_POIS"),
+    7: .same(proto: "STREAM_EVENT_TYPE_HOTELS"),
+    8: .same(proto: "STREAM_EVENT_TYPE_RESTAURANTS"),
+    9: .same(proto: "STREAM_EVENT_TYPE_ACTIVITIES"),
+    10: .same(proto: "STREAM_EVENT_TYPE_PROGRESS"),
+    11: .same(proto: "STREAM_EVENT_TYPE_ERROR"),
+    12: .same(proto: "STREAM_EVENT_TYPE_COMPLETE"),
+  ]
 }
 
-nonisolated extension Loci_Chat_SessionPOISection: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0SESSION_POI_SECTION_UNSPECIFIED\0\u{1}SESSION_POI_SECTION_ITINERARY\0\u{1}SESSION_POI_SECTION_GENERAL\0\u{1}SESSION_POI_SECTION_RESTAURANTS\0\u{1}SESSION_POI_SECTION_HOTELS\0\u{1}SESSION_POI_SECTION_ACTIVITIES\0")
+extension Loci_Chat_SessionPOISection: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "SESSION_POI_SECTION_UNSPECIFIED"),
+    1: .same(proto: "SESSION_POI_SECTION_ITINERARY"),
+    2: .same(proto: "SESSION_POI_SECTION_GENERAL"),
+    3: .same(proto: "SESSION_POI_SECTION_RESTAURANTS"),
+    4: .same(proto: "SESSION_POI_SECTION_HOTELS"),
+    5: .same(proto: "SESSION_POI_SECTION_ACTIVITIES"),
+  ]
 }
 
-nonisolated extension Loci_Chat_LlmInteraction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_LlmInteraction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".LlmInteraction"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}session_id\0\u{3}user_id\0\u{3}profile_id\0\u{3}city_name\0\u{1}prompt\0\u{3}request_payload\0\u{3}response_text\0\u{3}response_payload\0\u{3}model_used\0\u{3}prompt_tokens\0\u{3}completion_tokens\0\u{3}total_tokens\0\u{3}latency_ms\0\u{1}timestamp\0\u{1}latitude\0\u{1}longitude\0\u{1}distance\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "session_id"),
+    3: .standard(proto: "user_id"),
+    4: .standard(proto: "profile_id"),
+    5: .standard(proto: "city_name"),
+    6: .same(proto: "prompt"),
+    7: .standard(proto: "request_payload"),
+    8: .standard(proto: "response_text"),
+    9: .standard(proto: "response_payload"),
+    10: .standard(proto: "model_used"),
+    11: .standard(proto: "prompt_tokens"),
+    12: .standard(proto: "completion_tokens"),
+    13: .standard(proto: "total_tokens"),
+    14: .standard(proto: "latency_ms"),
+    15: .same(proto: "timestamp"),
+    16: .same(proto: "latitude"),
+    17: .same(proto: "longitude"),
+    18: .same(proto: "distance"),
+  ]
 
   fileprivate class _StorageClass {
     var _id: String = String()
@@ -2195,11 +2275,15 @@ nonisolated extension Loci_Chat_LlmInteraction: SwiftProtobuf.Message, SwiftProt
     var _longitude: Double? = nil
     var _distance: Double? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -2360,9 +2444,16 @@ nonisolated extension Loci_Chat_LlmInteraction: SwiftProtobuf.Message, SwiftProt
   }
 }
 
-nonisolated extension Loci_Chat_ConversationMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_ConversationMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ConversationMessage"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}role\0\u{1}content\0\u{3}message_type\0\u{1}timestamp\0\u{1}metadata\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "role"),
+    3: .same(proto: "content"),
+    4: .standard(proto: "message_type"),
+    5: .same(proto: "timestamp"),
+    6: .same(proto: "metadata"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2419,9 +2510,13 @@ nonisolated extension Loci_Chat_ConversationMessage: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_Chat_MessageMetadata: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_MessageMetadata: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".MessageMetadata"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}llm_interaction_id\0\u{3}modified_poi_count\0\u{3}request_type\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "llm_interaction_id"),
+    2: .standard(proto: "modified_poi_count"),
+    3: .standard(proto: "request_type"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2463,9 +2558,14 @@ nonisolated extension Loci_Chat_MessageMetadata: SwiftProtobuf.Message, SwiftPro
   }
 }
 
-nonisolated extension Loci_Chat_ModificationRecord: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_ModificationRecord: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ModificationRecord"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}type\0\u{1}description\0\u{1}timestamp\0\u{1}applied\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "type"),
+    2: .same(proto: "description"),
+    3: .same(proto: "timestamp"),
+    4: .same(proto: "applied"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2512,9 +2612,17 @@ nonisolated extension Loci_Chat_ModificationRecord: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_Chat_SessionContext: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_SessionContext: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SessionContext"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}city_name\0\u{3}last_city_id\0\u{3}user_preferences\0\u{3}active_interests\0\u{3}active_tags\0\u{3}conversation_summary\0\u{3}modification_history\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "city_name"),
+    2: .standard(proto: "last_city_id"),
+    3: .standard(proto: "user_preferences"),
+    4: .standard(proto: "active_interests"),
+    5: .standard(proto: "active_tags"),
+    6: .standard(proto: "conversation_summary"),
+    7: .standard(proto: "modification_history"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2576,9 +2684,16 @@ nonisolated extension Loci_Chat_SessionContext: SwiftProtobuf.Message, SwiftProt
   }
 }
 
-nonisolated extension Loci_Chat_AIItineraryResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_AIItineraryResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".AIItineraryResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}itinerary_name\0\u{3}overall_description\0\u{3}points_of_interest\0\u{1}restaurants\0\u{1}bars\0\u{3}planned_days\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "itinerary_name"),
+    2: .standard(proto: "overall_description"),
+    3: .standard(proto: "points_of_interest"),
+    4: .same(proto: "restaurants"),
+    5: .same(proto: "bars"),
+    6: .standard(proto: "planned_days"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2631,9 +2746,14 @@ nonisolated extension Loci_Chat_AIItineraryResponse: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_Chat_AiCityResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_AiCityResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".AiCityResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}general_city_data\0\u{3}points_of_interest\0\u{3}itinerary_response\0\u{3}session_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "general_city_data"),
+    2: .standard(proto: "points_of_interest"),
+    3: .standard(proto: "itinerary_response"),
+    4: .standard(proto: "session_id"),
+  ]
 
   fileprivate class _StorageClass {
     var _generalCityData: Loci_City_GeneralCityData? = nil
@@ -2641,11 +2761,15 @@ nonisolated extension Loci_Chat_AiCityResponse: SwiftProtobuf.Message, SwiftProt
     var _itineraryResponse: Loci_Chat_AIItineraryResponse? = nil
     var _sessionID: String = String()
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -2722,9 +2846,16 @@ nonisolated extension Loci_Chat_AiCityResponse: SwiftProtobuf.Message, SwiftProt
   }
 }
 
-nonisolated extension Loci_Chat_SessionPerformanceMetrics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_SessionPerformanceMetrics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SessionPerformanceMetrics"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}avg_response_time_ms\0\u{3}total_tokens\0\u{3}prompt_tokens\0\u{3}completion_tokens\0\u{3}models_used\0\u{3}total_latency_ms\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "avg_response_time_ms"),
+    2: .standard(proto: "total_tokens"),
+    3: .standard(proto: "prompt_tokens"),
+    4: .standard(proto: "completion_tokens"),
+    5: .standard(proto: "models_used"),
+    6: .standard(proto: "total_latency_ms"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2777,9 +2908,17 @@ nonisolated extension Loci_Chat_SessionPerformanceMetrics: SwiftProtobuf.Message
   }
 }
 
-nonisolated extension Loci_Chat_SessionContentMetrics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_SessionContentMetrics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SessionContentMetrics"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}total_pois\0\u{3}total_hotels\0\u{3}total_restaurants\0\u{3}cities_covered\0\u{3}has_itinerary\0\u{3}complexity_score\0\u{3}dominant_categories\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "total_pois"),
+    2: .standard(proto: "total_hotels"),
+    3: .standard(proto: "total_restaurants"),
+    4: .standard(proto: "cities_covered"),
+    5: .standard(proto: "has_itinerary"),
+    6: .standard(proto: "complexity_score"),
+    7: .standard(proto: "dominant_categories"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2837,9 +2976,17 @@ nonisolated extension Loci_Chat_SessionContentMetrics: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_Chat_SessionEngagementMetrics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_SessionEngagementMetrics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SessionEngagementMetrics"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}message_count\0\u{3}conversation_duration_seconds\0\u{3}user_message_count\0\u{3}assistant_message_count\0\u{3}avg_message_length\0\u{3}peak_activity_time\0\u{3}engagement_level\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "message_count"),
+    2: .standard(proto: "conversation_duration_seconds"),
+    3: .standard(proto: "user_message_count"),
+    4: .standard(proto: "assistant_message_count"),
+    5: .standard(proto: "avg_message_length"),
+    6: .standard(proto: "peak_activity_time"),
+    7: .standard(proto: "engagement_level"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2901,9 +3048,24 @@ nonisolated extension Loci_Chat_SessionEngagementMetrics: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_Chat_ChatSession: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_ChatSession: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ChatSession"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}user_id\0\u{3}profile_id\0\u{3}city_name\0\u{3}current_itinerary\0\u{3}conversation_history\0\u{3}session_context\0\u{3}created_at\0\u{3}updated_at\0\u{3}expires_at\0\u{1}status\0\u{3}performance_metrics\0\u{3}content_metrics\0\u{3}engagement_metrics\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "user_id"),
+    3: .standard(proto: "profile_id"),
+    4: .standard(proto: "city_name"),
+    5: .standard(proto: "current_itinerary"),
+    6: .standard(proto: "conversation_history"),
+    7: .standard(proto: "session_context"),
+    8: .standard(proto: "created_at"),
+    9: .standard(proto: "updated_at"),
+    10: .standard(proto: "expires_at"),
+    11: .same(proto: "status"),
+    12: .standard(proto: "performance_metrics"),
+    13: .standard(proto: "content_metrics"),
+    14: .standard(proto: "engagement_metrics"),
+  ]
 
   fileprivate class _StorageClass {
     var _id: String = String()
@@ -2921,11 +3083,15 @@ nonisolated extension Loci_Chat_ChatSession: SwiftProtobuf.Message, SwiftProtobu
     var _contentMetrics: Loci_Chat_SessionContentMetrics? = nil
     var _engagementMetrics: Loci_Chat_SessionEngagementMetrics? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -3062,9 +3228,18 @@ nonisolated extension Loci_Chat_ChatSession: SwiftProtobuf.Message, SwiftProtobu
   }
 }
 
-nonisolated extension Loci_Chat_ChatRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_ChatRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ChatRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}session_id\0\u{1}message\0\u{3}city_name\0\u{3}user_location\0\u{3}profile_id\0\u{3}trip_id\0\u{3}resume_token\0\u{3}request_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "session_id"),
+    2: .same(proto: "message"),
+    3: .standard(proto: "city_name"),
+    4: .standard(proto: "user_location"),
+    5: .standard(proto: "profile_id"),
+    6: .standard(proto: "trip_id"),
+    7: .standard(proto: "resume_token"),
+    8: .standard(proto: "request_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3131,9 +3306,16 @@ nonisolated extension Loci_Chat_ChatRequest: SwiftProtobuf.Message, SwiftProtobu
   }
 }
 
-nonisolated extension Loci_Chat_ChatResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_ChatResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ChatResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}session_id\0\u{1}message\0\u{3}updated_itinerary\0\u{3}is_new_session\0\u{3}requires_clarification\0\u{3}suggested_actions\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "session_id"),
+    2: .same(proto: "message"),
+    3: .standard(proto: "updated_itinerary"),
+    4: .standard(proto: "is_new_session"),
+    5: .standard(proto: "requires_clarification"),
+    6: .standard(proto: "suggested_actions"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3190,9 +3372,14 @@ nonisolated extension Loci_Chat_ChatResponse: SwiftProtobuf.Message, SwiftProtob
   }
 }
 
-nonisolated extension Loci_Chat_StreamError: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_StreamError: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".StreamError"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_message\0\u{3}internal_code\0\u{1}retryable\0\u{3}retry_after_ms\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_message"),
+    2: .standard(proto: "internal_code"),
+    3: .same(proto: "retryable"),
+    4: .standard(proto: "retry_after_ms"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3239,9 +3426,13 @@ nonisolated extension Loci_Chat_StreamError: SwiftProtobuf.Message, SwiftProtobu
   }
 }
 
-nonisolated extension Loci_Chat_StartPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_StartPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".StartPayload"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}session_id\0\u{1}domain\0\u{3}city_name\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "session_id"),
+    2: .same(proto: "domain"),
+    3: .standard(proto: "city_name"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3283,9 +3474,12 @@ nonisolated extension Loci_Chat_StartPayload: SwiftProtobuf.Message, SwiftProtob
   }
 }
 
-nonisolated extension Loci_Chat_TokenPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_TokenPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".TokenPayload"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}text\0\u{1}part\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "text"),
+    2: .same(proto: "part"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3322,9 +3516,12 @@ nonisolated extension Loci_Chat_TokenPayload: SwiftProtobuf.Message, SwiftProtob
   }
 }
 
-nonisolated extension Loci_Chat_ProgressPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_ProgressPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ProgressPayload"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}stage\0\u{1}percent\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "stage"),
+    2: .same(proto: "percent"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3361,9 +3558,12 @@ nonisolated extension Loci_Chat_ProgressPayload: SwiftProtobuf.Message, SwiftPro
   }
 }
 
-nonisolated extension Loci_Chat_CityDataPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_CityDataPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CityDataPayload"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}general_city_data\0\u{3}session_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "general_city_data"),
+    2: .standard(proto: "session_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3400,9 +3600,13 @@ nonisolated extension Loci_Chat_CityDataPayload: SwiftProtobuf.Message, SwiftPro
   }
 }
 
-nonisolated extension Loci_Chat_GeneralPoisPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_GeneralPoisPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GeneralPoisPayload"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}pois\0\u{3}general_city_data\0\u{3}session_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "pois"),
+    2: .standard(proto: "general_city_data"),
+    3: .standard(proto: "session_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3444,9 +3648,13 @@ nonisolated extension Loci_Chat_GeneralPoisPayload: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_Chat_HotelsPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_HotelsPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".HotelsPayload"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}pois\0\u{3}general_city_data\0\u{3}session_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "pois"),
+    2: .standard(proto: "general_city_data"),
+    3: .standard(proto: "session_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3488,9 +3696,13 @@ nonisolated extension Loci_Chat_HotelsPayload: SwiftProtobuf.Message, SwiftProto
   }
 }
 
-nonisolated extension Loci_Chat_RestaurantsPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_RestaurantsPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RestaurantsPayload"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}pois\0\u{3}general_city_data\0\u{3}session_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "pois"),
+    2: .standard(proto: "general_city_data"),
+    3: .standard(proto: "session_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3532,9 +3744,13 @@ nonisolated extension Loci_Chat_RestaurantsPayload: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_Chat_ActivitiesPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_ActivitiesPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ActivitiesPayload"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}activities\0\u{3}general_city_data\0\u{3}session_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "activities"),
+    2: .standard(proto: "general_city_data"),
+    3: .standard(proto: "session_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3576,9 +3792,11 @@ nonisolated extension Loci_Chat_ActivitiesPayload: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension Loci_Chat_ItineraryPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_ItineraryPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ItineraryPayload"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}city_response\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "city_response"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3610,9 +3828,12 @@ nonisolated extension Loci_Chat_ItineraryPayload: SwiftProtobuf.Message, SwiftPr
   }
 }
 
-nonisolated extension Loci_Chat_CompletePayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_CompletePayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CompletePayload"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}session_id\0\u{1}result\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "session_id"),
+    2: .same(proto: "result"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3649,9 +3870,29 @@ nonisolated extension Loci_Chat_CompletePayload: SwiftProtobuf.Message, SwiftPro
   }
 }
 
-nonisolated extension Loci_Chat_StreamEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_StreamEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".StreamEvent"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\u{2}message\0\u{2}\u{3}timestamp\0\u{3}event_id\0\u{3}is_final\0\u{1}navigation\0\u{3}event_type\0\u{3}request_id\0\u{2}\u{a}start\0\u{1}token\0\u{1}partial\0\u{3}city_data\0\u{1}itinerary\0\u{3}general_pois\0\u{1}hotels\0\u{1}restaurants\0\u{1}activities\0\u{1}progress\0\u{1}error\0\u{1}complete\0\u{c}\u{1}\u{1}\u{c}\u{3}\u{1}\u{c}\u{4}\u{1}")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    2: .same(proto: "message"),
+    5: .same(proto: "timestamp"),
+    6: .standard(proto: "event_id"),
+    7: .standard(proto: "is_final"),
+    8: .same(proto: "navigation"),
+    9: .standard(proto: "event_type"),
+    10: .standard(proto: "request_id"),
+    20: .same(proto: "start"),
+    21: .same(proto: "token"),
+    22: .same(proto: "partial"),
+    23: .standard(proto: "city_data"),
+    24: .same(proto: "itinerary"),
+    25: .standard(proto: "general_pois"),
+    26: .same(proto: "hotels"),
+    27: .same(proto: "restaurants"),
+    28: .same(proto: "activities"),
+    29: .same(proto: "progress"),
+    30: .same(proto: "error"),
+    31: .same(proto: "complete"),
+  ]
 
   fileprivate class _StorageClass {
     var _message: String = String()
@@ -3663,11 +3904,15 @@ nonisolated extension Loci_Chat_StreamEvent: SwiftProtobuf.Message, SwiftProtobu
     var _requestID: String? = nil
     var _payload: Loci_Chat_StreamEvent.OneOf_Payload?
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -3971,9 +4216,13 @@ nonisolated extension Loci_Chat_StreamEvent: SwiftProtobuf.Message, SwiftProtobu
   }
 }
 
-nonisolated extension Loci_Chat_NavigationData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_NavigationData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".NavigationData"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}url\0\u{3}route_type\0\u{3}query_params\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "url"),
+    2: .standard(proto: "route_type"),
+    3: .standard(proto: "query_params"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -4011,9 +4260,12 @@ nonisolated extension Loci_Chat_NavigationData: SwiftProtobuf.Message, SwiftProt
   }
 }
 
-nonisolated extension Loci_Chat_UserLocation: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_UserLocation: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UserLocation"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}latitude\0\u{1}longitude\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "latitude"),
+    2: .same(proto: "longitude"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -4050,9 +4302,15 @@ nonisolated extension Loci_Chat_UserLocation: SwiftProtobuf.Message, SwiftProtob
   }
 }
 
-nonisolated extension Loci_Chat_StartChatRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_StartChatRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".StartChatRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}city_name\0\u{3}context_type\0\u{3}initial_message\0\u{3}user_location\0\u{3}profile_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "city_name"),
+    2: .standard(proto: "context_type"),
+    3: .standard(proto: "initial_message"),
+    4: .standard(proto: "user_location"),
+    5: .standard(proto: "profile_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -4104,9 +4362,14 @@ nonisolated extension Loci_Chat_StartChatRequest: SwiftProtobuf.Message, SwiftPr
   }
 }
 
-nonisolated extension Loci_Chat_ContinueChatRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_ContinueChatRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ContinueChatRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}session_id\0\u{1}message\0\u{3}city_name\0\u{3}context_type\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "session_id"),
+    2: .same(proto: "message"),
+    3: .standard(proto: "city_name"),
+    4: .standard(proto: "context_type"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -4153,9 +4416,11 @@ nonisolated extension Loci_Chat_ContinueChatRequest: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_Chat_GetChatSessionRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_GetChatSessionRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetChatSessionRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}session_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "session_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -4183,9 +4448,11 @@ nonisolated extension Loci_Chat_GetChatSessionRequest: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_Chat_GetChatSessionResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_GetChatSessionResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetChatSessionResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}session\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "session"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -4217,9 +4484,13 @@ nonisolated extension Loci_Chat_GetChatSessionResponse: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_Chat_GetSessionPOIsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_GetSessionPOIsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetSessionPOIsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}session_id\0\u{1}pagination\0\u{1}section\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "session_id"),
+    2: .same(proto: "pagination"),
+    3: .same(proto: "section"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -4261,9 +4532,14 @@ nonisolated extension Loci_Chat_GetSessionPOIsRequest: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_Chat_GetSessionPOIsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_GetSessionPOIsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetSessionPOIsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}points_of_interest\0\u{1}pagination\0\u{1}section\0\u{3}planned_days\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "points_of_interest"),
+    2: .same(proto: "pagination"),
+    3: .same(proto: "section"),
+    4: .standard(proto: "planned_days"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -4310,9 +4586,12 @@ nonisolated extension Loci_Chat_GetSessionPOIsResponse: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_Chat_GetChatSessionsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_GetChatSessionsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetChatSessionsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{1}pagination\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .same(proto: "pagination"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -4349,9 +4628,12 @@ nonisolated extension Loci_Chat_GetChatSessionsRequest: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_Chat_GetChatSessionsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_GetChatSessionsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetChatSessionsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}sessions\0\u{1}pagination\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "sessions"),
+    2: .same(proto: "pagination"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -4388,9 +4670,22 @@ nonisolated extension Loci_Chat_GetChatSessionsResponse: SwiftProtobuf.Message, 
   }
 }
 
-nonisolated extension Loci_Chat_RecentInteraction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_RecentInteraction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RecentInteraction"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}user_id\0\u{3}city_name\0\u{3}city_id\0\u{1}prompt\0\u{3}response_text\0\u{3}model_used\0\u{3}latency_ms\0\u{3}created_at\0\u{1}pois\0\u{1}hotels\0\u{1}restaurants\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "user_id"),
+    3: .standard(proto: "city_name"),
+    4: .standard(proto: "city_id"),
+    5: .same(proto: "prompt"),
+    6: .standard(proto: "response_text"),
+    7: .standard(proto: "model_used"),
+    8: .standard(proto: "latency_ms"),
+    9: .standard(proto: "created_at"),
+    10: .same(proto: "pois"),
+    11: .same(proto: "hotels"),
+    12: .same(proto: "restaurants"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -4477,9 +4772,19 @@ nonisolated extension Loci_Chat_RecentInteraction: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension Loci_Chat_CityInteractions: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_CityInteractions: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CityInteractions"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}city_name\0\u{3}session_id\0\u{1}interactions\0\u{3}poi_count\0\u{3}last_activity\0\u{3}session_ids\0\u{1}title\0\u{3}total_favorites\0\u{3}total_itineraries\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "city_name"),
+    2: .standard(proto: "session_id"),
+    3: .same(proto: "interactions"),
+    4: .standard(proto: "poi_count"),
+    5: .standard(proto: "last_activity"),
+    6: .standard(proto: "session_ids"),
+    7: .same(proto: "title"),
+    8: .standard(proto: "total_favorites"),
+    9: .standard(proto: "total_itineraries"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -4551,9 +4856,12 @@ nonisolated extension Loci_Chat_CityInteractions: SwiftProtobuf.Message, SwiftPr
   }
 }
 
-nonisolated extension Loci_Chat_GetRecentInteractionsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_GetRecentInteractionsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetRecentInteractionsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{1}pagination\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .same(proto: "pagination"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -4590,9 +4898,12 @@ nonisolated extension Loci_Chat_GetRecentInteractionsRequest: SwiftProtobuf.Mess
   }
 }
 
-nonisolated extension Loci_Chat_GetRecentInteractionsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_GetRecentInteractionsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetRecentInteractionsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}cities\0\u{1}pagination\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "cities"),
+    2: .same(proto: "pagination"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -4629,9 +4940,20 @@ nonisolated extension Loci_Chat_GetRecentInteractionsResponse: SwiftProtobuf.Mes
   }
 }
 
-nonisolated extension Loci_Chat_BookmarkRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_BookmarkRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".BookmarkRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}title\0\u{1}description\0\u{1}tags\0\u{3}is_public\0\u{3}session_id\0\u{3}llm_interaction_id\0\u{3}primary_city_name\0\u{3}primary_city_id\0\u{3}poi_id\0\u{3}itinerary_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "title"),
+    2: .same(proto: "description"),
+    3: .same(proto: "tags"),
+    4: .standard(proto: "is_public"),
+    5: .standard(proto: "session_id"),
+    6: .standard(proto: "llm_interaction_id"),
+    7: .standard(proto: "primary_city_name"),
+    8: .standard(proto: "primary_city_id"),
+    9: .standard(proto: "poi_id"),
+    10: .standard(proto: "itinerary_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -4708,9 +5030,13 @@ nonisolated extension Loci_Chat_BookmarkRequest: SwiftProtobuf.Message, SwiftPro
   }
 }
 
-nonisolated extension Loci_Chat_BookmarkResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_BookmarkResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".BookmarkResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}success\0\u{1}message\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "success"),
+    3: .same(proto: "message"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -4748,9 +5074,12 @@ nonisolated extension Loci_Chat_BookmarkResponse: SwiftProtobuf.Message, SwiftPr
   }
 }
 
-nonisolated extension Loci_Chat_GetBookmarksRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Chat_GetBookmarksRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetBookmarksRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{1}pagination\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .same(proto: "pagination"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

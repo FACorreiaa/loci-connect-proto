@@ -12,9 +12,6 @@ import SwiftProtobuf
 /// CompareService compares weekend destinations side-by-side.
 public protocol Loci_Compare_V1_CompareServiceClientInterface: Sendable {
 
-    @discardableResult
-    func `compareWeekend`(request: Loci_Compare_V1_CompareWeekendRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Compare_V1_CompareWeekendResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `compareWeekend`(request: Loci_Compare_V1_CompareWeekendRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Compare_V1_CompareWeekendResponse>
 }
@@ -25,11 +22,6 @@ public final class Loci_Compare_V1_CompareServiceClient: Loci_Compare_V1_Compare
 
     public init(client: Connect.ProtocolClientInterface) {
         self.client = client
-    }
-
-    @discardableResult
-    public func `compareWeekend`(request: Loci_Compare_V1_CompareWeekendRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Compare_V1_CompareWeekendResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.compare.v1.CompareService/CompareWeekend", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

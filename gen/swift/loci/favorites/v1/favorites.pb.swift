@@ -15,13 +15,13 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// Content type for favorites
-public nonisolated enum Loci_Favorites_V1_ContentType: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Favorites_V1_ContentType: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case poi // = 1
@@ -68,87 +68,87 @@ public nonisolated enum Loci_Favorites_V1_ContentType: SwiftProtobuf.Enum, Swift
 }
 
 /// Favorite item representation
-public nonisolated struct Loci_Favorites_V1_FavoriteItem: @unchecked Sendable {
+public struct Loci_Favorites_V1_FavoriteItem: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var id: String {
-    get {_storage._id}
+    get {return _storage._id}
     set {_uniqueStorage()._id = newValue}
   }
 
   public var userID: String {
-    get {_storage._userID}
+    get {return _storage._userID}
     set {_uniqueStorage()._userID = newValue}
   }
 
   /// The ID of the POI/hotel/restaurant/itinerary
   public var itemID: String {
-    get {_storage._itemID}
+    get {return _storage._itemID}
     set {_uniqueStorage()._itemID = newValue}
   }
 
   public var itemName: String {
-    get {_storage._itemName}
+    get {return _storage._itemName}
     set {_uniqueStorage()._itemName = newValue}
   }
 
   public var contentType: Loci_Favorites_V1_ContentType {
-    get {_storage._contentType}
+    get {return _storage._contentType}
     set {_uniqueStorage()._contentType = newValue}
   }
 
   public var notes: String {
-    get {_storage._notes}
+    get {return _storage._notes}
     set {_uniqueStorage()._notes = newValue}
   }
 
   public var description_p: String {
-    get {_storage._description_p}
+    get {return _storage._description_p}
     set {_uniqueStorage()._description_p = newValue}
   }
 
   public var cityName: String {
-    get {_storage._cityName}
+    get {return _storage._cityName}
     set {_uniqueStorage()._cityName = newValue}
   }
 
   public var latitude: Double {
-    get {_storage._latitude}
+    get {return _storage._latitude}
     set {_uniqueStorage()._latitude = newValue}
   }
 
   public var longitude: Double {
-    get {_storage._longitude}
+    get {return _storage._longitude}
     set {_uniqueStorage()._longitude = newValue}
   }
 
   public var rating: Double {
-    get {_storage._rating}
+    get {return _storage._rating}
     set {_uniqueStorage()._rating = newValue}
   }
 
   public var category: String {
-    get {_storage._category}
+    get {return _storage._category}
     set {_uniqueStorage()._category = newValue}
   }
 
   public var addedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._addedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._addedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._addedAt = newValue}
   }
   /// Returns true if `addedAt` has been explicitly set.
-  public var hasAddedAt: Bool {_storage._addedAt != nil}
+  public var hasAddedAt: Bool {return _storage._addedAt != nil}
   /// Clears the value of `addedAt`. Subsequent reads from it will return its default value.
   public mutating func clearAddedAt() {_uniqueStorage()._addedAt = nil}
 
   public var recommendationTrace: Loci_Recommendation_RecommendationTrace {
-    get {_storage._recommendationTrace ?? Loci_Recommendation_RecommendationTrace()}
+    get {return _storage._recommendationTrace ?? Loci_Recommendation_RecommendationTrace()}
     set {_uniqueStorage()._recommendationTrace = newValue}
   }
   /// Returns true if `recommendationTrace` has been explicitly set.
-  public var hasRecommendationTrace: Bool {_storage._recommendationTrace != nil}
+  public var hasRecommendationTrace: Bool {return _storage._recommendationTrace != nil}
   /// Clears the value of `recommendationTrace`. Subsequent reads from it will return its default value.
   public mutating func clearRecommendationTrace() {_uniqueStorage()._recommendationTrace = nil}
 
@@ -160,78 +160,78 @@ public nonisolated struct Loci_Favorites_V1_FavoriteItem: @unchecked Sendable {
 }
 
 /// AddToFavorites
-public nonisolated struct Loci_Favorites_V1_AddToFavoritesRequest: @unchecked Sendable {
+public struct Loci_Favorites_V1_AddToFavoritesRequest: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var userID: String {
-    get {_storage._userID}
+    get {return _storage._userID}
     set {_uniqueStorage()._userID = newValue}
   }
 
   public var itemID: String {
-    get {_storage._itemID}
+    get {return _storage._itemID}
     set {_uniqueStorage()._itemID = newValue}
   }
 
   public var itemName: String {
-    get {_storage._itemName}
+    get {return _storage._itemName}
     set {_uniqueStorage()._itemName = newValue}
   }
 
   public var contentType: Loci_Favorites_V1_ContentType {
-    get {_storage._contentType}
+    get {return _storage._contentType}
     set {_uniqueStorage()._contentType = newValue}
   }
 
   public var notes: String {
-    get {_storage._notes}
+    get {return _storage._notes}
     set {_uniqueStorage()._notes = newValue}
   }
 
   public var description_p: String {
-    get {_storage._description_p}
+    get {return _storage._description_p}
     set {_uniqueStorage()._description_p = newValue}
   }
 
   public var cityName: String {
-    get {_storage._cityName}
+    get {return _storage._cityName}
     set {_uniqueStorage()._cityName = newValue}
   }
 
   public var latitude: Double {
-    get {_storage._latitude}
+    get {return _storage._latitude}
     set {_uniqueStorage()._latitude = newValue}
   }
 
   public var longitude: Double {
-    get {_storage._longitude}
+    get {return _storage._longitude}
     set {_uniqueStorage()._longitude = newValue}
   }
 
   public var rating: Double {
-    get {_storage._rating}
+    get {return _storage._rating}
     set {_uniqueStorage()._rating = newValue}
   }
 
   public var category: String {
-    get {_storage._category}
+    get {return _storage._category}
     set {_uniqueStorage()._category = newValue}
   }
 
   /// Optional: link to LLM interaction
   public var llmInteractionID: String {
-    get {_storage._llmInteractionID}
+    get {return _storage._llmInteractionID}
     set {_uniqueStorage()._llmInteractionID = newValue}
   }
 
   public var recommendationTrace: Loci_Recommendation_RecommendationTrace {
-    get {_storage._recommendationTrace ?? Loci_Recommendation_RecommendationTrace()}
+    get {return _storage._recommendationTrace ?? Loci_Recommendation_RecommendationTrace()}
     set {_uniqueStorage()._recommendationTrace = newValue}
   }
   /// Returns true if `recommendationTrace` has been explicitly set.
-  public var hasRecommendationTrace: Bool {_storage._recommendationTrace != nil}
+  public var hasRecommendationTrace: Bool {return _storage._recommendationTrace != nil}
   /// Clears the value of `recommendationTrace`. Subsequent reads from it will return its default value.
   public mutating func clearRecommendationTrace() {_uniqueStorage()._recommendationTrace = nil}
 
@@ -242,7 +242,7 @@ public nonisolated struct Loci_Favorites_V1_AddToFavoritesRequest: @unchecked Se
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-public nonisolated struct Loci_Favorites_V1_AddToFavoritesResponse: Sendable {
+public struct Loci_Favorites_V1_AddToFavoritesResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -252,11 +252,11 @@ public nonisolated struct Loci_Favorites_V1_AddToFavoritesResponse: Sendable {
   public var message: String = String()
 
   public var favorite: Loci_Favorites_V1_FavoriteItem {
-    get {_favorite ?? Loci_Favorites_V1_FavoriteItem()}
+    get {return _favorite ?? Loci_Favorites_V1_FavoriteItem()}
     set {_favorite = newValue}
   }
   /// Returns true if `favorite` has been explicitly set.
-  public var hasFavorite: Bool {self._favorite != nil}
+  public var hasFavorite: Bool {return self._favorite != nil}
   /// Clears the value of `favorite`. Subsequent reads from it will return its default value.
   public mutating func clearFavorite() {self._favorite = nil}
 
@@ -268,7 +268,7 @@ public nonisolated struct Loci_Favorites_V1_AddToFavoritesResponse: Sendable {
 }
 
 /// RemoveFromFavorites
-public nonisolated struct Loci_Favorites_V1_RemoveFromFavoritesRequest: Sendable {
+public struct Loci_Favorites_V1_RemoveFromFavoritesRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -284,7 +284,7 @@ public nonisolated struct Loci_Favorites_V1_RemoveFromFavoritesRequest: Sendable
   public init() {}
 }
 
-public nonisolated struct Loci_Favorites_V1_RemoveFromFavoritesResponse: Sendable {
+public struct Loci_Favorites_V1_RemoveFromFavoritesResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -299,7 +299,7 @@ public nonisolated struct Loci_Favorites_V1_RemoveFromFavoritesResponse: Sendabl
 }
 
 /// GetFavorites
-public nonisolated struct Loci_Favorites_V1_GetFavoritesRequest: Sendable {
+public struct Loci_Favorites_V1_GetFavoritesRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -318,7 +318,7 @@ public nonisolated struct Loci_Favorites_V1_GetFavoritesRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Favorites_V1_GetFavoritesResponse: Sendable {
+public struct Loci_Favorites_V1_GetFavoritesResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -333,7 +333,7 @@ public nonisolated struct Loci_Favorites_V1_GetFavoritesResponse: Sendable {
 }
 
 /// IsFavorited
-public nonisolated struct Loci_Favorites_V1_IsFavoritedRequest: Sendable {
+public struct Loci_Favorites_V1_IsFavoritedRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -349,7 +349,7 @@ public nonisolated struct Loci_Favorites_V1_IsFavoritedRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Favorites_V1_IsFavoritedResponse: Sendable {
+public struct Loci_Favorites_V1_IsFavoritedResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -362,7 +362,7 @@ public nonisolated struct Loci_Favorites_V1_IsFavoritedResponse: Sendable {
 }
 
 /// GetFavoritesCount
-public nonisolated struct Loci_Favorites_V1_GetFavoritesCountRequest: Sendable {
+public struct Loci_Favorites_V1_GetFavoritesCountRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -377,7 +377,7 @@ public nonisolated struct Loci_Favorites_V1_GetFavoritesCountRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Favorites_V1_GetFavoritesCountResponse: Sendable {
+public struct Loci_Favorites_V1_GetFavoritesCountResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -389,142 +389,142 @@ public nonisolated struct Loci_Favorites_V1_GetFavoritesCountResponse: Sendable 
   public init() {}
 }
 
-public nonisolated struct Loci_Favorites_V1_HotelDetails: @unchecked Sendable {
+public struct Loci_Favorites_V1_HotelDetails: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var id: String {
-    get {_storage._id}
+    get {return _storage._id}
     set {_uniqueStorage()._id = newValue}
   }
 
   public var name: String {
-    get {_storage._name}
+    get {return _storage._name}
     set {_uniqueStorage()._name = newValue}
   }
 
   public var city: String {
-    get {_storage._city}
+    get {return _storage._city}
     set {_uniqueStorage()._city = newValue}
   }
 
   public var description_p: String {
-    get {_storage._description_p}
+    get {return _storage._description_p}
     set {_uniqueStorage()._description_p = newValue}
   }
 
   public var latitude: Double {
-    get {_storage._latitude}
+    get {return _storage._latitude}
     set {_uniqueStorage()._latitude = newValue}
   }
 
   public var longitude: Double {
-    get {_storage._longitude}
+    get {return _storage._longitude}
     set {_uniqueStorage()._longitude = newValue}
   }
 
   public var address: String {
-    get {_storage._address}
+    get {return _storage._address}
     set {_uniqueStorage()._address = newValue}
   }
 
   public var category: String {
-    get {_storage._category}
+    get {return _storage._category}
     set {_uniqueStorage()._category = newValue}
   }
 
   public var rating: Double {
-    get {_storage._rating}
+    get {return _storage._rating}
     set {_uniqueStorage()._rating = newValue}
   }
 
   public var starRating: String {
-    get {_storage._starRating}
+    get {return _storage._starRating}
     set {_uniqueStorage()._starRating = newValue}
   }
 
   public var priceRange: String {
-    get {_storage._priceRange}
+    get {return _storage._priceRange}
     set {_uniqueStorage()._priceRange = newValue}
   }
 
   public var amenities: [String] {
-    get {_storage._amenities}
+    get {return _storage._amenities}
     set {_uniqueStorage()._amenities = newValue}
   }
 
   public var images: [String] {
-    get {_storage._images}
+    get {return _storage._images}
     set {_uniqueStorage()._images = newValue}
   }
 
   public var phone: String {
-    get {_storage._phone}
+    get {return _storage._phone}
     set {_uniqueStorage()._phone = newValue}
   }
 
   public var website: String {
-    get {_storage._website}
+    get {return _storage._website}
     set {_uniqueStorage()._website = newValue}
   }
 
   public var llmInteractionID: String {
-    get {_storage._llmInteractionID}
+    get {return _storage._llmInteractionID}
     set {_uniqueStorage()._llmInteractionID = newValue}
   }
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {_storage._createdAt != nil}
+  public var hasCreatedAt: Bool {return _storage._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {_uniqueStorage()._createdAt = nil}
 
   /// Extended fields for detail page
   public var checkIn: String {
-    get {_storage._checkIn}
+    get {return _storage._checkIn}
     set {_uniqueStorage()._checkIn = newValue}
   }
 
   public var checkOut: String {
-    get {_storage._checkOut}
+    get {return _storage._checkOut}
     set {_uniqueStorage()._checkOut = newValue}
   }
 
   public var pricePerNight: String {
-    get {_storage._pricePerNight}
+    get {return _storage._pricePerNight}
     set {_uniqueStorage()._pricePerNight = newValue}
   }
 
   public var reviewCount: Int32 {
-    get {_storage._reviewCount}
+    get {return _storage._reviewCount}
     set {_uniqueStorage()._reviewCount = newValue}
   }
 
   public var features: [String] {
-    get {_storage._features}
+    get {return _storage._features}
     set {_uniqueStorage()._features = newValue}
   }
 
   public var rooms: [Loci_Favorites_V1_HotelRoom] {
-    get {_storage._rooms}
+    get {return _storage._rooms}
     set {_uniqueStorage()._rooms = newValue}
   }
 
   public var nearbyAttractions: [Loci_Favorites_V1_NearbyAttraction] {
-    get {_storage._nearbyAttractions}
+    get {return _storage._nearbyAttractions}
     set {_uniqueStorage()._nearbyAttractions = newValue}
   }
 
   public var contact: Loci_Favorites_V1_HotelContact {
-    get {_storage._contact ?? Loci_Favorites_V1_HotelContact()}
+    get {return _storage._contact ?? Loci_Favorites_V1_HotelContact()}
     set {_uniqueStorage()._contact = newValue}
   }
   /// Returns true if `contact` has been explicitly set.
-  public var hasContact: Bool {_storage._contact != nil}
+  public var hasContact: Bool {return _storage._contact != nil}
   /// Clears the value of `contact`. Subsequent reads from it will return its default value.
   public mutating func clearContact() {_uniqueStorage()._contact = nil}
 
@@ -535,7 +535,7 @@ public nonisolated struct Loci_Favorites_V1_HotelDetails: @unchecked Sendable {
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-public nonisolated struct Loci_Favorites_V1_HotelRoom: Sendable {
+public struct Loci_Favorites_V1_HotelRoom: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -557,7 +557,7 @@ public nonisolated struct Loci_Favorites_V1_HotelRoom: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Favorites_V1_NearbyAttraction: Sendable {
+public struct Loci_Favorites_V1_NearbyAttraction: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -573,7 +573,7 @@ public nonisolated struct Loci_Favorites_V1_NearbyAttraction: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Favorites_V1_HotelContact: Sendable {
+public struct Loci_Favorites_V1_HotelContact: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -589,7 +589,7 @@ public nonisolated struct Loci_Favorites_V1_HotelContact: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Favorites_V1_GetHotelDetailsRequest: Sendable {
+public struct Loci_Favorites_V1_GetHotelDetailsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -601,7 +601,7 @@ public nonisolated struct Loci_Favorites_V1_GetHotelDetailsRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Favorites_V1_GetHotelDetailsResponse: Sendable {
+public struct Loci_Favorites_V1_GetHotelDetailsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -611,11 +611,11 @@ public nonisolated struct Loci_Favorites_V1_GetHotelDetailsResponse: Sendable {
   public var message: String = String()
 
   public var hotel: Loci_Favorites_V1_HotelDetails {
-    get {_hotel ?? Loci_Favorites_V1_HotelDetails()}
+    get {return _hotel ?? Loci_Favorites_V1_HotelDetails()}
     set {_hotel = newValue}
   }
   /// Returns true if `hotel` has been explicitly set.
-  public var hasHotel: Bool {self._hotel != nil}
+  public var hasHotel: Bool {return self._hotel != nil}
   /// Clears the value of `hotel`. Subsequent reads from it will return its default value.
   public mutating func clearHotel() {self._hotel = nil}
 
@@ -626,7 +626,7 @@ public nonisolated struct Loci_Favorites_V1_GetHotelDetailsResponse: Sendable {
   fileprivate var _hotel: Loci_Favorites_V1_HotelDetails? = nil
 }
 
-public nonisolated struct Loci_Favorites_V1_GetNearbyHotelsRequest: Sendable {
+public struct Loci_Favorites_V1_GetNearbyHotelsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -646,7 +646,7 @@ public nonisolated struct Loci_Favorites_V1_GetNearbyHotelsRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Favorites_V1_GetNearbyHotelsResponse: Sendable {
+public struct Loci_Favorites_V1_GetNearbyHotelsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -660,161 +660,161 @@ public nonisolated struct Loci_Favorites_V1_GetNearbyHotelsResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Favorites_V1_RestaurantDetails: @unchecked Sendable {
+public struct Loci_Favorites_V1_RestaurantDetails: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var id: String {
-    get {_storage._id}
+    get {return _storage._id}
     set {_uniqueStorage()._id = newValue}
   }
 
   public var name: String {
-    get {_storage._name}
+    get {return _storage._name}
     set {_uniqueStorage()._name = newValue}
   }
 
   public var city: String {
-    get {_storage._city}
+    get {return _storage._city}
     set {_uniqueStorage()._city = newValue}
   }
 
   public var description_p: String {
-    get {_storage._description_p}
+    get {return _storage._description_p}
     set {_uniqueStorage()._description_p = newValue}
   }
 
   public var latitude: Double {
-    get {_storage._latitude}
+    get {return _storage._latitude}
     set {_uniqueStorage()._latitude = newValue}
   }
 
   public var longitude: Double {
-    get {_storage._longitude}
+    get {return _storage._longitude}
     set {_uniqueStorage()._longitude = newValue}
   }
 
   public var address: String {
-    get {_storage._address}
+    get {return _storage._address}
     set {_uniqueStorage()._address = newValue}
   }
 
   public var category: String {
-    get {_storage._category}
+    get {return _storage._category}
     set {_uniqueStorage()._category = newValue}
   }
 
   public var rating: Double {
-    get {_storage._rating}
+    get {return _storage._rating}
     set {_uniqueStorage()._rating = newValue}
   }
 
   public var cuisineType: String {
-    get {_storage._cuisineType}
+    get {return _storage._cuisineType}
     set {_uniqueStorage()._cuisineType = newValue}
   }
 
   public var priceRange: String {
-    get {_storage._priceRange}
+    get {return _storage._priceRange}
     set {_uniqueStorage()._priceRange = newValue}
   }
 
   public var tags: [String] {
-    get {_storage._tags}
+    get {return _storage._tags}
     set {_uniqueStorage()._tags = newValue}
   }
 
   public var images: [String] {
-    get {_storage._images}
+    get {return _storage._images}
     set {_uniqueStorage()._images = newValue}
   }
 
   public var phone: String {
-    get {_storage._phone}
+    get {return _storage._phone}
     set {_uniqueStorage()._phone = newValue}
   }
 
   public var website: String {
-    get {_storage._website}
+    get {return _storage._website}
     set {_uniqueStorage()._website = newValue}
   }
 
   public var llmInteractionID: String {
-    get {_storage._llmInteractionID}
+    get {return _storage._llmInteractionID}
     set {_uniqueStorage()._llmInteractionID = newValue}
   }
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {_storage._createdAt != nil}
+  public var hasCreatedAt: Bool {return _storage._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {_uniqueStorage()._createdAt = nil}
 
   /// Extended fields for detail page
   public var reviewCount: Int32 {
-    get {_storage._reviewCount}
+    get {return _storage._reviewCount}
     set {_uniqueStorage()._reviewCount = newValue}
   }
 
   public var isOpen: Bool {
-    get {_storage._isOpen}
+    get {return _storage._isOpen}
     set {_uniqueStorage()._isOpen = newValue}
   }
 
   public var reservationRequired: Bool {
-    get {_storage._reservationRequired}
+    get {return _storage._reservationRequired}
     set {_uniqueStorage()._reservationRequired = newValue}
   }
 
   public var acceptsCards: Bool {
-    get {_storage._acceptsCards}
+    get {return _storage._acceptsCards}
     set {_uniqueStorage()._acceptsCards = newValue}
   }
 
   public var features: [String] {
-    get {_storage._features}
+    get {return _storage._features}
     set {_uniqueStorage()._features = newValue}
   }
 
   public var specialties: [String] {
-    get {_storage._specialties}
+    get {return _storage._specialties}
     set {_uniqueStorage()._specialties = newValue}
   }
 
   public var languages: [String] {
-    get {_storage._languages}
+    get {return _storage._languages}
     set {_uniqueStorage()._languages = newValue}
   }
 
   public var averagePrice: String {
-    get {_storage._averagePrice}
+    get {return _storage._averagePrice}
     set {_uniqueStorage()._averagePrice = newValue}
   }
 
   public var menu: Loci_Favorites_V1_RestaurantMenu {
-    get {_storage._menu ?? Loci_Favorites_V1_RestaurantMenu()}
+    get {return _storage._menu ?? Loci_Favorites_V1_RestaurantMenu()}
     set {_uniqueStorage()._menu = newValue}
   }
   /// Returns true if `menu` has been explicitly set.
-  public var hasMenu: Bool {_storage._menu != nil}
+  public var hasMenu: Bool {return _storage._menu != nil}
   /// Clears the value of `menu`. Subsequent reads from it will return its default value.
   public mutating func clearMenu() {_uniqueStorage()._menu = nil}
 
   public var hours: Dictionary<String,String> {
-    get {_storage._hours}
+    get {return _storage._hours}
     set {_uniqueStorage()._hours = newValue}
   }
 
   public var contact: Loci_Favorites_V1_RestaurantContact {
-    get {_storage._contact ?? Loci_Favorites_V1_RestaurantContact()}
+    get {return _storage._contact ?? Loci_Favorites_V1_RestaurantContact()}
     set {_uniqueStorage()._contact = newValue}
   }
   /// Returns true if `contact` has been explicitly set.
-  public var hasContact: Bool {_storage._contact != nil}
+  public var hasContact: Bool {return _storage._contact != nil}
   /// Clears the value of `contact`. Subsequent reads from it will return its default value.
   public mutating func clearContact() {_uniqueStorage()._contact = nil}
 
@@ -825,7 +825,7 @@ public nonisolated struct Loci_Favorites_V1_RestaurantDetails: @unchecked Sendab
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-public nonisolated struct Loci_Favorites_V1_MenuItem: Sendable {
+public struct Loci_Favorites_V1_MenuItem: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -841,7 +841,7 @@ public nonisolated struct Loci_Favorites_V1_MenuItem: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Favorites_V1_RestaurantMenu: Sendable {
+public struct Loci_Favorites_V1_RestaurantMenu: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -857,7 +857,7 @@ public nonisolated struct Loci_Favorites_V1_RestaurantMenu: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Favorites_V1_RestaurantContact: Sendable {
+public struct Loci_Favorites_V1_RestaurantContact: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -873,7 +873,7 @@ public nonisolated struct Loci_Favorites_V1_RestaurantContact: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Favorites_V1_GetRestaurantDetailsRequest: Sendable {
+public struct Loci_Favorites_V1_GetRestaurantDetailsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -885,7 +885,7 @@ public nonisolated struct Loci_Favorites_V1_GetRestaurantDetailsRequest: Sendabl
   public init() {}
 }
 
-public nonisolated struct Loci_Favorites_V1_GetRestaurantDetailsResponse: Sendable {
+public struct Loci_Favorites_V1_GetRestaurantDetailsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -895,11 +895,11 @@ public nonisolated struct Loci_Favorites_V1_GetRestaurantDetailsResponse: Sendab
   public var message: String = String()
 
   public var restaurant: Loci_Favorites_V1_RestaurantDetails {
-    get {_restaurant ?? Loci_Favorites_V1_RestaurantDetails()}
+    get {return _restaurant ?? Loci_Favorites_V1_RestaurantDetails()}
     set {_restaurant = newValue}
   }
   /// Returns true if `restaurant` has been explicitly set.
-  public var hasRestaurant: Bool {self._restaurant != nil}
+  public var hasRestaurant: Bool {return self._restaurant != nil}
   /// Clears the value of `restaurant`. Subsequent reads from it will return its default value.
   public mutating func clearRestaurant() {self._restaurant = nil}
 
@@ -910,7 +910,7 @@ public nonisolated struct Loci_Favorites_V1_GetRestaurantDetailsResponse: Sendab
   fileprivate var _restaurant: Loci_Favorites_V1_RestaurantDetails? = nil
 }
 
-public nonisolated struct Loci_Favorites_V1_GetNearbyRestaurantsRequest: Sendable {
+public struct Loci_Favorites_V1_GetNearbyRestaurantsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -930,7 +930,7 @@ public nonisolated struct Loci_Favorites_V1_GetNearbyRestaurantsRequest: Sendabl
   public init() {}
 }
 
-public nonisolated struct Loci_Favorites_V1_GetNearbyRestaurantsResponse: Sendable {
+public struct Loci_Favorites_V1_GetNearbyRestaurantsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -946,15 +946,36 @@ public nonisolated struct Loci_Favorites_V1_GetNearbyRestaurantsResponse: Sendab
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.favorites.v1"
+fileprivate let _protobuf_package = "loci.favorites.v1"
 
-nonisolated extension Loci_Favorites_V1_ContentType: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0CONTENT_TYPE_UNSPECIFIED\0\u{1}CONTENT_TYPE_POI\0\u{1}CONTENT_TYPE_HOTEL\0\u{1}CONTENT_TYPE_RESTAURANT\0\u{1}CONTENT_TYPE_ITINERARY\0")
+extension Loci_Favorites_V1_ContentType: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "CONTENT_TYPE_UNSPECIFIED"),
+    1: .same(proto: "CONTENT_TYPE_POI"),
+    2: .same(proto: "CONTENT_TYPE_HOTEL"),
+    3: .same(proto: "CONTENT_TYPE_RESTAURANT"),
+    4: .same(proto: "CONTENT_TYPE_ITINERARY"),
+  ]
 }
 
-nonisolated extension Loci_Favorites_V1_FavoriteItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Favorites_V1_FavoriteItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".FavoriteItem"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}user_id\0\u{3}item_id\0\u{3}item_name\0\u{3}content_type\0\u{1}notes\0\u{1}description\0\u{3}city_name\0\u{1}latitude\0\u{1}longitude\0\u{1}rating\0\u{1}category\0\u{3}added_at\0\u{3}recommendation_trace\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "user_id"),
+    3: .standard(proto: "item_id"),
+    4: .standard(proto: "item_name"),
+    5: .standard(proto: "content_type"),
+    6: .same(proto: "notes"),
+    7: .same(proto: "description"),
+    8: .standard(proto: "city_name"),
+    9: .same(proto: "latitude"),
+    10: .same(proto: "longitude"),
+    11: .same(proto: "rating"),
+    12: .same(proto: "category"),
+    13: .standard(proto: "added_at"),
+    14: .standard(proto: "recommendation_trace"),
+  ]
 
   fileprivate class _StorageClass {
     var _id: String = String()
@@ -972,11 +993,15 @@ nonisolated extension Loci_Favorites_V1_FavoriteItem: SwiftProtobuf.Message, Swi
     var _addedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _recommendationTrace: Loci_Recommendation_RecommendationTrace? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -1113,9 +1138,23 @@ nonisolated extension Loci_Favorites_V1_FavoriteItem: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Favorites_V1_AddToFavoritesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Favorites_V1_AddToFavoritesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".AddToFavoritesRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}item_id\0\u{3}item_name\0\u{3}content_type\0\u{1}notes\0\u{1}description\0\u{3}city_name\0\u{1}latitude\0\u{1}longitude\0\u{1}rating\0\u{1}category\0\u{3}llm_interaction_id\0\u{3}recommendation_trace\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "item_id"),
+    3: .standard(proto: "item_name"),
+    4: .standard(proto: "content_type"),
+    5: .same(proto: "notes"),
+    6: .same(proto: "description"),
+    7: .standard(proto: "city_name"),
+    8: .same(proto: "latitude"),
+    9: .same(proto: "longitude"),
+    10: .same(proto: "rating"),
+    11: .same(proto: "category"),
+    12: .standard(proto: "llm_interaction_id"),
+    13: .standard(proto: "recommendation_trace"),
+  ]
 
   fileprivate class _StorageClass {
     var _userID: String = String()
@@ -1132,11 +1171,15 @@ nonisolated extension Loci_Favorites_V1_AddToFavoritesRequest: SwiftProtobuf.Mes
     var _llmInteractionID: String = String()
     var _recommendationTrace: Loci_Recommendation_RecommendationTrace? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -1267,9 +1310,13 @@ nonisolated extension Loci_Favorites_V1_AddToFavoritesRequest: SwiftProtobuf.Mes
   }
 }
 
-nonisolated extension Loci_Favorites_V1_AddToFavoritesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Favorites_V1_AddToFavoritesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".AddToFavoritesResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}success\0\u{1}message\0\u{1}favorite\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "success"),
+    2: .same(proto: "message"),
+    3: .same(proto: "favorite"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1311,9 +1358,13 @@ nonisolated extension Loci_Favorites_V1_AddToFavoritesResponse: SwiftProtobuf.Me
   }
 }
 
-nonisolated extension Loci_Favorites_V1_RemoveFromFavoritesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Favorites_V1_RemoveFromFavoritesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RemoveFromFavoritesRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}item_id\0\u{3}content_type\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "item_id"),
+    3: .standard(proto: "content_type"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1351,9 +1402,12 @@ nonisolated extension Loci_Favorites_V1_RemoveFromFavoritesRequest: SwiftProtobu
   }
 }
 
-nonisolated extension Loci_Favorites_V1_RemoveFromFavoritesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Favorites_V1_RemoveFromFavoritesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RemoveFromFavoritesResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}success\0\u{1}message\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "success"),
+    2: .same(proto: "message"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1386,9 +1440,14 @@ nonisolated extension Loci_Favorites_V1_RemoveFromFavoritesResponse: SwiftProtob
   }
 }
 
-nonisolated extension Loci_Favorites_V1_GetFavoritesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Favorites_V1_GetFavoritesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetFavoritesRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}content_type\0\u{1}limit\0\u{1}offset\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "content_type"),
+    3: .same(proto: "limit"),
+    4: .same(proto: "offset"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1431,9 +1490,12 @@ nonisolated extension Loci_Favorites_V1_GetFavoritesRequest: SwiftProtobuf.Messa
   }
 }
 
-nonisolated extension Loci_Favorites_V1_GetFavoritesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Favorites_V1_GetFavoritesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetFavoritesResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}favorites\0\u{3}total_count\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "favorites"),
+    2: .standard(proto: "total_count"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1466,9 +1528,13 @@ nonisolated extension Loci_Favorites_V1_GetFavoritesResponse: SwiftProtobuf.Mess
   }
 }
 
-nonisolated extension Loci_Favorites_V1_IsFavoritedRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Favorites_V1_IsFavoritedRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".IsFavoritedRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}item_id\0\u{3}content_type\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "item_id"),
+    3: .standard(proto: "content_type"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1506,9 +1572,11 @@ nonisolated extension Loci_Favorites_V1_IsFavoritedRequest: SwiftProtobuf.Messag
   }
 }
 
-nonisolated extension Loci_Favorites_V1_IsFavoritedResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Favorites_V1_IsFavoritedResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".IsFavoritedResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}is_favorited\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "is_favorited"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1536,9 +1604,12 @@ nonisolated extension Loci_Favorites_V1_IsFavoritedResponse: SwiftProtobuf.Messa
   }
 }
 
-nonisolated extension Loci_Favorites_V1_GetFavoritesCountRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Favorites_V1_GetFavoritesCountRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetFavoritesCountRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}content_type\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "content_type"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1571,9 +1642,11 @@ nonisolated extension Loci_Favorites_V1_GetFavoritesCountRequest: SwiftProtobuf.
   }
 }
 
-nonisolated extension Loci_Favorites_V1_GetFavoritesCountResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Favorites_V1_GetFavoritesCountResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetFavoritesCountResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}count\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "count"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1601,9 +1674,35 @@ nonisolated extension Loci_Favorites_V1_GetFavoritesCountResponse: SwiftProtobuf
   }
 }
 
-nonisolated extension Loci_Favorites_V1_HotelDetails: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Favorites_V1_HotelDetails: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".HotelDetails"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{1}city\0\u{1}description\0\u{1}latitude\0\u{1}longitude\0\u{1}address\0\u{1}category\0\u{1}rating\0\u{3}star_rating\0\u{3}price_range\0\u{1}amenities\0\u{1}images\0\u{1}phone\0\u{1}website\0\u{3}llm_interaction_id\0\u{3}created_at\0\u{3}check_in\0\u{3}check_out\0\u{3}price_per_night\0\u{3}review_count\0\u{1}features\0\u{1}rooms\0\u{3}nearby_attractions\0\u{1}contact\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "name"),
+    3: .same(proto: "city"),
+    4: .same(proto: "description"),
+    5: .same(proto: "latitude"),
+    6: .same(proto: "longitude"),
+    7: .same(proto: "address"),
+    8: .same(proto: "category"),
+    9: .same(proto: "rating"),
+    10: .standard(proto: "star_rating"),
+    11: .standard(proto: "price_range"),
+    12: .same(proto: "amenities"),
+    13: .same(proto: "images"),
+    14: .same(proto: "phone"),
+    15: .same(proto: "website"),
+    16: .standard(proto: "llm_interaction_id"),
+    17: .standard(proto: "created_at"),
+    18: .standard(proto: "check_in"),
+    19: .standard(proto: "check_out"),
+    20: .standard(proto: "price_per_night"),
+    21: .standard(proto: "review_count"),
+    22: .same(proto: "features"),
+    23: .same(proto: "rooms"),
+    24: .standard(proto: "nearby_attractions"),
+    25: .same(proto: "contact"),
+  ]
 
   fileprivate class _StorageClass {
     var _id: String = String()
@@ -1632,11 +1731,15 @@ nonisolated extension Loci_Favorites_V1_HotelDetails: SwiftProtobuf.Message, Swi
     var _nearbyAttractions: [Loci_Favorites_V1_NearbyAttraction] = []
     var _contact: Loci_Favorites_V1_HotelContact? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -1839,9 +1942,16 @@ nonisolated extension Loci_Favorites_V1_HotelDetails: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Favorites_V1_HotelRoom: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Favorites_V1_HotelRoom: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".HotelRoom"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}type\0\u{1}description\0\u{1}price\0\u{1}size\0\u{1}capacity\0\u{1}amenities\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "type"),
+    2: .same(proto: "description"),
+    3: .same(proto: "price"),
+    4: .same(proto: "size"),
+    5: .same(proto: "capacity"),
+    6: .same(proto: "amenities"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1894,9 +2004,13 @@ nonisolated extension Loci_Favorites_V1_HotelRoom: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension Loci_Favorites_V1_NearbyAttraction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Favorites_V1_NearbyAttraction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".NearbyAttraction"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0\u{1}type\0\u{1}distance\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "name"),
+    2: .same(proto: "type"),
+    3: .same(proto: "distance"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1934,9 +2048,13 @@ nonisolated extension Loci_Favorites_V1_NearbyAttraction: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_Favorites_V1_HotelContact: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Favorites_V1_HotelContact: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".HotelContact"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}phone\0\u{1}email\0\u{1}website\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "phone"),
+    2: .same(proto: "email"),
+    3: .same(proto: "website"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1974,9 +2092,11 @@ nonisolated extension Loci_Favorites_V1_HotelContact: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Favorites_V1_GetHotelDetailsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Favorites_V1_GetHotelDetailsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetHotelDetailsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}hotel_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "hotel_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2004,9 +2124,13 @@ nonisolated extension Loci_Favorites_V1_GetHotelDetailsRequest: SwiftProtobuf.Me
   }
 }
 
-nonisolated extension Loci_Favorites_V1_GetHotelDetailsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Favorites_V1_GetHotelDetailsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetHotelDetailsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}success\0\u{1}message\0\u{1}hotel\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "success"),
+    2: .same(proto: "message"),
+    3: .same(proto: "hotel"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2048,9 +2172,14 @@ nonisolated extension Loci_Favorites_V1_GetHotelDetailsResponse: SwiftProtobuf.M
   }
 }
 
-nonisolated extension Loci_Favorites_V1_GetNearbyHotelsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Favorites_V1_GetNearbyHotelsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetNearbyHotelsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}latitude\0\u{1}longitude\0\u{3}radius_km\0\u{1}limit\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "latitude"),
+    2: .same(proto: "longitude"),
+    3: .standard(proto: "radius_km"),
+    4: .same(proto: "limit"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2093,9 +2222,12 @@ nonisolated extension Loci_Favorites_V1_GetNearbyHotelsRequest: SwiftProtobuf.Me
   }
 }
 
-nonisolated extension Loci_Favorites_V1_GetNearbyHotelsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Favorites_V1_GetNearbyHotelsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetNearbyHotelsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}hotels\0\u{3}total_count\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "hotels"),
+    2: .standard(proto: "total_count"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2128,9 +2260,38 @@ nonisolated extension Loci_Favorites_V1_GetNearbyHotelsResponse: SwiftProtobuf.M
   }
 }
 
-nonisolated extension Loci_Favorites_V1_RestaurantDetails: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Favorites_V1_RestaurantDetails: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RestaurantDetails"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{1}city\0\u{1}description\0\u{1}latitude\0\u{1}longitude\0\u{1}address\0\u{1}category\0\u{1}rating\0\u{3}cuisine_type\0\u{3}price_range\0\u{1}tags\0\u{1}images\0\u{1}phone\0\u{1}website\0\u{3}llm_interaction_id\0\u{3}created_at\0\u{3}review_count\0\u{3}is_open\0\u{3}reservation_required\0\u{3}accepts_cards\0\u{1}features\0\u{1}specialties\0\u{1}languages\0\u{3}average_price\0\u{1}menu\0\u{1}hours\0\u{1}contact\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "name"),
+    3: .same(proto: "city"),
+    4: .same(proto: "description"),
+    5: .same(proto: "latitude"),
+    6: .same(proto: "longitude"),
+    7: .same(proto: "address"),
+    8: .same(proto: "category"),
+    9: .same(proto: "rating"),
+    10: .standard(proto: "cuisine_type"),
+    11: .standard(proto: "price_range"),
+    12: .same(proto: "tags"),
+    13: .same(proto: "images"),
+    14: .same(proto: "phone"),
+    15: .same(proto: "website"),
+    16: .standard(proto: "llm_interaction_id"),
+    17: .standard(proto: "created_at"),
+    18: .standard(proto: "review_count"),
+    19: .standard(proto: "is_open"),
+    20: .standard(proto: "reservation_required"),
+    21: .standard(proto: "accepts_cards"),
+    22: .same(proto: "features"),
+    23: .same(proto: "specialties"),
+    24: .same(proto: "languages"),
+    25: .standard(proto: "average_price"),
+    26: .same(proto: "menu"),
+    27: .same(proto: "hours"),
+    28: .same(proto: "contact"),
+  ]
 
   fileprivate class _StorageClass {
     var _id: String = String()
@@ -2162,11 +2323,15 @@ nonisolated extension Loci_Favorites_V1_RestaurantDetails: SwiftProtobuf.Message
     var _hours: Dictionary<String,String> = [:]
     var _contact: Loci_Favorites_V1_RestaurantContact? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -2387,9 +2552,13 @@ nonisolated extension Loci_Favorites_V1_RestaurantDetails: SwiftProtobuf.Message
   }
 }
 
-nonisolated extension Loci_Favorites_V1_MenuItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Favorites_V1_MenuItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".MenuItem"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0\u{1}description\0\u{1}price\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "name"),
+    2: .same(proto: "description"),
+    3: .same(proto: "price"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2427,9 +2596,13 @@ nonisolated extension Loci_Favorites_V1_MenuItem: SwiftProtobuf.Message, SwiftPr
   }
 }
 
-nonisolated extension Loci_Favorites_V1_RestaurantMenu: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Favorites_V1_RestaurantMenu: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RestaurantMenu"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}starters\0\u{1}mains\0\u{1}desserts\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "starters"),
+    2: .same(proto: "mains"),
+    3: .same(proto: "desserts"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2467,9 +2640,13 @@ nonisolated extension Loci_Favorites_V1_RestaurantMenu: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_Favorites_V1_RestaurantContact: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Favorites_V1_RestaurantContact: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RestaurantContact"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}phone\0\u{1}email\0\u{1}website\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "phone"),
+    2: .same(proto: "email"),
+    3: .same(proto: "website"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2507,9 +2684,11 @@ nonisolated extension Loci_Favorites_V1_RestaurantContact: SwiftProtobuf.Message
   }
 }
 
-nonisolated extension Loci_Favorites_V1_GetRestaurantDetailsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Favorites_V1_GetRestaurantDetailsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetRestaurantDetailsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}restaurant_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "restaurant_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2537,9 +2716,13 @@ nonisolated extension Loci_Favorites_V1_GetRestaurantDetailsRequest: SwiftProtob
   }
 }
 
-nonisolated extension Loci_Favorites_V1_GetRestaurantDetailsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Favorites_V1_GetRestaurantDetailsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetRestaurantDetailsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}success\0\u{1}message\0\u{1}restaurant\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "success"),
+    2: .same(proto: "message"),
+    3: .same(proto: "restaurant"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2581,9 +2764,14 @@ nonisolated extension Loci_Favorites_V1_GetRestaurantDetailsResponse: SwiftProto
   }
 }
 
-nonisolated extension Loci_Favorites_V1_GetNearbyRestaurantsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Favorites_V1_GetNearbyRestaurantsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetNearbyRestaurantsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}latitude\0\u{1}longitude\0\u{3}radius_km\0\u{1}limit\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "latitude"),
+    2: .same(proto: "longitude"),
+    3: .standard(proto: "radius_km"),
+    4: .same(proto: "limit"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2626,9 +2814,12 @@ nonisolated extension Loci_Favorites_V1_GetNearbyRestaurantsRequest: SwiftProtob
   }
 }
 
-nonisolated extension Loci_Favorites_V1_GetNearbyRestaurantsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Favorites_V1_GetNearbyRestaurantsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetNearbyRestaurantsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}restaurants\0\u{3}total_count\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "restaurants"),
+    2: .standard(proto: "total_count"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

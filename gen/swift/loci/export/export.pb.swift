@@ -8,11 +8,7 @@
 // For information on using the generated types, please see the documentation:
 //   https://github.com/apple/swift-protobuf/
 
-#if canImport(FoundationEssentials)
-import FoundationEssentials
-#else
 import Foundation
-#endif
 import SwiftProtobuf
 
 // If the compiler emits an error on this type, it is because this file
@@ -20,13 +16,13 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// Export format options
-public nonisolated enum Loci_Export_ExportFormat: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Export_ExportFormat: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case pdf // = 1
@@ -65,7 +61,7 @@ public nonisolated enum Loci_Export_ExportFormat: SwiftProtobuf.Enum, Swift.Case
 }
 
 /// POI for export (simplified structure)
-public nonisolated struct Loci_Export_ExportPOI: Sendable {
+public struct Loci_Export_ExportPOI: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -100,7 +96,7 @@ public nonisolated struct Loci_Export_ExportPOI: Sendable {
 }
 
 /// Hotel for export
-public nonisolated struct Loci_Export_ExportHotel: Sendable {
+public struct Loci_Export_ExportHotel: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -139,7 +135,7 @@ public nonisolated struct Loci_Export_ExportHotel: Sendable {
 }
 
 /// Restaurant for export
-public nonisolated struct Loci_Export_ExportRestaurant: Sendable {
+public struct Loci_Export_ExportRestaurant: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -176,7 +172,7 @@ public nonisolated struct Loci_Export_ExportRestaurant: Sendable {
 }
 
 /// Activity for export
-public nonisolated struct Loci_Export_ExportActivity: Sendable {
+public struct Loci_Export_ExportActivity: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -209,7 +205,7 @@ public nonisolated struct Loci_Export_ExportActivity: Sendable {
 }
 
 /// Itinerary day item for export
-public nonisolated struct Loci_Export_ExportItineraryItem: Sendable {
+public struct Loci_Export_ExportItineraryItem: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -234,7 +230,7 @@ public nonisolated struct Loci_Export_ExportItineraryItem: Sendable {
 }
 
 /// Itinerary for export
-public nonisolated struct Loci_Export_ExportItinerary: Sendable {
+public struct Loci_Export_ExportItinerary: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -257,7 +253,7 @@ public nonisolated struct Loci_Export_ExportItinerary: Sendable {
 }
 
 /// Request messages
-public nonisolated struct Loci_Export_ExportPOIsRequest: Sendable {
+public struct Loci_Export_ExportPOIsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -274,7 +270,7 @@ public nonisolated struct Loci_Export_ExportPOIsRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Export_ExportHotelsRequest: Sendable {
+public struct Loci_Export_ExportHotelsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -292,7 +288,7 @@ public nonisolated struct Loci_Export_ExportHotelsRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Export_ExportRestaurantsRequest: Sendable {
+public struct Loci_Export_ExportRestaurantsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -310,7 +306,7 @@ public nonisolated struct Loci_Export_ExportRestaurantsRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Export_ExportActivitiesRequest: Sendable {
+public struct Loci_Export_ExportActivitiesRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -328,17 +324,17 @@ public nonisolated struct Loci_Export_ExportActivitiesRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Export_ExportItineraryRequest: Sendable {
+public struct Loci_Export_ExportItineraryRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var itinerary: Loci_Export_ExportItinerary {
-    get {_itinerary ?? Loci_Export_ExportItinerary()}
+    get {return _itinerary ?? Loci_Export_ExportItinerary()}
     set {_itinerary = newValue}
   }
   /// Returns true if `itinerary` has been explicitly set.
-  public var hasItinerary: Bool {self._itinerary != nil}
+  public var hasItinerary: Bool {return self._itinerary != nil}
   /// Clears the value of `itinerary`. Subsequent reads from it will return its default value.
   public mutating func clearItinerary() {self._itinerary = nil}
 
@@ -351,7 +347,7 @@ public nonisolated struct Loci_Export_ExportItineraryRequest: Sendable {
   fileprivate var _itinerary: Loci_Export_ExportItinerary? = nil
 }
 
-public nonisolated struct Loci_Export_ExportListRequest: Sendable {
+public struct Loci_Export_ExportListRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -374,7 +370,7 @@ public nonisolated struct Loci_Export_ExportListRequest: Sendable {
 }
 
 /// Response message
-public nonisolated struct Loci_Export_ExportPDFResponse: Sendable {
+public struct Loci_Export_ExportPDFResponse: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -394,15 +390,32 @@ public nonisolated struct Loci_Export_ExportPDFResponse: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.export"
+fileprivate let _protobuf_package = "loci.export"
 
-nonisolated extension Loci_Export_ExportFormat: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0EXPORT_FORMAT_UNSPECIFIED\0\u{1}EXPORT_FORMAT_PDF\0\u{1}EXPORT_FORMAT_MARKDOWN\0")
+extension Loci_Export_ExportFormat: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "EXPORT_FORMAT_UNSPECIFIED"),
+    1: .same(proto: "EXPORT_FORMAT_PDF"),
+    2: .same(proto: "EXPORT_FORMAT_MARKDOWN"),
+  ]
 }
 
-nonisolated extension Loci_Export_ExportPOI: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Export_ExportPOI: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ExportPOI"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{1}category\0\u{1}description\0\u{1}address\0\u{1}latitude\0\u{1}longitude\0\u{1}rating\0\u{3}price_range\0\u{1}phone\0\u{1}website\0\u{3}opening_hours\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "name"),
+    3: .same(proto: "category"),
+    4: .same(proto: "description"),
+    5: .same(proto: "address"),
+    6: .same(proto: "latitude"),
+    7: .same(proto: "longitude"),
+    8: .same(proto: "rating"),
+    9: .standard(proto: "price_range"),
+    10: .same(proto: "phone"),
+    11: .same(proto: "website"),
+    12: .standard(proto: "opening_hours"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -485,9 +498,24 @@ nonisolated extension Loci_Export_ExportPOI: SwiftProtobuf.Message, SwiftProtobu
   }
 }
 
-nonisolated extension Loci_Export_ExportHotel: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Export_ExportHotel: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ExportHotel"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{1}description\0\u{1}address\0\u{1}latitude\0\u{1}longitude\0\u{1}rating\0\u{3}star_rating\0\u{3}price_range\0\u{1}amenities\0\u{3}check_in_time\0\u{3}check_out_time\0\u{1}phone\0\u{1}website\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "name"),
+    3: .same(proto: "description"),
+    4: .same(proto: "address"),
+    5: .same(proto: "latitude"),
+    6: .same(proto: "longitude"),
+    7: .same(proto: "rating"),
+    8: .standard(proto: "star_rating"),
+    9: .standard(proto: "price_range"),
+    10: .same(proto: "amenities"),
+    11: .standard(proto: "check_in_time"),
+    12: .standard(proto: "check_out_time"),
+    13: .same(proto: "phone"),
+    14: .same(proto: "website"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -580,9 +608,23 @@ nonisolated extension Loci_Export_ExportHotel: SwiftProtobuf.Message, SwiftProto
   }
 }
 
-nonisolated extension Loci_Export_ExportRestaurant: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Export_ExportRestaurant: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ExportRestaurant"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{1}description\0\u{1}address\0\u{1}latitude\0\u{1}longitude\0\u{1}rating\0\u{3}cuisine_type\0\u{3}price_range\0\u{3}dietary_options\0\u{1}phone\0\u{1}website\0\u{3}opening_hours\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "name"),
+    3: .same(proto: "description"),
+    4: .same(proto: "address"),
+    5: .same(proto: "latitude"),
+    6: .same(proto: "longitude"),
+    7: .same(proto: "rating"),
+    8: .standard(proto: "cuisine_type"),
+    9: .standard(proto: "price_range"),
+    10: .standard(proto: "dietary_options"),
+    11: .same(proto: "phone"),
+    12: .same(proto: "website"),
+    13: .standard(proto: "opening_hours"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -670,9 +712,21 @@ nonisolated extension Loci_Export_ExportRestaurant: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_Export_ExportActivity: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Export_ExportActivity: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ExportActivity"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{1}description\0\u{1}address\0\u{1}latitude\0\u{1}longitude\0\u{1}rating\0\u{1}category\0\u{1}duration\0\u{3}price_range\0\u{1}difficulty\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "name"),
+    3: .same(proto: "description"),
+    4: .same(proto: "address"),
+    5: .same(proto: "latitude"),
+    6: .same(proto: "longitude"),
+    7: .same(proto: "rating"),
+    8: .same(proto: "category"),
+    9: .same(proto: "duration"),
+    10: .standard(proto: "price_range"),
+    11: .same(proto: "difficulty"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -750,9 +804,17 @@ nonisolated extension Loci_Export_ExportActivity: SwiftProtobuf.Message, SwiftPr
   }
 }
 
-nonisolated extension Loci_Export_ExportItineraryItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Export_ExportItineraryItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ExportItineraryItem"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}day_number\0\u{3}time_slot\0\u{1}name\0\u{1}description\0\u{1}address\0\u{3}duration_minutes\0\u{1}notes\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "day_number"),
+    2: .standard(proto: "time_slot"),
+    3: .same(proto: "name"),
+    4: .same(proto: "description"),
+    5: .same(proto: "address"),
+    6: .standard(proto: "duration_minutes"),
+    7: .same(proto: "notes"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -810,9 +872,16 @@ nonisolated extension Loci_Export_ExportItineraryItem: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_Export_ExportItinerary: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Export_ExportItinerary: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ExportItinerary"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}title\0\u{1}description\0\u{3}city_name\0\u{3}total_days\0\u{1}items\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "title"),
+    3: .same(proto: "description"),
+    4: .standard(proto: "city_name"),
+    5: .standard(proto: "total_days"),
+    6: .same(proto: "items"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -865,9 +934,13 @@ nonisolated extension Loci_Export_ExportItinerary: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension Loci_Export_ExportPOIsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Export_ExportPOIsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ExportPOIsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}pois\0\u{1}title\0\u{1}format\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "pois"),
+    2: .same(proto: "title"),
+    3: .same(proto: "format"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -905,9 +978,14 @@ nonisolated extension Loci_Export_ExportPOIsRequest: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_Export_ExportHotelsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Export_ExportHotelsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ExportHotelsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}hotels\0\u{1}title\0\u{3}city_name\0\u{1}format\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "hotels"),
+    2: .same(proto: "title"),
+    3: .standard(proto: "city_name"),
+    4: .same(proto: "format"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -950,9 +1028,14 @@ nonisolated extension Loci_Export_ExportHotelsRequest: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_Export_ExportRestaurantsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Export_ExportRestaurantsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ExportRestaurantsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}restaurants\0\u{1}title\0\u{3}city_name\0\u{1}format\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "restaurants"),
+    2: .same(proto: "title"),
+    3: .standard(proto: "city_name"),
+    4: .same(proto: "format"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -995,9 +1078,14 @@ nonisolated extension Loci_Export_ExportRestaurantsRequest: SwiftProtobuf.Messag
   }
 }
 
-nonisolated extension Loci_Export_ExportActivitiesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Export_ExportActivitiesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ExportActivitiesRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}activities\0\u{1}title\0\u{3}city_name\0\u{1}format\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "activities"),
+    2: .same(proto: "title"),
+    3: .standard(proto: "city_name"),
+    4: .same(proto: "format"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1040,9 +1128,12 @@ nonisolated extension Loci_Export_ExportActivitiesRequest: SwiftProtobuf.Message
   }
 }
 
-nonisolated extension Loci_Export_ExportItineraryRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Export_ExportItineraryRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ExportItineraryRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}itinerary\0\u{1}format\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "itinerary"),
+    2: .same(proto: "format"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1079,9 +1170,16 @@ nonisolated extension Loci_Export_ExportItineraryRequest: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_Export_ExportListRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Export_ExportListRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ExportListRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}list_id\0\u{3}list_name\0\u{1}pois\0\u{1}hotels\0\u{1}restaurants\0\u{1}format\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "list_id"),
+    2: .standard(proto: "list_name"),
+    3: .same(proto: "pois"),
+    4: .same(proto: "hotels"),
+    5: .same(proto: "restaurants"),
+    6: .same(proto: "format"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1134,9 +1232,14 @@ nonisolated extension Loci_Export_ExportListRequest: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_Export_ExportPDFResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Export_ExportPDFResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ExportPDFResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}pdf_data\0\u{1}filename\0\u{3}content_type\0\u{3}size_bytes\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "pdf_data"),
+    2: .same(proto: "filename"),
+    3: .standard(proto: "content_type"),
+    4: .standard(proto: "size_bytes"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

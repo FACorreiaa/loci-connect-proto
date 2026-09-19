@@ -22,26 +22,12 @@ public protocol Loci_Aicreds_AiCredentialServiceClientInterface: Sendable {
     /// GetCredential returns the caller's stored credential, without its key.
     /// Answers NOT_FOUND when the account runs on Loci's own provider, which is
     /// the ordinary case rather than an error.
-    @discardableResult
-    func `getCredential`(request: Loci_Aicreds_GetCredentialRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Aicreds_GetCredentialResponse>) -> Void) -> Connect.Cancelable
-
-    /// GetCredential returns the caller's stored credential, without its key.
-    /// Answers NOT_FOUND when the account runs on Loci's own provider, which is
-    /// the ordinary case rather than an error.
     @available(iOS 13, *)
     func `getCredential`(request: Loci_Aicreds_GetCredentialRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Aicreds_GetCredentialResponse>
 
     /// SaveCredential stores or replaces the credential.
-    @discardableResult
-    func `saveCredential`(request: Loci_Aicreds_SaveCredentialRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Aicreds_SaveCredentialResponse>) -> Void) -> Connect.Cancelable
-
-    /// SaveCredential stores or replaces the credential.
     @available(iOS 13, *)
     func `saveCredential`(request: Loci_Aicreds_SaveCredentialRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Aicreds_SaveCredentialResponse>
-
-    /// DeleteCredential returns the account to Loci's own provider.
-    @discardableResult
-    func `deleteCredential`(request: Loci_Aicreds_DeleteCredentialRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Aicreds_DeleteCredentialResponse>) -> Void) -> Connect.Cancelable
 
     /// DeleteCredential returns the account to Loci's own provider.
     @available(iOS 13, *)
@@ -50,21 +36,8 @@ public protocol Loci_Aicreds_AiCredentialServiceClientInterface: Sendable {
     /// ListProviders returns the backends a key may be brought for, so the
     /// settings page renders the catalogue the server actually supports rather
     /// than a copy of it that can drift.
-    @discardableResult
-    func `listProviders`(request: Loci_Aicreds_ListProvidersRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Aicreds_ListProvidersResponse>) -> Void) -> Connect.Cancelable
-
-    /// ListProviders returns the backends a key may be brought for, so the
-    /// settings page renders the catalogue the server actually supports rather
-    /// than a copy of it that can drift.
     @available(iOS 13, *)
     func `listProviders`(request: Loci_Aicreds_ListProvidersRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Aicreds_ListProvidersResponse>
-
-    /// VerifyCredential makes one cheap call against the stored credential and
-    /// records the outcome. It exists so somebody learns their key is wrong while
-    /// they are still looking at the form, rather than from an itinerary that
-    /// quietly came from Loci's provider instead.
-    @discardableResult
-    func `verifyCredential`(request: Loci_Aicreds_VerifyCredentialRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Aicreds_VerifyCredentialResponse>) -> Void) -> Connect.Cancelable
 
     /// VerifyCredential makes one cheap call against the stored credential and
     /// records the outcome. It exists so somebody learns their key is wrong while
@@ -82,19 +55,9 @@ public final class Loci_Aicreds_AiCredentialServiceClient: Loci_Aicreds_AiCreden
         self.client = client
     }
 
-    @discardableResult
-    public func `getCredential`(request: Loci_Aicreds_GetCredentialRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Aicreds_GetCredentialResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.aicreds.AiCredentialService/GetCredential", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getCredential`(request: Loci_Aicreds_GetCredentialRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Aicreds_GetCredentialResponse> {
         return await self.client.unary(path: "/loci.aicreds.AiCredentialService/GetCredential", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `saveCredential`(request: Loci_Aicreds_SaveCredentialRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Aicreds_SaveCredentialResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.aicreds.AiCredentialService/SaveCredential", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -102,29 +65,14 @@ public final class Loci_Aicreds_AiCredentialServiceClient: Loci_Aicreds_AiCreden
         return await self.client.unary(path: "/loci.aicreds.AiCredentialService/SaveCredential", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `deleteCredential`(request: Loci_Aicreds_DeleteCredentialRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Aicreds_DeleteCredentialResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.aicreds.AiCredentialService/DeleteCredential", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `deleteCredential`(request: Loci_Aicreds_DeleteCredentialRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Aicreds_DeleteCredentialResponse> {
         return await self.client.unary(path: "/loci.aicreds.AiCredentialService/DeleteCredential", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `listProviders`(request: Loci_Aicreds_ListProvidersRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Aicreds_ListProvidersResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.aicreds.AiCredentialService/ListProviders", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `listProviders`(request: Loci_Aicreds_ListProvidersRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Aicreds_ListProvidersResponse> {
         return await self.client.unary(path: "/loci.aicreds.AiCredentialService/ListProviders", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `verifyCredential`(request: Loci_Aicreds_VerifyCredentialRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Aicreds_VerifyCredentialResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.aicreds.AiCredentialService/VerifyCredential", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

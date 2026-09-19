@@ -12,68 +12,35 @@ import SwiftProtobuf
 /// ItineraryService defines itinerary-related RPCs
 public protocol Loci_Itinerary_ItineraryServiceClientInterface: Sendable {
 
-    @discardableResult
-    func `createList`(request: Loci_Itinerary_CreateListRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `createList`(request: Loci_Itinerary_CreateListRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Common_Response>
-
-    @discardableResult
-    func `updateList`(request: Loci_Itinerary_UpdateListRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `updateList`(request: Loci_Itinerary_UpdateListRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Common_Response>
 
-    @discardableResult
-    func `getList`(request: Loci_Itinerary_GetListRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Itinerary_GetListResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `getList`(request: Loci_Itinerary_GetListRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Itinerary_GetListResponse>
-
-    @discardableResult
-    func `getUserLists`(request: Loci_Itinerary_GetUserListsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Itinerary_GetUserListsResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `getUserLists`(request: Loci_Itinerary_GetUserListsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Itinerary_GetUserListsResponse>
 
-    @discardableResult
-    func `addListItem`(request: Loci_Itinerary_AddListItemRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `addListItem`(request: Loci_Itinerary_AddListItemRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Common_Response>
-
-    @discardableResult
-    func `updateListItem`(request: Loci_Itinerary_UpdateListItemRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `updateListItem`(request: Loci_Itinerary_UpdateListItemRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Common_Response>
 
-    @discardableResult
-    func `getUserItineraries`(request: Loci_Itinerary_GetUserItinerariesRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Itinerary_GetUserItinerariesResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `getUserItineraries`(request: Loci_Itinerary_GetUserItinerariesRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Itinerary_GetUserItinerariesResponse>
-
-    @discardableResult
-    func `getItinerary`(request: Loci_Itinerary_GetItineraryRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Itinerary_GetItineraryResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `getItinerary`(request: Loci_Itinerary_GetItineraryRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Itinerary_GetItineraryResponse>
 
-    @discardableResult
-    func `updateItinerary`(request: Loci_Itinerary_UpdateItineraryRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `updateItinerary`(request: Loci_Itinerary_UpdateItineraryRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Common_Response>
 
-    @discardableResult
-    func `bookmarkItinerary`(request: Loci_Itinerary_BookmarkRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `bookmarkItinerary`(request: Loci_Itinerary_BookmarkRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Common_Response>
-
-    @discardableResult
-    func `deleteBookmark`(request: Loci_Itinerary_DeleteBookmarkRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `deleteBookmark`(request: Loci_Itinerary_DeleteBookmarkRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Common_Response>
@@ -87,19 +54,9 @@ public final class Loci_Itinerary_ItineraryServiceClient: Loci_Itinerary_Itinera
         self.client = client
     }
 
-    @discardableResult
-    public func `createList`(request: Loci_Itinerary_CreateListRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.itinerary.ItineraryService/CreateList", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `createList`(request: Loci_Itinerary_CreateListRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Common_Response> {
         return await self.client.unary(path: "/loci.itinerary.ItineraryService/CreateList", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `updateList`(request: Loci_Itinerary_UpdateListRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.itinerary.ItineraryService/UpdateList", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -107,19 +64,9 @@ public final class Loci_Itinerary_ItineraryServiceClient: Loci_Itinerary_Itinera
         return await self.client.unary(path: "/loci.itinerary.ItineraryService/UpdateList", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getList`(request: Loci_Itinerary_GetListRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Itinerary_GetListResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.itinerary.ItineraryService/GetList", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getList`(request: Loci_Itinerary_GetListRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Itinerary_GetListResponse> {
         return await self.client.unary(path: "/loci.itinerary.ItineraryService/GetList", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getUserLists`(request: Loci_Itinerary_GetUserListsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Itinerary_GetUserListsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.itinerary.ItineraryService/GetUserLists", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -127,19 +74,9 @@ public final class Loci_Itinerary_ItineraryServiceClient: Loci_Itinerary_Itinera
         return await self.client.unary(path: "/loci.itinerary.ItineraryService/GetUserLists", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `addListItem`(request: Loci_Itinerary_AddListItemRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.itinerary.ItineraryService/AddListItem", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `addListItem`(request: Loci_Itinerary_AddListItemRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Common_Response> {
         return await self.client.unary(path: "/loci.itinerary.ItineraryService/AddListItem", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `updateListItem`(request: Loci_Itinerary_UpdateListItemRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.itinerary.ItineraryService/UpdateListItem", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -147,19 +84,9 @@ public final class Loci_Itinerary_ItineraryServiceClient: Loci_Itinerary_Itinera
         return await self.client.unary(path: "/loci.itinerary.ItineraryService/UpdateListItem", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getUserItineraries`(request: Loci_Itinerary_GetUserItinerariesRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Itinerary_GetUserItinerariesResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.itinerary.ItineraryService/GetUserItineraries", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getUserItineraries`(request: Loci_Itinerary_GetUserItinerariesRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Itinerary_GetUserItinerariesResponse> {
         return await self.client.unary(path: "/loci.itinerary.ItineraryService/GetUserItineraries", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getItinerary`(request: Loci_Itinerary_GetItineraryRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Itinerary_GetItineraryResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.itinerary.ItineraryService/GetItinerary", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -167,29 +94,14 @@ public final class Loci_Itinerary_ItineraryServiceClient: Loci_Itinerary_Itinera
         return await self.client.unary(path: "/loci.itinerary.ItineraryService/GetItinerary", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `updateItinerary`(request: Loci_Itinerary_UpdateItineraryRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.itinerary.ItineraryService/UpdateItinerary", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `updateItinerary`(request: Loci_Itinerary_UpdateItineraryRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Common_Response> {
         return await self.client.unary(path: "/loci.itinerary.ItineraryService/UpdateItinerary", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `bookmarkItinerary`(request: Loci_Itinerary_BookmarkRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.itinerary.ItineraryService/BookmarkItinerary", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `bookmarkItinerary`(request: Loci_Itinerary_BookmarkRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Common_Response> {
         return await self.client.unary(path: "/loci.itinerary.ItineraryService/BookmarkItinerary", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `deleteBookmark`(request: Loci_Itinerary_DeleteBookmarkRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.itinerary.ItineraryService/DeleteBookmark", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

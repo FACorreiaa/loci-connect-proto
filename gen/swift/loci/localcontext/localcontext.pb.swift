@@ -15,7 +15,7 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
@@ -24,7 +24,7 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
 ///
 /// Values are only ever appended. Reordering or removing one silently changes
 /// the meaning of data already on the wire.
-public nonisolated enum Loci_Localcontext_AlertKind: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Localcontext_AlertKind: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case closure // = 1
@@ -86,17 +86,17 @@ public nonisolated enum Loci_Localcontext_AlertKind: SwiftProtobuf.Enum, Swift.C
 }
 
 /// WeatherDay is a one-day forecast summary.
-public nonisolated struct Loci_Localcontext_WeatherDay: Sendable {
+public struct Loci_Localcontext_WeatherDay: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var date: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_date ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _date ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_date = newValue}
   }
   /// Returns true if `date` has been explicitly set.
-  public var hasDate: Bool {self._date != nil}
+  public var hasDate: Bool {return self._date != nil}
   /// Clears the value of `date`. Subsequent reads from it will return its default value.
   public mutating func clearDate() {self._date = nil}
 
@@ -117,7 +117,7 @@ public nonisolated struct Loci_Localcontext_WeatherDay: Sendable {
 
 /// LocalAlert warns about something affecting a trip day (closure/holiday/
 /// hazard/strike).
-public nonisolated struct Loci_Localcontext_LocalAlert: Sendable {
+public struct Loci_Localcontext_LocalAlert: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -129,11 +129,11 @@ public nonisolated struct Loci_Localcontext_LocalAlert: Sendable {
   public var detail: String = String()
 
   public var date: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_date ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _date ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_date = newValue}
   }
   /// Returns true if `date` has been explicitly set.
-  public var hasDate: Bool {self._date != nil}
+  public var hasDate: Bool {return self._date != nil}
   /// Clears the value of `date`. Subsequent reads from it will return its default value.
   public mutating func clearDate() {self._date = nil}
 
@@ -155,20 +155,20 @@ public nonisolated struct Loci_Localcontext_LocalAlert: Sendable {
   /// coordinates, and inventing some to make it mappable would be a lie.
   /// Only alerts carrying both can be drawn as map pins.
   public var latitude: Double {
-    get {_latitude ?? 0}
+    get {return _latitude ?? 0}
     set {_latitude = newValue}
   }
   /// Returns true if `latitude` has been explicitly set.
-  public var hasLatitude: Bool {self._latitude != nil}
+  public var hasLatitude: Bool {return self._latitude != nil}
   /// Clears the value of `latitude`. Subsequent reads from it will return its default value.
   public mutating func clearLatitude() {self._latitude = nil}
 
   public var longitude: Double {
-    get {_longitude ?? 0}
+    get {return _longitude ?? 0}
     set {_longitude = newValue}
   }
   /// Returns true if `longitude` has been explicitly set.
-  public var hasLongitude: Bool {self._longitude != nil}
+  public var hasLongitude: Bool {return self._longitude != nil}
   /// Clears the value of `longitude`. Subsequent reads from it will return its default value.
   public mutating func clearLongitude() {self._longitude = nil}
 
@@ -182,7 +182,7 @@ public nonisolated struct Loci_Localcontext_LocalAlert: Sendable {
 }
 
 /// GetLocalContextRequest asks for weather + alerts near a point.
-public nonisolated struct Loci_Localcontext_GetLocalContextRequest: Sendable {
+public struct Loci_Localcontext_GetLocalContextRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -200,7 +200,7 @@ public nonisolated struct Loci_Localcontext_GetLocalContextRequest: Sendable {
 }
 
 /// LocalContext is the trip-time local information for a location.
-public nonisolated struct Loci_Localcontext_LocalContext: Sendable {
+public struct Loci_Localcontext_LocalContext: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -221,7 +221,7 @@ public nonisolated struct Loci_Localcontext_LocalContext: Sendable {
 /// ScoreFactor is one dimension of the go/no-go judgement, with its reasoning.
 /// The score is always shown WITH these: a bare number is not an explanation,
 /// and a user who disagrees with it should be able to see why it landed there.
-public nonisolated struct Loci_Localcontext_ScoreFactor: Sendable {
+public struct Loci_Localcontext_ScoreFactor: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -243,7 +243,7 @@ public nonisolated struct Loci_Localcontext_ScoreFactor: Sendable {
 }
 
 /// GoScore answers "should I go here, in this window?".
-public nonisolated struct Loci_Localcontext_GoScore: Sendable {
+public struct Loci_Localcontext_GoScore: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -267,74 +267,74 @@ public nonisolated struct Loci_Localcontext_GoScore: Sendable {
 }
 
 /// GetGoScoreRequest asks whether a city is worth the trip in a given window.
-public nonisolated struct Loci_Localcontext_GetGoScoreRequest: Sendable {
+public struct Loci_Localcontext_GetGoScoreRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   /// Destination, by name (fuzzy-matched) or by coordinates.
   public var cityName: String {
-    get {_cityName ?? String()}
+    get {return _cityName ?? String()}
     set {_cityName = newValue}
   }
   /// Returns true if `cityName` has been explicitly set.
-  public var hasCityName: Bool {self._cityName != nil}
+  public var hasCityName: Bool {return self._cityName != nil}
   /// Clears the value of `cityName`. Subsequent reads from it will return its default value.
   public mutating func clearCityName() {self._cityName = nil}
 
   public var latitude: Double {
-    get {_latitude ?? 0}
+    get {return _latitude ?? 0}
     set {_latitude = newValue}
   }
   /// Returns true if `latitude` has been explicitly set.
-  public var hasLatitude: Bool {self._latitude != nil}
+  public var hasLatitude: Bool {return self._latitude != nil}
   /// Clears the value of `latitude`. Subsequent reads from it will return its default value.
   public mutating func clearLatitude() {self._latitude = nil}
 
   public var longitude: Double {
-    get {_longitude ?? 0}
+    get {return _longitude ?? 0}
     set {_longitude = newValue}
   }
   /// Returns true if `longitude` has been explicitly set.
-  public var hasLongitude: Bool {self._longitude != nil}
+  public var hasLongitude: Bool {return self._longitude != nil}
   /// Clears the value of `longitude`. Subsequent reads from it will return its default value.
   public mutating func clearLongitude() {self._longitude = nil}
 
   /// Where the traveller starts from, used for travel time.
   public var originLat: Double {
-    get {_originLat ?? 0}
+    get {return _originLat ?? 0}
     set {_originLat = newValue}
   }
   /// Returns true if `originLat` has been explicitly set.
-  public var hasOriginLat: Bool {self._originLat != nil}
+  public var hasOriginLat: Bool {return self._originLat != nil}
   /// Clears the value of `originLat`. Subsequent reads from it will return its default value.
   public mutating func clearOriginLat() {self._originLat = nil}
 
   public var originLon: Double {
-    get {_originLon ?? 0}
+    get {return _originLon ?? 0}
     set {_originLon = newValue}
   }
   /// Returns true if `originLon` has been explicitly set.
-  public var hasOriginLon: Bool {self._originLon != nil}
+  public var hasOriginLon: Bool {return self._originLon != nil}
   /// Clears the value of `originLon`. Subsequent reads from it will return its default value.
   public mutating func clearOriginLon() {self._originLon = nil}
 
   /// Trip window. Defaults to a 48-hour weekend when omitted.
   public var start: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_start ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _start ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_start = newValue}
   }
   /// Returns true if `start` has been explicitly set.
-  public var hasStart: Bool {self._start != nil}
+  public var hasStart: Bool {return self._start != nil}
   /// Clears the value of `start`. Subsequent reads from it will return its default value.
   public mutating func clearStart() {self._start = nil}
 
   public var end: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_end ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _end ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_end = newValue}
   }
   /// Returns true if `end` has been explicitly set.
-  public var hasEnd: Bool {self._end != nil}
+  public var hasEnd: Bool {return self._end != nil}
   /// Clears the value of `end`. Subsequent reads from it will return its default value.
   public mutating func clearEnd() {self._end = nil}
 
@@ -352,17 +352,17 @@ public nonisolated struct Loci_Localcontext_GetGoScoreRequest: Sendable {
 }
 
 /// GetGoScoreResponse carries the verdict and the resolved destination.
-public nonisolated struct Loci_Localcontext_GetGoScoreResponse: Sendable {
+public struct Loci_Localcontext_GetGoScoreResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var score: Loci_Localcontext_GoScore {
-    get {_score ?? Loci_Localcontext_GoScore()}
+    get {return _score ?? Loci_Localcontext_GoScore()}
     set {_score = newValue}
   }
   /// Returns true if `score` has been explicitly set.
-  public var hasScore: Bool {self._score != nil}
+  public var hasScore: Bool {return self._score != nil}
   /// Clears the value of `score`. Subsequent reads from it will return its default value.
   public mutating func clearScore() {self._score = nil}
 
@@ -381,7 +381,7 @@ public nonisolated struct Loci_Localcontext_GetGoScoreResponse: Sendable {
 /// modelled, but the ECB publishes only 30 currencies — anywhere else returns no
 /// rate at all, because a made-up number about someone's money is worse than
 /// none.
-public nonisolated struct Loci_Localcontext_FxRate: Sendable {
+public struct Loci_Localcontext_FxRate: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -395,11 +395,11 @@ public nonisolated struct Loci_Localcontext_FxRate: Sendable {
   /// The day the rate was published. Shown so a user can tell a Friday rate read
   /// on a Sunday for what it is.
   public var asOf: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_asOf ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _asOf ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_asOf = newValue}
   }
   /// Returns true if `asOf` has been explicitly set.
-  public var hasAsOf: Bool {self._asOf != nil}
+  public var hasAsOf: Bool {return self._asOf != nil}
   /// Clears the value of `asOf`. Subsequent reads from it will return its default value.
   public mutating func clearAsOf() {self._asOf = nil}
 
@@ -411,18 +411,18 @@ public nonisolated struct Loci_Localcontext_FxRate: Sendable {
 }
 
 /// GetFxRatesRequest asks what the traveller's money is worth at a destination.
-public nonisolated struct Loci_Localcontext_GetFxRatesRequest: Sendable {
+public struct Loci_Localcontext_GetFxRatesRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   /// ISO-4217. Defaults to the server's configured base when empty.
   public var base: String {
-    get {_base ?? String()}
+    get {return _base ?? String()}
     set {_base = newValue}
   }
   /// Returns true if `base` has been explicitly set.
-  public var hasBase: Bool {self._base != nil}
+  public var hasBase: Bool {return self._base != nil}
   /// Clears the value of `base`. Subsequent reads from it will return its default value.
   public mutating func clearBase() {self._base = nil}
 
@@ -432,11 +432,11 @@ public nonisolated struct Loci_Localcontext_GetFxRatesRequest: Sendable {
   /// ISO-3166 alpha-2. A convenience so a caller holding a destination does not
   /// have to know its currency.
   public var countryCode: String {
-    get {_countryCode ?? String()}
+    get {return _countryCode ?? String()}
     set {_countryCode = newValue}
   }
   /// Returns true if `countryCode` has been explicitly set.
-  public var hasCountryCode: Bool {self._countryCode != nil}
+  public var hasCountryCode: Bool {return self._countryCode != nil}
   /// Clears the value of `countryCode`. Subsequent reads from it will return its default value.
   public mutating func clearCountryCode() {self._countryCode = nil}
 
@@ -450,20 +450,20 @@ public nonisolated struct Loci_Localcontext_GetFxRatesRequest: Sendable {
   ///
   /// Ignored when country_code or quotes are supplied.
   public var latitude: Double {
-    get {_latitude ?? 0}
+    get {return _latitude ?? 0}
     set {_latitude = newValue}
   }
   /// Returns true if `latitude` has been explicitly set.
-  public var hasLatitude: Bool {self._latitude != nil}
+  public var hasLatitude: Bool {return self._latitude != nil}
   /// Clears the value of `latitude`. Subsequent reads from it will return its default value.
   public mutating func clearLatitude() {self._latitude = nil}
 
   public var longitude: Double {
-    get {_longitude ?? 0}
+    get {return _longitude ?? 0}
     set {_longitude = newValue}
   }
   /// Returns true if `longitude` has been explicitly set.
-  public var hasLongitude: Bool {self._longitude != nil}
+  public var hasLongitude: Bool {return self._longitude != nil}
   /// Clears the value of `longitude`. Subsequent reads from it will return its default value.
   public mutating func clearLongitude() {self._longitude = nil}
 
@@ -477,7 +477,7 @@ public nonisolated struct Loci_Localcontext_GetFxRatesRequest: Sendable {
   fileprivate var _longitude: Double? = nil
 }
 
-public nonisolated struct Loci_Localcontext_GetFxRatesResponse: Sendable {
+public struct Loci_Localcontext_GetFxRatesResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -495,7 +495,7 @@ public nonisolated struct Loci_Localcontext_GetFxRatesResponse: Sendable {
 }
 
 /// DriveCostEstimate prices the fuel for a driving leg.
-public nonisolated struct Loci_Localcontext_DriveCostEstimate: Sendable {
+public struct Loci_Localcontext_DriveCostEstimate: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -518,7 +518,7 @@ public nonisolated struct Loci_Localcontext_DriveCostEstimate: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Localcontext_EstimateDriveCostRequest: Sendable {
+public struct Loci_Localcontext_EstimateDriveCostRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -527,11 +527,11 @@ public nonisolated struct Loci_Localcontext_EstimateDriveCostRequest: Sendable {
 
   /// ISO-4217 for the result. Defaults to the server's configured base.
   public var currency: String {
-    get {_currency ?? String()}
+    get {return _currency ?? String()}
     set {_currency = newValue}
   }
   /// Returns true if `currency` has been explicitly set.
-  public var hasCurrency: Bool {self._currency != nil}
+  public var hasCurrency: Bool {return self._currency != nil}
   /// Clears the value of `currency`. Subsequent reads from it will return its default value.
   public mutating func clearCurrency() {self._currency = nil}
 
@@ -542,17 +542,17 @@ public nonisolated struct Loci_Localcontext_EstimateDriveCostRequest: Sendable {
   fileprivate var _currency: String? = nil
 }
 
-public nonisolated struct Loci_Localcontext_EstimateDriveCostResponse: Sendable {
+public struct Loci_Localcontext_EstimateDriveCostResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var estimate: Loci_Localcontext_DriveCostEstimate {
-    get {_estimate ?? Loci_Localcontext_DriveCostEstimate()}
+    get {return _estimate ?? Loci_Localcontext_DriveCostEstimate()}
     set {_estimate = newValue}
   }
   /// Returns true if `estimate` has been explicitly set.
-  public var hasEstimate: Bool {self._estimate != nil}
+  public var hasEstimate: Bool {return self._estimate != nil}
   /// Clears the value of `estimate`. Subsequent reads from it will return its default value.
   public mutating func clearEstimate() {self._estimate = nil}
 
@@ -568,7 +568,7 @@ public nonisolated struct Loci_Localcontext_EstimateDriveCostResponse: Sendable 
 /// NewsTickerItem is one breaking-news headline for the traveller's desk:
 /// title, source, time and a link out. Never a body — the ticker links to the
 /// publisher rather than republishing.
-public nonisolated struct Loci_Localcontext_NewsTickerItem: Sendable {
+public struct Loci_Localcontext_NewsTickerItem: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -582,11 +582,11 @@ public nonisolated struct Loci_Localcontext_NewsTickerItem: Sendable {
   public var source: String = String()
 
   public var publishedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_publishedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _publishedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_publishedAt = newValue}
   }
   /// Returns true if `publishedAt` has been explicitly set.
-  public var hasPublishedAt: Bool {self._publishedAt != nil}
+  public var hasPublishedAt: Bool {return self._publishedAt != nil}
   /// Clears the value of `publishedAt`. Subsequent reads from it will return its default value.
   public mutating func clearPublishedAt() {self._publishedAt = nil}
 
@@ -601,7 +601,7 @@ public nonisolated struct Loci_Localcontext_NewsTickerItem: Sendable {
   fileprivate var _publishedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-public nonisolated struct Loci_Localcontext_GetNewsTickerRequest: Sendable {
+public struct Loci_Localcontext_GetNewsTickerRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -613,7 +613,7 @@ public nonisolated struct Loci_Localcontext_GetNewsTickerRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Localcontext_GetNewsTickerResponse: Sendable {
+public struct Loci_Localcontext_GetNewsTickerResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -635,7 +635,7 @@ public nonisolated struct Loci_Localcontext_GetNewsTickerResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Localcontext_SetNewsTickerEnabledRequest: Sendable {
+public struct Loci_Localcontext_SetNewsTickerEnabledRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -647,7 +647,7 @@ public nonisolated struct Loci_Localcontext_SetNewsTickerEnabledRequest: Sendabl
   public init() {}
 }
 
-public nonisolated struct Loci_Localcontext_SetNewsTickerEnabledResponse: Sendable {
+public struct Loci_Localcontext_SetNewsTickerEnabledResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -661,15 +661,30 @@ public nonisolated struct Loci_Localcontext_SetNewsTickerEnabledResponse: Sendab
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.localcontext"
+fileprivate let _protobuf_package = "loci.localcontext"
 
-nonisolated extension Loci_Localcontext_AlertKind: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0ALERT_KIND_UNSPECIFIED\0\u{1}ALERT_KIND_CLOSURE\0\u{1}ALERT_KIND_HOLIDAY\0\u{1}ALERT_KIND_STRIKE\0\u{1}ALERT_KIND_HAZARD\0\u{1}ALERT_KIND_AIR_QUALITY\0\u{1}ALERT_KIND_TRANSIT\0\u{1}ALERT_KIND_ADVISORY\0")
+extension Loci_Localcontext_AlertKind: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "ALERT_KIND_UNSPECIFIED"),
+    1: .same(proto: "ALERT_KIND_CLOSURE"),
+    2: .same(proto: "ALERT_KIND_HOLIDAY"),
+    3: .same(proto: "ALERT_KIND_STRIKE"),
+    4: .same(proto: "ALERT_KIND_HAZARD"),
+    5: .same(proto: "ALERT_KIND_AIR_QUALITY"),
+    6: .same(proto: "ALERT_KIND_TRANSIT"),
+    7: .same(proto: "ALERT_KIND_ADVISORY"),
+  ]
 }
 
-nonisolated extension Loci_Localcontext_WeatherDay: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Localcontext_WeatherDay: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".WeatherDay"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}date\0\u{3}high_c\0\u{3}low_c\0\u{1}condition\0\u{3}precip_prob\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "date"),
+    2: .standard(proto: "high_c"),
+    3: .standard(proto: "low_c"),
+    4: .same(proto: "condition"),
+    5: .standard(proto: "precip_prob"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -721,9 +736,18 @@ nonisolated extension Loci_Localcontext_WeatherDay: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_Localcontext_LocalAlert: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Localcontext_LocalAlert: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".LocalAlert"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}kind\0\u{1}title\0\u{1}detail\0\u{1}date\0\u{1}severity\0\u{1}source\0\u{1}latitude\0\u{1}longitude\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "kind"),
+    2: .same(proto: "title"),
+    3: .same(proto: "detail"),
+    4: .same(proto: "date"),
+    5: .same(proto: "severity"),
+    6: .same(proto: "source"),
+    7: .same(proto: "latitude"),
+    8: .same(proto: "longitude"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -790,9 +814,13 @@ nonisolated extension Loci_Localcontext_LocalAlert: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_Localcontext_GetLocalContextRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Localcontext_GetLocalContextRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetLocalContextRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}latitude\0\u{1}longitude\0\u{1}days\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "latitude"),
+    2: .same(proto: "longitude"),
+    3: .same(proto: "days"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -830,9 +858,13 @@ nonisolated extension Loci_Localcontext_GetLocalContextRequest: SwiftProtobuf.Me
   }
 }
 
-nonisolated extension Loci_Localcontext_LocalContext: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Localcontext_LocalContext: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".LocalContext"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}weather\0\u{1}alerts\0\u{3}weather_is_estimated\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "weather"),
+    2: .same(proto: "alerts"),
+    3: .standard(proto: "weather_is_estimated"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -870,9 +902,14 @@ nonisolated extension Loci_Localcontext_LocalContext: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Localcontext_ScoreFactor: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Localcontext_ScoreFactor: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ScoreFactor"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}label\0\u{1}contribution\0\u{3}max_contribution\0\u{1}detail\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "label"),
+    2: .same(proto: "contribution"),
+    3: .standard(proto: "max_contribution"),
+    4: .same(proto: "detail"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -915,9 +952,15 @@ nonisolated extension Loci_Localcontext_ScoreFactor: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_Localcontext_GoScore: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Localcontext_GoScore: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GoScore"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}score\0\u{1}verdict\0\u{1}factors\0\u{1}summary\0\u{3}has_estimated_inputs\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "score"),
+    2: .same(proto: "verdict"),
+    3: .same(proto: "factors"),
+    4: .same(proto: "summary"),
+    5: .standard(proto: "has_estimated_inputs"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -965,9 +1008,17 @@ nonisolated extension Loci_Localcontext_GoScore: SwiftProtobuf.Message, SwiftPro
   }
 }
 
-nonisolated extension Loci_Localcontext_GetGoScoreRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Localcontext_GetGoScoreRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetGoScoreRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}city_name\0\u{1}latitude\0\u{1}longitude\0\u{3}origin_lat\0\u{3}origin_lon\0\u{1}start\0\u{1}end\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "city_name"),
+    2: .same(proto: "latitude"),
+    3: .same(proto: "longitude"),
+    4: .standard(proto: "origin_lat"),
+    5: .standard(proto: "origin_lon"),
+    6: .same(proto: "start"),
+    7: .same(proto: "end"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1029,9 +1080,12 @@ nonisolated extension Loci_Localcontext_GetGoScoreRequest: SwiftProtobuf.Message
   }
 }
 
-nonisolated extension Loci_Localcontext_GetGoScoreResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Localcontext_GetGoScoreResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetGoScoreResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}score\0\u{3}city_name\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "score"),
+    2: .standard(proto: "city_name"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1068,9 +1122,14 @@ nonisolated extension Loci_Localcontext_GetGoScoreResponse: SwiftProtobuf.Messag
   }
 }
 
-nonisolated extension Loci_Localcontext_FxRate: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Localcontext_FxRate: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".FxRate"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}base\0\u{1}quote\0\u{1}rate\0\u{3}as_of\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "base"),
+    2: .same(proto: "quote"),
+    3: .same(proto: "rate"),
+    4: .standard(proto: "as_of"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1117,9 +1176,15 @@ nonisolated extension Loci_Localcontext_FxRate: SwiftProtobuf.Message, SwiftProt
   }
 }
 
-nonisolated extension Loci_Localcontext_GetFxRatesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Localcontext_GetFxRatesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetFxRatesRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}base\0\u{1}quotes\0\u{3}country_code\0\u{1}latitude\0\u{1}longitude\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "base"),
+    2: .same(proto: "quotes"),
+    3: .standard(proto: "country_code"),
+    4: .same(proto: "latitude"),
+    5: .same(proto: "longitude"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1171,9 +1236,12 @@ nonisolated extension Loci_Localcontext_GetFxRatesRequest: SwiftProtobuf.Message
   }
 }
 
-nonisolated extension Loci_Localcontext_GetFxRatesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Localcontext_GetFxRatesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetFxRatesResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}rates\0\u{1}unsupported\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "rates"),
+    2: .same(proto: "unsupported"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1206,9 +1274,15 @@ nonisolated extension Loci_Localcontext_GetFxRatesResponse: SwiftProtobuf.Messag
   }
 }
 
-nonisolated extension Loci_Localcontext_DriveCostEstimate: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Localcontext_DriveCostEstimate: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DriveCostEstimate"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}distance_km\0\u{1}litres\0\u{1}cost\0\u{1}currency\0\u{1}assumptions\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "distance_km"),
+    2: .same(proto: "litres"),
+    3: .same(proto: "cost"),
+    4: .same(proto: "currency"),
+    5: .same(proto: "assumptions"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1256,9 +1330,12 @@ nonisolated extension Loci_Localcontext_DriveCostEstimate: SwiftProtobuf.Message
   }
 }
 
-nonisolated extension Loci_Localcontext_EstimateDriveCostRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Localcontext_EstimateDriveCostRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".EstimateDriveCostRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}distance_km\0\u{1}currency\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "distance_km"),
+    2: .same(proto: "currency"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1295,9 +1372,11 @@ nonisolated extension Loci_Localcontext_EstimateDriveCostRequest: SwiftProtobuf.
   }
 }
 
-nonisolated extension Loci_Localcontext_EstimateDriveCostResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Localcontext_EstimateDriveCostResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".EstimateDriveCostResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}estimate\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "estimate"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1329,9 +1408,16 @@ nonisolated extension Loci_Localcontext_EstimateDriveCostResponse: SwiftProtobuf
   }
 }
 
-nonisolated extension Loci_Localcontext_NewsTickerItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Localcontext_NewsTickerItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".NewsTickerItem"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}title\0\u{1}url\0\u{1}source\0\u{3}published_at\0\u{3}country_code\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "title"),
+    3: .same(proto: "url"),
+    4: .same(proto: "source"),
+    5: .standard(proto: "published_at"),
+    6: .standard(proto: "country_code"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1388,9 +1474,11 @@ nonisolated extension Loci_Localcontext_NewsTickerItem: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_Localcontext_GetNewsTickerRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Localcontext_GetNewsTickerRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetNewsTickerRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}limit\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "limit"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1418,9 +1506,14 @@ nonisolated extension Loci_Localcontext_GetNewsTickerRequest: SwiftProtobuf.Mess
   }
 }
 
-nonisolated extension Loci_Localcontext_GetNewsTickerResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Localcontext_GetNewsTickerResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetNewsTickerResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}items\0\u{1}enabled\0\u{1}stale\0\u{3}country_codes\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "items"),
+    2: .same(proto: "enabled"),
+    3: .same(proto: "stale"),
+    4: .standard(proto: "country_codes"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1463,9 +1556,11 @@ nonisolated extension Loci_Localcontext_GetNewsTickerResponse: SwiftProtobuf.Mes
   }
 }
 
-nonisolated extension Loci_Localcontext_SetNewsTickerEnabledRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Localcontext_SetNewsTickerEnabledRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SetNewsTickerEnabledRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}enabled\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "enabled"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1493,9 +1588,11 @@ nonisolated extension Loci_Localcontext_SetNewsTickerEnabledRequest: SwiftProtob
   }
 }
 
-nonisolated extension Loci_Localcontext_SetNewsTickerEnabledResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Localcontext_SetNewsTickerEnabledResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SetNewsTickerEnabledResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}enabled\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "enabled"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

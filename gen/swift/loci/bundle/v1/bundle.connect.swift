@@ -17,32 +17,17 @@ import SwiftProtobuf
 /// teaser to a stranger and the whole pack to someone who bought it.
 public protocol Loci_Bundle_V1_BundleServiceClientInterface: Sendable {
 
-    @discardableResult
-    func `listBundles`(request: Loci_Bundle_V1_ListBundlesRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Bundle_V1_ListBundlesResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `listBundles`(request: Loci_Bundle_V1_ListBundlesRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Bundle_V1_ListBundlesResponse>
-
-    @discardableResult
-    func `getBundle`(request: Loci_Bundle_V1_GetBundleRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Bundle_V1_BundleDetail>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `getBundle`(request: Loci_Bundle_V1_GetBundleRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Bundle_V1_BundleDetail>
 
-    @discardableResult
-    func `createBundleCheckout`(request: Loci_Bundle_V1_CreateBundleCheckoutRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Bundle_V1_CreateBundleCheckoutResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `createBundleCheckout`(request: Loci_Bundle_V1_CreateBundleCheckoutRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Bundle_V1_CreateBundleCheckoutResponse>
 
-    @discardableResult
-    func `claimBundle`(request: Loci_Bundle_V1_ClaimBundleRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Bundle_V1_ClaimBundleResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `claimBundle`(request: Loci_Bundle_V1_ClaimBundleRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Bundle_V1_ClaimBundleResponse>
-
-    @discardableResult
-    func `listMyBundles`(request: Loci_Bundle_V1_ListMyBundlesRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Bundle_V1_ListMyBundlesResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `listMyBundles`(request: Loci_Bundle_V1_ListMyBundlesRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Bundle_V1_ListMyBundlesResponse>
@@ -56,19 +41,9 @@ public final class Loci_Bundle_V1_BundleServiceClient: Loci_Bundle_V1_BundleServ
         self.client = client
     }
 
-    @discardableResult
-    public func `listBundles`(request: Loci_Bundle_V1_ListBundlesRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Bundle_V1_ListBundlesResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.bundle.v1.BundleService/ListBundles", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `listBundles`(request: Loci_Bundle_V1_ListBundlesRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Bundle_V1_ListBundlesResponse> {
         return await self.client.unary(path: "/loci.bundle.v1.BundleService/ListBundles", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getBundle`(request: Loci_Bundle_V1_GetBundleRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Bundle_V1_BundleDetail>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.bundle.v1.BundleService/GetBundle", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -76,29 +51,14 @@ public final class Loci_Bundle_V1_BundleServiceClient: Loci_Bundle_V1_BundleServ
         return await self.client.unary(path: "/loci.bundle.v1.BundleService/GetBundle", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `createBundleCheckout`(request: Loci_Bundle_V1_CreateBundleCheckoutRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Bundle_V1_CreateBundleCheckoutResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.bundle.v1.BundleService/CreateBundleCheckout", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `createBundleCheckout`(request: Loci_Bundle_V1_CreateBundleCheckoutRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Bundle_V1_CreateBundleCheckoutResponse> {
         return await self.client.unary(path: "/loci.bundle.v1.BundleService/CreateBundleCheckout", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `claimBundle`(request: Loci_Bundle_V1_ClaimBundleRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Bundle_V1_ClaimBundleResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.bundle.v1.BundleService/ClaimBundle", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `claimBundle`(request: Loci_Bundle_V1_ClaimBundleRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Bundle_V1_ClaimBundleResponse> {
         return await self.client.unary(path: "/loci.bundle.v1.BundleService/ClaimBundle", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `listMyBundles`(request: Loci_Bundle_V1_ListMyBundlesRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Bundle_V1_ListMyBundlesResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.bundle.v1.BundleService/ListMyBundles", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

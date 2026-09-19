@@ -15,13 +15,13 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// TrendingDiscovery represents a trending discovery/search
-public nonisolated struct Loci_Discover_TrendingDiscovery: Sendable {
+public struct Loci_Discover_TrendingDiscovery: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -38,7 +38,7 @@ public nonisolated struct Loci_Discover_TrendingDiscovery: Sendable {
 }
 
 /// FeaturedCollection represents a featured collection of POIs
-public nonisolated struct Loci_Discover_FeaturedCollection: Sendable {
+public struct Loci_Discover_FeaturedCollection: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -57,7 +57,7 @@ public nonisolated struct Loci_Discover_FeaturedCollection: Sendable {
 }
 
 /// DiscoverResult represents a single discovery result (POI)
-public nonisolated struct Loci_Discover_DiscoverResult: Sendable {
+public struct Loci_Discover_DiscoverResult: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -77,29 +77,29 @@ public nonisolated struct Loci_Discover_DiscoverResult: Sendable {
   public var address: String = String()
 
   public var website: String {
-    get {_website ?? String()}
+    get {return _website ?? String()}
     set {_website = newValue}
   }
   /// Returns true if `website` has been explicitly set.
-  public var hasWebsite: Bool {self._website != nil}
+  public var hasWebsite: Bool {return self._website != nil}
   /// Clears the value of `website`. Subsequent reads from it will return its default value.
   public mutating func clearWebsite() {self._website = nil}
 
   public var phoneNumber: String {
-    get {_phoneNumber ?? String()}
+    get {return _phoneNumber ?? String()}
     set {_phoneNumber = newValue}
   }
   /// Returns true if `phoneNumber` has been explicitly set.
-  public var hasPhoneNumber: Bool {self._phoneNumber != nil}
+  public var hasPhoneNumber: Bool {return self._phoneNumber != nil}
   /// Clears the value of `phoneNumber`. Subsequent reads from it will return its default value.
   public mutating func clearPhoneNumber() {self._phoneNumber = nil}
 
   public var openingHours: String {
-    get {_openingHours ?? String()}
+    get {return _openingHours ?? String()}
     set {_openingHours = newValue}
   }
   /// Returns true if `openingHours` has been explicitly set.
-  public var hasOpeningHours: Bool {self._openingHours != nil}
+  public var hasOpeningHours: Bool {return self._openingHours != nil}
   /// Clears the value of `openingHours`. Subsequent reads from it will return its default value.
   public mutating func clearOpeningHours() {self._openingHours = nil}
 
@@ -112,20 +112,20 @@ public nonisolated struct Loci_Discover_DiscoverResult: Sendable {
   public var images: [String] = []
 
   public var cuisineType: String {
-    get {_cuisineType ?? String()}
+    get {return _cuisineType ?? String()}
     set {_cuisineType = newValue}
   }
   /// Returns true if `cuisineType` has been explicitly set.
-  public var hasCuisineType: Bool {self._cuisineType != nil}
+  public var hasCuisineType: Bool {return self._cuisineType != nil}
   /// Clears the value of `cuisineType`. Subsequent reads from it will return its default value.
   public mutating func clearCuisineType() {self._cuisineType = nil}
 
   public var starRating: String {
-    get {_starRating ?? String()}
+    get {return _starRating ?? String()}
     set {_starRating = newValue}
   }
   /// Returns true if `starRating` has been explicitly set.
-  public var hasStarRating: Bool {self._starRating != nil}
+  public var hasStarRating: Bool {return self._starRating != nil}
   /// Clears the value of `starRating`. Subsequent reads from it will return its default value.
   public mutating func clearStarRating() {self._starRating = nil}
 
@@ -141,7 +141,7 @@ public nonisolated struct Loci_Discover_DiscoverResult: Sendable {
 }
 
 /// DiscoverPageData contains all data needed for the discover page
-public nonisolated struct Loci_Discover_DiscoverPageData: Sendable {
+public struct Loci_Discover_DiscoverPageData: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -158,7 +158,7 @@ public nonisolated struct Loci_Discover_DiscoverPageData: Sendable {
 }
 
 /// GetDiscoverPageRequest for retrieving the discover page data
-public nonisolated struct Loci_Discover_GetDiscoverPageRequest: Sendable {
+public struct Loci_Discover_GetDiscoverPageRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -169,17 +169,17 @@ public nonisolated struct Loci_Discover_GetDiscoverPageRequest: Sendable {
 }
 
 /// GetDiscoverPageResponse for discover page data retrieval
-public nonisolated struct Loci_Discover_GetDiscoverPageResponse: Sendable {
+public struct Loci_Discover_GetDiscoverPageResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var data: Loci_Discover_DiscoverPageData {
-    get {_data ?? Loci_Discover_DiscoverPageData()}
+    get {return _data ?? Loci_Discover_DiscoverPageData()}
     set {_data = newValue}
   }
   /// Returns true if `data` has been explicitly set.
-  public var hasData: Bool {self._data != nil}
+  public var hasData: Bool {return self._data != nil}
   /// Clears the value of `data`. Subsequent reads from it will return its default value.
   public mutating func clearData() {self._data = nil}
 
@@ -191,17 +191,17 @@ public nonisolated struct Loci_Discover_GetDiscoverPageResponse: Sendable {
 }
 
 /// GetTrendingRequest for retrieving trending discoveries
-public nonisolated struct Loci_Discover_GetTrendingRequest: Sendable {
+public struct Loci_Discover_GetTrendingRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var limit: Int32 {
-    get {_limit ?? 0}
+    get {return _limit ?? 0}
     set {_limit = newValue}
   }
   /// Returns true if `limit` has been explicitly set.
-  public var hasLimit: Bool {self._limit != nil}
+  public var hasLimit: Bool {return self._limit != nil}
   /// Clears the value of `limit`. Subsequent reads from it will return its default value.
   public mutating func clearLimit() {self._limit = nil}
 
@@ -213,7 +213,7 @@ public nonisolated struct Loci_Discover_GetTrendingRequest: Sendable {
 }
 
 /// GetTrendingResponse for trending discoveries retrieval
-public nonisolated struct Loci_Discover_GetTrendingResponse: Sendable {
+public struct Loci_Discover_GetTrendingResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -226,17 +226,17 @@ public nonisolated struct Loci_Discover_GetTrendingResponse: Sendable {
 }
 
 /// GetFeaturedRequest for retrieving featured collections
-public nonisolated struct Loci_Discover_GetFeaturedRequest: Sendable {
+public struct Loci_Discover_GetFeaturedRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var limit: Int32 {
-    get {_limit ?? 0}
+    get {return _limit ?? 0}
     set {_limit = newValue}
   }
   /// Returns true if `limit` has been explicitly set.
-  public var hasLimit: Bool {self._limit != nil}
+  public var hasLimit: Bool {return self._limit != nil}
   /// Clears the value of `limit`. Subsequent reads from it will return its default value.
   public mutating func clearLimit() {self._limit = nil}
 
@@ -248,7 +248,7 @@ public nonisolated struct Loci_Discover_GetFeaturedRequest: Sendable {
 }
 
 /// GetFeaturedResponse for featured collections retrieval
-public nonisolated struct Loci_Discover_GetFeaturedResponse: Sendable {
+public struct Loci_Discover_GetFeaturedResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -261,26 +261,26 @@ public nonisolated struct Loci_Discover_GetFeaturedResponse: Sendable {
 }
 
 /// GetRecentDiscoveriesRequest for retrieving recent discoveries
-public nonisolated struct Loci_Discover_GetRecentDiscoveriesRequest: Sendable {
+public struct Loci_Discover_GetRecentDiscoveriesRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var userID: String {
-    get {_userID ?? String()}
+    get {return _userID ?? String()}
     set {_userID = newValue}
   }
   /// Returns true if `userID` has been explicitly set.
-  public var hasUserID: Bool {self._userID != nil}
+  public var hasUserID: Bool {return self._userID != nil}
   /// Clears the value of `userID`. Subsequent reads from it will return its default value.
   public mutating func clearUserID() {self._userID = nil}
 
   public var pagination: Loci_Common_PaginationRequest {
-    get {_pagination ?? Loci_Common_PaginationRequest()}
+    get {return _pagination ?? Loci_Common_PaginationRequest()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
@@ -293,7 +293,7 @@ public nonisolated struct Loci_Discover_GetRecentDiscoveriesRequest: Sendable {
 }
 
 /// GetRecentDiscoveriesResponse for recent discoveries retrieval
-public nonisolated struct Loci_Discover_GetRecentDiscoveriesResponse: Sendable {
+public struct Loci_Discover_GetRecentDiscoveriesResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -301,11 +301,11 @@ public nonisolated struct Loci_Discover_GetRecentDiscoveriesResponse: Sendable {
   public var sessions: [Loci_Chat_ChatSession] = []
 
   public var pagination: Loci_Common_PaginationMetadata {
-    get {_pagination ?? Loci_Common_PaginationMetadata()}
+    get {return _pagination ?? Loci_Common_PaginationMetadata()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
@@ -317,7 +317,7 @@ public nonisolated struct Loci_Discover_GetRecentDiscoveriesResponse: Sendable {
 }
 
 /// GetCategoryResultsRequest for retrieving category results
-public nonisolated struct Loci_Discover_GetCategoryResultsRequest: Sendable {
+public struct Loci_Discover_GetCategoryResultsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -325,20 +325,20 @@ public nonisolated struct Loci_Discover_GetCategoryResultsRequest: Sendable {
   public var category: String = String()
 
   public var cityName: String {
-    get {_cityName ?? String()}
+    get {return _cityName ?? String()}
     set {_cityName = newValue}
   }
   /// Returns true if `cityName` has been explicitly set.
-  public var hasCityName: Bool {self._cityName != nil}
+  public var hasCityName: Bool {return self._cityName != nil}
   /// Clears the value of `cityName`. Subsequent reads from it will return its default value.
   public mutating func clearCityName() {self._cityName = nil}
 
   public var pagination: Loci_Common_PaginationRequest {
-    get {_pagination ?? Loci_Common_PaginationRequest()}
+    get {return _pagination ?? Loci_Common_PaginationRequest()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
@@ -351,7 +351,7 @@ public nonisolated struct Loci_Discover_GetCategoryResultsRequest: Sendable {
 }
 
 /// GetCategoryResultsResponse for category results retrieval
-public nonisolated struct Loci_Discover_GetCategoryResultsResponse: Sendable {
+public struct Loci_Discover_GetCategoryResultsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -361,11 +361,11 @@ public nonisolated struct Loci_Discover_GetCategoryResultsResponse: Sendable {
   public var results: [Loci_Discover_DiscoverResult] = []
 
   public var pagination: Loci_Common_PaginationMetadata {
-    get {_pagination ?? Loci_Common_PaginationMetadata()}
+    get {return _pagination ?? Loci_Common_PaginationMetadata()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
@@ -378,11 +378,15 @@ public nonisolated struct Loci_Discover_GetCategoryResultsResponse: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.discover"
+fileprivate let _protobuf_package = "loci.discover"
 
-nonisolated extension Loci_Discover_TrendingDiscovery: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Discover_TrendingDiscovery: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".TrendingDiscovery"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}city_name\0\u{3}search_count\0\u{1}emoji\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "city_name"),
+    2: .standard(proto: "search_count"),
+    3: .same(proto: "emoji"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -420,9 +424,14 @@ nonisolated extension Loci_Discover_TrendingDiscovery: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_Discover_FeaturedCollection: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Discover_FeaturedCollection: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".FeaturedCollection"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}category\0\u{1}title\0\u{3}item_count\0\u{1}emoji\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "category"),
+    2: .same(proto: "title"),
+    3: .standard(proto: "item_count"),
+    4: .same(proto: "emoji"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -465,9 +474,26 @@ nonisolated extension Loci_Discover_FeaturedCollection: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_Discover_DiscoverResult: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Discover_DiscoverResult: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DiscoverResult"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{1}latitude\0\u{1}longitude\0\u{1}category\0\u{1}description\0\u{1}address\0\u{1}website\0\u{3}phone_number\0\u{3}opening_hours\0\u{3}price_level\0\u{1}rating\0\u{1}tags\0\u{1}images\0\u{3}cuisine_type\0\u{3}star_rating\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "name"),
+    3: .same(proto: "latitude"),
+    4: .same(proto: "longitude"),
+    5: .same(proto: "category"),
+    6: .same(proto: "description"),
+    7: .same(proto: "address"),
+    8: .same(proto: "website"),
+    9: .standard(proto: "phone_number"),
+    10: .standard(proto: "opening_hours"),
+    11: .standard(proto: "price_level"),
+    12: .same(proto: "rating"),
+    13: .same(proto: "tags"),
+    14: .same(proto: "images"),
+    15: .standard(proto: "cuisine_type"),
+    16: .standard(proto: "star_rating"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -574,9 +600,13 @@ nonisolated extension Loci_Discover_DiscoverResult: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_Discover_DiscoverPageData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Discover_DiscoverPageData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DiscoverPageData"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}trending\0\u{1}featured\0\u{3}recent_discoveries\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "trending"),
+    2: .same(proto: "featured"),
+    3: .standard(proto: "recent_discoveries"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -614,7 +644,7 @@ nonisolated extension Loci_Discover_DiscoverPageData: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Discover_GetDiscoverPageRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Discover_GetDiscoverPageRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetDiscoverPageRequest"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
@@ -633,9 +663,11 @@ nonisolated extension Loci_Discover_GetDiscoverPageRequest: SwiftProtobuf.Messag
   }
 }
 
-nonisolated extension Loci_Discover_GetDiscoverPageResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Discover_GetDiscoverPageResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetDiscoverPageResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}data\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "data"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -667,9 +699,11 @@ nonisolated extension Loci_Discover_GetDiscoverPageResponse: SwiftProtobuf.Messa
   }
 }
 
-nonisolated extension Loci_Discover_GetTrendingRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Discover_GetTrendingRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetTrendingRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}limit\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "limit"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -701,9 +735,11 @@ nonisolated extension Loci_Discover_GetTrendingRequest: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_Discover_GetTrendingResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Discover_GetTrendingResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetTrendingResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}trending\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "trending"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -731,9 +767,11 @@ nonisolated extension Loci_Discover_GetTrendingResponse: SwiftProtobuf.Message, 
   }
 }
 
-nonisolated extension Loci_Discover_GetFeaturedRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Discover_GetFeaturedRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetFeaturedRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}limit\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "limit"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -765,9 +803,11 @@ nonisolated extension Loci_Discover_GetFeaturedRequest: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_Discover_GetFeaturedResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Discover_GetFeaturedResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetFeaturedResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}featured\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "featured"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -795,9 +835,12 @@ nonisolated extension Loci_Discover_GetFeaturedResponse: SwiftProtobuf.Message, 
   }
 }
 
-nonisolated extension Loci_Discover_GetRecentDiscoveriesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Discover_GetRecentDiscoveriesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetRecentDiscoveriesRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{1}pagination\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .same(proto: "pagination"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -834,9 +877,12 @@ nonisolated extension Loci_Discover_GetRecentDiscoveriesRequest: SwiftProtobuf.M
   }
 }
 
-nonisolated extension Loci_Discover_GetRecentDiscoveriesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Discover_GetRecentDiscoveriesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetRecentDiscoveriesResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}sessions\0\u{1}pagination\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "sessions"),
+    2: .same(proto: "pagination"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -873,9 +919,13 @@ nonisolated extension Loci_Discover_GetRecentDiscoveriesResponse: SwiftProtobuf.
   }
 }
 
-nonisolated extension Loci_Discover_GetCategoryResultsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Discover_GetCategoryResultsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetCategoryResultsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}category\0\u{3}city_name\0\u{1}pagination\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "category"),
+    2: .standard(proto: "city_name"),
+    3: .same(proto: "pagination"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -917,9 +967,13 @@ nonisolated extension Loci_Discover_GetCategoryResultsRequest: SwiftProtobuf.Mes
   }
 }
 
-nonisolated extension Loci_Discover_GetCategoryResultsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Discover_GetCategoryResultsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetCategoryResultsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}category\0\u{1}results\0\u{1}pagination\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "category"),
+    2: .same(proto: "results"),
+    3: .same(proto: "pagination"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

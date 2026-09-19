@@ -4,3 +4,4 @@ vendor
 
 # Toolchain installers are not source; one was committed by accident.
 *.pkg
+.swiftpm/

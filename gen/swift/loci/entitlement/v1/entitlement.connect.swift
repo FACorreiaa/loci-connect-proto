@@ -13,9 +13,6 @@ import SwiftProtobuf
 /// Limits of -1 mean unlimited (Pro).
 public protocol Loci_Entitlement_V1_EntitlementServiceClientInterface: Sendable {
 
-    @discardableResult
-    func `getEntitlements`(request: Loci_Entitlement_V1_GetEntitlementsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Entitlement_V1_Entitlements>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `getEntitlements`(request: Loci_Entitlement_V1_GetEntitlementsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Entitlement_V1_Entitlements>
 }
@@ -26,11 +23,6 @@ public final class Loci_Entitlement_V1_EntitlementServiceClient: Loci_Entitlemen
 
     public init(client: Connect.ProtocolClientInterface) {
         self.client = client
-    }
-
-    @discardableResult
-    public func `getEntitlements`(request: Loci_Entitlement_V1_GetEntitlementsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Entitlement_V1_Entitlements>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.entitlement.v1.EntitlementService/GetEntitlements", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

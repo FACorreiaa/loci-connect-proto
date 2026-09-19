@@ -15,13 +15,13 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// Type of content being shared
-public nonisolated enum Loci_Share_ShareContentType: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Share_ShareContentType: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case poi // = 1
@@ -76,7 +76,7 @@ public nonisolated enum Loci_Share_ShareContentType: SwiftProtobuf.Enum, Swift.C
 }
 
 /// Shared content metadata for OG tags
-public nonisolated struct Loci_Share_ShareMetadata: Sendable {
+public struct Loci_Share_ShareMetadata: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -96,11 +96,11 @@ public nonisolated struct Loci_Share_ShareMetadata: Sendable {
   public var siteName: String = String()
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {self._createdAt != nil}
+  public var hasCreatedAt: Bool {return self._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {self._createdAt = nil}
 
@@ -114,7 +114,7 @@ public nonisolated struct Loci_Share_ShareMetadata: Sendable {
 }
 
 /// Request to get share metadata
-public nonisolated struct Loci_Share_GetShareMetadataRequest: Sendable {
+public struct Loci_Share_GetShareMetadataRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -127,7 +127,7 @@ public nonisolated struct Loci_Share_GetShareMetadataRequest: Sendable {
 }
 
 /// Response with share metadata
-public nonisolated struct Loci_Share_GetShareMetadataResponse: Sendable {
+public struct Loci_Share_GetShareMetadataResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -137,11 +137,11 @@ public nonisolated struct Loci_Share_GetShareMetadataResponse: Sendable {
   public var message: String = String()
 
   public var metadata: Loci_Share_ShareMetadata {
-    get {_metadata ?? Loci_Share_ShareMetadata()}
+    get {return _metadata ?? Loci_Share_ShareMetadata()}
     set {_metadata = newValue}
   }
   /// Returns true if `metadata` has been explicitly set.
-  public var hasMetadata: Bool {self._metadata != nil}
+  public var hasMetadata: Bool {return self._metadata != nil}
   /// Clears the value of `metadata`. Subsequent reads from it will return its default value.
   public mutating func clearMetadata() {self._metadata = nil}
 
@@ -153,7 +153,7 @@ public nonisolated struct Loci_Share_GetShareMetadataResponse: Sendable {
 }
 
 /// Request to create a share link
-public nonisolated struct Loci_Share_CreateShareLinkRequest: Sendable {
+public struct Loci_Share_CreateShareLinkRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -176,7 +176,7 @@ public nonisolated struct Loci_Share_CreateShareLinkRequest: Sendable {
 }
 
 /// Response with created share link
-public nonisolated struct Loci_Share_CreateShareLinkResponse: Sendable {
+public struct Loci_Share_CreateShareLinkResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -195,7 +195,7 @@ public nonisolated struct Loci_Share_CreateShareLinkResponse: Sendable {
 }
 
 /// Request to get shared content
-public nonisolated struct Loci_Share_GetSharedContentRequest: Sendable {
+public struct Loci_Share_GetSharedContentRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -208,63 +208,63 @@ public nonisolated struct Loci_Share_GetSharedContentRequest: Sendable {
 }
 
 /// Shared content details
-public nonisolated struct Loci_Share_SharedContent: @unchecked Sendable {
+public struct Loci_Share_SharedContent: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var metadata: Loci_Share_ShareMetadata {
-    get {_storage._metadata ?? Loci_Share_ShareMetadata()}
+    get {return _storage._metadata ?? Loci_Share_ShareMetadata()}
     set {_uniqueStorage()._metadata = newValue}
   }
   /// Returns true if `metadata` has been explicitly set.
-  public var hasMetadata: Bool {_storage._metadata != nil}
+  public var hasMetadata: Bool {return _storage._metadata != nil}
   /// Clears the value of `metadata`. Subsequent reads from it will return its default value.
   public mutating func clearMetadata() {_uniqueStorage()._metadata = nil}
 
   /// The actual content data - only one will be populated based on content_type
   public var poi: Loci_Share_POIContent {
-    get {_storage._poi ?? Loci_Share_POIContent()}
+    get {return _storage._poi ?? Loci_Share_POIContent()}
     set {_uniqueStorage()._poi = newValue}
   }
   /// Returns true if `poi` has been explicitly set.
-  public var hasPoi: Bool {_storage._poi != nil}
+  public var hasPoi: Bool {return _storage._poi != nil}
   /// Clears the value of `poi`. Subsequent reads from it will return its default value.
   public mutating func clearPoi() {_uniqueStorage()._poi = nil}
 
   public var hotel: Loci_Share_HotelContent {
-    get {_storage._hotel ?? Loci_Share_HotelContent()}
+    get {return _storage._hotel ?? Loci_Share_HotelContent()}
     set {_uniqueStorage()._hotel = newValue}
   }
   /// Returns true if `hotel` has been explicitly set.
-  public var hasHotel: Bool {_storage._hotel != nil}
+  public var hasHotel: Bool {return _storage._hotel != nil}
   /// Clears the value of `hotel`. Subsequent reads from it will return its default value.
   public mutating func clearHotel() {_uniqueStorage()._hotel = nil}
 
   public var restaurant: Loci_Share_RestaurantContent {
-    get {_storage._restaurant ?? Loci_Share_RestaurantContent()}
+    get {return _storage._restaurant ?? Loci_Share_RestaurantContent()}
     set {_uniqueStorage()._restaurant = newValue}
   }
   /// Returns true if `restaurant` has been explicitly set.
-  public var hasRestaurant: Bool {_storage._restaurant != nil}
+  public var hasRestaurant: Bool {return _storage._restaurant != nil}
   /// Clears the value of `restaurant`. Subsequent reads from it will return its default value.
   public mutating func clearRestaurant() {_uniqueStorage()._restaurant = nil}
 
   public var itinerary: Loci_Share_ItineraryContent {
-    get {_storage._itinerary ?? Loci_Share_ItineraryContent()}
+    get {return _storage._itinerary ?? Loci_Share_ItineraryContent()}
     set {_uniqueStorage()._itinerary = newValue}
   }
   /// Returns true if `itinerary` has been explicitly set.
-  public var hasItinerary: Bool {_storage._itinerary != nil}
+  public var hasItinerary: Bool {return _storage._itinerary != nil}
   /// Clears the value of `itinerary`. Subsequent reads from it will return its default value.
   public mutating func clearItinerary() {_uniqueStorage()._itinerary = nil}
 
   public var list: Loci_Share_ListContent {
-    get {_storage._list ?? Loci_Share_ListContent()}
+    get {return _storage._list ?? Loci_Share_ListContent()}
     set {_uniqueStorage()._list = newValue}
   }
   /// Returns true if `list` has been explicitly set.
-  public var hasList: Bool {_storage._list != nil}
+  public var hasList: Bool {return _storage._list != nil}
   /// Clears the value of `list`. Subsequent reads from it will return its default value.
   public mutating func clearList() {_uniqueStorage()._list = nil}
 
@@ -276,7 +276,7 @@ public nonisolated struct Loci_Share_SharedContent: @unchecked Sendable {
 }
 
 /// POI content for sharing
-public nonisolated struct Loci_Share_POIContent: Sendable {
+public struct Loci_Share_POIContent: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -305,7 +305,7 @@ public nonisolated struct Loci_Share_POIContent: Sendable {
 }
 
 /// Hotel content for sharing
-public nonisolated struct Loci_Share_HotelContent: Sendable {
+public struct Loci_Share_HotelContent: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -334,7 +334,7 @@ public nonisolated struct Loci_Share_HotelContent: Sendable {
 }
 
 /// Restaurant content for sharing
-public nonisolated struct Loci_Share_RestaurantContent: Sendable {
+public struct Loci_Share_RestaurantContent: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -361,7 +361,7 @@ public nonisolated struct Loci_Share_RestaurantContent: Sendable {
 }
 
 /// Itinerary content for sharing
-public nonisolated struct Loci_Share_ItineraryContent: Sendable {
+public struct Loci_Share_ItineraryContent: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -384,7 +384,7 @@ public nonisolated struct Loci_Share_ItineraryContent: Sendable {
 }
 
 /// List content for sharing
-public nonisolated struct Loci_Share_ListContent: Sendable {
+public struct Loci_Share_ListContent: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -405,7 +405,7 @@ public nonisolated struct Loci_Share_ListContent: Sendable {
 }
 
 /// Response with shared content
-public nonisolated struct Loci_Share_GetSharedContentResponse: Sendable {
+public struct Loci_Share_GetSharedContentResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -415,11 +415,11 @@ public nonisolated struct Loci_Share_GetSharedContentResponse: Sendable {
   public var message: String = String()
 
   public var content: Loci_Share_SharedContent {
-    get {_content ?? Loci_Share_SharedContent()}
+    get {return _content ?? Loci_Share_SharedContent()}
     set {_content = newValue}
   }
   /// Returns true if `content` has been explicitly set.
-  public var hasContent: Bool {self._content != nil}
+  public var hasContent: Bool {return self._content != nil}
   /// Clears the value of `content`. Subsequent reads from it will return its default value.
   public mutating func clearContent() {self._content = nil}
 
@@ -432,15 +432,33 @@ public nonisolated struct Loci_Share_GetSharedContentResponse: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.share"
+fileprivate let _protobuf_package = "loci.share"
 
-nonisolated extension Loci_Share_ShareContentType: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0SHARE_CONTENT_TYPE_UNSPECIFIED\0\u{1}SHARE_CONTENT_TYPE_POI\0\u{1}SHARE_CONTENT_TYPE_HOTEL\0\u{1}SHARE_CONTENT_TYPE_RESTAURANT\0\u{1}SHARE_CONTENT_TYPE_ITINERARY\0\u{1}SHARE_CONTENT_TYPE_LIST\0\u{1}SHARE_CONTENT_TYPE_ACTIVITY\0")
+extension Loci_Share_ShareContentType: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "SHARE_CONTENT_TYPE_UNSPECIFIED"),
+    1: .same(proto: "SHARE_CONTENT_TYPE_POI"),
+    2: .same(proto: "SHARE_CONTENT_TYPE_HOTEL"),
+    3: .same(proto: "SHARE_CONTENT_TYPE_RESTAURANT"),
+    4: .same(proto: "SHARE_CONTENT_TYPE_ITINERARY"),
+    5: .same(proto: "SHARE_CONTENT_TYPE_LIST"),
+    6: .same(proto: "SHARE_CONTENT_TYPE_ACTIVITY"),
+  ]
 }
 
-nonisolated extension Loci_Share_ShareMetadata: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Share_ShareMetadata: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ShareMetadata"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}share_code\0\u{3}content_type\0\u{1}title\0\u{1}description\0\u{3}image_url\0\u{3}canonical_url\0\u{3}site_name\0\u{3}created_at\0\u{3}view_count\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "share_code"),
+    2: .standard(proto: "content_type"),
+    3: .same(proto: "title"),
+    4: .same(proto: "description"),
+    5: .standard(proto: "image_url"),
+    6: .standard(proto: "canonical_url"),
+    7: .standard(proto: "site_name"),
+    8: .standard(proto: "created_at"),
+    9: .standard(proto: "view_count"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -512,9 +530,11 @@ nonisolated extension Loci_Share_ShareMetadata: SwiftProtobuf.Message, SwiftProt
   }
 }
 
-nonisolated extension Loci_Share_GetShareMetadataRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Share_GetShareMetadataRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetShareMetadataRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}share_code\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "share_code"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -542,9 +562,13 @@ nonisolated extension Loci_Share_GetShareMetadataRequest: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_Share_GetShareMetadataResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Share_GetShareMetadataResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetShareMetadataResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}success\0\u{1}message\0\u{1}metadata\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "success"),
+    2: .same(proto: "message"),
+    3: .same(proto: "metadata"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -586,9 +610,16 @@ nonisolated extension Loci_Share_GetShareMetadataResponse: SwiftProtobuf.Message
   }
 }
 
-nonisolated extension Loci_Share_CreateShareLinkRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Share_CreateShareLinkRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreateShareLinkRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}content_type\0\u{3}content_id\0\u{1}title\0\u{1}description\0\u{3}image_url\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "content_type"),
+    3: .standard(proto: "content_id"),
+    4: .same(proto: "title"),
+    5: .same(proto: "description"),
+    6: .standard(proto: "image_url"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -641,9 +672,14 @@ nonisolated extension Loci_Share_CreateShareLinkRequest: SwiftProtobuf.Message, 
   }
 }
 
-nonisolated extension Loci_Share_CreateShareLinkResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Share_CreateShareLinkResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreateShareLinkResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}success\0\u{1}message\0\u{3}share_code\0\u{3}share_url\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "success"),
+    2: .same(proto: "message"),
+    3: .standard(proto: "share_code"),
+    4: .standard(proto: "share_url"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -686,9 +722,11 @@ nonisolated extension Loci_Share_CreateShareLinkResponse: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_Share_GetSharedContentRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Share_GetSharedContentRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetSharedContentRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}share_code\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "share_code"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -716,9 +754,16 @@ nonisolated extension Loci_Share_GetSharedContentRequest: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_Share_SharedContent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Share_SharedContent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SharedContent"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}metadata\0\u{1}poi\0\u{1}hotel\0\u{1}restaurant\0\u{1}itinerary\0\u{1}list\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "metadata"),
+    2: .same(proto: "poi"),
+    3: .same(proto: "hotel"),
+    4: .same(proto: "restaurant"),
+    5: .same(proto: "itinerary"),
+    6: .same(proto: "list"),
+  ]
 
   fileprivate class _StorageClass {
     var _metadata: Loci_Share_ShareMetadata? = nil
@@ -728,11 +773,15 @@ nonisolated extension Loci_Share_SharedContent: SwiftProtobuf.Message, SwiftProt
     var _itinerary: Loci_Share_ItineraryContent? = nil
     var _list: Loci_Share_ListContent? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -821,9 +870,19 @@ nonisolated extension Loci_Share_SharedContent: SwiftProtobuf.Message, SwiftProt
   }
 }
 
-nonisolated extension Loci_Share_POIContent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Share_POIContent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".POIContent"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{1}description\0\u{1}address\0\u{1}latitude\0\u{1}longitude\0\u{1}category\0\u{1}rating\0\u{1}photos\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "name"),
+    3: .same(proto: "description"),
+    4: .same(proto: "address"),
+    5: .same(proto: "latitude"),
+    6: .same(proto: "longitude"),
+    7: .same(proto: "category"),
+    8: .same(proto: "rating"),
+    9: .same(proto: "photos"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -891,9 +950,19 @@ nonisolated extension Loci_Share_POIContent: SwiftProtobuf.Message, SwiftProtobu
   }
 }
 
-nonisolated extension Loci_Share_HotelContent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Share_HotelContent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".HotelContent"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{1}description\0\u{1}address\0\u{3}star_rating\0\u{1}rating\0\u{3}price_range\0\u{1}amenities\0\u{1}photos\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "name"),
+    3: .same(proto: "description"),
+    4: .same(proto: "address"),
+    5: .standard(proto: "star_rating"),
+    6: .same(proto: "rating"),
+    7: .standard(proto: "price_range"),
+    8: .same(proto: "amenities"),
+    9: .same(proto: "photos"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -961,9 +1030,18 @@ nonisolated extension Loci_Share_HotelContent: SwiftProtobuf.Message, SwiftProto
   }
 }
 
-nonisolated extension Loci_Share_RestaurantContent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Share_RestaurantContent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RestaurantContent"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{1}description\0\u{1}address\0\u{3}cuisine_type\0\u{1}rating\0\u{3}price_range\0\u{1}photos\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "name"),
+    3: .same(proto: "description"),
+    4: .same(proto: "address"),
+    5: .standard(proto: "cuisine_type"),
+    6: .same(proto: "rating"),
+    7: .standard(proto: "price_range"),
+    8: .same(proto: "photos"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1026,9 +1104,16 @@ nonisolated extension Loci_Share_RestaurantContent: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_Share_ItineraryContent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Share_ItineraryContent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ItineraryContent"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}title\0\u{1}description\0\u{3}city_name\0\u{3}duration_days\0\u{3}stop_count\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "title"),
+    3: .same(proto: "description"),
+    4: .standard(proto: "city_name"),
+    5: .standard(proto: "duration_days"),
+    6: .standard(proto: "stop_count"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1081,9 +1166,15 @@ nonisolated extension Loci_Share_ItineraryContent: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension Loci_Share_ListContent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Share_ListContent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListContent"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{1}description\0\u{3}item_count\0\u{3}is_itinerary\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "name"),
+    3: .same(proto: "description"),
+    4: .standard(proto: "item_count"),
+    5: .standard(proto: "is_itinerary"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1131,9 +1222,13 @@ nonisolated extension Loci_Share_ListContent: SwiftProtobuf.Message, SwiftProtob
   }
 }
 
-nonisolated extension Loci_Share_GetSharedContentResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Share_GetSharedContentResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetSharedContentResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}success\0\u{1}message\0\u{1}content\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "success"),
+    2: .same(proto: "message"),
+    3: .same(proto: "content"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

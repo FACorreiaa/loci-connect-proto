@@ -14,24 +14,12 @@ import SwiftProtobuf
 public protocol AiPoi_V1_AiPoiServiceClientInterface: Sendable {
 
     /// Health check
-    @discardableResult
-    func `healthCheck`(request: AiPoi_V1_HealthCheckRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<AiPoi_V1_HealthCheckResponse>) -> Void) -> Connect.Cancelable
-
-    /// Health check
     @available(iOS 13, *)
     func `healthCheck`(request: AiPoi_V1_HealthCheckRequest, headers: Connect.Headers) async -> ResponseMessage<AiPoi_V1_HealthCheckResponse>
 
     /// Get service information
-    @discardableResult
-    func `getServiceInfo`(request: AiPoi_V1_GetServiceInfoRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<AiPoi_V1_GetServiceInfoResponse>) -> Void) -> Connect.Cancelable
-
-    /// Get service information
     @available(iOS 13, *)
     func `getServiceInfo`(request: AiPoi_V1_GetServiceInfoRequest, headers: Connect.Headers) async -> ResponseMessage<AiPoi_V1_GetServiceInfoResponse>
-
-    /// Get feature flags for the user
-    @discardableResult
-    func `getFeatureFlags`(request: AiPoi_V1_GetFeatureFlagsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<AiPoi_V1_GetFeatureFlagsResponse>) -> Void) -> Connect.Cancelable
 
     /// Get feature flags for the user
     @available(iOS 13, *)
@@ -46,29 +34,14 @@ public final class AiPoi_V1_AiPoiServiceClient: AiPoi_V1_AiPoiServiceClientInter
         self.client = client
     }
 
-    @discardableResult
-    public func `healthCheck`(request: AiPoi_V1_HealthCheckRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<AiPoi_V1_HealthCheckResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/ai_poi.v1.AiPoiService/HealthCheck", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `healthCheck`(request: AiPoi_V1_HealthCheckRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<AiPoi_V1_HealthCheckResponse> {
         return await self.client.unary(path: "/ai_poi.v1.AiPoiService/HealthCheck", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getServiceInfo`(request: AiPoi_V1_GetServiceInfoRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<AiPoi_V1_GetServiceInfoResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/ai_poi.v1.AiPoiService/GetServiceInfo", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getServiceInfo`(request: AiPoi_V1_GetServiceInfoRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<AiPoi_V1_GetServiceInfoResponse> {
         return await self.client.unary(path: "/ai_poi.v1.AiPoiService/GetServiceInfo", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getFeatureFlags`(request: AiPoi_V1_GetFeatureFlagsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<AiPoi_V1_GetFeatureFlagsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/ai_poi.v1.AiPoiService/GetFeatureFlags", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

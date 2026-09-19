@@ -15,13 +15,13 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// ContentType defines the type of content in a list item
-public nonisolated enum Loci_Itinerary_ContentType: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Itinerary_ContentType: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case poi // = 1
@@ -68,7 +68,7 @@ public nonisolated enum Loci_Itinerary_ContentType: SwiftProtobuf.Enum, Swift.Ca
 }
 
 /// List represents a list or itinerary
-public nonisolated struct Loci_Itinerary_List: Sendable {
+public struct Loci_Itinerary_List: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -88,11 +88,11 @@ public nonisolated struct Loci_Itinerary_List: Sendable {
   public var isItinerary: Bool = false
 
   public var parentListID: String {
-    get {_parentListID ?? String()}
+    get {return _parentListID ?? String()}
     set {_parentListID = newValue}
   }
   /// Returns true if `parentListID` has been explicitly set.
-  public var hasParentListID: Bool {self._parentListID != nil}
+  public var hasParentListID: Bool {return self._parentListID != nil}
   /// Clears the value of `parentListID`. Subsequent reads from it will return its default value.
   public mutating func clearParentListID() {self._parentListID = nil}
 
@@ -103,20 +103,20 @@ public nonisolated struct Loci_Itinerary_List: Sendable {
   public var saveCount: Int32 = 0
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {self._createdAt != nil}
+  public var hasCreatedAt: Bool {return self._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {self._createdAt = nil}
 
   public var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  public var hasUpdatedAt: Bool {self._updatedAt != nil}
+  public var hasUpdatedAt: Bool {return self._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {self._updatedAt = nil}
 
@@ -130,7 +130,7 @@ public nonisolated struct Loci_Itinerary_List: Sendable {
 }
 
 /// ListItem represents an item in a list
-public nonisolated struct Loci_Itinerary_ListItem: Sendable {
+public struct Loci_Itinerary_ListItem: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -148,56 +148,56 @@ public nonisolated struct Loci_Itinerary_ListItem: Sendable {
   public var notes: String = String()
 
   public var dayNumber: Int32 {
-    get {_dayNumber ?? 0}
+    get {return _dayNumber ?? 0}
     set {_dayNumber = newValue}
   }
   /// Returns true if `dayNumber` has been explicitly set.
-  public var hasDayNumber: Bool {self._dayNumber != nil}
+  public var hasDayNumber: Bool {return self._dayNumber != nil}
   /// Clears the value of `dayNumber`. Subsequent reads from it will return its default value.
   public mutating func clearDayNumber() {self._dayNumber = nil}
 
   public var timeSlot: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_timeSlot ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _timeSlot ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_timeSlot = newValue}
   }
   /// Returns true if `timeSlot` has been explicitly set.
-  public var hasTimeSlot: Bool {self._timeSlot != nil}
+  public var hasTimeSlot: Bool {return self._timeSlot != nil}
   /// Clears the value of `timeSlot`. Subsequent reads from it will return its default value.
   public mutating func clearTimeSlot() {self._timeSlot = nil}
 
   public var duration: Int32 {
-    get {_duration ?? 0}
+    get {return _duration ?? 0}
     set {_duration = newValue}
   }
   /// Returns true if `duration` has been explicitly set.
-  public var hasDuration: Bool {self._duration != nil}
+  public var hasDuration: Bool {return self._duration != nil}
   /// Clears the value of `duration`. Subsequent reads from it will return its default value.
   public mutating func clearDuration() {self._duration = nil}
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {self._createdAt != nil}
+  public var hasCreatedAt: Bool {return self._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {self._createdAt = nil}
 
   public var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  public var hasUpdatedAt: Bool {self._updatedAt != nil}
+  public var hasUpdatedAt: Bool {return self._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {self._updatedAt = nil}
 
   public var sourceLlmInteractionID: String {
-    get {_sourceLlmInteractionID ?? String()}
+    get {return _sourceLlmInteractionID ?? String()}
     set {_sourceLlmInteractionID = newValue}
   }
   /// Returns true if `sourceLlmInteractionID` has been explicitly set.
-  public var hasSourceLlmInteractionID: Bool {self._sourceLlmInteractionID != nil}
+  public var hasSourceLlmInteractionID: Bool {return self._sourceLlmInteractionID != nil}
   /// Clears the value of `sourceLlmInteractionID`. Subsequent reads from it will return its default value.
   public mutating func clearSourceLlmInteractionID() {self._sourceLlmInteractionID = nil}
 
@@ -216,53 +216,53 @@ public nonisolated struct Loci_Itinerary_ListItem: Sendable {
 }
 
 /// ListItemWithContent combines a ListItem with its content details
-public nonisolated struct Loci_Itinerary_ListItemWithContent: @unchecked Sendable {
+public struct Loci_Itinerary_ListItemWithContent: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var listItem: Loci_Itinerary_ListItem {
-    get {_storage._listItem ?? Loci_Itinerary_ListItem()}
+    get {return _storage._listItem ?? Loci_Itinerary_ListItem()}
     set {_uniqueStorage()._listItem = newValue}
   }
   /// Returns true if `listItem` has been explicitly set.
-  public var hasListItem: Bool {_storage._listItem != nil}
+  public var hasListItem: Bool {return _storage._listItem != nil}
   /// Clears the value of `listItem`. Subsequent reads from it will return its default value.
   public mutating func clearListItem() {_uniqueStorage()._listItem = nil}
 
   public var poi: Loci_Poi_POIDetailedInfo {
-    get {_storage._poi ?? Loci_Poi_POIDetailedInfo()}
+    get {return _storage._poi ?? Loci_Poi_POIDetailedInfo()}
     set {_uniqueStorage()._poi = newValue}
   }
   /// Returns true if `poi` has been explicitly set.
-  public var hasPoi: Bool {_storage._poi != nil}
+  public var hasPoi: Bool {return _storage._poi != nil}
   /// Clears the value of `poi`. Subsequent reads from it will return its default value.
   public mutating func clearPoi() {_uniqueStorage()._poi = nil}
 
   public var restaurant: Loci_Poi_RestaurantDetailedInfo {
-    get {_storage._restaurant ?? Loci_Poi_RestaurantDetailedInfo()}
+    get {return _storage._restaurant ?? Loci_Poi_RestaurantDetailedInfo()}
     set {_uniqueStorage()._restaurant = newValue}
   }
   /// Returns true if `restaurant` has been explicitly set.
-  public var hasRestaurant: Bool {_storage._restaurant != nil}
+  public var hasRestaurant: Bool {return _storage._restaurant != nil}
   /// Clears the value of `restaurant`. Subsequent reads from it will return its default value.
   public mutating func clearRestaurant() {_uniqueStorage()._restaurant = nil}
 
   public var hotel: Loci_Poi_HotelDetailedInfo {
-    get {_storage._hotel ?? Loci_Poi_HotelDetailedInfo()}
+    get {return _storage._hotel ?? Loci_Poi_HotelDetailedInfo()}
     set {_uniqueStorage()._hotel = newValue}
   }
   /// Returns true if `hotel` has been explicitly set.
-  public var hasHotel: Bool {_storage._hotel != nil}
+  public var hasHotel: Bool {return _storage._hotel != nil}
   /// Clears the value of `hotel`. Subsequent reads from it will return its default value.
   public mutating func clearHotel() {_uniqueStorage()._hotel = nil}
 
   public var itinerary: Loci_Itinerary_UserSavedItinerary {
-    get {_storage._itinerary ?? Loci_Itinerary_UserSavedItinerary()}
+    get {return _storage._itinerary ?? Loci_Itinerary_UserSavedItinerary()}
     set {_uniqueStorage()._itinerary = newValue}
   }
   /// Returns true if `itinerary` has been explicitly set.
-  public var hasItinerary: Bool {_storage._itinerary != nil}
+  public var hasItinerary: Bool {return _storage._itinerary != nil}
   /// Clears the value of `itinerary`. Subsequent reads from it will return its default value.
   public mutating func clearItinerary() {_uniqueStorage()._itinerary = nil}
 
@@ -274,17 +274,17 @@ public nonisolated struct Loci_Itinerary_ListItemWithContent: @unchecked Sendabl
 }
 
 /// ListWithDetailedItems combines a List with its items and content
-public nonisolated struct Loci_Itinerary_ListWithDetailedItems: Sendable {
+public struct Loci_Itinerary_ListWithDetailedItems: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var list: Loci_Itinerary_List {
-    get {_list ?? Loci_Itinerary_List()}
+    get {return _list ?? Loci_Itinerary_List()}
     set {_list = newValue}
   }
   /// Returns true if `list` has been explicitly set.
-  public var hasList: Bool {self._list != nil}
+  public var hasList: Bool {return self._list != nil}
   /// Clears the value of `list`. Subsequent reads from it will return its default value.
   public mutating func clearList() {self._list = nil}
 
@@ -298,7 +298,7 @@ public nonisolated struct Loci_Itinerary_ListWithDetailedItems: Sendable {
 }
 
 /// UserSavedItinerary represents a saved itinerary
-public nonisolated struct Loci_Itinerary_UserSavedItinerary: Sendable {
+public struct Loci_Itinerary_UserSavedItinerary: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -308,40 +308,40 @@ public nonisolated struct Loci_Itinerary_UserSavedItinerary: Sendable {
   public var userID: String = String()
 
   public var sourceLlmInteractionID: String {
-    get {_sourceLlmInteractionID ?? String()}
+    get {return _sourceLlmInteractionID ?? String()}
     set {_sourceLlmInteractionID = newValue}
   }
   /// Returns true if `sourceLlmInteractionID` has been explicitly set.
-  public var hasSourceLlmInteractionID: Bool {self._sourceLlmInteractionID != nil}
+  public var hasSourceLlmInteractionID: Bool {return self._sourceLlmInteractionID != nil}
   /// Clears the value of `sourceLlmInteractionID`. Subsequent reads from it will return its default value.
   public mutating func clearSourceLlmInteractionID() {self._sourceLlmInteractionID = nil}
 
   public var sessionID: String {
-    get {_sessionID ?? String()}
+    get {return _sessionID ?? String()}
     set {_sessionID = newValue}
   }
   /// Returns true if `sessionID` has been explicitly set.
-  public var hasSessionID: Bool {self._sessionID != nil}
+  public var hasSessionID: Bool {return self._sessionID != nil}
   /// Clears the value of `sessionID`. Subsequent reads from it will return its default value.
   public mutating func clearSessionID() {self._sessionID = nil}
 
   public var primaryCityID: String {
-    get {_primaryCityID ?? String()}
+    get {return _primaryCityID ?? String()}
     set {_primaryCityID = newValue}
   }
   /// Returns true if `primaryCityID` has been explicitly set.
-  public var hasPrimaryCityID: Bool {self._primaryCityID != nil}
+  public var hasPrimaryCityID: Bool {return self._primaryCityID != nil}
   /// Clears the value of `primaryCityID`. Subsequent reads from it will return its default value.
   public mutating func clearPrimaryCityID() {self._primaryCityID = nil}
 
   public var title: String = String()
 
   public var description_p: String {
-    get {_description_p ?? String()}
+    get {return _description_p ?? String()}
     set {_description_p = newValue}
   }
   /// Returns true if `description_p` has been explicitly set.
-  public var hasDescription_p: Bool {self._description_p != nil}
+  public var hasDescription_p: Bool {return self._description_p != nil}
   /// Clears the value of `description_p`. Subsequent reads from it will return its default value.
   public mutating func clearDescription_p() {self._description_p = nil}
 
@@ -350,40 +350,40 @@ public nonisolated struct Loci_Itinerary_UserSavedItinerary: Sendable {
   public var tags: [String] = []
 
   public var estimatedDurationDays: Int32 {
-    get {_estimatedDurationDays ?? 0}
+    get {return _estimatedDurationDays ?? 0}
     set {_estimatedDurationDays = newValue}
   }
   /// Returns true if `estimatedDurationDays` has been explicitly set.
-  public var hasEstimatedDurationDays: Bool {self._estimatedDurationDays != nil}
+  public var hasEstimatedDurationDays: Bool {return self._estimatedDurationDays != nil}
   /// Clears the value of `estimatedDurationDays`. Subsequent reads from it will return its default value.
   public mutating func clearEstimatedDurationDays() {self._estimatedDurationDays = nil}
 
   public var estimatedCostLevel: Int32 {
-    get {_estimatedCostLevel ?? 0}
+    get {return _estimatedCostLevel ?? 0}
     set {_estimatedCostLevel = newValue}
   }
   /// Returns true if `estimatedCostLevel` has been explicitly set.
-  public var hasEstimatedCostLevel: Bool {self._estimatedCostLevel != nil}
+  public var hasEstimatedCostLevel: Bool {return self._estimatedCostLevel != nil}
   /// Clears the value of `estimatedCostLevel`. Subsequent reads from it will return its default value.
   public mutating func clearEstimatedCostLevel() {self._estimatedCostLevel = nil}
 
   public var isPublic: Bool = false
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {self._createdAt != nil}
+  public var hasCreatedAt: Bool {return self._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {self._createdAt = nil}
 
   public var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  public var hasUpdatedAt: Bool {self._updatedAt != nil}
+  public var hasUpdatedAt: Bool {return self._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {self._updatedAt = nil}
 
@@ -402,7 +402,7 @@ public nonisolated struct Loci_Itinerary_UserSavedItinerary: Sendable {
 }
 
 /// CreateListRequest for creating a new list
-public nonisolated struct Loci_Itinerary_CreateListRequest: Sendable {
+public struct Loci_Itinerary_CreateListRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -412,11 +412,11 @@ public nonisolated struct Loci_Itinerary_CreateListRequest: Sendable {
   public var description_p: String = String()
 
   public var cityID: String {
-    get {_cityID ?? String()}
+    get {return _cityID ?? String()}
     set {_cityID = newValue}
   }
   /// Returns true if `cityID` has been explicitly set.
-  public var hasCityID: Bool {self._cityID != nil}
+  public var hasCityID: Bool {return self._cityID != nil}
   /// Clears the value of `cityID`. Subsequent reads from it will return its default value.
   public mutating func clearCityID() {self._cityID = nil}
 
@@ -432,7 +432,7 @@ public nonisolated struct Loci_Itinerary_CreateListRequest: Sendable {
 }
 
 /// UpdateListRequest for updating a list
-public nonisolated struct Loci_Itinerary_UpdateListRequest: Sendable {
+public struct Loci_Itinerary_UpdateListRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -440,47 +440,47 @@ public nonisolated struct Loci_Itinerary_UpdateListRequest: Sendable {
   public var listID: String = String()
 
   public var name: String {
-    get {_name ?? String()}
+    get {return _name ?? String()}
     set {_name = newValue}
   }
   /// Returns true if `name` has been explicitly set.
-  public var hasName: Bool {self._name != nil}
+  public var hasName: Bool {return self._name != nil}
   /// Clears the value of `name`. Subsequent reads from it will return its default value.
   public mutating func clearName() {self._name = nil}
 
   public var description_p: String {
-    get {_description_p ?? String()}
+    get {return _description_p ?? String()}
     set {_description_p = newValue}
   }
   /// Returns true if `description_p` has been explicitly set.
-  public var hasDescription_p: Bool {self._description_p != nil}
+  public var hasDescription_p: Bool {return self._description_p != nil}
   /// Clears the value of `description_p`. Subsequent reads from it will return its default value.
   public mutating func clearDescription_p() {self._description_p = nil}
 
   public var imageURL: String {
-    get {_imageURL ?? String()}
+    get {return _imageURL ?? String()}
     set {_imageURL = newValue}
   }
   /// Returns true if `imageURL` has been explicitly set.
-  public var hasImageURL: Bool {self._imageURL != nil}
+  public var hasImageURL: Bool {return self._imageURL != nil}
   /// Clears the value of `imageURL`. Subsequent reads from it will return its default value.
   public mutating func clearImageURL() {self._imageURL = nil}
 
   public var isPublic: Bool {
-    get {_isPublic ?? false}
+    get {return _isPublic ?? false}
     set {_isPublic = newValue}
   }
   /// Returns true if `isPublic` has been explicitly set.
-  public var hasIsPublic: Bool {self._isPublic != nil}
+  public var hasIsPublic: Bool {return self._isPublic != nil}
   /// Clears the value of `isPublic`. Subsequent reads from it will return its default value.
   public mutating func clearIsPublic() {self._isPublic = nil}
 
   public var cityID: String {
-    get {_cityID ?? String()}
+    get {return _cityID ?? String()}
     set {_cityID = newValue}
   }
   /// Returns true if `cityID` has been explicitly set.
-  public var hasCityID: Bool {self._cityID != nil}
+  public var hasCityID: Bool {return self._cityID != nil}
   /// Clears the value of `cityID`. Subsequent reads from it will return its default value.
   public mutating func clearCityID() {self._cityID = nil}
 
@@ -496,7 +496,7 @@ public nonisolated struct Loci_Itinerary_UpdateListRequest: Sendable {
 }
 
 /// AddListItemRequest for adding an item to a list
-public nonisolated struct Loci_Itinerary_AddListItemRequest: Sendable {
+public struct Loci_Itinerary_AddListItemRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -512,38 +512,38 @@ public nonisolated struct Loci_Itinerary_AddListItemRequest: Sendable {
   public var notes: String = String()
 
   public var dayNumber: Int32 {
-    get {_dayNumber ?? 0}
+    get {return _dayNumber ?? 0}
     set {_dayNumber = newValue}
   }
   /// Returns true if `dayNumber` has been explicitly set.
-  public var hasDayNumber: Bool {self._dayNumber != nil}
+  public var hasDayNumber: Bool {return self._dayNumber != nil}
   /// Clears the value of `dayNumber`. Subsequent reads from it will return its default value.
   public mutating func clearDayNumber() {self._dayNumber = nil}
 
   public var timeSlot: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_timeSlot ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _timeSlot ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_timeSlot = newValue}
   }
   /// Returns true if `timeSlot` has been explicitly set.
-  public var hasTimeSlot: Bool {self._timeSlot != nil}
+  public var hasTimeSlot: Bool {return self._timeSlot != nil}
   /// Clears the value of `timeSlot`. Subsequent reads from it will return its default value.
   public mutating func clearTimeSlot() {self._timeSlot = nil}
 
   public var durationMinutes: Int32 {
-    get {_durationMinutes ?? 0}
+    get {return _durationMinutes ?? 0}
     set {_durationMinutes = newValue}
   }
   /// Returns true if `durationMinutes` has been explicitly set.
-  public var hasDurationMinutes: Bool {self._durationMinutes != nil}
+  public var hasDurationMinutes: Bool {return self._durationMinutes != nil}
   /// Clears the value of `durationMinutes`. Subsequent reads from it will return its default value.
   public mutating func clearDurationMinutes() {self._durationMinutes = nil}
 
   public var sourceLlmInteractionID: String {
-    get {_sourceLlmInteractionID ?? String()}
+    get {return _sourceLlmInteractionID ?? String()}
     set {_sourceLlmInteractionID = newValue}
   }
   /// Returns true if `sourceLlmInteractionID` has been explicitly set.
-  public var hasSourceLlmInteractionID: Bool {self._sourceLlmInteractionID != nil}
+  public var hasSourceLlmInteractionID: Bool {return self._sourceLlmInteractionID != nil}
   /// Clears the value of `sourceLlmInteractionID`. Subsequent reads from it will return its default value.
   public mutating func clearSourceLlmInteractionID() {self._sourceLlmInteractionID = nil}
 
@@ -560,7 +560,7 @@ public nonisolated struct Loci_Itinerary_AddListItemRequest: Sendable {
 }
 
 /// UpdateListItemRequest for updating a list item
-public nonisolated struct Loci_Itinerary_UpdateListItemRequest: Sendable {
+public struct Loci_Itinerary_UpdateListItemRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -570,74 +570,74 @@ public nonisolated struct Loci_Itinerary_UpdateListItemRequest: Sendable {
   public var itemID: String = String()
 
   public var contentType: Loci_Itinerary_ContentType {
-    get {_contentType ?? .unspecified}
+    get {return _contentType ?? .unspecified}
     set {_contentType = newValue}
   }
   /// Returns true if `contentType` has been explicitly set.
-  public var hasContentType: Bool {self._contentType != nil}
+  public var hasContentType: Bool {return self._contentType != nil}
   /// Clears the value of `contentType`. Subsequent reads from it will return its default value.
   public mutating func clearContentType() {self._contentType = nil}
 
   public var position: Int32 {
-    get {_position ?? 0}
+    get {return _position ?? 0}
     set {_position = newValue}
   }
   /// Returns true if `position` has been explicitly set.
-  public var hasPosition: Bool {self._position != nil}
+  public var hasPosition: Bool {return self._position != nil}
   /// Clears the value of `position`. Subsequent reads from it will return its default value.
   public mutating func clearPosition() {self._position = nil}
 
   public var notes: String {
-    get {_notes ?? String()}
+    get {return _notes ?? String()}
     set {_notes = newValue}
   }
   /// Returns true if `notes` has been explicitly set.
-  public var hasNotes: Bool {self._notes != nil}
+  public var hasNotes: Bool {return self._notes != nil}
   /// Clears the value of `notes`. Subsequent reads from it will return its default value.
   public mutating func clearNotes() {self._notes = nil}
 
   public var dayNumber: Int32 {
-    get {_dayNumber ?? 0}
+    get {return _dayNumber ?? 0}
     set {_dayNumber = newValue}
   }
   /// Returns true if `dayNumber` has been explicitly set.
-  public var hasDayNumber: Bool {self._dayNumber != nil}
+  public var hasDayNumber: Bool {return self._dayNumber != nil}
   /// Clears the value of `dayNumber`. Subsequent reads from it will return its default value.
   public mutating func clearDayNumber() {self._dayNumber = nil}
 
   public var timeSlot: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_timeSlot ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _timeSlot ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_timeSlot = newValue}
   }
   /// Returns true if `timeSlot` has been explicitly set.
-  public var hasTimeSlot: Bool {self._timeSlot != nil}
+  public var hasTimeSlot: Bool {return self._timeSlot != nil}
   /// Clears the value of `timeSlot`. Subsequent reads from it will return its default value.
   public mutating func clearTimeSlot() {self._timeSlot = nil}
 
   public var durationMinutes: Int32 {
-    get {_durationMinutes ?? 0}
+    get {return _durationMinutes ?? 0}
     set {_durationMinutes = newValue}
   }
   /// Returns true if `durationMinutes` has been explicitly set.
-  public var hasDurationMinutes: Bool {self._durationMinutes != nil}
+  public var hasDurationMinutes: Bool {return self._durationMinutes != nil}
   /// Clears the value of `durationMinutes`. Subsequent reads from it will return its default value.
   public mutating func clearDurationMinutes() {self._durationMinutes = nil}
 
   public var sourceLlmInteractionID: String {
-    get {_sourceLlmInteractionID ?? String()}
+    get {return _sourceLlmInteractionID ?? String()}
     set {_sourceLlmInteractionID = newValue}
   }
   /// Returns true if `sourceLlmInteractionID` has been explicitly set.
-  public var hasSourceLlmInteractionID: Bool {self._sourceLlmInteractionID != nil}
+  public var hasSourceLlmInteractionID: Bool {return self._sourceLlmInteractionID != nil}
   /// Clears the value of `sourceLlmInteractionID`. Subsequent reads from it will return its default value.
   public mutating func clearSourceLlmInteractionID() {self._sourceLlmInteractionID = nil}
 
   public var itemAiDescription: String {
-    get {_itemAiDescription ?? String()}
+    get {return _itemAiDescription ?? String()}
     set {_itemAiDescription = newValue}
   }
   /// Returns true if `itemAiDescription` has been explicitly set.
-  public var hasItemAiDescription: Bool {self._itemAiDescription != nil}
+  public var hasItemAiDescription: Bool {return self._itemAiDescription != nil}
   /// Clears the value of `itemAiDescription`. Subsequent reads from it will return its default value.
   public mutating func clearItemAiDescription() {self._itemAiDescription = nil}
 
@@ -656,7 +656,7 @@ public nonisolated struct Loci_Itinerary_UpdateListItemRequest: Sendable {
 }
 
 /// UpdateItineraryRequest for updating an itinerary
-public nonisolated struct Loci_Itinerary_UpdateItineraryRequest: Sendable {
+public struct Loci_Itinerary_UpdateItineraryRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -664,58 +664,58 @@ public nonisolated struct Loci_Itinerary_UpdateItineraryRequest: Sendable {
   public var itineraryID: String = String()
 
   public var title: String {
-    get {_title ?? String()}
+    get {return _title ?? String()}
     set {_title = newValue}
   }
   /// Returns true if `title` has been explicitly set.
-  public var hasTitle: Bool {self._title != nil}
+  public var hasTitle: Bool {return self._title != nil}
   /// Clears the value of `title`. Subsequent reads from it will return its default value.
   public mutating func clearTitle() {self._title = nil}
 
   public var description_p: String {
-    get {_description_p ?? String()}
+    get {return _description_p ?? String()}
     set {_description_p = newValue}
   }
   /// Returns true if `description_p` has been explicitly set.
-  public var hasDescription_p: Bool {self._description_p != nil}
+  public var hasDescription_p: Bool {return self._description_p != nil}
   /// Clears the value of `description_p`. Subsequent reads from it will return its default value.
   public mutating func clearDescription_p() {self._description_p = nil}
 
   public var tags: [String] = []
 
   public var estimatedDurationDays: Int32 {
-    get {_estimatedDurationDays ?? 0}
+    get {return _estimatedDurationDays ?? 0}
     set {_estimatedDurationDays = newValue}
   }
   /// Returns true if `estimatedDurationDays` has been explicitly set.
-  public var hasEstimatedDurationDays: Bool {self._estimatedDurationDays != nil}
+  public var hasEstimatedDurationDays: Bool {return self._estimatedDurationDays != nil}
   /// Clears the value of `estimatedDurationDays`. Subsequent reads from it will return its default value.
   public mutating func clearEstimatedDurationDays() {self._estimatedDurationDays = nil}
 
   public var estimatedCostLevel: Int32 {
-    get {_estimatedCostLevel ?? 0}
+    get {return _estimatedCostLevel ?? 0}
     set {_estimatedCostLevel = newValue}
   }
   /// Returns true if `estimatedCostLevel` has been explicitly set.
-  public var hasEstimatedCostLevel: Bool {self._estimatedCostLevel != nil}
+  public var hasEstimatedCostLevel: Bool {return self._estimatedCostLevel != nil}
   /// Clears the value of `estimatedCostLevel`. Subsequent reads from it will return its default value.
   public mutating func clearEstimatedCostLevel() {self._estimatedCostLevel = nil}
 
   public var isPublic: Bool {
-    get {_isPublic ?? false}
+    get {return _isPublic ?? false}
     set {_isPublic = newValue}
   }
   /// Returns true if `isPublic` has been explicitly set.
-  public var hasIsPublic: Bool {self._isPublic != nil}
+  public var hasIsPublic: Bool {return self._isPublic != nil}
   /// Clears the value of `isPublic`. Subsequent reads from it will return its default value.
   public mutating func clearIsPublic() {self._isPublic = nil}
 
   public var markdownContent: String {
-    get {_markdownContent ?? String()}
+    get {return _markdownContent ?? String()}
     set {_markdownContent = newValue}
   }
   /// Returns true if `markdownContent` has been explicitly set.
-  public var hasMarkdownContent: Bool {self._markdownContent != nil}
+  public var hasMarkdownContent: Bool {return self._markdownContent != nil}
   /// Clears the value of `markdownContent`. Subsequent reads from it will return its default value.
   public mutating func clearMarkdownContent() {self._markdownContent = nil}
 
@@ -732,35 +732,35 @@ public nonisolated struct Loci_Itinerary_UpdateItineraryRequest: Sendable {
 }
 
 /// BookmarkRequest for bookmarking an itinerary
-public nonisolated struct Loci_Itinerary_BookmarkRequest: Sendable {
+public struct Loci_Itinerary_BookmarkRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var llmInteractionID: String {
-    get {_llmInteractionID ?? String()}
+    get {return _llmInteractionID ?? String()}
     set {_llmInteractionID = newValue}
   }
   /// Returns true if `llmInteractionID` has been explicitly set.
-  public var hasLlmInteractionID: Bool {self._llmInteractionID != nil}
+  public var hasLlmInteractionID: Bool {return self._llmInteractionID != nil}
   /// Clears the value of `llmInteractionID`. Subsequent reads from it will return its default value.
   public mutating func clearLlmInteractionID() {self._llmInteractionID = nil}
 
   public var sessionID: String {
-    get {_sessionID ?? String()}
+    get {return _sessionID ?? String()}
     set {_sessionID = newValue}
   }
   /// Returns true if `sessionID` has been explicitly set.
-  public var hasSessionID: Bool {self._sessionID != nil}
+  public var hasSessionID: Bool {return self._sessionID != nil}
   /// Clears the value of `sessionID`. Subsequent reads from it will return its default value.
   public mutating func clearSessionID() {self._sessionID = nil}
 
   public var primaryCityID: String {
-    get {_primaryCityID ?? String()}
+    get {return _primaryCityID ?? String()}
     set {_primaryCityID = newValue}
   }
   /// Returns true if `primaryCityID` has been explicitly set.
-  public var hasPrimaryCityID: Bool {self._primaryCityID != nil}
+  public var hasPrimaryCityID: Bool {return self._primaryCityID != nil}
   /// Clears the value of `primaryCityID`. Subsequent reads from it will return its default value.
   public mutating func clearPrimaryCityID() {self._primaryCityID = nil}
 
@@ -769,22 +769,22 @@ public nonisolated struct Loci_Itinerary_BookmarkRequest: Sendable {
   public var title: String = String()
 
   public var description_p: String {
-    get {_description_p ?? String()}
+    get {return _description_p ?? String()}
     set {_description_p = newValue}
   }
   /// Returns true if `description_p` has been explicitly set.
-  public var hasDescription_p: Bool {self._description_p != nil}
+  public var hasDescription_p: Bool {return self._description_p != nil}
   /// Clears the value of `description_p`. Subsequent reads from it will return its default value.
   public mutating func clearDescription_p() {self._description_p = nil}
 
   public var tags: [String] = []
 
   public var isPublic: Bool {
-    get {_isPublic ?? false}
+    get {return _isPublic ?? false}
     set {_isPublic = newValue}
   }
   /// Returns true if `isPublic` has been explicitly set.
-  public var hasIsPublic: Bool {self._isPublic != nil}
+  public var hasIsPublic: Bool {return self._isPublic != nil}
   /// Clears the value of `isPublic`. Subsequent reads from it will return its default value.
   public mutating func clearIsPublic() {self._isPublic = nil}
 
@@ -800,7 +800,7 @@ public nonisolated struct Loci_Itinerary_BookmarkRequest: Sendable {
 }
 
 /// GetListRequest for retrieving a list
-public nonisolated struct Loci_Itinerary_GetListRequest: Sendable {
+public struct Loci_Itinerary_GetListRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -808,11 +808,11 @@ public nonisolated struct Loci_Itinerary_GetListRequest: Sendable {
   public var listID: String = String()
 
   public var includeItems: Bool {
-    get {_includeItems ?? false}
+    get {return _includeItems ?? false}
     set {_includeItems = newValue}
   }
   /// Returns true if `includeItems` has been explicitly set.
-  public var hasIncludeItems: Bool {self._includeItems != nil}
+  public var hasIncludeItems: Bool {return self._includeItems != nil}
   /// Clears the value of `includeItems`. Subsequent reads from it will return its default value.
   public mutating func clearIncludeItems() {self._includeItems = nil}
 
@@ -824,17 +824,17 @@ public nonisolated struct Loci_Itinerary_GetListRequest: Sendable {
 }
 
 /// GetListResponse for list retrieval
-public nonisolated struct Loci_Itinerary_GetListResponse: Sendable {
+public struct Loci_Itinerary_GetListResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var list: Loci_Itinerary_ListWithDetailedItems {
-    get {_list ?? Loci_Itinerary_ListWithDetailedItems()}
+    get {return _list ?? Loci_Itinerary_ListWithDetailedItems()}
     set {_list = newValue}
   }
   /// Returns true if `list` has been explicitly set.
-  public var hasList: Bool {self._list != nil}
+  public var hasList: Bool {return self._list != nil}
   /// Clears the value of `list`. Subsequent reads from it will return its default value.
   public mutating func clearList() {self._list = nil}
 
@@ -846,35 +846,35 @@ public nonisolated struct Loci_Itinerary_GetListResponse: Sendable {
 }
 
 /// GetUserListsRequest for retrieving user's lists
-public nonisolated struct Loci_Itinerary_GetUserListsRequest: Sendable {
+public struct Loci_Itinerary_GetUserListsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var userID: String {
-    get {_userID ?? String()}
+    get {return _userID ?? String()}
     set {_userID = newValue}
   }
   /// Returns true if `userID` has been explicitly set.
-  public var hasUserID: Bool {self._userID != nil}
+  public var hasUserID: Bool {return self._userID != nil}
   /// Clears the value of `userID`. Subsequent reads from it will return its default value.
   public mutating func clearUserID() {self._userID = nil}
 
   public var itinerariesOnly: Bool {
-    get {_itinerariesOnly ?? false}
+    get {return _itinerariesOnly ?? false}
     set {_itinerariesOnly = newValue}
   }
   /// Returns true if `itinerariesOnly` has been explicitly set.
-  public var hasItinerariesOnly: Bool {self._itinerariesOnly != nil}
+  public var hasItinerariesOnly: Bool {return self._itinerariesOnly != nil}
   /// Clears the value of `itinerariesOnly`. Subsequent reads from it will return its default value.
   public mutating func clearItinerariesOnly() {self._itinerariesOnly = nil}
 
   public var pagination: Loci_Common_PaginationRequest {
-    get {_pagination ?? Loci_Common_PaginationRequest()}
+    get {return _pagination ?? Loci_Common_PaginationRequest()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
@@ -888,7 +888,7 @@ public nonisolated struct Loci_Itinerary_GetUserListsRequest: Sendable {
 }
 
 /// GetUserListsResponse for user lists retrieval
-public nonisolated struct Loci_Itinerary_GetUserListsResponse: Sendable {
+public struct Loci_Itinerary_GetUserListsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -896,11 +896,11 @@ public nonisolated struct Loci_Itinerary_GetUserListsResponse: Sendable {
   public var lists: [Loci_Itinerary_List] = []
 
   public var pagination: Loci_Common_PaginationMetadata {
-    get {_pagination ?? Loci_Common_PaginationMetadata()}
+    get {return _pagination ?? Loci_Common_PaginationMetadata()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
@@ -912,26 +912,26 @@ public nonisolated struct Loci_Itinerary_GetUserListsResponse: Sendable {
 }
 
 /// GetUserItinerariesRequest for retrieving user's itineraries
-public nonisolated struct Loci_Itinerary_GetUserItinerariesRequest: Sendable {
+public struct Loci_Itinerary_GetUserItinerariesRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var userID: String {
-    get {_userID ?? String()}
+    get {return _userID ?? String()}
     set {_userID = newValue}
   }
   /// Returns true if `userID` has been explicitly set.
-  public var hasUserID: Bool {self._userID != nil}
+  public var hasUserID: Bool {return self._userID != nil}
   /// Clears the value of `userID`. Subsequent reads from it will return its default value.
   public mutating func clearUserID() {self._userID = nil}
 
   public var pagination: Loci_Common_PaginationRequest {
-    get {_pagination ?? Loci_Common_PaginationRequest()}
+    get {return _pagination ?? Loci_Common_PaginationRequest()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
@@ -944,7 +944,7 @@ public nonisolated struct Loci_Itinerary_GetUserItinerariesRequest: Sendable {
 }
 
 /// GetUserItinerariesResponse for user itineraries retrieval
-public nonisolated struct Loci_Itinerary_GetUserItinerariesResponse: Sendable {
+public struct Loci_Itinerary_GetUserItinerariesResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -952,11 +952,11 @@ public nonisolated struct Loci_Itinerary_GetUserItinerariesResponse: Sendable {
   public var itineraries: [Loci_Itinerary_UserSavedItinerary] = []
 
   public var pagination: Loci_Common_PaginationMetadata {
-    get {_pagination ?? Loci_Common_PaginationMetadata()}
+    get {return _pagination ?? Loci_Common_PaginationMetadata()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
@@ -968,7 +968,7 @@ public nonisolated struct Loci_Itinerary_GetUserItinerariesResponse: Sendable {
 }
 
 /// GetItineraryRequest for retrieving a single itinerary
-public nonisolated struct Loci_Itinerary_GetItineraryRequest: Sendable {
+public struct Loci_Itinerary_GetItineraryRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -981,17 +981,17 @@ public nonisolated struct Loci_Itinerary_GetItineraryRequest: Sendable {
 }
 
 /// GetItineraryResponse for itinerary retrieval
-public nonisolated struct Loci_Itinerary_GetItineraryResponse: Sendable {
+public struct Loci_Itinerary_GetItineraryResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var itinerary: Loci_Itinerary_UserSavedItinerary {
-    get {_itinerary ?? Loci_Itinerary_UserSavedItinerary()}
+    get {return _itinerary ?? Loci_Itinerary_UserSavedItinerary()}
     set {_itinerary = newValue}
   }
   /// Returns true if `itinerary` has been explicitly set.
-  public var hasItinerary: Bool {self._itinerary != nil}
+  public var hasItinerary: Bool {return self._itinerary != nil}
   /// Clears the value of `itinerary`. Subsequent reads from it will return its default value.
   public mutating func clearItinerary() {self._itinerary = nil}
 
@@ -1003,7 +1003,7 @@ public nonisolated struct Loci_Itinerary_GetItineraryResponse: Sendable {
 }
 
 /// DeleteBookmarkRequest for removing a bookmarked itinerary
-public nonisolated struct Loci_Itinerary_DeleteBookmarkRequest: Sendable {
+public struct Loci_Itinerary_DeleteBookmarkRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1017,15 +1017,35 @@ public nonisolated struct Loci_Itinerary_DeleteBookmarkRequest: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.itinerary"
+fileprivate let _protobuf_package = "loci.itinerary"
 
-nonisolated extension Loci_Itinerary_ContentType: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0CONTENT_TYPE_UNSPECIFIED\0\u{1}CONTENT_TYPE_POI\0\u{1}CONTENT_TYPE_RESTAURANT\0\u{1}CONTENT_TYPE_HOTEL\0\u{1}CONTENT_TYPE_ITINERARY\0")
+extension Loci_Itinerary_ContentType: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "CONTENT_TYPE_UNSPECIFIED"),
+    1: .same(proto: "CONTENT_TYPE_POI"),
+    2: .same(proto: "CONTENT_TYPE_RESTAURANT"),
+    3: .same(proto: "CONTENT_TYPE_HOTEL"),
+    4: .same(proto: "CONTENT_TYPE_ITINERARY"),
+  ]
 }
 
-nonisolated extension Loci_Itinerary_List: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Itinerary_List: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".List"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}user_id\0\u{1}name\0\u{1}description\0\u{3}image_url\0\u{3}is_public\0\u{3}is_itinerary\0\u{3}parent_list_id\0\u{3}city_id\0\u{3}view_count\0\u{3}save_count\0\u{3}created_at\0\u{3}updated_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "user_id"),
+    3: .same(proto: "name"),
+    4: .same(proto: "description"),
+    5: .standard(proto: "image_url"),
+    6: .standard(proto: "is_public"),
+    7: .standard(proto: "is_itinerary"),
+    8: .standard(proto: "parent_list_id"),
+    9: .standard(proto: "city_id"),
+    10: .standard(proto: "view_count"),
+    11: .standard(proto: "save_count"),
+    12: .standard(proto: "created_at"),
+    13: .standard(proto: "updated_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1117,9 +1137,23 @@ nonisolated extension Loci_Itinerary_List: SwiftProtobuf.Message, SwiftProtobuf.
   }
 }
 
-nonisolated extension Loci_Itinerary_ListItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Itinerary_ListItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListItem"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}list_id\0\u{3}item_id\0\u{3}poi_id\0\u{3}content_type\0\u{1}position\0\u{1}notes\0\u{3}day_number\0\u{3}time_slot\0\u{1}duration\0\u{3}created_at\0\u{3}updated_at\0\u{3}source_llm_interaction_id\0\u{3}item_ai_description\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "list_id"),
+    2: .standard(proto: "item_id"),
+    3: .standard(proto: "poi_id"),
+    4: .standard(proto: "content_type"),
+    5: .same(proto: "position"),
+    6: .same(proto: "notes"),
+    7: .standard(proto: "day_number"),
+    8: .standard(proto: "time_slot"),
+    9: .same(proto: "duration"),
+    10: .standard(proto: "created_at"),
+    11: .standard(proto: "updated_at"),
+    12: .standard(proto: "source_llm_interaction_id"),
+    13: .standard(proto: "item_ai_description"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1211,9 +1245,15 @@ nonisolated extension Loci_Itinerary_ListItem: SwiftProtobuf.Message, SwiftProto
   }
 }
 
-nonisolated extension Loci_Itinerary_ListItemWithContent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Itinerary_ListItemWithContent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListItemWithContent"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}list_item\0\u{1}poi\0\u{1}restaurant\0\u{1}hotel\0\u{1}itinerary\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "list_item"),
+    2: .same(proto: "poi"),
+    3: .same(proto: "restaurant"),
+    4: .same(proto: "hotel"),
+    5: .same(proto: "itinerary"),
+  ]
 
   fileprivate class _StorageClass {
     var _listItem: Loci_Itinerary_ListItem? = nil
@@ -1222,11 +1262,15 @@ nonisolated extension Loci_Itinerary_ListItemWithContent: SwiftProtobuf.Message,
     var _hotel: Loci_Poi_HotelDetailedInfo? = nil
     var _itinerary: Loci_Itinerary_UserSavedItinerary? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -1309,9 +1353,12 @@ nonisolated extension Loci_Itinerary_ListItemWithContent: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_Itinerary_ListWithDetailedItems: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Itinerary_ListWithDetailedItems: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListWithDetailedItems"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}list\0\u{1}items\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "list"),
+    2: .same(proto: "items"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1348,9 +1395,24 @@ nonisolated extension Loci_Itinerary_ListWithDetailedItems: SwiftProtobuf.Messag
   }
 }
 
-nonisolated extension Loci_Itinerary_UserSavedItinerary: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Itinerary_UserSavedItinerary: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UserSavedItinerary"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}user_id\0\u{3}source_llm_interaction_id\0\u{3}session_id\0\u{3}primary_city_id\0\u{1}title\0\u{1}description\0\u{3}markdown_content\0\u{1}tags\0\u{3}estimated_duration_days\0\u{3}estimated_cost_level\0\u{3}is_public\0\u{3}created_at\0\u{3}updated_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "user_id"),
+    3: .standard(proto: "source_llm_interaction_id"),
+    4: .standard(proto: "session_id"),
+    5: .standard(proto: "primary_city_id"),
+    6: .same(proto: "title"),
+    7: .same(proto: "description"),
+    8: .standard(proto: "markdown_content"),
+    9: .same(proto: "tags"),
+    10: .standard(proto: "estimated_duration_days"),
+    11: .standard(proto: "estimated_cost_level"),
+    12: .standard(proto: "is_public"),
+    13: .standard(proto: "created_at"),
+    14: .standard(proto: "updated_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1447,9 +1509,15 @@ nonisolated extension Loci_Itinerary_UserSavedItinerary: SwiftProtobuf.Message, 
   }
 }
 
-nonisolated extension Loci_Itinerary_CreateListRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Itinerary_CreateListRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreateListRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0\u{1}description\0\u{3}city_id\0\u{3}is_itinerary\0\u{3}is_public\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "name"),
+    2: .same(proto: "description"),
+    3: .standard(proto: "city_id"),
+    4: .standard(proto: "is_itinerary"),
+    5: .standard(proto: "is_public"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1501,9 +1569,16 @@ nonisolated extension Loci_Itinerary_CreateListRequest: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_Itinerary_UpdateListRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Itinerary_UpdateListRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UpdateListRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}list_id\0\u{1}name\0\u{1}description\0\u{3}image_url\0\u{3}is_public\0\u{3}city_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "list_id"),
+    2: .same(proto: "name"),
+    3: .same(proto: "description"),
+    4: .standard(proto: "image_url"),
+    5: .standard(proto: "is_public"),
+    6: .standard(proto: "city_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1560,9 +1635,20 @@ nonisolated extension Loci_Itinerary_UpdateListRequest: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_Itinerary_AddListItemRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Itinerary_AddListItemRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".AddListItemRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}list_id\0\u{3}item_id\0\u{3}content_type\0\u{1}position\0\u{1}notes\0\u{3}day_number\0\u{3}time_slot\0\u{3}duration_minutes\0\u{3}source_llm_interaction_id\0\u{3}item_ai_description\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "list_id"),
+    2: .standard(proto: "item_id"),
+    3: .standard(proto: "content_type"),
+    4: .same(proto: "position"),
+    5: .same(proto: "notes"),
+    6: .standard(proto: "day_number"),
+    7: .standard(proto: "time_slot"),
+    8: .standard(proto: "duration_minutes"),
+    9: .standard(proto: "source_llm_interaction_id"),
+    10: .standard(proto: "item_ai_description"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1639,9 +1725,20 @@ nonisolated extension Loci_Itinerary_AddListItemRequest: SwiftProtobuf.Message, 
   }
 }
 
-nonisolated extension Loci_Itinerary_UpdateListItemRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Itinerary_UpdateListItemRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UpdateListItemRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}list_id\0\u{3}item_id\0\u{3}content_type\0\u{1}position\0\u{1}notes\0\u{3}day_number\0\u{3}time_slot\0\u{3}duration_minutes\0\u{3}source_llm_interaction_id\0\u{3}item_ai_description\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "list_id"),
+    2: .standard(proto: "item_id"),
+    3: .standard(proto: "content_type"),
+    4: .same(proto: "position"),
+    5: .same(proto: "notes"),
+    6: .standard(proto: "day_number"),
+    7: .standard(proto: "time_slot"),
+    8: .standard(proto: "duration_minutes"),
+    9: .standard(proto: "source_llm_interaction_id"),
+    10: .standard(proto: "item_ai_description"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1718,9 +1815,18 @@ nonisolated extension Loci_Itinerary_UpdateListItemRequest: SwiftProtobuf.Messag
   }
 }
 
-nonisolated extension Loci_Itinerary_UpdateItineraryRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Itinerary_UpdateItineraryRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UpdateItineraryRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}itinerary_id\0\u{1}title\0\u{1}description\0\u{1}tags\0\u{3}estimated_duration_days\0\u{3}estimated_cost_level\0\u{3}is_public\0\u{3}markdown_content\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "itinerary_id"),
+    2: .same(proto: "title"),
+    3: .same(proto: "description"),
+    4: .same(proto: "tags"),
+    5: .standard(proto: "estimated_duration_days"),
+    6: .standard(proto: "estimated_cost_level"),
+    7: .standard(proto: "is_public"),
+    8: .standard(proto: "markdown_content"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1787,9 +1893,18 @@ nonisolated extension Loci_Itinerary_UpdateItineraryRequest: SwiftProtobuf.Messa
   }
 }
 
-nonisolated extension Loci_Itinerary_BookmarkRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Itinerary_BookmarkRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".BookmarkRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}llm_interaction_id\0\u{3}session_id\0\u{3}primary_city_id\0\u{3}primary_city_name\0\u{1}title\0\u{1}description\0\u{1}tags\0\u{3}is_public\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "llm_interaction_id"),
+    2: .standard(proto: "session_id"),
+    3: .standard(proto: "primary_city_id"),
+    4: .standard(proto: "primary_city_name"),
+    5: .same(proto: "title"),
+    6: .same(proto: "description"),
+    7: .same(proto: "tags"),
+    8: .standard(proto: "is_public"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1856,9 +1971,12 @@ nonisolated extension Loci_Itinerary_BookmarkRequest: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Itinerary_GetListRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Itinerary_GetListRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetListRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}list_id\0\u{3}include_items\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "list_id"),
+    2: .standard(proto: "include_items"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1895,9 +2013,11 @@ nonisolated extension Loci_Itinerary_GetListRequest: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_Itinerary_GetListResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Itinerary_GetListResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetListResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}list\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "list"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1929,9 +2049,13 @@ nonisolated extension Loci_Itinerary_GetListResponse: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Itinerary_GetUserListsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Itinerary_GetUserListsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetUserListsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}itineraries_only\0\u{1}pagination\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "itineraries_only"),
+    3: .same(proto: "pagination"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1973,9 +2097,12 @@ nonisolated extension Loci_Itinerary_GetUserListsRequest: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_Itinerary_GetUserListsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Itinerary_GetUserListsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetUserListsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}lists\0\u{1}pagination\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "lists"),
+    2: .same(proto: "pagination"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2012,9 +2139,12 @@ nonisolated extension Loci_Itinerary_GetUserListsResponse: SwiftProtobuf.Message
   }
 }
 
-nonisolated extension Loci_Itinerary_GetUserItinerariesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Itinerary_GetUserItinerariesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetUserItinerariesRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{1}pagination\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .same(proto: "pagination"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2051,9 +2181,12 @@ nonisolated extension Loci_Itinerary_GetUserItinerariesRequest: SwiftProtobuf.Me
   }
 }
 
-nonisolated extension Loci_Itinerary_GetUserItinerariesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Itinerary_GetUserItinerariesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetUserItinerariesResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}itineraries\0\u{1}pagination\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "itineraries"),
+    2: .same(proto: "pagination"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2090,9 +2223,11 @@ nonisolated extension Loci_Itinerary_GetUserItinerariesResponse: SwiftProtobuf.M
   }
 }
 
-nonisolated extension Loci_Itinerary_GetItineraryRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Itinerary_GetItineraryRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetItineraryRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}itinerary_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "itinerary_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2120,9 +2255,11 @@ nonisolated extension Loci_Itinerary_GetItineraryRequest: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_Itinerary_GetItineraryResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Itinerary_GetItineraryResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetItineraryResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}itinerary\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "itinerary"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2154,9 +2291,11 @@ nonisolated extension Loci_Itinerary_GetItineraryResponse: SwiftProtobuf.Message
   }
 }
 
-nonisolated extension Loci_Itinerary_DeleteBookmarkRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Itinerary_DeleteBookmarkRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DeleteBookmarkRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}itinerary_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "itinerary_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

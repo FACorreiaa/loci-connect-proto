@@ -13,72 +13,36 @@ import SwiftProtobuf
 public protocol Loci_Favorites_V1_FavoritesServiceClientInterface: Sendable {
 
     /// Add an item to favorites
-    @discardableResult
-    func `addToFavorites`(request: Loci_Favorites_V1_AddToFavoritesRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Favorites_V1_AddToFavoritesResponse>) -> Void) -> Connect.Cancelable
-
-    /// Add an item to favorites
     @available(iOS 13, *)
     func `addToFavorites`(request: Loci_Favorites_V1_AddToFavoritesRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Favorites_V1_AddToFavoritesResponse>
-
-    /// Remove an item from favorites
-    @discardableResult
-    func `removeFromFavorites`(request: Loci_Favorites_V1_RemoveFromFavoritesRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Favorites_V1_RemoveFromFavoritesResponse>) -> Void) -> Connect.Cancelable
 
     /// Remove an item from favorites
     @available(iOS 13, *)
     func `removeFromFavorites`(request: Loci_Favorites_V1_RemoveFromFavoritesRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Favorites_V1_RemoveFromFavoritesResponse>
 
     /// Get all favorites for a user
-    @discardableResult
-    func `getFavorites`(request: Loci_Favorites_V1_GetFavoritesRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Favorites_V1_GetFavoritesResponse>) -> Void) -> Connect.Cancelable
-
-    /// Get all favorites for a user
     @available(iOS 13, *)
     func `getFavorites`(request: Loci_Favorites_V1_GetFavoritesRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Favorites_V1_GetFavoritesResponse>
-
-    /// Check if an item is favorited
-    @discardableResult
-    func `isFavorited`(request: Loci_Favorites_V1_IsFavoritedRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Favorites_V1_IsFavoritedResponse>) -> Void) -> Connect.Cancelable
 
     /// Check if an item is favorited
     @available(iOS 13, *)
     func `isFavorited`(request: Loci_Favorites_V1_IsFavoritedRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Favorites_V1_IsFavoritedResponse>
 
     /// Get favorites count
-    @discardableResult
-    func `getFavoritesCount`(request: Loci_Favorites_V1_GetFavoritesCountRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Favorites_V1_GetFavoritesCountResponse>) -> Void) -> Connect.Cancelable
-
-    /// Get favorites count
     @available(iOS 13, *)
     func `getFavoritesCount`(request: Loci_Favorites_V1_GetFavoritesCountRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Favorites_V1_GetFavoritesCountResponse>
-
-    /// Get hotel details
-    @discardableResult
-    func `getHotelDetails`(request: Loci_Favorites_V1_GetHotelDetailsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Favorites_V1_GetHotelDetailsResponse>) -> Void) -> Connect.Cancelable
 
     /// Get hotel details
     @available(iOS 13, *)
     func `getHotelDetails`(request: Loci_Favorites_V1_GetHotelDetailsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Favorites_V1_GetHotelDetailsResponse>
 
     /// Get restaurant details
-    @discardableResult
-    func `getRestaurantDetails`(request: Loci_Favorites_V1_GetRestaurantDetailsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Favorites_V1_GetRestaurantDetailsResponse>) -> Void) -> Connect.Cancelable
-
-    /// Get restaurant details
     @available(iOS 13, *)
     func `getRestaurantDetails`(request: Loci_Favorites_V1_GetRestaurantDetailsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Favorites_V1_GetRestaurantDetailsResponse>
 
     /// Get nearby hotels
-    @discardableResult
-    func `getNearbyHotels`(request: Loci_Favorites_V1_GetNearbyHotelsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Favorites_V1_GetNearbyHotelsResponse>) -> Void) -> Connect.Cancelable
-
-    /// Get nearby hotels
     @available(iOS 13, *)
     func `getNearbyHotels`(request: Loci_Favorites_V1_GetNearbyHotelsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Favorites_V1_GetNearbyHotelsResponse>
-
-    /// Get nearby restaurants
-    @discardableResult
-    func `getNearbyRestaurants`(request: Loci_Favorites_V1_GetNearbyRestaurantsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Favorites_V1_GetNearbyRestaurantsResponse>) -> Void) -> Connect.Cancelable
 
     /// Get nearby restaurants
     @available(iOS 13, *)
@@ -93,19 +57,9 @@ public final class Loci_Favorites_V1_FavoritesServiceClient: Loci_Favorites_V1_F
         self.client = client
     }
 
-    @discardableResult
-    public func `addToFavorites`(request: Loci_Favorites_V1_AddToFavoritesRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Favorites_V1_AddToFavoritesResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.favorites.v1.FavoritesService/AddToFavorites", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `addToFavorites`(request: Loci_Favorites_V1_AddToFavoritesRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Favorites_V1_AddToFavoritesResponse> {
         return await self.client.unary(path: "/loci.favorites.v1.FavoritesService/AddToFavorites", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `removeFromFavorites`(request: Loci_Favorites_V1_RemoveFromFavoritesRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Favorites_V1_RemoveFromFavoritesResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.favorites.v1.FavoritesService/RemoveFromFavorites", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -113,19 +67,9 @@ public final class Loci_Favorites_V1_FavoritesServiceClient: Loci_Favorites_V1_F
         return await self.client.unary(path: "/loci.favorites.v1.FavoritesService/RemoveFromFavorites", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getFavorites`(request: Loci_Favorites_V1_GetFavoritesRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Favorites_V1_GetFavoritesResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.favorites.v1.FavoritesService/GetFavorites", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getFavorites`(request: Loci_Favorites_V1_GetFavoritesRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Favorites_V1_GetFavoritesResponse> {
         return await self.client.unary(path: "/loci.favorites.v1.FavoritesService/GetFavorites", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `isFavorited`(request: Loci_Favorites_V1_IsFavoritedRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Favorites_V1_IsFavoritedResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.favorites.v1.FavoritesService/IsFavorited", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -133,19 +77,9 @@ public final class Loci_Favorites_V1_FavoritesServiceClient: Loci_Favorites_V1_F
         return await self.client.unary(path: "/loci.favorites.v1.FavoritesService/IsFavorited", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getFavoritesCount`(request: Loci_Favorites_V1_GetFavoritesCountRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Favorites_V1_GetFavoritesCountResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.favorites.v1.FavoritesService/GetFavoritesCount", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getFavoritesCount`(request: Loci_Favorites_V1_GetFavoritesCountRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Favorites_V1_GetFavoritesCountResponse> {
         return await self.client.unary(path: "/loci.favorites.v1.FavoritesService/GetFavoritesCount", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getHotelDetails`(request: Loci_Favorites_V1_GetHotelDetailsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Favorites_V1_GetHotelDetailsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.favorites.v1.FavoritesService/GetHotelDetails", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -153,29 +87,14 @@ public final class Loci_Favorites_V1_FavoritesServiceClient: Loci_Favorites_V1_F
         return await self.client.unary(path: "/loci.favorites.v1.FavoritesService/GetHotelDetails", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getRestaurantDetails`(request: Loci_Favorites_V1_GetRestaurantDetailsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Favorites_V1_GetRestaurantDetailsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.favorites.v1.FavoritesService/GetRestaurantDetails", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getRestaurantDetails`(request: Loci_Favorites_V1_GetRestaurantDetailsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Favorites_V1_GetRestaurantDetailsResponse> {
         return await self.client.unary(path: "/loci.favorites.v1.FavoritesService/GetRestaurantDetails", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getNearbyHotels`(request: Loci_Favorites_V1_GetNearbyHotelsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Favorites_V1_GetNearbyHotelsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.favorites.v1.FavoritesService/GetNearbyHotels", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getNearbyHotels`(request: Loci_Favorites_V1_GetNearbyHotelsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Favorites_V1_GetNearbyHotelsResponse> {
         return await self.client.unary(path: "/loci.favorites.v1.FavoritesService/GetNearbyHotels", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getNearbyRestaurants`(request: Loci_Favorites_V1_GetNearbyRestaurantsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Favorites_V1_GetNearbyRestaurantsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.favorites.v1.FavoritesService/GetNearbyRestaurants", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

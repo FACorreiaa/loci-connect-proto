@@ -15,13 +15,13 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// RecommendationChannel identifies where a recommendation was delivered.
-public nonisolated enum Loci_Recommendation_RecommendationChannel: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Recommendation_RecommendationChannel: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case web // = 1
@@ -60,7 +60,7 @@ public nonisolated enum Loci_Recommendation_RecommendationChannel: SwiftProtobuf
 }
 
 /// RecommendationSurface identifies the product experience that ranked an item.
-public nonisolated enum Loci_Recommendation_RecommendationSurface: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Recommendation_RecommendationSurface: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case discover // = 1
@@ -111,7 +111,7 @@ public nonisolated enum Loci_Recommendation_RecommendationSurface: SwiftProtobuf
 }
 
 /// RecommendationEventType separates exposure metrics from learning outcomes.
-public nonisolated enum Loci_Recommendation_RecommendationEventType: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Recommendation_RecommendationEventType: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case delivered // = 1
@@ -195,7 +195,7 @@ public nonisolated enum Loci_Recommendation_RecommendationEventType: SwiftProtob
 
 /// RecommendationTrace is the opaque attribution data clients return with an
 /// outcome. It contains no query text or precise user location.
-public nonisolated struct Loci_Recommendation_RecommendationTrace: Sendable {
+public struct Loci_Recommendation_RecommendationTrace: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -219,7 +219,7 @@ public nonisolated struct Loci_Recommendation_RecommendationTrace: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Recommendation_RecommendationEvent: Sendable {
+public struct Loci_Recommendation_RecommendationEvent: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -229,47 +229,47 @@ public nonisolated struct Loci_Recommendation_RecommendationEvent: Sendable {
   public var eventType: Loci_Recommendation_RecommendationEventType = .unspecified
 
   public var trace: Loci_Recommendation_RecommendationTrace {
-    get {_trace ?? Loci_Recommendation_RecommendationTrace()}
+    get {return _trace ?? Loci_Recommendation_RecommendationTrace()}
     set {_trace = newValue}
   }
   /// Returns true if `trace` has been explicitly set.
-  public var hasTrace: Bool {self._trace != nil}
+  public var hasTrace: Bool {return self._trace != nil}
   /// Clears the value of `trace`. Subsequent reads from it will return its default value.
   public mutating func clearTrace() {self._trace = nil}
 
   public var occurredAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_occurredAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _occurredAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_occurredAt = newValue}
   }
   /// Returns true if `occurredAt` has been explicitly set.
-  public var hasOccurredAt: Bool {self._occurredAt != nil}
+  public var hasOccurredAt: Bool {return self._occurredAt != nil}
   /// Clears the value of `occurredAt`. Subsequent reads from it will return its default value.
   public mutating func clearOccurredAt() {self._occurredAt = nil}
 
   public var poiID: String {
-    get {_poiID ?? String()}
+    get {return _poiID ?? String()}
     set {_poiID = newValue}
   }
   /// Returns true if `poiID` has been explicitly set.
-  public var hasPoiID: Bool {self._poiID != nil}
+  public var hasPoiID: Bool {return self._poiID != nil}
   /// Clears the value of `poiID`. Subsequent reads from it will return its default value.
   public mutating func clearPoiID() {self._poiID = nil}
 
   public var tripID: String {
-    get {_tripID ?? String()}
+    get {return _tripID ?? String()}
     set {_tripID = newValue}
   }
   /// Returns true if `tripID` has been explicitly set.
-  public var hasTripID: Bool {self._tripID != nil}
+  public var hasTripID: Bool {return self._tripID != nil}
   /// Clears the value of `tripID`. Subsequent reads from it will return its default value.
   public mutating func clearTripID() {self._tripID = nil}
 
   public var rating: Int32 {
-    get {_rating ?? 0}
+    get {return _rating ?? 0}
     set {_rating = newValue}
   }
   /// Returns true if `rating` has been explicitly set.
-  public var hasRating: Bool {self._rating != nil}
+  public var hasRating: Bool {return self._rating != nil}
   /// Clears the value of `rating`. Subsequent reads from it will return its default value.
   public mutating func clearRating() {self._rating = nil}
 
@@ -286,7 +286,7 @@ public nonisolated struct Loci_Recommendation_RecommendationEvent: Sendable {
   fileprivate var _rating: Int32? = nil
 }
 
-public nonisolated struct Loci_Recommendation_RecordEventsRequest: Sendable {
+public struct Loci_Recommendation_RecordEventsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -298,7 +298,7 @@ public nonisolated struct Loci_Recommendation_RecordEventsRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Recommendation_RecordEventsResponse: Sendable {
+public struct Loci_Recommendation_RecordEventsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -312,7 +312,7 @@ public nonisolated struct Loci_Recommendation_RecordEventsResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Recommendation_PersonalizationSettings: Sendable {
+public struct Loci_Recommendation_PersonalizationSettings: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -324,11 +324,11 @@ public nonisolated struct Loci_Recommendation_PersonalizationSettings: Sendable 
   public var disclosureSeen: Bool = false
 
   public var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  public var hasUpdatedAt: Bool {self._updatedAt != nil}
+  public var hasUpdatedAt: Bool {return self._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {self._updatedAt = nil}
 
@@ -339,7 +339,7 @@ public nonisolated struct Loci_Recommendation_PersonalizationSettings: Sendable 
   fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-public nonisolated struct Loci_Recommendation_GetPersonalizationSettingsRequest: Sendable {
+public struct Loci_Recommendation_GetPersonalizationSettingsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -349,7 +349,7 @@ public nonisolated struct Loci_Recommendation_GetPersonalizationSettingsRequest:
   public init() {}
 }
 
-public nonisolated struct Loci_Recommendation_UpdatePersonalizationSettingsRequest: Sendable {
+public struct Loci_Recommendation_UpdatePersonalizationSettingsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -365,7 +365,7 @@ public nonisolated struct Loci_Recommendation_UpdatePersonalizationSettingsReque
   public init() {}
 }
 
-public nonisolated struct Loci_Recommendation_TasteTrait: Sendable {
+public struct Loci_Recommendation_TasteTrait: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -385,7 +385,7 @@ public nonisolated struct Loci_Recommendation_TasteTrait: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Recommendation_TasteProfile: Sendable {
+public struct Loci_Recommendation_TasteProfile: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -397,20 +397,20 @@ public nonisolated struct Loci_Recommendation_TasteProfile: Sendable {
   public var algorithmVersion: String = String()
 
   public var lastFeedbackAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_lastFeedbackAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _lastFeedbackAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_lastFeedbackAt = newValue}
   }
   /// Returns true if `lastFeedbackAt` has been explicitly set.
-  public var hasLastFeedbackAt: Bool {self._lastFeedbackAt != nil}
+  public var hasLastFeedbackAt: Bool {return self._lastFeedbackAt != nil}
   /// Clears the value of `lastFeedbackAt`. Subsequent reads from it will return its default value.
   public mutating func clearLastFeedbackAt() {self._lastFeedbackAt = nil}
 
   public var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  public var hasUpdatedAt: Bool {self._updatedAt != nil}
+  public var hasUpdatedAt: Bool {return self._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {self._updatedAt = nil}
 
@@ -422,7 +422,7 @@ public nonisolated struct Loci_Recommendation_TasteProfile: Sendable {
   fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-public nonisolated struct Loci_Recommendation_GetTasteProfileRequest: Sendable {
+public struct Loci_Recommendation_GetTasteProfileRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -432,7 +432,7 @@ public nonisolated struct Loci_Recommendation_GetTasteProfileRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Recommendation_ResetTasteProfileRequest: Sendable {
+public struct Loci_Recommendation_ResetTasteProfileRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -444,7 +444,7 @@ public nonisolated struct Loci_Recommendation_ResetTasteProfileRequest: Sendable
   public init() {}
 }
 
-public nonisolated struct Loci_Recommendation_ResetTasteProfileResponse: Sendable {
+public struct Loci_Recommendation_ResetTasteProfileResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -458,23 +458,57 @@ public nonisolated struct Loci_Recommendation_ResetTasteProfileResponse: Sendabl
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.recommendation"
+fileprivate let _protobuf_package = "loci.recommendation"
 
-nonisolated extension Loci_Recommendation_RecommendationChannel: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0RECOMMENDATION_CHANNEL_UNSPECIFIED\0\u{1}RECOMMENDATION_CHANNEL_WEB\0\u{1}RECOMMENDATION_CHANNEL_MCP\0")
+extension Loci_Recommendation_RecommendationChannel: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "RECOMMENDATION_CHANNEL_UNSPECIFIED"),
+    1: .same(proto: "RECOMMENDATION_CHANNEL_WEB"),
+    2: .same(proto: "RECOMMENDATION_CHANNEL_MCP"),
+  ]
 }
 
-nonisolated extension Loci_Recommendation_RecommendationSurface: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0RECOMMENDATION_SURFACE_UNSPECIFIED\0\u{1}RECOMMENDATION_SURFACE_DISCOVER\0\u{1}RECOMMENDATION_SURFACE_NEARBY\0\u{1}RECOMMENDATION_SURFACE_CHAT\0\u{1}RECOMMENDATION_SURFACE_TRIP\0\u{1}RECOMMENDATION_SURFACE_PLACE\0")
+extension Loci_Recommendation_RecommendationSurface: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "RECOMMENDATION_SURFACE_UNSPECIFIED"),
+    1: .same(proto: "RECOMMENDATION_SURFACE_DISCOVER"),
+    2: .same(proto: "RECOMMENDATION_SURFACE_NEARBY"),
+    3: .same(proto: "RECOMMENDATION_SURFACE_CHAT"),
+    4: .same(proto: "RECOMMENDATION_SURFACE_TRIP"),
+    5: .same(proto: "RECOMMENDATION_SURFACE_PLACE"),
+  ]
 }
 
-nonisolated extension Loci_Recommendation_RecommendationEventType: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0RECOMMENDATION_EVENT_TYPE_UNSPECIFIED\0\u{1}RECOMMENDATION_EVENT_TYPE_DELIVERED\0\u{1}RECOMMENDATION_EVENT_TYPE_PRESENTED\0\u{1}RECOMMENDATION_EVENT_TYPE_OPENED\0\u{1}RECOMMENDATION_EVENT_TYPE_DISMISSED\0\u{1}RECOMMENDATION_EVENT_TYPE_FAVORITED\0\u{1}RECOMMENDATION_EVENT_TYPE_ADDED_TO_LIST\0\u{1}RECOMMENDATION_EVENT_TYPE_ADDED_TO_TRIP\0\u{1}RECOMMENDATION_EVENT_TYPE_KEPT_IN_TRIP\0\u{1}RECOMMENDATION_EVENT_TYPE_REMOVED_FROM_TRIP\0\u{1}RECOMMENDATION_EVENT_TYPE_EXPORTED\0\u{1}RECOMMENDATION_EVENT_TYPE_BOOKING_OPENED\0\u{1}RECOMMENDATION_EVENT_TYPE_VISIT_CONFIRMED\0\u{1}RECOMMENDATION_EVENT_TYPE_RATED\0")
+extension Loci_Recommendation_RecommendationEventType: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "RECOMMENDATION_EVENT_TYPE_UNSPECIFIED"),
+    1: .same(proto: "RECOMMENDATION_EVENT_TYPE_DELIVERED"),
+    2: .same(proto: "RECOMMENDATION_EVENT_TYPE_PRESENTED"),
+    3: .same(proto: "RECOMMENDATION_EVENT_TYPE_OPENED"),
+    4: .same(proto: "RECOMMENDATION_EVENT_TYPE_DISMISSED"),
+    5: .same(proto: "RECOMMENDATION_EVENT_TYPE_FAVORITED"),
+    6: .same(proto: "RECOMMENDATION_EVENT_TYPE_ADDED_TO_LIST"),
+    7: .same(proto: "RECOMMENDATION_EVENT_TYPE_ADDED_TO_TRIP"),
+    8: .same(proto: "RECOMMENDATION_EVENT_TYPE_KEPT_IN_TRIP"),
+    9: .same(proto: "RECOMMENDATION_EVENT_TYPE_REMOVED_FROM_TRIP"),
+    10: .same(proto: "RECOMMENDATION_EVENT_TYPE_EXPORTED"),
+    11: .same(proto: "RECOMMENDATION_EVENT_TYPE_BOOKING_OPENED"),
+    12: .same(proto: "RECOMMENDATION_EVENT_TYPE_VISIT_CONFIRMED"),
+    13: .same(proto: "RECOMMENDATION_EVENT_TYPE_RATED"),
+  ]
 }
 
-nonisolated extension Loci_Recommendation_RecommendationTrace: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Recommendation_RecommendationTrace: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RecommendationTrace"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}run_id\0\u{3}item_id\0\u{1}rank\0\u{3}algorithm_version\0\u{3}experiment_variant\0\u{1}surface\0\u{1}channel\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "run_id"),
+    2: .standard(proto: "item_id"),
+    3: .same(proto: "rank"),
+    4: .standard(proto: "algorithm_version"),
+    5: .standard(proto: "experiment_variant"),
+    6: .same(proto: "surface"),
+    7: .same(proto: "channel"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -532,9 +566,18 @@ nonisolated extension Loci_Recommendation_RecommendationTrace: SwiftProtobuf.Mes
   }
 }
 
-nonisolated extension Loci_Recommendation_RecommendationEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Recommendation_RecommendationEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RecommendationEvent"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}client_event_id\0\u{3}event_type\0\u{1}trace\0\u{3}occurred_at\0\u{3}poi_id\0\u{3}trip_id\0\u{1}rating\0\u{1}metadata\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "client_event_id"),
+    2: .standard(proto: "event_type"),
+    3: .same(proto: "trace"),
+    4: .standard(proto: "occurred_at"),
+    5: .standard(proto: "poi_id"),
+    6: .standard(proto: "trip_id"),
+    7: .same(proto: "rating"),
+    8: .same(proto: "metadata"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -601,9 +644,11 @@ nonisolated extension Loci_Recommendation_RecommendationEvent: SwiftProtobuf.Mes
   }
 }
 
-nonisolated extension Loci_Recommendation_RecordEventsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Recommendation_RecordEventsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RecordEventsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}events\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "events"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -631,9 +676,12 @@ nonisolated extension Loci_Recommendation_RecordEventsRequest: SwiftProtobuf.Mes
   }
 }
 
-nonisolated extension Loci_Recommendation_RecordEventsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Recommendation_RecordEventsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RecordEventsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}accepted\0\u{1}duplicates\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "accepted"),
+    2: .same(proto: "duplicates"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -666,9 +714,14 @@ nonisolated extension Loci_Recommendation_RecordEventsResponse: SwiftProtobuf.Me
   }
 }
 
-nonisolated extension Loci_Recommendation_PersonalizationSettings: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Recommendation_PersonalizationSettings: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PersonalizationSettings"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}personalization_enabled\0\u{3}contribute_aggregate\0\u{3}disclosure_seen\0\u{3}updated_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "personalization_enabled"),
+    2: .standard(proto: "contribute_aggregate"),
+    3: .standard(proto: "disclosure_seen"),
+    4: .standard(proto: "updated_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -715,7 +768,7 @@ nonisolated extension Loci_Recommendation_PersonalizationSettings: SwiftProtobuf
   }
 }
 
-nonisolated extension Loci_Recommendation_GetPersonalizationSettingsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Recommendation_GetPersonalizationSettingsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetPersonalizationSettingsRequest"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
@@ -734,9 +787,13 @@ nonisolated extension Loci_Recommendation_GetPersonalizationSettingsRequest: Swi
   }
 }
 
-nonisolated extension Loci_Recommendation_UpdatePersonalizationSettingsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Recommendation_UpdatePersonalizationSettingsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UpdatePersonalizationSettingsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}personalization_enabled\0\u{3}contribute_aggregate\0\u{3}disclosure_seen\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "personalization_enabled"),
+    2: .standard(proto: "contribute_aggregate"),
+    3: .standard(proto: "disclosure_seen"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -774,9 +831,15 @@ nonisolated extension Loci_Recommendation_UpdatePersonalizationSettingsRequest: 
   }
 }
 
-nonisolated extension Loci_Recommendation_TasteTrait: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Recommendation_TasteTrait: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".TasteTrait"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}key\0\u{1}label\0\u{1}score\0\u{1}confidence\0\u{3}evidence_count\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "key"),
+    2: .same(proto: "label"),
+    3: .same(proto: "score"),
+    4: .same(proto: "confidence"),
+    5: .standard(proto: "evidence_count"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -824,9 +887,15 @@ nonisolated extension Loci_Recommendation_TasteTrait: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Recommendation_TasteProfile: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Recommendation_TasteProfile: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".TasteProfile"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}traits\0\u{3}feedback_count\0\u{3}algorithm_version\0\u{3}last_feedback_at\0\u{3}updated_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "traits"),
+    2: .standard(proto: "feedback_count"),
+    3: .standard(proto: "algorithm_version"),
+    4: .standard(proto: "last_feedback_at"),
+    5: .standard(proto: "updated_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -878,7 +947,7 @@ nonisolated extension Loci_Recommendation_TasteProfile: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_Recommendation_GetTasteProfileRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Recommendation_GetTasteProfileRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetTasteProfileRequest"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
@@ -897,9 +966,11 @@ nonisolated extension Loci_Recommendation_GetTasteProfileRequest: SwiftProtobuf.
   }
 }
 
-nonisolated extension Loci_Recommendation_ResetTasteProfileRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Recommendation_ResetTasteProfileRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ResetTasteProfileRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}confirmation\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "confirmation"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -927,9 +998,11 @@ nonisolated extension Loci_Recommendation_ResetTasteProfileRequest: SwiftProtobu
   }
 }
 
-nonisolated extension Loci_Recommendation_ResetTasteProfileResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Recommendation_ResetTasteProfileResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ResetTasteProfileResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}success\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "success"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

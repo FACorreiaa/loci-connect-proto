@@ -15,101 +15,101 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// POIDetailedInfo represents a point of interest
-public nonisolated struct Loci_Poi_POIDetailedInfo: @unchecked Sendable {
+public struct Loci_Poi_POIDetailedInfo: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var id: String {
-    get {_storage._id}
+    get {return _storage._id}
     set {_uniqueStorage()._id = newValue}
   }
 
   public var city: String {
-    get {_storage._city}
+    get {return _storage._city}
     set {_uniqueStorage()._city = newValue}
   }
 
   public var cityID: String {
-    get {_storage._cityID}
+    get {return _storage._cityID}
     set {_uniqueStorage()._cityID = newValue}
   }
 
   public var name: String {
-    get {_storage._name}
+    get {return _storage._name}
     set {_uniqueStorage()._name = newValue}
   }
 
   public var descriptionPoi: String {
-    get {_storage._descriptionPoi ?? String()}
+    get {return _storage._descriptionPoi ?? String()}
     set {_uniqueStorage()._descriptionPoi = newValue}
   }
   /// Returns true if `descriptionPoi` has been explicitly set.
-  public var hasDescriptionPoi: Bool {_storage._descriptionPoi != nil}
+  public var hasDescriptionPoi: Bool {return _storage._descriptionPoi != nil}
   /// Clears the value of `descriptionPoi`. Subsequent reads from it will return its default value.
   public mutating func clearDescriptionPoi() {_uniqueStorage()._descriptionPoi = nil}
 
   public var distance: Double {
-    get {_storage._distance}
+    get {return _storage._distance}
     set {_uniqueStorage()._distance = newValue}
   }
 
   public var latitude: Double {
-    get {_storage._latitude ?? 0}
+    get {return _storage._latitude ?? 0}
     set {_uniqueStorage()._latitude = newValue}
   }
   /// Returns true if `latitude` has been explicitly set.
-  public var hasLatitude: Bool {_storage._latitude != nil}
+  public var hasLatitude: Bool {return _storage._latitude != nil}
   /// Clears the value of `latitude`. Subsequent reads from it will return its default value.
   public mutating func clearLatitude() {_uniqueStorage()._latitude = nil}
 
   public var longitude: Double {
-    get {_storage._longitude ?? 0}
+    get {return _storage._longitude ?? 0}
     set {_uniqueStorage()._longitude = newValue}
   }
   /// Returns true if `longitude` has been explicitly set.
-  public var hasLongitude: Bool {_storage._longitude != nil}
+  public var hasLongitude: Bool {return _storage._longitude != nil}
   /// Clears the value of `longitude`. Subsequent reads from it will return its default value.
   public mutating func clearLongitude() {_uniqueStorage()._longitude = nil}
 
   public var category: String {
-    get {_storage._category}
+    get {return _storage._category}
     set {_uniqueStorage()._category = newValue}
   }
 
   public var description_p: String {
-    get {_storage._description_p}
+    get {return _storage._description_p}
     set {_uniqueStorage()._description_p = newValue}
   }
 
   public var rating: Double {
-    get {_storage._rating}
+    get {return _storage._rating}
     set {_uniqueStorage()._rating = newValue}
   }
 
   public var address: String {
-    get {_storage._address}
+    get {return _storage._address}
     set {_uniqueStorage()._address = newValue}
   }
 
   public var phoneNumber: String {
-    get {_storage._phoneNumber}
+    get {return _storage._phoneNumber}
     set {_uniqueStorage()._phoneNumber = newValue}
   }
 
   public var website: String {
-    get {_storage._website}
+    get {return _storage._website}
     set {_uniqueStorage()._website = newValue}
   }
 
   public var openingHours: Dictionary<String,String> {
-    get {_storage._openingHours}
+    get {return _storage._openingHours}
     set {_uniqueStorage()._openingHours = newValue}
   }
 
@@ -118,84 +118,84 @@ public nonisolated struct Loci_Poi_POIDetailedInfo: @unchecked Sendable {
   /// attribution must be read from image_credits instead — a URL on its own
   /// cannot be displayed lawfully.
   public var images: [String] {
-    get {_storage._images}
+    get {return _storage._images}
     set {_uniqueStorage()._images = newValue}
   }
 
   public var priceRange: String {
-    get {_storage._priceRange}
+    get {return _storage._priceRange}
     set {_uniqueStorage()._priceRange = newValue}
   }
 
   public var priceLevel: String {
-    get {_storage._priceLevel}
+    get {return _storage._priceLevel}
     set {_uniqueStorage()._priceLevel = newValue}
   }
 
   public var reviews: [String] {
-    get {_storage._reviews}
+    get {return _storage._reviews}
     set {_uniqueStorage()._reviews = newValue}
   }
 
   public var llmInteractionID: String {
-    get {_storage._llmInteractionID}
+    get {return _storage._llmInteractionID}
     set {_uniqueStorage()._llmInteractionID = newValue}
   }
 
   public var tags: [String] {
-    get {_storage._tags}
+    get {return _storage._tags}
     set {_uniqueStorage()._tags = newValue}
   }
 
   public var priority: Int32 {
-    get {_storage._priority ?? 0}
+    get {return _storage._priority ?? 0}
     set {_uniqueStorage()._priority = newValue}
   }
   /// Returns true if `priority` has been explicitly set.
-  public var hasPriority: Bool {_storage._priority != nil}
+  public var hasPriority: Bool {return _storage._priority != nil}
   /// Clears the value of `priority`. Subsequent reads from it will return its default value.
   public mutating func clearPriority() {_uniqueStorage()._priority = nil}
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {_storage._createdAt != nil}
+  public var hasCreatedAt: Bool {return _storage._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {_uniqueStorage()._createdAt = nil}
 
   /// For restaurants
   public var cuisineType: String {
-    get {_storage._cuisineType ?? String()}
+    get {return _storage._cuisineType ?? String()}
     set {_uniqueStorage()._cuisineType = newValue}
   }
   /// Returns true if `cuisineType` has been explicitly set.
-  public var hasCuisineType: Bool {_storage._cuisineType != nil}
+  public var hasCuisineType: Bool {return _storage._cuisineType != nil}
   /// Clears the value of `cuisineType`. Subsequent reads from it will return its default value.
   public mutating func clearCuisineType() {_uniqueStorage()._cuisineType = nil}
 
   /// For hotels
   public var starRating: String {
-    get {_storage._starRating ?? String()}
+    get {return _storage._starRating ?? String()}
     set {_uniqueStorage()._starRating = newValue}
   }
   /// Returns true if `starRating` has been explicitly set.
-  public var hasStarRating: Bool {_storage._starRating != nil}
+  public var hasStarRating: Bool {return _storage._starRating != nil}
   /// Clears the value of `starRating`. Subsequent reads from it will return its default value.
   public mutating func clearStarRating() {_uniqueStorage()._starRating = nil}
 
   public var amenities: String {
-    get {_storage._amenities}
+    get {return _storage._amenities}
     set {_uniqueStorage()._amenities = newValue}
   }
 
   public var source: String {
-    get {_storage._source ?? String()}
+    get {return _storage._source ?? String()}
     set {_uniqueStorage()._source = newValue}
   }
   /// Returns true if `source` has been explicitly set.
-  public var hasSource: Bool {_storage._source != nil}
+  public var hasSource: Bool {return _storage._source != nil}
   /// Clears the value of `source`. Subsequent reads from it will return its default value.
   public mutating func clearSource() {_uniqueStorage()._source = nil}
 
@@ -203,43 +203,43 @@ public nonisolated struct Loci_Poi_POIDetailedInfo: @unchecked Sendable {
   /// was less sure); missing_data names fields that couldn't be verified (e.g.
   /// "hours", "price"); recommendation_rationale is a short "why this" note.
   public var uncertaintyScore: Double {
-    get {_storage._uncertaintyScore ?? 0}
+    get {return _storage._uncertaintyScore ?? 0}
     set {_uniqueStorage()._uncertaintyScore = newValue}
   }
   /// Returns true if `uncertaintyScore` has been explicitly set.
-  public var hasUncertaintyScore: Bool {_storage._uncertaintyScore != nil}
+  public var hasUncertaintyScore: Bool {return _storage._uncertaintyScore != nil}
   /// Clears the value of `uncertaintyScore`. Subsequent reads from it will return its default value.
   public mutating func clearUncertaintyScore() {_uniqueStorage()._uncertaintyScore = nil}
 
   public var missingData: [String] {
-    get {_storage._missingData}
+    get {return _storage._missingData}
     set {_uniqueStorage()._missingData = newValue}
   }
 
   public var recommendationRationale: String {
-    get {_storage._recommendationRationale ?? String()}
+    get {return _storage._recommendationRationale ?? String()}
     set {_uniqueStorage()._recommendationRationale = newValue}
   }
   /// Returns true if `recommendationRationale` has been explicitly set.
-  public var hasRecommendationRationale: Bool {_storage._recommendationRationale != nil}
+  public var hasRecommendationRationale: Bool {return _storage._recommendationRationale != nil}
   /// Clears the value of `recommendationRationale`. Subsequent reads from it will return its default value.
   public mutating func clearRecommendationRationale() {_uniqueStorage()._recommendationRationale = nil}
 
   public var recommendationTrace: Loci_Recommendation_RecommendationTrace {
-    get {_storage._recommendationTrace ?? Loci_Recommendation_RecommendationTrace()}
+    get {return _storage._recommendationTrace ?? Loci_Recommendation_RecommendationTrace()}
     set {_uniqueStorage()._recommendationTrace = newValue}
   }
   /// Returns true if `recommendationTrace` has been explicitly set.
-  public var hasRecommendationTrace: Bool {_storage._recommendationTrace != nil}
+  public var hasRecommendationTrace: Bool {return _storage._recommendationTrace != nil}
   /// Clears the value of `recommendationTrace`. Subsequent reads from it will return its default value.
   public mutating func clearRecommendationTrace() {_uniqueStorage()._recommendationTrace = nil}
 
   public var verifiedFacts: Loci_Place_PlaceFacts {
-    get {_storage._verifiedFacts ?? Loci_Place_PlaceFacts()}
+    get {return _storage._verifiedFacts ?? Loci_Place_PlaceFacts()}
     set {_uniqueStorage()._verifiedFacts = newValue}
   }
   /// Returns true if `verifiedFacts` has been explicitly set.
-  public var hasVerifiedFacts: Bool {_storage._verifiedFacts != nil}
+  public var hasVerifiedFacts: Bool {return _storage._verifiedFacts != nil}
   /// Clears the value of `verifiedFacts`. Subsequent reads from it will return its default value.
   public mutating func clearVerifiedFacts() {_uniqueStorage()._verifiedFacts = nil}
 
@@ -248,11 +248,11 @@ public nonisolated struct Loci_Poi_POIDetailedInfo: @unchecked Sendable {
   /// did not verify it against its own data, so it must not be presented as
   /// verified. Absent on responses produced before grounding existed.
   public var grounded: Bool {
-    get {_storage._grounded ?? false}
+    get {return _storage._grounded ?? false}
     set {_uniqueStorage()._grounded = newValue}
   }
   /// Returns true if `grounded` has been explicitly set.
-  public var hasGrounded: Bool {_storage._grounded != nil}
+  public var hasGrounded: Bool {return _storage._grounded != nil}
   /// Clears the value of `grounded`. Subsequent reads from it will return its default value.
   public mutating func clearGrounded() {_uniqueStorage()._grounded = nil}
 
@@ -266,11 +266,11 @@ public nonisolated struct Loci_Poi_POIDetailedInfo: @unchecked Sendable {
   /// Absent for POIs that are not part of a plan (a search result, a nearby
   /// lookup), in which case clients fall back to chunking by index.
   public var day: Int32 {
-    get {_storage._day ?? 0}
+    get {return _storage._day ?? 0}
     set {_uniqueStorage()._day = newValue}
   }
   /// Returns true if `day` has been explicitly set.
-  public var hasDay: Bool {_storage._day != nil}
+  public var hasDay: Bool {return _storage._day != nil}
   /// Clears the value of `day`. Subsequent reads from it will return its default value.
   public mutating func clearDay() {_uniqueStorage()._day = nil}
 
@@ -281,7 +281,7 @@ public nonisolated struct Loci_Poi_POIDetailedInfo: @unchecked Sendable {
   /// under. The URL and its credit therefore travel together — a client that
   /// renders one renders the other.
   public var imageCredits: [Loci_Poi_POIImage] {
-    get {_storage._imageCredits}
+    get {return _storage._imageCredits}
     set {_uniqueStorage()._imageCredits = newValue}
   }
 
@@ -294,7 +294,7 @@ public nonisolated struct Loci_Poi_POIDetailedInfo: @unchecked Sendable {
 
 /// HotelDetailedInfo represents hotel-specific information
 /// POIImage is one picture of a place, carrying what must be displayed with it.
-public nonisolated struct Loci_Poi_POIImage: Sendable {
+public struct Loci_Poi_POIImage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -317,123 +317,123 @@ public nonisolated struct Loci_Poi_POIImage: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Poi_HotelDetailedInfo: @unchecked Sendable {
+public struct Loci_Poi_HotelDetailedInfo: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var id: String {
-    get {_storage._id}
+    get {return _storage._id}
     set {_uniqueStorage()._id = newValue}
   }
 
   public var city: String {
-    get {_storage._city}
+    get {return _storage._city}
     set {_uniqueStorage()._city = newValue}
   }
 
   public var name: String {
-    get {_storage._name}
+    get {return _storage._name}
     set {_uniqueStorage()._name = newValue}
   }
 
   public var latitude: Double {
-    get {_storage._latitude}
+    get {return _storage._latitude}
     set {_uniqueStorage()._latitude = newValue}
   }
 
   public var longitude: Double {
-    get {_storage._longitude}
+    get {return _storage._longitude}
     set {_uniqueStorage()._longitude = newValue}
   }
 
   public var category: String {
-    get {_storage._category}
+    get {return _storage._category}
     set {_uniqueStorage()._category = newValue}
   }
 
   public var description_p: String {
-    get {_storage._description_p}
+    get {return _storage._description_p}
     set {_uniqueStorage()._description_p = newValue}
   }
 
   public var address: String {
-    get {_storage._address}
+    get {return _storage._address}
     set {_uniqueStorage()._address = newValue}
   }
 
   public var phoneNumber: String {
-    get {_storage._phoneNumber ?? String()}
+    get {return _storage._phoneNumber ?? String()}
     set {_uniqueStorage()._phoneNumber = newValue}
   }
   /// Returns true if `phoneNumber` has been explicitly set.
-  public var hasPhoneNumber: Bool {_storage._phoneNumber != nil}
+  public var hasPhoneNumber: Bool {return _storage._phoneNumber != nil}
   /// Clears the value of `phoneNumber`. Subsequent reads from it will return its default value.
   public mutating func clearPhoneNumber() {_uniqueStorage()._phoneNumber = nil}
 
   public var website: String {
-    get {_storage._website ?? String()}
+    get {return _storage._website ?? String()}
     set {_uniqueStorage()._website = newValue}
   }
   /// Returns true if `website` has been explicitly set.
-  public var hasWebsite: Bool {_storage._website != nil}
+  public var hasWebsite: Bool {return _storage._website != nil}
   /// Clears the value of `website`. Subsequent reads from it will return its default value.
   public mutating func clearWebsite() {_uniqueStorage()._website = nil}
 
   public var openingHours: String {
-    get {_storage._openingHours ?? String()}
+    get {return _storage._openingHours ?? String()}
     set {_uniqueStorage()._openingHours = newValue}
   }
   /// Returns true if `openingHours` has been explicitly set.
-  public var hasOpeningHours: Bool {_storage._openingHours != nil}
+  public var hasOpeningHours: Bool {return _storage._openingHours != nil}
   /// Clears the value of `openingHours`. Subsequent reads from it will return its default value.
   public mutating func clearOpeningHours() {_uniqueStorage()._openingHours = nil}
 
   public var priceRange: String {
-    get {_storage._priceRange ?? String()}
+    get {return _storage._priceRange ?? String()}
     set {_uniqueStorage()._priceRange = newValue}
   }
   /// Returns true if `priceRange` has been explicitly set.
-  public var hasPriceRange: Bool {_storage._priceRange != nil}
+  public var hasPriceRange: Bool {return _storage._priceRange != nil}
   /// Clears the value of `priceRange`. Subsequent reads from it will return its default value.
   public mutating func clearPriceRange() {_uniqueStorage()._priceRange = nil}
 
   public var rating: Double {
-    get {_storage._rating}
+    get {return _storage._rating}
     set {_uniqueStorage()._rating = newValue}
   }
 
   public var tags: [String] {
-    get {_storage._tags}
+    get {return _storage._tags}
     set {_uniqueStorage()._tags = newValue}
   }
 
   public var images: [String] {
-    get {_storage._images}
+    get {return _storage._images}
     set {_uniqueStorage()._images = newValue}
   }
 
   public var llmInteractionID: String {
-    get {_storage._llmInteractionID}
+    get {return _storage._llmInteractionID}
     set {_uniqueStorage()._llmInteractionID = newValue}
   }
 
   public var recommendationTrace: Loci_Recommendation_RecommendationTrace {
-    get {_storage._recommendationTrace ?? Loci_Recommendation_RecommendationTrace()}
+    get {return _storage._recommendationTrace ?? Loci_Recommendation_RecommendationTrace()}
     set {_uniqueStorage()._recommendationTrace = newValue}
   }
   /// Returns true if `recommendationTrace` has been explicitly set.
-  public var hasRecommendationTrace: Bool {_storage._recommendationTrace != nil}
+  public var hasRecommendationTrace: Bool {return _storage._recommendationTrace != nil}
   /// Clears the value of `recommendationTrace`. Subsequent reads from it will return its default value.
   public mutating func clearRecommendationTrace() {_uniqueStorage()._recommendationTrace = nil}
 
   /// See POIDetailedInfo.grounded.
   public var grounded: Bool {
-    get {_storage._grounded ?? false}
+    get {return _storage._grounded ?? false}
     set {_uniqueStorage()._grounded = newValue}
   }
   /// Returns true if `grounded` has been explicitly set.
-  public var hasGrounded: Bool {_storage._grounded != nil}
+  public var hasGrounded: Bool {return _storage._grounded != nil}
   /// Clears the value of `grounded`. Subsequent reads from it will return its default value.
   public mutating func clearGrounded() {_uniqueStorage()._grounded = nil}
 
@@ -445,136 +445,136 @@ public nonisolated struct Loci_Poi_HotelDetailedInfo: @unchecked Sendable {
 }
 
 /// RestaurantDetailedInfo represents restaurant-specific information
-public nonisolated struct Loci_Poi_RestaurantDetailedInfo: @unchecked Sendable {
+public struct Loci_Poi_RestaurantDetailedInfo: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var id: String {
-    get {_storage._id}
+    get {return _storage._id}
     set {_uniqueStorage()._id = newValue}
   }
 
   public var city: String {
-    get {_storage._city}
+    get {return _storage._city}
     set {_uniqueStorage()._city = newValue}
   }
 
   public var name: String {
-    get {_storage._name}
+    get {return _storage._name}
     set {_uniqueStorage()._name = newValue}
   }
 
   public var latitude: Double {
-    get {_storage._latitude}
+    get {return _storage._latitude}
     set {_uniqueStorage()._latitude = newValue}
   }
 
   public var longitude: Double {
-    get {_storage._longitude}
+    get {return _storage._longitude}
     set {_uniqueStorage()._longitude = newValue}
   }
 
   public var category: String {
-    get {_storage._category}
+    get {return _storage._category}
     set {_uniqueStorage()._category = newValue}
   }
 
   public var description_p: String {
-    get {_storage._description_p}
+    get {return _storage._description_p}
     set {_uniqueStorage()._description_p = newValue}
   }
 
   public var address: String {
-    get {_storage._address ?? String()}
+    get {return _storage._address ?? String()}
     set {_uniqueStorage()._address = newValue}
   }
   /// Returns true if `address` has been explicitly set.
-  public var hasAddress: Bool {_storage._address != nil}
+  public var hasAddress: Bool {return _storage._address != nil}
   /// Clears the value of `address`. Subsequent reads from it will return its default value.
   public mutating func clearAddress() {_uniqueStorage()._address = nil}
 
   public var website: String {
-    get {_storage._website ?? String()}
+    get {return _storage._website ?? String()}
     set {_uniqueStorage()._website = newValue}
   }
   /// Returns true if `website` has been explicitly set.
-  public var hasWebsite: Bool {_storage._website != nil}
+  public var hasWebsite: Bool {return _storage._website != nil}
   /// Clears the value of `website`. Subsequent reads from it will return its default value.
   public mutating func clearWebsite() {_uniqueStorage()._website = nil}
 
   public var phoneNumber: String {
-    get {_storage._phoneNumber ?? String()}
+    get {return _storage._phoneNumber ?? String()}
     set {_uniqueStorage()._phoneNumber = newValue}
   }
   /// Returns true if `phoneNumber` has been explicitly set.
-  public var hasPhoneNumber: Bool {_storage._phoneNumber != nil}
+  public var hasPhoneNumber: Bool {return _storage._phoneNumber != nil}
   /// Clears the value of `phoneNumber`. Subsequent reads from it will return its default value.
   public mutating func clearPhoneNumber() {_uniqueStorage()._phoneNumber = nil}
 
   public var openingHours: String {
-    get {_storage._openingHours ?? String()}
+    get {return _storage._openingHours ?? String()}
     set {_uniqueStorage()._openingHours = newValue}
   }
   /// Returns true if `openingHours` has been explicitly set.
-  public var hasOpeningHours: Bool {_storage._openingHours != nil}
+  public var hasOpeningHours: Bool {return _storage._openingHours != nil}
   /// Clears the value of `openingHours`. Subsequent reads from it will return its default value.
   public mutating func clearOpeningHours() {_uniqueStorage()._openingHours = nil}
 
   public var priceLevel: String {
-    get {_storage._priceLevel ?? String()}
+    get {return _storage._priceLevel ?? String()}
     set {_uniqueStorage()._priceLevel = newValue}
   }
   /// Returns true if `priceLevel` has been explicitly set.
-  public var hasPriceLevel: Bool {_storage._priceLevel != nil}
+  public var hasPriceLevel: Bool {return _storage._priceLevel != nil}
   /// Clears the value of `priceLevel`. Subsequent reads from it will return its default value.
   public mutating func clearPriceLevel() {_uniqueStorage()._priceLevel = nil}
 
   public var cuisineType: String {
-    get {_storage._cuisineType ?? String()}
+    get {return _storage._cuisineType ?? String()}
     set {_uniqueStorage()._cuisineType = newValue}
   }
   /// Returns true if `cuisineType` has been explicitly set.
-  public var hasCuisineType: Bool {_storage._cuisineType != nil}
+  public var hasCuisineType: Bool {return _storage._cuisineType != nil}
   /// Clears the value of `cuisineType`. Subsequent reads from it will return its default value.
   public mutating func clearCuisineType() {_uniqueStorage()._cuisineType = nil}
 
   public var tags: [String] {
-    get {_storage._tags}
+    get {return _storage._tags}
     set {_uniqueStorage()._tags = newValue}
   }
 
   public var images: [String] {
-    get {_storage._images}
+    get {return _storage._images}
     set {_uniqueStorage()._images = newValue}
   }
 
   public var rating: Double {
-    get {_storage._rating}
+    get {return _storage._rating}
     set {_uniqueStorage()._rating = newValue}
   }
 
   public var llmInteractionID: String {
-    get {_storage._llmInteractionID}
+    get {return _storage._llmInteractionID}
     set {_uniqueStorage()._llmInteractionID = newValue}
   }
 
   public var recommendationTrace: Loci_Recommendation_RecommendationTrace {
-    get {_storage._recommendationTrace ?? Loci_Recommendation_RecommendationTrace()}
+    get {return _storage._recommendationTrace ?? Loci_Recommendation_RecommendationTrace()}
     set {_uniqueStorage()._recommendationTrace = newValue}
   }
   /// Returns true if `recommendationTrace` has been explicitly set.
-  public var hasRecommendationTrace: Bool {_storage._recommendationTrace != nil}
+  public var hasRecommendationTrace: Bool {return _storage._recommendationTrace != nil}
   /// Clears the value of `recommendationTrace`. Subsequent reads from it will return its default value.
   public mutating func clearRecommendationTrace() {_uniqueStorage()._recommendationTrace = nil}
 
   /// See POIDetailedInfo.grounded.
   public var grounded: Bool {
-    get {_storage._grounded ?? false}
+    get {return _storage._grounded ?? false}
     set {_uniqueStorage()._grounded = newValue}
   }
   /// Returns true if `grounded` has been explicitly set.
-  public var hasGrounded: Bool {_storage._grounded != nil}
+  public var hasGrounded: Bool {return _storage._grounded != nil}
   /// Clears the value of `grounded`. Subsequent reads from it will return its default value.
   public mutating func clearGrounded() {_uniqueStorage()._grounded = nil}
 
@@ -586,35 +586,35 @@ public nonisolated struct Loci_Poi_RestaurantDetailedInfo: @unchecked Sendable {
 }
 
 /// POIFilters for filtering POIs
-public nonisolated struct Loci_Poi_POIFilters: Sendable {
+public struct Loci_Poi_POIFilters: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var city: String {
-    get {_city ?? String()}
+    get {return _city ?? String()}
     set {_city = newValue}
   }
   /// Returns true if `city` has been explicitly set.
-  public var hasCity: Bool {self._city != nil}
+  public var hasCity: Bool {return self._city != nil}
   /// Clears the value of `city`. Subsequent reads from it will return its default value.
   public mutating func clearCity() {self._city = nil}
 
   public var category: String {
-    get {_category ?? String()}
+    get {return _category ?? String()}
     set {_category = newValue}
   }
   /// Returns true if `category` has been explicitly set.
-  public var hasCategory: Bool {self._category != nil}
+  public var hasCategory: Bool {return self._category != nil}
   /// Clears the value of `category`. Subsequent reads from it will return its default value.
   public mutating func clearCategory() {self._category = nil}
 
   public var priceRange: String {
-    get {_priceRange ?? String()}
+    get {return _priceRange ?? String()}
     set {_priceRange = newValue}
   }
   /// Returns true if `priceRange` has been explicitly set.
-  public var hasPriceRange: Bool {self._priceRange != nil}
+  public var hasPriceRange: Bool {return self._priceRange != nil}
   /// Clears the value of `priceRange`. Subsequent reads from it will return its default value.
   public mutating func clearPriceRange() {self._priceRange = nil}
 
@@ -628,7 +628,7 @@ public nonisolated struct Loci_Poi_POIFilters: Sendable {
 }
 
 /// SearchPOIRequest for searching POIs
-public nonisolated struct Loci_Poi_SearchPOIRequest: Sendable {
+public struct Loci_Poi_SearchPOIRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -642,76 +642,76 @@ public nonisolated struct Loci_Poi_SearchPOIRequest: Sendable {
   public var longitude: Double = 0
 
   public var radiusKm: Double {
-    get {_radiusKm ?? 0}
+    get {return _radiusKm ?? 0}
     set {_radiusKm = newValue}
   }
   /// Returns true if `radiusKm` has been explicitly set.
-  public var hasRadiusKm: Bool {self._radiusKm != nil}
+  public var hasRadiusKm: Bool {return self._radiusKm != nil}
   /// Clears the value of `radiusKm`. Subsequent reads from it will return its default value.
   public mutating func clearRadiusKm() {self._radiusKm = nil}
 
   public var searchText: String {
-    get {_searchText ?? String()}
+    get {return _searchText ?? String()}
     set {_searchText = newValue}
   }
   /// Returns true if `searchText` has been explicitly set.
-  public var hasSearchText: Bool {self._searchText != nil}
+  public var hasSearchText: Bool {return self._searchText != nil}
   /// Clears the value of `searchText`. Subsequent reads from it will return its default value.
   public mutating func clearSearchText() {self._searchText = nil}
 
   public var searchTags: [String] = []
 
   public var searchType: String {
-    get {_searchType ?? String()}
+    get {return _searchType ?? String()}
     set {_searchType = newValue}
   }
   /// Returns true if `searchType` has been explicitly set.
-  public var hasSearchType: Bool {self._searchType != nil}
+  public var hasSearchType: Bool {return self._searchType != nil}
   /// Clears the value of `searchType`. Subsequent reads from it will return its default value.
   public mutating func clearSearchType() {self._searchType = nil}
 
   public var sortBy: String {
-    get {_sortBy ?? String()}
+    get {return _sortBy ?? String()}
     set {_sortBy = newValue}
   }
   /// Returns true if `sortBy` has been explicitly set.
-  public var hasSortBy: Bool {self._sortBy != nil}
+  public var hasSortBy: Bool {return self._sortBy != nil}
   /// Clears the value of `sortBy`. Subsequent reads from it will return its default value.
   public mutating func clearSortBy() {self._sortBy = nil}
 
   public var sortOrder: String {
-    get {_sortOrder ?? String()}
+    get {return _sortOrder ?? String()}
     set {_sortOrder = newValue}
   }
   /// Returns true if `sortOrder` has been explicitly set.
-  public var hasSortOrder: Bool {self._sortOrder != nil}
+  public var hasSortOrder: Bool {return self._sortOrder != nil}
   /// Clears the value of `sortOrder`. Subsequent reads from it will return its default value.
   public mutating func clearSortOrder() {self._sortOrder = nil}
 
   public var minRating: Double {
-    get {_minRating ?? 0}
+    get {return _minRating ?? 0}
     set {_minRating = newValue}
   }
   /// Returns true if `minRating` has been explicitly set.
-  public var hasMinRating: Bool {self._minRating != nil}
+  public var hasMinRating: Bool {return self._minRating != nil}
   /// Clears the value of `minRating`. Subsequent reads from it will return its default value.
   public mutating func clearMinRating() {self._minRating = nil}
 
   public var minPrice: String {
-    get {_minPrice ?? String()}
+    get {return _minPrice ?? String()}
     set {_minPrice = newValue}
   }
   /// Returns true if `minPrice` has been explicitly set.
-  public var hasMinPrice: Bool {self._minPrice != nil}
+  public var hasMinPrice: Bool {return self._minPrice != nil}
   /// Clears the value of `minPrice`. Subsequent reads from it will return its default value.
   public mutating func clearMinPrice() {self._minPrice = nil}
 
   public var minGuests: Int32 {
-    get {_minGuests ?? 0}
+    get {return _minGuests ?? 0}
     set {_minGuests = newValue}
   }
   /// Returns true if `minGuests` has been explicitly set.
-  public var hasMinGuests: Bool {self._minGuests != nil}
+  public var hasMinGuests: Bool {return self._minGuests != nil}
   /// Clears the value of `minGuests`. Subsequent reads from it will return its default value.
   public mutating func clearMinGuests() {self._minGuests = nil}
 
@@ -730,7 +730,7 @@ public nonisolated struct Loci_Poi_SearchPOIRequest: Sendable {
 }
 
 /// SearchPOIResponse for POI search results
-public nonisolated struct Loci_Poi_SearchPOIResponse: Sendable {
+public struct Loci_Poi_SearchPOIResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -738,11 +738,11 @@ public nonisolated struct Loci_Poi_SearchPOIResponse: Sendable {
   public var pois: [Loci_Poi_POIDetailedInfo] = []
 
   public var pagination: Loci_Common_PaginationMetadata {
-    get {_pagination ?? Loci_Common_PaginationMetadata()}
+    get {return _pagination ?? Loci_Common_PaginationMetadata()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
@@ -754,7 +754,7 @@ public nonisolated struct Loci_Poi_SearchPOIResponse: Sendable {
 }
 
 /// GetPOIRequest for retrieving POI details
-public nonisolated struct Loci_Poi_GetPOIRequest: Sendable {
+public struct Loci_Poi_GetPOIRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -767,17 +767,17 @@ public nonisolated struct Loci_Poi_GetPOIRequest: Sendable {
 }
 
 /// GetPOIResponse for POI details retrieval
-public nonisolated struct Loci_Poi_GetPOIResponse: Sendable {
+public struct Loci_Poi_GetPOIResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var poi: Loci_Poi_POIDetailedInfo {
-    get {_poi ?? Loci_Poi_POIDetailedInfo()}
+    get {return _poi ?? Loci_Poi_POIDetailedInfo()}
     set {_poi = newValue}
   }
   /// Returns true if `poi` has been explicitly set.
-  public var hasPoi: Bool {self._poi != nil}
+  public var hasPoi: Bool {return self._poi != nil}
   /// Clears the value of `poi`. Subsequent reads from it will return its default value.
   public mutating func clearPoi() {self._poi = nil}
 
@@ -789,7 +789,7 @@ public nonisolated struct Loci_Poi_GetPOIResponse: Sendable {
 }
 
 /// AddPoiRequest for adding a POI to a list
-public nonisolated struct Loci_Poi_AddPoiRequest: Sendable {
+public struct Loci_Poi_AddPoiRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -799,11 +799,11 @@ public nonisolated struct Loci_Poi_AddPoiRequest: Sendable {
   public var isLlmPoi: Bool = false
 
   public var poiData: Loci_Poi_POIDetailedInfo {
-    get {_poiData ?? Loci_Poi_POIDetailedInfo()}
+    get {return _poiData ?? Loci_Poi_POIDetailedInfo()}
     set {_poiData = newValue}
   }
   /// Returns true if `poiData` has been explicitly set.
-  public var hasPoiData: Bool {self._poiData != nil}
+  public var hasPoiData: Bool {return self._poiData != nil}
   /// Clears the value of `poiData`. Subsequent reads from it will return its default value.
   public mutating func clearPoiData() {self._poiData = nil}
 
@@ -816,11 +816,47 @@ public nonisolated struct Loci_Poi_AddPoiRequest: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.poi"
+fileprivate let _protobuf_package = "loci.poi"
 
-nonisolated extension Loci_Poi_POIDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Poi_POIDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".POIDetailedInfo"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}city\0\u{3}city_id\0\u{1}name\0\u{3}description_poi\0\u{1}distance\0\u{1}latitude\0\u{1}longitude\0\u{1}category\0\u{1}description\0\u{1}rating\0\u{1}address\0\u{3}phone_number\0\u{1}website\0\u{3}opening_hours\0\u{1}images\0\u{3}price_range\0\u{3}price_level\0\u{1}reviews\0\u{3}llm_interaction_id\0\u{1}tags\0\u{1}priority\0\u{3}created_at\0\u{3}cuisine_type\0\u{3}star_rating\0\u{1}amenities\0\u{1}source\0\u{3}uncertainty_score\0\u{3}missing_data\0\u{3}recommendation_rationale\0\u{3}recommendation_trace\0\u{3}verified_facts\0\u{1}grounded\0\u{3}image_credits\0\u{1}day\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "city"),
+    3: .standard(proto: "city_id"),
+    4: .same(proto: "name"),
+    5: .standard(proto: "description_poi"),
+    6: .same(proto: "distance"),
+    7: .same(proto: "latitude"),
+    8: .same(proto: "longitude"),
+    9: .same(proto: "category"),
+    10: .same(proto: "description"),
+    11: .same(proto: "rating"),
+    12: .same(proto: "address"),
+    13: .standard(proto: "phone_number"),
+    14: .same(proto: "website"),
+    15: .standard(proto: "opening_hours"),
+    16: .same(proto: "images"),
+    17: .standard(proto: "price_range"),
+    18: .standard(proto: "price_level"),
+    19: .same(proto: "reviews"),
+    20: .standard(proto: "llm_interaction_id"),
+    21: .same(proto: "tags"),
+    22: .same(proto: "priority"),
+    23: .standard(proto: "created_at"),
+    24: .standard(proto: "cuisine_type"),
+    25: .standard(proto: "star_rating"),
+    26: .same(proto: "amenities"),
+    27: .same(proto: "source"),
+    28: .standard(proto: "uncertainty_score"),
+    29: .standard(proto: "missing_data"),
+    30: .standard(proto: "recommendation_rationale"),
+    31: .standard(proto: "recommendation_trace"),
+    32: .standard(proto: "verified_facts"),
+    33: .same(proto: "grounded"),
+    35: .same(proto: "day"),
+    34: .standard(proto: "image_credits"),
+  ]
 
   fileprivate class _StorageClass {
     var _id: String = String()
@@ -859,11 +895,15 @@ nonisolated extension Loci_Poi_POIDetailedInfo: SwiftProtobuf.Message, SwiftProt
     var _day: Int32? = nil
     var _imageCredits: [Loci_Poi_POIImage] = []
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -1126,9 +1166,15 @@ nonisolated extension Loci_Poi_POIDetailedInfo: SwiftProtobuf.Message, SwiftProt
   }
 }
 
-nonisolated extension Loci_Poi_POIImage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Poi_POIImage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".POIImage"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}url\0\u{1}source\0\u{1}licence\0\u{1}attribution\0\u{3}source_page_url\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "url"),
+    2: .same(proto: "source"),
+    3: .same(proto: "licence"),
+    4: .same(proto: "attribution"),
+    5: .standard(proto: "source_page_url"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1176,9 +1222,28 @@ nonisolated extension Loci_Poi_POIImage: SwiftProtobuf.Message, SwiftProtobuf._M
   }
 }
 
-nonisolated extension Loci_Poi_HotelDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Poi_HotelDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".HotelDetailedInfo"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}city\0\u{1}name\0\u{1}latitude\0\u{1}longitude\0\u{1}category\0\u{1}description\0\u{1}address\0\u{3}phone_number\0\u{1}website\0\u{3}opening_hours\0\u{3}price_range\0\u{1}rating\0\u{1}tags\0\u{1}images\0\u{3}llm_interaction_id\0\u{3}recommendation_trace\0\u{1}grounded\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "city"),
+    3: .same(proto: "name"),
+    4: .same(proto: "latitude"),
+    5: .same(proto: "longitude"),
+    6: .same(proto: "category"),
+    7: .same(proto: "description"),
+    8: .same(proto: "address"),
+    9: .standard(proto: "phone_number"),
+    10: .same(proto: "website"),
+    11: .standard(proto: "opening_hours"),
+    12: .standard(proto: "price_range"),
+    13: .same(proto: "rating"),
+    14: .same(proto: "tags"),
+    15: .same(proto: "images"),
+    16: .standard(proto: "llm_interaction_id"),
+    17: .standard(proto: "recommendation_trace"),
+    18: .same(proto: "grounded"),
+  ]
 
   fileprivate class _StorageClass {
     var _id: String = String()
@@ -1200,11 +1265,15 @@ nonisolated extension Loci_Poi_HotelDetailedInfo: SwiftProtobuf.Message, SwiftPr
     var _recommendationTrace: Loci_Recommendation_RecommendationTrace? = nil
     var _grounded: Bool? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -1365,9 +1434,29 @@ nonisolated extension Loci_Poi_HotelDetailedInfo: SwiftProtobuf.Message, SwiftPr
   }
 }
 
-nonisolated extension Loci_Poi_RestaurantDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Poi_RestaurantDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RestaurantDetailedInfo"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}city\0\u{1}name\0\u{1}latitude\0\u{1}longitude\0\u{1}category\0\u{1}description\0\u{1}address\0\u{1}website\0\u{3}phone_number\0\u{3}opening_hours\0\u{3}price_level\0\u{3}cuisine_type\0\u{1}tags\0\u{1}images\0\u{1}rating\0\u{3}llm_interaction_id\0\u{3}recommendation_trace\0\u{1}grounded\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "city"),
+    3: .same(proto: "name"),
+    4: .same(proto: "latitude"),
+    5: .same(proto: "longitude"),
+    6: .same(proto: "category"),
+    7: .same(proto: "description"),
+    8: .same(proto: "address"),
+    9: .same(proto: "website"),
+    10: .standard(proto: "phone_number"),
+    11: .standard(proto: "opening_hours"),
+    12: .standard(proto: "price_level"),
+    13: .standard(proto: "cuisine_type"),
+    14: .same(proto: "tags"),
+    15: .same(proto: "images"),
+    16: .same(proto: "rating"),
+    17: .standard(proto: "llm_interaction_id"),
+    18: .standard(proto: "recommendation_trace"),
+    19: .same(proto: "grounded"),
+  ]
 
   fileprivate class _StorageClass {
     var _id: String = String()
@@ -1390,11 +1479,15 @@ nonisolated extension Loci_Poi_RestaurantDetailedInfo: SwiftProtobuf.Message, Sw
     var _recommendationTrace: Loci_Recommendation_RecommendationTrace? = nil
     var _grounded: Bool? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -1561,9 +1654,13 @@ nonisolated extension Loci_Poi_RestaurantDetailedInfo: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_Poi_POIFilters: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Poi_POIFilters: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".POIFilters"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}city\0\u{1}category\0\u{3}price_range\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "city"),
+    2: .same(proto: "category"),
+    3: .standard(proto: "price_range"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1605,9 +1702,23 @@ nonisolated extension Loci_Poi_POIFilters: SwiftProtobuf.Message, SwiftProtobuf.
   }
 }
 
-nonisolated extension Loci_Poi_SearchPOIRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Poi_SearchPOIRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SearchPOIRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}query\0\u{3}city_name\0\u{1}latitude\0\u{1}longitude\0\u{3}radius_km\0\u{3}search_text\0\u{3}search_tags\0\u{3}search_type\0\u{3}sort_by\0\u{3}sort_order\0\u{3}min_rating\0\u{3}min_price\0\u{3}min_guests\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "query"),
+    2: .standard(proto: "city_name"),
+    3: .same(proto: "latitude"),
+    4: .same(proto: "longitude"),
+    5: .standard(proto: "radius_km"),
+    6: .standard(proto: "search_text"),
+    7: .standard(proto: "search_tags"),
+    8: .standard(proto: "search_type"),
+    9: .standard(proto: "sort_by"),
+    10: .standard(proto: "sort_order"),
+    11: .standard(proto: "min_rating"),
+    12: .standard(proto: "min_price"),
+    13: .standard(proto: "min_guests"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1699,9 +1810,12 @@ nonisolated extension Loci_Poi_SearchPOIRequest: SwiftProtobuf.Message, SwiftPro
   }
 }
 
-nonisolated extension Loci_Poi_SearchPOIResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Poi_SearchPOIResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SearchPOIResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}pois\0\u{1}pagination\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "pois"),
+    2: .same(proto: "pagination"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1738,9 +1852,11 @@ nonisolated extension Loci_Poi_SearchPOIResponse: SwiftProtobuf.Message, SwiftPr
   }
 }
 
-nonisolated extension Loci_Poi_GetPOIRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Poi_GetPOIRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetPOIRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}poi_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "poi_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1768,9 +1884,11 @@ nonisolated extension Loci_Poi_GetPOIRequest: SwiftProtobuf.Message, SwiftProtob
   }
 }
 
-nonisolated extension Loci_Poi_GetPOIResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Poi_GetPOIResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetPOIResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}poi\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "poi"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1802,9 +1920,13 @@ nonisolated extension Loci_Poi_GetPOIResponse: SwiftProtobuf.Message, SwiftProto
   }
 }
 
-nonisolated extension Loci_Poi_AddPoiRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Poi_AddPoiRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".AddPoiRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}poi_id\0\u{3}is_llm_poi\0\u{3}poi_data\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "poi_id"),
+    2: .standard(proto: "is_llm_poi"),
+    3: .standard(proto: "poi_data"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

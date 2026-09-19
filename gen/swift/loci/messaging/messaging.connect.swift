@@ -17,10 +17,6 @@ import SwiftProtobuf
 public protocol Loci_Messaging_MessagingServiceClientInterface: Sendable {
 
     /// GetLink reports whether a platform is linked to the caller's account.
-    @discardableResult
-    func `getLink`(request: Loci_Messaging_GetLinkRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Messaging_GetLinkResponse>) -> Void) -> Connect.Cancelable
-
-    /// GetLink reports whether a platform is linked to the caller's account.
     @available(iOS 13, *)
     func `getLink`(request: Loci_Messaging_GetLinkRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Messaging_GetLinkResponse>
 
@@ -30,22 +26,8 @@ public protocol Loci_Messaging_MessagingServiceClientInterface: Sendable {
     /// is deliberately weak on its own: it is typed by hand into a chat window,
     /// and what makes that safe is the expiry, the single use, and a rate limit
     /// on redemption rather than its length.
-    @discardableResult
-    func `createLinkCode`(request: Loci_Messaging_CreateLinkCodeRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Messaging_CreateLinkCodeResponse>) -> Void) -> Connect.Cancelable
-
-    /// CreateLinkCode issues a short-lived, single-use code to send to the bot.
-    ///
-    /// This is the only moment an unlinked chat can reach an account, so the code
-    /// is deliberately weak on its own: it is typed by hand into a chat window,
-    /// and what makes that safe is the expiry, the single use, and a rate limit
-    /// on redemption rather than its length.
     @available(iOS 13, *)
     func `createLinkCode`(request: Loci_Messaging_CreateLinkCodeRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Messaging_CreateLinkCodeResponse>
-
-    /// Unlink disconnects the chat. The conversation history stays with the
-    /// account; only the route to it is removed.
-    @discardableResult
-    func `unlink`(request: Loci_Messaging_UnlinkRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Messaging_UnlinkResponse>) -> Void) -> Connect.Cancelable
 
     /// Unlink disconnects the chat. The conversation history stays with the
     /// account; only the route to it is removed.
@@ -61,29 +43,14 @@ public final class Loci_Messaging_MessagingServiceClient: Loci_Messaging_Messagi
         self.client = client
     }
 
-    @discardableResult
-    public func `getLink`(request: Loci_Messaging_GetLinkRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Messaging_GetLinkResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.messaging.MessagingService/GetLink", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getLink`(request: Loci_Messaging_GetLinkRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Messaging_GetLinkResponse> {
         return await self.client.unary(path: "/loci.messaging.MessagingService/GetLink", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `createLinkCode`(request: Loci_Messaging_CreateLinkCodeRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Messaging_CreateLinkCodeResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.messaging.MessagingService/CreateLinkCode", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `createLinkCode`(request: Loci_Messaging_CreateLinkCodeRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Messaging_CreateLinkCodeResponse> {
         return await self.client.unary(path: "/loci.messaging.MessagingService/CreateLinkCode", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `unlink`(request: Loci_Messaging_UnlinkRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Messaging_UnlinkResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.messaging.MessagingService/Unlink", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

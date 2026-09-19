@@ -8,11 +8,7 @@
 // For information on using the generated types, please see the documentation:
 //   https://github.com/apple/swift-protobuf/
 
-#if canImport(FoundationEssentials)
-import FoundationEssentials
-#else
 import Foundation
-#endif
 import SwiftProtobuf
 
 // If the compiler emits an error on this type, it is because this file
@@ -20,13 +16,13 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// UserStats contains user statistics
-public nonisolated struct Loci_User_UserStats: Sendable {
+public struct Loci_User_UserStats: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -47,222 +43,222 @@ public nonisolated struct Loci_User_UserStats: Sendable {
 }
 
 /// UserProfile represents a user's profile
-public nonisolated struct Loci_User_UserProfile: @unchecked Sendable {
+public struct Loci_User_UserProfile: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var id: String {
-    get {_storage._id}
+    get {return _storage._id}
     set {_uniqueStorage()._id = newValue}
   }
 
   public var email: String {
-    get {_storage._email}
+    get {return _storage._email}
     set {_uniqueStorage()._email = newValue}
   }
 
   public var username: String {
-    get {_storage._username ?? String()}
+    get {return _storage._username ?? String()}
     set {_uniqueStorage()._username = newValue}
   }
   /// Returns true if `username` has been explicitly set.
-  public var hasUsername: Bool {_storage._username != nil}
+  public var hasUsername: Bool {return _storage._username != nil}
   /// Clears the value of `username`. Subsequent reads from it will return its default value.
   public mutating func clearUsername() {_uniqueStorage()._username = nil}
 
   public var firstname: String {
-    get {_storage._firstname ?? String()}
+    get {return _storage._firstname ?? String()}
     set {_uniqueStorage()._firstname = newValue}
   }
   /// Returns true if `firstname` has been explicitly set.
-  public var hasFirstname: Bool {_storage._firstname != nil}
+  public var hasFirstname: Bool {return _storage._firstname != nil}
   /// Clears the value of `firstname`. Subsequent reads from it will return its default value.
   public mutating func clearFirstname() {_uniqueStorage()._firstname = nil}
 
   public var lastname: String {
-    get {_storage._lastname ?? String()}
+    get {return _storage._lastname ?? String()}
     set {_uniqueStorage()._lastname = newValue}
   }
   /// Returns true if `lastname` has been explicitly set.
-  public var hasLastname: Bool {_storage._lastname != nil}
+  public var hasLastname: Bool {return _storage._lastname != nil}
   /// Clears the value of `lastname`. Subsequent reads from it will return its default value.
   public mutating func clearLastname() {_uniqueStorage()._lastname = nil}
 
   public var phoneNumber: String {
-    get {_storage._phoneNumber ?? String()}
+    get {return _storage._phoneNumber ?? String()}
     set {_uniqueStorage()._phoneNumber = newValue}
   }
   /// Returns true if `phoneNumber` has been explicitly set.
-  public var hasPhoneNumber: Bool {_storage._phoneNumber != nil}
+  public var hasPhoneNumber: Bool {return _storage._phoneNumber != nil}
   /// Clears the value of `phoneNumber`. Subsequent reads from it will return its default value.
   public mutating func clearPhoneNumber() {_uniqueStorage()._phoneNumber = nil}
 
   public var age: Int32 {
-    get {_storage._age ?? 0}
+    get {return _storage._age ?? 0}
     set {_uniqueStorage()._age = newValue}
   }
   /// Returns true if `age` has been explicitly set.
-  public var hasAge: Bool {_storage._age != nil}
+  public var hasAge: Bool {return _storage._age != nil}
   /// Clears the value of `age`. Subsequent reads from it will return its default value.
   public mutating func clearAge() {_uniqueStorage()._age = nil}
 
   public var city: String {
-    get {_storage._city ?? String()}
+    get {return _storage._city ?? String()}
     set {_uniqueStorage()._city = newValue}
   }
   /// Returns true if `city` has been explicitly set.
-  public var hasCity: Bool {_storage._city != nil}
+  public var hasCity: Bool {return _storage._city != nil}
   /// Clears the value of `city`. Subsequent reads from it will return its default value.
   public mutating func clearCity() {_uniqueStorage()._city = nil}
 
   public var country: String {
-    get {_storage._country ?? String()}
+    get {return _storage._country ?? String()}
     set {_uniqueStorage()._country = newValue}
   }
   /// Returns true if `country` has been explicitly set.
-  public var hasCountry: Bool {_storage._country != nil}
+  public var hasCountry: Bool {return _storage._country != nil}
   /// Clears the value of `country`. Subsequent reads from it will return its default value.
   public mutating func clearCountry() {_uniqueStorage()._country = nil}
 
   public var aboutYou: String {
-    get {_storage._aboutYou ?? String()}
+    get {return _storage._aboutYou ?? String()}
     set {_uniqueStorage()._aboutYou = newValue}
   }
   /// Returns true if `aboutYou` has been explicitly set.
-  public var hasAboutYou: Bool {_storage._aboutYou != nil}
+  public var hasAboutYou: Bool {return _storage._aboutYou != nil}
   /// Clears the value of `aboutYou`. Subsequent reads from it will return its default value.
   public mutating func clearAboutYou() {_uniqueStorage()._aboutYou = nil}
 
   public var bio: String {
-    get {_storage._bio ?? String()}
+    get {return _storage._bio ?? String()}
     set {_uniqueStorage()._bio = newValue}
   }
   /// Returns true if `bio` has been explicitly set.
-  public var hasBio: Bool {_storage._bio != nil}
+  public var hasBio: Bool {return _storage._bio != nil}
   /// Clears the value of `bio`. Subsequent reads from it will return its default value.
   public mutating func clearBio() {_uniqueStorage()._bio = nil}
 
   public var location: String {
-    get {_storage._location ?? String()}
+    get {return _storage._location ?? String()}
     set {_uniqueStorage()._location = newValue}
   }
   /// Returns true if `location` has been explicitly set.
-  public var hasLocation: Bool {_storage._location != nil}
+  public var hasLocation: Bool {return _storage._location != nil}
   /// Clears the value of `location`. Subsequent reads from it will return its default value.
   public mutating func clearLocation() {_uniqueStorage()._location = nil}
 
   public var joinedDate: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._joinedDate ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._joinedDate ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._joinedDate = newValue}
   }
   /// Returns true if `joinedDate` has been explicitly set.
-  public var hasJoinedDate: Bool {_storage._joinedDate != nil}
+  public var hasJoinedDate: Bool {return _storage._joinedDate != nil}
   /// Clears the value of `joinedDate`. Subsequent reads from it will return its default value.
   public mutating func clearJoinedDate() {_uniqueStorage()._joinedDate = nil}
 
   public var avatar: String {
-    get {_storage._avatar ?? String()}
+    get {return _storage._avatar ?? String()}
     set {_uniqueStorage()._avatar = newValue}
   }
   /// Returns true if `avatar` has been explicitly set.
-  public var hasAvatar: Bool {_storage._avatar != nil}
+  public var hasAvatar: Bool {return _storage._avatar != nil}
   /// Clears the value of `avatar`. Subsequent reads from it will return its default value.
   public mutating func clearAvatar() {_uniqueStorage()._avatar = nil}
 
   public var interests: [String] {
-    get {_storage._interests}
+    get {return _storage._interests}
     set {_uniqueStorage()._interests = newValue}
   }
 
   public var badges: [String] {
-    get {_storage._badges}
+    get {return _storage._badges}
     set {_uniqueStorage()._badges = newValue}
   }
 
   public var stats: Loci_User_UserStats {
-    get {_storage._stats ?? Loci_User_UserStats()}
+    get {return _storage._stats ?? Loci_User_UserStats()}
     set {_uniqueStorage()._stats = newValue}
   }
   /// Returns true if `stats` has been explicitly set.
-  public var hasStats: Bool {_storage._stats != nil}
+  public var hasStats: Bool {return _storage._stats != nil}
   /// Clears the value of `stats`. Subsequent reads from it will return its default value.
   public mutating func clearStats() {_uniqueStorage()._stats = nil}
 
   public var displayName: String {
-    get {_storage._displayName ?? String()}
+    get {return _storage._displayName ?? String()}
     set {_uniqueStorage()._displayName = newValue}
   }
   /// Returns true if `displayName` has been explicitly set.
-  public var hasDisplayName: Bool {_storage._displayName != nil}
+  public var hasDisplayName: Bool {return _storage._displayName != nil}
   /// Clears the value of `displayName`. Subsequent reads from it will return its default value.
   public mutating func clearDisplayName() {_uniqueStorage()._displayName = nil}
 
   public var profileImageURL: String {
-    get {_storage._profileImageURL ?? String()}
+    get {return _storage._profileImageURL ?? String()}
     set {_uniqueStorage()._profileImageURL = newValue}
   }
   /// Returns true if `profileImageURL` has been explicitly set.
-  public var hasProfileImageURL: Bool {_storage._profileImageURL != nil}
+  public var hasProfileImageURL: Bool {return _storage._profileImageURL != nil}
   /// Clears the value of `profileImageURL`. Subsequent reads from it will return its default value.
   public mutating func clearProfileImageURL() {_uniqueStorage()._profileImageURL = nil}
 
   public var isActive: Bool {
-    get {_storage._isActive}
+    get {return _storage._isActive}
     set {_uniqueStorage()._isActive = newValue}
   }
 
   public var emailVerifiedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._emailVerifiedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._emailVerifiedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._emailVerifiedAt = newValue}
   }
   /// Returns true if `emailVerifiedAt` has been explicitly set.
-  public var hasEmailVerifiedAt: Bool {_storage._emailVerifiedAt != nil}
+  public var hasEmailVerifiedAt: Bool {return _storage._emailVerifiedAt != nil}
   /// Clears the value of `emailVerifiedAt`. Subsequent reads from it will return its default value.
   public mutating func clearEmailVerifiedAt() {_uniqueStorage()._emailVerifiedAt = nil}
 
   public var lastLoginAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._lastLoginAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._lastLoginAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._lastLoginAt = newValue}
   }
   /// Returns true if `lastLoginAt` has been explicitly set.
-  public var hasLastLoginAt: Bool {_storage._lastLoginAt != nil}
+  public var hasLastLoginAt: Bool {return _storage._lastLoginAt != nil}
   /// Clears the value of `lastLoginAt`. Subsequent reads from it will return its default value.
   public mutating func clearLastLoginAt() {_uniqueStorage()._lastLoginAt = nil}
 
   public var theme: String {
-    get {_storage._theme ?? String()}
+    get {return _storage._theme ?? String()}
     set {_uniqueStorage()._theme = newValue}
   }
   /// Returns true if `theme` has been explicitly set.
-  public var hasTheme: Bool {_storage._theme != nil}
+  public var hasTheme: Bool {return _storage._theme != nil}
   /// Clears the value of `theme`. Subsequent reads from it will return its default value.
   public mutating func clearTheme() {_uniqueStorage()._theme = nil}
 
   public var language: String {
-    get {_storage._language ?? String()}
+    get {return _storage._language ?? String()}
     set {_uniqueStorage()._language = newValue}
   }
   /// Returns true if `language` has been explicitly set.
-  public var hasLanguage: Bool {_storage._language != nil}
+  public var hasLanguage: Bool {return _storage._language != nil}
   /// Clears the value of `language`. Subsequent reads from it will return its default value.
   public mutating func clearLanguage() {_uniqueStorage()._language = nil}
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {_storage._createdAt != nil}
+  public var hasCreatedAt: Bool {return _storage._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {_uniqueStorage()._createdAt = nil}
 
   public var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  public var hasUpdatedAt: Bool {_storage._updatedAt != nil}
+  public var hasUpdatedAt: Bool {return _storage._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {_uniqueStorage()._updatedAt = nil}
 
@@ -273,33 +269,33 @@ public nonisolated struct Loci_User_UserProfile: @unchecked Sendable {
   /// without one: a quiet hour, or anything else scheduled, is meaningless
   /// without knowing whose evening it is.
   public var timezone: String {
-    get {_storage._timezone ?? String()}
+    get {return _storage._timezone ?? String()}
     set {_uniqueStorage()._timezone = newValue}
   }
   /// Returns true if `timezone` has been explicitly set.
-  public var hasTimezone: Bool {_storage._timezone != nil}
+  public var hasTimezone: Bool {return _storage._timezone != nil}
   /// Clears the value of `timezone`. Subsequent reads from it will return its default value.
   public mutating func clearTimezone() {_uniqueStorage()._timezone = nil}
 
   /// "metric" or "imperial". Unset means metric, which is what every distance
   /// Loci computes is already in.
   public var units: String {
-    get {_storage._units ?? String()}
+    get {return _storage._units ?? String()}
     set {_uniqueStorage()._units = newValue}
   }
   /// Returns true if `units` has been explicitly set.
-  public var hasUnits: Bool {_storage._units != nil}
+  public var hasUnits: Bool {return _storage._units != nil}
   /// Clears the value of `units`. Subsequent reads from it will return its default value.
   public mutating func clearUnits() {_uniqueStorage()._units = nil}
 
   /// ISO 4217, e.g. "EUR". Unset means EUR, which is what prices were hardcoded
   /// to before this existed.
   public var currency: String {
-    get {_storage._currency ?? String()}
+    get {return _storage._currency ?? String()}
     set {_uniqueStorage()._currency = newValue}
   }
   /// Returns true if `currency` has been explicitly set.
-  public var hasCurrency: Bool {_storage._currency != nil}
+  public var hasCurrency: Bool {return _storage._currency != nil}
   /// Clears the value of `currency`. Subsequent reads from it will return its default value.
   public mutating func clearCurrency() {_uniqueStorage()._currency = nil}
 
@@ -311,177 +307,177 @@ public nonisolated struct Loci_User_UserProfile: @unchecked Sendable {
 }
 
 /// UpdateProfileParams for updating user profile
-public nonisolated struct Loci_User_UpdateProfileParams: @unchecked Sendable {
+public struct Loci_User_UpdateProfileParams: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var username: String {
-    get {_storage._username ?? String()}
+    get {return _storage._username ?? String()}
     set {_uniqueStorage()._username = newValue}
   }
   /// Returns true if `username` has been explicitly set.
-  public var hasUsername: Bool {_storage._username != nil}
+  public var hasUsername: Bool {return _storage._username != nil}
   /// Clears the value of `username`. Subsequent reads from it will return its default value.
   public mutating func clearUsername() {_uniqueStorage()._username = nil}
 
   public var phoneNumber: String {
-    get {_storage._phoneNumber ?? String()}
+    get {return _storage._phoneNumber ?? String()}
     set {_uniqueStorage()._phoneNumber = newValue}
   }
   /// Returns true if `phoneNumber` has been explicitly set.
-  public var hasPhoneNumber: Bool {_storage._phoneNumber != nil}
+  public var hasPhoneNumber: Bool {return _storage._phoneNumber != nil}
   /// Clears the value of `phoneNumber`. Subsequent reads from it will return its default value.
   public mutating func clearPhoneNumber() {_uniqueStorage()._phoneNumber = nil}
 
   public var email: String {
-    get {_storage._email ?? String()}
+    get {return _storage._email ?? String()}
     set {_uniqueStorage()._email = newValue}
   }
   /// Returns true if `email` has been explicitly set.
-  public var hasEmail: Bool {_storage._email != nil}
+  public var hasEmail: Bool {return _storage._email != nil}
   /// Clears the value of `email`. Subsequent reads from it will return its default value.
   public mutating func clearEmail() {_uniqueStorage()._email = nil}
 
   public var displayName: String {
-    get {_storage._displayName ?? String()}
+    get {return _storage._displayName ?? String()}
     set {_uniqueStorage()._displayName = newValue}
   }
   /// Returns true if `displayName` has been explicitly set.
-  public var hasDisplayName: Bool {_storage._displayName != nil}
+  public var hasDisplayName: Bool {return _storage._displayName != nil}
   /// Clears the value of `displayName`. Subsequent reads from it will return its default value.
   public mutating func clearDisplayName() {_uniqueStorage()._displayName = nil}
 
   public var profileImageURL: String {
-    get {_storage._profileImageURL ?? String()}
+    get {return _storage._profileImageURL ?? String()}
     set {_uniqueStorage()._profileImageURL = newValue}
   }
   /// Returns true if `profileImageURL` has been explicitly set.
-  public var hasProfileImageURL: Bool {_storage._profileImageURL != nil}
+  public var hasProfileImageURL: Bool {return _storage._profileImageURL != nil}
   /// Clears the value of `profileImageURL`. Subsequent reads from it will return its default value.
   public mutating func clearProfileImageURL() {_uniqueStorage()._profileImageURL = nil}
 
   public var firstname: String {
-    get {_storage._firstname ?? String()}
+    get {return _storage._firstname ?? String()}
     set {_uniqueStorage()._firstname = newValue}
   }
   /// Returns true if `firstname` has been explicitly set.
-  public var hasFirstname: Bool {_storage._firstname != nil}
+  public var hasFirstname: Bool {return _storage._firstname != nil}
   /// Clears the value of `firstname`. Subsequent reads from it will return its default value.
   public mutating func clearFirstname() {_uniqueStorage()._firstname = nil}
 
   public var lastname: String {
-    get {_storage._lastname ?? String()}
+    get {return _storage._lastname ?? String()}
     set {_uniqueStorage()._lastname = newValue}
   }
   /// Returns true if `lastname` has been explicitly set.
-  public var hasLastname: Bool {_storage._lastname != nil}
+  public var hasLastname: Bool {return _storage._lastname != nil}
   /// Clears the value of `lastname`. Subsequent reads from it will return its default value.
   public mutating func clearLastname() {_uniqueStorage()._lastname = nil}
 
   public var age: Int32 {
-    get {_storage._age ?? 0}
+    get {return _storage._age ?? 0}
     set {_uniqueStorage()._age = newValue}
   }
   /// Returns true if `age` has been explicitly set.
-  public var hasAge: Bool {_storage._age != nil}
+  public var hasAge: Bool {return _storage._age != nil}
   /// Clears the value of `age`. Subsequent reads from it will return its default value.
   public mutating func clearAge() {_uniqueStorage()._age = nil}
 
   public var city: String {
-    get {_storage._city ?? String()}
+    get {return _storage._city ?? String()}
     set {_uniqueStorage()._city = newValue}
   }
   /// Returns true if `city` has been explicitly set.
-  public var hasCity: Bool {_storage._city != nil}
+  public var hasCity: Bool {return _storage._city != nil}
   /// Clears the value of `city`. Subsequent reads from it will return its default value.
   public mutating func clearCity() {_uniqueStorage()._city = nil}
 
   public var country: String {
-    get {_storage._country ?? String()}
+    get {return _storage._country ?? String()}
     set {_uniqueStorage()._country = newValue}
   }
   /// Returns true if `country` has been explicitly set.
-  public var hasCountry: Bool {_storage._country != nil}
+  public var hasCountry: Bool {return _storage._country != nil}
   /// Clears the value of `country`. Subsequent reads from it will return its default value.
   public mutating func clearCountry() {_uniqueStorage()._country = nil}
 
   public var aboutYou: String {
-    get {_storage._aboutYou ?? String()}
+    get {return _storage._aboutYou ?? String()}
     set {_uniqueStorage()._aboutYou = newValue}
   }
   /// Returns true if `aboutYou` has been explicitly set.
-  public var hasAboutYou: Bool {_storage._aboutYou != nil}
+  public var hasAboutYou: Bool {return _storage._aboutYou != nil}
   /// Clears the value of `aboutYou`. Subsequent reads from it will return its default value.
   public mutating func clearAboutYou() {_uniqueStorage()._aboutYou = nil}
 
   public var location: String {
-    get {_storage._location ?? String()}
+    get {return _storage._location ?? String()}
     set {_uniqueStorage()._location = newValue}
   }
   /// Returns true if `location` has been explicitly set.
-  public var hasLocation: Bool {_storage._location != nil}
+  public var hasLocation: Bool {return _storage._location != nil}
   /// Clears the value of `location`. Subsequent reads from it will return its default value.
   public mutating func clearLocation() {_uniqueStorage()._location = nil}
 
   public var interests: [String] {
-    get {_storage._interests}
+    get {return _storage._interests}
     set {_uniqueStorage()._interests = newValue}
   }
 
   public var badges: [String] {
-    get {_storage._badges}
+    get {return _storage._badges}
     set {_uniqueStorage()._badges = newValue}
   }
 
   public var theme: String {
-    get {_storage._theme ?? String()}
+    get {return _storage._theme ?? String()}
     set {_uniqueStorage()._theme = newValue}
   }
   /// Returns true if `theme` has been explicitly set.
-  public var hasTheme: Bool {_storage._theme != nil}
+  public var hasTheme: Bool {return _storage._theme != nil}
   /// Clears the value of `theme`. Subsequent reads from it will return its default value.
   public mutating func clearTheme() {_uniqueStorage()._theme = nil}
 
   public var language: String {
-    get {_storage._language ?? String()}
+    get {return _storage._language ?? String()}
     set {_uniqueStorage()._language = newValue}
   }
   /// Returns true if `language` has been explicitly set.
-  public var hasLanguage: Bool {_storage._language != nil}
+  public var hasLanguage: Bool {return _storage._language != nil}
   /// Clears the value of `language`. Subsequent reads from it will return its default value.
   public mutating func clearLanguage() {_uniqueStorage()._language = nil}
 
   /// The pattern accepts the shape of an IANA zone name, not the list: that
   /// list ships with the operating system and changes without us.
   public var timezone: String {
-    get {_storage._timezone ?? String()}
+    get {return _storage._timezone ?? String()}
     set {_uniqueStorage()._timezone = newValue}
   }
   /// Returns true if `timezone` has been explicitly set.
-  public var hasTimezone: Bool {_storage._timezone != nil}
+  public var hasTimezone: Bool {return _storage._timezone != nil}
   /// Clears the value of `timezone`. Subsequent reads from it will return its default value.
   public mutating func clearTimezone() {_uniqueStorage()._timezone = nil}
 
   /// "metric" or "imperial". Unset means metric, which is what every distance
   /// Loci computes is already in.
   public var units: String {
-    get {_storage._units ?? String()}
+    get {return _storage._units ?? String()}
     set {_uniqueStorage()._units = newValue}
   }
   /// Returns true if `units` has been explicitly set.
-  public var hasUnits: Bool {_storage._units != nil}
+  public var hasUnits: Bool {return _storage._units != nil}
   /// Clears the value of `units`. Subsequent reads from it will return its default value.
   public mutating func clearUnits() {_uniqueStorage()._units = nil}
 
   /// ISO 4217, e.g. "EUR". Unset means EUR, which is what prices were hardcoded
   /// to before this existed.
   public var currency: String {
-    get {_storage._currency ?? String()}
+    get {return _storage._currency ?? String()}
     set {_uniqueStorage()._currency = newValue}
   }
   /// Returns true if `currency` has been explicitly set.
-  public var hasCurrency: Bool {_storage._currency != nil}
+  public var hasCurrency: Bool {return _storage._currency != nil}
   /// Clears the value of `currency`. Subsequent reads from it will return its default value.
   public mutating func clearCurrency() {_uniqueStorage()._currency = nil}
 
@@ -493,18 +489,18 @@ public nonisolated struct Loci_User_UpdateProfileParams: @unchecked Sendable {
 }
 
 /// GetUserProfileRequest for retrieving user profile
-public nonisolated struct Loci_User_GetUserProfileRequest: Sendable {
+public struct Loci_User_GetUserProfileRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   /// If empty, get authenticated user's profile
   public var userID: String {
-    get {_userID ?? String()}
+    get {return _userID ?? String()}
     set {_userID = newValue}
   }
   /// Returns true if `userID` has been explicitly set.
-  public var hasUserID: Bool {self._userID != nil}
+  public var hasUserID: Bool {return self._userID != nil}
   /// Clears the value of `userID`. Subsequent reads from it will return its default value.
   public mutating func clearUserID() {self._userID = nil}
 
@@ -516,17 +512,17 @@ public nonisolated struct Loci_User_GetUserProfileRequest: Sendable {
 }
 
 /// GetUserProfileResponse for user profile retrieval
-public nonisolated struct Loci_User_GetUserProfileResponse: Sendable {
+public struct Loci_User_GetUserProfileResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var profile: Loci_User_UserProfile {
-    get {_profile ?? Loci_User_UserProfile()}
+    get {return _profile ?? Loci_User_UserProfile()}
     set {_profile = newValue}
   }
   /// Returns true if `profile` has been explicitly set.
-  public var hasProfile: Bool {self._profile != nil}
+  public var hasProfile: Bool {return self._profile != nil}
   /// Clears the value of `profile`. Subsequent reads from it will return its default value.
   public mutating func clearProfile() {self._profile = nil}
 
@@ -538,17 +534,17 @@ public nonisolated struct Loci_User_GetUserProfileResponse: Sendable {
 }
 
 /// UpdateUserProfileRequest for updating user profile
-public nonisolated struct Loci_User_UpdateUserProfileRequest: Sendable {
+public struct Loci_User_UpdateUserProfileRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var params: Loci_User_UpdateProfileParams {
-    get {_params ?? Loci_User_UpdateProfileParams()}
+    get {return _params ?? Loci_User_UpdateProfileParams()}
     set {_params = newValue}
   }
   /// Returns true if `params` has been explicitly set.
-  public var hasParams: Bool {self._params != nil}
+  public var hasParams: Bool {return self._params != nil}
   /// Clears the value of `params`. Subsequent reads from it will return its default value.
   public mutating func clearParams() {self._params = nil}
 
@@ -560,7 +556,7 @@ public nonisolated struct Loci_User_UpdateUserProfileRequest: Sendable {
 }
 
 /// ExportUserDataRequest requests a machine-readable copy of the caller's data.
-public nonisolated struct Loci_User_ExportUserDataRequest: Sendable {
+public struct Loci_User_ExportUserDataRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -571,7 +567,7 @@ public nonisolated struct Loci_User_ExportUserDataRequest: Sendable {
 }
 
 /// ExportUserDataResponse carries the exported data as a downloadable blob (JSON).
-public nonisolated struct Loci_User_ExportUserDataResponse: Sendable {
+public struct Loci_User_ExportUserDataResponse: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -591,7 +587,7 @@ public nonisolated struct Loci_User_ExportUserDataResponse: Sendable {
 /// DeleteAccountRequest permanently deletes the caller's account and all owned
 /// data. `confirmation` must equal the literal "DELETE" to guard against
 /// accidental calls.
-public nonisolated struct Loci_User_DeleteAccountRequest: Sendable {
+public struct Loci_User_DeleteAccountRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -613,7 +609,7 @@ public nonisolated struct Loci_User_DeleteAccountRequest: Sendable {
 /// This stores the preference. Delivery — actually sending a push or an email —
 /// is a separate piece of work, and the UI must not imply otherwise while these
 /// are only recorded.
-public nonisolated struct Loci_User_NotificationSettings: Sendable {
+public struct Loci_User_NotificationSettings: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -623,11 +619,11 @@ public nonisolated struct Loci_User_NotificationSettings: Sendable {
   public var tripReminders: Bool = false
 
   public var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  public var hasUpdatedAt: Bool {self._updatedAt != nil}
+  public var hasUpdatedAt: Bool {return self._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {self._updatedAt = nil}
 
@@ -638,7 +634,7 @@ public nonisolated struct Loci_User_NotificationSettings: Sendable {
   fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-public nonisolated struct Loci_User_GetNotificationSettingsRequest: Sendable {
+public struct Loci_User_GetNotificationSettingsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -648,27 +644,27 @@ public nonisolated struct Loci_User_GetNotificationSettingsRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_User_UpdateNotificationSettingsRequest: Sendable {
+public struct Loci_User_UpdateNotificationSettingsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   /// Absent means "leave this switch as it is".
   public var recommendations: Bool {
-    get {_recommendations ?? false}
+    get {return _recommendations ?? false}
     set {_recommendations = newValue}
   }
   /// Returns true if `recommendations` has been explicitly set.
-  public var hasRecommendations: Bool {self._recommendations != nil}
+  public var hasRecommendations: Bool {return self._recommendations != nil}
   /// Clears the value of `recommendations`. Subsequent reads from it will return its default value.
   public mutating func clearRecommendations() {self._recommendations = nil}
 
   public var tripReminders: Bool {
-    get {_tripReminders ?? false}
+    get {return _tripReminders ?? false}
     set {_tripReminders = newValue}
   }
   /// Returns true if `tripReminders` has been explicitly set.
-  public var hasTripReminders: Bool {self._tripReminders != nil}
+  public var hasTripReminders: Bool {return self._tripReminders != nil}
   /// Clears the value of `tripReminders`. Subsequent reads from it will return its default value.
   public mutating func clearTripReminders() {self._tripReminders = nil}
 
@@ -682,11 +678,17 @@ public nonisolated struct Loci_User_UpdateNotificationSettingsRequest: Sendable 
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.user"
+fileprivate let _protobuf_package = "loci.user"
 
-nonisolated extension Loci_User_UserStats: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_User_UserStats: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UserStats"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}places_visited\0\u{3}reviews_written\0\u{3}lists_created\0\u{1}followers\0\u{1}following\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "places_visited"),
+    2: .standard(proto: "reviews_written"),
+    3: .standard(proto: "lists_created"),
+    4: .same(proto: "followers"),
+    5: .same(proto: "following"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -734,9 +736,39 @@ nonisolated extension Loci_User_UserStats: SwiftProtobuf.Message, SwiftProtobuf.
   }
 }
 
-nonisolated extension Loci_User_UserProfile: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_User_UserProfile: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UserProfile"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}email\0\u{1}username\0\u{1}firstname\0\u{1}lastname\0\u{3}phone_number\0\u{1}age\0\u{1}city\0\u{1}country\0\u{3}about_you\0\u{1}bio\0\u{1}location\0\u{3}joined_date\0\u{1}avatar\0\u{1}interests\0\u{1}badges\0\u{1}stats\0\u{3}display_name\0\u{3}profile_image_url\0\u{3}is_active\0\u{3}email_verified_at\0\u{3}last_login_at\0\u{1}theme\0\u{1}language\0\u{3}created_at\0\u{3}updated_at\0\u{1}timezone\0\u{1}units\0\u{1}currency\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "email"),
+    3: .same(proto: "username"),
+    4: .same(proto: "firstname"),
+    5: .same(proto: "lastname"),
+    6: .standard(proto: "phone_number"),
+    7: .same(proto: "age"),
+    8: .same(proto: "city"),
+    9: .same(proto: "country"),
+    10: .standard(proto: "about_you"),
+    11: .same(proto: "bio"),
+    12: .same(proto: "location"),
+    13: .standard(proto: "joined_date"),
+    14: .same(proto: "avatar"),
+    15: .same(proto: "interests"),
+    16: .same(proto: "badges"),
+    17: .same(proto: "stats"),
+    18: .standard(proto: "display_name"),
+    19: .standard(proto: "profile_image_url"),
+    20: .standard(proto: "is_active"),
+    21: .standard(proto: "email_verified_at"),
+    22: .standard(proto: "last_login_at"),
+    23: .same(proto: "theme"),
+    24: .same(proto: "language"),
+    25: .standard(proto: "created_at"),
+    26: .standard(proto: "updated_at"),
+    27: .same(proto: "timezone"),
+    28: .same(proto: "units"),
+    29: .same(proto: "currency"),
+  ]
 
   fileprivate class _StorageClass {
     var _id: String = String()
@@ -769,11 +801,15 @@ nonisolated extension Loci_User_UserProfile: SwiftProtobuf.Message, SwiftProtobu
     var _units: String? = nil
     var _currency: String? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -1000,9 +1036,29 @@ nonisolated extension Loci_User_UserProfile: SwiftProtobuf.Message, SwiftProtobu
   }
 }
 
-nonisolated extension Loci_User_UpdateProfileParams: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_User_UpdateProfileParams: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UpdateProfileParams"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}username\0\u{3}phone_number\0\u{1}email\0\u{3}display_name\0\u{3}profile_image_url\0\u{1}firstname\0\u{1}lastname\0\u{1}age\0\u{1}city\0\u{1}country\0\u{3}about_you\0\u{1}location\0\u{1}interests\0\u{1}badges\0\u{1}theme\0\u{1}language\0\u{1}timezone\0\u{1}units\0\u{1}currency\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "username"),
+    2: .standard(proto: "phone_number"),
+    3: .same(proto: "email"),
+    4: .standard(proto: "display_name"),
+    5: .standard(proto: "profile_image_url"),
+    6: .same(proto: "firstname"),
+    7: .same(proto: "lastname"),
+    8: .same(proto: "age"),
+    9: .same(proto: "city"),
+    10: .same(proto: "country"),
+    11: .standard(proto: "about_you"),
+    12: .same(proto: "location"),
+    13: .same(proto: "interests"),
+    14: .same(proto: "badges"),
+    15: .same(proto: "theme"),
+    16: .same(proto: "language"),
+    17: .same(proto: "timezone"),
+    18: .same(proto: "units"),
+    19: .same(proto: "currency"),
+  ]
 
   fileprivate class _StorageClass {
     var _username: String? = nil
@@ -1025,11 +1081,15 @@ nonisolated extension Loci_User_UpdateProfileParams: SwiftProtobuf.Message, Swif
     var _units: String? = nil
     var _currency: String? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -1196,9 +1256,11 @@ nonisolated extension Loci_User_UpdateProfileParams: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_User_GetUserProfileRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_User_GetUserProfileRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetUserProfileRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1230,9 +1292,11 @@ nonisolated extension Loci_User_GetUserProfileRequest: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_User_GetUserProfileResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_User_GetUserProfileResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetUserProfileResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}profile\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "profile"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1264,9 +1328,11 @@ nonisolated extension Loci_User_GetUserProfileResponse: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_User_UpdateUserProfileRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_User_UpdateUserProfileRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UpdateUserProfileRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}params\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "params"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1298,7 +1364,7 @@ nonisolated extension Loci_User_UpdateUserProfileRequest: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_User_ExportUserDataRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_User_ExportUserDataRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ExportUserDataRequest"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
@@ -1317,9 +1383,13 @@ nonisolated extension Loci_User_ExportUserDataRequest: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_User_ExportUserDataResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_User_ExportUserDataResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ExportUserDataResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}data\0\u{3}content_type\0\u{1}filename\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "data"),
+    2: .standard(proto: "content_type"),
+    3: .same(proto: "filename"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1357,9 +1427,11 @@ nonisolated extension Loci_User_ExportUserDataResponse: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_User_DeleteAccountRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_User_DeleteAccountRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DeleteAccountRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}confirmation\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "confirmation"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1387,9 +1459,13 @@ nonisolated extension Loci_User_DeleteAccountRequest: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_User_NotificationSettings: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_User_NotificationSettings: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".NotificationSettings"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}recommendations\0\u{3}trip_reminders\0\u{3}updated_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "recommendations"),
+    2: .standard(proto: "trip_reminders"),
+    3: .standard(proto: "updated_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1431,7 +1507,7 @@ nonisolated extension Loci_User_NotificationSettings: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_User_GetNotificationSettingsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_User_GetNotificationSettingsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetNotificationSettingsRequest"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
@@ -1450,9 +1526,12 @@ nonisolated extension Loci_User_GetNotificationSettingsRequest: SwiftProtobuf.Me
   }
 }
 
-nonisolated extension Loci_User_UpdateNotificationSettingsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_User_UpdateNotificationSettingsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UpdateNotificationSettingsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}recommendations\0\u{3}trip_reminders\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "recommendations"),
+    2: .standard(proto: "trip_reminders"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

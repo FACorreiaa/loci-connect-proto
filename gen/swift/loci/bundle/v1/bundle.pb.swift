@@ -15,7 +15,7 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
@@ -27,7 +27,7 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
 /// RETIRED is not deletion. A pack someone has paid for stays readable by its
 /// owners forever, so withdrawing one from sale moves it here rather than
 /// removing it.
-public nonisolated enum Loci_Bundle_V1_BundleStatus: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Bundle_V1_BundleStatus: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case draft // = 1
@@ -75,85 +75,85 @@ public nonisolated enum Loci_Bundle_V1_BundleStatus: SwiftProtobuf.Enum, Swift.C
 
 /// Bundle is the catalog entry for a pre-made itinerary: everything needed to
 /// render a card in a list, without any of the day-by-day content.
-public nonisolated struct Loci_Bundle_V1_Bundle: @unchecked Sendable {
+public struct Loci_Bundle_V1_Bundle: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var id: String {
-    get {_storage._id}
+    get {return _storage._id}
     set {_uniqueStorage()._id = newValue}
   }
 
   /// Stable, human-readable handle used in the URL (`/packs/<slug>`). This is
   /// the lookup key clients use, not the uuid, so a pack keeps its address.
   public var slug: String {
-    get {_storage._slug}
+    get {return _storage._slug}
     set {_uniqueStorage()._slug = newValue}
   }
 
   public var title: String {
-    get {_storage._title}
+    get {return _storage._title}
     set {_uniqueStorage()._title = newValue}
   }
 
   public var summary: String {
-    get {_storage._summary}
+    get {return _storage._summary}
     set {_uniqueStorage()._summary = newValue}
   }
 
   /// City is carried by name as well as id: a pack must still render its own
   /// header if the city row is ever merged away underneath it.
   public var cityID: String {
-    get {_storage._cityID ?? String()}
+    get {return _storage._cityID ?? String()}
     set {_uniqueStorage()._cityID = newValue}
   }
   /// Returns true if `cityID` has been explicitly set.
-  public var hasCityID: Bool {_storage._cityID != nil}
+  public var hasCityID: Bool {return _storage._cityID != nil}
   /// Clears the value of `cityID`. Subsequent reads from it will return its default value.
   public mutating func clearCityID() {_uniqueStorage()._cityID = nil}
 
   public var cityName: String {
-    get {_storage._cityName}
+    get {return _storage._cityName}
     set {_uniqueStorage()._cityName = newValue}
   }
 
   /// ISO 3166-1 alpha-2, for the flag.
   public var countryCode: String {
-    get {_storage._countryCode}
+    get {return _storage._countryCode}
     set {_uniqueStorage()._countryCode = newValue}
   }
 
   /// theme is the taste this pack is cut for: food, art, outdoors,
   /// architecture, nightlife, family.
   public var theme: String {
-    get {_storage._theme}
+    get {return _storage._theme}
     set {_uniqueStorage()._theme = newValue}
   }
 
   /// Months (1-12) the pack is in season for. Mirrors SeasonalPick.months on
   /// the client, which is where the seed list comes from.
   public var months: [Int32] {
-    get {_storage._months}
+    get {return _storage._months}
     set {_uniqueStorage()._months = newValue}
   }
 
   public var dayCount: Int32 {
-    get {_storage._dayCount}
+    get {return _storage._dayCount}
     set {_uniqueStorage()._dayCount = newValue}
   }
 
   public var stopCount: Int32 {
-    get {_storage._stopCount}
+    get {return _storage._stopCount}
     set {_uniqueStorage()._stopCount = newValue}
   }
 
   public var coverImageURL: String {
-    get {_storage._coverImageURL ?? String()}
+    get {return _storage._coverImageURL ?? String()}
     set {_uniqueStorage()._coverImageURL = newValue}
   }
   /// Returns true if `coverImageURL` has been explicitly set.
-  public var hasCoverImageURL: Bool {_storage._coverImageURL != nil}
+  public var hasCoverImageURL: Bool {return _storage._coverImageURL != nil}
   /// Clears the value of `coverImageURL`. Subsequent reads from it will return its default value.
   public mutating func clearCoverImageURL() {_uniqueStorage()._coverImageURL = nil}
 
@@ -161,33 +161,33 @@ public nonisolated struct Loci_Bundle_V1_Bundle: @unchecked Sendable {
   /// per response rather than per row because every pack shares one price
   /// today; a client must never send a price back to the server.
   public var isPaid: Bool {
-    get {_storage._isPaid}
+    get {return _storage._isPaid}
     set {_uniqueStorage()._isPaid = newValue}
   }
 
   public var priceCents: Int32 {
-    get {_storage._priceCents}
+    get {return _storage._priceCents}
     set {_uniqueStorage()._priceCents = newValue}
   }
 
   public var currency: String {
-    get {_storage._currency}
+    get {return _storage._currency}
     set {_uniqueStorage()._currency = newValue}
   }
 
   /// owned is false for anonymous callers and for a signed-in caller who has
   /// not bought this pack. Free packs report true.
   public var owned: Bool {
-    get {_storage._owned}
+    get {return _storage._owned}
     set {_uniqueStorage()._owned = newValue}
   }
 
   public var publishedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._publishedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._publishedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._publishedAt = newValue}
   }
   /// Returns true if `publishedAt` has been explicitly set.
-  public var hasPublishedAt: Bool {_storage._publishedAt != nil}
+  public var hasPublishedAt: Bool {return _storage._publishedAt != nil}
   /// Clears the value of `publishedAt`. Subsequent reads from it will return its default value.
   public mutating func clearPublishedAt() {_uniqueStorage()._publishedAt = nil}
 
@@ -201,7 +201,7 @@ public nonisolated struct Loci_Bundle_V1_Bundle: @unchecked Sendable {
 /// BundleDay is one day of a pack. Stops reuse loci.trip.TripStop so a pack
 /// renders through the same components a generated trip does, and so claiming
 /// one is a straight copy rather than a translation.
-public nonisolated struct Loci_Bundle_V1_BundleDay: Sendable {
+public struct Loci_Bundle_V1_BundleDay: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -224,17 +224,17 @@ public nonisolated struct Loci_Bundle_V1_BundleDay: Sendable {
 /// `days` holds day 1 only and the rest are simply absent from the wire.
 /// Sending every day and hiding some in the UI would put the paid content in
 /// the response body for anyone with devtools.
-public nonisolated struct Loci_Bundle_V1_BundleDetail: Sendable {
+public struct Loci_Bundle_V1_BundleDetail: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var bundle: Loci_Bundle_V1_Bundle {
-    get {_bundle ?? Loci_Bundle_V1_Bundle()}
+    get {return _bundle ?? Loci_Bundle_V1_Bundle()}
     set {_bundle = newValue}
   }
   /// Returns true if `bundle` has been explicitly set.
-  public var hasBundle: Bool {self._bundle != nil}
+  public var hasBundle: Bool {return self._bundle != nil}
   /// Clears the value of `bundle`. Subsequent reads from it will return its default value.
   public mutating func clearBundle() {self._bundle = nil}
 
@@ -250,55 +250,55 @@ public nonisolated struct Loci_Bundle_V1_BundleDetail: Sendable {
   fileprivate var _bundle: Loci_Bundle_V1_Bundle? = nil
 }
 
-public nonisolated struct Loci_Bundle_V1_ListBundlesRequest: Sendable {
+public struct Loci_Bundle_V1_ListBundlesRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   /// All filters are optional and AND together.
   public var cityName: String {
-    get {_cityName ?? String()}
+    get {return _cityName ?? String()}
     set {_cityName = newValue}
   }
   /// Returns true if `cityName` has been explicitly set.
-  public var hasCityName: Bool {self._cityName != nil}
+  public var hasCityName: Bool {return self._cityName != nil}
   /// Clears the value of `cityName`. Subsequent reads from it will return its default value.
   public mutating func clearCityName() {self._cityName = nil}
 
   public var theme: String {
-    get {_theme ?? String()}
+    get {return _theme ?? String()}
     set {_theme = newValue}
   }
   /// Returns true if `theme` has been explicitly set.
-  public var hasTheme: Bool {self._theme != nil}
+  public var hasTheme: Bool {return self._theme != nil}
   /// Clears the value of `theme`. Subsequent reads from it will return its default value.
   public mutating func clearTheme() {self._theme = nil}
 
   /// Month (1-12) the trip is for; matches against Bundle.months.
   public var month: Int32 {
-    get {_month ?? 0}
+    get {return _month ?? 0}
     set {_month = newValue}
   }
   /// Returns true if `month` has been explicitly set.
-  public var hasMonth: Bool {self._month != nil}
+  public var hasMonth: Bool {return self._month != nil}
   /// Clears the value of `month`. Subsequent reads from it will return its default value.
   public mutating func clearMonth() {self._month = nil}
 
   public var onlyFree: Bool {
-    get {_onlyFree ?? false}
+    get {return _onlyFree ?? false}
     set {_onlyFree = newValue}
   }
   /// Returns true if `onlyFree` has been explicitly set.
-  public var hasOnlyFree: Bool {self._onlyFree != nil}
+  public var hasOnlyFree: Bool {return self._onlyFree != nil}
   /// Clears the value of `onlyFree`. Subsequent reads from it will return its default value.
   public mutating func clearOnlyFree() {self._onlyFree = nil}
 
   public var pagination: Loci_Common_PaginationRequest {
-    get {_pagination ?? Loci_Common_PaginationRequest()}
+    get {return _pagination ?? Loci_Common_PaginationRequest()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
@@ -313,7 +313,7 @@ public nonisolated struct Loci_Bundle_V1_ListBundlesRequest: Sendable {
   fileprivate var _pagination: Loci_Common_PaginationRequest? = nil
 }
 
-public nonisolated struct Loci_Bundle_V1_ListBundlesResponse: Sendable {
+public struct Loci_Bundle_V1_ListBundlesResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -321,11 +321,11 @@ public nonisolated struct Loci_Bundle_V1_ListBundlesResponse: Sendable {
   public var bundles: [Loci_Bundle_V1_Bundle] = []
 
   public var pagination: Loci_Common_PaginationMetadata {
-    get {_pagination ?? Loci_Common_PaginationMetadata()}
+    get {return _pagination ?? Loci_Common_PaginationMetadata()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
@@ -336,7 +336,7 @@ public nonisolated struct Loci_Bundle_V1_ListBundlesResponse: Sendable {
   fileprivate var _pagination: Loci_Common_PaginationMetadata? = nil
 }
 
-public nonisolated struct Loci_Bundle_V1_GetBundleRequest: Sendable {
+public struct Loci_Bundle_V1_GetBundleRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -348,7 +348,7 @@ public nonisolated struct Loci_Bundle_V1_GetBundleRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Bundle_V1_CreateBundleCheckoutRequest: Sendable {
+public struct Loci_Bundle_V1_CreateBundleCheckoutRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -366,7 +366,7 @@ public nonisolated struct Loci_Bundle_V1_CreateBundleCheckoutRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Bundle_V1_CreateBundleCheckoutResponse: Sendable {
+public struct Loci_Bundle_V1_CreateBundleCheckoutResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -380,7 +380,7 @@ public nonisolated struct Loci_Bundle_V1_CreateBundleCheckoutResponse: Sendable 
   public init() {}
 }
 
-public nonisolated struct Loci_Bundle_V1_ClaimBundleRequest: Sendable {
+public struct Loci_Bundle_V1_ClaimBundleRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -392,7 +392,7 @@ public nonisolated struct Loci_Bundle_V1_ClaimBundleRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Bundle_V1_ClaimBundleResponse: Sendable {
+public struct Loci_Bundle_V1_ClaimBundleResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -405,17 +405,17 @@ public nonisolated struct Loci_Bundle_V1_ClaimBundleResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Bundle_V1_ListMyBundlesRequest: Sendable {
+public struct Loci_Bundle_V1_ListMyBundlesRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var pagination: Loci_Common_PaginationRequest {
-    get {_pagination ?? Loci_Common_PaginationRequest()}
+    get {return _pagination ?? Loci_Common_PaginationRequest()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
@@ -426,7 +426,7 @@ public nonisolated struct Loci_Bundle_V1_ListMyBundlesRequest: Sendable {
   fileprivate var _pagination: Loci_Common_PaginationRequest? = nil
 }
 
-public nonisolated struct Loci_Bundle_V1_ListMyBundlesResponse: Sendable {
+public struct Loci_Bundle_V1_ListMyBundlesResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -434,11 +434,11 @@ public nonisolated struct Loci_Bundle_V1_ListMyBundlesResponse: Sendable {
   public var bundles: [Loci_Bundle_V1_Bundle] = []
 
   public var pagination: Loci_Common_PaginationMetadata {
-    get {_pagination ?? Loci_Common_PaginationMetadata()}
+    get {return _pagination ?? Loci_Common_PaginationMetadata()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
@@ -451,15 +451,39 @@ public nonisolated struct Loci_Bundle_V1_ListMyBundlesResponse: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.bundle.v1"
+fileprivate let _protobuf_package = "loci.bundle.v1"
 
-nonisolated extension Loci_Bundle_V1_BundleStatus: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0BUNDLE_STATUS_UNSPECIFIED\0\u{1}BUNDLE_STATUS_DRAFT\0\u{1}BUNDLE_STATUS_APPROVED\0\u{1}BUNDLE_STATUS_PUBLISHED\0\u{1}BUNDLE_STATUS_RETIRED\0")
+extension Loci_Bundle_V1_BundleStatus: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "BUNDLE_STATUS_UNSPECIFIED"),
+    1: .same(proto: "BUNDLE_STATUS_DRAFT"),
+    2: .same(proto: "BUNDLE_STATUS_APPROVED"),
+    3: .same(proto: "BUNDLE_STATUS_PUBLISHED"),
+    4: .same(proto: "BUNDLE_STATUS_RETIRED"),
+  ]
 }
 
-nonisolated extension Loci_Bundle_V1_Bundle: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Bundle_V1_Bundle: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Bundle"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}slug\0\u{1}title\0\u{1}summary\0\u{3}city_id\0\u{3}city_name\0\u{3}country_code\0\u{1}theme\0\u{1}months\0\u{3}day_count\0\u{3}stop_count\0\u{3}cover_image_url\0\u{3}is_paid\0\u{3}price_cents\0\u{1}currency\0\u{1}owned\0\u{3}published_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "slug"),
+    3: .same(proto: "title"),
+    4: .same(proto: "summary"),
+    5: .standard(proto: "city_id"),
+    6: .standard(proto: "city_name"),
+    7: .standard(proto: "country_code"),
+    8: .same(proto: "theme"),
+    9: .same(proto: "months"),
+    10: .standard(proto: "day_count"),
+    11: .standard(proto: "stop_count"),
+    12: .standard(proto: "cover_image_url"),
+    13: .standard(proto: "is_paid"),
+    14: .standard(proto: "price_cents"),
+    15: .same(proto: "currency"),
+    16: .same(proto: "owned"),
+    17: .standard(proto: "published_at"),
+  ]
 
   fileprivate class _StorageClass {
     var _id: String = String()
@@ -480,11 +504,15 @@ nonisolated extension Loci_Bundle_V1_Bundle: SwiftProtobuf.Message, SwiftProtobu
     var _owned: Bool = false
     var _publishedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -639,9 +667,13 @@ nonisolated extension Loci_Bundle_V1_Bundle: SwiftProtobuf.Message, SwiftProtobu
   }
 }
 
-nonisolated extension Loci_Bundle_V1_BundleDay: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Bundle_V1_BundleDay: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".BundleDay"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}day_number\0\u{1}title\0\u{1}stops\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "day_number"),
+    2: .same(proto: "title"),
+    3: .same(proto: "stops"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -679,9 +711,13 @@ nonisolated extension Loci_Bundle_V1_BundleDay: SwiftProtobuf.Message, SwiftProt
   }
 }
 
-nonisolated extension Loci_Bundle_V1_BundleDetail: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Bundle_V1_BundleDetail: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".BundleDetail"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}bundle\0\u{1}days\0\u{3}locked_day_count\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "bundle"),
+    2: .same(proto: "days"),
+    3: .standard(proto: "locked_day_count"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -723,9 +759,15 @@ nonisolated extension Loci_Bundle_V1_BundleDetail: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension Loci_Bundle_V1_ListBundlesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Bundle_V1_ListBundlesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListBundlesRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}city_name\0\u{1}theme\0\u{1}month\0\u{3}only_free\0\u{1}pagination\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "city_name"),
+    2: .same(proto: "theme"),
+    3: .same(proto: "month"),
+    4: .standard(proto: "only_free"),
+    5: .same(proto: "pagination"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -777,9 +819,12 @@ nonisolated extension Loci_Bundle_V1_ListBundlesRequest: SwiftProtobuf.Message, 
   }
 }
 
-nonisolated extension Loci_Bundle_V1_ListBundlesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Bundle_V1_ListBundlesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListBundlesResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}bundles\0\u{1}pagination\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "bundles"),
+    2: .same(proto: "pagination"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -816,9 +861,11 @@ nonisolated extension Loci_Bundle_V1_ListBundlesResponse: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_Bundle_V1_GetBundleRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Bundle_V1_GetBundleRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetBundleRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}slug\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "slug"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -846,9 +893,13 @@ nonisolated extension Loci_Bundle_V1_GetBundleRequest: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_Bundle_V1_CreateBundleCheckoutRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Bundle_V1_CreateBundleCheckoutRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreateBundleCheckoutRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}bundle_id\0\u{3}success_url\0\u{3}cancel_url\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "bundle_id"),
+    2: .standard(proto: "success_url"),
+    3: .standard(proto: "cancel_url"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -886,9 +937,12 @@ nonisolated extension Loci_Bundle_V1_CreateBundleCheckoutRequest: SwiftProtobuf.
   }
 }
 
-nonisolated extension Loci_Bundle_V1_CreateBundleCheckoutResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Bundle_V1_CreateBundleCheckoutResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreateBundleCheckoutResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}session_id\0\u{1}url\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "session_id"),
+    2: .same(proto: "url"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -921,9 +975,11 @@ nonisolated extension Loci_Bundle_V1_CreateBundleCheckoutResponse: SwiftProtobuf
   }
 }
 
-nonisolated extension Loci_Bundle_V1_ClaimBundleRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Bundle_V1_ClaimBundleRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ClaimBundleRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}bundle_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "bundle_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -951,9 +1007,11 @@ nonisolated extension Loci_Bundle_V1_ClaimBundleRequest: SwiftProtobuf.Message, 
   }
 }
 
-nonisolated extension Loci_Bundle_V1_ClaimBundleResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Bundle_V1_ClaimBundleResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ClaimBundleResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}trip_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -981,9 +1039,11 @@ nonisolated extension Loci_Bundle_V1_ClaimBundleResponse: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_Bundle_V1_ListMyBundlesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Bundle_V1_ListMyBundlesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListMyBundlesRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}pagination\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "pagination"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1015,9 +1075,12 @@ nonisolated extension Loci_Bundle_V1_ListMyBundlesRequest: SwiftProtobuf.Message
   }
 }
 
-nonisolated extension Loci_Bundle_V1_ListMyBundlesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Bundle_V1_ListMyBundlesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListMyBundlesResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}bundles\0\u{1}pagination\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "bundles"),
+    2: .same(proto: "pagination"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
