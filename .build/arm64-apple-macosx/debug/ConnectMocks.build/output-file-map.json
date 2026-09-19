@@ -1,0 +1,47 @@
+{
+  "": {
+    "swift-dependencies": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/master.swiftdeps"
+  },
+  "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/checkouts/connect-swift/Libraries/ConnectMocks/MockBidirectionalAsyncStream.swift": {
+    "dependencies": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockBidirectionalAsyncStream.d",
+    "object": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockBidirectionalAsyncStream.swift.o",
+    "swiftmodule": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockBidirectionalAsyncStream~partial.swiftmodule",
+    "swift-dependencies": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockBidirectionalAsyncStream.swiftdeps",
+    "diagnostics": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockBidirectionalAsyncStream.dia"
+  },
+  "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/checkouts/connect-swift/Libraries/ConnectMocks/MockBidirectionalStream.swift": {
+    "dependencies": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockBidirectionalStream.d",
+    "object": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockBidirectionalStream.swift.o",
+    "swiftmodule": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockBidirectionalStream~partial.swiftmodule",
+    "swift-dependencies": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockBidirectionalStream.swiftdeps",
+    "diagnostics": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockBidirectionalStream.dia"
+  },
+  "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/checkouts/connect-swift/Libraries/ConnectMocks/MockClientOnlyAsyncStream.swift": {
+    "dependencies": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockClientOnlyAsyncStream.d",
+    "object": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockClientOnlyAsyncStream.swift.o",
+    "swiftmodule": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockClientOnlyAsyncStream~partial.swiftmodule",
+    "swift-dependencies": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockClientOnlyAsyncStream.swiftdeps",
+    "diagnostics": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockClientOnlyAsyncStream.dia"
+  },
+  "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/checkouts/connect-swift/Libraries/ConnectMocks/MockClientOnlyStream.swift": {
+    "dependencies": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockClientOnlyStream.d",
+    "object": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockClientOnlyStream.swift.o",
+    "swiftmodule": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockClientOnlyStream~partial.swiftmodule",
+    "swift-dependencies": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockClientOnlyStream.swiftdeps",
+    "diagnostics": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockClientOnlyStream.dia"
+  },
+  "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/checkouts/connect-swift/Libraries/ConnectMocks/MockServerOnlyAsyncStream.swift": {
+    "dependencies": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockServerOnlyAsyncStream.d",
+    "object": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockServerOnlyAsyncStream.swift.o",
+    "swiftmodule": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockServerOnlyAsyncStream~partial.swiftmodule",
+    "swift-dependencies": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockServerOnlyAsyncStream.swiftdeps",
+    "diagnostics": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockServerOnlyAsyncStream.dia"
+  },
+  "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/checkouts/connect-swift/Libraries/ConnectMocks/MockServerOnlyStream.swift": {
+    "dependencies": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockServerOnlyStream.d",
+    "object": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockServerOnlyStream.swift.o",
+    "swiftmodule": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockServerOnlyStream~partial.swiftmodule",
+    "swift-dependencies": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockServerOnlyStream.swiftdeps",
+    "diagnostics": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectMocks.build/MockServerOnlyStream.dia"
+  }
+}

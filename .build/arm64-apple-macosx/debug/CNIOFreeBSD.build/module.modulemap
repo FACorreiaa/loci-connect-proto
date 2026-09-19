@@ -1,0 +1,4 @@
+module CNIOFreeBSD {
+    umbrella header "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/checkouts/swift-nio/Sources/CNIOFreeBSD/include/CNIOFreeBSD.h"
+    export *
+}

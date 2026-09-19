@@ -1,0 +1,40 @@
+{
+  "": {
+    "swift-dependencies": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectPluginUtilities.build/master.swiftdeps"
+  },
+  "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/checkouts/connect-swift/Plugins/ConnectPluginUtilities/FilePathComponents.swift": {
+    "dependencies": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectPluginUtilities.build/FilePathComponents.d",
+    "object": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectPluginUtilities.build/FilePathComponents.swift.o",
+    "swiftmodule": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectPluginUtilities.build/FilePathComponents~partial.swiftmodule",
+    "swift-dependencies": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectPluginUtilities.build/FilePathComponents.swiftdeps",
+    "diagnostics": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectPluginUtilities.build/FilePathComponents.dia"
+  },
+  "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/checkouts/connect-swift/Plugins/ConnectPluginUtilities/Generator.swift": {
+    "dependencies": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectPluginUtilities.build/Generator.d",
+    "object": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectPluginUtilities.build/Generator.swift.o",
+    "swiftmodule": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectPluginUtilities.build/Generator~partial.swiftmodule",
+    "swift-dependencies": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectPluginUtilities.build/Generator.swiftdeps",
+    "diagnostics": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectPluginUtilities.build/Generator.dia"
+  },
+  "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/checkouts/connect-swift/Plugins/ConnectPluginUtilities/GeneratorOptions.swift": {
+    "dependencies": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectPluginUtilities.build/GeneratorOptions.d",
+    "object": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectPluginUtilities.build/GeneratorOptions.swift.o",
+    "swiftmodule": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectPluginUtilities.build/GeneratorOptions~partial.swiftmodule",
+    "swift-dependencies": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectPluginUtilities.build/GeneratorOptions.swiftdeps",
+    "diagnostics": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectPluginUtilities.build/GeneratorOptions.dia"
+  },
+  "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/checkouts/connect-swift/Plugins/ConnectPluginUtilities/MethodDescriptor+Extensions.swift": {
+    "dependencies": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectPluginUtilities.build/MethodDescriptor+Extensions.d",
+    "object": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectPluginUtilities.build/MethodDescriptor+Extensions.swift.o",
+    "swiftmodule": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectPluginUtilities.build/MethodDescriptor+Extensions~partial.swiftmodule",
+    "swift-dependencies": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectPluginUtilities.build/MethodDescriptor+Extensions.swiftdeps",
+    "diagnostics": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectPluginUtilities.build/MethodDescriptor+Extensions.dia"
+  },
+  "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/checkouts/connect-swift/Plugins/ConnectPluginUtilities/ServiceDescriptor+Extensions.swift": {
+    "dependencies": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectPluginUtilities.build/ServiceDescriptor+Extensions.d",
+    "object": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectPluginUtilities.build/ServiceDescriptor+Extensions.swift.o",
+    "swiftmodule": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectPluginUtilities.build/ServiceDescriptor+Extensions~partial.swiftmodule",
+    "swift-dependencies": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectPluginUtilities.build/ServiceDescriptor+Extensions.swiftdeps",
+    "diagnostics": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/ConnectPluginUtilities.build/ServiceDescriptor+Extensions.dia"
+  }
+}

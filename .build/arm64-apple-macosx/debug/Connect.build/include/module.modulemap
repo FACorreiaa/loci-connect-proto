@@ -1,0 +1,3 @@
+module Connect {
+    header "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/Connect.build/include/Connect-Swift.h"
+}

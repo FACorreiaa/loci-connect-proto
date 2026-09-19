@@ -1,0 +1,4 @@
+module CNIOLinux {
+    umbrella header "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/checkouts/swift-nio/Sources/CNIOLinux/include/CNIOLinux.h"
+    export *
+}
