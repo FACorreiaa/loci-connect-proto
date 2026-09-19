@@ -53,6 +53,17 @@ const (
 	LocalContextServiceSetNewsTickerEnabledProcedure = "/loci.localcontext.LocalContextService/SetNewsTickerEnabled"
 )
 
+// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
+var (
+	localContextServiceServiceDescriptor                    = localcontext.File_loci_localcontext_localcontext_proto.Services().ByName("LocalContextService")
+	localContextServiceGetLocalContextMethodDescriptor      = localContextServiceServiceDescriptor.Methods().ByName("GetLocalContext")
+	localContextServiceGetGoScoreMethodDescriptor           = localContextServiceServiceDescriptor.Methods().ByName("GetGoScore")
+	localContextServiceGetFxRatesMethodDescriptor           = localContextServiceServiceDescriptor.Methods().ByName("GetFxRates")
+	localContextServiceEstimateDriveCostMethodDescriptor    = localContextServiceServiceDescriptor.Methods().ByName("EstimateDriveCost")
+	localContextServiceGetNewsTickerMethodDescriptor        = localContextServiceServiceDescriptor.Methods().ByName("GetNewsTicker")
+	localContextServiceSetNewsTickerEnabledMethodDescriptor = localContextServiceServiceDescriptor.Methods().ByName("SetNewsTickerEnabled")
+)
+
 // LocalContextServiceClient is a client for the loci.localcontext.LocalContextService service.
 type LocalContextServiceClient interface {
 	GetLocalContext(context.Context, *connect.Request[localcontext.GetLocalContextRequest]) (*connect.Response[localcontext.LocalContext], error)
@@ -78,42 +89,41 @@ type LocalContextServiceClient interface {
 // http://api.acme.com or https://acme.com/grpc).
 func NewLocalContextServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) LocalContextServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
-	localContextServiceMethods := localcontext.File_loci_localcontext_localcontext_proto.Services().ByName("LocalContextService").Methods()
 	return &localContextServiceClient{
 		getLocalContext: connect.NewClient[localcontext.GetLocalContextRequest, localcontext.LocalContext](
 			httpClient,
 			baseURL+LocalContextServiceGetLocalContextProcedure,
-			connect.WithSchema(localContextServiceMethods.ByName("GetLocalContext")),
+			connect.WithSchema(localContextServiceGetLocalContextMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
 		getGoScore: connect.NewClient[localcontext.GetGoScoreRequest, localcontext.GetGoScoreResponse](
 			httpClient,
 			baseURL+LocalContextServiceGetGoScoreProcedure,
-			connect.WithSchema(localContextServiceMethods.ByName("GetGoScore")),
+			connect.WithSchema(localContextServiceGetGoScoreMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
 		getFxRates: connect.NewClient[localcontext.GetFxRatesRequest, localcontext.GetFxRatesResponse](
 			httpClient,
 			baseURL+LocalContextServiceGetFxRatesProcedure,
-			connect.WithSchema(localContextServiceMethods.ByName("GetFxRates")),
+			connect.WithSchema(localContextServiceGetFxRatesMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
 		estimateDriveCost: connect.NewClient[localcontext.EstimateDriveCostRequest, localcontext.EstimateDriveCostResponse](
 			httpClient,
 			baseURL+LocalContextServiceEstimateDriveCostProcedure,
-			connect.WithSchema(localContextServiceMethods.ByName("EstimateDriveCost")),
+			connect.WithSchema(localContextServiceEstimateDriveCostMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
 		getNewsTicker: connect.NewClient[localcontext.GetNewsTickerRequest, localcontext.GetNewsTickerResponse](
 			httpClient,
 			baseURL+LocalContextServiceGetNewsTickerProcedure,
-			connect.WithSchema(localContextServiceMethods.ByName("GetNewsTicker")),
+			connect.WithSchema(localContextServiceGetNewsTickerMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
 		setNewsTickerEnabled: connect.NewClient[localcontext.SetNewsTickerEnabledRequest, localcontext.SetNewsTickerEnabledResponse](
 			httpClient,
 			baseURL+LocalContextServiceSetNewsTickerEnabledProcedure,
-			connect.WithSchema(localContextServiceMethods.ByName("SetNewsTickerEnabled")),
+			connect.WithSchema(localContextServiceSetNewsTickerEnabledMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -182,41 +192,40 @@ type LocalContextServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewLocalContextServiceHandler(svc LocalContextServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
-	localContextServiceMethods := localcontext.File_loci_localcontext_localcontext_proto.Services().ByName("LocalContextService").Methods()
 	localContextServiceGetLocalContextHandler := connect.NewUnaryHandler(
 		LocalContextServiceGetLocalContextProcedure,
 		svc.GetLocalContext,
-		connect.WithSchema(localContextServiceMethods.ByName("GetLocalContext")),
+		connect.WithSchema(localContextServiceGetLocalContextMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
 	localContextServiceGetGoScoreHandler := connect.NewUnaryHandler(
 		LocalContextServiceGetGoScoreProcedure,
 		svc.GetGoScore,
-		connect.WithSchema(localContextServiceMethods.ByName("GetGoScore")),
+		connect.WithSchema(localContextServiceGetGoScoreMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
 	localContextServiceGetFxRatesHandler := connect.NewUnaryHandler(
 		LocalContextServiceGetFxRatesProcedure,
 		svc.GetFxRates,
-		connect.WithSchema(localContextServiceMethods.ByName("GetFxRates")),
+		connect.WithSchema(localContextServiceGetFxRatesMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
 	localContextServiceEstimateDriveCostHandler := connect.NewUnaryHandler(
 		LocalContextServiceEstimateDriveCostProcedure,
 		svc.EstimateDriveCost,
-		connect.WithSchema(localContextServiceMethods.ByName("EstimateDriveCost")),
+		connect.WithSchema(localContextServiceEstimateDriveCostMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
 	localContextServiceGetNewsTickerHandler := connect.NewUnaryHandler(
 		LocalContextServiceGetNewsTickerProcedure,
 		svc.GetNewsTicker,
-		connect.WithSchema(localContextServiceMethods.ByName("GetNewsTicker")),
+		connect.WithSchema(localContextServiceGetNewsTickerMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
 	localContextServiceSetNewsTickerEnabledHandler := connect.NewUnaryHandler(
 		LocalContextServiceSetNewsTickerEnabledProcedure,
 		svc.SetNewsTickerEnabled,
-		connect.WithSchema(localContextServiceMethods.ByName("SetNewsTickerEnabled")),
+		connect.WithSchema(localContextServiceSetNewsTickerEnabledMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/loci.localcontext.LocalContextService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

@@ -543,6 +543,142 @@ export declare type EstimateDriveCostResponse = Message<"loci.localcontext.Estim
 export declare const EstimateDriveCostResponseSchema: GenMessage<EstimateDriveCostResponse>;
 
 /**
+ * LocalContextService surfaces trip-time context: weather, plus live alerts
+ * from public-holiday and natural-hazard providers.
+ * NewsTickerItem is one breaking-news headline for the traveller's desk:
+ * title, source, time and a link out. Never a body — the ticker links to the
+ * publisher rather than republishing.
+ *
+ * @generated from message loci.localcontext.NewsTickerItem
+ */
+export declare type NewsTickerItem = Message<"loci.localcontext.NewsTickerItem"> & {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * @generated from field: string title = 2;
+   */
+  title: string;
+
+  /**
+   * @generated from field: string url = 3;
+   */
+  url: string;
+
+  /**
+   * @generated from field: string source = 4;
+   */
+  source: string;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp published_at = 5;
+   */
+  publishedAt?: Timestamp;
+
+  /**
+   * ISO 3166-1 alpha-2 of the country this headline was selected for, or
+   * empty for a feed not tied to one.
+   *
+   * @generated from field: string country_code = 6;
+   */
+  countryCode: string;
+};
+
+/**
+ * Describes the message loci.localcontext.NewsTickerItem.
+ * Use `create(NewsTickerItemSchema)` to create a new message.
+ */
+export declare const NewsTickerItemSchema: GenMessage<NewsTickerItem>;
+
+/**
+ * @generated from message loci.localcontext.GetNewsTickerRequest
+ */
+export declare type GetNewsTickerRequest = Message<"loci.localcontext.GetNewsTickerRequest"> & {
+  /**
+   * @generated from field: int32 limit = 1;
+   */
+  limit: number;
+};
+
+/**
+ * Describes the message loci.localcontext.GetNewsTickerRequest.
+ * Use `create(GetNewsTickerRequestSchema)` to create a new message.
+ */
+export declare const GetNewsTickerRequestSchema: GenMessage<GetNewsTickerRequest>;
+
+/**
+ * @generated from message loci.localcontext.GetNewsTickerResponse
+ */
+export declare type GetNewsTickerResponse = Message<"loci.localcontext.GetNewsTickerResponse"> & {
+  /**
+   * @generated from field: repeated loci.localcontext.NewsTickerItem items = 1;
+   */
+  items: NewsTickerItem[];
+
+  /**
+   * False when the person switched the ticker off; items is then empty.
+   *
+   * @generated from field: bool enabled = 2;
+   */
+  enabled: boolean;
+
+  /**
+   * True when at least one feed is serving cached headlines after a failed
+   * fetch upstream.
+   *
+   * @generated from field: bool stale = 3;
+   */
+  stale: boolean;
+
+  /**
+   * The countries whose news was selected: home, next trip, recently visited.
+   *
+   * @generated from field: repeated string country_codes = 4;
+   */
+  countryCodes: string[];
+};
+
+/**
+ * Describes the message loci.localcontext.GetNewsTickerResponse.
+ * Use `create(GetNewsTickerResponseSchema)` to create a new message.
+ */
+export declare const GetNewsTickerResponseSchema: GenMessage<GetNewsTickerResponse>;
+
+/**
+ * @generated from message loci.localcontext.SetNewsTickerEnabledRequest
+ */
+export declare type SetNewsTickerEnabledRequest = Message<"loci.localcontext.SetNewsTickerEnabledRequest"> & {
+  /**
+   * @generated from field: bool enabled = 1;
+   */
+  enabled: boolean;
+};
+
+/**
+ * Describes the message loci.localcontext.SetNewsTickerEnabledRequest.
+ * Use `create(SetNewsTickerEnabledRequestSchema)` to create a new message.
+ */
+export declare const SetNewsTickerEnabledRequestSchema: GenMessage<SetNewsTickerEnabledRequest>;
+
+/**
+ * @generated from message loci.localcontext.SetNewsTickerEnabledResponse
+ */
+export declare type SetNewsTickerEnabledResponse = Message<"loci.localcontext.SetNewsTickerEnabledResponse"> & {
+  /**
+   * @generated from field: bool enabled = 1;
+   */
+  enabled: boolean;
+};
+
+/**
+ * Describes the message loci.localcontext.SetNewsTickerEnabledResponse.
+ * Use `create(SetNewsTickerEnabledResponseSchema)` to create a new message.
+ */
+export declare const SetNewsTickerEnabledResponseSchema: GenMessage<SetNewsTickerEnabledResponse>;
+
+/**
  * AlertKind classifies a trip-time heads-up.
  *
  * Values are only ever appended. Reordering or removing one silently changes
@@ -601,9 +737,6 @@ export enum AlertKind {
 export declare const AlertKindSchema: GenEnum<AlertKind>;
 
 /**
- * LocalContextService surfaces trip-time context: weather, plus live alerts
- * from public-holiday and natural-hazard providers.
- *
  * @generated from service loci.localcontext.LocalContextService
  */
 export declare const LocalContextService: GenService<{
@@ -644,6 +777,27 @@ export declare const LocalContextService: GenService<{
     methodKind: "unary";
     input: typeof EstimateDriveCostRequestSchema;
     output: typeof EstimateDriveCostResponseSchema;
+  },
+  /**
+   * GetNewsTicker is the breaking-news strip for the signed-in traveller:
+   * headlines for their home country, next destination and recent visits.
+   *
+   * @generated from rpc loci.localcontext.LocalContextService.GetNewsTicker
+   */
+  getNewsTicker: {
+    methodKind: "unary";
+    input: typeof GetNewsTickerRequestSchema;
+    output: typeof GetNewsTickerResponseSchema;
+  },
+  /**
+   * SetNewsTickerEnabled is the per-user switch for that strip.
+   *
+   * @generated from rpc loci.localcontext.LocalContextService.SetNewsTickerEnabled
+   */
+  setNewsTickerEnabled: {
+    methodKind: "unary";
+    input: typeof SetNewsTickerEnabledRequestSchema;
+    output: typeof SetNewsTickerEnabledResponseSchema;
   },
 }>;
 
