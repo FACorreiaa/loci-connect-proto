@@ -15,13 +15,13 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// A linked chat.
-public nonisolated struct Loci_Messaging_Link: Sendable {
+public struct Loci_Messaging_Link: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -34,22 +34,22 @@ public nonisolated struct Loci_Messaging_Link: Sendable {
   public var displayName: String = String()
 
   public var linkedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_linkedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _linkedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_linkedAt = newValue}
   }
   /// Returns true if `linkedAt` has been explicitly set.
-  public var hasLinkedAt: Bool {self._linkedAt != nil}
+  public var hasLinkedAt: Bool {return self._linkedAt != nil}
   /// Clears the value of `linkedAt`. Subsequent reads from it will return its default value.
   public mutating func clearLinkedAt() {self._linkedAt = nil}
 
   /// Absent means linked but never used, which is how the settings page tells a
   /// live connection from one set up and forgotten.
   public var lastSeenAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_lastSeenAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _lastSeenAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_lastSeenAt = newValue}
   }
   /// Returns true if `lastSeenAt` has been explicitly set.
-  public var hasLastSeenAt: Bool {self._lastSeenAt != nil}
+  public var hasLastSeenAt: Bool {return self._lastSeenAt != nil}
   /// Clears the value of `lastSeenAt`. Subsequent reads from it will return its default value.
   public mutating func clearLastSeenAt() {self._lastSeenAt = nil}
 
@@ -61,7 +61,7 @@ public nonisolated struct Loci_Messaging_Link: Sendable {
   fileprivate var _lastSeenAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-public nonisolated struct Loci_Messaging_GetLinkRequest: Sendable {
+public struct Loci_Messaging_GetLinkRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -73,18 +73,18 @@ public nonisolated struct Loci_Messaging_GetLinkRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Messaging_GetLinkResponse: Sendable {
+public struct Loci_Messaging_GetLinkResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   /// Absent when the platform is not linked.
   public var link: Loci_Messaging_Link {
-    get {_link ?? Loci_Messaging_Link()}
+    get {return _link ?? Loci_Messaging_Link()}
     set {_link = newValue}
   }
   /// Returns true if `link` has been explicitly set.
-  public var hasLink: Bool {self._link != nil}
+  public var hasLink: Bool {return self._link != nil}
   /// Clears the value of `link`. Subsequent reads from it will return its default value.
   public mutating func clearLink() {self._link = nil}
 
@@ -100,7 +100,7 @@ public nonisolated struct Loci_Messaging_GetLinkResponse: Sendable {
   fileprivate var _link: Loci_Messaging_Link? = nil
 }
 
-public nonisolated struct Loci_Messaging_CreateLinkCodeRequest: Sendable {
+public struct Loci_Messaging_CreateLinkCodeRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -112,7 +112,7 @@ public nonisolated struct Loci_Messaging_CreateLinkCodeRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Messaging_CreateLinkCodeResponse: Sendable {
+public struct Loci_Messaging_CreateLinkCodeResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -122,11 +122,11 @@ public nonisolated struct Loci_Messaging_CreateLinkCodeResponse: Sendable {
   public var code: String = String()
 
   public var expiresAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_expiresAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _expiresAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_expiresAt = newValue}
   }
   /// Returns true if `expiresAt` has been explicitly set.
-  public var hasExpiresAt: Bool {self._expiresAt != nil}
+  public var hasExpiresAt: Bool {return self._expiresAt != nil}
   /// Clears the value of `expiresAt`. Subsequent reads from it will return its default value.
   public mutating func clearExpiresAt() {self._expiresAt = nil}
 
@@ -139,7 +139,7 @@ public nonisolated struct Loci_Messaging_CreateLinkCodeResponse: Sendable {
   fileprivate var _expiresAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-public nonisolated struct Loci_Messaging_UnlinkRequest: Sendable {
+public struct Loci_Messaging_UnlinkRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -151,7 +151,7 @@ public nonisolated struct Loci_Messaging_UnlinkRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Messaging_UnlinkResponse: Sendable {
+public struct Loci_Messaging_UnlinkResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -163,11 +163,16 @@ public nonisolated struct Loci_Messaging_UnlinkResponse: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.messaging"
+fileprivate let _protobuf_package = "loci.messaging"
 
-nonisolated extension Loci_Messaging_Link: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Messaging_Link: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Link"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}platform\0\u{3}display_name\0\u{3}linked_at\0\u{3}last_seen_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "platform"),
+    2: .standard(proto: "display_name"),
+    3: .standard(proto: "linked_at"),
+    4: .standard(proto: "last_seen_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -214,9 +219,11 @@ nonisolated extension Loci_Messaging_Link: SwiftProtobuf.Message, SwiftProtobuf.
   }
 }
 
-nonisolated extension Loci_Messaging_GetLinkRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Messaging_GetLinkRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetLinkRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}platform\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "platform"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -244,9 +251,12 @@ nonisolated extension Loci_Messaging_GetLinkRequest: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_Messaging_GetLinkResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Messaging_GetLinkResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetLinkResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}link\0\u{3}bot_handle\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "link"),
+    2: .standard(proto: "bot_handle"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -283,9 +293,11 @@ nonisolated extension Loci_Messaging_GetLinkResponse: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Messaging_CreateLinkCodeRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Messaging_CreateLinkCodeRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreateLinkCodeRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}platform\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "platform"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -313,9 +325,13 @@ nonisolated extension Loci_Messaging_CreateLinkCodeRequest: SwiftProtobuf.Messag
   }
 }
 
-nonisolated extension Loci_Messaging_CreateLinkCodeResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Messaging_CreateLinkCodeResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreateLinkCodeResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}code\0\u{3}expires_at\0\u{3}bot_handle\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "code"),
+    2: .standard(proto: "expires_at"),
+    3: .standard(proto: "bot_handle"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -357,9 +373,11 @@ nonisolated extension Loci_Messaging_CreateLinkCodeResponse: SwiftProtobuf.Messa
   }
 }
 
-nonisolated extension Loci_Messaging_UnlinkRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Messaging_UnlinkRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UnlinkRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}platform\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "platform"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -387,7 +405,7 @@ nonisolated extension Loci_Messaging_UnlinkRequest: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_Messaging_UnlinkResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Messaging_UnlinkResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UnlinkResponse"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 

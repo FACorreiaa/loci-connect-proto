@@ -14,82 +14,41 @@ import SwiftProtobuf
 /// TripDraft (or affected sub-entity) with the bumped version.
 public protocol Loci_Trip_TripServiceClientInterface: Sendable {
 
-    @discardableResult
-    func `saveTrip`(request: Loci_Trip_SaveTripRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Trip_TripDraft>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `saveTrip`(request: Loci_Trip_SaveTripRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripDraft>
-
-    @discardableResult
-    func `getTrip`(request: Loci_Trip_GetTripRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Trip_TripDraft>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `getTrip`(request: Loci_Trip_GetTripRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripDraft>
 
-    @discardableResult
-    func `listTrips`(request: Loci_Trip_ListTripsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Trip_ListTripsResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `listTrips`(request: Loci_Trip_ListTripsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_ListTripsResponse>
-
-    @discardableResult
-    func `shareTrip`(request: Loci_Trip_ShareTripRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Trip_ShareTripResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `shareTrip`(request: Loci_Trip_ShareTripRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_ShareTripResponse>
 
-    @discardableResult
-    func `reorderStops`(request: Loci_Trip_ReorderStopsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Trip_TripDraft>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `reorderStops`(request: Loci_Trip_ReorderStopsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripDraft>
-
-    @discardableResult
-    func `renameStop`(request: Loci_Trip_RenameStopRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Trip_TripDraft>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `renameStop`(request: Loci_Trip_RenameStopRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripDraft>
 
-    @discardableResult
-    func `editStopDuration`(request: Loci_Trip_EditStopDurationRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Trip_TripDraft>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `editStopDuration`(request: Loci_Trip_EditStopDurationRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripDraft>
-
-    @discardableResult
-    func `setConstraint`(request: Loci_Trip_SetConstraintRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Trip_TripDraft>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `setConstraint`(request: Loci_Trip_SetConstraintRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripDraft>
 
-    @discardableResult
-    func `addStop`(request: Loci_Trip_AddStopRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Trip_TripDraft>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `addStop`(request: Loci_Trip_AddStopRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripDraft>
-
-    @discardableResult
-    func `removeStop`(request: Loci_Trip_RemoveStopRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Trip_TripDraft>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `removeStop`(request: Loci_Trip_RemoveStopRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripDraft>
 
-    @discardableResult
-    func `replaceStop`(request: Loci_Trip_ReplaceStopRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Trip_TripDraft>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `replaceStop`(request: Loci_Trip_ReplaceStopRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripDraft>
 
-    @discardableResult
-    func `exportTrip`(request: Loci_Trip_ExportTripRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Trip_ExportTripResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `exportTrip`(request: Loci_Trip_ExportTripRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_ExportTripResponse>
-
-    /// SuggestPacking derives a packing list from the trip: its length, its cities'
-    /// forecasts, the driving between them, and the traveller's stated interests.
-    @discardableResult
-    func `suggestPacking`(request: Loci_Trip_SuggestPackingRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Trip_SuggestPackingResponse>) -> Void) -> Connect.Cancelable
 
     /// SuggestPacking derives a packing list from the trip: its length, its cities'
     /// forecasts, the driving between them, and the traveller's stated interests.
@@ -105,19 +64,9 @@ public final class Loci_Trip_TripServiceClient: Loci_Trip_TripServiceClientInter
         self.client = client
     }
 
-    @discardableResult
-    public func `saveTrip`(request: Loci_Trip_SaveTripRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Trip_TripDraft>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.trip.TripService/SaveTrip", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `saveTrip`(request: Loci_Trip_SaveTripRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_TripDraft> {
         return await self.client.unary(path: "/loci.trip.TripService/SaveTrip", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getTrip`(request: Loci_Trip_GetTripRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Trip_TripDraft>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.trip.TripService/GetTrip", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -125,19 +74,9 @@ public final class Loci_Trip_TripServiceClient: Loci_Trip_TripServiceClientInter
         return await self.client.unary(path: "/loci.trip.TripService/GetTrip", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `listTrips`(request: Loci_Trip_ListTripsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Trip_ListTripsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.trip.TripService/ListTrips", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `listTrips`(request: Loci_Trip_ListTripsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_ListTripsResponse> {
         return await self.client.unary(path: "/loci.trip.TripService/ListTrips", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `shareTrip`(request: Loci_Trip_ShareTripRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Trip_ShareTripResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.trip.TripService/ShareTrip", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -145,19 +84,9 @@ public final class Loci_Trip_TripServiceClient: Loci_Trip_TripServiceClientInter
         return await self.client.unary(path: "/loci.trip.TripService/ShareTrip", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `reorderStops`(request: Loci_Trip_ReorderStopsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Trip_TripDraft>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.trip.TripService/ReorderStops", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `reorderStops`(request: Loci_Trip_ReorderStopsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_TripDraft> {
         return await self.client.unary(path: "/loci.trip.TripService/ReorderStops", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `renameStop`(request: Loci_Trip_RenameStopRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Trip_TripDraft>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.trip.TripService/RenameStop", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -165,19 +94,9 @@ public final class Loci_Trip_TripServiceClient: Loci_Trip_TripServiceClientInter
         return await self.client.unary(path: "/loci.trip.TripService/RenameStop", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `editStopDuration`(request: Loci_Trip_EditStopDurationRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Trip_TripDraft>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.trip.TripService/EditStopDuration", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `editStopDuration`(request: Loci_Trip_EditStopDurationRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_TripDraft> {
         return await self.client.unary(path: "/loci.trip.TripService/EditStopDuration", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `setConstraint`(request: Loci_Trip_SetConstraintRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Trip_TripDraft>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.trip.TripService/SetConstraint", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -185,19 +104,9 @@ public final class Loci_Trip_TripServiceClient: Loci_Trip_TripServiceClientInter
         return await self.client.unary(path: "/loci.trip.TripService/SetConstraint", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `addStop`(request: Loci_Trip_AddStopRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Trip_TripDraft>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.trip.TripService/AddStop", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `addStop`(request: Loci_Trip_AddStopRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_TripDraft> {
         return await self.client.unary(path: "/loci.trip.TripService/AddStop", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `removeStop`(request: Loci_Trip_RemoveStopRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Trip_TripDraft>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.trip.TripService/RemoveStop", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -205,29 +114,14 @@ public final class Loci_Trip_TripServiceClient: Loci_Trip_TripServiceClientInter
         return await self.client.unary(path: "/loci.trip.TripService/RemoveStop", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `replaceStop`(request: Loci_Trip_ReplaceStopRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Trip_TripDraft>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.trip.TripService/ReplaceStop", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `replaceStop`(request: Loci_Trip_ReplaceStopRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_TripDraft> {
         return await self.client.unary(path: "/loci.trip.TripService/ReplaceStop", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `exportTrip`(request: Loci_Trip_ExportTripRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Trip_ExportTripResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.trip.TripService/ExportTrip", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `exportTrip`(request: Loci_Trip_ExportTripRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_ExportTripResponse> {
         return await self.client.unary(path: "/loci.trip.TripService/ExportTrip", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `suggestPacking`(request: Loci_Trip_SuggestPackingRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Trip_SuggestPackingResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.trip.TripService/SuggestPacking", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

@@ -23,10 +23,6 @@ import SwiftProtobuf
 public protocol Loci_Speech_SpeechServiceClientInterface: Sendable {
 
     /// Transcribe returns what was said in a recording.
-    @discardableResult
-    func `transcribe`(request: Loci_Speech_TranscribeRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Speech_TranscribeResponse>) -> Void) -> Connect.Cancelable
-
-    /// Transcribe returns what was said in a recording.
     @available(iOS 13, *)
     func `transcribe`(request: Loci_Speech_TranscribeRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Speech_TranscribeResponse>
 }
@@ -37,11 +33,6 @@ public final class Loci_Speech_SpeechServiceClient: Loci_Speech_SpeechServiceCli
 
     public init(client: Connect.ProtocolClientInterface) {
         self.client = client
-    }
-
-    @discardableResult
-    public func `transcribe`(request: Loci_Speech_TranscribeRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Speech_TranscribeResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.speech.SpeechService/Transcribe", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

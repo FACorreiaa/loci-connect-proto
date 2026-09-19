@@ -15,13 +15,13 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// Type of content being reviewed
-public nonisolated enum Loci_Review_ReviewContentType: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Review_ReviewContentType: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
 
@@ -88,7 +88,7 @@ public nonisolated enum Loci_Review_ReviewContentType: SwiftProtobuf.Enum, Swift
 }
 
 /// Review status
-public nonisolated enum Loci_Review_ReviewStatus: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Review_ReviewStatus: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
 
@@ -148,7 +148,7 @@ public nonisolated enum Loci_Review_ReviewStatus: SwiftProtobuf.Enum, Swift.Case
 
 }
 
-public nonisolated enum Loci_Review_SortDirection: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Review_SortDirection: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case asc // = 1
@@ -187,7 +187,7 @@ public nonisolated enum Loci_Review_SortDirection: SwiftProtobuf.Enum, Swift.Cas
 }
 
 /// Sort options for reviews
-public nonisolated enum Loci_Review_ReviewSortBy: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Review_ReviewSortBy: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
 
@@ -242,150 +242,150 @@ public nonisolated enum Loci_Review_ReviewSortBy: SwiftProtobuf.Enum, Swift.Case
 }
 
 /// Core review entity
-public nonisolated struct Loci_Review_Review: @unchecked Sendable {
+public struct Loci_Review_Review: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var id: String {
-    get {_storage._id}
+    get {return _storage._id}
     set {_uniqueStorage()._id = newValue}
   }
 
   public var userID: String {
-    get {_storage._userID}
+    get {return _storage._userID}
     set {_uniqueStorage()._userID = newValue}
   }
 
   /// Deprecated: use content_id instead
   public var poiID: String {
-    get {_storage._poiID}
+    get {return _storage._poiID}
     set {_uniqueStorage()._poiID = newValue}
   }
 
   /// 1.0 - 5.0
   public var rating: Double {
-    get {_storage._rating}
+    get {return _storage._rating}
     set {_uniqueStorage()._rating = newValue}
   }
 
   public var title: String {
-    get {_storage._title}
+    get {return _storage._title}
     set {_uniqueStorage()._title = newValue}
   }
 
   public var content: String {
-    get {_storage._content}
+    get {return _storage._content}
     set {_uniqueStorage()._content = newValue}
   }
 
   /// Photo URLs
   public var photos: [String] {
-    get {_storage._photos}
+    get {return _storage._photos}
     set {_uniqueStorage()._photos = newValue}
   }
 
   public var status: Loci_Review_ReviewStatus {
-    get {_storage._status}
+    get {return _storage._status}
     set {_uniqueStorage()._status = newValue}
   }
 
   public var visitDate: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._visitDate ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._visitDate ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._visitDate = newValue}
   }
   /// Returns true if `visitDate` has been explicitly set.
-  public var hasVisitDate: Bool {_storage._visitDate != nil}
+  public var hasVisitDate: Bool {return _storage._visitDate != nil}
   /// Clears the value of `visitDate`. Subsequent reads from it will return its default value.
   public mutating func clearVisitDate() {_uniqueStorage()._visitDate = nil}
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {_storage._createdAt != nil}
+  public var hasCreatedAt: Bool {return _storage._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {_uniqueStorage()._createdAt = nil}
 
   public var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  public var hasUpdatedAt: Bool {_storage._updatedAt != nil}
+  public var hasUpdatedAt: Bool {return _storage._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {_uniqueStorage()._updatedAt = nil}
 
   /// Review metadata
   public var helpfulCount: Int32 {
-    get {_storage._helpfulCount}
+    get {return _storage._helpfulCount}
     set {_uniqueStorage()._helpfulCount = newValue}
   }
 
   /// Number of reports
   public var reportCount: Int32 {
-    get {_storage._reportCount}
+    get {return _storage._reportCount}
     set {_uniqueStorage()._reportCount = newValue}
   }
 
   /// Verified reviewer
   public var isVerified: Bool {
-    get {_storage._isVerified}
+    get {return _storage._isVerified}
     set {_uniqueStorage()._isVerified = newValue}
   }
 
   /// ISO 639-1 language code
   public var language: String {
-    get {_storage._language}
+    get {return _storage._language}
     set {_uniqueStorage()._language = newValue}
   }
 
   /// Review aspects (detailed ratings)
   public var aspects: Loci_Review_ReviewAspects {
-    get {_storage._aspects ?? Loci_Review_ReviewAspects()}
+    get {return _storage._aspects ?? Loci_Review_ReviewAspects()}
     set {_uniqueStorage()._aspects = newValue}
   }
   /// Returns true if `aspects` has been explicitly set.
-  public var hasAspects: Bool {_storage._aspects != nil}
+  public var hasAspects: Bool {return _storage._aspects != nil}
   /// Clears the value of `aspects`. Subsequent reads from it will return its default value.
   public mutating func clearAspects() {_uniqueStorage()._aspects = nil}
 
   /// User information (public)
   public var reviewer: Loci_Review_ReviewerInfo {
-    get {_storage._reviewer ?? Loci_Review_ReviewerInfo()}
+    get {return _storage._reviewer ?? Loci_Review_ReviewerInfo()}
     set {_uniqueStorage()._reviewer = newValue}
   }
   /// Returns true if `reviewer` has been explicitly set.
-  public var hasReviewer: Bool {_storage._reviewer != nil}
+  public var hasReviewer: Bool {return _storage._reviewer != nil}
   /// Clears the value of `reviewer`. Subsequent reads from it will return its default value.
   public mutating func clearReviewer() {_uniqueStorage()._reviewer = nil}
 
   /// Response from business owner
   public var businessResponse: Loci_Review_BusinessResponse {
-    get {_storage._businessResponse ?? Loci_Review_BusinessResponse()}
+    get {return _storage._businessResponse ?? Loci_Review_BusinessResponse()}
     set {_uniqueStorage()._businessResponse = newValue}
   }
   /// Returns true if `businessResponse` has been explicitly set.
-  public var hasBusinessResponse: Bool {_storage._businessResponse != nil}
+  public var hasBusinessResponse: Bool {return _storage._businessResponse != nil}
   /// Clears the value of `businessResponse`. Subsequent reads from it will return its default value.
   public mutating func clearBusinessResponse() {_uniqueStorage()._businessResponse = nil}
 
   /// NEW: Support for all content types (not just POIs)
   public var contentType: Loci_Review_ReviewContentType {
-    get {_storage._contentType}
+    get {return _storage._contentType}
     set {_uniqueStorage()._contentType = newValue}
   }
 
   /// ID of content being reviewed
   public var contentID: String {
-    get {_storage._contentID}
+    get {return _storage._contentID}
     set {_uniqueStorage()._contentID = newValue}
   }
 
   /// Name of content for display
   public var contentName: String {
-    get {_storage._contentName}
+    get {return _storage._contentName}
     set {_uniqueStorage()._contentName = newValue}
   }
 
@@ -397,7 +397,7 @@ public nonisolated struct Loci_Review_Review: @unchecked Sendable {
 }
 
 /// Detailed aspects of a review
-public nonisolated struct Loci_Review_ReviewAspects: Sendable {
+public struct Loci_Review_ReviewAspects: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -431,7 +431,7 @@ public nonisolated struct Loci_Review_ReviewAspects: Sendable {
 }
 
 /// Public reviewer information
-public nonisolated struct Loci_Review_ReviewerInfo: Sendable {
+public struct Loci_Review_ReviewerInfo: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -450,11 +450,11 @@ public nonisolated struct Loci_Review_ReviewerInfo: Sendable {
   public var level: String = String()
 
   public var memberSince: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_memberSince ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _memberSince ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_memberSince = newValue}
   }
   /// Returns true if `memberSince` has been explicitly set.
-  public var hasMemberSince: Bool {self._memberSince != nil}
+  public var hasMemberSince: Bool {return self._memberSince != nil}
   /// Clears the value of `memberSince`. Subsequent reads from it will return its default value.
   public mutating func clearMemberSince() {self._memberSince = nil}
 
@@ -466,7 +466,7 @@ public nonisolated struct Loci_Review_ReviewerInfo: Sendable {
 }
 
 /// Business response to a review
-public nonisolated struct Loci_Review_BusinessResponse: Sendable {
+public struct Loci_Review_BusinessResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -478,11 +478,11 @@ public nonisolated struct Loci_Review_BusinessResponse: Sendable {
   public var content: String = String()
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {self._createdAt != nil}
+  public var hasCreatedAt: Bool {return self._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {self._createdAt = nil}
 
@@ -498,74 +498,74 @@ public nonisolated struct Loci_Review_BusinessResponse: Sendable {
 }
 
 /// Review statistics for a POI
-public nonisolated struct Loci_Review_ReviewStatistics: @unchecked Sendable {
+public struct Loci_Review_ReviewStatistics: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var poiID: String {
-    get {_storage._poiID}
+    get {return _storage._poiID}
     set {_uniqueStorage()._poiID = newValue}
   }
 
   public var overallRating: Double {
-    get {_storage._overallRating}
+    get {return _storage._overallRating}
     set {_uniqueStorage()._overallRating = newValue}
   }
 
   public var totalReviews: Int32 {
-    get {_storage._totalReviews}
+    get {return _storage._totalReviews}
     set {_uniqueStorage()._totalReviews = newValue}
   }
 
   public var ratingBreakdown: Loci_Review_RatingBreakdown {
-    get {_storage._ratingBreakdown ?? Loci_Review_RatingBreakdown()}
+    get {return _storage._ratingBreakdown ?? Loci_Review_RatingBreakdown()}
     set {_uniqueStorage()._ratingBreakdown = newValue}
   }
   /// Returns true if `ratingBreakdown` has been explicitly set.
-  public var hasRatingBreakdown: Bool {_storage._ratingBreakdown != nil}
+  public var hasRatingBreakdown: Bool {return _storage._ratingBreakdown != nil}
   /// Clears the value of `ratingBreakdown`. Subsequent reads from it will return its default value.
   public mutating func clearRatingBreakdown() {_uniqueStorage()._ratingBreakdown = nil}
 
   public var aspectAverages: Loci_Review_ReviewAspectAverages {
-    get {_storage._aspectAverages ?? Loci_Review_ReviewAspectAverages()}
+    get {return _storage._aspectAverages ?? Loci_Review_ReviewAspectAverages()}
     set {_uniqueStorage()._aspectAverages = newValue}
   }
   /// Returns true if `aspectAverages` has been explicitly set.
-  public var hasAspectAverages: Bool {_storage._aspectAverages != nil}
+  public var hasAspectAverages: Bool {return _storage._aspectAverages != nil}
   /// Clears the value of `aspectAverages`. Subsequent reads from it will return its default value.
   public mutating func clearAspectAverages() {_uniqueStorage()._aspectAverages = nil}
 
   public var trends: Loci_Review_RecentReviewTrends {
-    get {_storage._trends ?? Loci_Review_RecentReviewTrends()}
+    get {return _storage._trends ?? Loci_Review_RecentReviewTrends()}
     set {_uniqueStorage()._trends = newValue}
   }
   /// Returns true if `trends` has been explicitly set.
-  public var hasTrends: Bool {_storage._trends != nil}
+  public var hasTrends: Bool {return _storage._trends != nil}
   /// Clears the value of `trends`. Subsequent reads from it will return its default value.
   public mutating func clearTrends() {_uniqueStorage()._trends = nil}
 
   /// Most mentioned tags/keywords
   public var tags: [Loci_Review_ReviewTag] {
-    get {_storage._tags}
+    get {return _storage._tags}
     set {_uniqueStorage()._tags = newValue}
   }
 
   public var languageDistribution: Loci_Review_LanguageDistribution {
-    get {_storage._languageDistribution ?? Loci_Review_LanguageDistribution()}
+    get {return _storage._languageDistribution ?? Loci_Review_LanguageDistribution()}
     set {_uniqueStorage()._languageDistribution = newValue}
   }
   /// Returns true if `languageDistribution` has been explicitly set.
-  public var hasLanguageDistribution: Bool {_storage._languageDistribution != nil}
+  public var hasLanguageDistribution: Bool {return _storage._languageDistribution != nil}
   /// Clears the value of `languageDistribution`. Subsequent reads from it will return its default value.
   public mutating func clearLanguageDistribution() {_uniqueStorage()._languageDistribution = nil}
 
   public var lastUpdated: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._lastUpdated ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._lastUpdated ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._lastUpdated = newValue}
   }
   /// Returns true if `lastUpdated` has been explicitly set.
-  public var hasLastUpdated: Bool {_storage._lastUpdated != nil}
+  public var hasLastUpdated: Bool {return _storage._lastUpdated != nil}
   /// Clears the value of `lastUpdated`. Subsequent reads from it will return its default value.
   public mutating func clearLastUpdated() {_uniqueStorage()._lastUpdated = nil}
 
@@ -576,7 +576,7 @@ public nonisolated struct Loci_Review_ReviewStatistics: @unchecked Sendable {
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-public nonisolated struct Loci_Review_RatingBreakdown: Sendable {
+public struct Loci_Review_RatingBreakdown: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -597,7 +597,7 @@ public nonisolated struct Loci_Review_RatingBreakdown: Sendable {
 }
 
 /// Average ratings for review aspects
-public nonisolated struct Loci_Review_ReviewAspectAverages: Sendable {
+public struct Loci_Review_ReviewAspectAverages: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -628,7 +628,7 @@ public nonisolated struct Loci_Review_ReviewAspectAverages: Sendable {
 }
 
 /// Review trends over time
-public nonisolated struct Loci_Review_RecentReviewTrends: Sendable {
+public struct Loci_Review_RecentReviewTrends: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -649,7 +649,7 @@ public nonisolated struct Loci_Review_RecentReviewTrends: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Review_MonthlyReviewData: Sendable {
+public struct Loci_Review_MonthlyReviewData: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -668,7 +668,7 @@ public nonisolated struct Loci_Review_MonthlyReviewData: Sendable {
 }
 
 /// Review tags/keywords
-public nonisolated struct Loci_Review_ReviewTag: Sendable {
+public struct Loci_Review_ReviewTag: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -689,7 +689,7 @@ public nonisolated struct Loci_Review_ReviewTag: Sendable {
 }
 
 /// Language distribution of reviews
-public nonisolated struct Loci_Review_LanguageDistribution: Sendable {
+public struct Loci_Review_LanguageDistribution: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -701,7 +701,7 @@ public nonisolated struct Loci_Review_LanguageDistribution: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Review_LanguageCount: Sendable {
+public struct Loci_Review_LanguageCount: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -720,7 +720,7 @@ public nonisolated struct Loci_Review_LanguageCount: Sendable {
 }
 
 /// Review filter options
-public nonisolated struct Loci_Review_ReviewFilter: Sendable {
+public struct Loci_Review_ReviewFilter: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -729,20 +729,20 @@ public nonisolated struct Loci_Review_ReviewFilter: Sendable {
   public var ratingFilters: [Double] = []
 
   public var startDate: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_startDate ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _startDate ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_startDate = newValue}
   }
   /// Returns true if `startDate` has been explicitly set.
-  public var hasStartDate: Bool {self._startDate != nil}
+  public var hasStartDate: Bool {return self._startDate != nil}
   /// Clears the value of `startDate`. Subsequent reads from it will return its default value.
   public mutating func clearStartDate() {self._startDate = nil}
 
   public var endDate: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_endDate ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _endDate ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_endDate = newValue}
   }
   /// Returns true if `endDate` has been explicitly set.
-  public var hasEndDate: Bool {self._endDate != nil}
+  public var hasEndDate: Bool {return self._endDate != nil}
   /// Clears the value of `endDate`. Subsequent reads from it will return its default value.
   public mutating func clearEndDate() {self._endDate = nil}
 
@@ -767,7 +767,7 @@ public nonisolated struct Loci_Review_ReviewFilter: Sendable {
 }
 
 /// Request/Response messages
-public nonisolated struct Loci_Review_CreateReviewRequest: @unchecked Sendable {
+public struct Loci_Review_CreateReviewRequest: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -775,76 +775,76 @@ public nonisolated struct Loci_Review_CreateReviewRequest: @unchecked Sendable {
   /// Ignored by the server, which takes the author from the auth token. Kept
   /// for wire compatibility; do not require it — clients correctly omit it.
   public var userID: String {
-    get {_storage._userID}
+    get {return _storage._userID}
     set {_uniqueStorage()._userID = newValue}
   }
 
   /// Deprecated: use content_id
   public var poiID: String {
-    get {_storage._poiID}
+    get {return _storage._poiID}
     set {_uniqueStorage()._poiID = newValue}
   }
 
   public var rating: Double {
-    get {_storage._rating}
+    get {return _storage._rating}
     set {_uniqueStorage()._rating = newValue}
   }
 
   public var title: String {
-    get {_storage._title}
+    get {return _storage._title}
     set {_uniqueStorage()._title = newValue}
   }
 
   public var content: String {
-    get {_storage._content}
+    get {return _storage._content}
     set {_uniqueStorage()._content = newValue}
   }
 
   public var photoUrls: [String] {
-    get {_storage._photoUrls}
+    get {return _storage._photoUrls}
     set {_uniqueStorage()._photoUrls = newValue}
   }
 
   public var visitDate: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._visitDate ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._visitDate ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._visitDate = newValue}
   }
   /// Returns true if `visitDate` has been explicitly set.
-  public var hasVisitDate: Bool {_storage._visitDate != nil}
+  public var hasVisitDate: Bool {return _storage._visitDate != nil}
   /// Clears the value of `visitDate`. Subsequent reads from it will return its default value.
   public mutating func clearVisitDate() {_uniqueStorage()._visitDate = nil}
 
   public var aspects: Loci_Review_ReviewAspects {
-    get {_storage._aspects ?? Loci_Review_ReviewAspects()}
+    get {return _storage._aspects ?? Loci_Review_ReviewAspects()}
     set {_uniqueStorage()._aspects = newValue}
   }
   /// Returns true if `aspects` has been explicitly set.
-  public var hasAspects: Bool {_storage._aspects != nil}
+  public var hasAspects: Bool {return _storage._aspects != nil}
   /// Clears the value of `aspects`. Subsequent reads from it will return its default value.
   public mutating func clearAspects() {_uniqueStorage()._aspects = nil}
 
   /// Optional. Empty means "unspecified"; when set it must be an ISO 639-1 code.
   public var language: String {
-    get {_storage._language}
+    get {return _storage._language}
     set {_uniqueStorage()._language = newValue}
   }
 
   /// NEW: Support for all content types
   public var contentType: Loci_Review_ReviewContentType {
-    get {_storage._contentType}
+    get {return _storage._contentType}
     set {_uniqueStorage()._contentType = newValue}
   }
 
   /// Alternative to poi_id for non-POI content. Exactly one of the two is set,
   /// so this cannot be required.
   public var contentID: String {
-    get {_storage._contentID}
+    get {return _storage._contentID}
     set {_uniqueStorage()._contentID = newValue}
   }
 
   /// Name of content for display
   public var contentName: String {
-    get {_storage._contentName}
+    get {return _storage._contentName}
     set {_uniqueStorage()._contentName = newValue}
   }
 
@@ -855,26 +855,26 @@ public nonisolated struct Loci_Review_CreateReviewRequest: @unchecked Sendable {
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-public nonisolated struct Loci_Review_CreateReviewResponse: Sendable {
+public struct Loci_Review_CreateReviewResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var response: Loci_Common_Response {
-    get {_response ?? Loci_Common_Response()}
+    get {return _response ?? Loci_Common_Response()}
     set {_response = newValue}
   }
   /// Returns true if `response` has been explicitly set.
-  public var hasResponse: Bool {self._response != nil}
+  public var hasResponse: Bool {return self._response != nil}
   /// Clears the value of `response`. Subsequent reads from it will return its default value.
   public mutating func clearResponse() {self._response = nil}
 
   public var review: Loci_Review_Review {
-    get {_review ?? Loci_Review_Review()}
+    get {return _review ?? Loci_Review_Review()}
     set {_review = newValue}
   }
   /// Returns true if `review` has been explicitly set.
-  public var hasReview: Bool {self._review != nil}
+  public var hasReview: Bool {return self._review != nil}
   /// Clears the value of `review`. Subsequent reads from it will return its default value.
   public mutating func clearReview() {self._review = nil}
 
@@ -886,7 +886,7 @@ public nonisolated struct Loci_Review_CreateReviewResponse: Sendable {
   fileprivate var _review: Loci_Review_Review? = nil
 }
 
-public nonisolated struct Loci_Review_GetPOIReviewsRequest: Sendable {
+public struct Loci_Review_GetPOIReviewsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -894,20 +894,20 @@ public nonisolated struct Loci_Review_GetPOIReviewsRequest: Sendable {
   public var poiID: String = String()
 
   public var pagination: Loci_Common_PaginationRequest {
-    get {_pagination ?? Loci_Common_PaginationRequest()}
+    get {return _pagination ?? Loci_Common_PaginationRequest()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
   public var filter: Loci_Review_ReviewFilter {
-    get {_filter ?? Loci_Review_ReviewFilter()}
+    get {return _filter ?? Loci_Review_ReviewFilter()}
     set {_filter = newValue}
   }
   /// Returns true if `filter` has been explicitly set.
-  public var hasFilter: Bool {self._filter != nil}
+  public var hasFilter: Bool {return self._filter != nil}
   /// Clears the value of `filter`. Subsequent reads from it will return its default value.
   public mutating func clearFilter() {self._filter = nil}
 
@@ -919,7 +919,7 @@ public nonisolated struct Loci_Review_GetPOIReviewsRequest: Sendable {
   fileprivate var _filter: Loci_Review_ReviewFilter? = nil
 }
 
-public nonisolated struct Loci_Review_GetPOIReviewsResponse: Sendable {
+public struct Loci_Review_GetPOIReviewsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -927,20 +927,20 @@ public nonisolated struct Loci_Review_GetPOIReviewsResponse: Sendable {
   public var reviews: [Loci_Review_Review] = []
 
   public var pagination: Loci_Common_PaginationMetadata {
-    get {_pagination ?? Loci_Common_PaginationMetadata()}
+    get {return _pagination ?? Loci_Common_PaginationMetadata()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
   public var statistics: Loci_Review_ReviewStatistics {
-    get {_statistics ?? Loci_Review_ReviewStatistics()}
+    get {return _statistics ?? Loci_Review_ReviewStatistics()}
     set {_statistics = newValue}
   }
   /// Returns true if `statistics` has been explicitly set.
-  public var hasStatistics: Bool {self._statistics != nil}
+  public var hasStatistics: Bool {return self._statistics != nil}
   /// Clears the value of `statistics`. Subsequent reads from it will return its default value.
   public mutating func clearStatistics() {self._statistics = nil}
 
@@ -953,26 +953,26 @@ public nonisolated struct Loci_Review_GetPOIReviewsResponse: Sendable {
 }
 
 /// Global recent-reviews feed (across all content)
-public nonisolated struct Loci_Review_GetRecentReviewsRequest: Sendable {
+public struct Loci_Review_GetRecentReviewsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var pagination: Loci_Common_PaginationRequest {
-    get {_pagination ?? Loci_Common_PaginationRequest()}
+    get {return _pagination ?? Loci_Common_PaginationRequest()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
   public var filter: Loci_Review_ReviewFilter {
-    get {_filter ?? Loci_Review_ReviewFilter()}
+    get {return _filter ?? Loci_Review_ReviewFilter()}
     set {_filter = newValue}
   }
   /// Returns true if `filter` has been explicitly set.
-  public var hasFilter: Bool {self._filter != nil}
+  public var hasFilter: Bool {return self._filter != nil}
   /// Clears the value of `filter`. Subsequent reads from it will return its default value.
   public mutating func clearFilter() {self._filter = nil}
 
@@ -984,7 +984,7 @@ public nonisolated struct Loci_Review_GetRecentReviewsRequest: Sendable {
   fileprivate var _filter: Loci_Review_ReviewFilter? = nil
 }
 
-public nonisolated struct Loci_Review_GetRecentReviewsResponse: Sendable {
+public struct Loci_Review_GetRecentReviewsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -992,11 +992,11 @@ public nonisolated struct Loci_Review_GetRecentReviewsResponse: Sendable {
   public var reviews: [Loci_Review_Review] = []
 
   public var pagination: Loci_Common_PaginationMetadata {
-    get {_pagination ?? Loci_Common_PaginationMetadata()}
+    get {return _pagination ?? Loci_Common_PaginationMetadata()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
@@ -1008,36 +1008,36 @@ public nonisolated struct Loci_Review_GetRecentReviewsResponse: Sendable {
 }
 
 /// NEW: Generic request for any content type
-public nonisolated struct Loci_Review_GetContentReviewsRequest: @unchecked Sendable {
+public struct Loci_Review_GetContentReviewsRequest: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var contentType: Loci_Review_ReviewContentType {
-    get {_storage._contentType}
+    get {return _storage._contentType}
     set {_uniqueStorage()._contentType = newValue}
   }
 
   public var contentID: String {
-    get {_storage._contentID}
+    get {return _storage._contentID}
     set {_uniqueStorage()._contentID = newValue}
   }
 
   public var pagination: Loci_Common_PaginationRequest {
-    get {_storage._pagination ?? Loci_Common_PaginationRequest()}
+    get {return _storage._pagination ?? Loci_Common_PaginationRequest()}
     set {_uniqueStorage()._pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {_storage._pagination != nil}
+  public var hasPagination: Bool {return _storage._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {_uniqueStorage()._pagination = nil}
 
   public var filter: Loci_Review_ReviewFilter {
-    get {_storage._filter ?? Loci_Review_ReviewFilter()}
+    get {return _storage._filter ?? Loci_Review_ReviewFilter()}
     set {_uniqueStorage()._filter = newValue}
   }
   /// Returns true if `filter` has been explicitly set.
-  public var hasFilter: Bool {_storage._filter != nil}
+  public var hasFilter: Bool {return _storage._filter != nil}
   /// Clears the value of `filter`. Subsequent reads from it will return its default value.
   public mutating func clearFilter() {_uniqueStorage()._filter = nil}
 
@@ -1048,7 +1048,7 @@ public nonisolated struct Loci_Review_GetContentReviewsRequest: @unchecked Senda
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-public nonisolated struct Loci_Review_GetContentReviewsResponse: Sendable {
+public struct Loci_Review_GetContentReviewsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1056,20 +1056,20 @@ public nonisolated struct Loci_Review_GetContentReviewsResponse: Sendable {
   public var reviews: [Loci_Review_Review] = []
 
   public var pagination: Loci_Common_PaginationMetadata {
-    get {_pagination ?? Loci_Common_PaginationMetadata()}
+    get {return _pagination ?? Loci_Common_PaginationMetadata()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
   public var statistics: Loci_Review_ReviewStatistics {
-    get {_statistics ?? Loci_Review_ReviewStatistics()}
+    get {return _statistics ?? Loci_Review_ReviewStatistics()}
     set {_statistics = newValue}
   }
   /// Returns true if `statistics` has been explicitly set.
-  public var hasStatistics: Bool {self._statistics != nil}
+  public var hasStatistics: Bool {return self._statistics != nil}
   /// Clears the value of `statistics`. Subsequent reads from it will return its default value.
   public mutating func clearStatistics() {self._statistics = nil}
 
@@ -1081,7 +1081,7 @@ public nonisolated struct Loci_Review_GetContentReviewsResponse: Sendable {
   fileprivate var _statistics: Loci_Review_ReviewStatistics? = nil
 }
 
-public nonisolated struct Loci_Review_GetReviewRequest: Sendable {
+public struct Loci_Review_GetReviewRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1096,17 +1096,17 @@ public nonisolated struct Loci_Review_GetReviewRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Review_GetReviewResponse: Sendable {
+public struct Loci_Review_GetReviewResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var review: Loci_Review_Review {
-    get {_review ?? Loci_Review_Review()}
+    get {return _review ?? Loci_Review_Review()}
     set {_review = newValue}
   }
   /// Returns true if `review` has been explicitly set.
-  public var hasReview: Bool {self._review != nil}
+  public var hasReview: Bool {return self._review != nil}
   /// Clears the value of `review`. Subsequent reads from it will return its default value.
   public mutating func clearReview() {self._review = nil}
 
@@ -1121,56 +1121,56 @@ public nonisolated struct Loci_Review_GetReviewResponse: Sendable {
   fileprivate var _review: Loci_Review_Review? = nil
 }
 
-public nonisolated struct Loci_Review_UpdateReviewRequest: @unchecked Sendable {
+public struct Loci_Review_UpdateReviewRequest: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var userID: String {
-    get {_storage._userID}
+    get {return _storage._userID}
     set {_uniqueStorage()._userID = newValue}
   }
 
   public var reviewID: String {
-    get {_storage._reviewID}
+    get {return _storage._reviewID}
     set {_uniqueStorage()._reviewID = newValue}
   }
 
   public var rating: Double {
-    get {_storage._rating}
+    get {return _storage._rating}
     set {_uniqueStorage()._rating = newValue}
   }
 
   public var title: String {
-    get {_storage._title}
+    get {return _storage._title}
     set {_uniqueStorage()._title = newValue}
   }
 
   public var content: String {
-    get {_storage._content}
+    get {return _storage._content}
     set {_uniqueStorage()._content = newValue}
   }
 
   public var photoUrls: [String] {
-    get {_storage._photoUrls}
+    get {return _storage._photoUrls}
     set {_uniqueStorage()._photoUrls = newValue}
   }
 
   public var visitDate: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._visitDate ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._visitDate ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._visitDate = newValue}
   }
   /// Returns true if `visitDate` has been explicitly set.
-  public var hasVisitDate: Bool {_storage._visitDate != nil}
+  public var hasVisitDate: Bool {return _storage._visitDate != nil}
   /// Clears the value of `visitDate`. Subsequent reads from it will return its default value.
   public mutating func clearVisitDate() {_uniqueStorage()._visitDate = nil}
 
   public var aspects: Loci_Review_ReviewAspects {
-    get {_storage._aspects ?? Loci_Review_ReviewAspects()}
+    get {return _storage._aspects ?? Loci_Review_ReviewAspects()}
     set {_uniqueStorage()._aspects = newValue}
   }
   /// Returns true if `aspects` has been explicitly set.
-  public var hasAspects: Bool {_storage._aspects != nil}
+  public var hasAspects: Bool {return _storage._aspects != nil}
   /// Clears the value of `aspects`. Subsequent reads from it will return its default value.
   public mutating func clearAspects() {_uniqueStorage()._aspects = nil}
 
@@ -1181,26 +1181,26 @@ public nonisolated struct Loci_Review_UpdateReviewRequest: @unchecked Sendable {
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-public nonisolated struct Loci_Review_UpdateReviewResponse: Sendable {
+public struct Loci_Review_UpdateReviewResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var response: Loci_Common_Response {
-    get {_response ?? Loci_Common_Response()}
+    get {return _response ?? Loci_Common_Response()}
     set {_response = newValue}
   }
   /// Returns true if `response` has been explicitly set.
-  public var hasResponse: Bool {self._response != nil}
+  public var hasResponse: Bool {return self._response != nil}
   /// Clears the value of `response`. Subsequent reads from it will return its default value.
   public mutating func clearResponse() {self._response = nil}
 
   public var review: Loci_Review_Review {
-    get {_review ?? Loci_Review_Review()}
+    get {return _review ?? Loci_Review_Review()}
     set {_review = newValue}
   }
   /// Returns true if `review` has been explicitly set.
-  public var hasReview: Bool {self._review != nil}
+  public var hasReview: Bool {return self._review != nil}
   /// Clears the value of `review`. Subsequent reads from it will return its default value.
   public mutating func clearReview() {self._review = nil}
 
@@ -1212,7 +1212,7 @@ public nonisolated struct Loci_Review_UpdateReviewResponse: Sendable {
   fileprivate var _review: Loci_Review_Review? = nil
 }
 
-public nonisolated struct Loci_Review_DeleteReviewRequest: Sendable {
+public struct Loci_Review_DeleteReviewRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1226,17 +1226,17 @@ public nonisolated struct Loci_Review_DeleteReviewRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Review_DeleteReviewResponse: Sendable {
+public struct Loci_Review_DeleteReviewResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var response: Loci_Common_Response {
-    get {_response ?? Loci_Common_Response()}
+    get {return _response ?? Loci_Common_Response()}
     set {_response = newValue}
   }
   /// Returns true if `response` has been explicitly set.
-  public var hasResponse: Bool {self._response != nil}
+  public var hasResponse: Bool {return self._response != nil}
   /// Clears the value of `response`. Subsequent reads from it will return its default value.
   public mutating func clearResponse() {self._response = nil}
 
@@ -1247,7 +1247,7 @@ public nonisolated struct Loci_Review_DeleteReviewResponse: Sendable {
   fileprivate var _response: Loci_Common_Response? = nil
 }
 
-public nonisolated struct Loci_Review_GetUserReviewsRequest: Sendable {
+public struct Loci_Review_GetUserReviewsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1255,20 +1255,20 @@ public nonisolated struct Loci_Review_GetUserReviewsRequest: Sendable {
   public var userID: String = String()
 
   public var pagination: Loci_Common_PaginationRequest {
-    get {_pagination ?? Loci_Common_PaginationRequest()}
+    get {return _pagination ?? Loci_Common_PaginationRequest()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
   public var filter: Loci_Review_ReviewFilter {
-    get {_filter ?? Loci_Review_ReviewFilter()}
+    get {return _filter ?? Loci_Review_ReviewFilter()}
     set {_filter = newValue}
   }
   /// Returns true if `filter` has been explicitly set.
-  public var hasFilter: Bool {self._filter != nil}
+  public var hasFilter: Bool {return self._filter != nil}
   /// Clears the value of `filter`. Subsequent reads from it will return its default value.
   public mutating func clearFilter() {self._filter = nil}
 
@@ -1280,7 +1280,7 @@ public nonisolated struct Loci_Review_GetUserReviewsRequest: Sendable {
   fileprivate var _filter: Loci_Review_ReviewFilter? = nil
 }
 
-public nonisolated struct Loci_Review_GetUserReviewsResponse: Sendable {
+public struct Loci_Review_GetUserReviewsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1288,20 +1288,20 @@ public nonisolated struct Loci_Review_GetUserReviewsResponse: Sendable {
   public var reviews: [Loci_Review_Review] = []
 
   public var pagination: Loci_Common_PaginationMetadata {
-    get {_pagination ?? Loci_Common_PaginationMetadata()}
+    get {return _pagination ?? Loci_Common_PaginationMetadata()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
   public var statistics: Loci_Review_UserReviewStatistics {
-    get {_statistics ?? Loci_Review_UserReviewStatistics()}
+    get {return _statistics ?? Loci_Review_UserReviewStatistics()}
     set {_statistics = newValue}
   }
   /// Returns true if `statistics` has been explicitly set.
-  public var hasStatistics: Bool {self._statistics != nil}
+  public var hasStatistics: Bool {return self._statistics != nil}
   /// Clears the value of `statistics`. Subsequent reads from it will return its default value.
   public mutating func clearStatistics() {self._statistics = nil}
 
@@ -1313,7 +1313,7 @@ public nonisolated struct Loci_Review_GetUserReviewsResponse: Sendable {
   fileprivate var _statistics: Loci_Review_UserReviewStatistics? = nil
 }
 
-public nonisolated struct Loci_Review_UserReviewStatistics: Sendable {
+public struct Loci_Review_UserReviewStatistics: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1333,7 +1333,7 @@ public nonisolated struct Loci_Review_UserReviewStatistics: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Review_LikeReviewRequest: Sendable {
+public struct Loci_Review_LikeReviewRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1350,17 +1350,17 @@ public nonisolated struct Loci_Review_LikeReviewRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Review_LikeReviewResponse: Sendable {
+public struct Loci_Review_LikeReviewResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var response: Loci_Common_Response {
-    get {_response ?? Loci_Common_Response()}
+    get {return _response ?? Loci_Common_Response()}
     set {_response = newValue}
   }
   /// Returns true if `response` has been explicitly set.
-  public var hasResponse: Bool {self._response != nil}
+  public var hasResponse: Bool {return self._response != nil}
   /// Clears the value of `response`. Subsequent reads from it will return its default value.
   public mutating func clearResponse() {self._response = nil}
 
@@ -1373,7 +1373,7 @@ public nonisolated struct Loci_Review_LikeReviewResponse: Sendable {
   fileprivate var _response: Loci_Common_Response? = nil
 }
 
-public nonisolated struct Loci_Review_ReportReviewRequest: Sendable {
+public struct Loci_Review_ReportReviewRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1392,17 +1392,17 @@ public nonisolated struct Loci_Review_ReportReviewRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Review_ReportReviewResponse: Sendable {
+public struct Loci_Review_ReportReviewResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var response: Loci_Common_Response {
-    get {_response ?? Loci_Common_Response()}
+    get {return _response ?? Loci_Common_Response()}
     set {_response = newValue}
   }
   /// Returns true if `response` has been explicitly set.
-  public var hasResponse: Bool {self._response != nil}
+  public var hasResponse: Bool {return self._response != nil}
   /// Clears the value of `response`. Subsequent reads from it will return its default value.
   public mutating func clearResponse() {self._response = nil}
 
@@ -1413,7 +1413,7 @@ public nonisolated struct Loci_Review_ReportReviewResponse: Sendable {
   fileprivate var _response: Loci_Common_Response? = nil
 }
 
-public nonisolated struct Loci_Review_GetReviewStatisticsRequest: Sendable {
+public struct Loci_Review_GetReviewStatisticsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1429,17 +1429,17 @@ public nonisolated struct Loci_Review_GetReviewStatisticsRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Review_GetReviewStatisticsResponse: Sendable {
+public struct Loci_Review_GetReviewStatisticsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var statistics: Loci_Review_ReviewStatistics {
-    get {_statistics ?? Loci_Review_ReviewStatistics()}
+    get {return _statistics ?? Loci_Review_ReviewStatistics()}
     set {_statistics = newValue}
   }
   /// Returns true if `statistics` has been explicitly set.
-  public var hasStatistics: Bool {self._statistics != nil}
+  public var hasStatistics: Bool {return self._statistics != nil}
   /// Clears the value of `statistics`. Subsequent reads from it will return its default value.
   public mutating func clearStatistics() {self._statistics = nil}
 
@@ -1452,27 +1452,74 @@ public nonisolated struct Loci_Review_GetReviewStatisticsResponse: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.review"
+fileprivate let _protobuf_package = "loci.review"
 
-nonisolated extension Loci_Review_ReviewContentType: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0REVIEW_CONTENT_TYPE_UNSPECIFIED\0\u{1}REVIEW_CONTENT_TYPE_POI\0\u{1}REVIEW_CONTENT_TYPE_HOTEL\0\u{1}REVIEW_CONTENT_TYPE_RESTAURANT\0\u{1}REVIEW_CONTENT_TYPE_ACTIVITY\0\u{1}REVIEW_CONTENT_TYPE_ITINERARY\0\u{1}REVIEW_CONTENT_TYPE_LIST\0")
+extension Loci_Review_ReviewContentType: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "REVIEW_CONTENT_TYPE_UNSPECIFIED"),
+    1: .same(proto: "REVIEW_CONTENT_TYPE_POI"),
+    2: .same(proto: "REVIEW_CONTENT_TYPE_HOTEL"),
+    3: .same(proto: "REVIEW_CONTENT_TYPE_RESTAURANT"),
+    4: .same(proto: "REVIEW_CONTENT_TYPE_ACTIVITY"),
+    5: .same(proto: "REVIEW_CONTENT_TYPE_ITINERARY"),
+    6: .same(proto: "REVIEW_CONTENT_TYPE_LIST"),
+  ]
 }
 
-nonisolated extension Loci_Review_ReviewStatus: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0REVIEW_STATUS_UNSPECIFIED\0\u{1}REVIEW_STATUS_PENDING\0\u{1}REVIEW_STATUS_PUBLISHED\0\u{1}REVIEW_STATUS_HIDDEN\0\u{1}REVIEW_STATUS_DELETED\0\u{1}REVIEW_STATUS_FLAGGED\0")
+extension Loci_Review_ReviewStatus: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "REVIEW_STATUS_UNSPECIFIED"),
+    1: .same(proto: "REVIEW_STATUS_PENDING"),
+    2: .same(proto: "REVIEW_STATUS_PUBLISHED"),
+    3: .same(proto: "REVIEW_STATUS_HIDDEN"),
+    4: .same(proto: "REVIEW_STATUS_DELETED"),
+    5: .same(proto: "REVIEW_STATUS_FLAGGED"),
+  ]
 }
 
-nonisolated extension Loci_Review_SortDirection: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0SORT_DIRECTION_UNSPECIFIED\0\u{1}SORT_DIRECTION_ASC\0\u{1}SORT_DIRECTION_DESC\0")
+extension Loci_Review_SortDirection: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "SORT_DIRECTION_UNSPECIFIED"),
+    1: .same(proto: "SORT_DIRECTION_ASC"),
+    2: .same(proto: "SORT_DIRECTION_DESC"),
+  ]
 }
 
-nonisolated extension Loci_Review_ReviewSortBy: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0REVIEW_SORT_BY_UNSPECIFIED\0\u{1}REVIEW_SORT_BY_DATE\0\u{1}REVIEW_SORT_BY_RATING\0\u{1}REVIEW_SORT_BY_HELPFUL\0\u{1}REVIEW_SORT_BY_RELEVANCE\0")
+extension Loci_Review_ReviewSortBy: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "REVIEW_SORT_BY_UNSPECIFIED"),
+    1: .same(proto: "REVIEW_SORT_BY_DATE"),
+    2: .same(proto: "REVIEW_SORT_BY_RATING"),
+    3: .same(proto: "REVIEW_SORT_BY_HELPFUL"),
+    4: .same(proto: "REVIEW_SORT_BY_RELEVANCE"),
+  ]
 }
 
-nonisolated extension Loci_Review_Review: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_Review: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Review"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}user_id\0\u{3}poi_id\0\u{1}rating\0\u{1}title\0\u{1}content\0\u{1}photos\0\u{1}status\0\u{3}visit_date\0\u{3}created_at\0\u{3}updated_at\0\u{3}helpful_count\0\u{3}report_count\0\u{3}is_verified\0\u{1}language\0\u{1}aspects\0\u{1}reviewer\0\u{3}business_response\0\u{3}content_type\0\u{3}content_id\0\u{3}content_name\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "user_id"),
+    3: .standard(proto: "poi_id"),
+    4: .same(proto: "rating"),
+    5: .same(proto: "title"),
+    6: .same(proto: "content"),
+    7: .same(proto: "photos"),
+    8: .same(proto: "status"),
+    9: .standard(proto: "visit_date"),
+    10: .standard(proto: "created_at"),
+    11: .standard(proto: "updated_at"),
+    12: .standard(proto: "helpful_count"),
+    13: .standard(proto: "report_count"),
+    14: .standard(proto: "is_verified"),
+    15: .same(proto: "language"),
+    16: .same(proto: "aspects"),
+    17: .same(proto: "reviewer"),
+    18: .standard(proto: "business_response"),
+    19: .standard(proto: "content_type"),
+    20: .standard(proto: "content_id"),
+    21: .standard(proto: "content_name"),
+  ]
 
   fileprivate class _StorageClass {
     var _id: String = String()
@@ -1497,11 +1544,15 @@ nonisolated extension Loci_Review_Review: SwiftProtobuf.Message, SwiftProtobuf._
     var _contentID: String = String()
     var _contentName: String = String()
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -1680,9 +1731,20 @@ nonisolated extension Loci_Review_Review: SwiftProtobuf.Message, SwiftProtobuf._
   }
 }
 
-nonisolated extension Loci_Review_ReviewAspects: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_ReviewAspects: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ReviewAspects"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}service_rating\0\u{3}quality_rating\0\u{3}value_rating\0\u{3}atmosphere_rating\0\u{3}cleanliness_rating\0\u{3}location_rating\0\u{3}food_rating\0\u{3}room_rating\0\u{3}amenities_rating\0\u{3}staff_rating\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "service_rating"),
+    2: .standard(proto: "quality_rating"),
+    3: .standard(proto: "value_rating"),
+    4: .standard(proto: "atmosphere_rating"),
+    5: .standard(proto: "cleanliness_rating"),
+    6: .standard(proto: "location_rating"),
+    7: .standard(proto: "food_rating"),
+    8: .standard(proto: "room_rating"),
+    9: .standard(proto: "amenities_rating"),
+    10: .standard(proto: "staff_rating"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1755,9 +1817,17 @@ nonisolated extension Loci_Review_ReviewAspects: SwiftProtobuf.Message, SwiftPro
   }
 }
 
-nonisolated extension Loci_Review_ReviewerInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_ReviewerInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ReviewerInfo"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}display_name\0\u{3}avatar_url\0\u{3}review_count\0\u{3}is_verified\0\u{1}level\0\u{3}member_since\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "display_name"),
+    3: .standard(proto: "avatar_url"),
+    4: .standard(proto: "review_count"),
+    5: .standard(proto: "is_verified"),
+    6: .same(proto: "level"),
+    7: .standard(proto: "member_since"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1819,9 +1889,16 @@ nonisolated extension Loci_Review_ReviewerInfo: SwiftProtobuf.Message, SwiftProt
   }
 }
 
-nonisolated extension Loci_Review_BusinessResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_BusinessResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".BusinessResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}business_user_id\0\u{1}content\0\u{3}created_at\0\u{3}responder_name\0\u{3}responder_title\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "business_user_id"),
+    3: .same(proto: "content"),
+    4: .standard(proto: "created_at"),
+    5: .standard(proto: "responder_name"),
+    6: .standard(proto: "responder_title"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1878,9 +1955,19 @@ nonisolated extension Loci_Review_BusinessResponse: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_Review_ReviewStatistics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_ReviewStatistics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ReviewStatistics"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}poi_id\0\u{3}overall_rating\0\u{3}total_reviews\0\u{3}rating_breakdown\0\u{3}aspect_averages\0\u{1}trends\0\u{1}tags\0\u{3}language_distribution\0\u{3}last_updated\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "poi_id"),
+    2: .standard(proto: "overall_rating"),
+    3: .standard(proto: "total_reviews"),
+    4: .standard(proto: "rating_breakdown"),
+    5: .standard(proto: "aspect_averages"),
+    6: .same(proto: "trends"),
+    7: .same(proto: "tags"),
+    8: .standard(proto: "language_distribution"),
+    9: .standard(proto: "last_updated"),
+  ]
 
   fileprivate class _StorageClass {
     var _poiID: String = String()
@@ -1893,11 +1980,15 @@ nonisolated extension Loci_Review_ReviewStatistics: SwiftProtobuf.Message, Swift
     var _languageDistribution: Loci_Review_LanguageDistribution? = nil
     var _lastUpdated: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -2004,9 +2095,15 @@ nonisolated extension Loci_Review_ReviewStatistics: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_Review_RatingBreakdown: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_RatingBreakdown: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RatingBreakdown"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}one_star\0\u{3}two_star\0\u{3}three_star\0\u{3}four_star\0\u{3}five_star\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "one_star"),
+    2: .standard(proto: "two_star"),
+    3: .standard(proto: "three_star"),
+    4: .standard(proto: "four_star"),
+    5: .standard(proto: "five_star"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2054,9 +2151,20 @@ nonisolated extension Loci_Review_RatingBreakdown: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension Loci_Review_ReviewAspectAverages: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_ReviewAspectAverages: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ReviewAspectAverages"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}service_average\0\u{3}quality_average\0\u{3}value_average\0\u{3}atmosphere_average\0\u{3}cleanliness_average\0\u{3}location_average\0\u{3}food_average\0\u{3}room_average\0\u{3}amenities_average\0\u{3}staff_average\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "service_average"),
+    2: .standard(proto: "quality_average"),
+    3: .standard(proto: "value_average"),
+    4: .standard(proto: "atmosphere_average"),
+    5: .standard(proto: "cleanliness_average"),
+    6: .standard(proto: "location_average"),
+    7: .standard(proto: "food_average"),
+    8: .standard(proto: "room_average"),
+    9: .standard(proto: "amenities_average"),
+    10: .standard(proto: "staff_average"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2129,9 +2237,15 @@ nonisolated extension Loci_Review_ReviewAspectAverages: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_Review_RecentReviewTrends: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_RecentReviewTrends: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RecentReviewTrends"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}rating_trend\0\u{3}reviews_last_30_days\0\u{3}average_rating_last_30_days\0\u{3}rating_change_percentage\0\u{3}monthly_data\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "rating_trend"),
+    2: .standard(proto: "reviews_last_30_days"),
+    3: .standard(proto: "average_rating_last_30_days"),
+    4: .standard(proto: "rating_change_percentage"),
+    5: .standard(proto: "monthly_data"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2179,9 +2293,14 @@ nonisolated extension Loci_Review_RecentReviewTrends: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Review_MonthlyReviewData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_MonthlyReviewData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".MonthlyReviewData"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}year\0\u{1}month\0\u{3}review_count\0\u{3}average_rating\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "year"),
+    2: .same(proto: "month"),
+    3: .standard(proto: "review_count"),
+    4: .standard(proto: "average_rating"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2224,9 +2343,14 @@ nonisolated extension Loci_Review_MonthlyReviewData: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_Review_ReviewTag: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_ReviewTag: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ReviewTag"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}tag\0\u{1}count\0\u{3}sentiment_score\0\u{1}category\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "tag"),
+    2: .same(proto: "count"),
+    3: .standard(proto: "sentiment_score"),
+    4: .same(proto: "category"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2269,9 +2393,11 @@ nonisolated extension Loci_Review_ReviewTag: SwiftProtobuf.Message, SwiftProtobu
   }
 }
 
-nonisolated extension Loci_Review_LanguageDistribution: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_LanguageDistribution: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".LanguageDistribution"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}languages\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "languages"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2299,9 +2425,14 @@ nonisolated extension Loci_Review_LanguageDistribution: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_Review_LanguageCount: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_LanguageCount: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".LanguageCount"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}language_code\0\u{3}language_name\0\u{1}count\0\u{1}percentage\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "language_code"),
+    2: .standard(proto: "language_name"),
+    3: .same(proto: "count"),
+    4: .same(proto: "percentage"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2344,9 +2475,19 @@ nonisolated extension Loci_Review_LanguageCount: SwiftProtobuf.Message, SwiftPro
   }
 }
 
-nonisolated extension Loci_Review_ReviewFilter: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_ReviewFilter: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ReviewFilter"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}rating_filters\0\u{3}start_date\0\u{3}end_date\0\u{1}languages\0\u{3}verified_only\0\u{3}with_photos_only\0\u{1}keywords\0\u{3}sort_by\0\u{3}sort_direction\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "rating_filters"),
+    2: .standard(proto: "start_date"),
+    3: .standard(proto: "end_date"),
+    4: .same(proto: "languages"),
+    5: .standard(proto: "verified_only"),
+    6: .standard(proto: "with_photos_only"),
+    7: .same(proto: "keywords"),
+    8: .standard(proto: "sort_by"),
+    9: .standard(proto: "sort_direction"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2418,9 +2559,22 @@ nonisolated extension Loci_Review_ReviewFilter: SwiftProtobuf.Message, SwiftProt
   }
 }
 
-nonisolated extension Loci_Review_CreateReviewRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_CreateReviewRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreateReviewRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}poi_id\0\u{1}rating\0\u{1}title\0\u{1}content\0\u{3}photo_urls\0\u{3}visit_date\0\u{1}aspects\0\u{1}language\0\u{3}content_type\0\u{3}content_id\0\u{3}content_name\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "poi_id"),
+    3: .same(proto: "rating"),
+    4: .same(proto: "title"),
+    5: .same(proto: "content"),
+    6: .standard(proto: "photo_urls"),
+    7: .standard(proto: "visit_date"),
+    8: .same(proto: "aspects"),
+    9: .same(proto: "language"),
+    10: .standard(proto: "content_type"),
+    11: .standard(proto: "content_id"),
+    12: .standard(proto: "content_name"),
+  ]
 
   fileprivate class _StorageClass {
     var _userID: String = String()
@@ -2436,11 +2590,15 @@ nonisolated extension Loci_Review_CreateReviewRequest: SwiftProtobuf.Message, Sw
     var _contentID: String = String()
     var _contentName: String = String()
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -2565,9 +2723,12 @@ nonisolated extension Loci_Review_CreateReviewRequest: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_Review_CreateReviewResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_CreateReviewResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreateReviewResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}response\0\u{1}review\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "response"),
+    2: .same(proto: "review"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2604,9 +2765,13 @@ nonisolated extension Loci_Review_CreateReviewResponse: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_Review_GetPOIReviewsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_GetPOIReviewsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetPOIReviewsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}poi_id\0\u{1}pagination\0\u{1}filter\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "poi_id"),
+    2: .same(proto: "pagination"),
+    3: .same(proto: "filter"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2648,9 +2813,13 @@ nonisolated extension Loci_Review_GetPOIReviewsRequest: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_Review_GetPOIReviewsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_GetPOIReviewsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetPOIReviewsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}reviews\0\u{1}pagination\0\u{1}statistics\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "reviews"),
+    2: .same(proto: "pagination"),
+    3: .same(proto: "statistics"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2692,9 +2861,12 @@ nonisolated extension Loci_Review_GetPOIReviewsResponse: SwiftProtobuf.Message, 
   }
 }
 
-nonisolated extension Loci_Review_GetRecentReviewsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_GetRecentReviewsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetRecentReviewsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}pagination\0\u{1}filter\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "pagination"),
+    2: .same(proto: "filter"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2731,9 +2903,12 @@ nonisolated extension Loci_Review_GetRecentReviewsRequest: SwiftProtobuf.Message
   }
 }
 
-nonisolated extension Loci_Review_GetRecentReviewsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_GetRecentReviewsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetRecentReviewsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}reviews\0\u{1}pagination\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "reviews"),
+    2: .same(proto: "pagination"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2770,9 +2945,14 @@ nonisolated extension Loci_Review_GetRecentReviewsResponse: SwiftProtobuf.Messag
   }
 }
 
-nonisolated extension Loci_Review_GetContentReviewsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_GetContentReviewsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetContentReviewsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}content_type\0\u{3}content_id\0\u{1}pagination\0\u{1}filter\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "content_type"),
+    2: .standard(proto: "content_id"),
+    3: .same(proto: "pagination"),
+    4: .same(proto: "filter"),
+  ]
 
   fileprivate class _StorageClass {
     var _contentType: Loci_Review_ReviewContentType = .unspecified
@@ -2780,11 +2960,15 @@ nonisolated extension Loci_Review_GetContentReviewsRequest: SwiftProtobuf.Messag
     var _pagination: Loci_Common_PaginationRequest? = nil
     var _filter: Loci_Review_ReviewFilter? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -2861,9 +3045,13 @@ nonisolated extension Loci_Review_GetContentReviewsRequest: SwiftProtobuf.Messag
   }
 }
 
-nonisolated extension Loci_Review_GetContentReviewsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_GetContentReviewsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetContentReviewsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}reviews\0\u{1}pagination\0\u{1}statistics\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "reviews"),
+    2: .same(proto: "pagination"),
+    3: .same(proto: "statistics"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2905,9 +3093,12 @@ nonisolated extension Loci_Review_GetContentReviewsResponse: SwiftProtobuf.Messa
   }
 }
 
-nonisolated extension Loci_Review_GetReviewRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_GetReviewRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetReviewRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}review_id\0\u{3}user_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "review_id"),
+    2: .standard(proto: "user_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2940,9 +3131,13 @@ nonisolated extension Loci_Review_GetReviewRequest: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_Review_GetReviewResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_GetReviewResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetReviewResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}review\0\u{3}can_edit\0\u{3}can_delete\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "review"),
+    2: .standard(proto: "can_edit"),
+    3: .standard(proto: "can_delete"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2984,9 +3179,18 @@ nonisolated extension Loci_Review_GetReviewResponse: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_Review_UpdateReviewRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_UpdateReviewRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UpdateReviewRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}review_id\0\u{1}rating\0\u{1}title\0\u{1}content\0\u{3}photo_urls\0\u{3}visit_date\0\u{1}aspects\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "review_id"),
+    3: .same(proto: "rating"),
+    4: .same(proto: "title"),
+    5: .same(proto: "content"),
+    6: .standard(proto: "photo_urls"),
+    7: .standard(proto: "visit_date"),
+    8: .same(proto: "aspects"),
+  ]
 
   fileprivate class _StorageClass {
     var _userID: String = String()
@@ -2998,11 +3202,15 @@ nonisolated extension Loci_Review_UpdateReviewRequest: SwiftProtobuf.Message, Sw
     var _visitDate: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _aspects: Loci_Review_ReviewAspects? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -3103,9 +3311,12 @@ nonisolated extension Loci_Review_UpdateReviewRequest: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_Review_UpdateReviewResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_UpdateReviewResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UpdateReviewResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}response\0\u{1}review\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "response"),
+    2: .same(proto: "review"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3142,9 +3353,12 @@ nonisolated extension Loci_Review_UpdateReviewResponse: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_Review_DeleteReviewRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_DeleteReviewRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DeleteReviewRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}review_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "review_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3177,9 +3391,11 @@ nonisolated extension Loci_Review_DeleteReviewRequest: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_Review_DeleteReviewResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_DeleteReviewResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DeleteReviewResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}response\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "response"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3211,9 +3427,13 @@ nonisolated extension Loci_Review_DeleteReviewResponse: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_Review_GetUserReviewsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_GetUserReviewsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetUserReviewsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{1}pagination\0\u{1}filter\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .same(proto: "pagination"),
+    3: .same(proto: "filter"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3255,9 +3475,13 @@ nonisolated extension Loci_Review_GetUserReviewsRequest: SwiftProtobuf.Message, 
   }
 }
 
-nonisolated extension Loci_Review_GetUserReviewsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_GetUserReviewsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetUserReviewsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}reviews\0\u{1}pagination\0\u{1}statistics\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "reviews"),
+    2: .same(proto: "pagination"),
+    3: .same(proto: "statistics"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3299,9 +3523,15 @@ nonisolated extension Loci_Review_GetUserReviewsResponse: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_Review_UserReviewStatistics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_UserReviewStatistics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UserReviewStatistics"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}total_reviews\0\u{3}average_rating_given\0\u{3}helpful_votes_received\0\u{3}reviewer_level\0\u{3}top_categories_reviewed\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "total_reviews"),
+    2: .standard(proto: "average_rating_given"),
+    3: .standard(proto: "helpful_votes_received"),
+    4: .standard(proto: "reviewer_level"),
+    5: .standard(proto: "top_categories_reviewed"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3349,9 +3579,13 @@ nonisolated extension Loci_Review_UserReviewStatistics: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_Review_LikeReviewRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_LikeReviewRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".LikeReviewRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}review_id\0\u{3}is_like\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "review_id"),
+    3: .standard(proto: "is_like"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3389,9 +3623,12 @@ nonisolated extension Loci_Review_LikeReviewRequest: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_Review_LikeReviewResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_LikeReviewResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".LikeReviewResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}response\0\u{3}new_helpful_count\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "response"),
+    2: .standard(proto: "new_helpful_count"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3428,9 +3665,14 @@ nonisolated extension Loci_Review_LikeReviewResponse: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Review_ReportReviewRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_ReportReviewRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ReportReviewRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}review_id\0\u{1}reason\0\u{1}details\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "review_id"),
+    3: .same(proto: "reason"),
+    4: .same(proto: "details"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3473,9 +3715,11 @@ nonisolated extension Loci_Review_ReportReviewRequest: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_Review_ReportReviewResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_ReportReviewResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ReportReviewResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}response\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "response"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3507,9 +3751,13 @@ nonisolated extension Loci_Review_ReportReviewResponse: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_Review_GetReviewStatisticsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_GetReviewStatisticsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetReviewStatisticsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}poi_id\0\u{3}include_trends\0\u{3}include_tags\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "poi_id"),
+    2: .standard(proto: "include_trends"),
+    3: .standard(proto: "include_tags"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3547,9 +3795,11 @@ nonisolated extension Loci_Review_GetReviewStatisticsRequest: SwiftProtobuf.Mess
   }
 }
 
-nonisolated extension Loci_Review_GetReviewStatisticsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Review_GetReviewStatisticsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetReviewStatisticsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}statistics\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "statistics"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

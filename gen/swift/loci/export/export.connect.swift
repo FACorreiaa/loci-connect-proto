@@ -13,48 +13,24 @@ import SwiftProtobuf
 public protocol Loci_Export_ExportServiceClientInterface: Sendable {
 
     /// Export POIs to PDF (for selected items from discover/nearme/favorites)
-    @discardableResult
-    func `exportPoisToPdf`(request: Loci_Export_ExportPOIsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Export_ExportPDFResponse>) -> Void) -> Connect.Cancelable
-
-    /// Export POIs to PDF (for selected items from discover/nearme/favorites)
     @available(iOS 13, *)
     func `exportPoisToPdf`(request: Loci_Export_ExportPOIsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Export_ExportPDFResponse>
-
-    /// Export Hotels to PDF
-    @discardableResult
-    func `exportHotelsToPdf`(request: Loci_Export_ExportHotelsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Export_ExportPDFResponse>) -> Void) -> Connect.Cancelable
 
     /// Export Hotels to PDF
     @available(iOS 13, *)
     func `exportHotelsToPdf`(request: Loci_Export_ExportHotelsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Export_ExportPDFResponse>
 
     /// Export Restaurants to PDF
-    @discardableResult
-    func `exportRestaurantsToPdf`(request: Loci_Export_ExportRestaurantsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Export_ExportPDFResponse>) -> Void) -> Connect.Cancelable
-
-    /// Export Restaurants to PDF
     @available(iOS 13, *)
     func `exportRestaurantsToPdf`(request: Loci_Export_ExportRestaurantsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Export_ExportPDFResponse>
-
-    /// Export Activities to PDF
-    @discardableResult
-    func `exportActivitiesToPdf`(request: Loci_Export_ExportActivitiesRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Export_ExportPDFResponse>) -> Void) -> Connect.Cancelable
 
     /// Export Activities to PDF
     @available(iOS 13, *)
     func `exportActivitiesToPdf`(request: Loci_Export_ExportActivitiesRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Export_ExportPDFResponse>
 
     /// Export Itinerary to PDF
-    @discardableResult
-    func `exportItineraryToPdf`(request: Loci_Export_ExportItineraryRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Export_ExportPDFResponse>) -> Void) -> Connect.Cancelable
-
-    /// Export Itinerary to PDF
     @available(iOS 13, *)
     func `exportItineraryToPdf`(request: Loci_Export_ExportItineraryRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Export_ExportPDFResponse>
-
-    /// Export List to PDF
-    @discardableResult
-    func `exportListToPdf`(request: Loci_Export_ExportListRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Export_ExportPDFResponse>) -> Void) -> Connect.Cancelable
 
     /// Export List to PDF
     @available(iOS 13, *)
@@ -69,19 +45,9 @@ public final class Loci_Export_ExportServiceClient: Loci_Export_ExportServiceCli
         self.client = client
     }
 
-    @discardableResult
-    public func `exportPoisToPdf`(request: Loci_Export_ExportPOIsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Export_ExportPDFResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.export.ExportService/ExportPOIsToPDF", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `exportPoisToPdf`(request: Loci_Export_ExportPOIsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Export_ExportPDFResponse> {
         return await self.client.unary(path: "/loci.export.ExportService/ExportPOIsToPDF", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `exportHotelsToPdf`(request: Loci_Export_ExportHotelsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Export_ExportPDFResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.export.ExportService/ExportHotelsToPDF", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -89,19 +55,9 @@ public final class Loci_Export_ExportServiceClient: Loci_Export_ExportServiceCli
         return await self.client.unary(path: "/loci.export.ExportService/ExportHotelsToPDF", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `exportRestaurantsToPdf`(request: Loci_Export_ExportRestaurantsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Export_ExportPDFResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.export.ExportService/ExportRestaurantsToPDF", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `exportRestaurantsToPdf`(request: Loci_Export_ExportRestaurantsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Export_ExportPDFResponse> {
         return await self.client.unary(path: "/loci.export.ExportService/ExportRestaurantsToPDF", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `exportActivitiesToPdf`(request: Loci_Export_ExportActivitiesRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Export_ExportPDFResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.export.ExportService/ExportActivitiesToPDF", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -109,19 +65,9 @@ public final class Loci_Export_ExportServiceClient: Loci_Export_ExportServiceCli
         return await self.client.unary(path: "/loci.export.ExportService/ExportActivitiesToPDF", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `exportItineraryToPdf`(request: Loci_Export_ExportItineraryRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Export_ExportPDFResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.export.ExportService/ExportItineraryToPDF", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `exportItineraryToPdf`(request: Loci_Export_ExportItineraryRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Export_ExportPDFResponse> {
         return await self.client.unary(path: "/loci.export.ExportService/ExportItineraryToPDF", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `exportListToPdf`(request: Loci_Export_ExportListRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Export_ExportPDFResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.export.ExportService/ExportListToPDF", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

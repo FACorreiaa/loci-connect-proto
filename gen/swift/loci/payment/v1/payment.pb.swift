@@ -15,12 +15,12 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
-public nonisolated struct Loci_Payment_V1_Payment: Sendable {
+public struct Loci_Payment_V1_Payment: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -49,20 +49,20 @@ public nonisolated struct Loci_Payment_V1_Payment: Sendable {
   public var description_p: String = String()
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {self._createdAt != nil}
+  public var hasCreatedAt: Bool {return self._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {self._createdAt = nil}
 
   public var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  public var hasUpdatedAt: Bool {self._updatedAt != nil}
+  public var hasUpdatedAt: Bool {return self._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {self._updatedAt = nil}
 
@@ -74,7 +74,7 @@ public nonisolated struct Loci_Payment_V1_Payment: Sendable {
   fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-public nonisolated struct Loci_Payment_V1_Invoice: Sendable {
+public struct Loci_Payment_V1_Invoice: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -96,20 +96,20 @@ public nonisolated struct Loci_Payment_V1_Invoice: Sendable {
   public var pdfURL: String = String()
 
   public var issuedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_issuedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _issuedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_issuedAt = newValue}
   }
   /// Returns true if `issuedAt` has been explicitly set.
-  public var hasIssuedAt: Bool {self._issuedAt != nil}
+  public var hasIssuedAt: Bool {return self._issuedAt != nil}
   /// Clears the value of `issuedAt`. Subsequent reads from it will return its default value.
   public mutating func clearIssuedAt() {self._issuedAt = nil}
 
   public var paidAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_paidAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _paidAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_paidAt = newValue}
   }
   /// Returns true if `paidAt` has been explicitly set.
-  public var hasPaidAt: Bool {self._paidAt != nil}
+  public var hasPaidAt: Bool {return self._paidAt != nil}
   /// Clears the value of `paidAt`. Subsequent reads from it will return its default value.
   public mutating func clearPaidAt() {self._paidAt = nil}
 
@@ -121,7 +121,7 @@ public nonisolated struct Loci_Payment_V1_Invoice: Sendable {
   fileprivate var _paidAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-public nonisolated struct Loci_Payment_V1_Subscription: Sendable {
+public struct Loci_Payment_V1_Subscription: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -140,20 +140,20 @@ public nonisolated struct Loci_Payment_V1_Subscription: Sendable {
   public var stripeCustomerID: String = String()
 
   public var currentPeriodStart: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_currentPeriodStart ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _currentPeriodStart ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_currentPeriodStart = newValue}
   }
   /// Returns true if `currentPeriodStart` has been explicitly set.
-  public var hasCurrentPeriodStart: Bool {self._currentPeriodStart != nil}
+  public var hasCurrentPeriodStart: Bool {return self._currentPeriodStart != nil}
   /// Clears the value of `currentPeriodStart`. Subsequent reads from it will return its default value.
   public mutating func clearCurrentPeriodStart() {self._currentPeriodStart = nil}
 
   public var currentPeriodEnd: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_currentPeriodEnd ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _currentPeriodEnd ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_currentPeriodEnd = newValue}
   }
   /// Returns true if `currentPeriodEnd` has been explicitly set.
-  public var hasCurrentPeriodEnd: Bool {self._currentPeriodEnd != nil}
+  public var hasCurrentPeriodEnd: Bool {return self._currentPeriodEnd != nil}
   /// Clears the value of `currentPeriodEnd`. Subsequent reads from it will return its default value.
   public mutating func clearCurrentPeriodEnd() {self._currentPeriodEnd = nil}
 
@@ -167,7 +167,7 @@ public nonisolated struct Loci_Payment_V1_Subscription: Sendable {
   fileprivate var _currentPeriodEnd: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-public nonisolated struct Loci_Payment_V1_CreatePaymentRequest: Sendable {
+public struct Loci_Payment_V1_CreatePaymentRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -187,7 +187,7 @@ public nonisolated struct Loci_Payment_V1_CreatePaymentRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Payment_V1_CreatePaymentResponse: Sendable {
+public struct Loci_Payment_V1_CreatePaymentResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -205,7 +205,7 @@ public nonisolated struct Loci_Payment_V1_CreatePaymentResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Payment_V1_GetPaymentRequest: Sendable {
+public struct Loci_Payment_V1_GetPaymentRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -217,26 +217,26 @@ public nonisolated struct Loci_Payment_V1_GetPaymentRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Payment_V1_GetPaymentResponse: @unchecked Sendable {
+public struct Loci_Payment_V1_GetPaymentResponse: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var payment: Loci_Payment_V1_Payment {
-    get {_storage._payment ?? Loci_Payment_V1_Payment()}
+    get {return _storage._payment ?? Loci_Payment_V1_Payment()}
     set {_uniqueStorage()._payment = newValue}
   }
   /// Returns true if `payment` has been explicitly set.
-  public var hasPayment: Bool {_storage._payment != nil}
+  public var hasPayment: Bool {return _storage._payment != nil}
   /// Clears the value of `payment`. Subsequent reads from it will return its default value.
   public mutating func clearPayment() {_uniqueStorage()._payment = nil}
 
   public var invoice: Loci_Payment_V1_Invoice {
-    get {_storage._invoice ?? Loci_Payment_V1_Invoice()}
+    get {return _storage._invoice ?? Loci_Payment_V1_Invoice()}
     set {_uniqueStorage()._invoice = newValue}
   }
   /// Returns true if `invoice` has been explicitly set.
-  public var hasInvoice: Bool {_storage._invoice != nil}
+  public var hasInvoice: Bool {return _storage._invoice != nil}
   /// Clears the value of `invoice`. Subsequent reads from it will return its default value.
   public mutating func clearInvoice() {_uniqueStorage()._invoice = nil}
 
@@ -247,7 +247,7 @@ public nonisolated struct Loci_Payment_V1_GetPaymentResponse: @unchecked Sendabl
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-public nonisolated struct Loci_Payment_V1_GetUserPaymentsRequest: Sendable {
+public struct Loci_Payment_V1_GetUserPaymentsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -261,7 +261,7 @@ public nonisolated struct Loci_Payment_V1_GetUserPaymentsRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Payment_V1_GetUserPaymentsResponse: Sendable {
+public struct Loci_Payment_V1_GetUserPaymentsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -279,7 +279,7 @@ public nonisolated struct Loci_Payment_V1_GetUserPaymentsResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Payment_V1_RefundPaymentRequest: Sendable {
+public struct Loci_Payment_V1_RefundPaymentRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -296,7 +296,7 @@ public nonisolated struct Loci_Payment_V1_RefundPaymentRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Payment_V1_RefundPaymentResponse: Sendable {
+public struct Loci_Payment_V1_RefundPaymentResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -320,7 +320,7 @@ public nonisolated struct Loci_Payment_V1_RefundPaymentResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Payment_V1_GetInvoiceRequest: Sendable {
+public struct Loci_Payment_V1_GetInvoiceRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -332,7 +332,7 @@ public nonisolated struct Loci_Payment_V1_GetInvoiceRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Payment_V1_GetUserInvoicesRequest: Sendable {
+public struct Loci_Payment_V1_GetUserInvoicesRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -346,7 +346,7 @@ public nonisolated struct Loci_Payment_V1_GetUserInvoicesRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Payment_V1_GetUserInvoicesResponse: Sendable {
+public struct Loci_Payment_V1_GetUserInvoicesResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -364,7 +364,7 @@ public nonisolated struct Loci_Payment_V1_GetUserInvoicesResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Payment_V1_CreateSubscriptionRequest: Sendable {
+public struct Loci_Payment_V1_CreateSubscriptionRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -380,7 +380,7 @@ public nonisolated struct Loci_Payment_V1_CreateSubscriptionRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Payment_V1_CreateSubscriptionResponse: Sendable {
+public struct Loci_Payment_V1_CreateSubscriptionResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -397,7 +397,7 @@ public nonisolated struct Loci_Payment_V1_CreateSubscriptionResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Payment_V1_CancelSubscriptionRequest: Sendable {
+public struct Loci_Payment_V1_CancelSubscriptionRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -411,7 +411,7 @@ public nonisolated struct Loci_Payment_V1_CancelSubscriptionRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Payment_V1_CancelSubscriptionResponse: Sendable {
+public struct Loci_Payment_V1_CancelSubscriptionResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -425,7 +425,7 @@ public nonisolated struct Loci_Payment_V1_CancelSubscriptionResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Payment_V1_GetUserSubscriptionsRequest: Sendable {
+public struct Loci_Payment_V1_GetUserSubscriptionsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -439,7 +439,7 @@ public nonisolated struct Loci_Payment_V1_GetUserSubscriptionsRequest: Sendable 
   public init() {}
 }
 
-public nonisolated struct Loci_Payment_V1_GetUserSubscriptionsResponse: Sendable {
+public struct Loci_Payment_V1_GetUserSubscriptionsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -452,7 +452,7 @@ public nonisolated struct Loci_Payment_V1_GetUserSubscriptionsResponse: Sendable
 }
 
 /// Empty - uses authenticated user's subscription
-public nonisolated struct Loci_Payment_V1_GetSubscriptionRequest: Sendable {
+public struct Loci_Payment_V1_GetSubscriptionRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -462,26 +462,26 @@ public nonisolated struct Loci_Payment_V1_GetSubscriptionRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Payment_V1_GetSubscriptionResponse: Sendable {
+public struct Loci_Payment_V1_GetSubscriptionResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var subscription: Loci_Payment_V1_Subscription {
-    get {_subscription ?? Loci_Payment_V1_Subscription()}
+    get {return _subscription ?? Loci_Payment_V1_Subscription()}
     set {_subscription = newValue}
   }
   /// Returns true if `subscription` has been explicitly set.
-  public var hasSubscription: Bool {self._subscription != nil}
+  public var hasSubscription: Bool {return self._subscription != nil}
   /// Clears the value of `subscription`. Subsequent reads from it will return its default value.
   public mutating func clearSubscription() {self._subscription = nil}
 
   public var usage: Loci_Payment_V1_SubscriptionUsage {
-    get {_usage ?? Loci_Payment_V1_SubscriptionUsage()}
+    get {return _usage ?? Loci_Payment_V1_SubscriptionUsage()}
     set {_usage = newValue}
   }
   /// Returns true if `usage` has been explicitly set.
-  public var hasUsage: Bool {self._usage != nil}
+  public var hasUsage: Bool {return self._usage != nil}
   /// Clears the value of `usage`. Subsequent reads from it will return its default value.
   public mutating func clearUsage() {self._usage = nil}
 
@@ -493,7 +493,7 @@ public nonisolated struct Loci_Payment_V1_GetSubscriptionResponse: Sendable {
   fileprivate var _usage: Loci_Payment_V1_SubscriptionUsage? = nil
 }
 
-public nonisolated struct Loci_Payment_V1_SubscriptionUsage: Sendable {
+public struct Loci_Payment_V1_SubscriptionUsage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -511,7 +511,7 @@ public nonisolated struct Loci_Payment_V1_SubscriptionUsage: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Payment_V1_CreateCheckoutSessionRequest: Sendable {
+public struct Loci_Payment_V1_CreateCheckoutSessionRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -533,7 +533,7 @@ public nonisolated struct Loci_Payment_V1_CreateCheckoutSessionRequest: Sendable
   public init() {}
 }
 
-public nonisolated struct Loci_Payment_V1_CreateCheckoutSessionResponse: Sendable {
+public struct Loci_Payment_V1_CreateCheckoutSessionResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -549,7 +549,7 @@ public nonisolated struct Loci_Payment_V1_CreateCheckoutSessionResponse: Sendabl
   public init() {}
 }
 
-public nonisolated struct Loci_Payment_V1_CreateCustomerPortalSessionRequest: Sendable {
+public struct Loci_Payment_V1_CreateCustomerPortalSessionRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -562,7 +562,7 @@ public nonisolated struct Loci_Payment_V1_CreateCustomerPortalSessionRequest: Se
   public init() {}
 }
 
-public nonisolated struct Loci_Payment_V1_CreateCustomerPortalSessionResponse: Sendable {
+public struct Loci_Payment_V1_CreateCustomerPortalSessionResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -580,11 +580,24 @@ public nonisolated struct Loci_Payment_V1_CreateCustomerPortalSessionResponse: S
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.payment.v1"
+fileprivate let _protobuf_package = "loci.payment.v1"
 
-nonisolated extension Loci_Payment_V1_Payment: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Payment_V1_Payment: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Payment"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}user_id\0\u{1}provider\0\u{3}external_payment_id\0\u{1}type\0\u{3}payment_method\0\u{1}amount\0\u{1}currency\0\u{1}status\0\u{1}description\0\u{3}created_at\0\u{3}updated_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "user_id"),
+    3: .same(proto: "provider"),
+    4: .standard(proto: "external_payment_id"),
+    5: .same(proto: "type"),
+    6: .standard(proto: "payment_method"),
+    7: .same(proto: "amount"),
+    8: .same(proto: "currency"),
+    9: .same(proto: "status"),
+    10: .same(proto: "description"),
+    11: .standard(proto: "created_at"),
+    12: .standard(proto: "updated_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -671,9 +684,20 @@ nonisolated extension Loci_Payment_V1_Payment: SwiftProtobuf.Message, SwiftProto
   }
 }
 
-nonisolated extension Loci_Payment_V1_Invoice: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Payment_V1_Invoice: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Invoice"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}payment_id\0\u{3}invoice_number\0\u{3}user_id\0\u{1}amount\0\u{1}currency\0\u{1}status\0\u{3}pdf_url\0\u{3}issued_at\0\u{3}paid_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "payment_id"),
+    3: .standard(proto: "invoice_number"),
+    4: .standard(proto: "user_id"),
+    5: .same(proto: "amount"),
+    6: .same(proto: "currency"),
+    7: .same(proto: "status"),
+    8: .standard(proto: "pdf_url"),
+    9: .standard(proto: "issued_at"),
+    10: .standard(proto: "paid_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -750,9 +774,19 @@ nonisolated extension Loci_Payment_V1_Invoice: SwiftProtobuf.Message, SwiftProto
   }
 }
 
-nonisolated extension Loci_Payment_V1_Subscription: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Payment_V1_Subscription: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Subscription"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}user_id\0\u{3}plan_id\0\u{1}status\0\u{3}stripe_subscription_id\0\u{3}stripe_customer_id\0\u{3}current_period_start\0\u{3}current_period_end\0\u{3}cancel_at_period_end\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "user_id"),
+    3: .standard(proto: "plan_id"),
+    4: .same(proto: "status"),
+    5: .standard(proto: "stripe_subscription_id"),
+    6: .standard(proto: "stripe_customer_id"),
+    7: .standard(proto: "current_period_start"),
+    8: .standard(proto: "current_period_end"),
+    9: .standard(proto: "cancel_at_period_end"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -824,9 +858,15 @@ nonisolated extension Loci_Payment_V1_Subscription: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_Payment_V1_CreatePaymentRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Payment_V1_CreatePaymentRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreatePaymentRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}amount\0\u{1}currency\0\u{1}type\0\u{1}description\0\u{1}metadata\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "amount"),
+    2: .same(proto: "currency"),
+    3: .same(proto: "type"),
+    4: .same(proto: "description"),
+    5: .same(proto: "metadata"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -874,9 +914,14 @@ nonisolated extension Loci_Payment_V1_CreatePaymentRequest: SwiftProtobuf.Messag
   }
 }
 
-nonisolated extension Loci_Payment_V1_CreatePaymentResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Payment_V1_CreatePaymentResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreatePaymentResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}payment_id\0\u{3}client_secret\0\u{3}external_payment_id\0\u{1}status\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "payment_id"),
+    2: .standard(proto: "client_secret"),
+    3: .standard(proto: "external_payment_id"),
+    4: .same(proto: "status"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -919,9 +964,11 @@ nonisolated extension Loci_Payment_V1_CreatePaymentResponse: SwiftProtobuf.Messa
   }
 }
 
-nonisolated extension Loci_Payment_V1_GetPaymentRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Payment_V1_GetPaymentRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetPaymentRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}payment_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "payment_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -949,19 +996,26 @@ nonisolated extension Loci_Payment_V1_GetPaymentRequest: SwiftProtobuf.Message, 
   }
 }
 
-nonisolated extension Loci_Payment_V1_GetPaymentResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Payment_V1_GetPaymentResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetPaymentResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}payment\0\u{1}invoice\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "payment"),
+    2: .same(proto: "invoice"),
+  ]
 
   fileprivate class _StorageClass {
     var _payment: Loci_Payment_V1_Payment? = nil
     var _invoice: Loci_Payment_V1_Invoice? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -1026,9 +1080,12 @@ nonisolated extension Loci_Payment_V1_GetPaymentResponse: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_Payment_V1_GetUserPaymentsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Payment_V1_GetUserPaymentsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetUserPaymentsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}page\0\u{3}page_size\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "page"),
+    2: .standard(proto: "page_size"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1061,9 +1118,14 @@ nonisolated extension Loci_Payment_V1_GetUserPaymentsRequest: SwiftProtobuf.Mess
   }
 }
 
-nonisolated extension Loci_Payment_V1_GetUserPaymentsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Payment_V1_GetUserPaymentsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetUserPaymentsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}payments\0\u{1}total\0\u{1}page\0\u{3}page_size\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "payments"),
+    2: .same(proto: "total"),
+    3: .same(proto: "page"),
+    4: .standard(proto: "page_size"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1106,9 +1168,13 @@ nonisolated extension Loci_Payment_V1_GetUserPaymentsResponse: SwiftProtobuf.Mes
   }
 }
 
-nonisolated extension Loci_Payment_V1_RefundPaymentRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Payment_V1_RefundPaymentRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RefundPaymentRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}payment_id\0\u{3}amount_cents\0\u{1}reason\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "payment_id"),
+    2: .standard(proto: "amount_cents"),
+    3: .same(proto: "reason"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1146,9 +1212,17 @@ nonisolated extension Loci_Payment_V1_RefundPaymentRequest: SwiftProtobuf.Messag
   }
 }
 
-nonisolated extension Loci_Payment_V1_RefundPaymentResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Payment_V1_RefundPaymentResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RefundPaymentResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}refund_id\0\u{3}payment_id\0\u{3}amount_cents\0\u{1}currency\0\u{1}status\0\u{3}total_refunded\0\u{3}is_full_refund\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "refund_id"),
+    2: .standard(proto: "payment_id"),
+    3: .standard(proto: "amount_cents"),
+    4: .same(proto: "currency"),
+    5: .same(proto: "status"),
+    6: .standard(proto: "total_refunded"),
+    7: .standard(proto: "is_full_refund"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1206,9 +1280,11 @@ nonisolated extension Loci_Payment_V1_RefundPaymentResponse: SwiftProtobuf.Messa
   }
 }
 
-nonisolated extension Loci_Payment_V1_GetInvoiceRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Payment_V1_GetInvoiceRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetInvoiceRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}invoice_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "invoice_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1236,9 +1312,12 @@ nonisolated extension Loci_Payment_V1_GetInvoiceRequest: SwiftProtobuf.Message, 
   }
 }
 
-nonisolated extension Loci_Payment_V1_GetUserInvoicesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Payment_V1_GetUserInvoicesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetUserInvoicesRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}page\0\u{3}page_size\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "page"),
+    2: .standard(proto: "page_size"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1271,9 +1350,14 @@ nonisolated extension Loci_Payment_V1_GetUserInvoicesRequest: SwiftProtobuf.Mess
   }
 }
 
-nonisolated extension Loci_Payment_V1_GetUserInvoicesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Payment_V1_GetUserInvoicesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetUserInvoicesResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}invoices\0\u{1}total\0\u{1}page\0\u{3}page_size\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "invoices"),
+    2: .same(proto: "total"),
+    3: .same(proto: "page"),
+    4: .standard(proto: "page_size"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1316,9 +1400,12 @@ nonisolated extension Loci_Payment_V1_GetUserInvoicesResponse: SwiftProtobuf.Mes
   }
 }
 
-nonisolated extension Loci_Payment_V1_CreateSubscriptionRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Payment_V1_CreateSubscriptionRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreateSubscriptionRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}plan_id\0\u{3}payment_method_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "plan_id"),
+    2: .standard(proto: "payment_method_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1351,9 +1438,13 @@ nonisolated extension Loci_Payment_V1_CreateSubscriptionRequest: SwiftProtobuf.M
   }
 }
 
-nonisolated extension Loci_Payment_V1_CreateSubscriptionResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Payment_V1_CreateSubscriptionResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreateSubscriptionResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}subscription_id\0\u{3}client_secret\0\u{1}status\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "subscription_id"),
+    2: .standard(proto: "client_secret"),
+    3: .same(proto: "status"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1391,9 +1482,12 @@ nonisolated extension Loci_Payment_V1_CreateSubscriptionResponse: SwiftProtobuf.
   }
 }
 
-nonisolated extension Loci_Payment_V1_CancelSubscriptionRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Payment_V1_CancelSubscriptionRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CancelSubscriptionRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}subscription_id\0\u{3}cancel_at_period_end\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "subscription_id"),
+    2: .standard(proto: "cancel_at_period_end"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1426,9 +1520,12 @@ nonisolated extension Loci_Payment_V1_CancelSubscriptionRequest: SwiftProtobuf.M
   }
 }
 
-nonisolated extension Loci_Payment_V1_CancelSubscriptionResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Payment_V1_CancelSubscriptionResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CancelSubscriptionResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}subscription_id\0\u{1}status\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "subscription_id"),
+    2: .same(proto: "status"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1461,9 +1558,12 @@ nonisolated extension Loci_Payment_V1_CancelSubscriptionResponse: SwiftProtobuf.
   }
 }
 
-nonisolated extension Loci_Payment_V1_GetUserSubscriptionsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Payment_V1_GetUserSubscriptionsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetUserSubscriptionsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}page\0\u{3}page_size\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "page"),
+    2: .standard(proto: "page_size"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1496,9 +1596,11 @@ nonisolated extension Loci_Payment_V1_GetUserSubscriptionsRequest: SwiftProtobuf
   }
 }
 
-nonisolated extension Loci_Payment_V1_GetUserSubscriptionsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Payment_V1_GetUserSubscriptionsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetUserSubscriptionsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}subscriptions\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "subscriptions"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1526,7 +1628,7 @@ nonisolated extension Loci_Payment_V1_GetUserSubscriptionsResponse: SwiftProtobu
   }
 }
 
-nonisolated extension Loci_Payment_V1_GetSubscriptionRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Payment_V1_GetSubscriptionRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetSubscriptionRequest"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
@@ -1545,9 +1647,12 @@ nonisolated extension Loci_Payment_V1_GetSubscriptionRequest: SwiftProtobuf.Mess
   }
 }
 
-nonisolated extension Loci_Payment_V1_GetSubscriptionResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Payment_V1_GetSubscriptionResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetSubscriptionResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}subscription\0\u{1}usage\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "subscription"),
+    2: .same(proto: "usage"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1584,9 +1689,14 @@ nonisolated extension Loci_Payment_V1_GetSubscriptionResponse: SwiftProtobuf.Mes
   }
 }
 
-nonisolated extension Loci_Payment_V1_SubscriptionUsage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Payment_V1_SubscriptionUsage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SubscriptionUsage"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}requests_today\0\u{3}requests_limit\0\u{3}saved_locations\0\u{3}saved_locations_limit\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "requests_today"),
+    2: .standard(proto: "requests_limit"),
+    3: .standard(proto: "saved_locations"),
+    4: .standard(proto: "saved_locations_limit"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1629,9 +1739,14 @@ nonisolated extension Loci_Payment_V1_SubscriptionUsage: SwiftProtobuf.Message, 
   }
 }
 
-nonisolated extension Loci_Payment_V1_CreateCheckoutSessionRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Payment_V1_CreateCheckoutSessionRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreateCheckoutSessionRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}price_id\0\u{3}success_url\0\u{3}cancel_url\0\u{1}mode\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "price_id"),
+    2: .standard(proto: "success_url"),
+    3: .standard(proto: "cancel_url"),
+    4: .same(proto: "mode"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1674,9 +1789,12 @@ nonisolated extension Loci_Payment_V1_CreateCheckoutSessionRequest: SwiftProtobu
   }
 }
 
-nonisolated extension Loci_Payment_V1_CreateCheckoutSessionResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Payment_V1_CreateCheckoutSessionResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreateCheckoutSessionResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}session_id\0\u{1}url\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "session_id"),
+    2: .same(proto: "url"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1709,9 +1827,11 @@ nonisolated extension Loci_Payment_V1_CreateCheckoutSessionResponse: SwiftProtob
   }
 }
 
-nonisolated extension Loci_Payment_V1_CreateCustomerPortalSessionRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Payment_V1_CreateCustomerPortalSessionRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreateCustomerPortalSessionRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}return_url\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "return_url"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1739,9 +1859,12 @@ nonisolated extension Loci_Payment_V1_CreateCustomerPortalSessionRequest: SwiftP
   }
 }
 
-nonisolated extension Loci_Payment_V1_CreateCustomerPortalSessionResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Payment_V1_CreateCustomerPortalSessionResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreateCustomerPortalSessionResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}session_id\0\u{1}url\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "session_id"),
+    2: .same(proto: "url"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

@@ -15,13 +15,13 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// Matches locitypes.PersonalTag
-public nonisolated struct Loci_Tags_PersonalTag: Sendable {
+public struct Loci_Tags_PersonalTag: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -38,32 +38,32 @@ public nonisolated struct Loci_Tags_PersonalTag: Sendable {
 
   /// *string in Go
   public var description_p: String {
-    get {_description_p ?? String()}
+    get {return _description_p ?? String()}
     set {_description_p = newValue}
   }
   /// Returns true if `description_p` has been explicitly set.
-  public var hasDescription_p: Bool {self._description_p != nil}
+  public var hasDescription_p: Bool {return self._description_p != nil}
   /// Clears the value of `description_p`. Subsequent reads from it will return its default value.
   public mutating func clearDescription_p() {self._description_p = nil}
 
   public var source: String = String()
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {self._createdAt != nil}
+  public var hasCreatedAt: Bool {return self._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {self._createdAt = nil}
 
   /// *time.Time in Go
   public var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  public var hasUpdatedAt: Bool {self._updatedAt != nil}
+  public var hasUpdatedAt: Bool {return self._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {self._updatedAt = nil}
 
@@ -77,7 +77,7 @@ public nonisolated struct Loci_Tags_PersonalTag: Sendable {
 }
 
 /// Matches locitypes.Tags
-public nonisolated struct Loci_Tags_Tag: Sendable {
+public struct Loci_Tags_Tag: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -91,21 +91,21 @@ public nonisolated struct Loci_Tags_Tag: Sendable {
 
   /// *string
   public var description_p: String {
-    get {_description_p ?? String()}
+    get {return _description_p ?? String()}
     set {_description_p = newValue}
   }
   /// Returns true if `description_p` has been explicitly set.
-  public var hasDescription_p: Bool {self._description_p != nil}
+  public var hasDescription_p: Bool {return self._description_p != nil}
   /// Clears the value of `description_p`. Subsequent reads from it will return its default value.
   public mutating func clearDescription_p() {self._description_p = nil}
 
   /// *string
   public var source: String {
-    get {_source ?? String()}
+    get {return _source ?? String()}
     set {_source = newValue}
   }
   /// Returns true if `source` has been explicitly set.
-  public var hasSource: Bool {self._source != nil}
+  public var hasSource: Bool {return self._source != nil}
   /// Clears the value of `source`. Subsequent reads from it will return its default value.
   public mutating func clearSource() {self._source = nil}
 
@@ -113,21 +113,21 @@ public nonisolated struct Loci_Tags_Tag: Sendable {
   public var active: Bool = false
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {self._createdAt != nil}
+  public var hasCreatedAt: Bool {return self._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {self._createdAt = nil}
 
   /// *time.Time
   public var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  public var hasUpdatedAt: Bool {self._updatedAt != nil}
+  public var hasUpdatedAt: Bool {return self._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {self._updatedAt = nil}
 
@@ -141,7 +141,7 @@ public nonisolated struct Loci_Tags_Tag: Sendable {
   fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-public nonisolated struct Loci_Tags_GetTagsRequest: Sendable {
+public struct Loci_Tags_GetTagsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -154,7 +154,7 @@ public nonisolated struct Loci_Tags_GetTagsRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Tags_GetTagsResponse: Sendable {
+public struct Loci_Tags_GetTagsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -166,7 +166,7 @@ public nonisolated struct Loci_Tags_GetTagsResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Tags_GetTagRequest: Sendable {
+public struct Loci_Tags_GetTagRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -182,17 +182,17 @@ public nonisolated struct Loci_Tags_GetTagRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Tags_GetTagResponse: Sendable {
+public struct Loci_Tags_GetTagResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var tag: Loci_Tags_Tag {
-    get {_tag ?? Loci_Tags_Tag()}
+    get {return _tag ?? Loci_Tags_Tag()}
     set {_tag = newValue}
   }
   /// Returns true if `tag` has been explicitly set.
-  public var hasTag: Bool {self._tag != nil}
+  public var hasTag: Bool {return self._tag != nil}
   /// Clears the value of `tag`. Subsequent reads from it will return its default value.
   public mutating func clearTag() {self._tag = nil}
 
@@ -204,7 +204,7 @@ public nonisolated struct Loci_Tags_GetTagResponse: Sendable {
 }
 
 /// Matches locitypes.CreatePersonalTagParams
-public nonisolated struct Loci_Tags_CreateTagRequest: Sendable {
+public struct Loci_Tags_CreateTagRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -226,17 +226,17 @@ public nonisolated struct Loci_Tags_CreateTagRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Tags_CreateTagResponse: Sendable {
+public struct Loci_Tags_CreateTagResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var tag: Loci_Tags_PersonalTag {
-    get {_tag ?? Loci_Tags_PersonalTag()}
+    get {return _tag ?? Loci_Tags_PersonalTag()}
     set {_tag = newValue}
   }
   /// Returns true if `tag` has been explicitly set.
-  public var hasTag: Bool {self._tag != nil}
+  public var hasTag: Bool {return self._tag != nil}
   /// Clears the value of `tag`. Subsequent reads from it will return its default value.
   public mutating func clearTag() {self._tag = nil}
 
@@ -248,7 +248,7 @@ public nonisolated struct Loci_Tags_CreateTagResponse: Sendable {
 }
 
 /// Matches locitypes.UpdatePersonalTagParams
-public nonisolated struct Loci_Tags_UpdateTagRequest: Sendable {
+public struct Loci_Tags_UpdateTagRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -272,7 +272,7 @@ public nonisolated struct Loci_Tags_UpdateTagRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Tags_UpdateTagResponse: Sendable {
+public struct Loci_Tags_UpdateTagResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -284,7 +284,7 @@ public nonisolated struct Loci_Tags_UpdateTagResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Tags_DeleteTagRequest: Sendable {
+public struct Loci_Tags_DeleteTagRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -300,7 +300,7 @@ public nonisolated struct Loci_Tags_DeleteTagRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Tags_DeleteTagResponse: Sendable {
+public struct Loci_Tags_DeleteTagResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -314,11 +314,20 @@ public nonisolated struct Loci_Tags_DeleteTagResponse: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.tags"
+fileprivate let _protobuf_package = "loci.tags"
 
-nonisolated extension Loci_Tags_PersonalTag: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Tags_PersonalTag: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PersonalTag"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}user_id\0\u{1}name\0\u{3}tag_type\0\u{1}description\0\u{1}source\0\u{3}created_at\0\u{3}updated_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "user_id"),
+    3: .same(proto: "name"),
+    4: .standard(proto: "tag_type"),
+    5: .same(proto: "description"),
+    6: .same(proto: "source"),
+    7: .standard(proto: "created_at"),
+    8: .standard(proto: "updated_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -385,9 +394,18 @@ nonisolated extension Loci_Tags_PersonalTag: SwiftProtobuf.Message, SwiftProtobu
   }
 }
 
-nonisolated extension Loci_Tags_Tag: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Tags_Tag: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Tag"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{3}tag_type\0\u{1}description\0\u{1}source\0\u{1}active\0\u{3}created_at\0\u{3}updated_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "name"),
+    3: .standard(proto: "tag_type"),
+    4: .same(proto: "description"),
+    5: .same(proto: "source"),
+    6: .same(proto: "active"),
+    7: .standard(proto: "created_at"),
+    8: .standard(proto: "updated_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -454,9 +472,11 @@ nonisolated extension Loci_Tags_Tag: SwiftProtobuf.Message, SwiftProtobuf._Messa
   }
 }
 
-nonisolated extension Loci_Tags_GetTagsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Tags_GetTagsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetTagsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -484,9 +504,11 @@ nonisolated extension Loci_Tags_GetTagsRequest: SwiftProtobuf.Message, SwiftProt
   }
 }
 
-nonisolated extension Loci_Tags_GetTagsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Tags_GetTagsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetTagsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}tags\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "tags"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -514,9 +536,12 @@ nonisolated extension Loci_Tags_GetTagsResponse: SwiftProtobuf.Message, SwiftPro
   }
 }
 
-nonisolated extension Loci_Tags_GetTagRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Tags_GetTagRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetTagRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}tag_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "tag_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -549,9 +574,11 @@ nonisolated extension Loci_Tags_GetTagRequest: SwiftProtobuf.Message, SwiftProto
   }
 }
 
-nonisolated extension Loci_Tags_GetTagResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Tags_GetTagResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetTagResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}tag\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "tag"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -583,9 +610,15 @@ nonisolated extension Loci_Tags_GetTagResponse: SwiftProtobuf.Message, SwiftProt
   }
 }
 
-nonisolated extension Loci_Tags_CreateTagRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Tags_CreateTagRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreateTagRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{1}name\0\u{1}description\0\u{3}tag_type\0\u{1}active\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .same(proto: "name"),
+    3: .same(proto: "description"),
+    4: .standard(proto: "tag_type"),
+    5: .same(proto: "active"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -633,9 +666,11 @@ nonisolated extension Loci_Tags_CreateTagRequest: SwiftProtobuf.Message, SwiftPr
   }
 }
 
-nonisolated extension Loci_Tags_CreateTagResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Tags_CreateTagResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreateTagResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}tag\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "tag"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -667,9 +702,16 @@ nonisolated extension Loci_Tags_CreateTagResponse: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension Loci_Tags_UpdateTagRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Tags_UpdateTagRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UpdateTagRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}tag_id\0\u{1}name\0\u{1}description\0\u{3}tag_type\0\u{1}active\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "tag_id"),
+    3: .same(proto: "name"),
+    4: .same(proto: "description"),
+    5: .standard(proto: "tag_type"),
+    6: .same(proto: "active"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -722,9 +764,11 @@ nonisolated extension Loci_Tags_UpdateTagRequest: SwiftProtobuf.Message, SwiftPr
   }
 }
 
-nonisolated extension Loci_Tags_UpdateTagResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Tags_UpdateTagResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UpdateTagResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}success\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "success"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -752,9 +796,12 @@ nonisolated extension Loci_Tags_UpdateTagResponse: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension Loci_Tags_DeleteTagRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Tags_DeleteTagRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DeleteTagRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}tag_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "tag_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -787,9 +834,11 @@ nonisolated extension Loci_Tags_DeleteTagRequest: SwiftProtobuf.Message, SwiftPr
   }
 }
 
-nonisolated extension Loci_Tags_DeleteTagResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Tags_DeleteTagResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DeleteTagResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}success\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "success"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

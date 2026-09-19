@@ -13,24 +13,12 @@ import SwiftProtobuf
 public protocol Loci_Tags_TagsServiceClientInterface: Sendable {
 
     /// GetTags retrieves all tags for a specific user
-    @discardableResult
-    func `getTags`(request: Loci_Tags_GetTagsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Tags_GetTagsResponse>) -> Void) -> Connect.Cancelable
-
-    /// GetTags retrieves all tags for a specific user
     @available(iOS 13, *)
     func `getTags`(request: Loci_Tags_GetTagsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Tags_GetTagsResponse>
 
     /// GetTag retrieves a specific tag by ID
-    @discardableResult
-    func `getTag`(request: Loci_Tags_GetTagRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Tags_GetTagResponse>) -> Void) -> Connect.Cancelable
-
-    /// GetTag retrieves a specific tag by ID
     @available(iOS 13, *)
     func `getTag`(request: Loci_Tags_GetTagRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Tags_GetTagResponse>
-
-    /// CreateTag creates a new personal tag
-    @discardableResult
-    func `createTag`(request: Loci_Tags_CreateTagRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Tags_CreateTagResponse>) -> Void) -> Connect.Cancelable
 
     /// CreateTag creates a new personal tag
     @available(iOS 13, *)
@@ -38,17 +26,8 @@ public protocol Loci_Tags_TagsServiceClientInterface: Sendable {
 
     /// UpdateTag updates an existing tag
     /// Note: Renamed from "Update" to "UpdateTag" for RPC clarity
-    @discardableResult
-    func `updateTag`(request: Loci_Tags_UpdateTagRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Tags_UpdateTagResponse>) -> Void) -> Connect.Cancelable
-
-    /// UpdateTag updates an existing tag
-    /// Note: Renamed from "Update" to "UpdateTag" for RPC clarity
     @available(iOS 13, *)
     func `updateTag`(request: Loci_Tags_UpdateTagRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Tags_UpdateTagResponse>
-
-    /// DeleteTag deletes a specific tag
-    @discardableResult
-    func `deleteTag`(request: Loci_Tags_DeleteTagRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Tags_DeleteTagResponse>) -> Void) -> Connect.Cancelable
 
     /// DeleteTag deletes a specific tag
     @available(iOS 13, *)
@@ -63,19 +42,9 @@ public final class Loci_Tags_TagsServiceClient: Loci_Tags_TagsServiceClientInter
         self.client = client
     }
 
-    @discardableResult
-    public func `getTags`(request: Loci_Tags_GetTagsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Tags_GetTagsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.tags.TagsService/GetTags", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getTags`(request: Loci_Tags_GetTagsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Tags_GetTagsResponse> {
         return await self.client.unary(path: "/loci.tags.TagsService/GetTags", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getTag`(request: Loci_Tags_GetTagRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Tags_GetTagResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.tags.TagsService/GetTag", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -83,29 +52,14 @@ public final class Loci_Tags_TagsServiceClient: Loci_Tags_TagsServiceClientInter
         return await self.client.unary(path: "/loci.tags.TagsService/GetTag", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `createTag`(request: Loci_Tags_CreateTagRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Tags_CreateTagResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.tags.TagsService/CreateTag", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `createTag`(request: Loci_Tags_CreateTagRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Tags_CreateTagResponse> {
         return await self.client.unary(path: "/loci.tags.TagsService/CreateTag", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `updateTag`(request: Loci_Tags_UpdateTagRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Tags_UpdateTagResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.tags.TagsService/UpdateTag", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `updateTag`(request: Loci_Tags_UpdateTagRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Tags_UpdateTagResponse> {
         return await self.client.unary(path: "/loci.tags.TagsService/UpdateTag", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `deleteTag`(request: Loci_Tags_DeleteTagRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Tags_DeleteTagResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.tags.TagsService/DeleteTag", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

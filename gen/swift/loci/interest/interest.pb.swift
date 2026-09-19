@@ -15,13 +15,13 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// Interest represents an interest tag
-public nonisolated struct Loci_Interest_Interest: Sendable {
+public struct Loci_Interest_Interest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -31,38 +31,38 @@ public nonisolated struct Loci_Interest_Interest: Sendable {
   public var name: String = String()
 
   public var description_p: String {
-    get {_description_p ?? String()}
+    get {return _description_p ?? String()}
     set {_description_p = newValue}
   }
   /// Returns true if `description_p` has been explicitly set.
-  public var hasDescription_p: Bool {self._description_p != nil}
+  public var hasDescription_p: Bool {return self._description_p != nil}
   /// Clears the value of `description_p`. Subsequent reads from it will return its default value.
   public mutating func clearDescription_p() {self._description_p = nil}
 
   public var active: Bool {
-    get {_active ?? false}
+    get {return _active ?? false}
     set {_active = newValue}
   }
   /// Returns true if `active` has been explicitly set.
-  public var hasActive: Bool {self._active != nil}
+  public var hasActive: Bool {return self._active != nil}
   /// Clears the value of `active`. Subsequent reads from it will return its default value.
   public mutating func clearActive() {self._active = nil}
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {self._createdAt != nil}
+  public var hasCreatedAt: Bool {return self._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {self._createdAt = nil}
 
   public var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  public var hasUpdatedAt: Bool {self._updatedAt != nil}
+  public var hasUpdatedAt: Bool {return self._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {self._updatedAt = nil}
 
@@ -79,7 +79,7 @@ public nonisolated struct Loci_Interest_Interest: Sendable {
 }
 
 /// Tags represents a tag
-public nonisolated struct Loci_Interest_Tags: Sendable {
+public struct Loci_Interest_Tags: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -91,47 +91,47 @@ public nonisolated struct Loci_Interest_Tags: Sendable {
   public var tagType: String = String()
 
   public var description_p: String {
-    get {_description_p ?? String()}
+    get {return _description_p ?? String()}
     set {_description_p = newValue}
   }
   /// Returns true if `description_p` has been explicitly set.
-  public var hasDescription_p: Bool {self._description_p != nil}
+  public var hasDescription_p: Bool {return self._description_p != nil}
   /// Clears the value of `description_p`. Subsequent reads from it will return its default value.
   public mutating func clearDescription_p() {self._description_p = nil}
 
   public var source: String {
-    get {_source ?? String()}
+    get {return _source ?? String()}
     set {_source = newValue}
   }
   /// Returns true if `source` has been explicitly set.
-  public var hasSource: Bool {self._source != nil}
+  public var hasSource: Bool {return self._source != nil}
   /// Clears the value of `source`. Subsequent reads from it will return its default value.
   public mutating func clearSource() {self._source = nil}
 
   public var active: Bool {
-    get {_active ?? false}
+    get {return _active ?? false}
     set {_active = newValue}
   }
   /// Returns true if `active` has been explicitly set.
-  public var hasActive: Bool {self._active != nil}
+  public var hasActive: Bool {return self._active != nil}
   /// Clears the value of `active`. Subsequent reads from it will return its default value.
   public mutating func clearActive() {self._active = nil}
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {self._createdAt != nil}
+  public var hasCreatedAt: Bool {return self._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {self._createdAt = nil}
 
   public var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  public var hasUpdatedAt: Bool {self._updatedAt != nil}
+  public var hasUpdatedAt: Bool {return self._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {self._updatedAt = nil}
 
@@ -147,7 +147,7 @@ public nonisolated struct Loci_Interest_Tags: Sendable {
 }
 
 /// CreateInterestRequest for creating a new interest
-public nonisolated struct Loci_Interest_CreateInterestRequest: Sendable {
+public struct Loci_Interest_CreateInterestRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -155,11 +155,11 @@ public nonisolated struct Loci_Interest_CreateInterestRequest: Sendable {
   public var name: String = String()
 
   public var description_p: String {
-    get {_description_p ?? String()}
+    get {return _description_p ?? String()}
     set {_description_p = newValue}
   }
   /// Returns true if `description_p` has been explicitly set.
-  public var hasDescription_p: Bool {self._description_p != nil}
+  public var hasDescription_p: Bool {return self._description_p != nil}
   /// Clears the value of `description_p`. Subsequent reads from it will return its default value.
   public mutating func clearDescription_p() {self._description_p = nil}
 
@@ -173,7 +173,7 @@ public nonisolated struct Loci_Interest_CreateInterestRequest: Sendable {
 }
 
 /// UpdateInterestRequest for updating an interest
-public nonisolated struct Loci_Interest_UpdateInterestRequest: Sendable {
+public struct Loci_Interest_UpdateInterestRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -181,29 +181,29 @@ public nonisolated struct Loci_Interest_UpdateInterestRequest: Sendable {
   public var interestID: String = String()
 
   public var name: String {
-    get {_name ?? String()}
+    get {return _name ?? String()}
     set {_name = newValue}
   }
   /// Returns true if `name` has been explicitly set.
-  public var hasName: Bool {self._name != nil}
+  public var hasName: Bool {return self._name != nil}
   /// Clears the value of `name`. Subsequent reads from it will return its default value.
   public mutating func clearName() {self._name = nil}
 
   public var description_p: String {
-    get {_description_p ?? String()}
+    get {return _description_p ?? String()}
     set {_description_p = newValue}
   }
   /// Returns true if `description_p` has been explicitly set.
-  public var hasDescription_p: Bool {self._description_p != nil}
+  public var hasDescription_p: Bool {return self._description_p != nil}
   /// Clears the value of `description_p`. Subsequent reads from it will return its default value.
   public mutating func clearDescription_p() {self._description_p = nil}
 
   public var active: Bool {
-    get {_active ?? false}
+    get {return _active ?? false}
     set {_active = newValue}
   }
   /// Returns true if `active` has been explicitly set.
-  public var hasActive: Bool {self._active != nil}
+  public var hasActive: Bool {return self._active != nil}
   /// Clears the value of `active`. Subsequent reads from it will return its default value.
   public mutating func clearActive() {self._active = nil}
 
@@ -217,7 +217,7 @@ public nonisolated struct Loci_Interest_UpdateInterestRequest: Sendable {
 }
 
 /// AddInterestRequest for adding an interest to user
-public nonisolated struct Loci_Interest_AddInterestRequest: Sendable {
+public struct Loci_Interest_AddInterestRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -230,7 +230,7 @@ public nonisolated struct Loci_Interest_AddInterestRequest: Sendable {
 }
 
 /// UpdatePreferenceLevelRequest for updating preference level
-public nonisolated struct Loci_Interest_UpdatePreferenceLevelRequest: Sendable {
+public struct Loci_Interest_UpdatePreferenceLevelRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -243,17 +243,17 @@ public nonisolated struct Loci_Interest_UpdatePreferenceLevelRequest: Sendable {
 }
 
 /// GetInterestsRequest for retrieving interests
-public nonisolated struct Loci_Interest_GetInterestsRequest: Sendable {
+public struct Loci_Interest_GetInterestsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var activeOnly: Bool {
-    get {_activeOnly ?? false}
+    get {return _activeOnly ?? false}
     set {_activeOnly = newValue}
   }
   /// Returns true if `activeOnly` has been explicitly set.
-  public var hasActiveOnly: Bool {self._activeOnly != nil}
+  public var hasActiveOnly: Bool {return self._activeOnly != nil}
   /// Clears the value of `activeOnly`. Subsequent reads from it will return its default value.
   public mutating func clearActiveOnly() {self._activeOnly = nil}
 
@@ -265,7 +265,7 @@ public nonisolated struct Loci_Interest_GetInterestsRequest: Sendable {
 }
 
 /// GetInterestsResponse for interests retrieval
-public nonisolated struct Loci_Interest_GetInterestsResponse: Sendable {
+public struct Loci_Interest_GetInterestsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -278,17 +278,17 @@ public nonisolated struct Loci_Interest_GetInterestsResponse: Sendable {
 }
 
 /// GetUserInterestsRequest for retrieving user interests
-public nonisolated struct Loci_Interest_GetUserInterestsRequest: Sendable {
+public struct Loci_Interest_GetUserInterestsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var userID: String {
-    get {_userID ?? String()}
+    get {return _userID ?? String()}
     set {_userID = newValue}
   }
   /// Returns true if `userID` has been explicitly set.
-  public var hasUserID: Bool {self._userID != nil}
+  public var hasUserID: Bool {return self._userID != nil}
   /// Clears the value of `userID`. Subsequent reads from it will return its default value.
   public mutating func clearUserID() {self._userID = nil}
 
@@ -300,7 +300,7 @@ public nonisolated struct Loci_Interest_GetUserInterestsRequest: Sendable {
 }
 
 /// GetUserInterestsResponse for user interests retrieval
-public nonisolated struct Loci_Interest_GetUserInterestsResponse: Sendable {
+public struct Loci_Interest_GetUserInterestsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -318,7 +318,7 @@ public nonisolated struct Loci_Interest_GetUserInterestsResponse: Sendable {
 /// the list, switched off. The client offered a delete button that called
 /// UpdateInterest with active=false and reported "Interest deleted", which left
 /// the interest exactly where it was.
-public nonisolated struct Loci_Interest_DeleteInterestRequest: Sendable {
+public struct Loci_Interest_DeleteInterestRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -332,11 +332,19 @@ public nonisolated struct Loci_Interest_DeleteInterestRequest: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.interest"
+fileprivate let _protobuf_package = "loci.interest"
 
-nonisolated extension Loci_Interest_Interest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Interest_Interest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Interest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{1}description\0\u{1}active\0\u{3}created_at\0\u{3}updated_at\0\u{1}source\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "name"),
+    3: .same(proto: "description"),
+    4: .same(proto: "active"),
+    5: .standard(proto: "created_at"),
+    6: .standard(proto: "updated_at"),
+    7: .same(proto: "source"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -398,9 +406,18 @@ nonisolated extension Loci_Interest_Interest: SwiftProtobuf.Message, SwiftProtob
   }
 }
 
-nonisolated extension Loci_Interest_Tags: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Interest_Tags: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Tags"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{3}tag_type\0\u{1}description\0\u{1}source\0\u{1}active\0\u{3}created_at\0\u{3}updated_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "name"),
+    3: .standard(proto: "tag_type"),
+    4: .same(proto: "description"),
+    5: .same(proto: "source"),
+    6: .same(proto: "active"),
+    7: .standard(proto: "created_at"),
+    8: .standard(proto: "updated_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -467,9 +484,13 @@ nonisolated extension Loci_Interest_Tags: SwiftProtobuf.Message, SwiftProtobuf._
   }
 }
 
-nonisolated extension Loci_Interest_CreateInterestRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Interest_CreateInterestRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreateInterestRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0\u{1}description\0\u{1}active\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "name"),
+    2: .same(proto: "description"),
+    3: .same(proto: "active"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -511,9 +532,14 @@ nonisolated extension Loci_Interest_CreateInterestRequest: SwiftProtobuf.Message
   }
 }
 
-nonisolated extension Loci_Interest_UpdateInterestRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Interest_UpdateInterestRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UpdateInterestRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}interest_id\0\u{1}name\0\u{1}description\0\u{1}active\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "interest_id"),
+    2: .same(proto: "name"),
+    3: .same(proto: "description"),
+    4: .same(proto: "active"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -560,9 +586,11 @@ nonisolated extension Loci_Interest_UpdateInterestRequest: SwiftProtobuf.Message
   }
 }
 
-nonisolated extension Loci_Interest_AddInterestRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Interest_AddInterestRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".AddInterestRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}interest_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "interest_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -590,9 +618,11 @@ nonisolated extension Loci_Interest_AddInterestRequest: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_Interest_UpdatePreferenceLevelRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Interest_UpdatePreferenceLevelRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UpdatePreferenceLevelRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}preference_level\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "preference_level"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -620,9 +650,11 @@ nonisolated extension Loci_Interest_UpdatePreferenceLevelRequest: SwiftProtobuf.
   }
 }
 
-nonisolated extension Loci_Interest_GetInterestsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Interest_GetInterestsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetInterestsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}active_only\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "active_only"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -654,9 +686,11 @@ nonisolated extension Loci_Interest_GetInterestsRequest: SwiftProtobuf.Message, 
   }
 }
 
-nonisolated extension Loci_Interest_GetInterestsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Interest_GetInterestsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetInterestsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}interests\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "interests"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -684,9 +718,11 @@ nonisolated extension Loci_Interest_GetInterestsResponse: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_Interest_GetUserInterestsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Interest_GetUserInterestsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetUserInterestsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -718,9 +754,11 @@ nonisolated extension Loci_Interest_GetUserInterestsRequest: SwiftProtobuf.Messa
   }
 }
 
-nonisolated extension Loci_Interest_GetUserInterestsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Interest_GetUserInterestsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetUserInterestsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}interests\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "interests"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -748,9 +786,11 @@ nonisolated extension Loci_Interest_GetUserInterestsResponse: SwiftProtobuf.Mess
   }
 }
 
-nonisolated extension Loci_Interest_DeleteInterestRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Interest_DeleteInterestRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DeleteInterestRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}interest_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "interest_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

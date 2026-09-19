@@ -15,13 +15,13 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// Content types for list items
-public nonisolated enum Loci_List_ContentType: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_List_ContentType: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case poi // = 1
@@ -68,7 +68,7 @@ public nonisolated enum Loci_List_ContentType: SwiftProtobuf.Enum, Swift.CaseIte
 }
 
 /// Core list entity
-public nonisolated struct Loci_List_List: Sendable {
+public struct Loci_List_List: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -98,20 +98,20 @@ public nonisolated struct Loci_List_List: Sendable {
   public var itemCount: Int32 = 0
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {self._createdAt != nil}
+  public var hasCreatedAt: Bool {return self._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {self._createdAt = nil}
 
   public var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  public var hasUpdatedAt: Bool {self._updatedAt != nil}
+  public var hasUpdatedAt: Bool {return self._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {self._updatedAt = nil}
 
@@ -124,96 +124,96 @@ public nonisolated struct Loci_List_List: Sendable {
 }
 
 /// List item entity
-public nonisolated struct Loci_List_ListItem: @unchecked Sendable {
+public struct Loci_List_ListItem: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var listID: String {
-    get {_storage._listID}
+    get {return _storage._listID}
     set {_uniqueStorage()._listID = newValue}
   }
 
   public var itemID: String {
-    get {_storage._itemID}
+    get {return _storage._itemID}
     set {_uniqueStorage()._itemID = newValue}
   }
 
   /// For backward compatibility with POI-only items
   public var poiID: String {
-    get {_storage._poiID}
+    get {return _storage._poiID}
     set {_uniqueStorage()._poiID = newValue}
   }
 
   public var contentType: Loci_List_ContentType {
-    get {_storage._contentType}
+    get {return _storage._contentType}
     set {_uniqueStorage()._contentType = newValue}
   }
 
   public var position: Int32 {
-    get {_storage._position}
+    get {return _storage._position}
     set {_uniqueStorage()._position = newValue}
   }
 
   public var notes: String {
-    get {_storage._notes}
+    get {return _storage._notes}
     set {_uniqueStorage()._notes = newValue}
   }
 
   public var dayNumber: Int32 {
-    get {_storage._dayNumber}
+    get {return _storage._dayNumber}
     set {_uniqueStorage()._dayNumber = newValue}
   }
 
   public var timeSlot: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._timeSlot ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._timeSlot ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._timeSlot = newValue}
   }
   /// Returns true if `timeSlot` has been explicitly set.
-  public var hasTimeSlot: Bool {_storage._timeSlot != nil}
+  public var hasTimeSlot: Bool {return _storage._timeSlot != nil}
   /// Clears the value of `timeSlot`. Subsequent reads from it will return its default value.
   public mutating func clearTimeSlot() {_uniqueStorage()._timeSlot = nil}
 
   /// Duration in minutes
   public var duration: Int32 {
-    get {_storage._duration}
+    get {return _storage._duration}
     set {_uniqueStorage()._duration = newValue}
   }
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {_storage._createdAt != nil}
+  public var hasCreatedAt: Bool {return _storage._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {_uniqueStorage()._createdAt = nil}
 
   public var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  public var hasUpdatedAt: Bool {_storage._updatedAt != nil}
+  public var hasUpdatedAt: Bool {return _storage._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {_uniqueStorage()._updatedAt = nil}
 
   public var sourceLlmInteractionID: String {
-    get {_storage._sourceLlmInteractionID}
+    get {return _storage._sourceLlmInteractionID}
     set {_uniqueStorage()._sourceLlmInteractionID = newValue}
   }
 
   public var itemAiDescription: String {
-    get {_storage._itemAiDescription}
+    get {return _storage._itemAiDescription}
     set {_uniqueStorage()._itemAiDescription = newValue}
   }
 
   public var recommendationTrace: Loci_Recommendation_RecommendationTrace {
-    get {_storage._recommendationTrace ?? Loci_Recommendation_RecommendationTrace()}
+    get {return _storage._recommendationTrace ?? Loci_Recommendation_RecommendationTrace()}
     set {_uniqueStorage()._recommendationTrace = newValue}
   }
   /// Returns true if `recommendationTrace` has been explicitly set.
-  public var hasRecommendationTrace: Bool {_storage._recommendationTrace != nil}
+  public var hasRecommendationTrace: Bool {return _storage._recommendationTrace != nil}
   /// Clears the value of `recommendationTrace`. Subsequent reads from it will return its default value.
   public mutating func clearRecommendationTrace() {_uniqueStorage()._recommendationTrace = nil}
 
@@ -225,22 +225,22 @@ public nonisolated struct Loci_List_ListItem: @unchecked Sendable {
 }
 
 /// List with its items
-public nonisolated struct Loci_List_ListWithItems: @unchecked Sendable {
+public struct Loci_List_ListWithItems: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var list: Loci_List_List {
-    get {_storage._list ?? Loci_List_List()}
+    get {return _storage._list ?? Loci_List_List()}
     set {_uniqueStorage()._list = newValue}
   }
   /// Returns true if `list` has been explicitly set.
-  public var hasList: Bool {_storage._list != nil}
+  public var hasList: Bool {return _storage._list != nil}
   /// Clears the value of `list`. Subsequent reads from it will return its default value.
   public mutating func clearList() {_uniqueStorage()._list = nil}
 
   public var items: [Loci_List_ListItem] {
-    get {_storage._items}
+    get {return _storage._items}
     set {_uniqueStorage()._items = newValue}
   }
 
@@ -252,53 +252,53 @@ public nonisolated struct Loci_List_ListWithItems: @unchecked Sendable {
 }
 
 /// List item with detailed content
-public nonisolated struct Loci_List_ListItemWithContent: @unchecked Sendable {
+public struct Loci_List_ListItemWithContent: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var listItem: Loci_List_ListItem {
-    get {_storage._listItem ?? Loci_List_ListItem()}
+    get {return _storage._listItem ?? Loci_List_ListItem()}
     set {_uniqueStorage()._listItem = newValue}
   }
   /// Returns true if `listItem` has been explicitly set.
-  public var hasListItem: Bool {_storage._listItem != nil}
+  public var hasListItem: Bool {return _storage._listItem != nil}
   /// Clears the value of `listItem`. Subsequent reads from it will return its default value.
   public mutating func clearListItem() {_uniqueStorage()._listItem = nil}
 
   public var poi: Loci_List_POIDetailedInfo {
-    get {_storage._poi ?? Loci_List_POIDetailedInfo()}
+    get {return _storage._poi ?? Loci_List_POIDetailedInfo()}
     set {_uniqueStorage()._poi = newValue}
   }
   /// Returns true if `poi` has been explicitly set.
-  public var hasPoi: Bool {_storage._poi != nil}
+  public var hasPoi: Bool {return _storage._poi != nil}
   /// Clears the value of `poi`. Subsequent reads from it will return its default value.
   public mutating func clearPoi() {_uniqueStorage()._poi = nil}
 
   public var restaurant: Loci_List_RestaurantDetailedInfo {
-    get {_storage._restaurant ?? Loci_List_RestaurantDetailedInfo()}
+    get {return _storage._restaurant ?? Loci_List_RestaurantDetailedInfo()}
     set {_uniqueStorage()._restaurant = newValue}
   }
   /// Returns true if `restaurant` has been explicitly set.
-  public var hasRestaurant: Bool {_storage._restaurant != nil}
+  public var hasRestaurant: Bool {return _storage._restaurant != nil}
   /// Clears the value of `restaurant`. Subsequent reads from it will return its default value.
   public mutating func clearRestaurant() {_uniqueStorage()._restaurant = nil}
 
   public var hotel: Loci_List_HotelDetailedInfo {
-    get {_storage._hotel ?? Loci_List_HotelDetailedInfo()}
+    get {return _storage._hotel ?? Loci_List_HotelDetailedInfo()}
     set {_uniqueStorage()._hotel = newValue}
   }
   /// Returns true if `hotel` has been explicitly set.
-  public var hasHotel: Bool {_storage._hotel != nil}
+  public var hasHotel: Bool {return _storage._hotel != nil}
   /// Clears the value of `hotel`. Subsequent reads from it will return its default value.
   public mutating func clearHotel() {_uniqueStorage()._hotel = nil}
 
   public var itinerary: Loci_List_UserSavedItinerary {
-    get {_storage._itinerary ?? Loci_List_UserSavedItinerary()}
+    get {return _storage._itinerary ?? Loci_List_UserSavedItinerary()}
     set {_uniqueStorage()._itinerary = newValue}
   }
   /// Returns true if `itinerary` has been explicitly set.
-  public var hasItinerary: Bool {_storage._itinerary != nil}
+  public var hasItinerary: Bool {return _storage._itinerary != nil}
   /// Clears the value of `itinerary`. Subsequent reads from it will return its default value.
   public mutating func clearItinerary() {_uniqueStorage()._itinerary = nil}
 
@@ -310,22 +310,22 @@ public nonisolated struct Loci_List_ListItemWithContent: @unchecked Sendable {
 }
 
 /// List with detailed items
-public nonisolated struct Loci_List_ListWithDetailedItems: @unchecked Sendable {
+public struct Loci_List_ListWithDetailedItems: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var list: Loci_List_List {
-    get {_storage._list ?? Loci_List_List()}
+    get {return _storage._list ?? Loci_List_List()}
     set {_uniqueStorage()._list = newValue}
   }
   /// Returns true if `list` has been explicitly set.
-  public var hasList: Bool {_storage._list != nil}
+  public var hasList: Bool {return _storage._list != nil}
   /// Clears the value of `list`. Subsequent reads from it will return its default value.
   public mutating func clearList() {_uniqueStorage()._list = nil}
 
   public var items: [Loci_List_ListItemWithContent] {
-    get {_storage._items}
+    get {return _storage._items}
     set {_uniqueStorage()._items = newValue}
   }
 
@@ -337,7 +337,7 @@ public nonisolated struct Loci_List_ListWithDetailedItems: @unchecked Sendable {
 }
 
 /// POI detailed info (simplified from poi.proto)
-public nonisolated struct Loci_List_POIDetailedInfo: Sendable {
+public struct Loci_List_POIDetailedInfo: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -374,37 +374,37 @@ public nonisolated struct Loci_List_POIDetailedInfo: Sendable {
 }
 
 /// Restaurant detailed info
-public nonisolated struct Loci_List_RestaurantDetailedInfo: @unchecked Sendable {
+public struct Loci_List_RestaurantDetailedInfo: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var poi: Loci_List_POIDetailedInfo {
-    get {_storage._poi ?? Loci_List_POIDetailedInfo()}
+    get {return _storage._poi ?? Loci_List_POIDetailedInfo()}
     set {_uniqueStorage()._poi = newValue}
   }
   /// Returns true if `poi` has been explicitly set.
-  public var hasPoi: Bool {_storage._poi != nil}
+  public var hasPoi: Bool {return _storage._poi != nil}
   /// Clears the value of `poi`. Subsequent reads from it will return its default value.
   public mutating func clearPoi() {_uniqueStorage()._poi = nil}
 
   public var cuisineType: String {
-    get {_storage._cuisineType}
+    get {return _storage._cuisineType}
     set {_uniqueStorage()._cuisineType = newValue}
   }
 
   public var dietaryOptions: [String] {
-    get {_storage._dietaryOptions}
+    get {return _storage._dietaryOptions}
     set {_uniqueStorage()._dietaryOptions = newValue}
   }
 
   public var dressCode: String {
-    get {_storage._dressCode}
+    get {return _storage._dressCode}
     set {_uniqueStorage()._dressCode = newValue}
   }
 
   public var reservationsRequired: Bool {
-    get {_storage._reservationsRequired}
+    get {return _storage._reservationsRequired}
     set {_uniqueStorage()._reservationsRequired = newValue}
   }
 
@@ -416,42 +416,42 @@ public nonisolated struct Loci_List_RestaurantDetailedInfo: @unchecked Sendable 
 }
 
 /// Hotel detailed info
-public nonisolated struct Loci_List_HotelDetailedInfo: @unchecked Sendable {
+public struct Loci_List_HotelDetailedInfo: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var poi: Loci_List_POIDetailedInfo {
-    get {_storage._poi ?? Loci_List_POIDetailedInfo()}
+    get {return _storage._poi ?? Loci_List_POIDetailedInfo()}
     set {_uniqueStorage()._poi = newValue}
   }
   /// Returns true if `poi` has been explicitly set.
-  public var hasPoi: Bool {_storage._poi != nil}
+  public var hasPoi: Bool {return _storage._poi != nil}
   /// Clears the value of `poi`. Subsequent reads from it will return its default value.
   public mutating func clearPoi() {_uniqueStorage()._poi = nil}
 
   public var starRating: Int32 {
-    get {_storage._starRating}
+    get {return _storage._starRating}
     set {_uniqueStorage()._starRating = newValue}
   }
 
   public var roomTypes: [String] {
-    get {_storage._roomTypes}
+    get {return _storage._roomTypes}
     set {_uniqueStorage()._roomTypes = newValue}
   }
 
   public var amenities: [String] {
-    get {_storage._amenities}
+    get {return _storage._amenities}
     set {_uniqueStorage()._amenities = newValue}
   }
 
   public var checkInTime: String {
-    get {_storage._checkInTime}
+    get {return _storage._checkInTime}
     set {_uniqueStorage()._checkInTime = newValue}
   }
 
   public var checkOutTime: String {
-    get {_storage._checkOutTime}
+    get {return _storage._checkOutTime}
     set {_uniqueStorage()._checkOutTime = newValue}
   }
 
@@ -463,7 +463,7 @@ public nonisolated struct Loci_List_HotelDetailedInfo: @unchecked Sendable {
 }
 
 /// User saved itinerary
-public nonisolated struct Loci_List_UserSavedItinerary: Sendable {
+public struct Loci_List_UserSavedItinerary: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -482,20 +482,20 @@ public nonisolated struct Loci_List_UserSavedItinerary: Sendable {
   public var itineraryData: String = String()
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {self._createdAt != nil}
+  public var hasCreatedAt: Bool {return self._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {self._createdAt = nil}
 
   public var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  public var hasUpdatedAt: Bool {self._updatedAt != nil}
+  public var hasUpdatedAt: Bool {return self._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {self._updatedAt = nil}
 
@@ -508,7 +508,7 @@ public nonisolated struct Loci_List_UserSavedItinerary: Sendable {
 }
 
 /// List management
-public nonisolated struct Loci_List_CreateListRequest: Sendable {
+public struct Loci_List_CreateListRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -530,27 +530,27 @@ public nonisolated struct Loci_List_CreateListRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_List_CreateListResponse: @unchecked Sendable {
+public struct Loci_List_CreateListResponse: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var success: Bool {
-    get {_storage._success}
+    get {return _storage._success}
     set {_uniqueStorage()._success = newValue}
   }
 
   public var message: String {
-    get {_storage._message}
+    get {return _storage._message}
     set {_uniqueStorage()._message = newValue}
   }
 
   public var list: Loci_List_List {
-    get {_storage._list ?? Loci_List_List()}
+    get {return _storage._list ?? Loci_List_List()}
     set {_uniqueStorage()._list = newValue}
   }
   /// Returns true if `list` has been explicitly set.
-  public var hasList: Bool {_storage._list != nil}
+  public var hasList: Bool {return _storage._list != nil}
   /// Clears the value of `list`. Subsequent reads from it will return its default value.
   public mutating func clearList() {_uniqueStorage()._list = nil}
 
@@ -561,7 +561,7 @@ public nonisolated struct Loci_List_CreateListResponse: @unchecked Sendable {
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-public nonisolated struct Loci_List_GetListsRequest: Sendable {
+public struct Loci_List_GetListsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -579,7 +579,7 @@ public nonisolated struct Loci_List_GetListsRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_List_GetListsResponse: Sendable {
+public struct Loci_List_GetListsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -593,7 +593,7 @@ public nonisolated struct Loci_List_GetListsResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_List_GetListRequest: Sendable {
+public struct Loci_List_GetListRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -609,17 +609,17 @@ public nonisolated struct Loci_List_GetListRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_List_GetListResponse: Sendable {
+public struct Loci_List_GetListResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var list: Loci_List_ListWithDetailedItems {
-    get {_list ?? Loci_List_ListWithDetailedItems()}
+    get {return _list ?? Loci_List_ListWithDetailedItems()}
     set {_list = newValue}
   }
   /// Returns true if `list` has been explicitly set.
-  public var hasList: Bool {self._list != nil}
+  public var hasList: Bool {return self._list != nil}
   /// Clears the value of `list`. Subsequent reads from it will return its default value.
   public mutating func clearList() {self._list = nil}
 
@@ -630,7 +630,7 @@ public nonisolated struct Loci_List_GetListResponse: Sendable {
   fileprivate var _list: Loci_List_ListWithDetailedItems? = nil
 }
 
-public nonisolated struct Loci_List_UpdateListRequest: Sendable {
+public struct Loci_List_UpdateListRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -654,27 +654,27 @@ public nonisolated struct Loci_List_UpdateListRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_List_UpdateListResponse: @unchecked Sendable {
+public struct Loci_List_UpdateListResponse: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var success: Bool {
-    get {_storage._success}
+    get {return _storage._success}
     set {_uniqueStorage()._success = newValue}
   }
 
   public var message: String {
-    get {_storage._message}
+    get {return _storage._message}
     set {_uniqueStorage()._message = newValue}
   }
 
   public var list: Loci_List_List {
-    get {_storage._list ?? Loci_List_List()}
+    get {return _storage._list ?? Loci_List_List()}
     set {_uniqueStorage()._list = newValue}
   }
   /// Returns true if `list` has been explicitly set.
-  public var hasList: Bool {_storage._list != nil}
+  public var hasList: Bool {return _storage._list != nil}
   /// Clears the value of `list`. Subsequent reads from it will return its default value.
   public mutating func clearList() {_uniqueStorage()._list = nil}
 
@@ -685,7 +685,7 @@ public nonisolated struct Loci_List_UpdateListResponse: @unchecked Sendable {
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-public nonisolated struct Loci_List_DeleteListRequest: Sendable {
+public struct Loci_List_DeleteListRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -699,7 +699,7 @@ public nonisolated struct Loci_List_DeleteListRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_List_DeleteListResponse: Sendable {
+public struct Loci_List_DeleteListResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -714,7 +714,7 @@ public nonisolated struct Loci_List_DeleteListResponse: Sendable {
 }
 
 /// Itinerary creation
-public nonisolated struct Loci_List_CreateItineraryRequest: Sendable {
+public struct Loci_List_CreateItineraryRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -734,27 +734,27 @@ public nonisolated struct Loci_List_CreateItineraryRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_List_CreateItineraryResponse: @unchecked Sendable {
+public struct Loci_List_CreateItineraryResponse: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var success: Bool {
-    get {_storage._success}
+    get {return _storage._success}
     set {_uniqueStorage()._success = newValue}
   }
 
   public var message: String {
-    get {_storage._message}
+    get {return _storage._message}
     set {_uniqueStorage()._message = newValue}
   }
 
   public var itinerary: Loci_List_List {
-    get {_storage._itinerary ?? Loci_List_List()}
+    get {return _storage._itinerary ?? Loci_List_List()}
     set {_uniqueStorage()._itinerary = newValue}
   }
   /// Returns true if `itinerary` has been explicitly set.
-  public var hasItinerary: Bool {_storage._itinerary != nil}
+  public var hasItinerary: Bool {return _storage._itinerary != nil}
   /// Clears the value of `itinerary`. Subsequent reads from it will return its default value.
   public mutating func clearItinerary() {_uniqueStorage()._itinerary = nil}
 
@@ -766,76 +766,76 @@ public nonisolated struct Loci_List_CreateItineraryResponse: @unchecked Sendable
 }
 
 /// List item management
-public nonisolated struct Loci_List_AddListItemRequest: @unchecked Sendable {
+public struct Loci_List_AddListItemRequest: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var userID: String {
-    get {_storage._userID}
+    get {return _storage._userID}
     set {_uniqueStorage()._userID = newValue}
   }
 
   public var listID: String {
-    get {_storage._listID}
+    get {return _storage._listID}
     set {_uniqueStorage()._listID = newValue}
   }
 
   public var itemID: String {
-    get {_storage._itemID}
+    get {return _storage._itemID}
     set {_uniqueStorage()._itemID = newValue}
   }
 
   public var contentType: Loci_List_ContentType {
-    get {_storage._contentType}
+    get {return _storage._contentType}
     set {_uniqueStorage()._contentType = newValue}
   }
 
   public var position: Int32 {
-    get {_storage._position}
+    get {return _storage._position}
     set {_uniqueStorage()._position = newValue}
   }
 
   public var notes: String {
-    get {_storage._notes}
+    get {return _storage._notes}
     set {_uniqueStorage()._notes = newValue}
   }
 
   public var dayNumber: Int32 {
-    get {_storage._dayNumber}
+    get {return _storage._dayNumber}
     set {_uniqueStorage()._dayNumber = newValue}
   }
 
   public var timeSlot: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._timeSlot ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._timeSlot ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._timeSlot = newValue}
   }
   /// Returns true if `timeSlot` has been explicitly set.
-  public var hasTimeSlot: Bool {_storage._timeSlot != nil}
+  public var hasTimeSlot: Bool {return _storage._timeSlot != nil}
   /// Clears the value of `timeSlot`. Subsequent reads from it will return its default value.
   public mutating func clearTimeSlot() {_uniqueStorage()._timeSlot = nil}
 
   public var durationMinutes: Int32 {
-    get {_storage._durationMinutes}
+    get {return _storage._durationMinutes}
     set {_uniqueStorage()._durationMinutes = newValue}
   }
 
   public var sourceLlmInteractionID: String {
-    get {_storage._sourceLlmInteractionID}
+    get {return _storage._sourceLlmInteractionID}
     set {_uniqueStorage()._sourceLlmInteractionID = newValue}
   }
 
   public var itemAiDescription: String {
-    get {_storage._itemAiDescription}
+    get {return _storage._itemAiDescription}
     set {_uniqueStorage()._itemAiDescription = newValue}
   }
 
   public var recommendationTrace: Loci_Recommendation_RecommendationTrace {
-    get {_storage._recommendationTrace ?? Loci_Recommendation_RecommendationTrace()}
+    get {return _storage._recommendationTrace ?? Loci_Recommendation_RecommendationTrace()}
     set {_uniqueStorage()._recommendationTrace = newValue}
   }
   /// Returns true if `recommendationTrace` has been explicitly set.
-  public var hasRecommendationTrace: Bool {_storage._recommendationTrace != nil}
+  public var hasRecommendationTrace: Bool {return _storage._recommendationTrace != nil}
   /// Clears the value of `recommendationTrace`. Subsequent reads from it will return its default value.
   public mutating func clearRecommendationTrace() {_uniqueStorage()._recommendationTrace = nil}
 
@@ -846,7 +846,7 @@ public nonisolated struct Loci_List_AddListItemRequest: @unchecked Sendable {
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-public nonisolated struct Loci_List_AddListItemResponse: Sendable {
+public struct Loci_List_AddListItemResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -856,11 +856,11 @@ public nonisolated struct Loci_List_AddListItemResponse: Sendable {
   public var message: String = String()
 
   public var item: Loci_List_ListItem {
-    get {_item ?? Loci_List_ListItem()}
+    get {return _item ?? Loci_List_ListItem()}
     set {_item = newValue}
   }
   /// Returns true if `item` has been explicitly set.
-  public var hasItem: Bool {self._item != nil}
+  public var hasItem: Bool {return self._item != nil}
   /// Clears the value of `item`. Subsequent reads from it will return its default value.
   public mutating func clearItem() {self._item = nil}
 
@@ -871,7 +871,7 @@ public nonisolated struct Loci_List_AddListItemResponse: Sendable {
   fileprivate var _item: Loci_List_ListItem? = nil
 }
 
-public nonisolated struct Loci_List_UpdateListItemRequest: Sendable {
+public struct Loci_List_UpdateListItemRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -891,11 +891,11 @@ public nonisolated struct Loci_List_UpdateListItemRequest: Sendable {
   public var dayNumber: Int32 = 0
 
   public var timeSlot: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_timeSlot ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _timeSlot ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_timeSlot = newValue}
   }
   /// Returns true if `timeSlot` has been explicitly set.
-  public var hasTimeSlot: Bool {self._timeSlot != nil}
+  public var hasTimeSlot: Bool {return self._timeSlot != nil}
   /// Clears the value of `timeSlot`. Subsequent reads from it will return its default value.
   public mutating func clearTimeSlot() {self._timeSlot = nil}
 
@@ -912,7 +912,7 @@ public nonisolated struct Loci_List_UpdateListItemRequest: Sendable {
   fileprivate var _timeSlot: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-public nonisolated struct Loci_List_UpdateListItemResponse: Sendable {
+public struct Loci_List_UpdateListItemResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -922,11 +922,11 @@ public nonisolated struct Loci_List_UpdateListItemResponse: Sendable {
   public var message: String = String()
 
   public var item: Loci_List_ListItem {
-    get {_item ?? Loci_List_ListItem()}
+    get {return _item ?? Loci_List_ListItem()}
     set {_item = newValue}
   }
   /// Returns true if `item` has been explicitly set.
-  public var hasItem: Bool {self._item != nil}
+  public var hasItem: Bool {return self._item != nil}
   /// Clears the value of `item`. Subsequent reads from it will return its default value.
   public mutating func clearItem() {self._item = nil}
 
@@ -937,7 +937,7 @@ public nonisolated struct Loci_List_UpdateListItemResponse: Sendable {
   fileprivate var _item: Loci_List_ListItem? = nil
 }
 
-public nonisolated struct Loci_List_RemoveListItemRequest: Sendable {
+public struct Loci_List_RemoveListItemRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -955,7 +955,7 @@ public nonisolated struct Loci_List_RemoveListItemRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_List_RemoveListItemResponse: Sendable {
+public struct Loci_List_RemoveListItemResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -969,7 +969,7 @@ public nonisolated struct Loci_List_RemoveListItemResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_List_GetListItemsRequest: Sendable {
+public struct Loci_List_GetListItemsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -985,7 +985,7 @@ public nonisolated struct Loci_List_GetListItemsRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_List_GetListItemsResponse: Sendable {
+public struct Loci_List_GetListItemsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1000,7 +1000,7 @@ public nonisolated struct Loci_List_GetListItemsResponse: Sendable {
 }
 
 /// Content-specific item requests
-public nonisolated struct Loci_List_GetListRestaurantsRequest: Sendable {
+public struct Loci_List_GetListRestaurantsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1014,7 +1014,7 @@ public nonisolated struct Loci_List_GetListRestaurantsRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_List_GetListRestaurantsResponse: Sendable {
+public struct Loci_List_GetListRestaurantsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1026,7 +1026,7 @@ public nonisolated struct Loci_List_GetListRestaurantsResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_List_GetListHotelsRequest: Sendable {
+public struct Loci_List_GetListHotelsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1040,7 +1040,7 @@ public nonisolated struct Loci_List_GetListHotelsRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_List_GetListHotelsResponse: Sendable {
+public struct Loci_List_GetListHotelsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1052,7 +1052,7 @@ public nonisolated struct Loci_List_GetListHotelsResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_List_GetListItinerariesRequest: Sendable {
+public struct Loci_List_GetListItinerariesRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1066,7 +1066,7 @@ public nonisolated struct Loci_List_GetListItinerariesRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_List_GetListItinerariesResponse: Sendable {
+public struct Loci_List_GetListItinerariesResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1079,7 +1079,7 @@ public nonisolated struct Loci_List_GetListItinerariesResponse: Sendable {
 }
 
 /// Public list management
-public nonisolated struct Loci_List_SavePublicListRequest: Sendable {
+public struct Loci_List_SavePublicListRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1093,7 +1093,7 @@ public nonisolated struct Loci_List_SavePublicListRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_List_SavePublicListResponse: Sendable {
+public struct Loci_List_SavePublicListResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1107,7 +1107,7 @@ public nonisolated struct Loci_List_SavePublicListResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_List_UnsaveListRequest: Sendable {
+public struct Loci_List_UnsaveListRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1121,7 +1121,7 @@ public nonisolated struct Loci_List_UnsaveListRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_List_UnsaveListResponse: Sendable {
+public struct Loci_List_UnsaveListResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1135,7 +1135,7 @@ public nonisolated struct Loci_List_UnsaveListResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_List_GetSavedListsRequest: Sendable {
+public struct Loci_List_GetSavedListsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1151,7 +1151,7 @@ public nonisolated struct Loci_List_GetSavedListsRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_List_GetSavedListsResponse: Sendable {
+public struct Loci_List_GetSavedListsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1165,7 +1165,7 @@ public nonisolated struct Loci_List_GetSavedListsResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_List_SearchPublicListsRequest: Sendable {
+public struct Loci_List_SearchPublicListsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1188,7 +1188,7 @@ public nonisolated struct Loci_List_SearchPublicListsRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_List_SearchPublicListsResponse: Sendable {
+public struct Loci_List_SearchPublicListsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1198,11 +1198,11 @@ public nonisolated struct Loci_List_SearchPublicListsResponse: Sendable {
   public var totalCount: Int32 = 0
 
   public var metadata: Loci_List_SearchMetadata {
-    get {_metadata ?? Loci_List_SearchMetadata()}
+    get {return _metadata ?? Loci_List_SearchMetadata()}
     set {_metadata = newValue}
   }
   /// Returns true if `metadata` has been explicitly set.
-  public var hasMetadata: Bool {self._metadata != nil}
+  public var hasMetadata: Bool {return self._metadata != nil}
   /// Clears the value of `metadata`. Subsequent reads from it will return its default value.
   public mutating func clearMetadata() {self._metadata = nil}
 
@@ -1213,7 +1213,7 @@ public nonisolated struct Loci_List_SearchPublicListsResponse: Sendable {
   fileprivate var _metadata: Loci_List_SearchMetadata? = nil
 }
 
-public nonisolated struct Loci_List_SearchMetadata: Sendable {
+public struct Loci_List_SearchMetadata: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1231,15 +1231,36 @@ public nonisolated struct Loci_List_SearchMetadata: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.list"
+fileprivate let _protobuf_package = "loci.list"
 
-nonisolated extension Loci_List_ContentType: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0CONTENT_TYPE_UNSPECIFIED\0\u{1}CONTENT_TYPE_POI\0\u{1}CONTENT_TYPE_RESTAURANT\0\u{1}CONTENT_TYPE_HOTEL\0\u{1}CONTENT_TYPE_ITINERARY\0")
+extension Loci_List_ContentType: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "CONTENT_TYPE_UNSPECIFIED"),
+    1: .same(proto: "CONTENT_TYPE_POI"),
+    2: .same(proto: "CONTENT_TYPE_RESTAURANT"),
+    3: .same(proto: "CONTENT_TYPE_HOTEL"),
+    4: .same(proto: "CONTENT_TYPE_ITINERARY"),
+  ]
 }
 
-nonisolated extension Loci_List_List: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_List: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".List"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}user_id\0\u{1}name\0\u{1}description\0\u{3}image_url\0\u{3}is_public\0\u{3}is_itinerary\0\u{3}parent_list_id\0\u{3}city_id\0\u{3}view_count\0\u{3}save_count\0\u{3}item_count\0\u{3}created_at\0\u{3}updated_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "user_id"),
+    3: .same(proto: "name"),
+    4: .same(proto: "description"),
+    5: .standard(proto: "image_url"),
+    6: .standard(proto: "is_public"),
+    7: .standard(proto: "is_itinerary"),
+    8: .standard(proto: "parent_list_id"),
+    9: .standard(proto: "city_id"),
+    10: .standard(proto: "view_count"),
+    11: .standard(proto: "save_count"),
+    12: .standard(proto: "item_count"),
+    13: .standard(proto: "created_at"),
+    14: .standard(proto: "updated_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1336,9 +1357,24 @@ nonisolated extension Loci_List_List: SwiftProtobuf.Message, SwiftProtobuf._Mess
   }
 }
 
-nonisolated extension Loci_List_ListItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_ListItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListItem"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}list_id\0\u{3}item_id\0\u{3}poi_id\0\u{3}content_type\0\u{1}position\0\u{1}notes\0\u{3}day_number\0\u{3}time_slot\0\u{1}duration\0\u{3}created_at\0\u{3}updated_at\0\u{3}source_llm_interaction_id\0\u{3}item_ai_description\0\u{3}recommendation_trace\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "list_id"),
+    2: .standard(proto: "item_id"),
+    3: .standard(proto: "poi_id"),
+    4: .standard(proto: "content_type"),
+    5: .same(proto: "position"),
+    6: .same(proto: "notes"),
+    7: .standard(proto: "day_number"),
+    8: .standard(proto: "time_slot"),
+    9: .same(proto: "duration"),
+    10: .standard(proto: "created_at"),
+    11: .standard(proto: "updated_at"),
+    12: .standard(proto: "source_llm_interaction_id"),
+    13: .standard(proto: "item_ai_description"),
+    14: .standard(proto: "recommendation_trace"),
+  ]
 
   fileprivate class _StorageClass {
     var _listID: String = String()
@@ -1356,11 +1392,15 @@ nonisolated extension Loci_List_ListItem: SwiftProtobuf.Message, SwiftProtobuf._
     var _itemAiDescription: String = String()
     var _recommendationTrace: Loci_Recommendation_RecommendationTrace? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -1497,19 +1537,26 @@ nonisolated extension Loci_List_ListItem: SwiftProtobuf.Message, SwiftProtobuf._
   }
 }
 
-nonisolated extension Loci_List_ListWithItems: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_ListWithItems: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListWithItems"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}list\0\u{1}items\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "list"),
+    2: .same(proto: "items"),
+  ]
 
   fileprivate class _StorageClass {
     var _list: Loci_List_List? = nil
     var _items: [Loci_List_ListItem] = []
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -1574,9 +1621,15 @@ nonisolated extension Loci_List_ListWithItems: SwiftProtobuf.Message, SwiftProto
   }
 }
 
-nonisolated extension Loci_List_ListItemWithContent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_ListItemWithContent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListItemWithContent"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}list_item\0\u{1}poi\0\u{1}restaurant\0\u{1}hotel\0\u{1}itinerary\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "list_item"),
+    2: .same(proto: "poi"),
+    3: .same(proto: "restaurant"),
+    4: .same(proto: "hotel"),
+    5: .same(proto: "itinerary"),
+  ]
 
   fileprivate class _StorageClass {
     var _listItem: Loci_List_ListItem? = nil
@@ -1585,11 +1638,15 @@ nonisolated extension Loci_List_ListItemWithContent: SwiftProtobuf.Message, Swif
     var _hotel: Loci_List_HotelDetailedInfo? = nil
     var _itinerary: Loci_List_UserSavedItinerary? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -1672,19 +1729,26 @@ nonisolated extension Loci_List_ListItemWithContent: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_List_ListWithDetailedItems: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_ListWithDetailedItems: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListWithDetailedItems"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}list\0\u{1}items\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "list"),
+    2: .same(proto: "items"),
+  ]
 
   fileprivate class _StorageClass {
     var _list: Loci_List_List? = nil
     var _items: [Loci_List_ListItemWithContent] = []
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -1749,9 +1813,23 @@ nonisolated extension Loci_List_ListWithDetailedItems: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_List_POIDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_POIDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".POIDetailedInfo"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{1}latitude\0\u{1}longitude\0\u{1}category\0\u{1}description\0\u{1}rating\0\u{3}review_count\0\u{3}price_range\0\u{1}address\0\u{1}phone\0\u{1}website\0\u{1}photos\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "name"),
+    3: .same(proto: "latitude"),
+    4: .same(proto: "longitude"),
+    5: .same(proto: "category"),
+    6: .same(proto: "description"),
+    7: .same(proto: "rating"),
+    8: .standard(proto: "review_count"),
+    9: .standard(proto: "price_range"),
+    10: .same(proto: "address"),
+    11: .same(proto: "phone"),
+    12: .same(proto: "website"),
+    13: .same(proto: "photos"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1839,9 +1917,15 @@ nonisolated extension Loci_List_POIDetailedInfo: SwiftProtobuf.Message, SwiftPro
   }
 }
 
-nonisolated extension Loci_List_RestaurantDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_RestaurantDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RestaurantDetailedInfo"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}poi\0\u{3}cuisine_type\0\u{3}dietary_options\0\u{3}dress_code\0\u{3}reservations_required\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "poi"),
+    2: .standard(proto: "cuisine_type"),
+    3: .standard(proto: "dietary_options"),
+    4: .standard(proto: "dress_code"),
+    5: .standard(proto: "reservations_required"),
+  ]
 
   fileprivate class _StorageClass {
     var _poi: Loci_List_POIDetailedInfo? = nil
@@ -1850,11 +1934,15 @@ nonisolated extension Loci_List_RestaurantDetailedInfo: SwiftProtobuf.Message, S
     var _dressCode: String = String()
     var _reservationsRequired: Bool = false
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -1937,9 +2025,16 @@ nonisolated extension Loci_List_RestaurantDetailedInfo: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_List_HotelDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_HotelDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".HotelDetailedInfo"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}poi\0\u{3}star_rating\0\u{3}room_types\0\u{1}amenities\0\u{3}check_in_time\0\u{3}check_out_time\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "poi"),
+    2: .standard(proto: "star_rating"),
+    3: .standard(proto: "room_types"),
+    4: .same(proto: "amenities"),
+    5: .standard(proto: "check_in_time"),
+    6: .standard(proto: "check_out_time"),
+  ]
 
   fileprivate class _StorageClass {
     var _poi: Loci_List_POIDetailedInfo? = nil
@@ -1949,11 +2044,15 @@ nonisolated extension Loci_List_HotelDetailedInfo: SwiftProtobuf.Message, SwiftP
     var _checkInTime: String = String()
     var _checkOutTime: String = String()
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -2042,9 +2141,18 @@ nonisolated extension Loci_List_HotelDetailedInfo: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension Loci_List_UserSavedItinerary: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_UserSavedItinerary: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UserSavedItinerary"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}user_id\0\u{3}session_id\0\u{1}title\0\u{1}description\0\u{3}itinerary_data\0\u{3}created_at\0\u{3}updated_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "user_id"),
+    3: .standard(proto: "session_id"),
+    4: .same(proto: "title"),
+    5: .same(proto: "description"),
+    6: .standard(proto: "itinerary_data"),
+    7: .standard(proto: "created_at"),
+    8: .standard(proto: "updated_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2111,9 +2219,16 @@ nonisolated extension Loci_List_UserSavedItinerary: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_List_CreateListRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_CreateListRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreateListRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{1}name\0\u{1}description\0\u{3}city_id\0\u{3}is_itinerary\0\u{3}is_public\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .same(proto: "name"),
+    3: .same(proto: "description"),
+    4: .standard(proto: "city_id"),
+    5: .standard(proto: "is_itinerary"),
+    6: .standard(proto: "is_public"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2166,20 +2281,28 @@ nonisolated extension Loci_List_CreateListRequest: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension Loci_List_CreateListResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_CreateListResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreateListResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}success\0\u{1}message\0\u{1}list\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "success"),
+    2: .same(proto: "message"),
+    3: .same(proto: "list"),
+  ]
 
   fileprivate class _StorageClass {
     var _success: Bool = false
     var _message: String = String()
     var _list: Loci_List_List? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -2250,9 +2373,14 @@ nonisolated extension Loci_List_CreateListResponse: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_List_GetListsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_GetListsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetListsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{1}limit\0\u{1}offset\0\u{3}include_items\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .same(proto: "limit"),
+    3: .same(proto: "offset"),
+    4: .standard(proto: "include_items"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2295,9 +2423,12 @@ nonisolated extension Loci_List_GetListsRequest: SwiftProtobuf.Message, SwiftPro
   }
 }
 
-nonisolated extension Loci_List_GetListsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_GetListsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetListsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}lists\0\u{3}total_count\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "lists"),
+    2: .standard(proto: "total_count"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2330,9 +2461,13 @@ nonisolated extension Loci_List_GetListsResponse: SwiftProtobuf.Message, SwiftPr
   }
 }
 
-nonisolated extension Loci_List_GetListRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_GetListRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetListRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}list_id\0\u{3}include_detailed_items\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "list_id"),
+    3: .standard(proto: "include_detailed_items"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2370,9 +2505,11 @@ nonisolated extension Loci_List_GetListRequest: SwiftProtobuf.Message, SwiftProt
   }
 }
 
-nonisolated extension Loci_List_GetListResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_GetListResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetListResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}list\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "list"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2404,9 +2541,17 @@ nonisolated extension Loci_List_GetListResponse: SwiftProtobuf.Message, SwiftPro
   }
 }
 
-nonisolated extension Loci_List_UpdateListRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_UpdateListRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UpdateListRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}list_id\0\u{1}name\0\u{1}description\0\u{3}image_url\0\u{3}is_public\0\u{3}city_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "list_id"),
+    3: .same(proto: "name"),
+    4: .same(proto: "description"),
+    5: .standard(proto: "image_url"),
+    6: .standard(proto: "is_public"),
+    7: .standard(proto: "city_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2464,20 +2609,28 @@ nonisolated extension Loci_List_UpdateListRequest: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension Loci_List_UpdateListResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_UpdateListResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UpdateListResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}success\0\u{1}message\0\u{1}list\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "success"),
+    2: .same(proto: "message"),
+    3: .same(proto: "list"),
+  ]
 
   fileprivate class _StorageClass {
     var _success: Bool = false
     var _message: String = String()
     var _list: Loci_List_List? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -2548,9 +2701,12 @@ nonisolated extension Loci_List_UpdateListResponse: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_List_DeleteListRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_DeleteListRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DeleteListRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}list_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "list_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2583,9 +2739,12 @@ nonisolated extension Loci_List_DeleteListRequest: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension Loci_List_DeleteListResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_DeleteListResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DeleteListResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}success\0\u{1}message\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "success"),
+    2: .same(proto: "message"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2618,9 +2777,15 @@ nonisolated extension Loci_List_DeleteListResponse: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_List_CreateItineraryRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_CreateItineraryRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreateItineraryRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}parent_list_id\0\u{1}name\0\u{1}description\0\u{3}is_public\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "parent_list_id"),
+    3: .same(proto: "name"),
+    4: .same(proto: "description"),
+    5: .standard(proto: "is_public"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2668,20 +2833,28 @@ nonisolated extension Loci_List_CreateItineraryRequest: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_List_CreateItineraryResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_CreateItineraryResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreateItineraryResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}success\0\u{1}message\0\u{1}itinerary\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "success"),
+    2: .same(proto: "message"),
+    3: .same(proto: "itinerary"),
+  ]
 
   fileprivate class _StorageClass {
     var _success: Bool = false
     var _message: String = String()
     var _itinerary: Loci_List_List? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -2752,9 +2925,22 @@ nonisolated extension Loci_List_CreateItineraryResponse: SwiftProtobuf.Message, 
   }
 }
 
-nonisolated extension Loci_List_AddListItemRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_AddListItemRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".AddListItemRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}list_id\0\u{3}item_id\0\u{3}content_type\0\u{1}position\0\u{1}notes\0\u{3}day_number\0\u{3}time_slot\0\u{3}duration_minutes\0\u{3}source_llm_interaction_id\0\u{3}item_ai_description\0\u{3}recommendation_trace\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "list_id"),
+    3: .standard(proto: "item_id"),
+    4: .standard(proto: "content_type"),
+    5: .same(proto: "position"),
+    6: .same(proto: "notes"),
+    7: .standard(proto: "day_number"),
+    8: .standard(proto: "time_slot"),
+    9: .standard(proto: "duration_minutes"),
+    10: .standard(proto: "source_llm_interaction_id"),
+    11: .standard(proto: "item_ai_description"),
+    12: .standard(proto: "recommendation_trace"),
+  ]
 
   fileprivate class _StorageClass {
     var _userID: String = String()
@@ -2770,11 +2956,15 @@ nonisolated extension Loci_List_AddListItemRequest: SwiftProtobuf.Message, Swift
     var _itemAiDescription: String = String()
     var _recommendationTrace: Loci_Recommendation_RecommendationTrace? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -2899,9 +3089,13 @@ nonisolated extension Loci_List_AddListItemRequest: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_List_AddListItemResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_AddListItemResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".AddListItemResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}success\0\u{1}message\0\u{1}item\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "success"),
+    2: .same(proto: "message"),
+    3: .same(proto: "item"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2943,9 +3137,21 @@ nonisolated extension Loci_List_AddListItemResponse: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_List_UpdateListItemRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_UpdateListItemRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UpdateListItemRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}list_id\0\u{3}item_id\0\u{3}content_type\0\u{1}position\0\u{1}notes\0\u{3}day_number\0\u{3}time_slot\0\u{3}duration_minutes\0\u{3}source_llm_interaction_id\0\u{3}item_ai_description\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "list_id"),
+    3: .standard(proto: "item_id"),
+    4: .standard(proto: "content_type"),
+    5: .same(proto: "position"),
+    6: .same(proto: "notes"),
+    7: .standard(proto: "day_number"),
+    8: .standard(proto: "time_slot"),
+    9: .standard(proto: "duration_minutes"),
+    10: .standard(proto: "source_llm_interaction_id"),
+    11: .standard(proto: "item_ai_description"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3027,9 +3233,13 @@ nonisolated extension Loci_List_UpdateListItemRequest: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_List_UpdateListItemResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_UpdateListItemResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UpdateListItemResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}success\0\u{1}message\0\u{1}item\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "success"),
+    2: .same(proto: "message"),
+    3: .same(proto: "item"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3071,9 +3281,14 @@ nonisolated extension Loci_List_UpdateListItemResponse: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_List_RemoveListItemRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_RemoveListItemRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RemoveListItemRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}list_id\0\u{3}item_id\0\u{3}content_type\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "list_id"),
+    3: .standard(proto: "item_id"),
+    4: .standard(proto: "content_type"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3116,9 +3331,12 @@ nonisolated extension Loci_List_RemoveListItemRequest: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_List_RemoveListItemResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_RemoveListItemResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RemoveListItemResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}success\0\u{1}message\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "success"),
+    2: .same(proto: "message"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3151,9 +3369,13 @@ nonisolated extension Loci_List_RemoveListItemResponse: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_List_GetListItemsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_GetListItemsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetListItemsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}list_id\0\u{3}include_content_details\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "list_id"),
+    3: .standard(proto: "include_content_details"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3191,9 +3413,12 @@ nonisolated extension Loci_List_GetListItemsRequest: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_List_GetListItemsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_GetListItemsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetListItemsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}items\0\u{3}total_count\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "items"),
+    2: .standard(proto: "total_count"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3226,9 +3451,12 @@ nonisolated extension Loci_List_GetListItemsResponse: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_List_GetListRestaurantsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_GetListRestaurantsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetListRestaurantsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}list_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "list_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3261,9 +3489,11 @@ nonisolated extension Loci_List_GetListRestaurantsRequest: SwiftProtobuf.Message
   }
 }
 
-nonisolated extension Loci_List_GetListRestaurantsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_GetListRestaurantsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetListRestaurantsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}restaurants\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "restaurants"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3291,9 +3521,12 @@ nonisolated extension Loci_List_GetListRestaurantsResponse: SwiftProtobuf.Messag
   }
 }
 
-nonisolated extension Loci_List_GetListHotelsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_GetListHotelsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetListHotelsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}list_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "list_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3326,9 +3559,11 @@ nonisolated extension Loci_List_GetListHotelsRequest: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_List_GetListHotelsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_GetListHotelsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetListHotelsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}hotels\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "hotels"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3356,9 +3591,12 @@ nonisolated extension Loci_List_GetListHotelsResponse: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_List_GetListItinerariesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_GetListItinerariesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetListItinerariesRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}list_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "list_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3391,9 +3629,11 @@ nonisolated extension Loci_List_GetListItinerariesRequest: SwiftProtobuf.Message
   }
 }
 
-nonisolated extension Loci_List_GetListItinerariesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_GetListItinerariesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetListItinerariesResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}itineraries\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "itineraries"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3421,9 +3661,12 @@ nonisolated extension Loci_List_GetListItinerariesResponse: SwiftProtobuf.Messag
   }
 }
 
-nonisolated extension Loci_List_SavePublicListRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_SavePublicListRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SavePublicListRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}list_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "list_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3456,9 +3699,12 @@ nonisolated extension Loci_List_SavePublicListRequest: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_List_SavePublicListResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_SavePublicListResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SavePublicListResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}success\0\u{1}message\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "success"),
+    2: .same(proto: "message"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3491,9 +3737,12 @@ nonisolated extension Loci_List_SavePublicListResponse: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_List_UnsaveListRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_UnsaveListRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UnsaveListRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}list_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "list_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3526,9 +3775,12 @@ nonisolated extension Loci_List_UnsaveListRequest: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension Loci_List_UnsaveListResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_UnsaveListResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UnsaveListResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}success\0\u{1}message\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "success"),
+    2: .same(proto: "message"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3561,9 +3813,13 @@ nonisolated extension Loci_List_UnsaveListResponse: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_List_GetSavedListsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_GetSavedListsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetSavedListsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{1}limit\0\u{1}offset\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .same(proto: "limit"),
+    3: .same(proto: "offset"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3601,9 +3857,12 @@ nonisolated extension Loci_List_GetSavedListsRequest: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_List_GetSavedListsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_GetSavedListsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetSavedListsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}lists\0\u{3}total_count\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "lists"),
+    2: .standard(proto: "total_count"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3636,9 +3895,16 @@ nonisolated extension Loci_List_GetSavedListsResponse: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_List_SearchPublicListsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_SearchPublicListsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SearchPublicListsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}query\0\u{3}city_id\0\u{1}categories\0\u{1}limit\0\u{1}offset\0\u{3}sort_by\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "query"),
+    2: .standard(proto: "city_id"),
+    3: .same(proto: "categories"),
+    4: .same(proto: "limit"),
+    5: .same(proto: "offset"),
+    6: .standard(proto: "sort_by"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3691,9 +3957,13 @@ nonisolated extension Loci_List_SearchPublicListsRequest: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_List_SearchPublicListsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_SearchPublicListsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SearchPublicListsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}lists\0\u{3}total_count\0\u{1}metadata\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "lists"),
+    2: .standard(proto: "total_count"),
+    3: .same(proto: "metadata"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3735,9 +4005,13 @@ nonisolated extension Loci_List_SearchPublicListsResponse: SwiftProtobuf.Message
   }
 }
 
-nonisolated extension Loci_List_SearchMetadata: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_List_SearchMetadata: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SearchMetadata"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}query_time_ms\0\u{3}search_method\0\u{3}filters_applied\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "query_time_ms"),
+    2: .standard(proto: "search_method"),
+    3: .standard(proto: "filters_applied"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

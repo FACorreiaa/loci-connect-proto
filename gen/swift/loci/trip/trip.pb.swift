@@ -8,11 +8,7 @@
 // For information on using the generated types, please see the documentation:
 //   https://github.com/apple/swift-protobuf/
 
-#if canImport(FoundationEssentials)
-import FoundationEssentials
-#else
 import Foundation
-#endif
 import SwiftProtobuf
 
 // If the compiler emits an error on this type, it is because this file
@@ -20,13 +16,13 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// TripPace is how densely a day is packed.
-public nonisolated enum Loci_Trip_TripPace: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Trip_TripPace: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case relaxed // = 1
@@ -69,7 +65,7 @@ public nonisolated enum Loci_Trip_TripPace: SwiftProtobuf.Enum, Swift.CaseIterab
 }
 
 /// PackingCategory groups suggestions so a long list stays scannable.
-public nonisolated enum Loci_Trip_PackingCategory: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Trip_PackingCategory: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case essentials // = 1
@@ -128,7 +124,7 @@ public nonisolated enum Loci_Trip_PackingCategory: SwiftProtobuf.Enum, Swift.Cas
 }
 
 /// ExportFormat selects the export artifact.
-public nonisolated enum Loci_Trip_ExportFormat: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Trip_ExportFormat: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case ics // = 1
@@ -174,17 +170,17 @@ public nonisolated enum Loci_Trip_ExportFormat: SwiftProtobuf.Enum, Swift.CaseIt
 
 /// TripConstraint holds the planning constraints for a trip. These override the
 /// user's search profile for this specific trip.
-public nonisolated struct Loci_Trip_TripConstraint: Sendable {
+public struct Loci_Trip_TripConstraint: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var budgetLevel: Int32 {
-    get {_budgetLevel ?? 0}
+    get {return _budgetLevel ?? 0}
     set {_budgetLevel = newValue}
   }
   /// Returns true if `budgetLevel` has been explicitly set.
-  public var hasBudgetLevel: Bool {self._budgetLevel != nil}
+  public var hasBudgetLevel: Bool {return self._budgetLevel != nil}
   /// Clears the value of `budgetLevel`. Subsequent reads from it will return its default value.
   public mutating func clearBudgetLevel() {self._budgetLevel = nil}
 
@@ -192,11 +188,11 @@ public nonisolated struct Loci_Trip_TripConstraint: Sendable {
 
   /// mobility: e.g. "walking", "wheelchair", "transit", "car".
   public var mobility: String {
-    get {_mobility ?? String()}
+    get {return _mobility ?? String()}
     set {_mobility = newValue}
   }
   /// Returns true if `mobility` has been explicitly set.
-  public var hasMobility: Bool {self._mobility != nil}
+  public var hasMobility: Bool {return self._mobility != nil}
   /// Clears the value of `mobility`. Subsequent reads from it will return its default value.
   public mutating func clearMobility() {self._mobility = nil}
 
@@ -204,20 +200,20 @@ public nonisolated struct Loci_Trip_TripConstraint: Sendable {
 
   /// Daily active window, minutes from midnight (e.g. 540 = 09:00).
   public var dayStartMinute: Int32 {
-    get {_dayStartMinute ?? 0}
+    get {return _dayStartMinute ?? 0}
     set {_dayStartMinute = newValue}
   }
   /// Returns true if `dayStartMinute` has been explicitly set.
-  public var hasDayStartMinute: Bool {self._dayStartMinute != nil}
+  public var hasDayStartMinute: Bool {return self._dayStartMinute != nil}
   /// Clears the value of `dayStartMinute`. Subsequent reads from it will return its default value.
   public mutating func clearDayStartMinute() {self._dayStartMinute = nil}
 
   public var dayEndMinute: Int32 {
-    get {_dayEndMinute ?? 0}
+    get {return _dayEndMinute ?? 0}
     set {_dayEndMinute = newValue}
   }
   /// Returns true if `dayEndMinute` has been explicitly set.
-  public var hasDayEndMinute: Bool {self._dayEndMinute != nil}
+  public var hasDayEndMinute: Bool {return self._dayEndMinute != nil}
   /// Clears the value of `dayEndMinute`. Subsequent reads from it will return its default value.
   public mutating func clearDayEndMinute() {self._dayEndMinute = nil}
 
@@ -232,7 +228,7 @@ public nonisolated struct Loci_Trip_TripConstraint: Sendable {
 }
 
 /// TripStop is a single place on a day's timeline.
-public nonisolated struct Loci_Trip_TripStop: Sendable {
+public struct Loci_Trip_TripStop: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -251,51 +247,51 @@ public nonisolated struct Loci_Trip_TripStop: Sendable {
 
   /// start_minute is minutes from midnight for the stop's start.
   public var startMinute: Int32 {
-    get {_startMinute ?? 0}
+    get {return _startMinute ?? 0}
     set {_startMinute = newValue}
   }
   /// Returns true if `startMinute` has been explicitly set.
-  public var hasStartMinute: Bool {self._startMinute != nil}
+  public var hasStartMinute: Bool {return self._startMinute != nil}
   /// Clears the value of `startMinute`. Subsequent reads from it will return its default value.
   public mutating func clearStartMinute() {self._startMinute = nil}
 
   /// duration_minutes is how long to spend here.
   public var durationMinutes: Int32 {
-    get {_durationMinutes ?? 0}
+    get {return _durationMinutes ?? 0}
     set {_durationMinutes = newValue}
   }
   /// Returns true if `durationMinutes` has been explicitly set.
-  public var hasDurationMinutes: Bool {self._durationMinutes != nil}
+  public var hasDurationMinutes: Bool {return self._durationMinutes != nil}
   /// Clears the value of `durationMinutes`. Subsequent reads from it will return its default value.
   public mutating func clearDurationMinutes() {self._durationMinutes = nil}
 
   public var notes: String = String()
 
   public var bookingURL: String {
-    get {_bookingURL ?? String()}
+    get {return _bookingURL ?? String()}
     set {_bookingURL = newValue}
   }
   /// Returns true if `bookingURL` has been explicitly set.
-  public var hasBookingURL: Bool {self._bookingURL != nil}
+  public var hasBookingURL: Bool {return self._bookingURL != nil}
   /// Clears the value of `bookingURL`. Subsequent reads from it will return its default value.
   public mutating func clearBookingURL() {self._bookingURL = nil}
 
   /// Hydrated POI details for rendering (read side only; not persisted here).
   public var poi: Loci_Poi_POIDetailedInfo {
-    get {_poi ?? Loci_Poi_POIDetailedInfo()}
+    get {return _poi ?? Loci_Poi_POIDetailedInfo()}
     set {_poi = newValue}
   }
   /// Returns true if `poi` has been explicitly set.
-  public var hasPoi: Bool {self._poi != nil}
+  public var hasPoi: Bool {return self._poi != nil}
   /// Clears the value of `poi`. Subsequent reads from it will return its default value.
   public mutating func clearPoi() {self._poi = nil}
 
   public var recommendationTrace: Loci_Recommendation_RecommendationTrace {
-    get {_recommendationTrace ?? Loci_Recommendation_RecommendationTrace()}
+    get {return _recommendationTrace ?? Loci_Recommendation_RecommendationTrace()}
     set {_recommendationTrace = newValue}
   }
   /// Returns true if `recommendationTrace` has been explicitly set.
-  public var hasRecommendationTrace: Bool {self._recommendationTrace != nil}
+  public var hasRecommendationTrace: Bool {return self._recommendationTrace != nil}
   /// Clears the value of `recommendationTrace`. Subsequent reads from it will return its default value.
   public mutating func clearRecommendationTrace() {self._recommendationTrace = nil}
 
@@ -311,7 +307,7 @@ public nonisolated struct Loci_Trip_TripStop: Sendable {
 }
 
 /// TripDay is one day of a trip.
-public nonisolated struct Loci_Trip_TripDay: Sendable {
+public struct Loci_Trip_TripDay: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -323,11 +319,11 @@ public nonisolated struct Loci_Trip_TripDay: Sendable {
 
   /// Optional calendar date for the day (nil for a relative "Day N" plan).
   public var date: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_date ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _date ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_date = newValue}
   }
   /// Returns true if `date` has been explicitly set.
-  public var hasDate: Bool {self._date != nil}
+  public var hasDate: Bool {return self._date != nil}
   /// Clears the value of `date`. Subsequent reads from it will return its default value.
   public mutating func clearDate() {self._date = nil}
 
@@ -338,29 +334,29 @@ public nonisolated struct Loci_Trip_TripDay: Sendable {
   public var cityName: String = String()
 
   public var cityID: String {
-    get {_cityID ?? String()}
+    get {return _cityID ?? String()}
     set {_cityID = newValue}
   }
   /// Returns true if `cityID` has been explicitly set.
-  public var hasCityID: Bool {self._cityID != nil}
+  public var hasCityID: Bool {return self._cityID != nil}
   /// Clears the value of `cityID`. Subsequent reads from it will return its default value.
   public mutating func clearCityID() {self._cityID = nil}
 
   public var cityLat: Double {
-    get {_cityLat ?? 0}
+    get {return _cityLat ?? 0}
     set {_cityLat = newValue}
   }
   /// Returns true if `cityLat` has been explicitly set.
-  public var hasCityLat: Bool {self._cityLat != nil}
+  public var hasCityLat: Bool {return self._cityLat != nil}
   /// Clears the value of `cityLat`. Subsequent reads from it will return its default value.
   public mutating func clearCityLat() {self._cityLat = nil}
 
   public var cityLon: Double {
-    get {_cityLon ?? 0}
+    get {return _cityLon ?? 0}
     set {_cityLon = newValue}
   }
   /// Returns true if `cityLon` has been explicitly set.
-  public var hasCityLon: Bool {self._cityLon != nil}
+  public var hasCityLon: Bool {return self._cityLon != nil}
   /// Clears the value of `cityLon`. Subsequent reads from it will return its default value.
   public mutating func clearCityLon() {self._cityLon = nil}
 
@@ -379,7 +375,7 @@ public nonisolated struct Loci_Trip_TripDay: Sendable {
 }
 
 /// TripLeg is travel between two consecutive places in a multi-city trip.
-public nonisolated struct Loci_Trip_TripLeg: Sendable {
+public struct Loci_Trip_TripLeg: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -409,11 +405,11 @@ public nonisolated struct Loci_Trip_TripLeg: Sendable {
   public var mode: String = String()
 
   public var bookingURL: String {
-    get {_bookingURL ?? String()}
+    get {return _bookingURL ?? String()}
     set {_bookingURL = newValue}
   }
   /// Returns true if `bookingURL` has been explicitly set.
-  public var hasBookingURL: Bool {self._bookingURL != nil}
+  public var hasBookingURL: Bool {return self._bookingURL != nil}
   /// Clears the value of `bookingURL`. Subsequent reads from it will return its default value.
   public mutating func clearBookingURL() {self._bookingURL = nil}
 
@@ -427,7 +423,7 @@ public nonisolated struct Loci_Trip_TripLeg: Sendable {
 /// TripDraft is the full editable trip. `version` powers optimistic concurrency /
 /// merge-safe multi-device edits: SaveTrip rejects a write whose base version is
 /// stale.
-public nonisolated struct Loci_Trip_TripDraft: @unchecked Sendable {
+public struct Loci_Trip_TripDraft: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -436,86 +432,86 @@ public nonisolated struct Loci_Trip_TripDraft: @unchecked Sendable {
   /// nil id as "new trip"). Requiring it made creating a trip impossible, which
   /// is the one thing every trip has to do first.
   public var id: String {
-    get {_storage._id}
+    get {return _storage._id}
     set {_uniqueStorage()._id = newValue}
   }
 
   public var userID: String {
-    get {_storage._userID}
+    get {return _storage._userID}
     set {_uniqueStorage()._userID = newValue}
   }
 
   public var cityID: String {
-    get {_storage._cityID ?? String()}
+    get {return _storage._cityID ?? String()}
     set {_uniqueStorage()._cityID = newValue}
   }
   /// Returns true if `cityID` has been explicitly set.
-  public var hasCityID: Bool {_storage._cityID != nil}
+  public var hasCityID: Bool {return _storage._cityID != nil}
   /// Clears the value of `cityID`. Subsequent reads from it will return its default value.
   public mutating func clearCityID() {_uniqueStorage()._cityID = nil}
 
   public var cityName: String {
-    get {_storage._cityName}
+    get {return _storage._cityName}
     set {_uniqueStorage()._cityName = newValue}
   }
 
   public var title: String {
-    get {_storage._title}
+    get {return _storage._title}
     set {_uniqueStorage()._title = newValue}
   }
 
   public var constraints: Loci_Trip_TripConstraint {
-    get {_storage._constraints ?? Loci_Trip_TripConstraint()}
+    get {return _storage._constraints ?? Loci_Trip_TripConstraint()}
     set {_uniqueStorage()._constraints = newValue}
   }
   /// Returns true if `constraints` has been explicitly set.
-  public var hasConstraints: Bool {_storage._constraints != nil}
+  public var hasConstraints: Bool {return _storage._constraints != nil}
   /// Clears the value of `constraints`. Subsequent reads from it will return its default value.
   public mutating func clearConstraints() {_uniqueStorage()._constraints = nil}
 
   public var days: [Loci_Trip_TripDay] {
-    get {_storage._days}
+    get {return _storage._days}
     set {_uniqueStorage()._days = newValue}
   }
 
   /// Monotonic version; incremented server-side on every successful SaveTrip.
   public var version: Int64 {
-    get {_storage._version}
+    get {return _storage._version}
     set {_uniqueStorage()._version = newValue}
   }
 
   /// Travel between cities. Empty for a single-city trip. `city_name` above stays
   /// the primary city (titles, exports) even when the trip spans several.
   public var legs: [Loci_Trip_TripLeg] {
-    get {_storage._legs}
+    get {return _storage._legs}
     set {_uniqueStorage()._legs = newValue}
   }
 
   /// Session that generated the initial draft, if any.
   public var sourceSessionID: String {
-    get {_storage._sourceSessionID ?? String()}
+    get {return _storage._sourceSessionID ?? String()}
     set {_uniqueStorage()._sourceSessionID = newValue}
   }
   /// Returns true if `sourceSessionID` has been explicitly set.
-  public var hasSourceSessionID: Bool {_storage._sourceSessionID != nil}
+  public var hasSourceSessionID: Bool {return _storage._sourceSessionID != nil}
   /// Clears the value of `sourceSessionID`. Subsequent reads from it will return its default value.
   public mutating func clearSourceSessionID() {_uniqueStorage()._sourceSessionID = nil}
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {_storage._createdAt != nil}
+  public var hasCreatedAt: Bool {return _storage._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {_uniqueStorage()._createdAt = nil}
 
   public var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  public var hasUpdatedAt: Bool {_storage._updatedAt != nil}
+  public var hasUpdatedAt: Bool {return _storage._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {_uniqueStorage()._updatedAt = nil}
 
@@ -528,7 +524,7 @@ public nonisolated struct Loci_Trip_TripDraft: @unchecked Sendable {
 
 /// TripSnapshot is an immutable point-in-time copy of a trip, written on each
 /// save so a device can reconcile against a known base version.
-public nonisolated struct Loci_Trip_TripSnapshot: Sendable {
+public struct Loci_Trip_TripSnapshot: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -540,20 +536,20 @@ public nonisolated struct Loci_Trip_TripSnapshot: Sendable {
   public var version: Int64 = 0
 
   public var trip: Loci_Trip_TripDraft {
-    get {_trip ?? Loci_Trip_TripDraft()}
+    get {return _trip ?? Loci_Trip_TripDraft()}
     set {_trip = newValue}
   }
   /// Returns true if `trip` has been explicitly set.
-  public var hasTrip: Bool {self._trip != nil}
+  public var hasTrip: Bool {return self._trip != nil}
   /// Clears the value of `trip`. Subsequent reads from it will return its default value.
   public mutating func clearTrip() {self._trip = nil}
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {self._createdAt != nil}
+  public var hasCreatedAt: Bool {return self._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {self._createdAt = nil}
 
@@ -568,7 +564,7 @@ public nonisolated struct Loci_Trip_TripSnapshot: Sendable {
 /// PackingSuggestion is one suggested item, with the reason this trip earned it.
 /// The reason is not decoration: a suggestion the user cannot evaluate is noise,
 /// and they need enough to disagree with it.
-public nonisolated struct Loci_Trip_PackingSuggestion: Sendable {
+public struct Loci_Trip_PackingSuggestion: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -589,7 +585,7 @@ public nonisolated struct Loci_Trip_PackingSuggestion: Sendable {
 }
 
 /// SuggestPackingRequest asks what to pack for a saved trip.
-public nonisolated struct Loci_Trip_SuggestPackingRequest: Sendable {
+public struct Loci_Trip_SuggestPackingRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -602,7 +598,7 @@ public nonisolated struct Loci_Trip_SuggestPackingRequest: Sendable {
 }
 
 /// SuggestPackingResponse carries the suggestions and how they were derived.
-public nonisolated struct Loci_Trip_SuggestPackingResponse: Sendable {
+public struct Loci_Trip_SuggestPackingResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -622,18 +618,18 @@ public nonisolated struct Loci_Trip_SuggestPackingResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Trip_SaveTripRequest: Sendable {
+public struct Loci_Trip_SaveTripRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   /// The full trip to upsert. For a new trip, id may be empty (server assigns).
   public var trip: Loci_Trip_TripDraft {
-    get {_trip ?? Loci_Trip_TripDraft()}
+    get {return _trip ?? Loci_Trip_TripDraft()}
     set {_trip = newValue}
   }
   /// Returns true if `trip` has been explicitly set.
-  public var hasTrip: Bool {self._trip != nil}
+  public var hasTrip: Bool {return self._trip != nil}
   /// Clears the value of `trip`. Subsequent reads from it will return its default value.
   public mutating func clearTrip() {self._trip = nil}
 
@@ -648,7 +644,7 @@ public nonisolated struct Loci_Trip_SaveTripRequest: Sendable {
   fileprivate var _trip: Loci_Trip_TripDraft? = nil
 }
 
-public nonisolated struct Loci_Trip_GetTripRequest: Sendable {
+public struct Loci_Trip_GetTripRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -660,17 +656,17 @@ public nonisolated struct Loci_Trip_GetTripRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Trip_ListTripsRequest: Sendable {
+public struct Loci_Trip_ListTripsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var pagination: Loci_Common_PaginationRequest {
-    get {_pagination ?? Loci_Common_PaginationRequest()}
+    get {return _pagination ?? Loci_Common_PaginationRequest()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
@@ -681,7 +677,7 @@ public nonisolated struct Loci_Trip_ListTripsRequest: Sendable {
   fileprivate var _pagination: Loci_Common_PaginationRequest? = nil
 }
 
-public nonisolated struct Loci_Trip_ListTripsResponse: Sendable {
+public struct Loci_Trip_ListTripsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -689,11 +685,11 @@ public nonisolated struct Loci_Trip_ListTripsResponse: Sendable {
   public var trips: [Loci_Trip_TripDraft] = []
 
   public var pagination: Loci_Common_PaginationMetadata {
-    get {_pagination ?? Loci_Common_PaginationMetadata()}
+    get {return _pagination ?? Loci_Common_PaginationMetadata()}
     set {_pagination = newValue}
   }
   /// Returns true if `pagination` has been explicitly set.
-  public var hasPagination: Bool {self._pagination != nil}
+  public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
 
@@ -704,7 +700,7 @@ public nonisolated struct Loci_Trip_ListTripsResponse: Sendable {
   fileprivate var _pagination: Loci_Common_PaginationMetadata? = nil
 }
 
-public nonisolated struct Loci_Trip_ShareTripRequest: Sendable {
+public struct Loci_Trip_ShareTripRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -718,7 +714,7 @@ public nonisolated struct Loci_Trip_ShareTripRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Trip_ShareTripResponse: Sendable {
+public struct Loci_Trip_ShareTripResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -732,7 +728,7 @@ public nonisolated struct Loci_Trip_ShareTripResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Trip_ReorderStopsRequest: Sendable {
+public struct Loci_Trip_ReorderStopsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -751,7 +747,7 @@ public nonisolated struct Loci_Trip_ReorderStopsRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Trip_RenameStopRequest: Sendable {
+public struct Loci_Trip_RenameStopRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -769,7 +765,7 @@ public nonisolated struct Loci_Trip_RenameStopRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Trip_EditStopDurationRequest: Sendable {
+public struct Loci_Trip_EditStopDurationRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -779,11 +775,11 @@ public nonisolated struct Loci_Trip_EditStopDurationRequest: Sendable {
   public var stopID: String = String()
 
   public var startMinute: Int32 {
-    get {_startMinute ?? 0}
+    get {return _startMinute ?? 0}
     set {_startMinute = newValue}
   }
   /// Returns true if `startMinute` has been explicitly set.
-  public var hasStartMinute: Bool {self._startMinute != nil}
+  public var hasStartMinute: Bool {return self._startMinute != nil}
   /// Clears the value of `startMinute`. Subsequent reads from it will return its default value.
   public mutating func clearStartMinute() {self._startMinute = nil}
 
@@ -798,7 +794,7 @@ public nonisolated struct Loci_Trip_EditStopDurationRequest: Sendable {
   fileprivate var _startMinute: Int32? = nil
 }
 
-public nonisolated struct Loci_Trip_SetConstraintRequest: Sendable {
+public struct Loci_Trip_SetConstraintRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -806,11 +802,11 @@ public nonisolated struct Loci_Trip_SetConstraintRequest: Sendable {
   public var tripID: String = String()
 
   public var constraints: Loci_Trip_TripConstraint {
-    get {_constraints ?? Loci_Trip_TripConstraint()}
+    get {return _constraints ?? Loci_Trip_TripConstraint()}
     set {_constraints = newValue}
   }
   /// Returns true if `constraints` has been explicitly set.
-  public var hasConstraints: Bool {self._constraints != nil}
+  public var hasConstraints: Bool {return self._constraints != nil}
   /// Clears the value of `constraints`. Subsequent reads from it will return its default value.
   public mutating func clearConstraints() {self._constraints = nil}
 
@@ -823,32 +819,32 @@ public nonisolated struct Loci_Trip_SetConstraintRequest: Sendable {
   fileprivate var _constraints: Loci_Trip_TripConstraint? = nil
 }
 
-public nonisolated struct Loci_Trip_AddStopRequest: @unchecked Sendable {
+public struct Loci_Trip_AddStopRequest: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var tripID: String {
-    get {_storage._tripID}
+    get {return _storage._tripID}
     set {_uniqueStorage()._tripID = newValue}
   }
 
   public var dayID: String {
-    get {_storage._dayID}
+    get {return _storage._dayID}
     set {_uniqueStorage()._dayID = newValue}
   }
 
   public var stop: Loci_Trip_TripStop {
-    get {_storage._stop ?? Loci_Trip_TripStop()}
+    get {return _storage._stop ?? Loci_Trip_TripStop()}
     set {_uniqueStorage()._stop = newValue}
   }
   /// Returns true if `stop` has been explicitly set.
-  public var hasStop: Bool {_storage._stop != nil}
+  public var hasStop: Bool {return _storage._stop != nil}
   /// Clears the value of `stop`. Subsequent reads from it will return its default value.
   public mutating func clearStop() {_uniqueStorage()._stop = nil}
 
   public var baseVersion: Int64 {
-    get {_storage._baseVersion}
+    get {return _storage._baseVersion}
     set {_uniqueStorage()._baseVersion = newValue}
   }
 
@@ -859,7 +855,7 @@ public nonisolated struct Loci_Trip_AddStopRequest: @unchecked Sendable {
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-public nonisolated struct Loci_Trip_RemoveStopRequest: Sendable {
+public struct Loci_Trip_RemoveStopRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -875,32 +871,32 @@ public nonisolated struct Loci_Trip_RemoveStopRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Trip_ReplaceStopRequest: @unchecked Sendable {
+public struct Loci_Trip_ReplaceStopRequest: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var tripID: String {
-    get {_storage._tripID}
+    get {return _storage._tripID}
     set {_uniqueStorage()._tripID = newValue}
   }
 
   public var stopID: String {
-    get {_storage._stopID}
+    get {return _storage._stopID}
     set {_uniqueStorage()._stopID = newValue}
   }
 
   public var replacement: Loci_Trip_TripStop {
-    get {_storage._replacement ?? Loci_Trip_TripStop()}
+    get {return _storage._replacement ?? Loci_Trip_TripStop()}
     set {_uniqueStorage()._replacement = newValue}
   }
   /// Returns true if `replacement` has been explicitly set.
-  public var hasReplacement: Bool {_storage._replacement != nil}
+  public var hasReplacement: Bool {return _storage._replacement != nil}
   /// Clears the value of `replacement`. Subsequent reads from it will return its default value.
   public mutating func clearReplacement() {_uniqueStorage()._replacement = nil}
 
   public var baseVersion: Int64 {
-    get {_storage._baseVersion}
+    get {return _storage._baseVersion}
     set {_uniqueStorage()._baseVersion = newValue}
   }
 
@@ -911,7 +907,7 @@ public nonisolated struct Loci_Trip_ReplaceStopRequest: @unchecked Sendable {
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-public nonisolated struct Loci_Trip_ExportTripRequest: Sendable {
+public struct Loci_Trip_ExportTripRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -925,7 +921,7 @@ public nonisolated struct Loci_Trip_ExportTripRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Trip_ExportTripResponse: Sendable {
+public struct Loci_Trip_ExportTripResponse: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -944,23 +940,49 @@ public nonisolated struct Loci_Trip_ExportTripResponse: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.trip"
+fileprivate let _protobuf_package = "loci.trip"
 
-nonisolated extension Loci_Trip_TripPace: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0TRIP_PACE_UNSPECIFIED\0\u{1}TRIP_PACE_RELAXED\0\u{1}TRIP_PACE_MODERATE\0\u{1}TRIP_PACE_PACKED\0")
+extension Loci_Trip_TripPace: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "TRIP_PACE_UNSPECIFIED"),
+    1: .same(proto: "TRIP_PACE_RELAXED"),
+    2: .same(proto: "TRIP_PACE_MODERATE"),
+    3: .same(proto: "TRIP_PACE_PACKED"),
+  ]
 }
 
-nonisolated extension Loci_Trip_PackingCategory: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0PACKING_CATEGORY_UNSPECIFIED\0\u{1}PACKING_CATEGORY_ESSENTIALS\0\u{1}PACKING_CATEGORY_CLOTHING\0\u{1}PACKING_CATEGORY_WEATHER\0\u{1}PACKING_CATEGORY_TECH\0\u{1}PACKING_CATEGORY_HEALTH\0\u{1}PACKING_CATEGORY_TRAVEL\0\u{1}PACKING_CATEGORY_ACTIVITY\0")
+extension Loci_Trip_PackingCategory: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "PACKING_CATEGORY_UNSPECIFIED"),
+    1: .same(proto: "PACKING_CATEGORY_ESSENTIALS"),
+    2: .same(proto: "PACKING_CATEGORY_CLOTHING"),
+    3: .same(proto: "PACKING_CATEGORY_WEATHER"),
+    4: .same(proto: "PACKING_CATEGORY_TECH"),
+    5: .same(proto: "PACKING_CATEGORY_HEALTH"),
+    6: .same(proto: "PACKING_CATEGORY_TRAVEL"),
+    7: .same(proto: "PACKING_CATEGORY_ACTIVITY"),
+  ]
 }
 
-nonisolated extension Loci_Trip_ExportFormat: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0EXPORT_FORMAT_UNSPECIFIED\0\u{1}EXPORT_FORMAT_ICS\0\u{1}EXPORT_FORMAT_PDF\0\u{1}EXPORT_FORMAT_MARKDOWN\0")
+extension Loci_Trip_ExportFormat: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "EXPORT_FORMAT_UNSPECIFIED"),
+    1: .same(proto: "EXPORT_FORMAT_ICS"),
+    2: .same(proto: "EXPORT_FORMAT_PDF"),
+    3: .same(proto: "EXPORT_FORMAT_MARKDOWN"),
+  ]
 }
 
-nonisolated extension Loci_Trip_TripConstraint: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Trip_TripConstraint: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".TripConstraint"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}budget_level\0\u{1}pace\0\u{1}mobility\0\u{1}interests\0\u{3}day_start_minute\0\u{3}day_end_minute\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "budget_level"),
+    2: .same(proto: "pace"),
+    3: .same(proto: "mobility"),
+    4: .same(proto: "interests"),
+    5: .standard(proto: "day_start_minute"),
+    6: .standard(proto: "day_end_minute"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1017,9 +1039,20 @@ nonisolated extension Loci_Trip_TripConstraint: SwiftProtobuf.Message, SwiftProt
   }
 }
 
-nonisolated extension Loci_Trip_TripStop: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Trip_TripStop: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".TripStop"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}poi_id\0\u{3}order_index\0\u{1}name\0\u{3}start_minute\0\u{3}duration_minutes\0\u{1}notes\0\u{3}booking_url\0\u{1}poi\0\u{3}recommendation_trace\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "poi_id"),
+    3: .standard(proto: "order_index"),
+    4: .same(proto: "name"),
+    5: .standard(proto: "start_minute"),
+    6: .standard(proto: "duration_minutes"),
+    7: .same(proto: "notes"),
+    8: .standard(proto: "booking_url"),
+    9: .same(proto: "poi"),
+    10: .standard(proto: "recommendation_trace"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1096,9 +1129,19 @@ nonisolated extension Loci_Trip_TripStop: SwiftProtobuf.Message, SwiftProtobuf._
   }
 }
 
-nonisolated extension Loci_Trip_TripDay: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Trip_TripDay: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".TripDay"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}day_number\0\u{1}date\0\u{1}stops\0\u{3}city_name\0\u{3}city_id\0\u{3}city_lat\0\u{3}city_lon\0\u{3}travel_day\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "day_number"),
+    3: .same(proto: "date"),
+    4: .same(proto: "stops"),
+    5: .standard(proto: "city_name"),
+    6: .standard(proto: "city_id"),
+    7: .standard(proto: "city_lat"),
+    8: .standard(proto: "city_lon"),
+    9: .standard(proto: "travel_day"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1170,9 +1213,22 @@ nonisolated extension Loci_Trip_TripDay: SwiftProtobuf.Message, SwiftProtobuf._M
   }
 }
 
-nonisolated extension Loci_Trip_TripLeg: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Trip_TripLeg: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".TripLeg"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}from_name\0\u{3}to_name\0\u{3}from_lat\0\u{3}from_lon\0\u{3}to_lat\0\u{3}to_lon\0\u{3}distance_km\0\u{3}duration_mins\0\u{3}after_day\0\u{1}mode\0\u{3}booking_url\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "from_name"),
+    3: .standard(proto: "to_name"),
+    4: .standard(proto: "from_lat"),
+    5: .standard(proto: "from_lon"),
+    6: .standard(proto: "to_lat"),
+    7: .standard(proto: "to_lon"),
+    8: .standard(proto: "distance_km"),
+    9: .standard(proto: "duration_mins"),
+    10: .standard(proto: "after_day"),
+    11: .same(proto: "mode"),
+    12: .standard(proto: "booking_url"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1259,9 +1315,22 @@ nonisolated extension Loci_Trip_TripLeg: SwiftProtobuf.Message, SwiftProtobuf._M
   }
 }
 
-nonisolated extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".TripDraft"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}user_id\0\u{3}city_id\0\u{3}city_name\0\u{1}title\0\u{1}constraints\0\u{1}days\0\u{1}version\0\u{3}source_session_id\0\u{3}created_at\0\u{3}updated_at\0\u{1}legs\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "user_id"),
+    3: .standard(proto: "city_id"),
+    4: .standard(proto: "city_name"),
+    5: .same(proto: "title"),
+    6: .same(proto: "constraints"),
+    7: .same(proto: "days"),
+    8: .same(proto: "version"),
+    12: .same(proto: "legs"),
+    9: .standard(proto: "source_session_id"),
+    10: .standard(proto: "created_at"),
+    11: .standard(proto: "updated_at"),
+  ]
 
   fileprivate class _StorageClass {
     var _id: String = String()
@@ -1277,11 +1346,15 @@ nonisolated extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf.
     var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -1406,9 +1479,15 @@ nonisolated extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf.
   }
 }
 
-nonisolated extension Loci_Trip_TripSnapshot: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Trip_TripSnapshot: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".TripSnapshot"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}trip_id\0\u{1}version\0\u{1}trip\0\u{3}created_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "trip_id"),
+    3: .same(proto: "version"),
+    4: .same(proto: "trip"),
+    5: .standard(proto: "created_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1460,9 +1539,14 @@ nonisolated extension Loci_Trip_TripSnapshot: SwiftProtobuf.Message, SwiftProtob
   }
 }
 
-nonisolated extension Loci_Trip_PackingSuggestion: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Trip_PackingSuggestion: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PackingSuggestion"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}text\0\u{1}category\0\u{1}reason\0\u{1}essential\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "text"),
+    2: .same(proto: "category"),
+    3: .same(proto: "reason"),
+    4: .same(proto: "essential"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1505,9 +1589,11 @@ nonisolated extension Loci_Trip_PackingSuggestion: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension Loci_Trip_SuggestPackingRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Trip_SuggestPackingRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SuggestPackingRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}trip_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1535,9 +1621,13 @@ nonisolated extension Loci_Trip_SuggestPackingRequest: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_Trip_SuggestPackingResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Trip_SuggestPackingResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SuggestPackingResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}suggestions\0\u{3}weather_is_estimated\0\u{3}used_forecast\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "suggestions"),
+    2: .standard(proto: "weather_is_estimated"),
+    3: .standard(proto: "used_forecast"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1575,9 +1665,12 @@ nonisolated extension Loci_Trip_SuggestPackingResponse: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_Trip_SaveTripRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Trip_SaveTripRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SaveTripRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}trip\0\u{3}base_version\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "trip"),
+    2: .standard(proto: "base_version"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1614,9 +1707,11 @@ nonisolated extension Loci_Trip_SaveTripRequest: SwiftProtobuf.Message, SwiftPro
   }
 }
 
-nonisolated extension Loci_Trip_GetTripRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Trip_GetTripRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetTripRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}trip_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1644,9 +1739,11 @@ nonisolated extension Loci_Trip_GetTripRequest: SwiftProtobuf.Message, SwiftProt
   }
 }
 
-nonisolated extension Loci_Trip_ListTripsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Trip_ListTripsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListTripsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}pagination\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "pagination"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1678,9 +1775,12 @@ nonisolated extension Loci_Trip_ListTripsRequest: SwiftProtobuf.Message, SwiftPr
   }
 }
 
-nonisolated extension Loci_Trip_ListTripsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Trip_ListTripsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListTripsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}trips\0\u{1}pagination\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "trips"),
+    2: .same(proto: "pagination"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1717,9 +1817,12 @@ nonisolated extension Loci_Trip_ListTripsResponse: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension Loci_Trip_ShareTripRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Trip_ShareTripRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ShareTripRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}trip_id\0\u{3}is_public\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+    2: .standard(proto: "is_public"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1752,9 +1855,12 @@ nonisolated extension Loci_Trip_ShareTripRequest: SwiftProtobuf.Message, SwiftPr
   }
 }
 
-nonisolated extension Loci_Trip_ShareTripResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Trip_ShareTripResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ShareTripResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}share_id\0\u{3}share_url\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "share_id"),
+    2: .standard(proto: "share_url"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1787,9 +1893,14 @@ nonisolated extension Loci_Trip_ShareTripResponse: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension Loci_Trip_ReorderStopsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Trip_ReorderStopsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ReorderStopsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}trip_id\0\u{3}day_id\0\u{3}ordered_stop_ids\0\u{3}base_version\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+    2: .standard(proto: "day_id"),
+    3: .standard(proto: "ordered_stop_ids"),
+    4: .standard(proto: "base_version"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1832,9 +1943,14 @@ nonisolated extension Loci_Trip_ReorderStopsRequest: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_Trip_RenameStopRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Trip_RenameStopRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RenameStopRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}trip_id\0\u{3}stop_id\0\u{1}name\0\u{3}base_version\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+    2: .standard(proto: "stop_id"),
+    3: .same(proto: "name"),
+    4: .standard(proto: "base_version"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1877,9 +1993,15 @@ nonisolated extension Loci_Trip_RenameStopRequest: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension Loci_Trip_EditStopDurationRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Trip_EditStopDurationRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".EditStopDurationRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}trip_id\0\u{3}stop_id\0\u{3}start_minute\0\u{3}duration_minutes\0\u{3}base_version\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+    2: .standard(proto: "stop_id"),
+    3: .standard(proto: "start_minute"),
+    4: .standard(proto: "duration_minutes"),
+    5: .standard(proto: "base_version"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1931,9 +2053,13 @@ nonisolated extension Loci_Trip_EditStopDurationRequest: SwiftProtobuf.Message, 
   }
 }
 
-nonisolated extension Loci_Trip_SetConstraintRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Trip_SetConstraintRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SetConstraintRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}trip_id\0\u{1}constraints\0\u{3}base_version\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+    2: .same(proto: "constraints"),
+    3: .standard(proto: "base_version"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1975,9 +2101,14 @@ nonisolated extension Loci_Trip_SetConstraintRequest: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Trip_AddStopRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Trip_AddStopRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".AddStopRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}trip_id\0\u{3}day_id\0\u{1}stop\0\u{3}base_version\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+    2: .standard(proto: "day_id"),
+    3: .same(proto: "stop"),
+    4: .standard(proto: "base_version"),
+  ]
 
   fileprivate class _StorageClass {
     var _tripID: String = String()
@@ -1985,11 +2116,15 @@ nonisolated extension Loci_Trip_AddStopRequest: SwiftProtobuf.Message, SwiftProt
     var _stop: Loci_Trip_TripStop? = nil
     var _baseVersion: Int64 = 0
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -2066,9 +2201,13 @@ nonisolated extension Loci_Trip_AddStopRequest: SwiftProtobuf.Message, SwiftProt
   }
 }
 
-nonisolated extension Loci_Trip_RemoveStopRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Trip_RemoveStopRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RemoveStopRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}trip_id\0\u{3}stop_id\0\u{3}base_version\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+    2: .standard(proto: "stop_id"),
+    3: .standard(proto: "base_version"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2106,9 +2245,14 @@ nonisolated extension Loci_Trip_RemoveStopRequest: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension Loci_Trip_ReplaceStopRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Trip_ReplaceStopRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ReplaceStopRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}trip_id\0\u{3}stop_id\0\u{1}replacement\0\u{3}base_version\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+    2: .standard(proto: "stop_id"),
+    3: .same(proto: "replacement"),
+    4: .standard(proto: "base_version"),
+  ]
 
   fileprivate class _StorageClass {
     var _tripID: String = String()
@@ -2116,11 +2260,15 @@ nonisolated extension Loci_Trip_ReplaceStopRequest: SwiftProtobuf.Message, Swift
     var _replacement: Loci_Trip_TripStop? = nil
     var _baseVersion: Int64 = 0
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -2197,9 +2345,12 @@ nonisolated extension Loci_Trip_ReplaceStopRequest: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_Trip_ExportTripRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Trip_ExportTripRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ExportTripRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}trip_id\0\u{1}format\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+    2: .same(proto: "format"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2232,9 +2383,13 @@ nonisolated extension Loci_Trip_ExportTripRequest: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension Loci_Trip_ExportTripResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Trip_ExportTripResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ExportTripResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}data\0\u{3}content_type\0\u{1}filename\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "data"),
+    2: .standard(proto: "content_type"),
+    3: .same(proto: "filename"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

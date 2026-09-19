@@ -11,44 +11,23 @@ import SwiftProtobuf
 
 public protocol Loci_Place_PlaceIntelligenceServiceClientInterface: Sendable {
 
-    @discardableResult
-    func `getPlaceFacts`(request: Loci_Place_GetPlaceFactsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Place_PlaceFacts>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `getPlaceFacts`(request: Loci_Place_GetPlaceFactsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Place_PlaceFacts>
-
-    @discardableResult
-    func `listVerificationTasks`(request: Loci_Place_ListVerificationTasksRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Place_ListVerificationTasksResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `listVerificationTasks`(request: Loci_Place_ListVerificationTasksRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Place_ListVerificationTasksResponse>
 
-    @discardableResult
-    func `submitPlaceClaim`(request: Loci_Place_SubmitPlaceClaimRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Place_SubmitPlaceClaimResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `submitPlaceClaim`(request: Loci_Place_SubmitPlaceClaimRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Place_SubmitPlaceClaimResponse>
-
-    @discardableResult
-    func `getMyContributorProfile`(request: Loci_Place_GetMyContributorProfileRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Place_ContributorProfile>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `getMyContributorProfile`(request: Loci_Place_GetMyContributorProfileRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Place_ContributorProfile>
 
-    @discardableResult
-    func `submitPlace`(request: Loci_Place_SubmitPlaceRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Place_SubmitPlaceResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `submitPlace`(request: Loci_Place_SubmitPlaceRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Place_SubmitPlaceResponse>
 
-    @discardableResult
-    func `confirmPlace`(request: Loci_Place_ConfirmPlaceRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Place_ConfirmPlaceResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `confirmPlace`(request: Loci_Place_ConfirmPlaceRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Place_ConfirmPlaceResponse>
-
-    @discardableResult
-    func `listPendingPlaces`(request: Loci_Place_ListPendingPlacesRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Place_ListPendingPlacesResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `listPendingPlaces`(request: Loci_Place_ListPendingPlacesRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Place_ListPendingPlacesResponse>
@@ -62,19 +41,9 @@ public final class Loci_Place_PlaceIntelligenceServiceClient: Loci_Place_PlaceIn
         self.client = client
     }
 
-    @discardableResult
-    public func `getPlaceFacts`(request: Loci_Place_GetPlaceFactsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Place_PlaceFacts>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.place.PlaceIntelligenceService/GetPlaceFacts", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getPlaceFacts`(request: Loci_Place_GetPlaceFactsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Place_PlaceFacts> {
         return await self.client.unary(path: "/loci.place.PlaceIntelligenceService/GetPlaceFacts", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `listVerificationTasks`(request: Loci_Place_ListVerificationTasksRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Place_ListVerificationTasksResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.place.PlaceIntelligenceService/ListVerificationTasks", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -82,19 +51,9 @@ public final class Loci_Place_PlaceIntelligenceServiceClient: Loci_Place_PlaceIn
         return await self.client.unary(path: "/loci.place.PlaceIntelligenceService/ListVerificationTasks", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `submitPlaceClaim`(request: Loci_Place_SubmitPlaceClaimRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Place_SubmitPlaceClaimResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.place.PlaceIntelligenceService/SubmitPlaceClaim", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `submitPlaceClaim`(request: Loci_Place_SubmitPlaceClaimRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Place_SubmitPlaceClaimResponse> {
         return await self.client.unary(path: "/loci.place.PlaceIntelligenceService/SubmitPlaceClaim", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getMyContributorProfile`(request: Loci_Place_GetMyContributorProfileRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Place_ContributorProfile>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.place.PlaceIntelligenceService/GetMyContributorProfile", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -102,29 +61,14 @@ public final class Loci_Place_PlaceIntelligenceServiceClient: Loci_Place_PlaceIn
         return await self.client.unary(path: "/loci.place.PlaceIntelligenceService/GetMyContributorProfile", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `submitPlace`(request: Loci_Place_SubmitPlaceRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Place_SubmitPlaceResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.place.PlaceIntelligenceService/SubmitPlace", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `submitPlace`(request: Loci_Place_SubmitPlaceRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Place_SubmitPlaceResponse> {
         return await self.client.unary(path: "/loci.place.PlaceIntelligenceService/SubmitPlace", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `confirmPlace`(request: Loci_Place_ConfirmPlaceRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Place_ConfirmPlaceResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.place.PlaceIntelligenceService/ConfirmPlace", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `confirmPlace`(request: Loci_Place_ConfirmPlaceRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Place_ConfirmPlaceResponse> {
         return await self.client.unary(path: "/loci.place.PlaceIntelligenceService/ConfirmPlace", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `listPendingPlaces`(request: Loci_Place_ListPendingPlacesRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Place_ListPendingPlacesResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.place.PlaceIntelligenceService/ListPendingPlaces", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

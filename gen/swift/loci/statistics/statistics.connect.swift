@@ -13,47 +13,24 @@ import SwiftProtobuf
 public protocol Loci_Statistics_StatisticsServiceClientInterface: Sendable {
 
     /// Get main page statistics (public)
-    @discardableResult
-    func `getMainPageStatistics`(request: Loci_Statistics_GetMainPageStatisticsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Statistics_GetMainPageStatisticsResponse>) -> Void) -> Connect.Cancelable
-
-    /// Get main page statistics (public)
     @available(iOS 13, *)
     func `getMainPageStatistics`(request: Loci_Statistics_GetMainPageStatisticsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Statistics_GetMainPageStatisticsResponse>
-
-    /// Stream real-time statistics updates (public)
-    func `streamMainPageStatistics`(headers: Connect.Headers, onResult: @escaping @Sendable (Connect.StreamResult<Loci_Statistics_StatisticsEvent>) -> Void) -> any Connect.ServerOnlyStreamInterface<Loci_Statistics_StreamMainPageStatisticsRequest>
 
     /// Stream real-time statistics updates (public)
     @available(iOS 13, *)
     func `streamMainPageStatistics`(headers: Connect.Headers) -> any Connect.ServerOnlyAsyncStreamInterface<Loci_Statistics_StreamMainPageStatisticsRequest, Loci_Statistics_StatisticsEvent>
 
     /// Get detailed POI statistics (authenticated)
-    @discardableResult
-    func `getDetailedPoistatistics`(request: Loci_Statistics_GetDetailedPOIStatisticsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Statistics_GetDetailedPOIStatisticsResponse>) -> Void) -> Connect.Cancelable
-
-    /// Get detailed POI statistics (authenticated)
     @available(iOS 13, *)
     func `getDetailedPoistatistics`(request: Loci_Statistics_GetDetailedPOIStatisticsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Statistics_GetDetailedPOIStatisticsResponse>
-
-    /// Get user landing page statistics (authenticated)
-    @discardableResult
-    func `getLandingPageStatistics`(request: Loci_Statistics_GetLandingPageStatisticsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Statistics_GetLandingPageStatisticsResponse>) -> Void) -> Connect.Cancelable
 
     /// Get user landing page statistics (authenticated)
     @available(iOS 13, *)
     func `getLandingPageStatistics`(request: Loci_Statistics_GetLandingPageStatisticsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Statistics_GetLandingPageStatisticsResponse>
 
     /// Get user activity analytics (authenticated)
-    @discardableResult
-    func `getUserActivityAnalytics`(request: Loci_Statistics_GetUserActivityAnalyticsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Statistics_GetUserActivityAnalyticsResponse>) -> Void) -> Connect.Cancelable
-
-    /// Get user activity analytics (authenticated)
     @available(iOS 13, *)
     func `getUserActivityAnalytics`(request: Loci_Statistics_GetUserActivityAnalyticsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Statistics_GetUserActivityAnalyticsResponse>
-
-    /// Get system-wide analytics (admin)
-    @discardableResult
-    func `getSystemAnalytics`(request: Loci_Statistics_GetSystemAnalyticsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Statistics_GetSystemAnalyticsResponse>) -> Void) -> Connect.Cancelable
 
     /// Get system-wide analytics (admin)
     @available(iOS 13, *)
@@ -68,18 +45,9 @@ public final class Loci_Statistics_StatisticsServiceClient: Loci_Statistics_Stat
         self.client = client
     }
 
-    @discardableResult
-    public func `getMainPageStatistics`(request: Loci_Statistics_GetMainPageStatisticsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Statistics_GetMainPageStatisticsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.statistics.StatisticsService/GetMainPageStatistics", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getMainPageStatistics`(request: Loci_Statistics_GetMainPageStatisticsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Statistics_GetMainPageStatisticsResponse> {
         return await self.client.unary(path: "/loci.statistics.StatisticsService/GetMainPageStatistics", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    public func `streamMainPageStatistics`(headers: Connect.Headers = [:], onResult: @escaping @Sendable (Connect.StreamResult<Loci_Statistics_StatisticsEvent>) -> Void) -> any Connect.ServerOnlyStreamInterface<Loci_Statistics_StreamMainPageStatisticsRequest> {
-        return self.client.serverOnlyStream(path: "/loci.statistics.StatisticsService/StreamMainPageStatistics", headers: headers, onResult: onResult)
     }
 
     @available(iOS 13, *)
@@ -87,19 +55,9 @@ public final class Loci_Statistics_StatisticsServiceClient: Loci_Statistics_Stat
         return self.client.serverOnlyStream(path: "/loci.statistics.StatisticsService/StreamMainPageStatistics", headers: headers)
     }
 
-    @discardableResult
-    public func `getDetailedPoistatistics`(request: Loci_Statistics_GetDetailedPOIStatisticsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Statistics_GetDetailedPOIStatisticsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.statistics.StatisticsService/GetDetailedPOIStatistics", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getDetailedPoistatistics`(request: Loci_Statistics_GetDetailedPOIStatisticsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Statistics_GetDetailedPOIStatisticsResponse> {
         return await self.client.unary(path: "/loci.statistics.StatisticsService/GetDetailedPOIStatistics", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getLandingPageStatistics`(request: Loci_Statistics_GetLandingPageStatisticsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Statistics_GetLandingPageStatisticsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.statistics.StatisticsService/GetLandingPageStatistics", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -107,19 +65,9 @@ public final class Loci_Statistics_StatisticsServiceClient: Loci_Statistics_Stat
         return await self.client.unary(path: "/loci.statistics.StatisticsService/GetLandingPageStatistics", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getUserActivityAnalytics`(request: Loci_Statistics_GetUserActivityAnalyticsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Statistics_GetUserActivityAnalyticsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.statistics.StatisticsService/GetUserActivityAnalytics", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getUserActivityAnalytics`(request: Loci_Statistics_GetUserActivityAnalyticsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Statistics_GetUserActivityAnalyticsResponse> {
         return await self.client.unary(path: "/loci.statistics.StatisticsService/GetUserActivityAnalytics", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getSystemAnalytics`(request: Loci_Statistics_GetSystemAnalyticsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Statistics_GetSystemAnalyticsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.statistics.StatisticsService/GetSystemAnalytics", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

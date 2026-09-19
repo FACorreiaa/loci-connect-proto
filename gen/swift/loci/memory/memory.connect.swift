@@ -23,29 +23,14 @@ import SwiftProtobuf
 public protocol Loci_Memory_MemoryServiceClientInterface: Sendable {
 
     /// GetMemory returns the caller's learned profile.
-    @discardableResult
-    func `getMemory`(request: Loci_Memory_GetMemoryRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Memory_GetMemoryResponse>) -> Void) -> Connect.Cancelable
-
-    /// GetMemory returns the caller's learned profile.
     @available(iOS 13, *)
     func `getMemory`(request: Loci_Memory_GetMemoryRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Memory_GetMemoryResponse>
 
     /// ForgetTrait removes a belief and the signals that produced it. Deleting the
     /// trait alone would be undone by the next recompute, so this reaches the
     /// evidence.
-    @discardableResult
-    func `forgetTrait`(request: Loci_Memory_ForgetTraitRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Memory_ForgetTraitResponse>) -> Void) -> Connect.Cancelable
-
-    /// ForgetTrait removes a belief and the signals that produced it. Deleting the
-    /// trait alone would be undone by the next recompute, so this reaches the
-    /// evidence.
     @available(iOS 13, *)
     func `forgetTrait`(request: Loci_Memory_ForgetTraitRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Memory_ForgetTraitResponse>
-
-    /// ForgetEvidence removes a single recorded action, leaving an otherwise
-    /// accurate belief intact.
-    @discardableResult
-    func `forgetEvidence`(request: Loci_Memory_ForgetEvidenceRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Memory_ForgetEvidenceResponse>) -> Void) -> Connect.Cancelable
 
     /// ForgetEvidence removes a single recorded action, leaving an otherwise
     /// accurate belief intact.
@@ -61,29 +46,14 @@ public final class Loci_Memory_MemoryServiceClient: Loci_Memory_MemoryServiceCli
         self.client = client
     }
 
-    @discardableResult
-    public func `getMemory`(request: Loci_Memory_GetMemoryRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Memory_GetMemoryResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.memory.MemoryService/GetMemory", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getMemory`(request: Loci_Memory_GetMemoryRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Memory_GetMemoryResponse> {
         return await self.client.unary(path: "/loci.memory.MemoryService/GetMemory", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `forgetTrait`(request: Loci_Memory_ForgetTraitRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Memory_ForgetTraitResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.memory.MemoryService/ForgetTrait", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `forgetTrait`(request: Loci_Memory_ForgetTraitRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Memory_ForgetTraitResponse> {
         return await self.client.unary(path: "/loci.memory.MemoryService/ForgetTrait", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `forgetEvidence`(request: Loci_Memory_ForgetEvidenceRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Memory_ForgetEvidenceResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.memory.MemoryService/ForgetEvidence", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

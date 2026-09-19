@@ -12,32 +12,17 @@ import SwiftProtobuf
 /// RecommendationService owns private learning controls and client-side exposure events.
 public protocol Loci_Recommendation_RecommendationServiceClientInterface: Sendable {
 
-    @discardableResult
-    func `recordEvents`(request: Loci_Recommendation_RecordEventsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Recommendation_RecordEventsResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `recordEvents`(request: Loci_Recommendation_RecordEventsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Recommendation_RecordEventsResponse>
-
-    @discardableResult
-    func `getPersonalizationSettings`(request: Loci_Recommendation_GetPersonalizationSettingsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Recommendation_PersonalizationSettings>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `getPersonalizationSettings`(request: Loci_Recommendation_GetPersonalizationSettingsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Recommendation_PersonalizationSettings>
 
-    @discardableResult
-    func `updatePersonalizationSettings`(request: Loci_Recommendation_UpdatePersonalizationSettingsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Recommendation_PersonalizationSettings>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `updatePersonalizationSettings`(request: Loci_Recommendation_UpdatePersonalizationSettingsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Recommendation_PersonalizationSettings>
 
-    @discardableResult
-    func `getTasteProfile`(request: Loci_Recommendation_GetTasteProfileRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Recommendation_TasteProfile>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `getTasteProfile`(request: Loci_Recommendation_GetTasteProfileRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Recommendation_TasteProfile>
-
-    @discardableResult
-    func `resetTasteProfile`(request: Loci_Recommendation_ResetTasteProfileRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Recommendation_ResetTasteProfileResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `resetTasteProfile`(request: Loci_Recommendation_ResetTasteProfileRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Recommendation_ResetTasteProfileResponse>
@@ -51,19 +36,9 @@ public final class Loci_Recommendation_RecommendationServiceClient: Loci_Recomme
         self.client = client
     }
 
-    @discardableResult
-    public func `recordEvents`(request: Loci_Recommendation_RecordEventsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Recommendation_RecordEventsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.recommendation.RecommendationService/RecordEvents", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `recordEvents`(request: Loci_Recommendation_RecordEventsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Recommendation_RecordEventsResponse> {
         return await self.client.unary(path: "/loci.recommendation.RecommendationService/RecordEvents", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getPersonalizationSettings`(request: Loci_Recommendation_GetPersonalizationSettingsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Recommendation_PersonalizationSettings>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.recommendation.RecommendationService/GetPersonalizationSettings", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -71,29 +46,14 @@ public final class Loci_Recommendation_RecommendationServiceClient: Loci_Recomme
         return await self.client.unary(path: "/loci.recommendation.RecommendationService/GetPersonalizationSettings", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `updatePersonalizationSettings`(request: Loci_Recommendation_UpdatePersonalizationSettingsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Recommendation_PersonalizationSettings>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.recommendation.RecommendationService/UpdatePersonalizationSettings", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `updatePersonalizationSettings`(request: Loci_Recommendation_UpdatePersonalizationSettingsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Recommendation_PersonalizationSettings> {
         return await self.client.unary(path: "/loci.recommendation.RecommendationService/UpdatePersonalizationSettings", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getTasteProfile`(request: Loci_Recommendation_GetTasteProfileRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Recommendation_TasteProfile>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.recommendation.RecommendationService/GetTasteProfile", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getTasteProfile`(request: Loci_Recommendation_GetTasteProfileRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Recommendation_TasteProfile> {
         return await self.client.unary(path: "/loci.recommendation.RecommendationService/GetTasteProfile", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `resetTasteProfile`(request: Loci_Recommendation_ResetTasteProfileRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Recommendation_ResetTasteProfileResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.recommendation.RecommendationService/ResetTasteProfile", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

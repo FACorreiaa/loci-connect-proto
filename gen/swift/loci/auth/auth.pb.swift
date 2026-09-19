@@ -15,13 +15,13 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// UserAuth represents the core user entity
-public nonisolated struct Loci_Auth_UserAuth: Sendable {
+public struct Loci_Auth_UserAuth: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -35,20 +35,20 @@ public nonisolated struct Loci_Auth_UserAuth: Sendable {
   public var role: String = String()
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {self._createdAt != nil}
+  public var hasCreatedAt: Bool {return self._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {self._createdAt = nil}
 
   public var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  public var hasUpdatedAt: Bool {self._updatedAt != nil}
+  public var hasUpdatedAt: Bool {return self._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {self._updatedAt = nil}
 
@@ -61,7 +61,7 @@ public nonisolated struct Loci_Auth_UserAuth: Sendable {
 }
 
 /// LoginRequest for user login
-public nonisolated struct Loci_Auth_LoginRequest: Sendable {
+public struct Loci_Auth_LoginRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -81,7 +81,7 @@ public nonisolated struct Loci_Auth_LoginRequest: Sendable {
 /// confirmed second factor, this carries the token pair as before. When they do,
 /// it carries mfa_required + mfa_token and NO tokens: the session is only half
 /// authenticated until VerifyMFA succeeds.
-public nonisolated struct Loci_Auth_LoginResponse: Sendable {
+public struct Loci_Auth_LoginResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -107,11 +107,11 @@ public nonisolated struct Loci_Auth_LoginResponse: Sendable {
   /// passed and is the ONLY thing VerifyMFA accepts; it grants no API access of
   /// its own.
   public var mfaToken: String {
-    get {_mfaToken ?? String()}
+    get {return _mfaToken ?? String()}
     set {_mfaToken = newValue}
   }
   /// Returns true if `mfaToken` has been explicitly set.
-  public var hasMfaToken: Bool {self._mfaToken != nil}
+  public var hasMfaToken: Bool {return self._mfaToken != nil}
   /// Clears the value of `mfaToken`. Subsequent reads from it will return its default value.
   public mutating func clearMfaToken() {self._mfaToken = nil}
 
@@ -123,7 +123,7 @@ public nonisolated struct Loci_Auth_LoginResponse: Sendable {
 }
 
 /// VerifyMFARequest completes a login that was challenged for a second factor.
-public nonisolated struct Loci_Auth_VerifyMFARequest: Sendable {
+public struct Loci_Auth_VerifyMFARequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -135,20 +135,20 @@ public nonisolated struct Loci_Auth_VerifyMFARequest: Sendable {
   /// The length range spans both: 6 digits for TOTP, 11 characters for a
   /// dash-separated recovery code, with slack for how people retype them.
   public var code: String {
-    get {_code ?? String()}
+    get {return _code ?? String()}
     set {_code = newValue}
   }
   /// Returns true if `code` has been explicitly set.
-  public var hasCode: Bool {self._code != nil}
+  public var hasCode: Bool {return self._code != nil}
   /// Clears the value of `code`. Subsequent reads from it will return its default value.
   public mutating func clearCode() {self._code = nil}
 
   public var recoveryCode: String {
-    get {_recoveryCode ?? String()}
+    get {return _recoveryCode ?? String()}
     set {_recoveryCode = newValue}
   }
   /// Returns true if `recoveryCode` has been explicitly set.
-  public var hasRecoveryCode: Bool {self._recoveryCode != nil}
+  public var hasRecoveryCode: Bool {return self._recoveryCode != nil}
   /// Clears the value of `recoveryCode`. Subsequent reads from it will return its default value.
   public mutating func clearRecoveryCode() {self._recoveryCode = nil}
 
@@ -162,7 +162,7 @@ public nonisolated struct Loci_Auth_VerifyMFARequest: Sendable {
 
 /// BeginMFAEnrollmentRequest starts enrolment for the calling user.
 /// The user is taken from the auth token, never from the request body.
-public nonisolated struct Loci_Auth_BeginMFAEnrollmentRequest: Sendable {
+public struct Loci_Auth_BeginMFAEnrollmentRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -174,7 +174,7 @@ public nonisolated struct Loci_Auth_BeginMFAEnrollmentRequest: Sendable {
 
 /// BeginMFAEnrollmentResponse carries what the user needs to add the account to
 /// an authenticator app. MFA is NOT active until ConfirmMFAEnrollment succeeds.
-public nonisolated struct Loci_Auth_BeginMFAEnrollmentResponse: Sendable {
+public struct Loci_Auth_BeginMFAEnrollmentResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -191,7 +191,7 @@ public nonisolated struct Loci_Auth_BeginMFAEnrollmentResponse: Sendable {
 }
 
 /// ConfirmMFAEnrollmentRequest proves the user's app is generating valid codes.
-public nonisolated struct Loci_Auth_ConfirmMFAEnrollmentRequest: Sendable {
+public struct Loci_Auth_ConfirmMFAEnrollmentRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -204,7 +204,7 @@ public nonisolated struct Loci_Auth_ConfirmMFAEnrollmentRequest: Sendable {
 }
 
 /// ConfirmMFAEnrollmentResponse returns the recovery codes.
-public nonisolated struct Loci_Auth_ConfirmMFAEnrollmentResponse: Sendable {
+public struct Loci_Auth_ConfirmMFAEnrollmentResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -222,26 +222,26 @@ public nonisolated struct Loci_Auth_ConfirmMFAEnrollmentResponse: Sendable {
 
 /// DisableMFARequest turns MFA off. Requires a current code: an attacker with a
 /// hijacked session must not be able to strip the second factor.
-public nonisolated struct Loci_Auth_DisableMFARequest: Sendable {
+public struct Loci_Auth_DisableMFARequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var code: String {
-    get {_code ?? String()}
+    get {return _code ?? String()}
     set {_code = newValue}
   }
   /// Returns true if `code` has been explicitly set.
-  public var hasCode: Bool {self._code != nil}
+  public var hasCode: Bool {return self._code != nil}
   /// Clears the value of `code`. Subsequent reads from it will return its default value.
   public mutating func clearCode() {self._code = nil}
 
   public var recoveryCode: String {
-    get {_recoveryCode ?? String()}
+    get {return _recoveryCode ?? String()}
     set {_recoveryCode = newValue}
   }
   /// Returns true if `recoveryCode` has been explicitly set.
-  public var hasRecoveryCode: Bool {self._recoveryCode != nil}
+  public var hasRecoveryCode: Bool {return self._recoveryCode != nil}
   /// Clears the value of `recoveryCode`. Subsequent reads from it will return its default value.
   public mutating func clearRecoveryCode() {self._recoveryCode = nil}
 
@@ -255,7 +255,7 @@ public nonisolated struct Loci_Auth_DisableMFARequest: Sendable {
 
 /// RegenerateRecoveryCodesRequest replaces all existing codes. Also requires a
 /// current code, for the same reason as disabling.
-public nonisolated struct Loci_Auth_RegenerateRecoveryCodesRequest: Sendable {
+public struct Loci_Auth_RegenerateRecoveryCodesRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -268,7 +268,7 @@ public nonisolated struct Loci_Auth_RegenerateRecoveryCodesRequest: Sendable {
 }
 
 /// RegenerateRecoveryCodesResponse returns the new codes and invalidates the old.
-public nonisolated struct Loci_Auth_RegenerateRecoveryCodesResponse: Sendable {
+public struct Loci_Auth_RegenerateRecoveryCodesResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -283,7 +283,7 @@ public nonisolated struct Loci_Auth_RegenerateRecoveryCodesResponse: Sendable {
 }
 
 /// GetMFAStatusRequest reports the calling user's MFA state, for Settings.
-public nonisolated struct Loci_Auth_GetMFAStatusRequest: Sendable {
+public struct Loci_Auth_GetMFAStatusRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -293,7 +293,7 @@ public nonisolated struct Loci_Auth_GetMFAStatusRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Auth_GetMFAStatusResponse: Sendable {
+public struct Loci_Auth_GetMFAStatusResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -305,11 +305,11 @@ public nonisolated struct Loci_Auth_GetMFAStatusResponse: Sendable {
   public var recoveryCodesRemaining: Int32 = 0
 
   public var enrolledAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_enrolledAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _enrolledAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_enrolledAt = newValue}
   }
   /// Returns true if `enrolledAt` has been explicitly set.
-  public var hasEnrolledAt: Bool {self._enrolledAt != nil}
+  public var hasEnrolledAt: Bool {return self._enrolledAt != nil}
   /// Clears the value of `enrolledAt`. Subsequent reads from it will return its default value.
   public mutating func clearEnrolledAt() {self._enrolledAt = nil}
 
@@ -325,7 +325,7 @@ public nonisolated struct Loci_Auth_GetMFAStatusResponse: Sendable {
 }
 
 /// RegisterRequest for user registration
-public nonisolated struct Loci_Auth_RegisterRequest: Sendable {
+public struct Loci_Auth_RegisterRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -337,11 +337,11 @@ public nonisolated struct Loci_Auth_RegisterRequest: Sendable {
   public var password: String = String()
 
   public var role: String {
-    get {_role ?? String()}
+    get {return _role ?? String()}
     set {_role = newValue}
   }
   /// Returns true if `role` has been explicitly set.
-  public var hasRole: Bool {self._role != nil}
+  public var hasRole: Bool {return self._role != nil}
   /// Clears the value of `role`. Subsequent reads from it will return its default value.
   public mutating func clearRole() {self._role = nil}
 
@@ -353,7 +353,7 @@ public nonisolated struct Loci_Auth_RegisterRequest: Sendable {
 }
 
 /// RefreshTokenRequest for refreshing tokens
-public nonisolated struct Loci_Auth_RefreshTokenRequest: Sendable {
+public struct Loci_Auth_RefreshTokenRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -366,7 +366,7 @@ public nonisolated struct Loci_Auth_RefreshTokenRequest: Sendable {
 }
 
 /// TokenResponse after refreshing tokens
-public nonisolated struct Loci_Auth_TokenResponse: Sendable {
+public struct Loci_Auth_TokenResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -381,7 +381,7 @@ public nonisolated struct Loci_Auth_TokenResponse: Sendable {
 }
 
 /// ValidateSessionRequest for session validation
-public nonisolated struct Loci_Auth_ValidateSessionRequest: Sendable {
+public struct Loci_Auth_ValidateSessionRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -394,7 +394,7 @@ public nonisolated struct Loci_Auth_ValidateSessionRequest: Sendable {
 }
 
 /// ValidateSessionResponse for session validation result
-public nonisolated struct Loci_Auth_ValidateSessionResponse: Sendable {
+public struct Loci_Auth_ValidateSessionResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -402,29 +402,29 @@ public nonisolated struct Loci_Auth_ValidateSessionResponse: Sendable {
   public var valid: Bool = false
 
   public var userID: String {
-    get {_userID ?? String()}
+    get {return _userID ?? String()}
     set {_userID = newValue}
   }
   /// Returns true if `userID` has been explicitly set.
-  public var hasUserID: Bool {self._userID != nil}
+  public var hasUserID: Bool {return self._userID != nil}
   /// Clears the value of `userID`. Subsequent reads from it will return its default value.
   public mutating func clearUserID() {self._userID = nil}
 
   public var username: String {
-    get {_username ?? String()}
+    get {return _username ?? String()}
     set {_username = newValue}
   }
   /// Returns true if `username` has been explicitly set.
-  public var hasUsername: Bool {self._username != nil}
+  public var hasUsername: Bool {return self._username != nil}
   /// Clears the value of `username`. Subsequent reads from it will return its default value.
   public mutating func clearUsername() {self._username = nil}
 
   public var email: String {
-    get {_email ?? String()}
+    get {return _email ?? String()}
     set {_email = newValue}
   }
   /// Returns true if `email` has been explicitly set.
-  public var hasEmail: Bool {self._email != nil}
+  public var hasEmail: Bool {return self._email != nil}
   /// Clears the value of `email`. Subsequent reads from it will return its default value.
   public mutating func clearEmail() {self._email = nil}
 
@@ -438,7 +438,7 @@ public nonisolated struct Loci_Auth_ValidateSessionResponse: Sendable {
 }
 
 /// ChangePasswordRequest for changing password
-public nonisolated struct Loci_Auth_ChangePasswordRequest: Sendable {
+public struct Loci_Auth_ChangePasswordRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -453,7 +453,7 @@ public nonisolated struct Loci_Auth_ChangePasswordRequest: Sendable {
 }
 
 /// ChangeEmailRequest for changing email
-public nonisolated struct Loci_Auth_ChangeEmailRequest: Sendable {
+public struct Loci_Auth_ChangeEmailRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -472,7 +472,7 @@ public nonisolated struct Loci_Auth_ChangeEmailRequest: Sendable {
 /// ChangeEmail used to swap the address outright, with nothing sent to the new
 /// inbox to prove the person asking could read it. The change is now staged and
 /// only takes effect when the token mailed to the new address comes back here.
-public nonisolated struct Loci_Auth_ConfirmEmailChangeRequest: Sendable {
+public struct Loci_Auth_ConfirmEmailChangeRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -491,7 +491,7 @@ public nonisolated struct Loci_Auth_ConfirmEmailChangeRequest: Sendable {
 /// to see where their account was signed in.
 /// Named DeviceSession because this package already has a Session, which is an
 /// identity summary (id, username, email) and nothing to do with a sign-in.
-public nonisolated struct Loci_Auth_DeviceSession: Sendable {
+public struct Loci_Auth_DeviceSession: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -499,38 +499,38 @@ public nonisolated struct Loci_Auth_DeviceSession: Sendable {
   public var id: String = String()
 
   public var userAgent: String {
-    get {_userAgent ?? String()}
+    get {return _userAgent ?? String()}
     set {_userAgent = newValue}
   }
   /// Returns true if `userAgent` has been explicitly set.
-  public var hasUserAgent: Bool {self._userAgent != nil}
+  public var hasUserAgent: Bool {return self._userAgent != nil}
   /// Clears the value of `userAgent`. Subsequent reads from it will return its default value.
   public mutating func clearUserAgent() {self._userAgent = nil}
 
   public var clientIp: String {
-    get {_clientIp ?? String()}
+    get {return _clientIp ?? String()}
     set {_clientIp = newValue}
   }
   /// Returns true if `clientIp` has been explicitly set.
-  public var hasClientIp: Bool {self._clientIp != nil}
+  public var hasClientIp: Bool {return self._clientIp != nil}
   /// Clears the value of `clientIp`. Subsequent reads from it will return its default value.
   public mutating func clearClientIp() {self._clientIp = nil}
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {self._createdAt != nil}
+  public var hasCreatedAt: Bool {return self._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {self._createdAt = nil}
 
   public var expiresAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_expiresAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _expiresAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_expiresAt = newValue}
   }
   /// Returns true if `expiresAt` has been explicitly set.
-  public var hasExpiresAt: Bool {self._expiresAt != nil}
+  public var hasExpiresAt: Bool {return self._expiresAt != nil}
   /// Clears the value of `expiresAt`. Subsequent reads from it will return its default value.
   public mutating func clearExpiresAt() {self._expiresAt = nil}
 
@@ -559,17 +559,17 @@ public nonisolated struct Loci_Auth_DeviceSession: Sendable {
 ///
 /// Optional: a caller that only wants the list can omit it and get no session
 /// marked current.
-public nonisolated struct Loci_Auth_ListSessionsRequest: Sendable {
+public struct Loci_Auth_ListSessionsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var refreshToken: String {
-    get {_refreshToken ?? String()}
+    get {return _refreshToken ?? String()}
     set {_refreshToken = newValue}
   }
   /// Returns true if `refreshToken` has been explicitly set.
-  public var hasRefreshToken: Bool {self._refreshToken != nil}
+  public var hasRefreshToken: Bool {return self._refreshToken != nil}
   /// Clears the value of `refreshToken`. Subsequent reads from it will return its default value.
   public mutating func clearRefreshToken() {self._refreshToken = nil}
 
@@ -580,7 +580,7 @@ public nonisolated struct Loci_Auth_ListSessionsRequest: Sendable {
   fileprivate var _refreshToken: String? = nil
 }
 
-public nonisolated struct Loci_Auth_ListSessionsResponse: Sendable {
+public struct Loci_Auth_ListSessionsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -592,7 +592,7 @@ public nonisolated struct Loci_Auth_ListSessionsResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Auth_RevokeSessionRequest: Sendable {
+public struct Loci_Auth_RevokeSessionRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -609,7 +609,7 @@ public nonisolated struct Loci_Auth_RevokeSessionRequest: Sendable {
 /// The refresh token is required here rather than optional: without it the RPC
 /// cannot tell which session to spare, and the only safe reading of "revoke the
 /// others" with no "others" defined is to revoke nothing.
-public nonisolated struct Loci_Auth_RevokeOtherSessionsRequest: Sendable {
+public struct Loci_Auth_RevokeOtherSessionsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -622,7 +622,7 @@ public nonisolated struct Loci_Auth_RevokeOtherSessionsRequest: Sendable {
 }
 
 /// LogoutRequest for logout
-public nonisolated struct Loci_Auth_LogoutRequest: Sendable {
+public struct Loci_Auth_LogoutRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -635,7 +635,7 @@ public nonisolated struct Loci_Auth_LogoutRequest: Sendable {
 }
 
 /// ForgotPasswordRequest for initiating password reset
-public nonisolated struct Loci_Auth_ForgotPasswordRequest: Sendable {
+public struct Loci_Auth_ForgotPasswordRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -648,7 +648,7 @@ public nonisolated struct Loci_Auth_ForgotPasswordRequest: Sendable {
 }
 
 /// ResetPasswordRequest for completing password reset with token
-public nonisolated struct Loci_Auth_ResetPasswordRequest: Sendable {
+public struct Loci_Auth_ResetPasswordRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -663,7 +663,7 @@ public nonisolated struct Loci_Auth_ResetPasswordRequest: Sendable {
 }
 
 /// Session represents session data
-public nonisolated struct Loci_Auth_Session: Sendable {
+public struct Loci_Auth_Session: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -680,7 +680,7 @@ public nonisolated struct Loci_Auth_Session: Sendable {
 }
 
 /// Claims represents JWT claims
-public nonisolated struct Loci_Auth_Claims: Sendable {
+public struct Loci_Auth_Claims: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -694,29 +694,29 @@ public nonisolated struct Loci_Auth_Claims: Sendable {
   public var role: String = String()
 
   public var subscriptionPlan: String {
-    get {_subscriptionPlan ?? String()}
+    get {return _subscriptionPlan ?? String()}
     set {_subscriptionPlan = newValue}
   }
   /// Returns true if `subscriptionPlan` has been explicitly set.
-  public var hasSubscriptionPlan: Bool {self._subscriptionPlan != nil}
+  public var hasSubscriptionPlan: Bool {return self._subscriptionPlan != nil}
   /// Clears the value of `subscriptionPlan`. Subsequent reads from it will return its default value.
   public mutating func clearSubscriptionPlan() {self._subscriptionPlan = nil}
 
   public var subscriptionStatus: String {
-    get {_subscriptionStatus ?? String()}
+    get {return _subscriptionStatus ?? String()}
     set {_subscriptionStatus = newValue}
   }
   /// Returns true if `subscriptionStatus` has been explicitly set.
-  public var hasSubscriptionStatus: Bool {self._subscriptionStatus != nil}
+  public var hasSubscriptionStatus: Bool {return self._subscriptionStatus != nil}
   /// Clears the value of `subscriptionStatus`. Subsequent reads from it will return its default value.
   public mutating func clearSubscriptionStatus() {self._subscriptionStatus = nil}
 
   public var scope: String {
-    get {_scope ?? String()}
+    get {return _scope ?? String()}
     set {_scope = newValue}
   }
   /// Returns true if `scope` has been explicitly set.
-  public var hasScope: Bool {self._scope != nil}
+  public var hasScope: Bool {return self._scope != nil}
   /// Clears the value of `scope`. Subsequent reads from it will return its default value.
   public mutating func clearScope() {self._scope = nil}
 
@@ -735,11 +735,18 @@ public nonisolated struct Loci_Auth_Claims: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.auth"
+fileprivate let _protobuf_package = "loci.auth"
 
-nonisolated extension Loci_Auth_UserAuth: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_UserAuth: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UserAuth"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}username\0\u{1}email\0\u{1}role\0\u{3}created_at\0\u{3}updated_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "username"),
+    3: .same(proto: "email"),
+    4: .same(proto: "role"),
+    5: .standard(proto: "created_at"),
+    6: .standard(proto: "updated_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -796,9 +803,12 @@ nonisolated extension Loci_Auth_UserAuth: SwiftProtobuf.Message, SwiftProtobuf._
   }
 }
 
-nonisolated extension Loci_Auth_LoginRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_LoginRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".LoginRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}email\0\u{1}password\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "email"),
+    2: .same(proto: "password"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -831,9 +841,18 @@ nonisolated extension Loci_Auth_LoginRequest: SwiftProtobuf.Message, SwiftProtob
   }
 }
 
-nonisolated extension Loci_Auth_LoginResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_LoginResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".LoginResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}access_token\0\u{3}refresh_token\0\u{1}message\0\u{3}user_id\0\u{1}username\0\u{1}email\0\u{3}mfa_required\0\u{3}mfa_token\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "access_token"),
+    2: .standard(proto: "refresh_token"),
+    3: .same(proto: "message"),
+    4: .standard(proto: "user_id"),
+    5: .same(proto: "username"),
+    6: .same(proto: "email"),
+    7: .standard(proto: "mfa_required"),
+    8: .standard(proto: "mfa_token"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -900,9 +919,13 @@ nonisolated extension Loci_Auth_LoginResponse: SwiftProtobuf.Message, SwiftProto
   }
 }
 
-nonisolated extension Loci_Auth_VerifyMFARequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_VerifyMFARequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".VerifyMFARequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}mfa_token\0\u{1}code\0\u{3}recovery_code\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "mfa_token"),
+    2: .same(proto: "code"),
+    3: .standard(proto: "recovery_code"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -944,7 +967,7 @@ nonisolated extension Loci_Auth_VerifyMFARequest: SwiftProtobuf.Message, SwiftPr
   }
 }
 
-nonisolated extension Loci_Auth_BeginMFAEnrollmentRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_BeginMFAEnrollmentRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".BeginMFAEnrollmentRequest"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
@@ -963,9 +986,12 @@ nonisolated extension Loci_Auth_BeginMFAEnrollmentRequest: SwiftProtobuf.Message
   }
 }
 
-nonisolated extension Loci_Auth_BeginMFAEnrollmentResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_BeginMFAEnrollmentResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".BeginMFAEnrollmentResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}provisioning_uri\0\u{1}secret\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "provisioning_uri"),
+    2: .same(proto: "secret"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -998,9 +1024,11 @@ nonisolated extension Loci_Auth_BeginMFAEnrollmentResponse: SwiftProtobuf.Messag
   }
 }
 
-nonisolated extension Loci_Auth_ConfirmMFAEnrollmentRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_ConfirmMFAEnrollmentRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ConfirmMFAEnrollmentRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}code\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "code"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1028,9 +1056,12 @@ nonisolated extension Loci_Auth_ConfirmMFAEnrollmentRequest: SwiftProtobuf.Messa
   }
 }
 
-nonisolated extension Loci_Auth_ConfirmMFAEnrollmentResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_ConfirmMFAEnrollmentResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ConfirmMFAEnrollmentResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}recovery_codes\0\u{1}message\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "recovery_codes"),
+    2: .same(proto: "message"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1063,9 +1094,12 @@ nonisolated extension Loci_Auth_ConfirmMFAEnrollmentResponse: SwiftProtobuf.Mess
   }
 }
 
-nonisolated extension Loci_Auth_DisableMFARequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_DisableMFARequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DisableMFARequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}code\0\u{3}recovery_code\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "code"),
+    2: .standard(proto: "recovery_code"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1102,9 +1136,11 @@ nonisolated extension Loci_Auth_DisableMFARequest: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension Loci_Auth_RegenerateRecoveryCodesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_RegenerateRecoveryCodesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RegenerateRecoveryCodesRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}code\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "code"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1132,9 +1168,12 @@ nonisolated extension Loci_Auth_RegenerateRecoveryCodesRequest: SwiftProtobuf.Me
   }
 }
 
-nonisolated extension Loci_Auth_RegenerateRecoveryCodesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_RegenerateRecoveryCodesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RegenerateRecoveryCodesResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}recovery_codes\0\u{1}message\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "recovery_codes"),
+    2: .same(proto: "message"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1167,7 +1206,7 @@ nonisolated extension Loci_Auth_RegenerateRecoveryCodesResponse: SwiftProtobuf.M
   }
 }
 
-nonisolated extension Loci_Auth_GetMFAStatusRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_GetMFAStatusRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetMFAStatusRequest"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
@@ -1186,9 +1225,14 @@ nonisolated extension Loci_Auth_GetMFAStatusRequest: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_Auth_GetMFAStatusResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_GetMFAStatusResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetMFAStatusResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}enabled\0\u{3}recovery_codes_remaining\0\u{3}enrolled_at\0\u{3}required_by_policy\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "enabled"),
+    2: .standard(proto: "recovery_codes_remaining"),
+    3: .standard(proto: "enrolled_at"),
+    4: .standard(proto: "required_by_policy"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1235,9 +1279,14 @@ nonisolated extension Loci_Auth_GetMFAStatusResponse: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Auth_RegisterRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_RegisterRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RegisterRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}username\0\u{1}email\0\u{1}password\0\u{1}role\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "username"),
+    2: .same(proto: "email"),
+    3: .same(proto: "password"),
+    4: .same(proto: "role"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1284,9 +1333,11 @@ nonisolated extension Loci_Auth_RegisterRequest: SwiftProtobuf.Message, SwiftPro
   }
 }
 
-nonisolated extension Loci_Auth_RefreshTokenRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_RefreshTokenRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RefreshTokenRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}refresh_token\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "refresh_token"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1314,9 +1365,12 @@ nonisolated extension Loci_Auth_RefreshTokenRequest: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_Auth_TokenResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_TokenResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".TokenResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}access_token\0\u{3}refresh_token\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "access_token"),
+    2: .standard(proto: "refresh_token"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1349,9 +1403,11 @@ nonisolated extension Loci_Auth_TokenResponse: SwiftProtobuf.Message, SwiftProto
   }
 }
 
-nonisolated extension Loci_Auth_ValidateSessionRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_ValidateSessionRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ValidateSessionRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}session_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "session_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1379,9 +1435,14 @@ nonisolated extension Loci_Auth_ValidateSessionRequest: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_Auth_ValidateSessionResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_ValidateSessionResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ValidateSessionResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}valid\0\u{3}user_id\0\u{1}username\0\u{1}email\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "valid"),
+    2: .standard(proto: "user_id"),
+    3: .same(proto: "username"),
+    4: .same(proto: "email"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1428,9 +1489,12 @@ nonisolated extension Loci_Auth_ValidateSessionResponse: SwiftProtobuf.Message, 
   }
 }
 
-nonisolated extension Loci_Auth_ChangePasswordRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_ChangePasswordRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ChangePasswordRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}old_password\0\u{3}new_password\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "old_password"),
+    2: .standard(proto: "new_password"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1463,9 +1527,12 @@ nonisolated extension Loci_Auth_ChangePasswordRequest: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_Auth_ChangeEmailRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_ChangeEmailRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ChangeEmailRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}password\0\u{3}new_email\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "password"),
+    2: .standard(proto: "new_email"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1498,9 +1565,11 @@ nonisolated extension Loci_Auth_ChangeEmailRequest: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_Auth_ConfirmEmailChangeRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_ConfirmEmailChangeRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ConfirmEmailChangeRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}token\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "token"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1528,9 +1597,16 @@ nonisolated extension Loci_Auth_ConfirmEmailChangeRequest: SwiftProtobuf.Message
   }
 }
 
-nonisolated extension Loci_Auth_DeviceSession: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_DeviceSession: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DeviceSession"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}user_agent\0\u{3}client_ip\0\u{3}created_at\0\u{3}expires_at\0\u{1}current\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "user_agent"),
+    3: .standard(proto: "client_ip"),
+    4: .standard(proto: "created_at"),
+    5: .standard(proto: "expires_at"),
+    6: .same(proto: "current"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1587,9 +1663,11 @@ nonisolated extension Loci_Auth_DeviceSession: SwiftProtobuf.Message, SwiftProto
   }
 }
 
-nonisolated extension Loci_Auth_ListSessionsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_ListSessionsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListSessionsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}refresh_token\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "refresh_token"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1621,9 +1699,11 @@ nonisolated extension Loci_Auth_ListSessionsRequest: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_Auth_ListSessionsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_ListSessionsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListSessionsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}sessions\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "sessions"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1651,9 +1731,11 @@ nonisolated extension Loci_Auth_ListSessionsResponse: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Auth_RevokeSessionRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_RevokeSessionRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RevokeSessionRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}session_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "session_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1681,9 +1763,11 @@ nonisolated extension Loci_Auth_RevokeSessionRequest: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Auth_RevokeOtherSessionsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_RevokeOtherSessionsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RevokeOtherSessionsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}refresh_token\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "refresh_token"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1711,9 +1795,11 @@ nonisolated extension Loci_Auth_RevokeOtherSessionsRequest: SwiftProtobuf.Messag
   }
 }
 
-nonisolated extension Loci_Auth_LogoutRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_LogoutRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".LogoutRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}refresh_token\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "refresh_token"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1741,9 +1827,11 @@ nonisolated extension Loci_Auth_LogoutRequest: SwiftProtobuf.Message, SwiftProto
   }
 }
 
-nonisolated extension Loci_Auth_ForgotPasswordRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_ForgotPasswordRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ForgotPasswordRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}email\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "email"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1771,9 +1859,12 @@ nonisolated extension Loci_Auth_ForgotPasswordRequest: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_Auth_ResetPasswordRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_ResetPasswordRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ResetPasswordRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}token\0\u{3}new_password\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "token"),
+    2: .standard(proto: "new_password"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1806,9 +1897,13 @@ nonisolated extension Loci_Auth_ResetPasswordRequest: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Auth_Session: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_Session: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Session"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}username\0\u{1}email\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "username"),
+    3: .same(proto: "email"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1846,9 +1941,19 @@ nonisolated extension Loci_Auth_Session: SwiftProtobuf.Message, SwiftProtobuf._M
   }
 }
 
-nonisolated extension Loci_Auth_Claims: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Auth_Claims: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Claims"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{1}username\0\u{1}email\0\u{1}role\0\u{3}subscription_plan\0\u{3}subscription_status\0\u{1}scope\0\u{3}expires_at\0\u{3}issued_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .same(proto: "username"),
+    3: .same(proto: "email"),
+    4: .same(proto: "role"),
+    5: .standard(proto: "subscription_plan"),
+    6: .standard(proto: "subscription_status"),
+    7: .same(proto: "scope"),
+    8: .standard(proto: "expires_at"),
+    9: .standard(proto: "issued_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

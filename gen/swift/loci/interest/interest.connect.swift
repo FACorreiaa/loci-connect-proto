@@ -12,44 +12,23 @@ import SwiftProtobuf
 /// InterestService defines interest-related RPCs
 public protocol Loci_Interest_InterestServiceClientInterface: Sendable {
 
-    @discardableResult
-    func `getInterests`(request: Loci_Interest_GetInterestsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Interest_GetInterestsResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `getInterests`(request: Loci_Interest_GetInterestsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Interest_GetInterestsResponse>
-
-    @discardableResult
-    func `getUserInterests`(request: Loci_Interest_GetUserInterestsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Interest_GetUserInterestsResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `getUserInterests`(request: Loci_Interest_GetUserInterestsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Interest_GetUserInterestsResponse>
 
-    @discardableResult
-    func `createInterest`(request: Loci_Interest_CreateInterestRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `createInterest`(request: Loci_Interest_CreateInterestRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Common_Response>
-
-    @discardableResult
-    func `updateInterest`(request: Loci_Interest_UpdateInterestRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `updateInterest`(request: Loci_Interest_UpdateInterestRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Common_Response>
 
-    @discardableResult
-    func `addInterestToUser`(request: Loci_Interest_AddInterestRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `addInterestToUser`(request: Loci_Interest_AddInterestRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Common_Response>
 
-    @discardableResult
-    func `updatePreferenceLevel`(request: Loci_Interest_UpdatePreferenceLevelRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `updatePreferenceLevel`(request: Loci_Interest_UpdatePreferenceLevelRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Common_Response>
-
-    @discardableResult
-    func `deleteInterest`(request: Loci_Interest_DeleteInterestRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `deleteInterest`(request: Loci_Interest_DeleteInterestRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Common_Response>
@@ -63,19 +42,9 @@ public final class Loci_Interest_InterestServiceClient: Loci_Interest_InterestSe
         self.client = client
     }
 
-    @discardableResult
-    public func `getInterests`(request: Loci_Interest_GetInterestsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Interest_GetInterestsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.interest.InterestService/GetInterests", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getInterests`(request: Loci_Interest_GetInterestsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Interest_GetInterestsResponse> {
         return await self.client.unary(path: "/loci.interest.InterestService/GetInterests", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getUserInterests`(request: Loci_Interest_GetUserInterestsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Interest_GetUserInterestsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.interest.InterestService/GetUserInterests", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -83,19 +52,9 @@ public final class Loci_Interest_InterestServiceClient: Loci_Interest_InterestSe
         return await self.client.unary(path: "/loci.interest.InterestService/GetUserInterests", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `createInterest`(request: Loci_Interest_CreateInterestRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.interest.InterestService/CreateInterest", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `createInterest`(request: Loci_Interest_CreateInterestRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Common_Response> {
         return await self.client.unary(path: "/loci.interest.InterestService/CreateInterest", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `updateInterest`(request: Loci_Interest_UpdateInterestRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.interest.InterestService/UpdateInterest", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -103,29 +62,14 @@ public final class Loci_Interest_InterestServiceClient: Loci_Interest_InterestSe
         return await self.client.unary(path: "/loci.interest.InterestService/UpdateInterest", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `addInterestToUser`(request: Loci_Interest_AddInterestRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.interest.InterestService/AddInterestToUser", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `addInterestToUser`(request: Loci_Interest_AddInterestRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Common_Response> {
         return await self.client.unary(path: "/loci.interest.InterestService/AddInterestToUser", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `updatePreferenceLevel`(request: Loci_Interest_UpdatePreferenceLevelRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.interest.InterestService/UpdatePreferenceLevel", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `updatePreferenceLevel`(request: Loci_Interest_UpdatePreferenceLevelRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Common_Response> {
         return await self.client.unary(path: "/loci.interest.InterestService/UpdatePreferenceLevel", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `deleteInterest`(request: Loci_Interest_DeleteInterestRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.interest.InterestService/DeleteInterest", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

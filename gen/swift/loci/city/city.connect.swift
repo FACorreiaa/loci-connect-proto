@@ -12,14 +12,8 @@ import SwiftProtobuf
 /// CityService defines city-related RPCs
 public protocol Loci_City_CityServiceClientInterface: Sendable {
 
-    @discardableResult
-    func `getCity`(request: Loci_City_GetCityRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_City_GetCityResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `getCity`(request: Loci_City_GetCityRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_City_GetCityResponse>
-
-    @discardableResult
-    func `searchCities`(request: Loci_City_SearchCitiesRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_City_SearchCitiesResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `searchCities`(request: Loci_City_SearchCitiesRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_City_SearchCitiesResponse>
@@ -33,19 +27,9 @@ public final class Loci_City_CityServiceClient: Loci_City_CityServiceClientInter
         self.client = client
     }
 
-    @discardableResult
-    public func `getCity`(request: Loci_City_GetCityRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_City_GetCityResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.city.CityService/GetCity", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getCity`(request: Loci_City_GetCityRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_City_GetCityResponse> {
         return await self.client.unary(path: "/loci.city.CityService/GetCity", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `searchCities`(request: Loci_City_SearchCitiesRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_City_SearchCitiesResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.city.CityService/SearchCities", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

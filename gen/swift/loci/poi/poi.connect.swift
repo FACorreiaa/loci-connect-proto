@@ -12,14 +12,8 @@ import SwiftProtobuf
 /// POIService defines POI-related RPCs
 public protocol Loci_Poi_PoiserviceClientInterface: Sendable {
 
-    @discardableResult
-    func `searchPoi`(request: Loci_Poi_SearchPOIRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Poi_SearchPOIResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `searchPoi`(request: Loci_Poi_SearchPOIRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Poi_SearchPOIResponse>
-
-    @discardableResult
-    func `getPoi`(request: Loci_Poi_GetPOIRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Poi_GetPOIResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `getPoi`(request: Loci_Poi_GetPOIRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Poi_GetPOIResponse>
@@ -33,19 +27,9 @@ public final class Loci_Poi_PoiserviceClient: Loci_Poi_PoiserviceClientInterface
         self.client = client
     }
 
-    @discardableResult
-    public func `searchPoi`(request: Loci_Poi_SearchPOIRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Poi_SearchPOIResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.poi.POIService/SearchPOI", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `searchPoi`(request: Loci_Poi_SearchPOIRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Poi_SearchPOIResponse> {
         return await self.client.unary(path: "/loci.poi.POIService/SearchPOI", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getPoi`(request: Loci_Poi_GetPOIRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Poi_GetPOIResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.poi.POIService/GetPOI", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

@@ -15,12 +15,12 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
-public nonisolated enum Loci_Place_PlaceFactField: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Place_PlaceFactField: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case openingHours // = 1
@@ -86,7 +86,7 @@ public nonisolated enum Loci_Place_PlaceFactField: SwiftProtobuf.Enum, Swift.Cas
 
 }
 
-public nonisolated enum Loci_Place_PlaceClaimStatus: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Place_PlaceClaimStatus: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case pending // = 1
@@ -132,7 +132,7 @@ public nonisolated enum Loci_Place_PlaceClaimStatus: SwiftProtobuf.Enum, Swift.C
 
 }
 
-public nonisolated enum Loci_Place_PlaceSubmissionStatus: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Place_PlaceSubmissionStatus: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case pending // = 1
@@ -174,7 +174,7 @@ public nonisolated enum Loci_Place_PlaceSubmissionStatus: SwiftProtobuf.Enum, Sw
 
 }
 
-public nonisolated struct Loci_Place_PlaceFact: Sendable {
+public struct Loci_Place_PlaceFact: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -188,20 +188,20 @@ public nonisolated struct Loci_Place_PlaceFact: Sendable {
   public var contributorCount: Int32 = 0
 
   public var verifiedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_verifiedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _verifiedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_verifiedAt = newValue}
   }
   /// Returns true if `verifiedAt` has been explicitly set.
-  public var hasVerifiedAt: Bool {self._verifiedAt != nil}
+  public var hasVerifiedAt: Bool {return self._verifiedAt != nil}
   /// Clears the value of `verifiedAt`. Subsequent reads from it will return its default value.
   public mutating func clearVerifiedAt() {self._verifiedAt = nil}
 
   public var expiresAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_expiresAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _expiresAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_expiresAt = newValue}
   }
   /// Returns true if `expiresAt` has been explicitly set.
-  public var hasExpiresAt: Bool {self._expiresAt != nil}
+  public var hasExpiresAt: Bool {return self._expiresAt != nil}
   /// Clears the value of `expiresAt`. Subsequent reads from it will return its default value.
   public mutating func clearExpiresAt() {self._expiresAt = nil}
 
@@ -213,7 +213,7 @@ public nonisolated struct Loci_Place_PlaceFact: Sendable {
   fileprivate var _expiresAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-public nonisolated struct Loci_Place_PlaceFacts: Sendable {
+public struct Loci_Place_PlaceFacts: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -227,7 +227,7 @@ public nonisolated struct Loci_Place_PlaceFacts: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Place_GetPlaceFactsRequest: Sendable {
+public struct Loci_Place_GetPlaceFactsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -239,7 +239,7 @@ public nonisolated struct Loci_Place_GetPlaceFactsRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Place_VerificationTask: Sendable {
+public struct Loci_Place_VerificationTask: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -251,11 +251,11 @@ public nonisolated struct Loci_Place_VerificationTask: Sendable {
   public var requestedFields: [Loci_Place_PlaceFactField] = []
 
   public var oldestFactAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_oldestFactAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _oldestFactAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_oldestFactAt = newValue}
   }
   /// Returns true if `oldestFactAt` has been explicitly set.
-  public var hasOldestFactAt: Bool {self._oldestFactAt != nil}
+  public var hasOldestFactAt: Bool {return self._oldestFactAt != nil}
   /// Clears the value of `oldestFactAt`. Subsequent reads from it will return its default value.
   public mutating func clearOldestFactAt() {self._oldestFactAt = nil}
 
@@ -266,7 +266,7 @@ public nonisolated struct Loci_Place_VerificationTask: Sendable {
   fileprivate var _oldestFactAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-public nonisolated struct Loci_Place_ListVerificationTasksRequest: Sendable {
+public struct Loci_Place_ListVerificationTasksRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -278,7 +278,7 @@ public nonisolated struct Loci_Place_ListVerificationTasksRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Place_ListVerificationTasksResponse: Sendable {
+public struct Loci_Place_ListVerificationTasksResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -290,7 +290,7 @@ public nonisolated struct Loci_Place_ListVerificationTasksResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Place_SubmitPlaceClaimRequest: Sendable {
+public struct Loci_Place_SubmitPlaceClaimRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -304,11 +304,11 @@ public nonisolated struct Loci_Place_SubmitPlaceClaimRequest: Sendable {
   public var value: String = String()
 
   public var observedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_observedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _observedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_observedAt = newValue}
   }
   /// Returns true if `observedAt` has been explicitly set.
-  public var hasObservedAt: Bool {self._observedAt != nil}
+  public var hasObservedAt: Bool {return self._observedAt != nil}
   /// Clears the value of `observedAt`. Subsequent reads from it will return its default value.
   public mutating func clearObservedAt() {self._observedAt = nil}
 
@@ -319,7 +319,7 @@ public nonisolated struct Loci_Place_SubmitPlaceClaimRequest: Sendable {
   fileprivate var _observedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-public nonisolated struct Loci_Place_SubmitPlaceClaimResponse: Sendable {
+public struct Loci_Place_SubmitPlaceClaimResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -333,7 +333,7 @@ public nonisolated struct Loci_Place_SubmitPlaceClaimResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Place_ContributorProfile: Sendable {
+public struct Loci_Place_ContributorProfile: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -351,7 +351,7 @@ public nonisolated struct Loci_Place_ContributorProfile: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Place_GetMyContributorProfileRequest: Sendable {
+public struct Loci_Place_GetMyContributorProfileRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -361,7 +361,7 @@ public nonisolated struct Loci_Place_GetMyContributorProfileRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Place_SubmitPlaceRequest: Sendable {
+public struct Loci_Place_SubmitPlaceRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -374,56 +374,56 @@ public nonisolated struct Loci_Place_SubmitPlaceRequest: Sendable {
   public var cityName: String = String()
 
   public var country: String {
-    get {_country ?? String()}
+    get {return _country ?? String()}
     set {_country = newValue}
   }
   /// Returns true if `country` has been explicitly set.
-  public var hasCountry: Bool {self._country != nil}
+  public var hasCountry: Bool {return self._country != nil}
   /// Clears the value of `country`. Subsequent reads from it will return its default value.
   public mutating func clearCountry() {self._country = nil}
 
   public var category: String {
-    get {_category ?? String()}
+    get {return _category ?? String()}
     set {_category = newValue}
   }
   /// Returns true if `category` has been explicitly set.
-  public var hasCategory: Bool {self._category != nil}
+  public var hasCategory: Bool {return self._category != nil}
   /// Clears the value of `category`. Subsequent reads from it will return its default value.
   public mutating func clearCategory() {self._category = nil}
 
   public var latitude: Double {
-    get {_latitude ?? 0}
+    get {return _latitude ?? 0}
     set {_latitude = newValue}
   }
   /// Returns true if `latitude` has been explicitly set.
-  public var hasLatitude: Bool {self._latitude != nil}
+  public var hasLatitude: Bool {return self._latitude != nil}
   /// Clears the value of `latitude`. Subsequent reads from it will return its default value.
   public mutating func clearLatitude() {self._latitude = nil}
 
   public var longitude: Double {
-    get {_longitude ?? 0}
+    get {return _longitude ?? 0}
     set {_longitude = newValue}
   }
   /// Returns true if `longitude` has been explicitly set.
-  public var hasLongitude: Bool {self._longitude != nil}
+  public var hasLongitude: Bool {return self._longitude != nil}
   /// Clears the value of `longitude`. Subsequent reads from it will return its default value.
   public mutating func clearLongitude() {self._longitude = nil}
 
   public var address: String {
-    get {_address ?? String()}
+    get {return _address ?? String()}
     set {_address = newValue}
   }
   /// Returns true if `address` has been explicitly set.
-  public var hasAddress: Bool {self._address != nil}
+  public var hasAddress: Bool {return self._address != nil}
   /// Clears the value of `address`. Subsequent reads from it will return its default value.
   public mutating func clearAddress() {self._address = nil}
 
   public var website: String {
-    get {_website ?? String()}
+    get {return _website ?? String()}
     set {_website = newValue}
   }
   /// Returns true if `website` has been explicitly set.
-  public var hasWebsite: Bool {self._website != nil}
+  public var hasWebsite: Bool {return self._website != nil}
   /// Clears the value of `website`. Subsequent reads from it will return its default value.
   public mutating func clearWebsite() {self._website = nil}
 
@@ -439,7 +439,7 @@ public nonisolated struct Loci_Place_SubmitPlaceRequest: Sendable {
   fileprivate var _website: String? = nil
 }
 
-public nonisolated struct Loci_Place_SubmitPlaceResponse: Sendable {
+public struct Loci_Place_SubmitPlaceResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -456,7 +456,7 @@ public nonisolated struct Loci_Place_SubmitPlaceResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Place_ConfirmPlaceRequest: Sendable {
+public struct Loci_Place_ConfirmPlaceRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -468,7 +468,7 @@ public nonisolated struct Loci_Place_ConfirmPlaceRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Place_ConfirmPlaceResponse: Sendable {
+public struct Loci_Place_ConfirmPlaceResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -479,11 +479,11 @@ public nonisolated struct Loci_Place_ConfirmPlaceResponse: Sendable {
 
   /// Set once promoted, so the client can link straight to the new place.
   public var poiID: String {
-    get {_poiID ?? String()}
+    get {return _poiID ?? String()}
     set {_poiID = newValue}
   }
   /// Returns true if `poiID` has been explicitly set.
-  public var hasPoiID: Bool {self._poiID != nil}
+  public var hasPoiID: Bool {return self._poiID != nil}
   /// Clears the value of `poiID`. Subsequent reads from it will return its default value.
   public mutating func clearPoiID() {self._poiID = nil}
 
@@ -494,7 +494,7 @@ public nonisolated struct Loci_Place_ConfirmPlaceResponse: Sendable {
   fileprivate var _poiID: String? = nil
 }
 
-public nonisolated struct Loci_Place_PendingPlace: Sendable {
+public struct Loci_Place_PendingPlace: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -506,20 +506,20 @@ public nonisolated struct Loci_Place_PendingPlace: Sendable {
   public var cityName: String = String()
 
   public var category: String {
-    get {_category ?? String()}
+    get {return _category ?? String()}
     set {_category = newValue}
   }
   /// Returns true if `category` has been explicitly set.
-  public var hasCategory: Bool {self._category != nil}
+  public var hasCategory: Bool {return self._category != nil}
   /// Clears the value of `category`. Subsequent reads from it will return its default value.
   public mutating func clearCategory() {self._category = nil}
 
   public var address: String {
-    get {_address ?? String()}
+    get {return _address ?? String()}
     set {_address = newValue}
   }
   /// Returns true if `address` has been explicitly set.
-  public var hasAddress: Bool {self._address != nil}
+  public var hasAddress: Bool {return self._address != nil}
   /// Clears the value of `address`. Subsequent reads from it will return its default value.
   public mutating func clearAddress() {self._address = nil}
 
@@ -533,7 +533,7 @@ public nonisolated struct Loci_Place_PendingPlace: Sendable {
   fileprivate var _address: String? = nil
 }
 
-public nonisolated struct Loci_Place_ListPendingPlacesRequest: Sendable {
+public struct Loci_Place_ListPendingPlacesRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -545,7 +545,7 @@ public nonisolated struct Loci_Place_ListPendingPlacesRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Place_ListPendingPlacesResponse: Sendable {
+public struct Loci_Place_ListPendingPlacesResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -559,23 +559,52 @@ public nonisolated struct Loci_Place_ListPendingPlacesResponse: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.place"
+fileprivate let _protobuf_package = "loci.place"
 
-nonisolated extension Loci_Place_PlaceFactField: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0PLACE_FACT_FIELD_UNSPECIFIED\0\u{1}PLACE_FACT_FIELD_OPENING_HOURS\0\u{1}PLACE_FACT_FIELD_PRICE_LEVEL\0\u{1}PLACE_FACT_FIELD_ACCESSIBILITY\0\u{1}PLACE_FACT_FIELD_DIETARY\0\u{1}PLACE_FACT_FIELD_CROWD_LEVEL\0\u{1}PLACE_FACT_FIELD_NOISE_LEVEL\0\u{1}PLACE_FACT_FIELD_CHILD_FRIENDLY\0\u{1}PLACE_FACT_FIELD_DOG_FRIENDLY\0\u{1}PLACE_FACT_FIELD_VIBE\0")
+extension Loci_Place_PlaceFactField: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "PLACE_FACT_FIELD_UNSPECIFIED"),
+    1: .same(proto: "PLACE_FACT_FIELD_OPENING_HOURS"),
+    2: .same(proto: "PLACE_FACT_FIELD_PRICE_LEVEL"),
+    3: .same(proto: "PLACE_FACT_FIELD_ACCESSIBILITY"),
+    4: .same(proto: "PLACE_FACT_FIELD_DIETARY"),
+    5: .same(proto: "PLACE_FACT_FIELD_CROWD_LEVEL"),
+    6: .same(proto: "PLACE_FACT_FIELD_NOISE_LEVEL"),
+    7: .same(proto: "PLACE_FACT_FIELD_CHILD_FRIENDLY"),
+    8: .same(proto: "PLACE_FACT_FIELD_DOG_FRIENDLY"),
+    9: .same(proto: "PLACE_FACT_FIELD_VIBE"),
+  ]
 }
 
-nonisolated extension Loci_Place_PlaceClaimStatus: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0PLACE_CLAIM_STATUS_UNSPECIFIED\0\u{1}PLACE_CLAIM_STATUS_PENDING\0\u{1}PLACE_CLAIM_STATUS_ACCEPTED\0\u{1}PLACE_CLAIM_STATUS_CONTRADICTED\0\u{1}PLACE_CLAIM_STATUS_EXPIRED\0")
+extension Loci_Place_PlaceClaimStatus: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "PLACE_CLAIM_STATUS_UNSPECIFIED"),
+    1: .same(proto: "PLACE_CLAIM_STATUS_PENDING"),
+    2: .same(proto: "PLACE_CLAIM_STATUS_ACCEPTED"),
+    3: .same(proto: "PLACE_CLAIM_STATUS_CONTRADICTED"),
+    4: .same(proto: "PLACE_CLAIM_STATUS_EXPIRED"),
+  ]
 }
 
-nonisolated extension Loci_Place_PlaceSubmissionStatus: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0PLACE_SUBMISSION_STATUS_UNSPECIFIED\0\u{1}PLACE_SUBMISSION_STATUS_PENDING\0\u{1}PLACE_SUBMISSION_STATUS_ACCEPTED\0\u{1}PLACE_SUBMISSION_STATUS_REJECTED\0")
+extension Loci_Place_PlaceSubmissionStatus: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "PLACE_SUBMISSION_STATUS_UNSPECIFIED"),
+    1: .same(proto: "PLACE_SUBMISSION_STATUS_PENDING"),
+    2: .same(proto: "PLACE_SUBMISSION_STATUS_ACCEPTED"),
+    3: .same(proto: "PLACE_SUBMISSION_STATUS_REJECTED"),
+  ]
 }
 
-nonisolated extension Loci_Place_PlaceFact: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Place_PlaceFact: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PlaceFact"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}field\0\u{1}value\0\u{1}confidence\0\u{3}contributor_count\0\u{3}verified_at\0\u{3}expires_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "field"),
+    2: .same(proto: "value"),
+    3: .same(proto: "confidence"),
+    4: .standard(proto: "contributor_count"),
+    5: .standard(proto: "verified_at"),
+    6: .standard(proto: "expires_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -632,9 +661,12 @@ nonisolated extension Loci_Place_PlaceFact: SwiftProtobuf.Message, SwiftProtobuf
   }
 }
 
-nonisolated extension Loci_Place_PlaceFacts: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Place_PlaceFacts: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PlaceFacts"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}poi_id\0\u{1}facts\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "poi_id"),
+    2: .same(proto: "facts"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -667,9 +699,11 @@ nonisolated extension Loci_Place_PlaceFacts: SwiftProtobuf.Message, SwiftProtobu
   }
 }
 
-nonisolated extension Loci_Place_GetPlaceFactsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Place_GetPlaceFactsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetPlaceFactsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}poi_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "poi_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -697,9 +731,14 @@ nonisolated extension Loci_Place_GetPlaceFactsRequest: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_Place_VerificationTask: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Place_VerificationTask: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".VerificationTask"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}poi_id\0\u{3}poi_name\0\u{3}requested_fields\0\u{3}oldest_fact_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "poi_id"),
+    2: .standard(proto: "poi_name"),
+    3: .standard(proto: "requested_fields"),
+    4: .standard(proto: "oldest_fact_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -746,9 +785,11 @@ nonisolated extension Loci_Place_VerificationTask: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension Loci_Place_ListVerificationTasksRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Place_ListVerificationTasksRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListVerificationTasksRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}limit\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "limit"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -776,9 +817,11 @@ nonisolated extension Loci_Place_ListVerificationTasksRequest: SwiftProtobuf.Mes
   }
 }
 
-nonisolated extension Loci_Place_ListVerificationTasksResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Place_ListVerificationTasksResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListVerificationTasksResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}tasks\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "tasks"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -806,9 +849,15 @@ nonisolated extension Loci_Place_ListVerificationTasksResponse: SwiftProtobuf.Me
   }
 }
 
-nonisolated extension Loci_Place_SubmitPlaceClaimRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Place_SubmitPlaceClaimRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SubmitPlaceClaimRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}client_claim_id\0\u{3}poi_id\0\u{1}field\0\u{1}value\0\u{3}observed_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "client_claim_id"),
+    2: .standard(proto: "poi_id"),
+    3: .same(proto: "field"),
+    4: .same(proto: "value"),
+    5: .standard(proto: "observed_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -860,9 +909,12 @@ nonisolated extension Loci_Place_SubmitPlaceClaimRequest: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_Place_SubmitPlaceClaimResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Place_SubmitPlaceClaimResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SubmitPlaceClaimResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}claim_id\0\u{1}status\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "claim_id"),
+    2: .same(proto: "status"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -895,9 +947,14 @@ nonisolated extension Loci_Place_SubmitPlaceClaimResponse: SwiftProtobuf.Message
   }
 }
 
-nonisolated extension Loci_Place_ContributorProfile: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Place_ContributorProfile: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ContributorProfile"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}reputation\0\u{3}submitted_claims\0\u{3}accepted_claims\0\u{1}badges\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "reputation"),
+    2: .standard(proto: "submitted_claims"),
+    3: .standard(proto: "accepted_claims"),
+    4: .same(proto: "badges"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -940,7 +997,7 @@ nonisolated extension Loci_Place_ContributorProfile: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_Place_GetMyContributorProfileRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Place_GetMyContributorProfileRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetMyContributorProfileRequest"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
@@ -959,9 +1016,19 @@ nonisolated extension Loci_Place_GetMyContributorProfileRequest: SwiftProtobuf.M
   }
 }
 
-nonisolated extension Loci_Place_SubmitPlaceRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Place_SubmitPlaceRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SubmitPlaceRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}client_submission_id\0\u{1}name\0\u{3}city_name\0\u{1}country\0\u{1}category\0\u{1}latitude\0\u{1}longitude\0\u{1}address\0\u{1}website\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "client_submission_id"),
+    2: .same(proto: "name"),
+    3: .standard(proto: "city_name"),
+    4: .same(proto: "country"),
+    5: .same(proto: "category"),
+    6: .same(proto: "latitude"),
+    7: .same(proto: "longitude"),
+    8: .same(proto: "address"),
+    9: .same(proto: "website"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1033,9 +1100,13 @@ nonisolated extension Loci_Place_SubmitPlaceRequest: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_Place_SubmitPlaceResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Place_SubmitPlaceResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SubmitPlaceResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}submission_id\0\u{1}status\0\u{3}confirmations_needed\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "submission_id"),
+    2: .same(proto: "status"),
+    3: .standard(proto: "confirmations_needed"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1073,9 +1144,11 @@ nonisolated extension Loci_Place_SubmitPlaceResponse: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Place_ConfirmPlaceRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Place_ConfirmPlaceRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ConfirmPlaceRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}submission_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "submission_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1103,9 +1176,13 @@ nonisolated extension Loci_Place_ConfirmPlaceRequest: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Place_ConfirmPlaceResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Place_ConfirmPlaceResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ConfirmPlaceResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}status\0\u{3}confirmations_needed\0\u{3}poi_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "status"),
+    2: .standard(proto: "confirmations_needed"),
+    3: .standard(proto: "poi_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1147,9 +1224,16 @@ nonisolated extension Loci_Place_ConfirmPlaceResponse: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_Place_PendingPlace: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Place_PendingPlace: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PendingPlace"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}submission_id\0\u{1}name\0\u{3}city_name\0\u{1}category\0\u{1}address\0\u{3}confirmations_needed\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "submission_id"),
+    2: .same(proto: "name"),
+    3: .standard(proto: "city_name"),
+    4: .same(proto: "category"),
+    5: .same(proto: "address"),
+    6: .standard(proto: "confirmations_needed"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1206,9 +1290,11 @@ nonisolated extension Loci_Place_PendingPlace: SwiftProtobuf.Message, SwiftProto
   }
 }
 
-nonisolated extension Loci_Place_ListPendingPlacesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Place_ListPendingPlacesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListPendingPlacesRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}limit\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "limit"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1236,9 +1322,11 @@ nonisolated extension Loci_Place_ListPendingPlacesRequest: SwiftProtobuf.Message
   }
 }
 
-nonisolated extension Loci_Place_ListPendingPlacesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Place_ListPendingPlacesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListPendingPlacesResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}places\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "places"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

@@ -15,13 +15,13 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// Metadata about an API key. The plaintext secret is never included.
-public nonisolated struct Loci_Apikey_ApiKey: Sendable {
+public struct Loci_Apikey_ApiKey: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -35,38 +35,38 @@ public nonisolated struct Loci_Apikey_ApiKey: Sendable {
   public var keyPrefix: String = String()
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {self._createdAt != nil}
+  public var hasCreatedAt: Bool {return self._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {self._createdAt = nil}
 
   public var lastUsedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_lastUsedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _lastUsedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_lastUsedAt = newValue}
   }
   /// Returns true if `lastUsedAt` has been explicitly set.
-  public var hasLastUsedAt: Bool {self._lastUsedAt != nil}
+  public var hasLastUsedAt: Bool {return self._lastUsedAt != nil}
   /// Clears the value of `lastUsedAt`. Subsequent reads from it will return its default value.
   public mutating func clearLastUsedAt() {self._lastUsedAt = nil}
 
   public var expiresAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_expiresAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _expiresAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_expiresAt = newValue}
   }
   /// Returns true if `expiresAt` has been explicitly set.
-  public var hasExpiresAt: Bool {self._expiresAt != nil}
+  public var hasExpiresAt: Bool {return self._expiresAt != nil}
   /// Clears the value of `expiresAt`. Subsequent reads from it will return its default value.
   public mutating func clearExpiresAt() {self._expiresAt = nil}
 
   public var revokedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_revokedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _revokedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_revokedAt = newValue}
   }
   /// Returns true if `revokedAt` has been explicitly set.
-  public var hasRevokedAt: Bool {self._revokedAt != nil}
+  public var hasRevokedAt: Bool {return self._revokedAt != nil}
   /// Clears the value of `revokedAt`. Subsequent reads from it will return its default value.
   public mutating func clearRevokedAt() {self._revokedAt = nil}
 
@@ -96,7 +96,7 @@ public nonisolated struct Loci_Apikey_ApiKey: Sendable {
   fileprivate var _revokedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-public nonisolated struct Loci_Apikey_CreateApiKeyRequest: Sendable {
+public struct Loci_Apikey_CreateApiKeyRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -105,11 +105,11 @@ public nonisolated struct Loci_Apikey_CreateApiKeyRequest: Sendable {
 
   /// Optional expiry; omitted means the key does not expire.
   public var expiresAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_expiresAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _expiresAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_expiresAt = newValue}
   }
   /// Returns true if `expiresAt` has been explicitly set.
-  public var hasExpiresAt: Bool {self._expiresAt != nil}
+  public var hasExpiresAt: Bool {return self._expiresAt != nil}
   /// Clears the value of `expiresAt`. Subsequent reads from it will return its default value.
   public mutating func clearExpiresAt() {self._expiresAt = nil}
 
@@ -131,23 +131,23 @@ public nonisolated struct Loci_Apikey_CreateApiKeyRequest: Sendable {
   fileprivate var _expiresAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-public nonisolated struct Loci_Apikey_CreateApiKeyResponse: @unchecked Sendable {
+public struct Loci_Apikey_CreateApiKeyResponse: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var apiKey: Loci_Apikey_ApiKey {
-    get {_storage._apiKey ?? Loci_Apikey_ApiKey()}
+    get {return _storage._apiKey ?? Loci_Apikey_ApiKey()}
     set {_uniqueStorage()._apiKey = newValue}
   }
   /// Returns true if `apiKey` has been explicitly set.
-  public var hasApiKey: Bool {_storage._apiKey != nil}
+  public var hasApiKey: Bool {return _storage._apiKey != nil}
   /// Clears the value of `apiKey`. Subsequent reads from it will return its default value.
   public mutating func clearApiKey() {_uniqueStorage()._apiKey = nil}
 
   /// The full secret key ("loci_sk_..."). Shown once; store it now.
   public var plaintextKey: String {
-    get {_storage._plaintextKey}
+    get {return _storage._plaintextKey}
     set {_uniqueStorage()._plaintextKey = newValue}
   }
 
@@ -159,11 +159,11 @@ public nonisolated struct Loci_Apikey_CreateApiKeyResponse: @unchecked Sendable 
   /// the same text with a placeholder, which is why the page can be opened
   /// repeatedly without a secret crossing the wire.
   public var setup: Loci_Apikey_SetupInstructions {
-    get {_storage._setup ?? Loci_Apikey_SetupInstructions()}
+    get {return _storage._setup ?? Loci_Apikey_SetupInstructions()}
     set {_uniqueStorage()._setup = newValue}
   }
   /// Returns true if `setup` has been explicitly set.
-  public var hasSetup: Bool {_storage._setup != nil}
+  public var hasSetup: Bool {return _storage._setup != nil}
   /// Clears the value of `setup`. Subsequent reads from it will return its default value.
   public mutating func clearSetup() {_uniqueStorage()._setup = nil}
 
@@ -174,7 +174,7 @@ public nonisolated struct Loci_Apikey_CreateApiKeyResponse: @unchecked Sendable 
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-public nonisolated struct Loci_Apikey_ListApiKeysRequest: Sendable {
+public struct Loci_Apikey_ListApiKeysRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -184,7 +184,7 @@ public nonisolated struct Loci_Apikey_ListApiKeysRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Apikey_ListApiKeysResponse: Sendable {
+public struct Loci_Apikey_ListApiKeysResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -196,7 +196,7 @@ public nonisolated struct Loci_Apikey_ListApiKeysResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Apikey_RevokeApiKeyRequest: Sendable {
+public struct Loci_Apikey_RevokeApiKeyRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -208,7 +208,7 @@ public nonisolated struct Loci_Apikey_RevokeApiKeyRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Apikey_RevokeApiKeyResponse: Sendable {
+public struct Loci_Apikey_RevokeApiKeyResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -218,7 +218,7 @@ public nonisolated struct Loci_Apikey_RevokeApiKeyResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Apikey_GetSetupInstructionsRequest: Sendable {
+public struct Loci_Apikey_GetSetupInstructionsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -232,17 +232,17 @@ public nonisolated struct Loci_Apikey_GetSetupInstructionsRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Apikey_GetSetupInstructionsResponse: Sendable {
+public struct Loci_Apikey_GetSetupInstructionsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var instructions: Loci_Apikey_SetupInstructions {
-    get {_instructions ?? Loci_Apikey_SetupInstructions()}
+    get {return _instructions ?? Loci_Apikey_SetupInstructions()}
     set {_instructions = newValue}
   }
   /// Returns true if `instructions` has been explicitly set.
-  public var hasInstructions: Bool {self._instructions != nil}
+  public var hasInstructions: Bool {return self._instructions != nil}
   /// Clears the value of `instructions`. Subsequent reads from it will return its default value.
   public mutating func clearInstructions() {self._instructions = nil}
 
@@ -261,7 +261,7 @@ public nonisolated struct Loci_Apikey_GetSetupInstructionsResponse: Sendable {
 /// environment variable and writes TOML, and a Hermes gateway is configured at a
 /// prompt. Flattening those into one format would mean writing instructions that
 /// are wrong for two of the three.
-public nonisolated struct Loci_Apikey_SetupInstructions: Sendable {
+public struct Loci_Apikey_SetupInstructions: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -313,11 +313,21 @@ public nonisolated struct Loci_Apikey_SetupInstructions: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.apikey"
+fileprivate let _protobuf_package = "loci.apikey"
 
-nonisolated extension Loci_Apikey_ApiKey: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Apikey_ApiKey: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ApiKey"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{3}key_prefix\0\u{3}created_at\0\u{3}last_used_at\0\u{3}expires_at\0\u{3}revoked_at\0\u{1}scopes\0\u{3}client_kind\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "name"),
+    3: .standard(proto: "key_prefix"),
+    4: .standard(proto: "created_at"),
+    5: .standard(proto: "last_used_at"),
+    6: .standard(proto: "expires_at"),
+    7: .standard(proto: "revoked_at"),
+    8: .same(proto: "scopes"),
+    9: .standard(proto: "client_kind"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -389,9 +399,14 @@ nonisolated extension Loci_Apikey_ApiKey: SwiftProtobuf.Message, SwiftProtobuf._
   }
 }
 
-nonisolated extension Loci_Apikey_CreateApiKeyRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Apikey_CreateApiKeyRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreateApiKeyRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0\u{3}expires_at\0\u{1}scopes\0\u{3}client_kind\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "name"),
+    2: .standard(proto: "expires_at"),
+    3: .same(proto: "scopes"),
+    4: .standard(proto: "client_kind"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -438,20 +453,28 @@ nonisolated extension Loci_Apikey_CreateApiKeyRequest: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_Apikey_CreateApiKeyResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Apikey_CreateApiKeyResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreateApiKeyResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}api_key\0\u{3}plaintext_key\0\u{1}setup\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "api_key"),
+    2: .standard(proto: "plaintext_key"),
+    3: .same(proto: "setup"),
+  ]
 
   fileprivate class _StorageClass {
     var _apiKey: Loci_Apikey_ApiKey? = nil
     var _plaintextKey: String = String()
     var _setup: Loci_Apikey_SetupInstructions? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -522,7 +545,7 @@ nonisolated extension Loci_Apikey_CreateApiKeyResponse: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_Apikey_ListApiKeysRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Apikey_ListApiKeysRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListApiKeysRequest"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
@@ -541,9 +564,11 @@ nonisolated extension Loci_Apikey_ListApiKeysRequest: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Apikey_ListApiKeysResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Apikey_ListApiKeysResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListApiKeysResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}api_keys\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "api_keys"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -571,9 +596,11 @@ nonisolated extension Loci_Apikey_ListApiKeysResponse: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_Apikey_RevokeApiKeyRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Apikey_RevokeApiKeyRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RevokeApiKeyRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -601,7 +628,7 @@ nonisolated extension Loci_Apikey_RevokeApiKeyRequest: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_Apikey_RevokeApiKeyResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Apikey_RevokeApiKeyResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RevokeApiKeyResponse"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
@@ -620,9 +647,11 @@ nonisolated extension Loci_Apikey_RevokeApiKeyResponse: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_Apikey_GetSetupInstructionsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Apikey_GetSetupInstructionsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetSetupInstructionsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}client_kind\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "client_kind"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -650,9 +679,11 @@ nonisolated extension Loci_Apikey_GetSetupInstructionsRequest: SwiftProtobuf.Mes
   }
 }
 
-nonisolated extension Loci_Apikey_GetSetupInstructionsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Apikey_GetSetupInstructionsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetSetupInstructionsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}instructions\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "instructions"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -684,9 +715,21 @@ nonisolated extension Loci_Apikey_GetSetupInstructionsResponse: SwiftProtobuf.Me
   }
 }
 
-nonisolated extension Loci_Apikey_SetupInstructions: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Apikey_SetupInstructions: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SetupInstructions"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}client_kind\0\u{1}endpoint\0\u{3}config_label\0\u{3}config_lang\0\u{1}config\0\u{3}safe_label\0\u{3}safe_lang\0\u{1}safe\0\u{3}safe_note\0\u{3}export_line\0\u{1}prompt\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "client_kind"),
+    2: .same(proto: "endpoint"),
+    3: .standard(proto: "config_label"),
+    4: .standard(proto: "config_lang"),
+    5: .same(proto: "config"),
+    6: .standard(proto: "safe_label"),
+    7: .standard(proto: "safe_lang"),
+    8: .same(proto: "safe"),
+    9: .standard(proto: "safe_note"),
+    10: .standard(proto: "export_line"),
+    11: .same(proto: "prompt"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

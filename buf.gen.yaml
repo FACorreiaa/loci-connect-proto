@@ -16,15 +16,16 @@ plugins:
     out: gen
   - remote: buf.build/bufbuild/es:v2.10.1
     out: gen/ts
-  - remote: buf.build/connectrpc/swift
+  - remote: buf.build/connectrpc/swift:v1.2.0
     out: gen/swift
     opt:
       - GenerateAsyncMethods=true
-      - GenerateCallbackMethods=true
+      - GenerateCallbackMethods=false
       - Visibility=Public
-  - remote: buf.build/apple/swift
+  - remote: buf.build/apple/swift:v1.28.2
     out: gen/swift
-    opt: Visibility=Public
+    opt:
+      - Visibility=Public
   # OpenAPI v3.1 spec from the Connect protobufs (source for the Bruno collection).
   - remote: buf.build/community/sudorandom-connect-openapi:v0.25.1
     out: gen/openapi

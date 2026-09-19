@@ -19,34 +19,16 @@ import SwiftProtobuf
 public protocol Loci_Integrations_IntegrationServiceClientInterface: Sendable {
 
     /// ListConnections returns the caller's registered servers, without tokens.
-    @discardableResult
-    func `listConnections`(request: Loci_Integrations_ListConnectionsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Integrations_ListConnectionsResponse>) -> Void) -> Connect.Cancelable
-
-    /// ListConnections returns the caller's registered servers, without tokens.
     @available(iOS 13, *)
     func `listConnections`(request: Loci_Integrations_ListConnectionsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Integrations_ListConnectionsResponse>
-
-    /// Connect registers or replaces one.
-    @discardableResult
-    func `connect`(request: Loci_Integrations_ConnectRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Integrations_ConnectResponse>) -> Void) -> Connect.Cancelable
 
     /// Connect registers or replaces one.
     @available(iOS 13, *)
     func `connect`(request: Loci_Integrations_ConnectRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Integrations_ConnectResponse>
 
     /// Disconnect removes one.
-    @discardableResult
-    func `disconnect`(request: Loci_Integrations_DisconnectRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Integrations_DisconnectResponse>) -> Void) -> Connect.Cancelable
-
-    /// Disconnect removes one.
     @available(iOS 13, *)
     func `disconnect`(request: Loci_Integrations_DisconnectRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Integrations_DisconnectResponse>
-
-    /// TestConnection dials the server and lists its tools, so somebody can see
-    /// it working before it is relied on rather than discovering it was wrong
-    /// through an itinerary that silently lacked their calendar.
-    @discardableResult
-    func `testConnection`(request: Loci_Integrations_TestConnectionRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Integrations_TestConnectionResponse>) -> Void) -> Connect.Cancelable
 
     /// TestConnection dials the server and lists its tools, so somebody can see
     /// it working before it is relied on rather than discovering it was wrong
@@ -63,19 +45,9 @@ public final class Loci_Integrations_IntegrationServiceClient: Loci_Integrations
         self.client = client
     }
 
-    @discardableResult
-    public func `listConnections`(request: Loci_Integrations_ListConnectionsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Integrations_ListConnectionsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.integrations.IntegrationService/ListConnections", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `listConnections`(request: Loci_Integrations_ListConnectionsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Integrations_ListConnectionsResponse> {
         return await self.client.unary(path: "/loci.integrations.IntegrationService/ListConnections", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `connect`(request: Loci_Integrations_ConnectRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Integrations_ConnectResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.integrations.IntegrationService/Connect", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -83,19 +55,9 @@ public final class Loci_Integrations_IntegrationServiceClient: Loci_Integrations
         return await self.client.unary(path: "/loci.integrations.IntegrationService/Connect", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `disconnect`(request: Loci_Integrations_DisconnectRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Integrations_DisconnectResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.integrations.IntegrationService/Disconnect", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `disconnect`(request: Loci_Integrations_DisconnectRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Integrations_DisconnectResponse> {
         return await self.client.unary(path: "/loci.integrations.IntegrationService/Disconnect", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `testConnection`(request: Loci_Integrations_TestConnectionRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Integrations_TestConnectionResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.integrations.IntegrationService/TestConnection", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

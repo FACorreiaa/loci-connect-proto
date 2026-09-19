@@ -13,29 +13,15 @@ import SwiftProtobuf
 public protocol Loci_CustomAuth_CustomAuthServiceClientInterface: Sendable {
 
     /// OAuth authentication
-    @discardableResult
-    func `getOauthURL`(request: Loci_CustomAuth_GetOAuthURLRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_CustomAuth_GetOAuthURLResponse>) -> Void) -> Connect.Cancelable
-
-    /// OAuth authentication
     @available(iOS 13, *)
     func `getOauthURL`(request: Loci_CustomAuth_GetOAuthURLRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_CustomAuth_GetOAuthURLResponse>
-
-    @discardableResult
-    func `oauthCallback`(request: Loci_CustomAuth_OAuthCallbackRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_CustomAuth_OAuthCallbackResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `oauthCallback`(request: Loci_CustomAuth_OAuthCallbackRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_CustomAuth_OAuthCallbackResponse>
 
     /// Phone authentication
-    @discardableResult
-    func `sendPhoneVerification`(request: Loci_CustomAuth_SendPhoneVerificationRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_CustomAuth_SendPhoneVerificationResponse>) -> Void) -> Connect.Cancelable
-
-    /// Phone authentication
     @available(iOS 13, *)
     func `sendPhoneVerification`(request: Loci_CustomAuth_SendPhoneVerificationRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_CustomAuth_SendPhoneVerificationResponse>
-
-    @discardableResult
-    func `verifyPhone`(request: Loci_CustomAuth_VerifyPhoneRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_CustomAuth_VerifyPhoneResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `verifyPhone`(request: Loci_CustomAuth_VerifyPhoneRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_CustomAuth_VerifyPhoneResponse>
@@ -49,19 +35,9 @@ public final class Loci_CustomAuth_CustomAuthServiceClient: Loci_CustomAuth_Cust
         self.client = client
     }
 
-    @discardableResult
-    public func `getOauthURL`(request: Loci_CustomAuth_GetOAuthURLRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_CustomAuth_GetOAuthURLResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.custom_auth.CustomAuthService/GetOAuthURL", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getOauthURL`(request: Loci_CustomAuth_GetOAuthURLRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_CustomAuth_GetOAuthURLResponse> {
         return await self.client.unary(path: "/loci.custom_auth.CustomAuthService/GetOAuthURL", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `oauthCallback`(request: Loci_CustomAuth_OAuthCallbackRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_CustomAuth_OAuthCallbackResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.custom_auth.CustomAuthService/OAuthCallback", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -69,19 +45,9 @@ public final class Loci_CustomAuth_CustomAuthServiceClient: Loci_CustomAuth_Cust
         return await self.client.unary(path: "/loci.custom_auth.CustomAuthService/OAuthCallback", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `sendPhoneVerification`(request: Loci_CustomAuth_SendPhoneVerificationRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_CustomAuth_SendPhoneVerificationResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.custom_auth.CustomAuthService/SendPhoneVerification", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `sendPhoneVerification`(request: Loci_CustomAuth_SendPhoneVerificationRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_CustomAuth_SendPhoneVerificationResponse> {
         return await self.client.unary(path: "/loci.custom_auth.CustomAuthService/SendPhoneVerification", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `verifyPhone`(request: Loci_CustomAuth_VerifyPhoneRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_CustomAuth_VerifyPhoneResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.custom_auth.CustomAuthService/VerifyPhone", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

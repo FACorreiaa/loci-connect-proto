@@ -13,88 +13,44 @@ import SwiftProtobuf
 public protocol Loci_Review_ReviewServiceClientInterface: Sendable {
 
     /// Create a new review
-    @discardableResult
-    func `createReview`(request: Loci_Review_CreateReviewRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Review_CreateReviewResponse>) -> Void) -> Connect.Cancelable
-
-    /// Create a new review
     @available(iOS 13, *)
     func `createReview`(request: Loci_Review_CreateReviewRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Review_CreateReviewResponse>
-
-    /// Get reviews for a POI (deprecated: use GetContentReviews)
-    @discardableResult
-    func `getPoireviews`(request: Loci_Review_GetPOIReviewsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Review_GetPOIReviewsResponse>) -> Void) -> Connect.Cancelable
 
     /// Get reviews for a POI (deprecated: use GetContentReviews)
     @available(iOS 13, *)
     func `getPoireviews`(request: Loci_Review_GetPOIReviewsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Review_GetPOIReviewsResponse>
 
     /// Get reviews for any content type (POI, hotel, restaurant, list, itinerary)
-    @discardableResult
-    func `getContentReviews`(request: Loci_Review_GetContentReviewsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Review_GetContentReviewsResponse>) -> Void) -> Connect.Cancelable
-
-    /// Get reviews for any content type (POI, hotel, restaurant, list, itinerary)
     @available(iOS 13, *)
     func `getContentReviews`(request: Loci_Review_GetContentReviewsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Review_GetContentReviewsResponse>
-
-    /// Get a specific review
-    @discardableResult
-    func `getReview`(request: Loci_Review_GetReviewRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Review_GetReviewResponse>) -> Void) -> Connect.Cancelable
 
     /// Get a specific review
     @available(iOS 13, *)
     func `getReview`(request: Loci_Review_GetReviewRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Review_GetReviewResponse>
 
     /// Update an existing review
-    @discardableResult
-    func `updateReview`(request: Loci_Review_UpdateReviewRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Review_UpdateReviewResponse>) -> Void) -> Connect.Cancelable
-
-    /// Update an existing review
     @available(iOS 13, *)
     func `updateReview`(request: Loci_Review_UpdateReviewRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Review_UpdateReviewResponse>
-
-    /// Delete a review
-    @discardableResult
-    func `deleteReview`(request: Loci_Review_DeleteReviewRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Review_DeleteReviewResponse>) -> Void) -> Connect.Cancelable
 
     /// Delete a review
     @available(iOS 13, *)
     func `deleteReview`(request: Loci_Review_DeleteReviewRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Review_DeleteReviewResponse>
 
     /// Get user's reviews
-    @discardableResult
-    func `getUserReviews`(request: Loci_Review_GetUserReviewsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Review_GetUserReviewsResponse>) -> Void) -> Connect.Cancelable
-
-    /// Get user's reviews
     @available(iOS 13, *)
     func `getUserReviews`(request: Loci_Review_GetUserReviewsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Review_GetUserReviewsResponse>
-
-    /// Like/unlike a review
-    @discardableResult
-    func `likeReview`(request: Loci_Review_LikeReviewRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Review_LikeReviewResponse>) -> Void) -> Connect.Cancelable
 
     /// Like/unlike a review
     @available(iOS 13, *)
     func `likeReview`(request: Loci_Review_LikeReviewRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Review_LikeReviewResponse>
 
     /// Report a review
-    @discardableResult
-    func `reportReview`(request: Loci_Review_ReportReviewRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Review_ReportReviewResponse>) -> Void) -> Connect.Cancelable
-
-    /// Report a review
     @available(iOS 13, *)
     func `reportReview`(request: Loci_Review_ReportReviewRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Review_ReportReviewResponse>
 
     /// Get review statistics for any content type
-    @discardableResult
-    func `getReviewStatistics`(request: Loci_Review_GetReviewStatisticsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Review_GetReviewStatisticsResponse>) -> Void) -> Connect.Cancelable
-
-    /// Get review statistics for any content type
     @available(iOS 13, *)
     func `getReviewStatistics`(request: Loci_Review_GetReviewStatisticsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Review_GetReviewStatisticsResponse>
-
-    /// Get the most recent reviews across all content (global feed)
-    @discardableResult
-    func `getRecentReviews`(request: Loci_Review_GetRecentReviewsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Review_GetRecentReviewsResponse>) -> Void) -> Connect.Cancelable
 
     /// Get the most recent reviews across all content (global feed)
     @available(iOS 13, *)
@@ -109,19 +65,9 @@ public final class Loci_Review_ReviewServiceClient: Loci_Review_ReviewServiceCli
         self.client = client
     }
 
-    @discardableResult
-    public func `createReview`(request: Loci_Review_CreateReviewRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Review_CreateReviewResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.review.ReviewService/CreateReview", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `createReview`(request: Loci_Review_CreateReviewRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Review_CreateReviewResponse> {
         return await self.client.unary(path: "/loci.review.ReviewService/CreateReview", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getPoireviews`(request: Loci_Review_GetPOIReviewsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Review_GetPOIReviewsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.review.ReviewService/GetPOIReviews", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -129,19 +75,9 @@ public final class Loci_Review_ReviewServiceClient: Loci_Review_ReviewServiceCli
         return await self.client.unary(path: "/loci.review.ReviewService/GetPOIReviews", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getContentReviews`(request: Loci_Review_GetContentReviewsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Review_GetContentReviewsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.review.ReviewService/GetContentReviews", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getContentReviews`(request: Loci_Review_GetContentReviewsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Review_GetContentReviewsResponse> {
         return await self.client.unary(path: "/loci.review.ReviewService/GetContentReviews", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getReview`(request: Loci_Review_GetReviewRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Review_GetReviewResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.review.ReviewService/GetReview", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -149,19 +85,9 @@ public final class Loci_Review_ReviewServiceClient: Loci_Review_ReviewServiceCli
         return await self.client.unary(path: "/loci.review.ReviewService/GetReview", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `updateReview`(request: Loci_Review_UpdateReviewRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Review_UpdateReviewResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.review.ReviewService/UpdateReview", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `updateReview`(request: Loci_Review_UpdateReviewRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Review_UpdateReviewResponse> {
         return await self.client.unary(path: "/loci.review.ReviewService/UpdateReview", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `deleteReview`(request: Loci_Review_DeleteReviewRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Review_DeleteReviewResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.review.ReviewService/DeleteReview", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -169,19 +95,9 @@ public final class Loci_Review_ReviewServiceClient: Loci_Review_ReviewServiceCli
         return await self.client.unary(path: "/loci.review.ReviewService/DeleteReview", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getUserReviews`(request: Loci_Review_GetUserReviewsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Review_GetUserReviewsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.review.ReviewService/GetUserReviews", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getUserReviews`(request: Loci_Review_GetUserReviewsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Review_GetUserReviewsResponse> {
         return await self.client.unary(path: "/loci.review.ReviewService/GetUserReviews", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `likeReview`(request: Loci_Review_LikeReviewRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Review_LikeReviewResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.review.ReviewService/LikeReview", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -189,29 +105,14 @@ public final class Loci_Review_ReviewServiceClient: Loci_Review_ReviewServiceCli
         return await self.client.unary(path: "/loci.review.ReviewService/LikeReview", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `reportReview`(request: Loci_Review_ReportReviewRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Review_ReportReviewResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.review.ReviewService/ReportReview", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `reportReview`(request: Loci_Review_ReportReviewRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Review_ReportReviewResponse> {
         return await self.client.unary(path: "/loci.review.ReviewService/ReportReview", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getReviewStatistics`(request: Loci_Review_GetReviewStatisticsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Review_GetReviewStatisticsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.review.ReviewService/GetReviewStatistics", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getReviewStatistics`(request: Loci_Review_GetReviewStatisticsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Review_GetReviewStatisticsResponse> {
         return await self.client.unary(path: "/loci.review.ReviewService/GetReviewStatistics", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getRecentReviews`(request: Loci_Review_GetRecentReviewsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Review_GetRecentReviewsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.review.ReviewService/GetRecentReviews", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

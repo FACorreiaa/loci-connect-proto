@@ -15,13 +15,13 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// Main page statistics (public facing)
-public nonisolated struct Loci_Statistics_MainPageStatistics: Sendable {
+public struct Loci_Statistics_MainPageStatistics: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -39,31 +39,31 @@ public nonisolated struct Loci_Statistics_MainPageStatistics: Sendable {
   public var activeUsersToday: Int64 = 0
 
   public var recentActivity: Loci_Statistics_RecentActivity {
-    get {_recentActivity ?? Loci_Statistics_RecentActivity()}
+    get {return _recentActivity ?? Loci_Statistics_RecentActivity()}
     set {_recentActivity = newValue}
   }
   /// Returns true if `recentActivity` has been explicitly set.
-  public var hasRecentActivity: Bool {self._recentActivity != nil}
+  public var hasRecentActivity: Bool {return self._recentActivity != nil}
   /// Clears the value of `recentActivity`. Subsequent reads from it will return its default value.
   public mutating func clearRecentActivity() {self._recentActivity = nil}
 
   public var popularDestinations: [Loci_Statistics_PopularDestination] = []
 
   public var trendingCategories: Loci_Statistics_TrendingCategories {
-    get {_trendingCategories ?? Loci_Statistics_TrendingCategories()}
+    get {return _trendingCategories ?? Loci_Statistics_TrendingCategories()}
     set {_trendingCategories = newValue}
   }
   /// Returns true if `trendingCategories` has been explicitly set.
-  public var hasTrendingCategories: Bool {self._trendingCategories != nil}
+  public var hasTrendingCategories: Bool {return self._trendingCategories != nil}
   /// Clears the value of `trendingCategories`. Subsequent reads from it will return its default value.
   public mutating func clearTrendingCategories() {self._trendingCategories = nil}
 
   public var lastUpdated: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_lastUpdated ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _lastUpdated ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_lastUpdated = newValue}
   }
   /// Returns true if `lastUpdated` has been explicitly set.
-  public var hasLastUpdated: Bool {self._lastUpdated != nil}
+  public var hasLastUpdated: Bool {return self._lastUpdated != nil}
   /// Clears the value of `lastUpdated`. Subsequent reads from it will return its default value.
   public mutating func clearLastUpdated() {self._lastUpdated = nil}
 
@@ -77,7 +77,7 @@ public nonisolated struct Loci_Statistics_MainPageStatistics: Sendable {
 }
 
 /// Recent activity summary
-public nonisolated struct Loci_Statistics_RecentActivity: Sendable {
+public struct Loci_Statistics_RecentActivity: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -96,7 +96,7 @@ public nonisolated struct Loci_Statistics_RecentActivity: Sendable {
 }
 
 /// Popular destinations
-public nonisolated struct Loci_Statistics_PopularDestination: Sendable {
+public struct Loci_Statistics_PopularDestination: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -119,7 +119,7 @@ public nonisolated struct Loci_Statistics_PopularDestination: Sendable {
 }
 
 /// Trending categories
-public nonisolated struct Loci_Statistics_TrendingCategories: Sendable {
+public struct Loci_Statistics_TrendingCategories: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -134,7 +134,7 @@ public nonisolated struct Loci_Statistics_TrendingCategories: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Statistics_CategoryTrend: Sendable {
+public struct Loci_Statistics_CategoryTrend: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -153,65 +153,65 @@ public nonisolated struct Loci_Statistics_CategoryTrend: Sendable {
 }
 
 /// Detailed POI statistics
-public nonisolated struct Loci_Statistics_DetailedPOIStatistics: @unchecked Sendable {
+public struct Loci_Statistics_DetailedPOIStatistics: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var userID: String {
-    get {_storage._userID}
+    get {return _storage._userID}
     set {_uniqueStorage()._userID = newValue}
   }
 
   public var totalPoiSearches: Int32 {
-    get {_storage._totalPoiSearches}
+    get {return _storage._totalPoiSearches}
     set {_uniqueStorage()._totalPoiSearches = newValue}
   }
 
   public var favoritePoisCount: Int32 {
-    get {_storage._favoritePoisCount}
+    get {return _storage._favoritePoisCount}
     set {_uniqueStorage()._favoritePoisCount = newValue}
   }
 
   public var visitedCitiesCount: Int32 {
-    get {_storage._visitedCitiesCount}
+    get {return _storage._visitedCitiesCount}
     set {_uniqueStorage()._visitedCitiesCount = newValue}
   }
 
   public var topCategories: [String] {
-    get {_storage._topCategories}
+    get {return _storage._topCategories}
     set {_uniqueStorage()._topCategories = newValue}
   }
 
   public var cityInteractions: [Loci_Statistics_CityInteractionStats] {
-    get {_storage._cityInteractions}
+    get {return _storage._cityInteractions}
     set {_uniqueStorage()._cityInteractions = newValue}
   }
 
   public var searchPatterns: Loci_Statistics_SearchPatterns {
-    get {_storage._searchPatterns ?? Loci_Statistics_SearchPatterns()}
+    get {return _storage._searchPatterns ?? Loci_Statistics_SearchPatterns()}
     set {_uniqueStorage()._searchPatterns = newValue}
   }
   /// Returns true if `searchPatterns` has been explicitly set.
-  public var hasSearchPatterns: Bool {_storage._searchPatterns != nil}
+  public var hasSearchPatterns: Bool {return _storage._searchPatterns != nil}
   /// Clears the value of `searchPatterns`. Subsequent reads from it will return its default value.
   public mutating func clearSearchPatterns() {_uniqueStorage()._searchPatterns = nil}
 
   public var timeAnalytics: Loci_Statistics_TimeBasedAnalytics {
-    get {_storage._timeAnalytics ?? Loci_Statistics_TimeBasedAnalytics()}
+    get {return _storage._timeAnalytics ?? Loci_Statistics_TimeBasedAnalytics()}
     set {_uniqueStorage()._timeAnalytics = newValue}
   }
   /// Returns true if `timeAnalytics` has been explicitly set.
-  public var hasTimeAnalytics: Bool {_storage._timeAnalytics != nil}
+  public var hasTimeAnalytics: Bool {return _storage._timeAnalytics != nil}
   /// Clears the value of `timeAnalytics`. Subsequent reads from it will return its default value.
   public mutating func clearTimeAnalytics() {_uniqueStorage()._timeAnalytics = nil}
 
   public var generatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._generatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._generatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._generatedAt = newValue}
   }
   /// Returns true if `generatedAt` has been explicitly set.
-  public var hasGeneratedAt: Bool {_storage._generatedAt != nil}
+  public var hasGeneratedAt: Bool {return _storage._generatedAt != nil}
   /// Clears the value of `generatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearGeneratedAt() {_uniqueStorage()._generatedAt = nil}
 
@@ -223,7 +223,7 @@ public nonisolated struct Loci_Statistics_DetailedPOIStatistics: @unchecked Send
 }
 
 /// City interaction statistics
-public nonisolated struct Loci_Statistics_CityInteractionStats: Sendable {
+public struct Loci_Statistics_CityInteractionStats: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -239,11 +239,11 @@ public nonisolated struct Loci_Statistics_CityInteractionStats: Sendable {
   public var itinerariesCreated: Int32 = 0
 
   public var lastInteraction: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_lastInteraction ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _lastInteraction ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_lastInteraction = newValue}
   }
   /// Returns true if `lastInteraction` has been explicitly set.
-  public var hasLastInteraction: Bool {self._lastInteraction != nil}
+  public var hasLastInteraction: Bool {return self._lastInteraction != nil}
   /// Clears the value of `lastInteraction`. Subsequent reads from it will return its default value.
   public mutating func clearLastInteraction() {self._lastInteraction = nil}
 
@@ -255,7 +255,7 @@ public nonisolated struct Loci_Statistics_CityInteractionStats: Sendable {
 }
 
 /// Search patterns analysis
-public nonisolated struct Loci_Statistics_SearchPatterns: Sendable {
+public struct Loci_Statistics_SearchPatterns: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -278,7 +278,7 @@ public nonisolated struct Loci_Statistics_SearchPatterns: Sendable {
 }
 
 /// Time-based analytics
-public nonisolated struct Loci_Statistics_TimeBasedAnalytics: Sendable {
+public struct Loci_Statistics_TimeBasedAnalytics: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -294,7 +294,7 @@ public nonisolated struct Loci_Statistics_TimeBasedAnalytics: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Statistics_HourlyActivity: Sendable {
+public struct Loci_Statistics_HourlyActivity: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -309,17 +309,17 @@ public nonisolated struct Loci_Statistics_HourlyActivity: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Statistics_DailyActivity: Sendable {
+public struct Loci_Statistics_DailyActivity: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var date: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_date ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _date ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_date = newValue}
   }
   /// Returns true if `date` has been explicitly set.
-  public var hasDate: Bool {self._date != nil}
+  public var hasDate: Bool {return self._date != nil}
   /// Clears the value of `date`. Subsequent reads from it will return its default value.
   public mutating func clearDate() {self._date = nil}
 
@@ -336,7 +336,7 @@ public nonisolated struct Loci_Statistics_DailyActivity: Sendable {
   fileprivate var _date: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-public nonisolated struct Loci_Statistics_MonthlyActivity: Sendable {
+public struct Loci_Statistics_MonthlyActivity: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -355,7 +355,7 @@ public nonisolated struct Loci_Statistics_MonthlyActivity: Sendable {
 }
 
 /// Landing page user statistics
-public nonisolated struct Loci_Statistics_LandingPageUserStats: Sendable {
+public struct Loci_Statistics_LandingPageUserStats: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -373,20 +373,20 @@ public nonisolated struct Loci_Statistics_LandingPageUserStats: Sendable {
   public var recentInteractions: [Loci_Statistics_RecentInteraction] = []
 
   public var recommendations: Loci_Statistics_PersonalizedRecommendations {
-    get {_recommendations ?? Loci_Statistics_PersonalizedRecommendations()}
+    get {return _recommendations ?? Loci_Statistics_PersonalizedRecommendations()}
     set {_recommendations = newValue}
   }
   /// Returns true if `recommendations` has been explicitly set.
-  public var hasRecommendations: Bool {self._recommendations != nil}
+  public var hasRecommendations: Bool {return self._recommendations != nil}
   /// Clears the value of `recommendations`. Subsequent reads from it will return its default value.
   public mutating func clearRecommendations() {self._recommendations = nil}
 
   public var badges: Loci_Statistics_AchievementBadges {
-    get {_badges ?? Loci_Statistics_AchievementBadges()}
+    get {return _badges ?? Loci_Statistics_AchievementBadges()}
     set {_badges = newValue}
   }
   /// Returns true if `badges` has been explicitly set.
-  public var hasBadges: Bool {self._badges != nil}
+  public var hasBadges: Bool {return self._badges != nil}
   /// Clears the value of `badges`. Subsequent reads from it will return its default value.
   public mutating func clearBadges() {self._badges = nil}
 
@@ -401,7 +401,7 @@ public nonisolated struct Loci_Statistics_LandingPageUserStats: Sendable {
 }
 
 /// Recent user interactions
-public nonisolated struct Loci_Statistics_RecentInteraction: Sendable {
+public struct Loci_Statistics_RecentInteraction: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -412,11 +412,11 @@ public nonisolated struct Loci_Statistics_RecentInteraction: Sendable {
   public var description_p: String = String()
 
   public var timestamp: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_timestamp = newValue}
   }
   /// Returns true if `timestamp` has been explicitly set.
-  public var hasTimestamp: Bool {self._timestamp != nil}
+  public var hasTimestamp: Bool {return self._timestamp != nil}
   /// Clears the value of `timestamp`. Subsequent reads from it will return its default value.
   public mutating func clearTimestamp() {self._timestamp = nil}
 
@@ -432,7 +432,7 @@ public nonisolated struct Loci_Statistics_RecentInteraction: Sendable {
 }
 
 /// Personalized recommendations
-public nonisolated struct Loci_Statistics_PersonalizedRecommendations: Sendable {
+public struct Loci_Statistics_PersonalizedRecommendations: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -449,7 +449,7 @@ public nonisolated struct Loci_Statistics_PersonalizedRecommendations: Sendable 
 }
 
 /// Achievement badges
-public nonisolated struct Loci_Statistics_AchievementBadges: Sendable {
+public struct Loci_Statistics_AchievementBadges: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -463,7 +463,7 @@ public nonisolated struct Loci_Statistics_AchievementBadges: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Statistics_Badge: Sendable {
+public struct Loci_Statistics_Badge: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -477,11 +477,11 @@ public nonisolated struct Loci_Statistics_Badge: Sendable {
   public var iconURL: String = String()
 
   public var earnedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_earnedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _earnedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_earnedAt = newValue}
   }
   /// Returns true if `earnedAt` has been explicitly set.
-  public var hasEarnedAt: Bool {self._earnedAt != nil}
+  public var hasEarnedAt: Bool {return self._earnedAt != nil}
   /// Clears the value of `earnedAt`. Subsequent reads from it will return its default value.
   public mutating func clearEarnedAt() {self._earnedAt = nil}
 
@@ -499,71 +499,71 @@ public nonisolated struct Loci_Statistics_Badge: Sendable {
 }
 
 /// System-wide analytics (admin only)
-public nonisolated struct Loci_Statistics_SystemAnalytics: @unchecked Sendable {
+public struct Loci_Statistics_SystemAnalytics: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var userGrowth: Loci_Statistics_UserGrowthMetrics {
-    get {_storage._userGrowth ?? Loci_Statistics_UserGrowthMetrics()}
+    get {return _storage._userGrowth ?? Loci_Statistics_UserGrowthMetrics()}
     set {_uniqueStorage()._userGrowth = newValue}
   }
   /// Returns true if `userGrowth` has been explicitly set.
-  public var hasUserGrowth: Bool {_storage._userGrowth != nil}
+  public var hasUserGrowth: Bool {return _storage._userGrowth != nil}
   /// Clears the value of `userGrowth`. Subsequent reads from it will return its default value.
   public mutating func clearUserGrowth() {_uniqueStorage()._userGrowth = nil}
 
   public var usageMetrics: Loci_Statistics_UsageMetrics {
-    get {_storage._usageMetrics ?? Loci_Statistics_UsageMetrics()}
+    get {return _storage._usageMetrics ?? Loci_Statistics_UsageMetrics()}
     set {_uniqueStorage()._usageMetrics = newValue}
   }
   /// Returns true if `usageMetrics` has been explicitly set.
-  public var hasUsageMetrics: Bool {_storage._usageMetrics != nil}
+  public var hasUsageMetrics: Bool {return _storage._usageMetrics != nil}
   /// Clears the value of `usageMetrics`. Subsequent reads from it will return its default value.
   public mutating func clearUsageMetrics() {_uniqueStorage()._usageMetrics = nil}
 
   public var performanceMetrics: Loci_Statistics_PerformanceMetrics {
-    get {_storage._performanceMetrics ?? Loci_Statistics_PerformanceMetrics()}
+    get {return _storage._performanceMetrics ?? Loci_Statistics_PerformanceMetrics()}
     set {_uniqueStorage()._performanceMetrics = newValue}
   }
   /// Returns true if `performanceMetrics` has been explicitly set.
-  public var hasPerformanceMetrics: Bool {_storage._performanceMetrics != nil}
+  public var hasPerformanceMetrics: Bool {return _storage._performanceMetrics != nil}
   /// Clears the value of `performanceMetrics`. Subsequent reads from it will return its default value.
   public mutating func clearPerformanceMetrics() {_uniqueStorage()._performanceMetrics = nil}
 
   public var errorMetrics: Loci_Statistics_ErrorMetrics {
-    get {_storage._errorMetrics ?? Loci_Statistics_ErrorMetrics()}
+    get {return _storage._errorMetrics ?? Loci_Statistics_ErrorMetrics()}
     set {_uniqueStorage()._errorMetrics = newValue}
   }
   /// Returns true if `errorMetrics` has been explicitly set.
-  public var hasErrorMetrics: Bool {_storage._errorMetrics != nil}
+  public var hasErrorMetrics: Bool {return _storage._errorMetrics != nil}
   /// Clears the value of `errorMetrics`. Subsequent reads from it will return its default value.
   public mutating func clearErrorMetrics() {_uniqueStorage()._errorMetrics = nil}
 
   public var geographicDistribution: Loci_Statistics_GeographicDistribution {
-    get {_storage._geographicDistribution ?? Loci_Statistics_GeographicDistribution()}
+    get {return _storage._geographicDistribution ?? Loci_Statistics_GeographicDistribution()}
     set {_uniqueStorage()._geographicDistribution = newValue}
   }
   /// Returns true if `geographicDistribution` has been explicitly set.
-  public var hasGeographicDistribution: Bool {_storage._geographicDistribution != nil}
+  public var hasGeographicDistribution: Bool {return _storage._geographicDistribution != nil}
   /// Clears the value of `geographicDistribution`. Subsequent reads from it will return its default value.
   public mutating func clearGeographicDistribution() {_uniqueStorage()._geographicDistribution = nil}
 
   public var featureUsage: Loci_Statistics_FeatureUsage {
-    get {_storage._featureUsage ?? Loci_Statistics_FeatureUsage()}
+    get {return _storage._featureUsage ?? Loci_Statistics_FeatureUsage()}
     set {_uniqueStorage()._featureUsage = newValue}
   }
   /// Returns true if `featureUsage` has been explicitly set.
-  public var hasFeatureUsage: Bool {_storage._featureUsage != nil}
+  public var hasFeatureUsage: Bool {return _storage._featureUsage != nil}
   /// Clears the value of `featureUsage`. Subsequent reads from it will return its default value.
   public mutating func clearFeatureUsage() {_uniqueStorage()._featureUsage = nil}
 
   public var generatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._generatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._generatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._generatedAt = newValue}
   }
   /// Returns true if `generatedAt` has been explicitly set.
-  public var hasGeneratedAt: Bool {_storage._generatedAt != nil}
+  public var hasGeneratedAt: Bool {return _storage._generatedAt != nil}
   /// Clears the value of `generatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearGeneratedAt() {_uniqueStorage()._generatedAt = nil}
 
@@ -574,7 +574,7 @@ public nonisolated struct Loci_Statistics_SystemAnalytics: @unchecked Sendable {
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-public nonisolated struct Loci_Statistics_UserGrowthMetrics: Sendable {
+public struct Loci_Statistics_UserGrowthMetrics: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -604,7 +604,7 @@ public nonisolated struct Loci_Statistics_UserGrowthMetrics: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Statistics_UsageMetrics: Sendable {
+public struct Loci_Statistics_UsageMetrics: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -628,7 +628,7 @@ public nonisolated struct Loci_Statistics_UsageMetrics: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Statistics_PerformanceMetrics: Sendable {
+public struct Loci_Statistics_PerformanceMetrics: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -650,7 +650,7 @@ public nonisolated struct Loci_Statistics_PerformanceMetrics: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Statistics_ErrorMetrics: Sendable {
+public struct Loci_Statistics_ErrorMetrics: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -668,7 +668,7 @@ public nonisolated struct Loci_Statistics_ErrorMetrics: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Statistics_ErrorBreakdown: Sendable {
+public struct Loci_Statistics_ErrorBreakdown: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -684,7 +684,7 @@ public nonisolated struct Loci_Statistics_ErrorBreakdown: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Statistics_GeographicDistribution: Sendable {
+public struct Loci_Statistics_GeographicDistribution: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -698,7 +698,7 @@ public nonisolated struct Loci_Statistics_GeographicDistribution: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Statistics_CountryStats: Sendable {
+public struct Loci_Statistics_CountryStats: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -718,7 +718,7 @@ public nonisolated struct Loci_Statistics_CountryStats: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Statistics_CityStats: Sendable {
+public struct Loci_Statistics_CityStats: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -738,7 +738,7 @@ public nonisolated struct Loci_Statistics_CityStats: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Statistics_FeatureUsage: Sendable {
+public struct Loci_Statistics_FeatureUsage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -760,7 +760,7 @@ public nonisolated struct Loci_Statistics_FeatureUsage: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Statistics_FeatureMetric: Sendable {
+public struct Loci_Statistics_FeatureMetric: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -777,23 +777,23 @@ public nonisolated struct Loci_Statistics_FeatureMetric: Sendable {
 }
 
 /// Streaming statistics event
-public nonisolated struct Loci_Statistics_StatisticsEvent: @unchecked Sendable {
+public struct Loci_Statistics_StatisticsEvent: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   /// "update", "metric", "alert"
   public var eventType: String {
-    get {_storage._eventType}
+    get {return _storage._eventType}
     set {_uniqueStorage()._eventType = newValue}
   }
 
   public var timestamp: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._timestamp = newValue}
   }
   /// Returns true if `timestamp` has been explicitly set.
-  public var hasTimestamp: Bool {_storage._timestamp != nil}
+  public var hasTimestamp: Bool {return _storage._timestamp != nil}
   /// Clears the value of `timestamp`. Subsequent reads from it will return its default value.
   public mutating func clearTimestamp() {_uniqueStorage()._timestamp = nil}
 
@@ -828,7 +828,7 @@ public nonisolated struct Loci_Statistics_StatisticsEvent: @unchecked Sendable {
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  public nonisolated enum OneOf_Payload: Equatable, Sendable {
+  public enum OneOf_Payload: Equatable, Sendable {
     case mainStats(Loci_Statistics_MainPageStatistics)
     case metricUpdate(Loci_Statistics_MetricUpdate)
     case systemAlert(Loci_Statistics_SystemAlert)
@@ -840,7 +840,7 @@ public nonisolated struct Loci_Statistics_StatisticsEvent: @unchecked Sendable {
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-public nonisolated struct Loci_Statistics_MetricUpdate: Sendable {
+public struct Loci_Statistics_MetricUpdate: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -859,7 +859,7 @@ public nonisolated struct Loci_Statistics_MetricUpdate: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Statistics_SystemAlert: Sendable {
+public struct Loci_Statistics_SystemAlert: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -880,7 +880,7 @@ public nonisolated struct Loci_Statistics_SystemAlert: Sendable {
 }
 
 /// Request/Response messages
-public nonisolated struct Loci_Statistics_GetMainPageStatisticsRequest: Sendable {
+public struct Loci_Statistics_GetMainPageStatisticsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -895,17 +895,17 @@ public nonisolated struct Loci_Statistics_GetMainPageStatisticsRequest: Sendable
   public init() {}
 }
 
-public nonisolated struct Loci_Statistics_GetMainPageStatisticsResponse: Sendable {
+public struct Loci_Statistics_GetMainPageStatisticsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var statistics: Loci_Statistics_MainPageStatistics {
-    get {_statistics ?? Loci_Statistics_MainPageStatistics()}
+    get {return _statistics ?? Loci_Statistics_MainPageStatistics()}
     set {_statistics = newValue}
   }
   /// Returns true if `statistics` has been explicitly set.
-  public var hasStatistics: Bool {self._statistics != nil}
+  public var hasStatistics: Bool {return self._statistics != nil}
   /// Clears the value of `statistics`. Subsequent reads from it will return its default value.
   public mutating func clearStatistics() {self._statistics = nil}
 
@@ -916,7 +916,7 @@ public nonisolated struct Loci_Statistics_GetMainPageStatisticsResponse: Sendabl
   fileprivate var _statistics: Loci_Statistics_MainPageStatistics? = nil
 }
 
-public nonisolated struct Loci_Statistics_StreamMainPageStatisticsRequest: Sendable {
+public struct Loci_Statistics_StreamMainPageStatisticsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -932,7 +932,7 @@ public nonisolated struct Loci_Statistics_StreamMainPageStatisticsRequest: Senda
   public init() {}
 }
 
-public nonisolated struct Loci_Statistics_GetDetailedPOIStatisticsRequest: Sendable {
+public struct Loci_Statistics_GetDetailedPOIStatisticsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -949,17 +949,17 @@ public nonisolated struct Loci_Statistics_GetDetailedPOIStatisticsRequest: Senda
   public init() {}
 }
 
-public nonisolated struct Loci_Statistics_GetDetailedPOIStatisticsResponse: Sendable {
+public struct Loci_Statistics_GetDetailedPOIStatisticsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var statistics: Loci_Statistics_DetailedPOIStatistics {
-    get {_statistics ?? Loci_Statistics_DetailedPOIStatistics()}
+    get {return _statistics ?? Loci_Statistics_DetailedPOIStatistics()}
     set {_statistics = newValue}
   }
   /// Returns true if `statistics` has been explicitly set.
-  public var hasStatistics: Bool {self._statistics != nil}
+  public var hasStatistics: Bool {return self._statistics != nil}
   /// Clears the value of `statistics`. Subsequent reads from it will return its default value.
   public mutating func clearStatistics() {self._statistics = nil}
 
@@ -972,7 +972,7 @@ public nonisolated struct Loci_Statistics_GetDetailedPOIStatisticsResponse: Send
   fileprivate var _statistics: Loci_Statistics_DetailedPOIStatistics? = nil
 }
 
-public nonisolated struct Loci_Statistics_Prediction: Sendable {
+public struct Loci_Statistics_Prediction: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -990,7 +990,7 @@ public nonisolated struct Loci_Statistics_Prediction: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Statistics_GetLandingPageStatisticsRequest: Sendable {
+public struct Loci_Statistics_GetLandingPageStatisticsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1002,17 +1002,17 @@ public nonisolated struct Loci_Statistics_GetLandingPageStatisticsRequest: Senda
   public init() {}
 }
 
-public nonisolated struct Loci_Statistics_GetLandingPageStatisticsResponse: Sendable {
+public struct Loci_Statistics_GetLandingPageStatisticsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var statistics: Loci_Statistics_LandingPageUserStats {
-    get {_statistics ?? Loci_Statistics_LandingPageUserStats()}
+    get {return _statistics ?? Loci_Statistics_LandingPageUserStats()}
     set {_statistics = newValue}
   }
   /// Returns true if `statistics` has been explicitly set.
-  public var hasStatistics: Bool {self._statistics != nil}
+  public var hasStatistics: Bool {return self._statistics != nil}
   /// Clears the value of `statistics`. Subsequent reads from it will return its default value.
   public mutating func clearStatistics() {self._statistics = nil}
 
@@ -1023,7 +1023,7 @@ public nonisolated struct Loci_Statistics_GetLandingPageStatisticsResponse: Send
   fileprivate var _statistics: Loci_Statistics_LandingPageUserStats? = nil
 }
 
-public nonisolated struct Loci_Statistics_GetUserActivityAnalyticsRequest: Sendable {
+public struct Loci_Statistics_GetUserActivityAnalyticsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1031,20 +1031,20 @@ public nonisolated struct Loci_Statistics_GetUserActivityAnalyticsRequest: Senda
   public var userID: String = String()
 
   public var startDate: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_startDate ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _startDate ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_startDate = newValue}
   }
   /// Returns true if `startDate` has been explicitly set.
-  public var hasStartDate: Bool {self._startDate != nil}
+  public var hasStartDate: Bool {return self._startDate != nil}
   /// Clears the value of `startDate`. Subsequent reads from it will return its default value.
   public mutating func clearStartDate() {self._startDate = nil}
 
   public var endDate: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_endDate ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _endDate ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_endDate = newValue}
   }
   /// Returns true if `endDate` has been explicitly set.
-  public var hasEndDate: Bool {self._endDate != nil}
+  public var hasEndDate: Bool {return self._endDate != nil}
   /// Clears the value of `endDate`. Subsequent reads from it will return its default value.
   public mutating func clearEndDate() {self._endDate = nil}
 
@@ -1059,7 +1059,7 @@ public nonisolated struct Loci_Statistics_GetUserActivityAnalyticsRequest: Senda
   fileprivate var _endDate: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-public nonisolated struct Loci_Statistics_GetUserActivityAnalyticsResponse: Sendable {
+public struct Loci_Statistics_GetUserActivityAnalyticsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1067,11 +1067,11 @@ public nonisolated struct Loci_Statistics_GetUserActivityAnalyticsResponse: Send
   public var activityData: [Loci_Statistics_ActivityDataPoint] = []
 
   public var summary: Loci_Statistics_ActivitySummary {
-    get {_summary ?? Loci_Statistics_ActivitySummary()}
+    get {return _summary ?? Loci_Statistics_ActivitySummary()}
     set {_summary = newValue}
   }
   /// Returns true if `summary` has been explicitly set.
-  public var hasSummary: Bool {self._summary != nil}
+  public var hasSummary: Bool {return self._summary != nil}
   /// Clears the value of `summary`. Subsequent reads from it will return its default value.
   public mutating func clearSummary() {self._summary = nil}
 
@@ -1082,17 +1082,17 @@ public nonisolated struct Loci_Statistics_GetUserActivityAnalyticsResponse: Send
   fileprivate var _summary: Loci_Statistics_ActivitySummary? = nil
 }
 
-public nonisolated struct Loci_Statistics_ActivityDataPoint: Sendable {
+public struct Loci_Statistics_ActivityDataPoint: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var timestamp: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_timestamp = newValue}
   }
   /// Returns true if `timestamp` has been explicitly set.
-  public var hasTimestamp: Bool {self._timestamp != nil}
+  public var hasTimestamp: Bool {return self._timestamp != nil}
   /// Clears the value of `timestamp`. Subsequent reads from it will return its default value.
   public mutating func clearTimestamp() {self._timestamp = nil}
 
@@ -1111,7 +1111,7 @@ public nonisolated struct Loci_Statistics_ActivityDataPoint: Sendable {
   fileprivate var _timestamp: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-public nonisolated struct Loci_Statistics_ActivitySummary: Sendable {
+public struct Loci_Statistics_ActivitySummary: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1131,7 +1131,7 @@ public nonisolated struct Loci_Statistics_ActivitySummary: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Statistics_GetSystemAnalyticsRequest: Sendable {
+public struct Loci_Statistics_GetSystemAnalyticsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1147,17 +1147,17 @@ public nonisolated struct Loci_Statistics_GetSystemAnalyticsRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Statistics_GetSystemAnalyticsResponse: Sendable {
+public struct Loci_Statistics_GetSystemAnalyticsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var analytics: Loci_Statistics_SystemAnalytics {
-    get {_analytics ?? Loci_Statistics_SystemAnalytics()}
+    get {return _analytics ?? Loci_Statistics_SystemAnalytics()}
     set {_analytics = newValue}
   }
   /// Returns true if `analytics` has been explicitly set.
-  public var hasAnalytics: Bool {self._analytics != nil}
+  public var hasAnalytics: Bool {return self._analytics != nil}
   /// Clears the value of `analytics`. Subsequent reads from it will return its default value.
   public mutating func clearAnalytics() {self._analytics = nil}
 
@@ -1170,11 +1170,22 @@ public nonisolated struct Loci_Statistics_GetSystemAnalyticsResponse: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.statistics"
+fileprivate let _protobuf_package = "loci.statistics"
 
-nonisolated extension Loci_Statistics_MainPageStatistics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_MainPageStatistics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".MainPageStatistics"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}total_pois\0\u{3}total_cities\0\u{3}total_users\0\u{3}total_itineraries\0\u{3}total_searches_today\0\u{3}active_users_today\0\u{3}recent_activity\0\u{3}popular_destinations\0\u{3}trending_categories\0\u{3}last_updated\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "total_pois"),
+    2: .standard(proto: "total_cities"),
+    3: .standard(proto: "total_users"),
+    4: .standard(proto: "total_itineraries"),
+    5: .standard(proto: "total_searches_today"),
+    6: .standard(proto: "active_users_today"),
+    7: .standard(proto: "recent_activity"),
+    8: .standard(proto: "popular_destinations"),
+    9: .standard(proto: "trending_categories"),
+    10: .standard(proto: "last_updated"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1251,9 +1262,14 @@ nonisolated extension Loci_Statistics_MainPageStatistics: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_Statistics_RecentActivity: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_RecentActivity: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RecentActivity"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}searches_last_hour\0\u{3}new_users_today\0\u{3}itineraries_created_today\0\u{3}pois_favorited_today\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "searches_last_hour"),
+    2: .standard(proto: "new_users_today"),
+    3: .standard(proto: "itineraries_created_today"),
+    4: .standard(proto: "pois_favorited_today"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1296,9 +1312,16 @@ nonisolated extension Loci_Statistics_RecentActivity: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Statistics_PopularDestination: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_PopularDestination: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PopularDestination"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}city_id\0\u{3}city_name\0\u{1}country\0\u{3}search_count\0\u{3}user_count\0\u{3}growth_percentage\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "city_id"),
+    2: .standard(proto: "city_name"),
+    3: .same(proto: "country"),
+    4: .standard(proto: "search_count"),
+    5: .standard(proto: "user_count"),
+    6: .standard(proto: "growth_percentage"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1351,9 +1374,12 @@ nonisolated extension Loci_Statistics_PopularDestination: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_Statistics_TrendingCategories: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_TrendingCategories: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".TrendingCategories"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}categories\0\u{3}time_period\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "categories"),
+    2: .standard(proto: "time_period"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1386,9 +1412,14 @@ nonisolated extension Loci_Statistics_TrendingCategories: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_Statistics_CategoryTrend: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_CategoryTrend: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CategoryTrend"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}category\0\u{3}search_count\0\u{3}growth_percentage\0\u{1}rank\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "category"),
+    2: .standard(proto: "search_count"),
+    3: .standard(proto: "growth_percentage"),
+    4: .same(proto: "rank"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1431,9 +1462,19 @@ nonisolated extension Loci_Statistics_CategoryTrend: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_Statistics_DetailedPOIStatistics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_DetailedPOIStatistics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DetailedPOIStatistics"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}total_poi_searches\0\u{3}favorite_pois_count\0\u{3}visited_cities_count\0\u{3}top_categories\0\u{3}city_interactions\0\u{3}search_patterns\0\u{3}time_analytics\0\u{3}generated_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "total_poi_searches"),
+    3: .standard(proto: "favorite_pois_count"),
+    4: .standard(proto: "visited_cities_count"),
+    5: .standard(proto: "top_categories"),
+    6: .standard(proto: "city_interactions"),
+    7: .standard(proto: "search_patterns"),
+    8: .standard(proto: "time_analytics"),
+    9: .standard(proto: "generated_at"),
+  ]
 
   fileprivate class _StorageClass {
     var _userID: String = String()
@@ -1446,11 +1487,15 @@ nonisolated extension Loci_Statistics_DetailedPOIStatistics: SwiftProtobuf.Messa
     var _timeAnalytics: Loci_Statistics_TimeBasedAnalytics? = nil
     var _generatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -1557,9 +1602,16 @@ nonisolated extension Loci_Statistics_DetailedPOIStatistics: SwiftProtobuf.Messa
   }
 }
 
-nonisolated extension Loci_Statistics_CityInteractionStats: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_CityInteractionStats: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CityInteractionStats"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}city_id\0\u{3}city_name\0\u{3}search_count\0\u{3}pois_favorited\0\u{3}itineraries_created\0\u{3}last_interaction\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "city_id"),
+    2: .standard(proto: "city_name"),
+    3: .standard(proto: "search_count"),
+    4: .standard(proto: "pois_favorited"),
+    5: .standard(proto: "itineraries_created"),
+    6: .standard(proto: "last_interaction"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1616,9 +1668,16 @@ nonisolated extension Loci_Statistics_CityInteractionStats: SwiftProtobuf.Messag
   }
 }
 
-nonisolated extension Loci_Statistics_SearchPatterns: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_SearchPatterns: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SearchPatterns"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}frequent_keywords\0\u{3}preferred_categories\0\u{3}preferred_price_range\0\u{3}average_search_radius\0\u{3}most_active_time_of_day\0\u{3}most_active_day_of_week\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "frequent_keywords"),
+    2: .standard(proto: "preferred_categories"),
+    3: .standard(proto: "preferred_price_range"),
+    4: .standard(proto: "average_search_radius"),
+    5: .standard(proto: "most_active_time_of_day"),
+    6: .standard(proto: "most_active_day_of_week"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1671,9 +1730,13 @@ nonisolated extension Loci_Statistics_SearchPatterns: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Statistics_TimeBasedAnalytics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_TimeBasedAnalytics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".TimeBasedAnalytics"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}hourly_activity\0\u{3}daily_activity\0\u{3}monthly_activity\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "hourly_activity"),
+    2: .standard(proto: "daily_activity"),
+    3: .standard(proto: "monthly_activity"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1711,9 +1774,12 @@ nonisolated extension Loci_Statistics_TimeBasedAnalytics: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_Statistics_HourlyActivity: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_HourlyActivity: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".HourlyActivity"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}hour\0\u{3}activity_count\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "hour"),
+    2: .standard(proto: "activity_count"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1746,9 +1812,14 @@ nonisolated extension Loci_Statistics_HourlyActivity: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Statistics_DailyActivity: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_DailyActivity: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DailyActivity"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}date\0\u{1}searches\0\u{3}favorites_added\0\u{3}itineraries_created\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "date"),
+    2: .same(proto: "searches"),
+    3: .standard(proto: "favorites_added"),
+    4: .standard(proto: "itineraries_created"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1795,9 +1866,14 @@ nonisolated extension Loci_Statistics_DailyActivity: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_Statistics_MonthlyActivity: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_MonthlyActivity: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".MonthlyActivity"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}year\0\u{1}month\0\u{3}total_activity\0\u{3}growth_percentage\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "year"),
+    2: .same(proto: "month"),
+    3: .standard(proto: "total_activity"),
+    4: .standard(proto: "growth_percentage"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1840,9 +1916,19 @@ nonisolated extension Loci_Statistics_MonthlyActivity: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_Statistics_LandingPageUserStats: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_LandingPageUserStats: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".LandingPageUserStats"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}searches_this_week\0\u{3}new_favorites_this_week\0\u{3}itineraries_created_this_month\0\u{3}recently_searched_cities\0\u{3}recent_interactions\0\u{1}recommendations\0\u{1}badges\0\u{3}cities_explored\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "searches_this_week"),
+    3: .standard(proto: "new_favorites_this_week"),
+    4: .standard(proto: "itineraries_created_this_month"),
+    5: .standard(proto: "recently_searched_cities"),
+    6: .standard(proto: "recent_interactions"),
+    7: .same(proto: "recommendations"),
+    8: .same(proto: "badges"),
+    9: .standard(proto: "cities_explored"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1914,9 +2000,15 @@ nonisolated extension Loci_Statistics_LandingPageUserStats: SwiftProtobuf.Messag
   }
 }
 
-nonisolated extension Loci_Statistics_RecentInteraction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_RecentInteraction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RecentInteraction"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}type\0\u{1}description\0\u{1}timestamp\0\u{3}city_name\0\u{1}metadata\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "type"),
+    2: .same(proto: "description"),
+    3: .same(proto: "timestamp"),
+    4: .standard(proto: "city_name"),
+    5: .same(proto: "metadata"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1968,9 +2060,13 @@ nonisolated extension Loci_Statistics_RecentInteraction: SwiftProtobuf.Message, 
   }
 }
 
-nonisolated extension Loci_Statistics_PersonalizedRecommendations: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_PersonalizedRecommendations: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PersonalizedRecommendations"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}suggested_cities\0\u{3}suggested_categories\0\u{3}recommendation_reason\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "suggested_cities"),
+    2: .standard(proto: "suggested_categories"),
+    3: .standard(proto: "recommendation_reason"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2008,9 +2104,12 @@ nonisolated extension Loci_Statistics_PersonalizedRecommendations: SwiftProtobuf
   }
 }
 
-nonisolated extension Loci_Statistics_AchievementBadges: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_AchievementBadges: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".AchievementBadges"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}earned_badges\0\u{3}available_badges\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "earned_badges"),
+    2: .standard(proto: "available_badges"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2043,9 +2142,17 @@ nonisolated extension Loci_Statistics_AchievementBadges: SwiftProtobuf.Message, 
   }
 }
 
-nonisolated extension Loci_Statistics_Badge: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_Badge: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Badge"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{1}description\0\u{3}icon_url\0\u{3}earned_at\0\u{1}progress\0\u{1}target\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "name"),
+    3: .same(proto: "description"),
+    4: .standard(proto: "icon_url"),
+    5: .standard(proto: "earned_at"),
+    6: .same(proto: "progress"),
+    7: .same(proto: "target"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2107,9 +2214,17 @@ nonisolated extension Loci_Statistics_Badge: SwiftProtobuf.Message, SwiftProtobu
   }
 }
 
-nonisolated extension Loci_Statistics_SystemAnalytics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_SystemAnalytics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SystemAnalytics"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_growth\0\u{3}usage_metrics\0\u{3}performance_metrics\0\u{3}error_metrics\0\u{3}geographic_distribution\0\u{3}feature_usage\0\u{3}generated_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_growth"),
+    2: .standard(proto: "usage_metrics"),
+    3: .standard(proto: "performance_metrics"),
+    4: .standard(proto: "error_metrics"),
+    5: .standard(proto: "geographic_distribution"),
+    6: .standard(proto: "feature_usage"),
+    7: .standard(proto: "generated_at"),
+  ]
 
   fileprivate class _StorageClass {
     var _userGrowth: Loci_Statistics_UserGrowthMetrics? = nil
@@ -2120,11 +2235,15 @@ nonisolated extension Loci_Statistics_SystemAnalytics: SwiftProtobuf.Message, Sw
     var _featureUsage: Loci_Statistics_FeatureUsage? = nil
     var _generatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -2219,9 +2338,20 @@ nonisolated extension Loci_Statistics_SystemAnalytics: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_Statistics_UserGrowthMetrics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_UserGrowthMetrics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UserGrowthMetrics"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}total_users\0\u{3}new_users_today\0\u{3}new_users_this_week\0\u{3}new_users_this_month\0\u{3}growth_rate_weekly\0\u{3}growth_rate_monthly\0\u{3}active_users_today\0\u{3}active_users_this_week\0\u{3}retention_rate_weekly\0\u{3}retention_rate_monthly\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "total_users"),
+    2: .standard(proto: "new_users_today"),
+    3: .standard(proto: "new_users_this_week"),
+    4: .standard(proto: "new_users_this_month"),
+    5: .standard(proto: "growth_rate_weekly"),
+    6: .standard(proto: "growth_rate_monthly"),
+    7: .standard(proto: "active_users_today"),
+    8: .standard(proto: "active_users_this_week"),
+    9: .standard(proto: "retention_rate_weekly"),
+    10: .standard(proto: "retention_rate_monthly"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2294,9 +2424,17 @@ nonisolated extension Loci_Statistics_UserGrowthMetrics: SwiftProtobuf.Message, 
   }
 }
 
-nonisolated extension Loci_Statistics_UsageMetrics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_UsageMetrics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UsageMetrics"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}total_searches\0\u{3}searches_today\0\u{3}searches_this_week\0\u{3}average_searches_per_user\0\u{3}total_api_calls\0\u{3}average_response_time_ms\0\u{3}peak_concurrent_users\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "total_searches"),
+    2: .standard(proto: "searches_today"),
+    3: .standard(proto: "searches_this_week"),
+    4: .standard(proto: "average_searches_per_user"),
+    5: .standard(proto: "total_api_calls"),
+    6: .standard(proto: "average_response_time_ms"),
+    7: .standard(proto: "peak_concurrent_users"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2354,9 +2492,16 @@ nonisolated extension Loci_Statistics_UsageMetrics: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_Statistics_PerformanceMetrics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_PerformanceMetrics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PerformanceMetrics"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}cpu_usage_percentage\0\u{3}memory_usage_percentage\0\u{3}disk_usage_percentage\0\u{3}active_database_connections\0\u{3}average_db_query_time_ms\0\u{3}cache_hit_rate_percentage\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "cpu_usage_percentage"),
+    2: .standard(proto: "memory_usage_percentage"),
+    3: .standard(proto: "disk_usage_percentage"),
+    4: .standard(proto: "active_database_connections"),
+    5: .standard(proto: "average_db_query_time_ms"),
+    6: .standard(proto: "cache_hit_rate_percentage"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2409,9 +2554,14 @@ nonisolated extension Loci_Statistics_PerformanceMetrics: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_Statistics_ErrorMetrics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_ErrorMetrics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ErrorMetrics"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}total_errors_today\0\u{3}total_errors_this_week\0\u{3}error_rate_percentage\0\u{3}error_breakdown\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "total_errors_today"),
+    2: .standard(proto: "total_errors_this_week"),
+    3: .standard(proto: "error_rate_percentage"),
+    4: .standard(proto: "error_breakdown"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2454,9 +2604,13 @@ nonisolated extension Loci_Statistics_ErrorMetrics: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_Statistics_ErrorBreakdown: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_ErrorBreakdown: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ErrorBreakdown"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}error_type\0\u{1}count\0\u{1}percentage\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "error_type"),
+    2: .same(proto: "count"),
+    3: .same(proto: "percentage"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2494,9 +2648,12 @@ nonisolated extension Loci_Statistics_ErrorBreakdown: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Statistics_GeographicDistribution: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_GeographicDistribution: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GeographicDistribution"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}country_stats\0\u{3}city_stats\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "country_stats"),
+    2: .standard(proto: "city_stats"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2529,9 +2686,15 @@ nonisolated extension Loci_Statistics_GeographicDistribution: SwiftProtobuf.Mess
   }
 }
 
-nonisolated extension Loci_Statistics_CountryStats: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_CountryStats: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CountryStats"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}country_code\0\u{3}country_name\0\u{3}user_count\0\u{3}search_count\0\u{3}percentage_of_total\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "country_code"),
+    2: .standard(proto: "country_name"),
+    3: .standard(proto: "user_count"),
+    4: .standard(proto: "search_count"),
+    5: .standard(proto: "percentage_of_total"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2579,9 +2742,15 @@ nonisolated extension Loci_Statistics_CountryStats: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_Statistics_CityStats: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_CityStats: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CityStats"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}city_id\0\u{3}city_name\0\u{3}search_count\0\u{3}poi_count\0\u{3}popularity_score\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "city_id"),
+    2: .standard(proto: "city_name"),
+    3: .standard(proto: "search_count"),
+    4: .standard(proto: "poi_count"),
+    5: .standard(proto: "popularity_score"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2629,9 +2798,16 @@ nonisolated extension Loci_Statistics_CityStats: SwiftProtobuf.Message, SwiftPro
   }
 }
 
-nonisolated extension Loci_Statistics_FeatureUsage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_FeatureUsage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".FeatureUsage"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}semantic_searches\0\u{3}favorites_added\0\u{3}itineraries_created\0\u{3}lists_created\0\u{3}chat_sessions\0\u{3}feature_metrics\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "semantic_searches"),
+    2: .standard(proto: "favorites_added"),
+    3: .standard(proto: "itineraries_created"),
+    4: .standard(proto: "lists_created"),
+    5: .standard(proto: "chat_sessions"),
+    6: .standard(proto: "feature_metrics"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2684,9 +2860,13 @@ nonisolated extension Loci_Statistics_FeatureUsage: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_Statistics_FeatureMetric: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_FeatureMetric: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".FeatureMetric"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}feature_name\0\u{3}usage_count\0\u{3}adoption_rate\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "feature_name"),
+    2: .standard(proto: "usage_count"),
+    3: .standard(proto: "adoption_rate"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2724,20 +2904,30 @@ nonisolated extension Loci_Statistics_FeatureMetric: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_Statistics_StatisticsEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_StatisticsEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".StatisticsEvent"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}event_type\0\u{1}timestamp\0\u{3}main_stats\0\u{3}metric_update\0\u{3}system_alert\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "event_type"),
+    2: .same(proto: "timestamp"),
+    3: .standard(proto: "main_stats"),
+    4: .standard(proto: "metric_update"),
+    5: .standard(proto: "system_alert"),
+  ]
 
   fileprivate class _StorageClass {
     var _eventType: String = String()
     var _timestamp: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _payload: Loci_Statistics_StatisticsEvent.OneOf_Payload?
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -2858,9 +3048,14 @@ nonisolated extension Loci_Statistics_StatisticsEvent: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_Statistics_MetricUpdate: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_MetricUpdate: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".MetricUpdate"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}metric_name\0\u{1}value\0\u{3}change_type\0\u{3}previous_value\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "metric_name"),
+    2: .same(proto: "value"),
+    3: .standard(proto: "change_type"),
+    4: .standard(proto: "previous_value"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2903,9 +3098,14 @@ nonisolated extension Loci_Statistics_MetricUpdate: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_Statistics_SystemAlert: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_SystemAlert: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SystemAlert"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}alert_type\0\u{1}message\0\u{1}severity\0\u{1}details\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "alert_type"),
+    2: .same(proto: "message"),
+    3: .same(proto: "severity"),
+    4: .same(proto: "details"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2948,9 +3148,12 @@ nonisolated extension Loci_Statistics_SystemAlert: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension Loci_Statistics_GetMainPageStatisticsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_GetMainPageStatisticsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetMainPageStatisticsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}include_trends\0\u{3}time_range\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "include_trends"),
+    2: .standard(proto: "time_range"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2983,9 +3186,11 @@ nonisolated extension Loci_Statistics_GetMainPageStatisticsRequest: SwiftProtobu
   }
 }
 
-nonisolated extension Loci_Statistics_GetMainPageStatisticsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_GetMainPageStatisticsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetMainPageStatisticsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}statistics\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "statistics"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3017,9 +3222,12 @@ nonisolated extension Loci_Statistics_GetMainPageStatisticsResponse: SwiftProtob
   }
 }
 
-nonisolated extension Loci_Statistics_StreamMainPageStatisticsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_StreamMainPageStatisticsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".StreamMainPageStatisticsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}update_interval_seconds\0\u{3}metric_filters\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "update_interval_seconds"),
+    2: .standard(proto: "metric_filters"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3052,9 +3260,13 @@ nonisolated extension Loci_Statistics_StreamMainPageStatisticsRequest: SwiftProt
   }
 }
 
-nonisolated extension Loci_Statistics_GetDetailedPOIStatisticsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_GetDetailedPOIStatisticsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetDetailedPOIStatisticsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}time_range\0\u{3}include_predictions\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "time_range"),
+    3: .standard(proto: "include_predictions"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3092,9 +3304,12 @@ nonisolated extension Loci_Statistics_GetDetailedPOIStatisticsRequest: SwiftProt
   }
 }
 
-nonisolated extension Loci_Statistics_GetDetailedPOIStatisticsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_GetDetailedPOIStatisticsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetDetailedPOIStatisticsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}statistics\0\u{1}predictions\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "statistics"),
+    2: .same(proto: "predictions"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3131,9 +3346,14 @@ nonisolated extension Loci_Statistics_GetDetailedPOIStatisticsResponse: SwiftPro
   }
 }
 
-nonisolated extension Loci_Statistics_Prediction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_Prediction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Prediction"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}metric\0\u{3}predicted_value\0\u{3}confidence_level\0\u{3}time_horizon\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "metric"),
+    2: .standard(proto: "predicted_value"),
+    3: .standard(proto: "confidence_level"),
+    4: .standard(proto: "time_horizon"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3176,9 +3396,11 @@ nonisolated extension Loci_Statistics_Prediction: SwiftProtobuf.Message, SwiftPr
   }
 }
 
-nonisolated extension Loci_Statistics_GetLandingPageStatisticsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_GetLandingPageStatisticsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetLandingPageStatisticsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3206,9 +3428,11 @@ nonisolated extension Loci_Statistics_GetLandingPageStatisticsRequest: SwiftProt
   }
 }
 
-nonisolated extension Loci_Statistics_GetLandingPageStatisticsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_GetLandingPageStatisticsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetLandingPageStatisticsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}statistics\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "statistics"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3240,9 +3464,14 @@ nonisolated extension Loci_Statistics_GetLandingPageStatisticsResponse: SwiftPro
   }
 }
 
-nonisolated extension Loci_Statistics_GetUserActivityAnalyticsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_GetUserActivityAnalyticsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetUserActivityAnalyticsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}start_date\0\u{3}end_date\0\u{1}granularity\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "start_date"),
+    3: .standard(proto: "end_date"),
+    4: .same(proto: "granularity"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3289,9 +3518,12 @@ nonisolated extension Loci_Statistics_GetUserActivityAnalyticsRequest: SwiftProt
   }
 }
 
-nonisolated extension Loci_Statistics_GetUserActivityAnalyticsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_GetUserActivityAnalyticsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetUserActivityAnalyticsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}activity_data\0\u{1}summary\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "activity_data"),
+    2: .same(proto: "summary"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3328,9 +3560,15 @@ nonisolated extension Loci_Statistics_GetUserActivityAnalyticsResponse: SwiftPro
   }
 }
 
-nonisolated extension Loci_Statistics_ActivityDataPoint: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_ActivityDataPoint: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ActivityDataPoint"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}timestamp\0\u{1}searches\0\u{1}favorites\0\u{3}itinerary_actions\0\u{3}chat_messages\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "timestamp"),
+    2: .same(proto: "searches"),
+    3: .same(proto: "favorites"),
+    4: .standard(proto: "itinerary_actions"),
+    5: .standard(proto: "chat_messages"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3382,9 +3620,15 @@ nonisolated extension Loci_Statistics_ActivityDataPoint: SwiftProtobuf.Message, 
   }
 }
 
-nonisolated extension Loci_Statistics_ActivitySummary: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_ActivitySummary: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ActivitySummary"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}total_searches\0\u{3}total_favorites\0\u{3}total_itinerary_actions\0\u{3}most_active_hour\0\u{3}most_active_day\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "total_searches"),
+    2: .standard(proto: "total_favorites"),
+    3: .standard(proto: "total_itinerary_actions"),
+    4: .standard(proto: "most_active_hour"),
+    5: .standard(proto: "most_active_day"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3432,9 +3676,12 @@ nonisolated extension Loci_Statistics_ActivitySummary: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_Statistics_GetSystemAnalyticsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_GetSystemAnalyticsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetSystemAnalyticsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}time_range\0\u{3}metric_categories\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "time_range"),
+    2: .standard(proto: "metric_categories"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3467,9 +3714,11 @@ nonisolated extension Loci_Statistics_GetSystemAnalyticsRequest: SwiftProtobuf.M
   }
 }
 
-nonisolated extension Loci_Statistics_GetSystemAnalyticsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Statistics_GetSystemAnalyticsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetSystemAnalyticsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}analytics\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "analytics"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

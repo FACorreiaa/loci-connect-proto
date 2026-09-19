@@ -11,31 +11,16 @@ import SwiftProtobuf
 
 public protocol Loci_Localcontext_LocalContextServiceClientInterface: Sendable {
 
-    @discardableResult
-    func `getLocalContext`(request: Loci_Localcontext_GetLocalContextRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Localcontext_LocalContext>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `getLocalContext`(request: Loci_Localcontext_GetLocalContextRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Localcontext_LocalContext>
-
-    /// GetGoScore answers "should I go this weekend?" for one destination.
-    @discardableResult
-    func `getGoScore`(request: Loci_Localcontext_GetGoScoreRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Localcontext_GetGoScoreResponse>) -> Void) -> Connect.Cancelable
 
     /// GetGoScore answers "should I go this weekend?" for one destination.
     @available(iOS 13, *)
     func `getGoScore`(request: Loci_Localcontext_GetGoScoreRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Localcontext_GetGoScoreResponse>
 
     /// GetFxRates answers "what is my money worth there?".
-    @discardableResult
-    func `getFxRates`(request: Loci_Localcontext_GetFxRatesRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Localcontext_GetFxRatesResponse>) -> Void) -> Connect.Cancelable
-
-    /// GetFxRates answers "what is my money worth there?".
     @available(iOS 13, *)
     func `getFxRates`(request: Loci_Localcontext_GetFxRatesRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Localcontext_GetFxRatesResponse>
-
-    /// EstimateDriveCost prices the fuel for a driving leg.
-    @discardableResult
-    func `estimateDriveCost`(request: Loci_Localcontext_EstimateDriveCostRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Localcontext_EstimateDriveCostResponse>) -> Void) -> Connect.Cancelable
 
     /// EstimateDriveCost prices the fuel for a driving leg.
     @available(iOS 13, *)
@@ -43,17 +28,8 @@ public protocol Loci_Localcontext_LocalContextServiceClientInterface: Sendable {
 
     /// GetNewsTicker is the breaking-news strip for the signed-in traveller:
     /// headlines for their home country, next destination and recent visits.
-    @discardableResult
-    func `getNewsTicker`(request: Loci_Localcontext_GetNewsTickerRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Localcontext_GetNewsTickerResponse>) -> Void) -> Connect.Cancelable
-
-    /// GetNewsTicker is the breaking-news strip for the signed-in traveller:
-    /// headlines for their home country, next destination and recent visits.
     @available(iOS 13, *)
     func `getNewsTicker`(request: Loci_Localcontext_GetNewsTickerRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Localcontext_GetNewsTickerResponse>
-
-    /// SetNewsTickerEnabled is the per-user switch for that strip.
-    @discardableResult
-    func `setNewsTickerEnabled`(request: Loci_Localcontext_SetNewsTickerEnabledRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Localcontext_SetNewsTickerEnabledResponse>) -> Void) -> Connect.Cancelable
 
     /// SetNewsTickerEnabled is the per-user switch for that strip.
     @available(iOS 13, *)
@@ -68,19 +44,9 @@ public final class Loci_Localcontext_LocalContextServiceClient: Loci_Localcontex
         self.client = client
     }
 
-    @discardableResult
-    public func `getLocalContext`(request: Loci_Localcontext_GetLocalContextRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Localcontext_LocalContext>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.localcontext.LocalContextService/GetLocalContext", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getLocalContext`(request: Loci_Localcontext_GetLocalContextRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Localcontext_LocalContext> {
         return await self.client.unary(path: "/loci.localcontext.LocalContextService/GetLocalContext", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getGoScore`(request: Loci_Localcontext_GetGoScoreRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Localcontext_GetGoScoreResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.localcontext.LocalContextService/GetGoScore", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -88,19 +54,9 @@ public final class Loci_Localcontext_LocalContextServiceClient: Loci_Localcontex
         return await self.client.unary(path: "/loci.localcontext.LocalContextService/GetGoScore", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getFxRates`(request: Loci_Localcontext_GetFxRatesRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Localcontext_GetFxRatesResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.localcontext.LocalContextService/GetFxRates", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getFxRates`(request: Loci_Localcontext_GetFxRatesRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Localcontext_GetFxRatesResponse> {
         return await self.client.unary(path: "/loci.localcontext.LocalContextService/GetFxRates", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `estimateDriveCost`(request: Loci_Localcontext_EstimateDriveCostRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Localcontext_EstimateDriveCostResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.localcontext.LocalContextService/EstimateDriveCost", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -108,19 +64,9 @@ public final class Loci_Localcontext_LocalContextServiceClient: Loci_Localcontex
         return await self.client.unary(path: "/loci.localcontext.LocalContextService/EstimateDriveCost", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getNewsTicker`(request: Loci_Localcontext_GetNewsTickerRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Localcontext_GetNewsTickerResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.localcontext.LocalContextService/GetNewsTicker", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getNewsTicker`(request: Loci_Localcontext_GetNewsTickerRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Localcontext_GetNewsTickerResponse> {
         return await self.client.unary(path: "/loci.localcontext.LocalContextService/GetNewsTicker", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `setNewsTickerEnabled`(request: Loci_Localcontext_SetNewsTickerEnabledRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Localcontext_SetNewsTickerEnabledResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.localcontext.LocalContextService/SetNewsTickerEnabled", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

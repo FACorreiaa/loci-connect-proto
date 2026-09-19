@@ -15,13 +15,13 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// OAuthProvider enum for supported OAuth providers
-public nonisolated enum Loci_CustomAuth_OAuthProvider: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_CustomAuth_OAuthProvider: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case google // = 1
@@ -60,7 +60,7 @@ public nonisolated enum Loci_CustomAuth_OAuthProvider: SwiftProtobuf.Enum, Swift
 }
 
 /// GetOAuthURLRequest for initiating OAuth flow
-public nonisolated struct Loci_CustomAuth_GetOAuthURLRequest: Sendable {
+public struct Loci_CustomAuth_GetOAuthURLRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -75,7 +75,7 @@ public nonisolated struct Loci_CustomAuth_GetOAuthURLRequest: Sendable {
 }
 
 /// GetOAuthURLResponse returns the OAuth authorization URL
-public nonisolated struct Loci_CustomAuth_GetOAuthURLResponse: Sendable {
+public struct Loci_CustomAuth_GetOAuthURLResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -90,7 +90,7 @@ public nonisolated struct Loci_CustomAuth_GetOAuthURLResponse: Sendable {
 }
 
 /// OAuthCallbackRequest for handling OAuth callback
-public nonisolated struct Loci_CustomAuth_OAuthCallbackRequest: Sendable {
+public struct Loci_CustomAuth_OAuthCallbackRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -107,7 +107,7 @@ public nonisolated struct Loci_CustomAuth_OAuthCallbackRequest: Sendable {
 }
 
 /// OAuthCallbackResponse returns tokens after OAuth authentication
-public nonisolated struct Loci_CustomAuth_OAuthCallbackResponse: Sendable {
+public struct Loci_CustomAuth_OAuthCallbackResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -130,7 +130,7 @@ public nonisolated struct Loci_CustomAuth_OAuthCallbackResponse: Sendable {
 }
 
 /// SendPhoneVerificationRequest for initiating phone auth
-public nonisolated struct Loci_CustomAuth_SendPhoneVerificationRequest: Sendable {
+public struct Loci_CustomAuth_SendPhoneVerificationRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -143,7 +143,7 @@ public nonisolated struct Loci_CustomAuth_SendPhoneVerificationRequest: Sendable
 }
 
 /// SendPhoneVerificationResponse confirms SMS was sent
-public nonisolated struct Loci_CustomAuth_SendPhoneVerificationResponse: Sendable {
+public struct Loci_CustomAuth_SendPhoneVerificationResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -158,7 +158,7 @@ public nonisolated struct Loci_CustomAuth_SendPhoneVerificationResponse: Sendabl
 }
 
 /// VerifyPhoneRequest for verifying phone code
-public nonisolated struct Loci_CustomAuth_VerifyPhoneRequest: Sendable {
+public struct Loci_CustomAuth_VerifyPhoneRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -173,7 +173,7 @@ public nonisolated struct Loci_CustomAuth_VerifyPhoneRequest: Sendable {
 }
 
 /// VerifyPhoneResponse returns tokens after phone verification
-public nonisolated struct Loci_CustomAuth_VerifyPhoneResponse: Sendable {
+public struct Loci_CustomAuth_VerifyPhoneResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -193,15 +193,22 @@ public nonisolated struct Loci_CustomAuth_VerifyPhoneResponse: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.custom_auth"
+fileprivate let _protobuf_package = "loci.custom_auth"
 
-nonisolated extension Loci_CustomAuth_OAuthProvider: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0OAUTH_PROVIDER_UNSPECIFIED\0\u{1}OAUTH_PROVIDER_GOOGLE\0\u{1}OAUTH_PROVIDER_APPLE\0")
+extension Loci_CustomAuth_OAuthProvider: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "OAUTH_PROVIDER_UNSPECIFIED"),
+    1: .same(proto: "OAUTH_PROVIDER_GOOGLE"),
+    2: .same(proto: "OAUTH_PROVIDER_APPLE"),
+  ]
 }
 
-nonisolated extension Loci_CustomAuth_GetOAuthURLRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_CustomAuth_GetOAuthURLRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetOAuthURLRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}provider\0\u{3}redirect_uri\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "provider"),
+    2: .standard(proto: "redirect_uri"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -234,9 +241,12 @@ nonisolated extension Loci_CustomAuth_GetOAuthURLRequest: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_CustomAuth_GetOAuthURLResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_CustomAuth_GetOAuthURLResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetOAuthURLResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}auth_url\0\u{1}state\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "auth_url"),
+    2: .same(proto: "state"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -269,9 +279,13 @@ nonisolated extension Loci_CustomAuth_GetOAuthURLResponse: SwiftProtobuf.Message
   }
 }
 
-nonisolated extension Loci_CustomAuth_OAuthCallbackRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_CustomAuth_OAuthCallbackRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".OAuthCallbackRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}provider\0\u{1}code\0\u{1}state\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "provider"),
+    2: .same(proto: "code"),
+    3: .same(proto: "state"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -309,9 +323,16 @@ nonisolated extension Loci_CustomAuth_OAuthCallbackRequest: SwiftProtobuf.Messag
   }
 }
 
-nonisolated extension Loci_CustomAuth_OAuthCallbackResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_CustomAuth_OAuthCallbackResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".OAuthCallbackResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}access_token\0\u{3}refresh_token\0\u{3}user_id\0\u{1}email\0\u{1}username\0\u{3}is_new_user\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "access_token"),
+    2: .standard(proto: "refresh_token"),
+    3: .standard(proto: "user_id"),
+    4: .same(proto: "email"),
+    5: .same(proto: "username"),
+    6: .standard(proto: "is_new_user"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -364,9 +385,11 @@ nonisolated extension Loci_CustomAuth_OAuthCallbackResponse: SwiftProtobuf.Messa
   }
 }
 
-nonisolated extension Loci_CustomAuth_SendPhoneVerificationRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_CustomAuth_SendPhoneVerificationRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SendPhoneVerificationRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}phone_number\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "phone_number"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -394,9 +417,12 @@ nonisolated extension Loci_CustomAuth_SendPhoneVerificationRequest: SwiftProtobu
   }
 }
 
-nonisolated extension Loci_CustomAuth_SendPhoneVerificationResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_CustomAuth_SendPhoneVerificationResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SendPhoneVerificationResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}success\0\u{1}message\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "success"),
+    2: .same(proto: "message"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -429,9 +455,12 @@ nonisolated extension Loci_CustomAuth_SendPhoneVerificationResponse: SwiftProtob
   }
 }
 
-nonisolated extension Loci_CustomAuth_VerifyPhoneRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_CustomAuth_VerifyPhoneRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".VerifyPhoneRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}phone_number\0\u{1}code\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "phone_number"),
+    2: .same(proto: "code"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -464,9 +493,14 @@ nonisolated extension Loci_CustomAuth_VerifyPhoneRequest: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_CustomAuth_VerifyPhoneResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_CustomAuth_VerifyPhoneResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".VerifyPhoneResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}access_token\0\u{3}refresh_token\0\u{3}user_id\0\u{3}is_new_user\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "access_token"),
+    2: .standard(proto: "refresh_token"),
+    3: .standard(proto: "user_id"),
+    4: .standard(proto: "is_new_user"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

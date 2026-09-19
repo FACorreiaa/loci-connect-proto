@@ -15,13 +15,13 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// One backend a user may bring a key for.
-public nonisolated struct Loci_Aicreds_Provider: Sendable {
+public struct Loci_Aicreds_Provider: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -59,7 +59,7 @@ public nonisolated struct Loci_Aicreds_Provider: Sendable {
 }
 
 /// A stored credential, without the credential.
-public nonisolated struct Loci_Aicreds_Credential: Sendable {
+public struct Loci_Aicreds_Credential: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -82,29 +82,29 @@ public nonisolated struct Loci_Aicreds_Credential: Sendable {
   public var lastError: String = String()
 
   public var lastErrorAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_lastErrorAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _lastErrorAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_lastErrorAt = newValue}
   }
   /// Returns true if `lastErrorAt` has been explicitly set.
-  public var hasLastErrorAt: Bool {self._lastErrorAt != nil}
+  public var hasLastErrorAt: Bool {return self._lastErrorAt != nil}
   /// Clears the value of `lastErrorAt`. Subsequent reads from it will return its default value.
   public mutating func clearLastErrorAt() {self._lastErrorAt = nil}
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {self._createdAt != nil}
+  public var hasCreatedAt: Bool {return self._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {self._createdAt = nil}
 
   public var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  public var hasUpdatedAt: Bool {self._updatedAt != nil}
+  public var hasUpdatedAt: Bool {return self._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {self._updatedAt = nil}
 
@@ -117,7 +117,7 @@ public nonisolated struct Loci_Aicreds_Credential: Sendable {
   fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-public nonisolated struct Loci_Aicreds_GetCredentialRequest: Sendable {
+public struct Loci_Aicreds_GetCredentialRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -127,17 +127,17 @@ public nonisolated struct Loci_Aicreds_GetCredentialRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Aicreds_GetCredentialResponse: Sendable {
+public struct Loci_Aicreds_GetCredentialResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var credential: Loci_Aicreds_Credential {
-    get {_credential ?? Loci_Aicreds_Credential()}
+    get {return _credential ?? Loci_Aicreds_Credential()}
     set {_credential = newValue}
   }
   /// Returns true if `credential` has been explicitly set.
-  public var hasCredential: Bool {self._credential != nil}
+  public var hasCredential: Bool {return self._credential != nil}
   /// Clears the value of `credential`. Subsequent reads from it will return its default value.
   public mutating func clearCredential() {self._credential = nil}
 
@@ -152,7 +152,7 @@ public nonisolated struct Loci_Aicreds_GetCredentialResponse: Sendable {
   fileprivate var _credential: Loci_Aicreds_Credential? = nil
 }
 
-public nonisolated struct Loci_Aicreds_SaveCredentialRequest: Sendable {
+public struct Loci_Aicreds_SaveCredentialRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -180,17 +180,17 @@ public nonisolated struct Loci_Aicreds_SaveCredentialRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Aicreds_SaveCredentialResponse: Sendable {
+public struct Loci_Aicreds_SaveCredentialResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var credential: Loci_Aicreds_Credential {
-    get {_credential ?? Loci_Aicreds_Credential()}
+    get {return _credential ?? Loci_Aicreds_Credential()}
     set {_credential = newValue}
   }
   /// Returns true if `credential` has been explicitly set.
-  public var hasCredential: Bool {self._credential != nil}
+  public var hasCredential: Bool {return self._credential != nil}
   /// Clears the value of `credential`. Subsequent reads from it will return its default value.
   public mutating func clearCredential() {self._credential = nil}
 
@@ -201,7 +201,7 @@ public nonisolated struct Loci_Aicreds_SaveCredentialResponse: Sendable {
   fileprivate var _credential: Loci_Aicreds_Credential? = nil
 }
 
-public nonisolated struct Loci_Aicreds_DeleteCredentialRequest: Sendable {
+public struct Loci_Aicreds_DeleteCredentialRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -211,7 +211,7 @@ public nonisolated struct Loci_Aicreds_DeleteCredentialRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Aicreds_DeleteCredentialResponse: Sendable {
+public struct Loci_Aicreds_DeleteCredentialResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -221,7 +221,7 @@ public nonisolated struct Loci_Aicreds_DeleteCredentialResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Aicreds_ListProvidersRequest: Sendable {
+public struct Loci_Aicreds_ListProvidersRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -231,7 +231,7 @@ public nonisolated struct Loci_Aicreds_ListProvidersRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Aicreds_ListProvidersResponse: Sendable {
+public struct Loci_Aicreds_ListProvidersResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -247,7 +247,7 @@ public nonisolated struct Loci_Aicreds_ListProvidersResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Aicreds_VerifyCredentialRequest: Sendable {
+public struct Loci_Aicreds_VerifyCredentialRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -257,7 +257,7 @@ public nonisolated struct Loci_Aicreds_VerifyCredentialRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Aicreds_VerifyCredentialResponse: Sendable {
+public struct Loci_Aicreds_VerifyCredentialResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -279,11 +279,19 @@ public nonisolated struct Loci_Aicreds_VerifyCredentialResponse: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.aicreds"
+fileprivate let _protobuf_package = "loci.aicreds"
 
-nonisolated extension Loci_Aicreds_Provider: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Aicreds_Provider: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Provider"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0\u{1}label\0\u{3}default_model\0\u{3}key_hint\0\u{1}note\0\u{3}requires_base_url\0\u{3}supports_verification\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "name"),
+    2: .same(proto: "label"),
+    3: .standard(proto: "default_model"),
+    4: .standard(proto: "key_hint"),
+    5: .same(proto: "note"),
+    6: .standard(proto: "requires_base_url"),
+    7: .standard(proto: "supports_verification"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -341,9 +349,18 @@ nonisolated extension Loci_Aicreds_Provider: SwiftProtobuf.Message, SwiftProtobu
   }
 }
 
-nonisolated extension Loci_Aicreds_Credential: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Aicreds_Credential: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Credential"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}provider\0\u{3}key_hint\0\u{1}model\0\u{3}base_url\0\u{3}last_error\0\u{3}last_error_at\0\u{3}created_at\0\u{3}updated_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "provider"),
+    2: .standard(proto: "key_hint"),
+    3: .same(proto: "model"),
+    4: .standard(proto: "base_url"),
+    5: .standard(proto: "last_error"),
+    6: .standard(proto: "last_error_at"),
+    7: .standard(proto: "created_at"),
+    8: .standard(proto: "updated_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -410,7 +427,7 @@ nonisolated extension Loci_Aicreds_Credential: SwiftProtobuf.Message, SwiftProto
   }
 }
 
-nonisolated extension Loci_Aicreds_GetCredentialRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Aicreds_GetCredentialRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetCredentialRequest"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
@@ -429,9 +446,12 @@ nonisolated extension Loci_Aicreds_GetCredentialRequest: SwiftProtobuf.Message, 
   }
 }
 
-nonisolated extension Loci_Aicreds_GetCredentialResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Aicreds_GetCredentialResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetCredentialResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}credential\0\u{1}enabled\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "credential"),
+    2: .same(proto: "enabled"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -468,9 +488,14 @@ nonisolated extension Loci_Aicreds_GetCredentialResponse: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_Aicreds_SaveCredentialRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Aicreds_SaveCredentialRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SaveCredentialRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}provider\0\u{3}api_key\0\u{1}model\0\u{3}base_url\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "provider"),
+    2: .standard(proto: "api_key"),
+    3: .same(proto: "model"),
+    4: .standard(proto: "base_url"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -513,9 +538,11 @@ nonisolated extension Loci_Aicreds_SaveCredentialRequest: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_Aicreds_SaveCredentialResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Aicreds_SaveCredentialResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SaveCredentialResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}credential\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "credential"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -547,7 +574,7 @@ nonisolated extension Loci_Aicreds_SaveCredentialResponse: SwiftProtobuf.Message
   }
 }
 
-nonisolated extension Loci_Aicreds_DeleteCredentialRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Aicreds_DeleteCredentialRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DeleteCredentialRequest"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
@@ -566,7 +593,7 @@ nonisolated extension Loci_Aicreds_DeleteCredentialRequest: SwiftProtobuf.Messag
   }
 }
 
-nonisolated extension Loci_Aicreds_DeleteCredentialResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Aicreds_DeleteCredentialResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DeleteCredentialResponse"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
@@ -585,7 +612,7 @@ nonisolated extension Loci_Aicreds_DeleteCredentialResponse: SwiftProtobuf.Messa
   }
 }
 
-nonisolated extension Loci_Aicreds_ListProvidersRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Aicreds_ListProvidersRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListProvidersRequest"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
@@ -604,9 +631,12 @@ nonisolated extension Loci_Aicreds_ListProvidersRequest: SwiftProtobuf.Message, 
   }
 }
 
-nonisolated extension Loci_Aicreds_ListProvidersResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Aicreds_ListProvidersResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListProvidersResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}providers\0\u{1}enabled\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "providers"),
+    2: .same(proto: "enabled"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -639,7 +669,7 @@ nonisolated extension Loci_Aicreds_ListProvidersResponse: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_Aicreds_VerifyCredentialRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Aicreds_VerifyCredentialRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".VerifyCredentialRequest"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
@@ -658,9 +688,13 @@ nonisolated extension Loci_Aicreds_VerifyCredentialRequest: SwiftProtobuf.Messag
   }
 }
 
-nonisolated extension Loci_Aicreds_VerifyCredentialResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Aicreds_VerifyCredentialResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".VerifyCredentialResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}ok\0\u{1}error\0\u{1}checked\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "ok"),
+    2: .same(proto: "error"),
+    3: .same(proto: "checked"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

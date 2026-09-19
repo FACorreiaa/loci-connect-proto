@@ -15,13 +15,13 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// Health check request
-public nonisolated struct AiPoi_V1_HealthCheckRequest: Sendable {
+public struct AiPoi_V1_HealthCheckRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -35,7 +35,7 @@ public nonisolated struct AiPoi_V1_HealthCheckRequest: Sendable {
 }
 
 /// Service information
-public nonisolated struct AiPoi_V1_GetServiceInfoRequest: Sendable {
+public struct AiPoi_V1_GetServiceInfoRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -49,17 +49,17 @@ public nonisolated struct AiPoi_V1_GetServiceInfoRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct AiPoi_V1_GetServiceInfoResponse: Sendable {
+public struct AiPoi_V1_GetServiceInfoResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var serviceInfo: AiPoi_V1_ServiceInfo {
-    get {_serviceInfo ?? AiPoi_V1_ServiceInfo()}
+    get {return _serviceInfo ?? AiPoi_V1_ServiceInfo()}
     set {_serviceInfo = newValue}
   }
   /// Returns true if `serviceInfo` has been explicitly set.
-  public var hasServiceInfo: Bool {self._serviceInfo != nil}
+  public var hasServiceInfo: Bool {return self._serviceInfo != nil}
   /// Clears the value of `serviceInfo`. Subsequent reads from it will return its default value.
   public mutating func clearServiceInfo() {self._serviceInfo = nil}
 
@@ -74,7 +74,7 @@ public nonisolated struct AiPoi_V1_GetServiceInfoResponse: Sendable {
   fileprivate var _serviceInfo: AiPoi_V1_ServiceInfo? = nil
 }
 
-public nonisolated struct AiPoi_V1_ServiceInfo: Sendable {
+public struct AiPoi_V1_ServiceInfo: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -99,7 +99,7 @@ public nonisolated struct AiPoi_V1_ServiceInfo: Sendable {
   public init() {}
 }
 
-public nonisolated struct AiPoi_V1_ServiceEndpoint: Sendable {
+public struct AiPoi_V1_ServiceEndpoint: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -118,11 +118,11 @@ public nonisolated struct AiPoi_V1_ServiceEndpoint: Sendable {
   public var requiredPermissions: [String] = []
 
   public var rateLimit: AiPoi_V1_RateLimitInfo {
-    get {_rateLimit ?? AiPoi_V1_RateLimitInfo()}
+    get {return _rateLimit ?? AiPoi_V1_RateLimitInfo()}
     set {_rateLimit = newValue}
   }
   /// Returns true if `rateLimit` has been explicitly set.
-  public var hasRateLimit: Bool {self._rateLimit != nil}
+  public var hasRateLimit: Bool {return self._rateLimit != nil}
   /// Clears the value of `rateLimit`. Subsequent reads from it will return its default value.
   public mutating func clearRateLimit() {self._rateLimit = nil}
 
@@ -134,7 +134,7 @@ public nonisolated struct AiPoi_V1_ServiceEndpoint: Sendable {
 }
 
 /// Feature flags
-public nonisolated struct AiPoi_V1_GetFeatureFlagsRequest: Sendable {
+public struct AiPoi_V1_GetFeatureFlagsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -153,7 +153,7 @@ public nonisolated struct AiPoi_V1_GetFeatureFlagsRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct AiPoi_V1_GetFeatureFlagsResponse: Sendable {
+public struct AiPoi_V1_GetFeatureFlagsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -169,53 +169,53 @@ public nonisolated struct AiPoi_V1_GetFeatureFlagsResponse: Sendable {
 }
 
 /// Service dependencies and their health status
-public nonisolated struct AiPoi_V1_ServiceDependencies: @unchecked Sendable {
+public struct AiPoi_V1_ServiceDependencies: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var database: AiPoi_V1_ComponentHealth {
-    get {_storage._database ?? AiPoi_V1_ComponentHealth()}
+    get {return _storage._database ?? AiPoi_V1_ComponentHealth()}
     set {_uniqueStorage()._database = newValue}
   }
   /// Returns true if `database` has been explicitly set.
-  public var hasDatabase: Bool {_storage._database != nil}
+  public var hasDatabase: Bool {return _storage._database != nil}
   /// Clears the value of `database`. Subsequent reads from it will return its default value.
   public mutating func clearDatabase() {_uniqueStorage()._database = nil}
 
   public var redisCache: AiPoi_V1_ComponentHealth {
-    get {_storage._redisCache ?? AiPoi_V1_ComponentHealth()}
+    get {return _storage._redisCache ?? AiPoi_V1_ComponentHealth()}
     set {_uniqueStorage()._redisCache = newValue}
   }
   /// Returns true if `redisCache` has been explicitly set.
-  public var hasRedisCache: Bool {_storage._redisCache != nil}
+  public var hasRedisCache: Bool {return _storage._redisCache != nil}
   /// Clears the value of `redisCache`. Subsequent reads from it will return its default value.
   public mutating func clearRedisCache() {_uniqueStorage()._redisCache = nil}
 
   public var aiService: AiPoi_V1_ComponentHealth {
-    get {_storage._aiService ?? AiPoi_V1_ComponentHealth()}
+    get {return _storage._aiService ?? AiPoi_V1_ComponentHealth()}
     set {_uniqueStorage()._aiService = newValue}
   }
   /// Returns true if `aiService` has been explicitly set.
-  public var hasAiService: Bool {_storage._aiService != nil}
+  public var hasAiService: Bool {return _storage._aiService != nil}
   /// Clears the value of `aiService`. Subsequent reads from it will return its default value.
   public mutating func clearAiService() {_uniqueStorage()._aiService = nil}
 
   public var externalApis: AiPoi_V1_ComponentHealth {
-    get {_storage._externalApis ?? AiPoi_V1_ComponentHealth()}
+    get {return _storage._externalApis ?? AiPoi_V1_ComponentHealth()}
     set {_uniqueStorage()._externalApis = newValue}
   }
   /// Returns true if `externalApis` has been explicitly set.
-  public var hasExternalApis: Bool {_storage._externalApis != nil}
+  public var hasExternalApis: Bool {return _storage._externalApis != nil}
   /// Clears the value of `externalApis`. Subsequent reads from it will return its default value.
   public mutating func clearExternalApis() {_uniqueStorage()._externalApis = nil}
 
   public var fileStorage: AiPoi_V1_ComponentHealth {
-    get {_storage._fileStorage ?? AiPoi_V1_ComponentHealth()}
+    get {return _storage._fileStorage ?? AiPoi_V1_ComponentHealth()}
     set {_uniqueStorage()._fileStorage = newValue}
   }
   /// Returns true if `fileStorage` has been explicitly set.
-  public var hasFileStorage: Bool {_storage._fileStorage != nil}
+  public var hasFileStorage: Bool {return _storage._fileStorage != nil}
   /// Clears the value of `fileStorage`. Subsequent reads from it will return its default value.
   public mutating func clearFileStorage() {_uniqueStorage()._fileStorage = nil}
 
@@ -226,7 +226,7 @@ public nonisolated struct AiPoi_V1_ServiceDependencies: @unchecked Sendable {
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-public nonisolated struct AiPoi_V1_ComponentHealth: Sendable {
+public struct AiPoi_V1_ComponentHealth: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -247,7 +247,7 @@ public nonisolated struct AiPoi_V1_ComponentHealth: Sendable {
   public init() {}
 }
 
-public nonisolated struct AiPoi_V1_HealthCheckResponse: Sendable {
+public struct AiPoi_V1_HealthCheckResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -261,7 +261,7 @@ public nonisolated struct AiPoi_V1_HealthCheckResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct AiPoi_V1_ApiVersion: Sendable {
+public struct AiPoi_V1_ApiVersion: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -275,7 +275,7 @@ public nonisolated struct AiPoi_V1_ApiVersion: Sendable {
   public init() {}
 }
 
-public nonisolated struct AiPoi_V1_RateLimitInfo: Sendable {
+public struct AiPoi_V1_RateLimitInfo: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -289,7 +289,7 @@ public nonisolated struct AiPoi_V1_RateLimitInfo: Sendable {
   public init() {}
 }
 
-public nonisolated struct AiPoi_V1_FeatureFlag: Sendable {
+public struct AiPoi_V1_FeatureFlag: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -305,11 +305,13 @@ public nonisolated struct AiPoi_V1_FeatureFlag: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "ai_poi.v1"
+fileprivate let _protobuf_package = "ai_poi.v1"
 
-nonisolated extension AiPoi_V1_HealthCheckRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension AiPoi_V1_HealthCheckRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".HealthCheckRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}service\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "service"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -337,9 +339,12 @@ nonisolated extension AiPoi_V1_HealthCheckRequest: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension AiPoi_V1_GetServiceInfoRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension AiPoi_V1_GetServiceInfoRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetServiceInfoRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}include_endpoints\0\u{3}include_version_info\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "include_endpoints"),
+    2: .standard(proto: "include_version_info"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -372,9 +377,13 @@ nonisolated extension AiPoi_V1_GetServiceInfoRequest: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension AiPoi_V1_GetServiceInfoResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension AiPoi_V1_GetServiceInfoResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetServiceInfoResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}service_info\0\u{1}endpoints\0\u{1}versions\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "service_info"),
+    2: .same(proto: "endpoints"),
+    3: .same(proto: "versions"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -416,9 +425,17 @@ nonisolated extension AiPoi_V1_GetServiceInfoResponse: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension AiPoi_V1_ServiceInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension AiPoi_V1_ServiceInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ServiceInfo"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0\u{1}version\0\u{1}description\0\u{3}build_time\0\u{3}git_commit\0\u{1}environment\0\u{1}configuration\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "name"),
+    2: .same(proto: "version"),
+    3: .same(proto: "description"),
+    4: .standard(proto: "build_time"),
+    5: .standard(proto: "git_commit"),
+    6: .same(proto: "environment"),
+    7: .same(proto: "configuration"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -476,9 +493,17 @@ nonisolated extension AiPoi_V1_ServiceInfo: SwiftProtobuf.Message, SwiftProtobuf
   }
 }
 
-nonisolated extension AiPoi_V1_ServiceEndpoint: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension AiPoi_V1_ServiceEndpoint: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ServiceEndpoint"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0\u{1}path\0\u{1}method\0\u{1}description\0\u{3}requires_auth\0\u{3}required_permissions\0\u{3}rate_limit\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "name"),
+    2: .same(proto: "path"),
+    3: .same(proto: "method"),
+    4: .same(proto: "description"),
+    5: .standard(proto: "requires_auth"),
+    6: .standard(proto: "required_permissions"),
+    7: .standard(proto: "rate_limit"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -540,9 +565,14 @@ nonisolated extension AiPoi_V1_ServiceEndpoint: SwiftProtobuf.Message, SwiftProt
   }
 }
 
-nonisolated extension AiPoi_V1_GetFeatureFlagsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension AiPoi_V1_GetFeatureFlagsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetFeatureFlagsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0\u{3}client_version\0\u{1}platform\0\u{3}user_attributes\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "client_version"),
+    3: .same(proto: "platform"),
+    4: .standard(proto: "user_attributes"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -585,9 +615,12 @@ nonisolated extension AiPoi_V1_GetFeatureFlagsRequest: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension AiPoi_V1_GetFeatureFlagsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension AiPoi_V1_GetFeatureFlagsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetFeatureFlagsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}flags\0\u{1}experiments\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "flags"),
+    2: .same(proto: "experiments"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -620,9 +653,15 @@ nonisolated extension AiPoi_V1_GetFeatureFlagsResponse: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension AiPoi_V1_ServiceDependencies: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension AiPoi_V1_ServiceDependencies: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ServiceDependencies"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}database\0\u{3}redis_cache\0\u{3}ai_service\0\u{3}external_apis\0\u{3}file_storage\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "database"),
+    2: .standard(proto: "redis_cache"),
+    3: .standard(proto: "ai_service"),
+    4: .standard(proto: "external_apis"),
+    5: .standard(proto: "file_storage"),
+  ]
 
   fileprivate class _StorageClass {
     var _database: AiPoi_V1_ComponentHealth? = nil
@@ -631,11 +670,15 @@ nonisolated extension AiPoi_V1_ServiceDependencies: SwiftProtobuf.Message, Swift
     var _externalApis: AiPoi_V1_ComponentHealth? = nil
     var _fileStorage: AiPoi_V1_ComponentHealth? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -718,9 +761,15 @@ nonisolated extension AiPoi_V1_ServiceDependencies: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension AiPoi_V1_ComponentHealth: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension AiPoi_V1_ComponentHealth: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ComponentHealth"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0\u{1}status\0\u{1}message\0\u{3}response_time_ms\0\u{1}metrics\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "name"),
+    2: .same(proto: "status"),
+    3: .same(proto: "message"),
+    4: .standard(proto: "response_time_ms"),
+    5: .same(proto: "metrics"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -768,9 +817,12 @@ nonisolated extension AiPoi_V1_ComponentHealth: SwiftProtobuf.Message, SwiftProt
   }
 }
 
-nonisolated extension AiPoi_V1_HealthCheckResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension AiPoi_V1_HealthCheckResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".HealthCheckResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}healthy\0\u{1}message\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "healthy"),
+    2: .same(proto: "message"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -803,9 +855,12 @@ nonisolated extension AiPoi_V1_HealthCheckResponse: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension AiPoi_V1_ApiVersion: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension AiPoi_V1_ApiVersion: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ApiVersion"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}version\0\u{1}status\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "version"),
+    2: .same(proto: "status"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -838,9 +893,12 @@ nonisolated extension AiPoi_V1_ApiVersion: SwiftProtobuf.Message, SwiftProtobuf.
   }
 }
 
-nonisolated extension AiPoi_V1_RateLimitInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension AiPoi_V1_RateLimitInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RateLimitInfo"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}requests_per_minute\0\u{3}burst_limit\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "requests_per_minute"),
+    2: .standard(proto: "burst_limit"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -873,9 +931,12 @@ nonisolated extension AiPoi_V1_RateLimitInfo: SwiftProtobuf.Message, SwiftProtob
   }
 }
 
-nonisolated extension AiPoi_V1_FeatureFlag: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension AiPoi_V1_FeatureFlag: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".FeatureFlag"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0\u{1}enabled\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "name"),
+    2: .same(proto: "enabled"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

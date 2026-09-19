@@ -15,13 +15,13 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// Enums for preferences
-public nonisolated enum Loci_Profile_DayPreference: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Profile_DayPreference: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case any // = 1
@@ -63,7 +63,7 @@ public nonisolated enum Loci_Profile_DayPreference: SwiftProtobuf.Enum, Swift.Ca
 
 }
 
-public nonisolated enum Loci_Profile_SearchPace: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Profile_SearchPace: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case any // = 1
@@ -109,7 +109,7 @@ public nonisolated enum Loci_Profile_SearchPace: SwiftProtobuf.Enum, Swift.CaseI
 
 }
 
-public nonisolated enum Loci_Profile_TransportPreference: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Profile_TransportPreference: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
   case any // = 1
@@ -156,7 +156,7 @@ public nonisolated enum Loci_Profile_TransportPreference: SwiftProtobuf.Enum, Sw
 }
 
 /// AccommodationPreferences represents accommodation-specific filters
-public nonisolated struct Loci_Profile_AccommodationPreferences: Sendable {
+public struct Loci_Profile_AccommodationPreferences: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -176,20 +176,20 @@ public nonisolated struct Loci_Profile_AccommodationPreferences: Sendable {
   public var accommodationType: [String] = []
 
   public var starRating: Loci_Common_RangeFilter {
-    get {_starRating ?? Loci_Common_RangeFilter()}
+    get {return _starRating ?? Loci_Common_RangeFilter()}
     set {_starRating = newValue}
   }
   /// Returns true if `starRating` has been explicitly set.
-  public var hasStarRating: Bool {self._starRating != nil}
+  public var hasStarRating: Bool {return self._starRating != nil}
   /// Clears the value of `starRating`. Subsequent reads from it will return its default value.
   public mutating func clearStarRating() {self._starRating = nil}
 
   public var priceRangePerNight: Loci_Common_RangeFilter {
-    get {_priceRangePerNight ?? Loci_Common_RangeFilter()}
+    get {return _priceRangePerNight ?? Loci_Common_RangeFilter()}
     set {_priceRangePerNight = newValue}
   }
   /// Returns true if `priceRangePerNight` has been explicitly set.
-  public var hasPriceRangePerNight: Bool {self._priceRangePerNight != nil}
+  public var hasPriceRangePerNight: Bool {return self._priceRangePerNight != nil}
   /// Clears the value of `priceRangePerNight`. Subsequent reads from it will return its default value.
   public mutating func clearPriceRangePerNight() {self._priceRangePerNight = nil}
 
@@ -198,40 +198,40 @@ public nonisolated struct Loci_Profile_AccommodationPreferences: Sendable {
   public var roomType: [String] = []
 
   public var chainPreference: String {
-    get {_chainPreference ?? String()}
+    get {return _chainPreference ?? String()}
     set {_chainPreference = newValue}
   }
   /// Returns true if `chainPreference` has been explicitly set.
-  public var hasChainPreference: Bool {self._chainPreference != nil}
+  public var hasChainPreference: Bool {return self._chainPreference != nil}
   /// Clears the value of `chainPreference`. Subsequent reads from it will return its default value.
   public mutating func clearChainPreference() {self._chainPreference = nil}
 
   public var cancellationPolicy: [String] = []
 
   public var bookingFlexibility: String {
-    get {_bookingFlexibility ?? String()}
+    get {return _bookingFlexibility ?? String()}
     set {_bookingFlexibility = newValue}
   }
   /// Returns true if `bookingFlexibility` has been explicitly set.
-  public var hasBookingFlexibility: Bool {self._bookingFlexibility != nil}
+  public var hasBookingFlexibility: Bool {return self._bookingFlexibility != nil}
   /// Clears the value of `bookingFlexibility`. Subsequent reads from it will return its default value.
   public mutating func clearBookingFlexibility() {self._bookingFlexibility = nil}
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {self._createdAt != nil}
+  public var hasCreatedAt: Bool {return self._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {self._createdAt = nil}
 
   public var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  public var hasUpdatedAt: Bool {self._updatedAt != nil}
+  public var hasUpdatedAt: Bool {return self._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {self._updatedAt = nil}
 
@@ -248,7 +248,7 @@ public nonisolated struct Loci_Profile_AccommodationPreferences: Sendable {
 }
 
 /// DiningPreferences represents dining-specific filters
-public nonisolated struct Loci_Profile_DiningPreferences: @unchecked Sendable {
+public struct Loci_Profile_DiningPreferences: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -258,7 +258,7 @@ public nonisolated struct Loci_Profile_DiningPreferences: @unchecked Sendable {
   /// response and a field of the create/update requests, and a client has no id
   /// to send.
   public var id: String {
-    get {_storage._id}
+    get {return _storage._id}
     set {_uniqueStorage()._id = newValue}
   }
 
@@ -267,88 +267,88 @@ public nonisolated struct Loci_Profile_DiningPreferences: @unchecked Sendable {
   /// response and a field of the create/update requests, and a client has no id
   /// to send.
   public var userPreferenceID: String {
-    get {_storage._userPreferenceID}
+    get {return _storage._userPreferenceID}
     set {_uniqueStorage()._userPreferenceID = newValue}
   }
 
   public var cuisineTypes: [String] {
-    get {_storage._cuisineTypes}
+    get {return _storage._cuisineTypes}
     set {_uniqueStorage()._cuisineTypes = newValue}
   }
 
   public var mealTypes: [String] {
-    get {_storage._mealTypes}
+    get {return _storage._mealTypes}
     set {_uniqueStorage()._mealTypes = newValue}
   }
 
   public var serviceStyle: [String] {
-    get {_storage._serviceStyle}
+    get {return _storage._serviceStyle}
     set {_uniqueStorage()._serviceStyle = newValue}
   }
 
   public var priceRangePerPerson: Loci_Common_RangeFilter {
-    get {_storage._priceRangePerPerson ?? Loci_Common_RangeFilter()}
+    get {return _storage._priceRangePerPerson ?? Loci_Common_RangeFilter()}
     set {_uniqueStorage()._priceRangePerPerson = newValue}
   }
   /// Returns true if `priceRangePerPerson` has been explicitly set.
-  public var hasPriceRangePerPerson: Bool {_storage._priceRangePerPerson != nil}
+  public var hasPriceRangePerPerson: Bool {return _storage._priceRangePerPerson != nil}
   /// Clears the value of `priceRangePerPerson`. Subsequent reads from it will return its default value.
   public mutating func clearPriceRangePerPerson() {_uniqueStorage()._priceRangePerPerson = nil}
 
   public var dietaryNeeds: [String] {
-    get {_storage._dietaryNeeds}
+    get {return _storage._dietaryNeeds}
     set {_uniqueStorage()._dietaryNeeds = newValue}
   }
 
   public var allergenFree: [String] {
-    get {_storage._allergenFree}
+    get {return _storage._allergenFree}
     set {_uniqueStorage()._allergenFree = newValue}
   }
 
   public var michelinRated: Bool {
-    get {_storage._michelinRated}
+    get {return _storage._michelinRated}
     set {_uniqueStorage()._michelinRated = newValue}
   }
 
   public var localRecommendations: Bool {
-    get {_storage._localRecommendations}
+    get {return _storage._localRecommendations}
     set {_uniqueStorage()._localRecommendations = newValue}
   }
 
   public var chainVsLocal: String {
-    get {_storage._chainVsLocal ?? String()}
+    get {return _storage._chainVsLocal ?? String()}
     set {_uniqueStorage()._chainVsLocal = newValue}
   }
   /// Returns true if `chainVsLocal` has been explicitly set.
-  public var hasChainVsLocal: Bool {_storage._chainVsLocal != nil}
+  public var hasChainVsLocal: Bool {return _storage._chainVsLocal != nil}
   /// Clears the value of `chainVsLocal`. Subsequent reads from it will return its default value.
   public mutating func clearChainVsLocal() {_uniqueStorage()._chainVsLocal = nil}
 
   public var organicPreference: Bool {
-    get {_storage._organicPreference}
+    get {return _storage._organicPreference}
     set {_uniqueStorage()._organicPreference = newValue}
   }
 
   public var outdoorSeatingPreferred: Bool {
-    get {_storage._outdoorSeatingPreferred}
+    get {return _storage._outdoorSeatingPreferred}
     set {_uniqueStorage()._outdoorSeatingPreferred = newValue}
   }
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {_storage._createdAt != nil}
+  public var hasCreatedAt: Bool {return _storage._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {_uniqueStorage()._createdAt = nil}
 
   public var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  public var hasUpdatedAt: Bool {_storage._updatedAt != nil}
+  public var hasUpdatedAt: Bool {return _storage._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {_uniqueStorage()._updatedAt = nil}
 
@@ -360,7 +360,7 @@ public nonisolated struct Loci_Profile_DiningPreferences: @unchecked Sendable {
 }
 
 /// ActivityPreferences represents activity-specific filters
-public nonisolated struct Loci_Profile_ActivityPreferences: Sendable {
+public struct Loci_Profile_ActivityPreferences: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -380,38 +380,38 @@ public nonisolated struct Loci_Profile_ActivityPreferences: Sendable {
   public var activityCategories: [String] = []
 
   public var physicalActivityLevel: String {
-    get {_physicalActivityLevel ?? String()}
+    get {return _physicalActivityLevel ?? String()}
     set {_physicalActivityLevel = newValue}
   }
   /// Returns true if `physicalActivityLevel` has been explicitly set.
-  public var hasPhysicalActivityLevel: Bool {self._physicalActivityLevel != nil}
+  public var hasPhysicalActivityLevel: Bool {return self._physicalActivityLevel != nil}
   /// Clears the value of `physicalActivityLevel`. Subsequent reads from it will return its default value.
   public mutating func clearPhysicalActivityLevel() {self._physicalActivityLevel = nil}
 
   public var indoorOutdoorPreference: String {
-    get {_indoorOutdoorPreference ?? String()}
+    get {return _indoorOutdoorPreference ?? String()}
     set {_indoorOutdoorPreference = newValue}
   }
   /// Returns true if `indoorOutdoorPreference` has been explicitly set.
-  public var hasIndoorOutdoorPreference: Bool {self._indoorOutdoorPreference != nil}
+  public var hasIndoorOutdoorPreference: Bool {return self._indoorOutdoorPreference != nil}
   /// Clears the value of `indoorOutdoorPreference`. Subsequent reads from it will return its default value.
   public mutating func clearIndoorOutdoorPreference() {self._indoorOutdoorPreference = nil}
 
   public var culturalImmersionLevel: String {
-    get {_culturalImmersionLevel ?? String()}
+    get {return _culturalImmersionLevel ?? String()}
     set {_culturalImmersionLevel = newValue}
   }
   /// Returns true if `culturalImmersionLevel` has been explicitly set.
-  public var hasCulturalImmersionLevel: Bool {self._culturalImmersionLevel != nil}
+  public var hasCulturalImmersionLevel: Bool {return self._culturalImmersionLevel != nil}
   /// Clears the value of `culturalImmersionLevel`. Subsequent reads from it will return its default value.
   public mutating func clearCulturalImmersionLevel() {self._culturalImmersionLevel = nil}
 
   public var mustSeeVsHiddenGems: String {
-    get {_mustSeeVsHiddenGems ?? String()}
+    get {return _mustSeeVsHiddenGems ?? String()}
     set {_mustSeeVsHiddenGems = newValue}
   }
   /// Returns true if `mustSeeVsHiddenGems` has been explicitly set.
-  public var hasMustSeeVsHiddenGems: Bool {self._mustSeeVsHiddenGems != nil}
+  public var hasMustSeeVsHiddenGems: Bool {return self._mustSeeVsHiddenGems != nil}
   /// Clears the value of `mustSeeVsHiddenGems`. Subsequent reads from it will return its default value.
   public mutating func clearMustSeeVsHiddenGems() {self._mustSeeVsHiddenGems = nil}
 
@@ -426,20 +426,20 @@ public nonisolated struct Loci_Profile_ActivityPreferences: Sendable {
   public var localEventsInterest: [String] = []
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {self._createdAt != nil}
+  public var hasCreatedAt: Bool {return self._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {self._createdAt = nil}
 
   public var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  public var hasUpdatedAt: Bool {self._updatedAt != nil}
+  public var hasUpdatedAt: Bool {return self._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {self._updatedAt = nil}
 
@@ -456,7 +456,7 @@ public nonisolated struct Loci_Profile_ActivityPreferences: Sendable {
 }
 
 /// ItineraryPreferences represents itinerary planning-specific filters
-public nonisolated struct Loci_Profile_ItineraryPreferences: Sendable {
+public struct Loci_Profile_ItineraryPreferences: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -474,47 +474,47 @@ public nonisolated struct Loci_Profile_ItineraryPreferences: Sendable {
   public var userPreferenceID: String = String()
 
   public var planningStyle: String {
-    get {_planningStyle ?? String()}
+    get {return _planningStyle ?? String()}
     set {_planningStyle = newValue}
   }
   /// Returns true if `planningStyle` has been explicitly set.
-  public var hasPlanningStyle: Bool {self._planningStyle != nil}
+  public var hasPlanningStyle: Bool {return self._planningStyle != nil}
   /// Clears the value of `planningStyle`. Subsequent reads from it will return its default value.
   public mutating func clearPlanningStyle() {self._planningStyle = nil}
 
   public var preferredPace: String {
-    get {_preferredPace ?? String()}
+    get {return _preferredPace ?? String()}
     set {_preferredPace = newValue}
   }
   /// Returns true if `preferredPace` has been explicitly set.
-  public var hasPreferredPace: Bool {self._preferredPace != nil}
+  public var hasPreferredPace: Bool {return self._preferredPace != nil}
   /// Clears the value of `preferredPace`. Subsequent reads from it will return its default value.
   public mutating func clearPreferredPace() {self._preferredPace = nil}
 
   public var timeFlexibility: String {
-    get {_timeFlexibility ?? String()}
+    get {return _timeFlexibility ?? String()}
     set {_timeFlexibility = newValue}
   }
   /// Returns true if `timeFlexibility` has been explicitly set.
-  public var hasTimeFlexibility: Bool {self._timeFlexibility != nil}
+  public var hasTimeFlexibility: Bool {return self._timeFlexibility != nil}
   /// Clears the value of `timeFlexibility`. Subsequent reads from it will return its default value.
   public mutating func clearTimeFlexibility() {self._timeFlexibility = nil}
 
   public var morningVsEvening: String {
-    get {_morningVsEvening ?? String()}
+    get {return _morningVsEvening ?? String()}
     set {_morningVsEvening = newValue}
   }
   /// Returns true if `morningVsEvening` has been explicitly set.
-  public var hasMorningVsEvening: Bool {self._morningVsEvening != nil}
+  public var hasMorningVsEvening: Bool {return self._morningVsEvening != nil}
   /// Clears the value of `morningVsEvening`. Subsequent reads from it will return its default value.
   public mutating func clearMorningVsEvening() {self._morningVsEvening = nil}
 
   public var weekendVsWeekday: String {
-    get {_weekendVsWeekday ?? String()}
+    get {return _weekendVsWeekday ?? String()}
     set {_weekendVsWeekday = newValue}
   }
   /// Returns true if `weekendVsWeekday` has been explicitly set.
-  public var hasWeekendVsWeekday: Bool {self._weekendVsWeekday != nil}
+  public var hasWeekendVsWeekday: Bool {return self._weekendVsWeekday != nil}
   /// Clears the value of `weekendVsWeekday`. Subsequent reads from it will return its default value.
   public mutating func clearWeekendVsWeekday() {self._weekendVsWeekday = nil}
 
@@ -523,38 +523,38 @@ public nonisolated struct Loci_Profile_ItineraryPreferences: Sendable {
   public var avoidPeakSeason: Bool = false
 
   public var adventureVsRelaxation: String {
-    get {_adventureVsRelaxation ?? String()}
+    get {return _adventureVsRelaxation ?? String()}
     set {_adventureVsRelaxation = newValue}
   }
   /// Returns true if `adventureVsRelaxation` has been explicitly set.
-  public var hasAdventureVsRelaxation: Bool {self._adventureVsRelaxation != nil}
+  public var hasAdventureVsRelaxation: Bool {return self._adventureVsRelaxation != nil}
   /// Clears the value of `adventureVsRelaxation`. Subsequent reads from it will return its default value.
   public mutating func clearAdventureVsRelaxation() {self._adventureVsRelaxation = nil}
 
   public var spontaneousVsPlanned: String {
-    get {_spontaneousVsPlanned ?? String()}
+    get {return _spontaneousVsPlanned ?? String()}
     set {_spontaneousVsPlanned = newValue}
   }
   /// Returns true if `spontaneousVsPlanned` has been explicitly set.
-  public var hasSpontaneousVsPlanned: Bool {self._spontaneousVsPlanned != nil}
+  public var hasSpontaneousVsPlanned: Bool {return self._spontaneousVsPlanned != nil}
   /// Clears the value of `spontaneousVsPlanned`. Subsequent reads from it will return its default value.
   public mutating func clearSpontaneousVsPlanned() {self._spontaneousVsPlanned = nil}
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {self._createdAt != nil}
+  public var hasCreatedAt: Bool {return self._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {self._createdAt = nil}
 
   public var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  public var hasUpdatedAt: Bool {self._updatedAt != nil}
+  public var hasUpdatedAt: Bool {return self._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {self._updatedAt = nil}
 
@@ -574,160 +574,160 @@ public nonisolated struct Loci_Profile_ItineraryPreferences: Sendable {
 }
 
 /// UserPreferenceProfile represents a user's preference profile
-public nonisolated struct Loci_Profile_UserPreferenceProfile: @unchecked Sendable {
+public struct Loci_Profile_UserPreferenceProfile: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var id: String {
-    get {_storage._id}
+    get {return _storage._id}
     set {_uniqueStorage()._id = newValue}
   }
 
   public var userID: String {
-    get {_storage._userID}
+    get {return _storage._userID}
     set {_uniqueStorage()._userID = newValue}
   }
 
   public var profileName: String {
-    get {_storage._profileName}
+    get {return _storage._profileName}
     set {_uniqueStorage()._profileName = newValue}
   }
 
   public var isDefault: Bool {
-    get {_storage._isDefault}
+    get {return _storage._isDefault}
     set {_uniqueStorage()._isDefault = newValue}
   }
 
   public var searchRadiusKm: Double {
-    get {_storage._searchRadiusKm}
+    get {return _storage._searchRadiusKm}
     set {_uniqueStorage()._searchRadiusKm = newValue}
   }
 
   public var preferredTime: Loci_Profile_DayPreference {
-    get {_storage._preferredTime}
+    get {return _storage._preferredTime}
     set {_uniqueStorage()._preferredTime = newValue}
   }
 
   public var budgetLevel: Int32 {
-    get {_storage._budgetLevel}
+    get {return _storage._budgetLevel}
     set {_uniqueStorage()._budgetLevel = newValue}
   }
 
   public var preferredPace: Loci_Profile_SearchPace {
-    get {_storage._preferredPace}
+    get {return _storage._preferredPace}
     set {_uniqueStorage()._preferredPace = newValue}
   }
 
   public var preferAccessiblePois: Bool {
-    get {_storage._preferAccessiblePois}
+    get {return _storage._preferAccessiblePois}
     set {_uniqueStorage()._preferAccessiblePois = newValue}
   }
 
   public var preferOutdoorSeating: Bool {
-    get {_storage._preferOutdoorSeating}
+    get {return _storage._preferOutdoorSeating}
     set {_uniqueStorage()._preferOutdoorSeating = newValue}
   }
 
   public var preferDogFriendly: Bool {
-    get {_storage._preferDogFriendly}
+    get {return _storage._preferDogFriendly}
     set {_uniqueStorage()._preferDogFriendly = newValue}
   }
 
   public var preferredVibes: [String] {
-    get {_storage._preferredVibes}
+    get {return _storage._preferredVibes}
     set {_uniqueStorage()._preferredVibes = newValue}
   }
 
   public var preferredTransport: Loci_Profile_TransportPreference {
-    get {_storage._preferredTransport}
+    get {return _storage._preferredTransport}
     set {_uniqueStorage()._preferredTransport = newValue}
   }
 
   public var dietaryNeeds: [String] {
-    get {_storage._dietaryNeeds}
+    get {return _storage._dietaryNeeds}
     set {_uniqueStorage()._dietaryNeeds = newValue}
   }
 
   public var interests: [Loci_Interest_Interest] {
-    get {_storage._interests}
+    get {return _storage._interests}
     set {_uniqueStorage()._interests = newValue}
   }
 
   public var tags: [Loci_Interest_Tags] {
-    get {_storage._tags}
+    get {return _storage._tags}
     set {_uniqueStorage()._tags = newValue}
   }
 
   public var userLatitude: Double {
-    get {_storage._userLatitude ?? 0}
+    get {return _storage._userLatitude ?? 0}
     set {_uniqueStorage()._userLatitude = newValue}
   }
   /// Returns true if `userLatitude` has been explicitly set.
-  public var hasUserLatitude: Bool {_storage._userLatitude != nil}
+  public var hasUserLatitude: Bool {return _storage._userLatitude != nil}
   /// Clears the value of `userLatitude`. Subsequent reads from it will return its default value.
   public mutating func clearUserLatitude() {_uniqueStorage()._userLatitude = nil}
 
   public var userLongitude: Double {
-    get {_storage._userLongitude ?? 0}
+    get {return _storage._userLongitude ?? 0}
     set {_uniqueStorage()._userLongitude = newValue}
   }
   /// Returns true if `userLongitude` has been explicitly set.
-  public var hasUserLongitude: Bool {_storage._userLongitude != nil}
+  public var hasUserLongitude: Bool {return _storage._userLongitude != nil}
   /// Clears the value of `userLongitude`. Subsequent reads from it will return its default value.
   public mutating func clearUserLongitude() {_uniqueStorage()._userLongitude = nil}
 
   public var accommodationPreferences: Loci_Profile_AccommodationPreferences {
-    get {_storage._accommodationPreferences ?? Loci_Profile_AccommodationPreferences()}
+    get {return _storage._accommodationPreferences ?? Loci_Profile_AccommodationPreferences()}
     set {_uniqueStorage()._accommodationPreferences = newValue}
   }
   /// Returns true if `accommodationPreferences` has been explicitly set.
-  public var hasAccommodationPreferences: Bool {_storage._accommodationPreferences != nil}
+  public var hasAccommodationPreferences: Bool {return _storage._accommodationPreferences != nil}
   /// Clears the value of `accommodationPreferences`. Subsequent reads from it will return its default value.
   public mutating func clearAccommodationPreferences() {_uniqueStorage()._accommodationPreferences = nil}
 
   public var diningPreferences: Loci_Profile_DiningPreferences {
-    get {_storage._diningPreferences ?? Loci_Profile_DiningPreferences()}
+    get {return _storage._diningPreferences ?? Loci_Profile_DiningPreferences()}
     set {_uniqueStorage()._diningPreferences = newValue}
   }
   /// Returns true if `diningPreferences` has been explicitly set.
-  public var hasDiningPreferences: Bool {_storage._diningPreferences != nil}
+  public var hasDiningPreferences: Bool {return _storage._diningPreferences != nil}
   /// Clears the value of `diningPreferences`. Subsequent reads from it will return its default value.
   public mutating func clearDiningPreferences() {_uniqueStorage()._diningPreferences = nil}
 
   public var activityPreferences: Loci_Profile_ActivityPreferences {
-    get {_storage._activityPreferences ?? Loci_Profile_ActivityPreferences()}
+    get {return _storage._activityPreferences ?? Loci_Profile_ActivityPreferences()}
     set {_uniqueStorage()._activityPreferences = newValue}
   }
   /// Returns true if `activityPreferences` has been explicitly set.
-  public var hasActivityPreferences: Bool {_storage._activityPreferences != nil}
+  public var hasActivityPreferences: Bool {return _storage._activityPreferences != nil}
   /// Clears the value of `activityPreferences`. Subsequent reads from it will return its default value.
   public mutating func clearActivityPreferences() {_uniqueStorage()._activityPreferences = nil}
 
   public var itineraryPreferences: Loci_Profile_ItineraryPreferences {
-    get {_storage._itineraryPreferences ?? Loci_Profile_ItineraryPreferences()}
+    get {return _storage._itineraryPreferences ?? Loci_Profile_ItineraryPreferences()}
     set {_uniqueStorage()._itineraryPreferences = newValue}
   }
   /// Returns true if `itineraryPreferences` has been explicitly set.
-  public var hasItineraryPreferences: Bool {_storage._itineraryPreferences != nil}
+  public var hasItineraryPreferences: Bool {return _storage._itineraryPreferences != nil}
   /// Clears the value of `itineraryPreferences`. Subsequent reads from it will return its default value.
   public mutating func clearItineraryPreferences() {_uniqueStorage()._itineraryPreferences = nil}
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  public var hasCreatedAt: Bool {_storage._createdAt != nil}
+  public var hasCreatedAt: Bool {return _storage._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {_uniqueStorage()._createdAt = nil}
 
   public var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_storage._updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _storage._updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  public var hasUpdatedAt: Bool {_storage._updatedAt != nil}
+  public var hasUpdatedAt: Bool {return _storage._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {_uniqueStorage()._updatedAt = nil}
 
@@ -739,150 +739,150 @@ public nonisolated struct Loci_Profile_UserPreferenceProfile: @unchecked Sendabl
 }
 
 /// CreateUserPreferenceProfileRequest for creating a preference profile
-public nonisolated struct Loci_Profile_CreateUserPreferenceProfileRequest: @unchecked Sendable {
+public struct Loci_Profile_CreateUserPreferenceProfileRequest: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var profileName: String {
-    get {_storage._profileName}
+    get {return _storage._profileName}
     set {_uniqueStorage()._profileName = newValue}
   }
 
   public var isDefault: Bool {
-    get {_storage._isDefault ?? false}
+    get {return _storage._isDefault ?? false}
     set {_uniqueStorage()._isDefault = newValue}
   }
   /// Returns true if `isDefault` has been explicitly set.
-  public var hasIsDefault: Bool {_storage._isDefault != nil}
+  public var hasIsDefault: Bool {return _storage._isDefault != nil}
   /// Clears the value of `isDefault`. Subsequent reads from it will return its default value.
   public mutating func clearIsDefault() {_uniqueStorage()._isDefault = nil}
 
   public var searchRadiusKm: Double {
-    get {_storage._searchRadiusKm ?? 0}
+    get {return _storage._searchRadiusKm ?? 0}
     set {_uniqueStorage()._searchRadiusKm = newValue}
   }
   /// Returns true if `searchRadiusKm` has been explicitly set.
-  public var hasSearchRadiusKm: Bool {_storage._searchRadiusKm != nil}
+  public var hasSearchRadiusKm: Bool {return _storage._searchRadiusKm != nil}
   /// Clears the value of `searchRadiusKm`. Subsequent reads from it will return its default value.
   public mutating func clearSearchRadiusKm() {_uniqueStorage()._searchRadiusKm = nil}
 
   public var preferredTime: Loci_Profile_DayPreference {
-    get {_storage._preferredTime ?? .unspecified}
+    get {return _storage._preferredTime ?? .unspecified}
     set {_uniqueStorage()._preferredTime = newValue}
   }
   /// Returns true if `preferredTime` has been explicitly set.
-  public var hasPreferredTime: Bool {_storage._preferredTime != nil}
+  public var hasPreferredTime: Bool {return _storage._preferredTime != nil}
   /// Clears the value of `preferredTime`. Subsequent reads from it will return its default value.
   public mutating func clearPreferredTime() {_uniqueStorage()._preferredTime = nil}
 
   public var budgetLevel: Int32 {
-    get {_storage._budgetLevel ?? 0}
+    get {return _storage._budgetLevel ?? 0}
     set {_uniqueStorage()._budgetLevel = newValue}
   }
   /// Returns true if `budgetLevel` has been explicitly set.
-  public var hasBudgetLevel: Bool {_storage._budgetLevel != nil}
+  public var hasBudgetLevel: Bool {return _storage._budgetLevel != nil}
   /// Clears the value of `budgetLevel`. Subsequent reads from it will return its default value.
   public mutating func clearBudgetLevel() {_uniqueStorage()._budgetLevel = nil}
 
   public var preferredPace: Loci_Profile_SearchPace {
-    get {_storage._preferredPace ?? .unspecified}
+    get {return _storage._preferredPace ?? .unspecified}
     set {_uniqueStorage()._preferredPace = newValue}
   }
   /// Returns true if `preferredPace` has been explicitly set.
-  public var hasPreferredPace: Bool {_storage._preferredPace != nil}
+  public var hasPreferredPace: Bool {return _storage._preferredPace != nil}
   /// Clears the value of `preferredPace`. Subsequent reads from it will return its default value.
   public mutating func clearPreferredPace() {_uniqueStorage()._preferredPace = nil}
 
   public var preferAccessiblePois: Bool {
-    get {_storage._preferAccessiblePois ?? false}
+    get {return _storage._preferAccessiblePois ?? false}
     set {_uniqueStorage()._preferAccessiblePois = newValue}
   }
   /// Returns true if `preferAccessiblePois` has been explicitly set.
-  public var hasPreferAccessiblePois: Bool {_storage._preferAccessiblePois != nil}
+  public var hasPreferAccessiblePois: Bool {return _storage._preferAccessiblePois != nil}
   /// Clears the value of `preferAccessiblePois`. Subsequent reads from it will return its default value.
   public mutating func clearPreferAccessiblePois() {_uniqueStorage()._preferAccessiblePois = nil}
 
   public var preferOutdoorSeating: Bool {
-    get {_storage._preferOutdoorSeating ?? false}
+    get {return _storage._preferOutdoorSeating ?? false}
     set {_uniqueStorage()._preferOutdoorSeating = newValue}
   }
   /// Returns true if `preferOutdoorSeating` has been explicitly set.
-  public var hasPreferOutdoorSeating: Bool {_storage._preferOutdoorSeating != nil}
+  public var hasPreferOutdoorSeating: Bool {return _storage._preferOutdoorSeating != nil}
   /// Clears the value of `preferOutdoorSeating`. Subsequent reads from it will return its default value.
   public mutating func clearPreferOutdoorSeating() {_uniqueStorage()._preferOutdoorSeating = nil}
 
   public var preferDogFriendly: Bool {
-    get {_storage._preferDogFriendly ?? false}
+    get {return _storage._preferDogFriendly ?? false}
     set {_uniqueStorage()._preferDogFriendly = newValue}
   }
   /// Returns true if `preferDogFriendly` has been explicitly set.
-  public var hasPreferDogFriendly: Bool {_storage._preferDogFriendly != nil}
+  public var hasPreferDogFriendly: Bool {return _storage._preferDogFriendly != nil}
   /// Clears the value of `preferDogFriendly`. Subsequent reads from it will return its default value.
   public mutating func clearPreferDogFriendly() {_uniqueStorage()._preferDogFriendly = nil}
 
   public var preferredVibes: [String] {
-    get {_storage._preferredVibes}
+    get {return _storage._preferredVibes}
     set {_uniqueStorage()._preferredVibes = newValue}
   }
 
   public var preferredTransport: Loci_Profile_TransportPreference {
-    get {_storage._preferredTransport ?? .unspecified}
+    get {return _storage._preferredTransport ?? .unspecified}
     set {_uniqueStorage()._preferredTransport = newValue}
   }
   /// Returns true if `preferredTransport` has been explicitly set.
-  public var hasPreferredTransport: Bool {_storage._preferredTransport != nil}
+  public var hasPreferredTransport: Bool {return _storage._preferredTransport != nil}
   /// Clears the value of `preferredTransport`. Subsequent reads from it will return its default value.
   public mutating func clearPreferredTransport() {_uniqueStorage()._preferredTransport = nil}
 
   public var dietaryNeeds: [String] {
-    get {_storage._dietaryNeeds}
+    get {return _storage._dietaryNeeds}
     set {_uniqueStorage()._dietaryNeeds = newValue}
   }
 
   public var tagIds: [String] {
-    get {_storage._tagIds}
+    get {return _storage._tagIds}
     set {_uniqueStorage()._tagIds = newValue}
   }
 
   public var interestIds: [String] {
-    get {_storage._interestIds}
+    get {return _storage._interestIds}
     set {_uniqueStorage()._interestIds = newValue}
   }
 
   public var accommodationPreferences: Loci_Profile_AccommodationPreferences {
-    get {_storage._accommodationPreferences ?? Loci_Profile_AccommodationPreferences()}
+    get {return _storage._accommodationPreferences ?? Loci_Profile_AccommodationPreferences()}
     set {_uniqueStorage()._accommodationPreferences = newValue}
   }
   /// Returns true if `accommodationPreferences` has been explicitly set.
-  public var hasAccommodationPreferences: Bool {_storage._accommodationPreferences != nil}
+  public var hasAccommodationPreferences: Bool {return _storage._accommodationPreferences != nil}
   /// Clears the value of `accommodationPreferences`. Subsequent reads from it will return its default value.
   public mutating func clearAccommodationPreferences() {_uniqueStorage()._accommodationPreferences = nil}
 
   public var diningPreferences: Loci_Profile_DiningPreferences {
-    get {_storage._diningPreferences ?? Loci_Profile_DiningPreferences()}
+    get {return _storage._diningPreferences ?? Loci_Profile_DiningPreferences()}
     set {_uniqueStorage()._diningPreferences = newValue}
   }
   /// Returns true if `diningPreferences` has been explicitly set.
-  public var hasDiningPreferences: Bool {_storage._diningPreferences != nil}
+  public var hasDiningPreferences: Bool {return _storage._diningPreferences != nil}
   /// Clears the value of `diningPreferences`. Subsequent reads from it will return its default value.
   public mutating func clearDiningPreferences() {_uniqueStorage()._diningPreferences = nil}
 
   public var activityPreferences: Loci_Profile_ActivityPreferences {
-    get {_storage._activityPreferences ?? Loci_Profile_ActivityPreferences()}
+    get {return _storage._activityPreferences ?? Loci_Profile_ActivityPreferences()}
     set {_uniqueStorage()._activityPreferences = newValue}
   }
   /// Returns true if `activityPreferences` has been explicitly set.
-  public var hasActivityPreferences: Bool {_storage._activityPreferences != nil}
+  public var hasActivityPreferences: Bool {return _storage._activityPreferences != nil}
   /// Clears the value of `activityPreferences`. Subsequent reads from it will return its default value.
   public mutating func clearActivityPreferences() {_uniqueStorage()._activityPreferences = nil}
 
   public var itineraryPreferences: Loci_Profile_ItineraryPreferences {
-    get {_storage._itineraryPreferences ?? Loci_Profile_ItineraryPreferences()}
+    get {return _storage._itineraryPreferences ?? Loci_Profile_ItineraryPreferences()}
     set {_uniqueStorage()._itineraryPreferences = newValue}
   }
   /// Returns true if `itineraryPreferences` has been explicitly set.
-  public var hasItineraryPreferences: Bool {_storage._itineraryPreferences != nil}
+  public var hasItineraryPreferences: Bool {return _storage._itineraryPreferences != nil}
   /// Clears the value of `itineraryPreferences`. Subsequent reads from it will return its default value.
   public mutating func clearItineraryPreferences() {_uniqueStorage()._itineraryPreferences = nil}
 
@@ -894,159 +894,159 @@ public nonisolated struct Loci_Profile_CreateUserPreferenceProfileRequest: @unch
 }
 
 /// UpdateUserPreferenceProfileRequest for updating a preference profile
-public nonisolated struct Loci_Profile_UpdateUserPreferenceProfileRequest: @unchecked Sendable {
+public struct Loci_Profile_UpdateUserPreferenceProfileRequest: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var profileID: String {
-    get {_storage._profileID}
+    get {return _storage._profileID}
     set {_uniqueStorage()._profileID = newValue}
   }
 
   public var profileName: String {
-    get {_storage._profileName ?? String()}
+    get {return _storage._profileName ?? String()}
     set {_uniqueStorage()._profileName = newValue}
   }
   /// Returns true if `profileName` has been explicitly set.
-  public var hasProfileName: Bool {_storage._profileName != nil}
+  public var hasProfileName: Bool {return _storage._profileName != nil}
   /// Clears the value of `profileName`. Subsequent reads from it will return its default value.
   public mutating func clearProfileName() {_uniqueStorage()._profileName = nil}
 
   public var isDefault: Bool {
-    get {_storage._isDefault ?? false}
+    get {return _storage._isDefault ?? false}
     set {_uniqueStorage()._isDefault = newValue}
   }
   /// Returns true if `isDefault` has been explicitly set.
-  public var hasIsDefault: Bool {_storage._isDefault != nil}
+  public var hasIsDefault: Bool {return _storage._isDefault != nil}
   /// Clears the value of `isDefault`. Subsequent reads from it will return its default value.
   public mutating func clearIsDefault() {_uniqueStorage()._isDefault = nil}
 
   public var searchRadiusKm: Double {
-    get {_storage._searchRadiusKm ?? 0}
+    get {return _storage._searchRadiusKm ?? 0}
     set {_uniqueStorage()._searchRadiusKm = newValue}
   }
   /// Returns true if `searchRadiusKm` has been explicitly set.
-  public var hasSearchRadiusKm: Bool {_storage._searchRadiusKm != nil}
+  public var hasSearchRadiusKm: Bool {return _storage._searchRadiusKm != nil}
   /// Clears the value of `searchRadiusKm`. Subsequent reads from it will return its default value.
   public mutating func clearSearchRadiusKm() {_uniqueStorage()._searchRadiusKm = nil}
 
   public var preferredTime: Loci_Profile_DayPreference {
-    get {_storage._preferredTime ?? .unspecified}
+    get {return _storage._preferredTime ?? .unspecified}
     set {_uniqueStorage()._preferredTime = newValue}
   }
   /// Returns true if `preferredTime` has been explicitly set.
-  public var hasPreferredTime: Bool {_storage._preferredTime != nil}
+  public var hasPreferredTime: Bool {return _storage._preferredTime != nil}
   /// Clears the value of `preferredTime`. Subsequent reads from it will return its default value.
   public mutating func clearPreferredTime() {_uniqueStorage()._preferredTime = nil}
 
   public var budgetLevel: Int32 {
-    get {_storage._budgetLevel ?? 0}
+    get {return _storage._budgetLevel ?? 0}
     set {_uniqueStorage()._budgetLevel = newValue}
   }
   /// Returns true if `budgetLevel` has been explicitly set.
-  public var hasBudgetLevel: Bool {_storage._budgetLevel != nil}
+  public var hasBudgetLevel: Bool {return _storage._budgetLevel != nil}
   /// Clears the value of `budgetLevel`. Subsequent reads from it will return its default value.
   public mutating func clearBudgetLevel() {_uniqueStorage()._budgetLevel = nil}
 
   public var preferredPace: Loci_Profile_SearchPace {
-    get {_storage._preferredPace ?? .unspecified}
+    get {return _storage._preferredPace ?? .unspecified}
     set {_uniqueStorage()._preferredPace = newValue}
   }
   /// Returns true if `preferredPace` has been explicitly set.
-  public var hasPreferredPace: Bool {_storage._preferredPace != nil}
+  public var hasPreferredPace: Bool {return _storage._preferredPace != nil}
   /// Clears the value of `preferredPace`. Subsequent reads from it will return its default value.
   public mutating func clearPreferredPace() {_uniqueStorage()._preferredPace = nil}
 
   public var preferAccessiblePois: Bool {
-    get {_storage._preferAccessiblePois ?? false}
+    get {return _storage._preferAccessiblePois ?? false}
     set {_uniqueStorage()._preferAccessiblePois = newValue}
   }
   /// Returns true if `preferAccessiblePois` has been explicitly set.
-  public var hasPreferAccessiblePois: Bool {_storage._preferAccessiblePois != nil}
+  public var hasPreferAccessiblePois: Bool {return _storage._preferAccessiblePois != nil}
   /// Clears the value of `preferAccessiblePois`. Subsequent reads from it will return its default value.
   public mutating func clearPreferAccessiblePois() {_uniqueStorage()._preferAccessiblePois = nil}
 
   public var preferOutdoorSeating: Bool {
-    get {_storage._preferOutdoorSeating ?? false}
+    get {return _storage._preferOutdoorSeating ?? false}
     set {_uniqueStorage()._preferOutdoorSeating = newValue}
   }
   /// Returns true if `preferOutdoorSeating` has been explicitly set.
-  public var hasPreferOutdoorSeating: Bool {_storage._preferOutdoorSeating != nil}
+  public var hasPreferOutdoorSeating: Bool {return _storage._preferOutdoorSeating != nil}
   /// Clears the value of `preferOutdoorSeating`. Subsequent reads from it will return its default value.
   public mutating func clearPreferOutdoorSeating() {_uniqueStorage()._preferOutdoorSeating = nil}
 
   public var preferDogFriendly: Bool {
-    get {_storage._preferDogFriendly ?? false}
+    get {return _storage._preferDogFriendly ?? false}
     set {_uniqueStorage()._preferDogFriendly = newValue}
   }
   /// Returns true if `preferDogFriendly` has been explicitly set.
-  public var hasPreferDogFriendly: Bool {_storage._preferDogFriendly != nil}
+  public var hasPreferDogFriendly: Bool {return _storage._preferDogFriendly != nil}
   /// Clears the value of `preferDogFriendly`. Subsequent reads from it will return its default value.
   public mutating func clearPreferDogFriendly() {_uniqueStorage()._preferDogFriendly = nil}
 
   public var preferredVibes: [String] {
-    get {_storage._preferredVibes}
+    get {return _storage._preferredVibes}
     set {_uniqueStorage()._preferredVibes = newValue}
   }
 
   public var preferredTransport: Loci_Profile_TransportPreference {
-    get {_storage._preferredTransport ?? .unspecified}
+    get {return _storage._preferredTransport ?? .unspecified}
     set {_uniqueStorage()._preferredTransport = newValue}
   }
   /// Returns true if `preferredTransport` has been explicitly set.
-  public var hasPreferredTransport: Bool {_storage._preferredTransport != nil}
+  public var hasPreferredTransport: Bool {return _storage._preferredTransport != nil}
   /// Clears the value of `preferredTransport`. Subsequent reads from it will return its default value.
   public mutating func clearPreferredTransport() {_uniqueStorage()._preferredTransport = nil}
 
   public var dietaryNeeds: [String] {
-    get {_storage._dietaryNeeds}
+    get {return _storage._dietaryNeeds}
     set {_uniqueStorage()._dietaryNeeds = newValue}
   }
 
   public var tagIds: [String] {
-    get {_storage._tagIds}
+    get {return _storage._tagIds}
     set {_uniqueStorage()._tagIds = newValue}
   }
 
   public var interestIds: [String] {
-    get {_storage._interestIds}
+    get {return _storage._interestIds}
     set {_uniqueStorage()._interestIds = newValue}
   }
 
   public var accommodationPreferences: Loci_Profile_AccommodationPreferences {
-    get {_storage._accommodationPreferences ?? Loci_Profile_AccommodationPreferences()}
+    get {return _storage._accommodationPreferences ?? Loci_Profile_AccommodationPreferences()}
     set {_uniqueStorage()._accommodationPreferences = newValue}
   }
   /// Returns true if `accommodationPreferences` has been explicitly set.
-  public var hasAccommodationPreferences: Bool {_storage._accommodationPreferences != nil}
+  public var hasAccommodationPreferences: Bool {return _storage._accommodationPreferences != nil}
   /// Clears the value of `accommodationPreferences`. Subsequent reads from it will return its default value.
   public mutating func clearAccommodationPreferences() {_uniqueStorage()._accommodationPreferences = nil}
 
   public var diningPreferences: Loci_Profile_DiningPreferences {
-    get {_storage._diningPreferences ?? Loci_Profile_DiningPreferences()}
+    get {return _storage._diningPreferences ?? Loci_Profile_DiningPreferences()}
     set {_uniqueStorage()._diningPreferences = newValue}
   }
   /// Returns true if `diningPreferences` has been explicitly set.
-  public var hasDiningPreferences: Bool {_storage._diningPreferences != nil}
+  public var hasDiningPreferences: Bool {return _storage._diningPreferences != nil}
   /// Clears the value of `diningPreferences`. Subsequent reads from it will return its default value.
   public mutating func clearDiningPreferences() {_uniqueStorage()._diningPreferences = nil}
 
   public var activityPreferences: Loci_Profile_ActivityPreferences {
-    get {_storage._activityPreferences ?? Loci_Profile_ActivityPreferences()}
+    get {return _storage._activityPreferences ?? Loci_Profile_ActivityPreferences()}
     set {_uniqueStorage()._activityPreferences = newValue}
   }
   /// Returns true if `activityPreferences` has been explicitly set.
-  public var hasActivityPreferences: Bool {_storage._activityPreferences != nil}
+  public var hasActivityPreferences: Bool {return _storage._activityPreferences != nil}
   /// Clears the value of `activityPreferences`. Subsequent reads from it will return its default value.
   public mutating func clearActivityPreferences() {_uniqueStorage()._activityPreferences = nil}
 
   public var itineraryPreferences: Loci_Profile_ItineraryPreferences {
-    get {_storage._itineraryPreferences ?? Loci_Profile_ItineraryPreferences()}
+    get {return _storage._itineraryPreferences ?? Loci_Profile_ItineraryPreferences()}
     set {_uniqueStorage()._itineraryPreferences = newValue}
   }
   /// Returns true if `itineraryPreferences` has been explicitly set.
-  public var hasItineraryPreferences: Bool {_storage._itineraryPreferences != nil}
+  public var hasItineraryPreferences: Bool {return _storage._itineraryPreferences != nil}
   /// Clears the value of `itineraryPreferences`. Subsequent reads from it will return its default value.
   public mutating func clearItineraryPreferences() {_uniqueStorage()._itineraryPreferences = nil}
 
@@ -1058,17 +1058,17 @@ public nonisolated struct Loci_Profile_UpdateUserPreferenceProfileRequest: @unch
 }
 
 /// GetUserPreferenceProfilesRequest for retrieving user preference profiles
-public nonisolated struct Loci_Profile_GetUserPreferenceProfilesRequest: Sendable {
+public struct Loci_Profile_GetUserPreferenceProfilesRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var userID: String {
-    get {_userID ?? String()}
+    get {return _userID ?? String()}
     set {_userID = newValue}
   }
   /// Returns true if `userID` has been explicitly set.
-  public var hasUserID: Bool {self._userID != nil}
+  public var hasUserID: Bool {return self._userID != nil}
   /// Clears the value of `userID`. Subsequent reads from it will return its default value.
   public mutating func clearUserID() {self._userID = nil}
 
@@ -1080,7 +1080,7 @@ public nonisolated struct Loci_Profile_GetUserPreferenceProfilesRequest: Sendabl
 }
 
 /// GetUserPreferenceProfilesResponse for preference profiles retrieval
-public nonisolated struct Loci_Profile_GetUserPreferenceProfilesResponse: Sendable {
+public struct Loci_Profile_GetUserPreferenceProfilesResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1093,7 +1093,7 @@ public nonisolated struct Loci_Profile_GetUserPreferenceProfilesResponse: Sendab
 }
 
 /// GetUserPreferenceProfile request/response
-public nonisolated struct Loci_Profile_GetUserPreferenceProfileRequest: Sendable {
+public struct Loci_Profile_GetUserPreferenceProfileRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1105,17 +1105,17 @@ public nonisolated struct Loci_Profile_GetUserPreferenceProfileRequest: Sendable
   public init() {}
 }
 
-public nonisolated struct Loci_Profile_GetUserPreferenceProfileResponse: Sendable {
+public struct Loci_Profile_GetUserPreferenceProfileResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var profile: Loci_Profile_UserPreferenceProfile {
-    get {_profile ?? Loci_Profile_UserPreferenceProfile()}
+    get {return _profile ?? Loci_Profile_UserPreferenceProfile()}
     set {_profile = newValue}
   }
   /// Returns true if `profile` has been explicitly set.
-  public var hasProfile: Bool {self._profile != nil}
+  public var hasProfile: Bool {return self._profile != nil}
   /// Clears the value of `profile`. Subsequent reads from it will return its default value.
   public mutating func clearProfile() {self._profile = nil}
 
@@ -1127,7 +1127,7 @@ public nonisolated struct Loci_Profile_GetUserPreferenceProfileResponse: Sendabl
 }
 
 /// DeleteUserPreferenceProfile request
-public nonisolated struct Loci_Profile_DeleteUserPreferenceProfileRequest: Sendable {
+public struct Loci_Profile_DeleteUserPreferenceProfileRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1140,7 +1140,7 @@ public nonisolated struct Loci_Profile_DeleteUserPreferenceProfileRequest: Senda
 }
 
 /// SetDefaultProfile request
-public nonisolated struct Loci_Profile_SetDefaultProfileRequest: Sendable {
+public struct Loci_Profile_SetDefaultProfileRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1153,7 +1153,7 @@ public nonisolated struct Loci_Profile_SetDefaultProfileRequest: Sendable {
 }
 
 /// Domain preference requests/responses
-public nonisolated struct Loci_Profile_GetDomainPreferencesRequest: Sendable {
+public struct Loci_Profile_GetDomainPreferencesRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1165,27 +1165,27 @@ public nonisolated struct Loci_Profile_GetDomainPreferencesRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Profile_AccommodationPreferencesResponse: @unchecked Sendable {
+public struct Loci_Profile_AccommodationPreferencesResponse: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var success: Bool {
-    get {_storage._success}
+    get {return _storage._success}
     set {_uniqueStorage()._success = newValue}
   }
 
   public var message: String {
-    get {_storage._message}
+    get {return _storage._message}
     set {_uniqueStorage()._message = newValue}
   }
 
   public var preferences: Loci_Profile_AccommodationPreferences {
-    get {_storage._preferences ?? Loci_Profile_AccommodationPreferences()}
+    get {return _storage._preferences ?? Loci_Profile_AccommodationPreferences()}
     set {_uniqueStorage()._preferences = newValue}
   }
   /// Returns true if `preferences` has been explicitly set.
-  public var hasPreferences: Bool {_storage._preferences != nil}
+  public var hasPreferences: Bool {return _storage._preferences != nil}
   /// Clears the value of `preferences`. Subsequent reads from it will return its default value.
   public mutating func clearPreferences() {_uniqueStorage()._preferences = nil}
 
@@ -1196,7 +1196,7 @@ public nonisolated struct Loci_Profile_AccommodationPreferencesResponse: @unchec
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-public nonisolated struct Loci_Profile_DiningPreferencesResponse: Sendable {
+public struct Loci_Profile_DiningPreferencesResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1206,11 +1206,11 @@ public nonisolated struct Loci_Profile_DiningPreferencesResponse: Sendable {
   public var message: String = String()
 
   public var preferences: Loci_Profile_DiningPreferences {
-    get {_preferences ?? Loci_Profile_DiningPreferences()}
+    get {return _preferences ?? Loci_Profile_DiningPreferences()}
     set {_preferences = newValue}
   }
   /// Returns true if `preferences` has been explicitly set.
-  public var hasPreferences: Bool {self._preferences != nil}
+  public var hasPreferences: Bool {return self._preferences != nil}
   /// Clears the value of `preferences`. Subsequent reads from it will return its default value.
   public mutating func clearPreferences() {self._preferences = nil}
 
@@ -1221,27 +1221,27 @@ public nonisolated struct Loci_Profile_DiningPreferencesResponse: Sendable {
   fileprivate var _preferences: Loci_Profile_DiningPreferences? = nil
 }
 
-public nonisolated struct Loci_Profile_ActivityPreferencesResponse: @unchecked Sendable {
+public struct Loci_Profile_ActivityPreferencesResponse: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var success: Bool {
-    get {_storage._success}
+    get {return _storage._success}
     set {_uniqueStorage()._success = newValue}
   }
 
   public var message: String {
-    get {_storage._message}
+    get {return _storage._message}
     set {_uniqueStorage()._message = newValue}
   }
 
   public var preferences: Loci_Profile_ActivityPreferences {
-    get {_storage._preferences ?? Loci_Profile_ActivityPreferences()}
+    get {return _storage._preferences ?? Loci_Profile_ActivityPreferences()}
     set {_uniqueStorage()._preferences = newValue}
   }
   /// Returns true if `preferences` has been explicitly set.
-  public var hasPreferences: Bool {_storage._preferences != nil}
+  public var hasPreferences: Bool {return _storage._preferences != nil}
   /// Clears the value of `preferences`. Subsequent reads from it will return its default value.
   public mutating func clearPreferences() {_uniqueStorage()._preferences = nil}
 
@@ -1252,27 +1252,27 @@ public nonisolated struct Loci_Profile_ActivityPreferencesResponse: @unchecked S
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-public nonisolated struct Loci_Profile_ItineraryPreferencesResponse: @unchecked Sendable {
+public struct Loci_Profile_ItineraryPreferencesResponse: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var success: Bool {
-    get {_storage._success}
+    get {return _storage._success}
     set {_uniqueStorage()._success = newValue}
   }
 
   public var message: String {
-    get {_storage._message}
+    get {return _storage._message}
     set {_uniqueStorage()._message = newValue}
   }
 
   public var preferences: Loci_Profile_ItineraryPreferences {
-    get {_storage._preferences ?? Loci_Profile_ItineraryPreferences()}
+    get {return _storage._preferences ?? Loci_Profile_ItineraryPreferences()}
     set {_uniqueStorage()._preferences = newValue}
   }
   /// Returns true if `preferences` has been explicitly set.
-  public var hasPreferences: Bool {_storage._preferences != nil}
+  public var hasPreferences: Bool {return _storage._preferences != nil}
   /// Clears the value of `preferences`. Subsequent reads from it will return its default value.
   public mutating func clearPreferences() {_uniqueStorage()._preferences = nil}
 
@@ -1284,7 +1284,7 @@ public nonisolated struct Loci_Profile_ItineraryPreferencesResponse: @unchecked 
 }
 
 /// Combined filters for a domain
-public nonisolated struct Loci_Profile_GetCombinedFiltersRequest: Sendable {
+public struct Loci_Profile_GetCombinedFiltersRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1293,11 +1293,11 @@ public nonisolated struct Loci_Profile_GetCombinedFiltersRequest: Sendable {
 
   /// general, accommodation, dining, activities, itinerary
   public var domain: String {
-    get {_domain ?? String()}
+    get {return _domain ?? String()}
     set {_domain = newValue}
   }
   /// Returns true if `domain` has been explicitly set.
-  public var hasDomain: Bool {self._domain != nil}
+  public var hasDomain: Bool {return self._domain != nil}
   /// Clears the value of `domain`. Subsequent reads from it will return its default value.
   public mutating func clearDomain() {self._domain = nil}
 
@@ -1308,63 +1308,63 @@ public nonisolated struct Loci_Profile_GetCombinedFiltersRequest: Sendable {
   fileprivate var _domain: String? = nil
 }
 
-public nonisolated struct Loci_Profile_CombinedFiltersResponse: @unchecked Sendable {
+public struct Loci_Profile_CombinedFiltersResponse: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var success: Bool {
-    get {_storage._success}
+    get {return _storage._success}
     set {_uniqueStorage()._success = newValue}
   }
 
   public var message: String {
-    get {_storage._message}
+    get {return _storage._message}
     set {_uniqueStorage()._message = newValue}
   }
 
   public var profile: Loci_Profile_UserPreferenceProfile {
-    get {_storage._profile ?? Loci_Profile_UserPreferenceProfile()}
+    get {return _storage._profile ?? Loci_Profile_UserPreferenceProfile()}
     set {_uniqueStorage()._profile = newValue}
   }
   /// Returns true if `profile` has been explicitly set.
-  public var hasProfile: Bool {_storage._profile != nil}
+  public var hasProfile: Bool {return _storage._profile != nil}
   /// Clears the value of `profile`. Subsequent reads from it will return its default value.
   public mutating func clearProfile() {_uniqueStorage()._profile = nil}
 
   public var accommodation: Loci_Profile_AccommodationPreferences {
-    get {_storage._accommodation ?? Loci_Profile_AccommodationPreferences()}
+    get {return _storage._accommodation ?? Loci_Profile_AccommodationPreferences()}
     set {_uniqueStorage()._accommodation = newValue}
   }
   /// Returns true if `accommodation` has been explicitly set.
-  public var hasAccommodation: Bool {_storage._accommodation != nil}
+  public var hasAccommodation: Bool {return _storage._accommodation != nil}
   /// Clears the value of `accommodation`. Subsequent reads from it will return its default value.
   public mutating func clearAccommodation() {_uniqueStorage()._accommodation = nil}
 
   public var dining: Loci_Profile_DiningPreferences {
-    get {_storage._dining ?? Loci_Profile_DiningPreferences()}
+    get {return _storage._dining ?? Loci_Profile_DiningPreferences()}
     set {_uniqueStorage()._dining = newValue}
   }
   /// Returns true if `dining` has been explicitly set.
-  public var hasDining: Bool {_storage._dining != nil}
+  public var hasDining: Bool {return _storage._dining != nil}
   /// Clears the value of `dining`. Subsequent reads from it will return its default value.
   public mutating func clearDining() {_uniqueStorage()._dining = nil}
 
   public var activity: Loci_Profile_ActivityPreferences {
-    get {_storage._activity ?? Loci_Profile_ActivityPreferences()}
+    get {return _storage._activity ?? Loci_Profile_ActivityPreferences()}
     set {_uniqueStorage()._activity = newValue}
   }
   /// Returns true if `activity` has been explicitly set.
-  public var hasActivity: Bool {_storage._activity != nil}
+  public var hasActivity: Bool {return _storage._activity != nil}
   /// Clears the value of `activity`. Subsequent reads from it will return its default value.
   public mutating func clearActivity() {_uniqueStorage()._activity = nil}
 
   public var itinerary: Loci_Profile_ItineraryPreferences {
-    get {_storage._itinerary ?? Loci_Profile_ItineraryPreferences()}
+    get {return _storage._itinerary ?? Loci_Profile_ItineraryPreferences()}
     set {_uniqueStorage()._itinerary = newValue}
   }
   /// Returns true if `itinerary` has been explicitly set.
-  public var hasItinerary: Bool {_storage._itinerary != nil}
+  public var hasItinerary: Bool {return _storage._itinerary != nil}
   /// Clears the value of `itinerary`. Subsequent reads from it will return its default value.
   public mutating func clearItinerary() {_uniqueStorage()._itinerary = nil}
 
@@ -1377,23 +1377,53 @@ public nonisolated struct Loci_Profile_CombinedFiltersResponse: @unchecked Senda
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.profile"
+fileprivate let _protobuf_package = "loci.profile"
 
-nonisolated extension Loci_Profile_DayPreference: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0DAY_PREFERENCE_UNSPECIFIED\0\u{1}DAY_PREFERENCE_ANY\0\u{1}DAY_PREFERENCE_DAY\0\u{1}DAY_PREFERENCE_NIGHT\0")
+extension Loci_Profile_DayPreference: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "DAY_PREFERENCE_UNSPECIFIED"),
+    1: .same(proto: "DAY_PREFERENCE_ANY"),
+    2: .same(proto: "DAY_PREFERENCE_DAY"),
+    3: .same(proto: "DAY_PREFERENCE_NIGHT"),
+  ]
 }
 
-nonisolated extension Loci_Profile_SearchPace: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0SEARCH_PACE_UNSPECIFIED\0\u{1}SEARCH_PACE_ANY\0\u{1}SEARCH_PACE_RELAXED\0\u{1}SEARCH_PACE_MODERATE\0\u{1}SEARCH_PACE_FAST\0")
+extension Loci_Profile_SearchPace: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "SEARCH_PACE_UNSPECIFIED"),
+    1: .same(proto: "SEARCH_PACE_ANY"),
+    2: .same(proto: "SEARCH_PACE_RELAXED"),
+    3: .same(proto: "SEARCH_PACE_MODERATE"),
+    4: .same(proto: "SEARCH_PACE_FAST"),
+  ]
 }
 
-nonisolated extension Loci_Profile_TransportPreference: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0TRANSPORT_PREFERENCE_UNSPECIFIED\0\u{1}TRANSPORT_PREFERENCE_ANY\0\u{1}TRANSPORT_PREFERENCE_WALK\0\u{1}TRANSPORT_PREFERENCE_PUBLIC\0\u{1}TRANSPORT_PREFERENCE_CAR\0")
+extension Loci_Profile_TransportPreference: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "TRANSPORT_PREFERENCE_UNSPECIFIED"),
+    1: .same(proto: "TRANSPORT_PREFERENCE_ANY"),
+    2: .same(proto: "TRANSPORT_PREFERENCE_WALK"),
+    3: .same(proto: "TRANSPORT_PREFERENCE_PUBLIC"),
+    4: .same(proto: "TRANSPORT_PREFERENCE_CAR"),
+  ]
 }
 
-nonisolated extension Loci_Profile_AccommodationPreferences: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Profile_AccommodationPreferences: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".AccommodationPreferences"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}user_preference_id\0\u{3}accommodation_type\0\u{3}star_rating\0\u{3}price_range_per_night\0\u{1}amenities\0\u{3}room_type\0\u{3}chain_preference\0\u{3}cancellation_policy\0\u{3}booking_flexibility\0\u{3}created_at\0\u{3}updated_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "user_preference_id"),
+    3: .standard(proto: "accommodation_type"),
+    4: .standard(proto: "star_rating"),
+    5: .standard(proto: "price_range_per_night"),
+    6: .same(proto: "amenities"),
+    7: .standard(proto: "room_type"),
+    8: .standard(proto: "chain_preference"),
+    9: .standard(proto: "cancellation_policy"),
+    10: .standard(proto: "booking_flexibility"),
+    11: .standard(proto: "created_at"),
+    12: .standard(proto: "updated_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1480,9 +1510,25 @@ nonisolated extension Loci_Profile_AccommodationPreferences: SwiftProtobuf.Messa
   }
 }
 
-nonisolated extension Loci_Profile_DiningPreferences: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Profile_DiningPreferences: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DiningPreferences"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}user_preference_id\0\u{3}cuisine_types\0\u{3}meal_types\0\u{3}service_style\0\u{3}price_range_per_person\0\u{3}dietary_needs\0\u{3}allergen_free\0\u{3}michelin_rated\0\u{3}local_recommendations\0\u{3}chain_vs_local\0\u{3}organic_preference\0\u{3}outdoor_seating_preferred\0\u{3}created_at\0\u{3}updated_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "user_preference_id"),
+    3: .standard(proto: "cuisine_types"),
+    4: .standard(proto: "meal_types"),
+    5: .standard(proto: "service_style"),
+    6: .standard(proto: "price_range_per_person"),
+    7: .standard(proto: "dietary_needs"),
+    8: .standard(proto: "allergen_free"),
+    9: .standard(proto: "michelin_rated"),
+    10: .standard(proto: "local_recommendations"),
+    11: .standard(proto: "chain_vs_local"),
+    12: .standard(proto: "organic_preference"),
+    13: .standard(proto: "outdoor_seating_preferred"),
+    14: .standard(proto: "created_at"),
+    15: .standard(proto: "updated_at"),
+  ]
 
   fileprivate class _StorageClass {
     var _id: String = String()
@@ -1501,11 +1547,15 @@ nonisolated extension Loci_Profile_DiningPreferences: SwiftProtobuf.Message, Swi
     var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -1648,9 +1698,24 @@ nonisolated extension Loci_Profile_DiningPreferences: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Profile_ActivityPreferences: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Profile_ActivityPreferences: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ActivityPreferences"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}user_preference_id\0\u{3}activity_categories\0\u{3}physical_activity_level\0\u{3}indoor_outdoor_preference\0\u{3}cultural_immersion_level\0\u{3}must_see_vs_hidden_gems\0\u{3}educational_preference\0\u{3}photography_opportunities\0\u{3}season_specific_activities\0\u{3}avoid_crowds\0\u{3}local_events_interest\0\u{3}created_at\0\u{3}updated_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "user_preference_id"),
+    3: .standard(proto: "activity_categories"),
+    4: .standard(proto: "physical_activity_level"),
+    5: .standard(proto: "indoor_outdoor_preference"),
+    6: .standard(proto: "cultural_immersion_level"),
+    7: .standard(proto: "must_see_vs_hidden_gems"),
+    8: .standard(proto: "educational_preference"),
+    9: .standard(proto: "photography_opportunities"),
+    10: .standard(proto: "season_specific_activities"),
+    11: .standard(proto: "avoid_crowds"),
+    12: .standard(proto: "local_events_interest"),
+    13: .standard(proto: "created_at"),
+    14: .standard(proto: "updated_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1747,9 +1812,23 @@ nonisolated extension Loci_Profile_ActivityPreferences: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_Profile_ItineraryPreferences: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Profile_ItineraryPreferences: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ItineraryPreferences"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}user_preference_id\0\u{3}planning_style\0\u{3}preferred_pace\0\u{3}time_flexibility\0\u{3}morning_vs_evening\0\u{3}weekend_vs_weekday\0\u{3}preferred_seasons\0\u{3}avoid_peak_season\0\u{3}adventure_vs_relaxation\0\u{3}spontaneous_vs_planned\0\u{3}created_at\0\u{3}updated_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "user_preference_id"),
+    3: .standard(proto: "planning_style"),
+    4: .standard(proto: "preferred_pace"),
+    5: .standard(proto: "time_flexibility"),
+    6: .standard(proto: "morning_vs_evening"),
+    7: .standard(proto: "weekend_vs_weekday"),
+    8: .standard(proto: "preferred_seasons"),
+    9: .standard(proto: "avoid_peak_season"),
+    10: .standard(proto: "adventure_vs_relaxation"),
+    11: .standard(proto: "spontaneous_vs_planned"),
+    12: .standard(proto: "created_at"),
+    13: .standard(proto: "updated_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1841,9 +1920,34 @@ nonisolated extension Loci_Profile_ItineraryPreferences: SwiftProtobuf.Message, 
   }
 }
 
-nonisolated extension Loci_Profile_UserPreferenceProfile: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Profile_UserPreferenceProfile: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UserPreferenceProfile"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}user_id\0\u{3}profile_name\0\u{3}is_default\0\u{3}search_radius_km\0\u{3}preferred_time\0\u{3}budget_level\0\u{3}preferred_pace\0\u{3}prefer_accessible_pois\0\u{3}prefer_outdoor_seating\0\u{3}prefer_dog_friendly\0\u{3}preferred_vibes\0\u{3}preferred_transport\0\u{3}dietary_needs\0\u{1}interests\0\u{1}tags\0\u{3}user_latitude\0\u{3}user_longitude\0\u{3}accommodation_preferences\0\u{3}dining_preferences\0\u{3}activity_preferences\0\u{3}itinerary_preferences\0\u{3}created_at\0\u{3}updated_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "user_id"),
+    3: .standard(proto: "profile_name"),
+    4: .standard(proto: "is_default"),
+    5: .standard(proto: "search_radius_km"),
+    6: .standard(proto: "preferred_time"),
+    7: .standard(proto: "budget_level"),
+    8: .standard(proto: "preferred_pace"),
+    9: .standard(proto: "prefer_accessible_pois"),
+    10: .standard(proto: "prefer_outdoor_seating"),
+    11: .standard(proto: "prefer_dog_friendly"),
+    12: .standard(proto: "preferred_vibes"),
+    13: .standard(proto: "preferred_transport"),
+    14: .standard(proto: "dietary_needs"),
+    15: .same(proto: "interests"),
+    16: .same(proto: "tags"),
+    17: .standard(proto: "user_latitude"),
+    18: .standard(proto: "user_longitude"),
+    19: .standard(proto: "accommodation_preferences"),
+    20: .standard(proto: "dining_preferences"),
+    21: .standard(proto: "activity_preferences"),
+    22: .standard(proto: "itinerary_preferences"),
+    23: .standard(proto: "created_at"),
+    24: .standard(proto: "updated_at"),
+  ]
 
   fileprivate class _StorageClass {
     var _id: String = String()
@@ -1871,11 +1975,15 @@ nonisolated extension Loci_Profile_UserPreferenceProfile: SwiftProtobuf.Message,
     var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -2072,9 +2180,28 @@ nonisolated extension Loci_Profile_UserPreferenceProfile: SwiftProtobuf.Message,
   }
 }
 
-nonisolated extension Loci_Profile_CreateUserPreferenceProfileRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Profile_CreateUserPreferenceProfileRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreateUserPreferenceProfileRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}profile_name\0\u{3}is_default\0\u{3}search_radius_km\0\u{3}preferred_time\0\u{3}budget_level\0\u{3}preferred_pace\0\u{3}prefer_accessible_pois\0\u{3}prefer_outdoor_seating\0\u{3}prefer_dog_friendly\0\u{3}preferred_vibes\0\u{3}preferred_transport\0\u{3}dietary_needs\0\u{3}tag_ids\0\u{3}interest_ids\0\u{3}accommodation_preferences\0\u{3}dining_preferences\0\u{3}activity_preferences\0\u{3}itinerary_preferences\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "profile_name"),
+    2: .standard(proto: "is_default"),
+    3: .standard(proto: "search_radius_km"),
+    4: .standard(proto: "preferred_time"),
+    5: .standard(proto: "budget_level"),
+    6: .standard(proto: "preferred_pace"),
+    7: .standard(proto: "prefer_accessible_pois"),
+    8: .standard(proto: "prefer_outdoor_seating"),
+    9: .standard(proto: "prefer_dog_friendly"),
+    10: .standard(proto: "preferred_vibes"),
+    11: .standard(proto: "preferred_transport"),
+    12: .standard(proto: "dietary_needs"),
+    13: .standard(proto: "tag_ids"),
+    14: .standard(proto: "interest_ids"),
+    15: .standard(proto: "accommodation_preferences"),
+    16: .standard(proto: "dining_preferences"),
+    17: .standard(proto: "activity_preferences"),
+    18: .standard(proto: "itinerary_preferences"),
+  ]
 
   fileprivate class _StorageClass {
     var _profileName: String = String()
@@ -2096,11 +2223,15 @@ nonisolated extension Loci_Profile_CreateUserPreferenceProfileRequest: SwiftProt
     var _activityPreferences: Loci_Profile_ActivityPreferences? = nil
     var _itineraryPreferences: Loci_Profile_ItineraryPreferences? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -2261,9 +2392,29 @@ nonisolated extension Loci_Profile_CreateUserPreferenceProfileRequest: SwiftProt
   }
 }
 
-nonisolated extension Loci_Profile_UpdateUserPreferenceProfileRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Profile_UpdateUserPreferenceProfileRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UpdateUserPreferenceProfileRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}profile_id\0\u{3}profile_name\0\u{3}is_default\0\u{3}search_radius_km\0\u{3}preferred_time\0\u{3}budget_level\0\u{3}preferred_pace\0\u{3}prefer_accessible_pois\0\u{3}prefer_outdoor_seating\0\u{3}prefer_dog_friendly\0\u{3}preferred_vibes\0\u{3}preferred_transport\0\u{3}dietary_needs\0\u{3}tag_ids\0\u{3}interest_ids\0\u{3}accommodation_preferences\0\u{3}dining_preferences\0\u{3}activity_preferences\0\u{3}itinerary_preferences\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "profile_id"),
+    2: .standard(proto: "profile_name"),
+    3: .standard(proto: "is_default"),
+    4: .standard(proto: "search_radius_km"),
+    5: .standard(proto: "preferred_time"),
+    6: .standard(proto: "budget_level"),
+    7: .standard(proto: "preferred_pace"),
+    8: .standard(proto: "prefer_accessible_pois"),
+    9: .standard(proto: "prefer_outdoor_seating"),
+    10: .standard(proto: "prefer_dog_friendly"),
+    11: .standard(proto: "preferred_vibes"),
+    12: .standard(proto: "preferred_transport"),
+    13: .standard(proto: "dietary_needs"),
+    14: .standard(proto: "tag_ids"),
+    15: .standard(proto: "interest_ids"),
+    16: .standard(proto: "accommodation_preferences"),
+    17: .standard(proto: "dining_preferences"),
+    18: .standard(proto: "activity_preferences"),
+    19: .standard(proto: "itinerary_preferences"),
+  ]
 
   fileprivate class _StorageClass {
     var _profileID: String = String()
@@ -2286,11 +2437,15 @@ nonisolated extension Loci_Profile_UpdateUserPreferenceProfileRequest: SwiftProt
     var _activityPreferences: Loci_Profile_ActivityPreferences? = nil
     var _itineraryPreferences: Loci_Profile_ItineraryPreferences? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -2457,9 +2612,11 @@ nonisolated extension Loci_Profile_UpdateUserPreferenceProfileRequest: SwiftProt
   }
 }
 
-nonisolated extension Loci_Profile_GetUserPreferenceProfilesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Profile_GetUserPreferenceProfilesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetUserPreferenceProfilesRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2491,9 +2648,11 @@ nonisolated extension Loci_Profile_GetUserPreferenceProfilesRequest: SwiftProtob
   }
 }
 
-nonisolated extension Loci_Profile_GetUserPreferenceProfilesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Profile_GetUserPreferenceProfilesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetUserPreferenceProfilesResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}profiles\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "profiles"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2521,9 +2680,11 @@ nonisolated extension Loci_Profile_GetUserPreferenceProfilesResponse: SwiftProto
   }
 }
 
-nonisolated extension Loci_Profile_GetUserPreferenceProfileRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Profile_GetUserPreferenceProfileRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetUserPreferenceProfileRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}profile_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "profile_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2551,9 +2712,11 @@ nonisolated extension Loci_Profile_GetUserPreferenceProfileRequest: SwiftProtobu
   }
 }
 
-nonisolated extension Loci_Profile_GetUserPreferenceProfileResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Profile_GetUserPreferenceProfileResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetUserPreferenceProfileResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}profile\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "profile"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2585,9 +2748,11 @@ nonisolated extension Loci_Profile_GetUserPreferenceProfileResponse: SwiftProtob
   }
 }
 
-nonisolated extension Loci_Profile_DeleteUserPreferenceProfileRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Profile_DeleteUserPreferenceProfileRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DeleteUserPreferenceProfileRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}profile_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "profile_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2615,9 +2780,11 @@ nonisolated extension Loci_Profile_DeleteUserPreferenceProfileRequest: SwiftProt
   }
 }
 
-nonisolated extension Loci_Profile_SetDefaultProfileRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Profile_SetDefaultProfileRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".SetDefaultProfileRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}profile_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "profile_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2645,9 +2812,11 @@ nonisolated extension Loci_Profile_SetDefaultProfileRequest: SwiftProtobuf.Messa
   }
 }
 
-nonisolated extension Loci_Profile_GetDomainPreferencesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Profile_GetDomainPreferencesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetDomainPreferencesRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}profile_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "profile_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2675,20 +2844,28 @@ nonisolated extension Loci_Profile_GetDomainPreferencesRequest: SwiftProtobuf.Me
   }
 }
 
-nonisolated extension Loci_Profile_AccommodationPreferencesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Profile_AccommodationPreferencesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".AccommodationPreferencesResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}success\0\u{1}message\0\u{1}preferences\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "success"),
+    2: .same(proto: "message"),
+    3: .same(proto: "preferences"),
+  ]
 
   fileprivate class _StorageClass {
     var _success: Bool = false
     var _message: String = String()
     var _preferences: Loci_Profile_AccommodationPreferences? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -2759,9 +2936,13 @@ nonisolated extension Loci_Profile_AccommodationPreferencesResponse: SwiftProtob
   }
 }
 
-nonisolated extension Loci_Profile_DiningPreferencesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Profile_DiningPreferencesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DiningPreferencesResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}success\0\u{1}message\0\u{1}preferences\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "success"),
+    2: .same(proto: "message"),
+    3: .same(proto: "preferences"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2803,20 +2984,28 @@ nonisolated extension Loci_Profile_DiningPreferencesResponse: SwiftProtobuf.Mess
   }
 }
 
-nonisolated extension Loci_Profile_ActivityPreferencesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Profile_ActivityPreferencesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ActivityPreferencesResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}success\0\u{1}message\0\u{1}preferences\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "success"),
+    2: .same(proto: "message"),
+    3: .same(proto: "preferences"),
+  ]
 
   fileprivate class _StorageClass {
     var _success: Bool = false
     var _message: String = String()
     var _preferences: Loci_Profile_ActivityPreferences? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -2887,20 +3076,28 @@ nonisolated extension Loci_Profile_ActivityPreferencesResponse: SwiftProtobuf.Me
   }
 }
 
-nonisolated extension Loci_Profile_ItineraryPreferencesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Profile_ItineraryPreferencesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ItineraryPreferencesResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}success\0\u{1}message\0\u{1}preferences\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "success"),
+    2: .same(proto: "message"),
+    3: .same(proto: "preferences"),
+  ]
 
   fileprivate class _StorageClass {
     var _success: Bool = false
     var _message: String = String()
     var _preferences: Loci_Profile_ItineraryPreferences? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 
@@ -2971,9 +3168,12 @@ nonisolated extension Loci_Profile_ItineraryPreferencesResponse: SwiftProtobuf.M
   }
 }
 
-nonisolated extension Loci_Profile_GetCombinedFiltersRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Profile_GetCombinedFiltersRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetCombinedFiltersRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}profile_id\0\u{1}domain\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "profile_id"),
+    2: .same(proto: "domain"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3010,9 +3210,17 @@ nonisolated extension Loci_Profile_GetCombinedFiltersRequest: SwiftProtobuf.Mess
   }
 }
 
-nonisolated extension Loci_Profile_CombinedFiltersResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Profile_CombinedFiltersResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CombinedFiltersResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}success\0\u{1}message\0\u{1}profile\0\u{1}accommodation\0\u{1}dining\0\u{1}activity\0\u{1}itinerary\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "success"),
+    2: .same(proto: "message"),
+    3: .same(proto: "profile"),
+    4: .same(proto: "accommodation"),
+    5: .same(proto: "dining"),
+    6: .same(proto: "activity"),
+    7: .same(proto: "itinerary"),
+  ]
 
   fileprivate class _StorageClass {
     var _success: Bool = false
@@ -3023,11 +3231,15 @@ nonisolated extension Loci_Profile_CombinedFiltersResponse: SwiftProtobuf.Messag
     var _activity: Loci_Profile_ActivityPreferences? = nil
     var _itinerary: Loci_Profile_ItineraryPreferences? = nil
 
+    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
 
     private init() {}
 

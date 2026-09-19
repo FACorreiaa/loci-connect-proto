@@ -15,13 +15,13 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// Evidence is one recorded action that contributed to a belief.
-public nonisolated struct Loci_Memory_Evidence: Sendable {
+public struct Loci_Memory_Evidence: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -46,11 +46,11 @@ public nonisolated struct Loci_Memory_Evidence: Sendable {
   public var cityName: String = String()
 
   public var occurredAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_occurredAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _occurredAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_occurredAt = newValue}
   }
   /// Returns true if `occurredAt` has been explicitly set.
-  public var hasOccurredAt: Bool {self._occurredAt != nil}
+  public var hasOccurredAt: Bool {return self._occurredAt != nil}
   /// Clears the value of `occurredAt`. Subsequent reads from it will return its default value.
   public mutating func clearOccurredAt() {self._occurredAt = nil}
 
@@ -62,7 +62,7 @@ public nonisolated struct Loci_Memory_Evidence: Sendable {
 }
 
 /// Trait is one thing Loci believes, with what taught it.
-public nonisolated struct Loci_Memory_Trait: Sendable {
+public struct Loci_Memory_Trait: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -80,11 +80,11 @@ public nonisolated struct Loci_Memory_Trait: Sendable {
   public var evidenceCount: Int32 = 0
 
   public var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  public var hasUpdatedAt: Bool {self._updatedAt != nil}
+  public var hasUpdatedAt: Bool {return self._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {self._updatedAt = nil}
 
@@ -98,7 +98,7 @@ public nonisolated struct Loci_Memory_Trait: Sendable {
   fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-public nonisolated struct Loci_Memory_GetMemoryRequest: Sendable {
+public struct Loci_Memory_GetMemoryRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -112,7 +112,7 @@ public nonisolated struct Loci_Memory_GetMemoryRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Memory_GetMemoryResponse: Sendable {
+public struct Loci_Memory_GetMemoryResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -130,20 +130,20 @@ public nonisolated struct Loci_Memory_GetMemoryResponse: Sendable {
   public var signalCount: Int32 = 0
 
   public var lastSignalAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_lastSignalAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _lastSignalAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_lastSignalAt = newValue}
   }
   /// Returns true if `lastSignalAt` has been explicitly set.
-  public var hasLastSignalAt: Bool {self._lastSignalAt != nil}
+  public var hasLastSignalAt: Bool {return self._lastSignalAt != nil}
   /// Clears the value of `lastSignalAt`. Subsequent reads from it will return its default value.
   public mutating func clearLastSignalAt() {self._lastSignalAt = nil}
 
   public var generatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_generatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _generatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_generatedAt = newValue}
   }
   /// Returns true if `generatedAt` has been explicitly set.
-  public var hasGeneratedAt: Bool {self._generatedAt != nil}
+  public var hasGeneratedAt: Bool {return self._generatedAt != nil}
   /// Clears the value of `generatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearGeneratedAt() {self._generatedAt = nil}
 
@@ -155,7 +155,7 @@ public nonisolated struct Loci_Memory_GetMemoryResponse: Sendable {
   fileprivate var _generatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-public nonisolated struct Loci_Memory_ForgetTraitRequest: Sendable {
+public struct Loci_Memory_ForgetTraitRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -167,7 +167,7 @@ public nonisolated struct Loci_Memory_ForgetTraitRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Memory_ForgetTraitResponse: Sendable {
+public struct Loci_Memory_ForgetTraitResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -180,7 +180,7 @@ public nonisolated struct Loci_Memory_ForgetTraitResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Memory_ForgetEvidenceRequest: Sendable {
+public struct Loci_Memory_ForgetEvidenceRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -193,7 +193,7 @@ public nonisolated struct Loci_Memory_ForgetEvidenceRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Memory_ForgetEvidenceResponse: Sendable {
+public struct Loci_Memory_ForgetEvidenceResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -205,11 +205,20 @@ public nonisolated struct Loci_Memory_ForgetEvidenceResponse: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.memory"
+fileprivate let _protobuf_package = "loci.memory"
 
-nonisolated extension Loci_Memory_Evidence: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Memory_Evidence: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Evidence"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}feedback_id\0\u{1}event\0\u{1}weight\0\u{3}poi_id\0\u{3}poi_name\0\u{3}city_name\0\u{3}occurred_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "feedback_id"),
+    3: .same(proto: "event"),
+    4: .same(proto: "weight"),
+    5: .standard(proto: "poi_id"),
+    6: .standard(proto: "poi_name"),
+    7: .standard(proto: "city_name"),
+    8: .standard(proto: "occurred_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -276,9 +285,17 @@ nonisolated extension Loci_Memory_Evidence: SwiftProtobuf.Message, SwiftProtobuf
   }
 }
 
-nonisolated extension Loci_Memory_Trait: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Memory_Trait: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Trait"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}key\0\u{1}label\0\u{1}score\0\u{1}confidence\0\u{3}evidence_count\0\u{3}updated_at\0\u{1}evidence\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "key"),
+    2: .same(proto: "label"),
+    3: .same(proto: "score"),
+    4: .same(proto: "confidence"),
+    5: .standard(proto: "evidence_count"),
+    6: .standard(proto: "updated_at"),
+    7: .same(proto: "evidence"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -340,9 +357,11 @@ nonisolated extension Loci_Memory_Trait: SwiftProtobuf.Message, SwiftProtobuf._M
   }
 }
 
-nonisolated extension Loci_Memory_GetMemoryRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Memory_GetMemoryRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetMemoryRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}include_evidence\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "include_evidence"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -370,9 +389,16 @@ nonisolated extension Loci_Memory_GetMemoryRequest: SwiftProtobuf.Message, Swift
   }
 }
 
-nonisolated extension Loci_Memory_GetMemoryResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Memory_GetMemoryResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetMemoryResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}traits\0\u{3}personalization_enabled\0\u{3}has_vector\0\u{3}signal_count\0\u{3}last_signal_at\0\u{3}generated_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "traits"),
+    2: .standard(proto: "personalization_enabled"),
+    3: .standard(proto: "has_vector"),
+    4: .standard(proto: "signal_count"),
+    5: .standard(proto: "last_signal_at"),
+    6: .standard(proto: "generated_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -429,9 +455,11 @@ nonisolated extension Loci_Memory_GetMemoryResponse: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_Memory_ForgetTraitRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Memory_ForgetTraitRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ForgetTraitRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}trait_key\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trait_key"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -459,9 +487,11 @@ nonisolated extension Loci_Memory_ForgetTraitRequest: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Memory_ForgetTraitResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Memory_ForgetTraitResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ForgetTraitResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}signals_removed\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "signals_removed"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -489,9 +519,11 @@ nonisolated extension Loci_Memory_ForgetTraitResponse: SwiftProtobuf.Message, Sw
   }
 }
 
-nonisolated extension Loci_Memory_ForgetEvidenceRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Memory_ForgetEvidenceRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ForgetEvidenceRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}feedback_id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "feedback_id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -519,7 +551,7 @@ nonisolated extension Loci_Memory_ForgetEvidenceRequest: SwiftProtobuf.Message, 
   }
 }
 
-nonisolated extension Loci_Memory_ForgetEvidenceResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Memory_ForgetEvidenceResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ForgetEvidenceResponse"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 

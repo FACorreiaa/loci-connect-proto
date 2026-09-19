@@ -13,113 +13,57 @@ import SwiftProtobuf
 public protocol Loci_List_ListServiceClientInterface: Sendable {
 
     /// List management
-    @discardableResult
-    func `createList`(request: Loci_List_CreateListRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_List_CreateListResponse>) -> Void) -> Connect.Cancelable
-
-    /// List management
     @available(iOS 13, *)
     func `createList`(request: Loci_List_CreateListRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_List_CreateListResponse>
-
-    @discardableResult
-    func `getLists`(request: Loci_List_GetListsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_List_GetListsResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `getLists`(request: Loci_List_GetListsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_List_GetListsResponse>
 
-    @discardableResult
-    func `getList`(request: Loci_List_GetListRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_List_GetListResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `getList`(request: Loci_List_GetListRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_List_GetListResponse>
-
-    @discardableResult
-    func `updateList`(request: Loci_List_UpdateListRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_List_UpdateListResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `updateList`(request: Loci_List_UpdateListRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_List_UpdateListResponse>
 
-    @discardableResult
-    func `deleteList`(request: Loci_List_DeleteListRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_List_DeleteListResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `deleteList`(request: Loci_List_DeleteListRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_List_DeleteListResponse>
-
-    /// Itinerary management (lists that are itineraries)
-    @discardableResult
-    func `createItinerary`(request: Loci_List_CreateItineraryRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_List_CreateItineraryResponse>) -> Void) -> Connect.Cancelable
 
     /// Itinerary management (lists that are itineraries)
     @available(iOS 13, *)
     func `createItinerary`(request: Loci_List_CreateItineraryRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_List_CreateItineraryResponse>
 
     /// List item management
-    @discardableResult
-    func `addListItem`(request: Loci_List_AddListItemRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_List_AddListItemResponse>) -> Void) -> Connect.Cancelable
-
-    /// List item management
     @available(iOS 13, *)
     func `addListItem`(request: Loci_List_AddListItemRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_List_AddListItemResponse>
-
-    @discardableResult
-    func `updateListItem`(request: Loci_List_UpdateListItemRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_List_UpdateListItemResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `updateListItem`(request: Loci_List_UpdateListItemRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_List_UpdateListItemResponse>
 
-    @discardableResult
-    func `removeListItem`(request: Loci_List_RemoveListItemRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_List_RemoveListItemResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `removeListItem`(request: Loci_List_RemoveListItemRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_List_RemoveListItemResponse>
-
-    @discardableResult
-    func `getListItems`(request: Loci_List_GetListItemsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_List_GetListItemsResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `getListItems`(request: Loci_List_GetListItemsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_List_GetListItemsResponse>
 
     /// Get items by content type
-    @discardableResult
-    func `getListRestaurants`(request: Loci_List_GetListRestaurantsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_List_GetListRestaurantsResponse>) -> Void) -> Connect.Cancelable
-
-    /// Get items by content type
     @available(iOS 13, *)
     func `getListRestaurants`(request: Loci_List_GetListRestaurantsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_List_GetListRestaurantsResponse>
 
-    @discardableResult
-    func `getListHotels`(request: Loci_List_GetListHotelsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_List_GetListHotelsResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `getListHotels`(request: Loci_List_GetListHotelsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_List_GetListHotelsResponse>
-
-    @discardableResult
-    func `getListItineraries`(request: Loci_List_GetListItinerariesRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_List_GetListItinerariesResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `getListItineraries`(request: Loci_List_GetListItinerariesRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_List_GetListItinerariesResponse>
 
     /// Public list management
-    @discardableResult
-    func `savePublicList`(request: Loci_List_SavePublicListRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_List_SavePublicListResponse>) -> Void) -> Connect.Cancelable
-
-    /// Public list management
     @available(iOS 13, *)
     func `savePublicList`(request: Loci_List_SavePublicListRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_List_SavePublicListResponse>
-
-    @discardableResult
-    func `unsaveList`(request: Loci_List_UnsaveListRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_List_UnsaveListResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `unsaveList`(request: Loci_List_UnsaveListRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_List_UnsaveListResponse>
 
-    @discardableResult
-    func `getSavedLists`(request: Loci_List_GetSavedListsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_List_GetSavedListsResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `getSavedLists`(request: Loci_List_GetSavedListsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_List_GetSavedListsResponse>
-
-    @discardableResult
-    func `searchPublicLists`(request: Loci_List_SearchPublicListsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_List_SearchPublicListsResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `searchPublicLists`(request: Loci_List_SearchPublicListsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_List_SearchPublicListsResponse>
@@ -133,19 +77,9 @@ public final class Loci_List_ListServiceClient: Loci_List_ListServiceClientInter
         self.client = client
     }
 
-    @discardableResult
-    public func `createList`(request: Loci_List_CreateListRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_List_CreateListResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.list.ListService/CreateList", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `createList`(request: Loci_List_CreateListRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_List_CreateListResponse> {
         return await self.client.unary(path: "/loci.list.ListService/CreateList", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getLists`(request: Loci_List_GetListsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_List_GetListsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.list.ListService/GetLists", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -153,19 +87,9 @@ public final class Loci_List_ListServiceClient: Loci_List_ListServiceClientInter
         return await self.client.unary(path: "/loci.list.ListService/GetLists", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getList`(request: Loci_List_GetListRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_List_GetListResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.list.ListService/GetList", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getList`(request: Loci_List_GetListRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_List_GetListResponse> {
         return await self.client.unary(path: "/loci.list.ListService/GetList", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `updateList`(request: Loci_List_UpdateListRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_List_UpdateListResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.list.ListService/UpdateList", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -173,19 +97,9 @@ public final class Loci_List_ListServiceClient: Loci_List_ListServiceClientInter
         return await self.client.unary(path: "/loci.list.ListService/UpdateList", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `deleteList`(request: Loci_List_DeleteListRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_List_DeleteListResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.list.ListService/DeleteList", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `deleteList`(request: Loci_List_DeleteListRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_List_DeleteListResponse> {
         return await self.client.unary(path: "/loci.list.ListService/DeleteList", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `createItinerary`(request: Loci_List_CreateItineraryRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_List_CreateItineraryResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.list.ListService/CreateItinerary", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -193,19 +107,9 @@ public final class Loci_List_ListServiceClient: Loci_List_ListServiceClientInter
         return await self.client.unary(path: "/loci.list.ListService/CreateItinerary", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `addListItem`(request: Loci_List_AddListItemRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_List_AddListItemResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.list.ListService/AddListItem", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `addListItem`(request: Loci_List_AddListItemRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_List_AddListItemResponse> {
         return await self.client.unary(path: "/loci.list.ListService/AddListItem", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `updateListItem`(request: Loci_List_UpdateListItemRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_List_UpdateListItemResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.list.ListService/UpdateListItem", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -213,19 +117,9 @@ public final class Loci_List_ListServiceClient: Loci_List_ListServiceClientInter
         return await self.client.unary(path: "/loci.list.ListService/UpdateListItem", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `removeListItem`(request: Loci_List_RemoveListItemRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_List_RemoveListItemResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.list.ListService/RemoveListItem", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `removeListItem`(request: Loci_List_RemoveListItemRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_List_RemoveListItemResponse> {
         return await self.client.unary(path: "/loci.list.ListService/RemoveListItem", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getListItems`(request: Loci_List_GetListItemsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_List_GetListItemsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.list.ListService/GetListItems", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -233,19 +127,9 @@ public final class Loci_List_ListServiceClient: Loci_List_ListServiceClientInter
         return await self.client.unary(path: "/loci.list.ListService/GetListItems", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getListRestaurants`(request: Loci_List_GetListRestaurantsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_List_GetListRestaurantsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.list.ListService/GetListRestaurants", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getListRestaurants`(request: Loci_List_GetListRestaurantsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_List_GetListRestaurantsResponse> {
         return await self.client.unary(path: "/loci.list.ListService/GetListRestaurants", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getListHotels`(request: Loci_List_GetListHotelsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_List_GetListHotelsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.list.ListService/GetListHotels", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -253,19 +137,9 @@ public final class Loci_List_ListServiceClient: Loci_List_ListServiceClientInter
         return await self.client.unary(path: "/loci.list.ListService/GetListHotels", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getListItineraries`(request: Loci_List_GetListItinerariesRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_List_GetListItinerariesResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.list.ListService/GetListItineraries", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getListItineraries`(request: Loci_List_GetListItinerariesRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_List_GetListItinerariesResponse> {
         return await self.client.unary(path: "/loci.list.ListService/GetListItineraries", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `savePublicList`(request: Loci_List_SavePublicListRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_List_SavePublicListResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.list.ListService/SavePublicList", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -273,29 +147,14 @@ public final class Loci_List_ListServiceClient: Loci_List_ListServiceClientInter
         return await self.client.unary(path: "/loci.list.ListService/SavePublicList", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `unsaveList`(request: Loci_List_UnsaveListRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_List_UnsaveListResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.list.ListService/UnsaveList", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `unsaveList`(request: Loci_List_UnsaveListRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_List_UnsaveListResponse> {
         return await self.client.unary(path: "/loci.list.ListService/UnsaveList", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getSavedLists`(request: Loci_List_GetSavedListsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_List_GetSavedListsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.list.ListService/GetSavedLists", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getSavedLists`(request: Loci_List_GetSavedListsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_List_GetSavedListsResponse> {
         return await self.client.unary(path: "/loci.list.ListService/GetSavedLists", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `searchPublicLists`(request: Loci_List_SearchPublicListsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_List_SearchPublicListsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.list.ListService/SearchPublicLists", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

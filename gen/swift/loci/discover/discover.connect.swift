@@ -12,32 +12,17 @@ import SwiftProtobuf
 /// DiscoverService defines discover-related RPCs
 public protocol Loci_Discover_DiscoverServiceClientInterface: Sendable {
 
-    @discardableResult
-    func `getDiscoverPage`(request: Loci_Discover_GetDiscoverPageRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Discover_GetDiscoverPageResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `getDiscoverPage`(request: Loci_Discover_GetDiscoverPageRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Discover_GetDiscoverPageResponse>
-
-    @discardableResult
-    func `getTrending`(request: Loci_Discover_GetTrendingRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Discover_GetTrendingResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `getTrending`(request: Loci_Discover_GetTrendingRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Discover_GetTrendingResponse>
 
-    @discardableResult
-    func `getFeatured`(request: Loci_Discover_GetFeaturedRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Discover_GetFeaturedResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `getFeatured`(request: Loci_Discover_GetFeaturedRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Discover_GetFeaturedResponse>
 
-    @discardableResult
-    func `getRecentDiscoveries`(request: Loci_Discover_GetRecentDiscoveriesRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Discover_GetRecentDiscoveriesResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `getRecentDiscoveries`(request: Loci_Discover_GetRecentDiscoveriesRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Discover_GetRecentDiscoveriesResponse>
-
-    @discardableResult
-    func `getCategoryResults`(request: Loci_Discover_GetCategoryResultsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Discover_GetCategoryResultsResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `getCategoryResults`(request: Loci_Discover_GetCategoryResultsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Discover_GetCategoryResultsResponse>
@@ -51,19 +36,9 @@ public final class Loci_Discover_DiscoverServiceClient: Loci_Discover_DiscoverSe
         self.client = client
     }
 
-    @discardableResult
-    public func `getDiscoverPage`(request: Loci_Discover_GetDiscoverPageRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Discover_GetDiscoverPageResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.discover.DiscoverService/GetDiscoverPage", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getDiscoverPage`(request: Loci_Discover_GetDiscoverPageRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Discover_GetDiscoverPageResponse> {
         return await self.client.unary(path: "/loci.discover.DiscoverService/GetDiscoverPage", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getTrending`(request: Loci_Discover_GetTrendingRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Discover_GetTrendingResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.discover.DiscoverService/GetTrending", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -71,29 +46,14 @@ public final class Loci_Discover_DiscoverServiceClient: Loci_Discover_DiscoverSe
         return await self.client.unary(path: "/loci.discover.DiscoverService/GetTrending", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getFeatured`(request: Loci_Discover_GetFeaturedRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Discover_GetFeaturedResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.discover.DiscoverService/GetFeatured", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getFeatured`(request: Loci_Discover_GetFeaturedRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Discover_GetFeaturedResponse> {
         return await self.client.unary(path: "/loci.discover.DiscoverService/GetFeatured", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getRecentDiscoveries`(request: Loci_Discover_GetRecentDiscoveriesRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Discover_GetRecentDiscoveriesResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.discover.DiscoverService/GetRecentDiscoveries", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getRecentDiscoveries`(request: Loci_Discover_GetRecentDiscoveriesRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Discover_GetRecentDiscoveriesResponse> {
         return await self.client.unary(path: "/loci.discover.DiscoverService/GetRecentDiscoveries", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getCategoryResults`(request: Loci_Discover_GetCategoryResultsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Discover_GetCategoryResultsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.discover.DiscoverService/GetCategoryResults", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)

@@ -15,7 +15,7 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
@@ -23,7 +23,7 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
 /// VisitSource records HOW a visit came to be known, so any row can be explained
 /// and undone. Before this service existed, "places visited" was a denormalised
 /// counter and a hard-coded placeholder; provenance is what stops that recurring.
-public nonisolated enum Loci_Travelhistory_VisitSource: SwiftProtobuf.Enum, Swift.CaseIterable {
+public enum Loci_Travelhistory_VisitSource: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
 
@@ -80,7 +80,7 @@ public nonisolated enum Loci_Travelhistory_VisitSource: SwiftProtobuf.Enum, Swif
 /// VisitedCity is one city a traveller has actually been to. Coordinates are
 /// required because the globe plots these directly; a city we cannot place is
 /// not recorded rather than being placed at 0,0.
-public nonisolated struct Loci_Travelhistory_VisitedCity: Sendable {
+public struct Loci_Travelhistory_VisitedCity: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -107,20 +107,20 @@ public nonisolated struct Loci_Travelhistory_VisitedCity: Sendable {
   public var tripID: String = String()
 
   public var firstVisitAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_firstVisitAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _firstVisitAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_firstVisitAt = newValue}
   }
   /// Returns true if `firstVisitAt` has been explicitly set.
-  public var hasFirstVisitAt: Bool {self._firstVisitAt != nil}
+  public var hasFirstVisitAt: Bool {return self._firstVisitAt != nil}
   /// Clears the value of `firstVisitAt`. Subsequent reads from it will return its default value.
   public mutating func clearFirstVisitAt() {self._firstVisitAt = nil}
 
   public var lastVisitAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_lastVisitAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _lastVisitAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_lastVisitAt = newValue}
   }
   /// Returns true if `lastVisitAt` has been explicitly set.
-  public var hasLastVisitAt: Bool {self._lastVisitAt != nil}
+  public var hasLastVisitAt: Bool {return self._lastVisitAt != nil}
   /// Clears the value of `lastVisitAt`. Subsequent reads from it will return its default value.
   public mutating func clearLastVisitAt() {self._lastVisitAt = nil}
 
@@ -136,7 +136,7 @@ public nonisolated struct Loci_Travelhistory_VisitedCity: Sendable {
 
 /// VisitedPOI is a single confirmed stop. Kept per-visit (not rolled up) so the
 /// city totals can be RECOMPUTED from evidence rather than trusted.
-public nonisolated struct Loci_Travelhistory_VisitedPOI: Sendable {
+public struct Loci_Travelhistory_VisitedPOI: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -151,20 +151,20 @@ public nonisolated struct Loci_Travelhistory_VisitedPOI: Sendable {
 
   /// Optional: a POI we hold no coordinates for is still a real visit.
   public var latitude: Double {
-    get {_latitude ?? 0}
+    get {return _latitude ?? 0}
     set {_latitude = newValue}
   }
   /// Returns true if `latitude` has been explicitly set.
-  public var hasLatitude: Bool {self._latitude != nil}
+  public var hasLatitude: Bool {return self._latitude != nil}
   /// Clears the value of `latitude`. Subsequent reads from it will return its default value.
   public mutating func clearLatitude() {self._latitude = nil}
 
   public var longitude: Double {
-    get {_longitude ?? 0}
+    get {return _longitude ?? 0}
     set {_longitude = newValue}
   }
   /// Returns true if `longitude` has been explicitly set.
-  public var hasLongitude: Bool {self._longitude != nil}
+  public var hasLongitude: Bool {return self._longitude != nil}
   /// Clears the value of `longitude`. Subsequent reads from it will return its default value.
   public mutating func clearLongitude() {self._longitude = nil}
 
@@ -173,11 +173,11 @@ public nonisolated struct Loci_Travelhistory_VisitedPOI: Sendable {
   public var source: Loci_Travelhistory_VisitSource = .unspecified
 
   public var visitedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_visitedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _visitedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_visitedAt = newValue}
   }
   /// Returns true if `visitedAt` has been explicitly set.
-  public var hasVisitedAt: Bool {self._visitedAt != nil}
+  public var hasVisitedAt: Bool {return self._visitedAt != nil}
   /// Clears the value of `visitedAt`. Subsequent reads from it will return its default value.
   public mutating func clearVisitedAt() {self._visitedAt = nil}
 
@@ -195,7 +195,7 @@ public nonisolated struct Loci_Travelhistory_VisitedPOI: Sendable {
 /// The *_prev_period fields exist so the rail renders a REAL delta. Without them
 /// a trend arrow can only be invented, and an invented metric is exactly what
 /// this service was built to remove.
-public nonisolated struct Loci_Travelhistory_TravelSummary: Sendable {
+public struct Loci_Travelhistory_TravelSummary: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -212,20 +212,20 @@ public nonisolated struct Loci_Travelhistory_TravelSummary: Sendable {
   public var tripsCompleted: Int32 = 0
 
   public var firstVisitAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_firstVisitAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _firstVisitAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_firstVisitAt = newValue}
   }
   /// Returns true if `firstVisitAt` has been explicitly set.
-  public var hasFirstVisitAt: Bool {self._firstVisitAt != nil}
+  public var hasFirstVisitAt: Bool {return self._firstVisitAt != nil}
   /// Clears the value of `firstVisitAt`. Subsequent reads from it will return its default value.
   public mutating func clearFirstVisitAt() {self._firstVisitAt = nil}
 
   public var lastVisitAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_lastVisitAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _lastVisitAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_lastVisitAt = newValue}
   }
   /// Returns true if `lastVisitAt` has been explicitly set.
-  public var hasLastVisitAt: Bool {self._lastVisitAt != nil}
+  public var hasLastVisitAt: Bool {return self._lastVisitAt != nil}
   /// Clears the value of `lastVisitAt`. Subsequent reads from it will return its default value.
   public mutating func clearLastVisitAt() {self._lastVisitAt = nil}
 
@@ -250,7 +250,7 @@ public nonisolated struct Loci_Travelhistory_TravelSummary: Sendable {
 /// GlobeArc is one leg between two placed points, ready to draw as a great
 /// circle. Sourced from real TripLeg rows — never synthesised between cities
 /// that merely appear in the same trip.
-public nonisolated struct Loci_Travelhistory_GlobeArc: Sendable {
+public struct Loci_Travelhistory_GlobeArc: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -276,11 +276,11 @@ public nonisolated struct Loci_Travelhistory_GlobeArc: Sendable {
   public var mode: String = String()
 
   public var occurredAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_occurredAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _occurredAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_occurredAt = newValue}
   }
   /// Returns true if `occurredAt` has been explicitly set.
-  public var hasOccurredAt: Bool {self._occurredAt != nil}
+  public var hasOccurredAt: Bool {return self._occurredAt != nil}
   /// Clears the value of `occurredAt`. Subsequent reads from it will return its default value.
   public mutating func clearOccurredAt() {self._occurredAt = nil}
 
@@ -291,7 +291,7 @@ public nonisolated struct Loci_Travelhistory_GlobeArc: Sendable {
   fileprivate var _occurredAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-public nonisolated struct Loci_Travelhistory_ListVisitedCitiesRequest: Sendable {
+public struct Loci_Travelhistory_ListVisitedCitiesRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -305,7 +305,7 @@ public nonisolated struct Loci_Travelhistory_ListVisitedCitiesRequest: Sendable 
   public init() {}
 }
 
-public nonisolated struct Loci_Travelhistory_ListVisitedCitiesResponse: Sendable {
+public struct Loci_Travelhistory_ListVisitedCitiesResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -319,7 +319,7 @@ public nonisolated struct Loci_Travelhistory_ListVisitedCitiesResponse: Sendable
   public init() {}
 }
 
-public nonisolated struct Loci_Travelhistory_ListVisitedPOIsRequest: Sendable {
+public struct Loci_Travelhistory_ListVisitedPOIsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -336,7 +336,7 @@ public nonisolated struct Loci_Travelhistory_ListVisitedPOIsRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Travelhistory_ListVisitedPOIsResponse: Sendable {
+public struct Loci_Travelhistory_ListVisitedPOIsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -350,7 +350,7 @@ public nonisolated struct Loci_Travelhistory_ListVisitedPOIsResponse: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Travelhistory_GetTravelSummaryRequest: Sendable {
+public struct Loci_Travelhistory_GetTravelSummaryRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -363,17 +363,17 @@ public nonisolated struct Loci_Travelhistory_GetTravelSummaryRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Travelhistory_GetTravelSummaryResponse: Sendable {
+public struct Loci_Travelhistory_GetTravelSummaryResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var summary: Loci_Travelhistory_TravelSummary {
-    get {_summary ?? Loci_Travelhistory_TravelSummary()}
+    get {return _summary ?? Loci_Travelhistory_TravelSummary()}
     set {_summary = newValue}
   }
   /// Returns true if `summary` has been explicitly set.
-  public var hasSummary: Bool {self._summary != nil}
+  public var hasSummary: Bool {return self._summary != nil}
   /// Clears the value of `summary`. Subsequent reads from it will return its default value.
   public mutating func clearSummary() {self._summary = nil}
 
@@ -384,7 +384,7 @@ public nonisolated struct Loci_Travelhistory_GetTravelSummaryResponse: Sendable 
   fileprivate var _summary: Loci_Travelhistory_TravelSummary? = nil
 }
 
-public nonisolated struct Loci_Travelhistory_RecordVisitRequest: Sendable {
+public struct Loci_Travelhistory_RecordVisitRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -400,30 +400,30 @@ public nonisolated struct Loci_Travelhistory_RecordVisitRequest: Sendable {
   public var tripID: String = String()
 
   public var poiID: String {
-    get {_poiID ?? String()}
+    get {return _poiID ?? String()}
     set {_poiID = newValue}
   }
   /// Returns true if `poiID` has been explicitly set.
-  public var hasPoiID: Bool {self._poiID != nil}
+  public var hasPoiID: Bool {return self._poiID != nil}
   /// Clears the value of `poiID`. Subsequent reads from it will return its default value.
   public mutating func clearPoiID() {self._poiID = nil}
 
   public var poiName: String {
-    get {_poiName ?? String()}
+    get {return _poiName ?? String()}
     set {_poiName = newValue}
   }
   /// Returns true if `poiName` has been explicitly set.
-  public var hasPoiName: Bool {self._poiName != nil}
+  public var hasPoiName: Bool {return self._poiName != nil}
   /// Clears the value of `poiName`. Subsequent reads from it will return its default value.
   public mutating func clearPoiName() {self._poiName = nil}
 
   /// Defaults to server time when omitted.
   public var visitedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {_visitedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {return _visitedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_visitedAt = newValue}
   }
   /// Returns true if `visitedAt` has been explicitly set.
-  public var hasVisitedAt: Bool {self._visitedAt != nil}
+  public var hasVisitedAt: Bool {return self._visitedAt != nil}
   /// Clears the value of `visitedAt`. Subsequent reads from it will return its default value.
   public mutating func clearVisitedAt() {self._visitedAt = nil}
 
@@ -436,17 +436,17 @@ public nonisolated struct Loci_Travelhistory_RecordVisitRequest: Sendable {
   fileprivate var _visitedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-public nonisolated struct Loci_Travelhistory_RecordVisitResponse: Sendable {
+public struct Loci_Travelhistory_RecordVisitResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var city: Loci_Travelhistory_VisitedCity {
-    get {_city ?? Loci_Travelhistory_VisitedCity()}
+    get {return _city ?? Loci_Travelhistory_VisitedCity()}
     set {_city = newValue}
   }
   /// Returns true if `city` has been explicitly set.
-  public var hasCity: Bool {self._city != nil}
+  public var hasCity: Bool {return self._city != nil}
   /// Clears the value of `city`. Subsequent reads from it will return its default value.
   public mutating func clearCity() {self._city = nil}
 
@@ -457,7 +457,7 @@ public nonisolated struct Loci_Travelhistory_RecordVisitResponse: Sendable {
   fileprivate var _city: Loci_Travelhistory_VisitedCity? = nil
 }
 
-public nonisolated struct Loci_Travelhistory_DeleteVisitRequest: Sendable {
+public struct Loci_Travelhistory_DeleteVisitRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -469,7 +469,7 @@ public nonisolated struct Loci_Travelhistory_DeleteVisitRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Travelhistory_DeleteVisitResponse: Sendable {
+public struct Loci_Travelhistory_DeleteVisitResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -484,7 +484,7 @@ public nonisolated struct Loci_Travelhistory_DeleteVisitResponse: Sendable {
 /// GetGlobeDataRequest asks for everything the globe dashboard renders in ONE
 /// round trip. Splitting this across three calls makes a single screen wait on
 /// three sequential auth + query cycles.
-public nonisolated struct Loci_Travelhistory_GetGlobeDataRequest: Sendable {
+public struct Loci_Travelhistory_GetGlobeDataRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -500,7 +500,7 @@ public nonisolated struct Loci_Travelhistory_GetGlobeDataRequest: Sendable {
   public init() {}
 }
 
-public nonisolated struct Loci_Travelhistory_GetGlobeDataResponse: Sendable {
+public struct Loci_Travelhistory_GetGlobeDataResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -510,11 +510,11 @@ public nonisolated struct Loci_Travelhistory_GetGlobeDataResponse: Sendable {
   public var arcs: [Loci_Travelhistory_GlobeArc] = []
 
   public var summary: Loci_Travelhistory_TravelSummary {
-    get {_summary ?? Loci_Travelhistory_TravelSummary()}
+    get {return _summary ?? Loci_Travelhistory_TravelSummary()}
     set {_summary = newValue}
   }
   /// Returns true if `summary` has been explicitly set.
-  public var hasSummary: Bool {self._summary != nil}
+  public var hasSummary: Bool {return self._summary != nil}
   /// Clears the value of `summary`. Subsequent reads from it will return its default value.
   public mutating func clearSummary() {self._summary = nil}
 
@@ -531,15 +531,34 @@ public nonisolated struct Loci_Travelhistory_GetGlobeDataResponse: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate nonisolated let _protobuf_package = "loci.travelhistory"
+fileprivate let _protobuf_package = "loci.travelhistory"
 
-nonisolated extension Loci_Travelhistory_VisitSource: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0VISIT_SOURCE_UNSPECIFIED\0\u{1}VISIT_SOURCE_TRIP\0\u{1}VISIT_SOURCE_VISIT_EVENT\0\u{1}VISIT_SOURCE_MANUAL\0\u{1}VISIT_SOURCE_BACKFILL\0")
+extension Loci_Travelhistory_VisitSource: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "VISIT_SOURCE_UNSPECIFIED"),
+    1: .same(proto: "VISIT_SOURCE_TRIP"),
+    2: .same(proto: "VISIT_SOURCE_VISIT_EVENT"),
+    3: .same(proto: "VISIT_SOURCE_MANUAL"),
+    4: .same(proto: "VISIT_SOURCE_BACKFILL"),
+  ]
 }
 
-nonisolated extension Loci_Travelhistory_VisitedCity: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Travelhistory_VisitedCity: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".VisitedCity"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}city_id\0\u{3}city_name\0\u{1}country\0\u{3}country_code\0\u{1}latitude\0\u{1}longitude\0\u{1}source\0\u{3}trip_id\0\u{3}first_visit_at\0\u{3}last_visit_at\0\u{3}visit_count\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "city_id"),
+    3: .standard(proto: "city_name"),
+    4: .same(proto: "country"),
+    5: .standard(proto: "country_code"),
+    6: .same(proto: "latitude"),
+    7: .same(proto: "longitude"),
+    8: .same(proto: "source"),
+    9: .standard(proto: "trip_id"),
+    10: .standard(proto: "first_visit_at"),
+    11: .standard(proto: "last_visit_at"),
+    12: .standard(proto: "visit_count"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -626,9 +645,19 @@ nonisolated extension Loci_Travelhistory_VisitedCity: SwiftProtobuf.Message, Swi
   }
 }
 
-nonisolated extension Loci_Travelhistory_VisitedPOI: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Travelhistory_VisitedPOI: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".VisitedPOI"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}poi_id\0\u{3}poi_name\0\u{3}city_name\0\u{1}latitude\0\u{1}longitude\0\u{3}trip_id\0\u{1}source\0\u{3}visited_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "poi_id"),
+    3: .standard(proto: "poi_name"),
+    4: .standard(proto: "city_name"),
+    5: .same(proto: "latitude"),
+    6: .same(proto: "longitude"),
+    7: .standard(proto: "trip_id"),
+    8: .same(proto: "source"),
+    9: .standard(proto: "visited_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -700,9 +729,21 @@ nonisolated extension Loci_Travelhistory_VisitedPOI: SwiftProtobuf.Message, Swif
   }
 }
 
-nonisolated extension Loci_Travelhistory_TravelSummary: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Travelhistory_TravelSummary: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".TravelSummary"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}cities_visited\0\u{3}countries_visited\0\u{3}pois_visited\0\u{3}distance_km\0\u{3}trips_completed\0\u{3}first_visit_at\0\u{3}last_visit_at\0\u{3}cities_visited_prev_period\0\u{3}countries_visited_prev_period\0\u{3}pois_visited_prev_period\0\u{3}period_days\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "cities_visited"),
+    2: .standard(proto: "countries_visited"),
+    3: .standard(proto: "pois_visited"),
+    4: .standard(proto: "distance_km"),
+    5: .standard(proto: "trips_completed"),
+    6: .standard(proto: "first_visit_at"),
+    7: .standard(proto: "last_visit_at"),
+    8: .standard(proto: "cities_visited_prev_period"),
+    9: .standard(proto: "countries_visited_prev_period"),
+    10: .standard(proto: "pois_visited_prev_period"),
+    11: .standard(proto: "period_days"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -784,9 +825,20 @@ nonisolated extension Loci_Travelhistory_TravelSummary: SwiftProtobuf.Message, S
   }
 }
 
-nonisolated extension Loci_Travelhistory_GlobeArc: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Travelhistory_GlobeArc: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GlobeArc"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}from_name\0\u{3}to_name\0\u{3}from_lat\0\u{3}from_lon\0\u{3}to_lat\0\u{3}to_lon\0\u{3}distance_km\0\u{3}trip_id\0\u{1}mode\0\u{3}occurred_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "from_name"),
+    2: .standard(proto: "to_name"),
+    3: .standard(proto: "from_lat"),
+    4: .standard(proto: "from_lon"),
+    5: .standard(proto: "to_lat"),
+    6: .standard(proto: "to_lon"),
+    7: .standard(proto: "distance_km"),
+    8: .standard(proto: "trip_id"),
+    9: .same(proto: "mode"),
+    10: .standard(proto: "occurred_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -863,9 +915,12 @@ nonisolated extension Loci_Travelhistory_GlobeArc: SwiftProtobuf.Message, SwiftP
   }
 }
 
-nonisolated extension Loci_Travelhistory_ListVisitedCitiesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Travelhistory_ListVisitedCitiesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListVisitedCitiesRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}page\0\u{3}page_size\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "page"),
+    2: .standard(proto: "page_size"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -898,9 +953,12 @@ nonisolated extension Loci_Travelhistory_ListVisitedCitiesRequest: SwiftProtobuf
   }
 }
 
-nonisolated extension Loci_Travelhistory_ListVisitedCitiesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Travelhistory_ListVisitedCitiesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListVisitedCitiesResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}cities\0\u{1}total\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "cities"),
+    2: .same(proto: "total"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -933,9 +991,13 @@ nonisolated extension Loci_Travelhistory_ListVisitedCitiesResponse: SwiftProtobu
   }
 }
 
-nonisolated extension Loci_Travelhistory_ListVisitedPOIsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Travelhistory_ListVisitedPOIsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListVisitedPOIsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}city_id\0\u{1}page\0\u{3}page_size\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "city_id"),
+    2: .same(proto: "page"),
+    3: .standard(proto: "page_size"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -973,9 +1035,12 @@ nonisolated extension Loci_Travelhistory_ListVisitedPOIsRequest: SwiftProtobuf.M
   }
 }
 
-nonisolated extension Loci_Travelhistory_ListVisitedPOIsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Travelhistory_ListVisitedPOIsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListVisitedPOIsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}pois\0\u{1}total\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "pois"),
+    2: .same(proto: "total"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1008,9 +1073,11 @@ nonisolated extension Loci_Travelhistory_ListVisitedPOIsResponse: SwiftProtobuf.
   }
 }
 
-nonisolated extension Loci_Travelhistory_GetTravelSummaryRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Travelhistory_GetTravelSummaryRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetTravelSummaryRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}period_days\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "period_days"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1038,9 +1105,11 @@ nonisolated extension Loci_Travelhistory_GetTravelSummaryRequest: SwiftProtobuf.
   }
 }
 
-nonisolated extension Loci_Travelhistory_GetTravelSummaryResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Travelhistory_GetTravelSummaryResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetTravelSummaryResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}summary\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "summary"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1072,9 +1141,18 @@ nonisolated extension Loci_Travelhistory_GetTravelSummaryResponse: SwiftProtobuf
   }
 }
 
-nonisolated extension Loci_Travelhistory_RecordVisitRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Travelhistory_RecordVisitRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RecordVisitRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}city_id\0\u{3}city_name\0\u{1}latitude\0\u{1}longitude\0\u{3}trip_id\0\u{3}poi_id\0\u{3}poi_name\0\u{3}visited_at\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "city_id"),
+    2: .standard(proto: "city_name"),
+    3: .same(proto: "latitude"),
+    4: .same(proto: "longitude"),
+    5: .standard(proto: "trip_id"),
+    6: .standard(proto: "poi_id"),
+    7: .standard(proto: "poi_name"),
+    8: .standard(proto: "visited_at"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1141,9 +1219,11 @@ nonisolated extension Loci_Travelhistory_RecordVisitRequest: SwiftProtobuf.Messa
   }
 }
 
-nonisolated extension Loci_Travelhistory_RecordVisitResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Travelhistory_RecordVisitResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RecordVisitResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}city\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "city"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1175,9 +1255,11 @@ nonisolated extension Loci_Travelhistory_RecordVisitResponse: SwiftProtobuf.Mess
   }
 }
 
-nonisolated extension Loci_Travelhistory_DeleteVisitRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Travelhistory_DeleteVisitRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DeleteVisitRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1205,9 +1287,11 @@ nonisolated extension Loci_Travelhistory_DeleteVisitRequest: SwiftProtobuf.Messa
   }
 }
 
-nonisolated extension Loci_Travelhistory_DeleteVisitResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Travelhistory_DeleteVisitResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DeleteVisitResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}deleted\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "deleted"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1235,9 +1319,12 @@ nonisolated extension Loci_Travelhistory_DeleteVisitResponse: SwiftProtobuf.Mess
   }
 }
 
-nonisolated extension Loci_Travelhistory_GetGlobeDataRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Travelhistory_GetGlobeDataRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetGlobeDataRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}limit\0\u{3}period_days\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "limit"),
+    2: .standard(proto: "period_days"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1270,9 +1357,14 @@ nonisolated extension Loci_Travelhistory_GetGlobeDataRequest: SwiftProtobuf.Mess
   }
 }
 
-nonisolated extension Loci_Travelhistory_GetGlobeDataResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Loci_Travelhistory_GetGlobeDataResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetGlobeDataResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}cities\0\u{1}arcs\0\u{1}summary\0\u{1}backfilled\0")
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "cities"),
+    2: .same(proto: "arcs"),
+    3: .same(proto: "summary"),
+    4: .same(proto: "backfilled"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

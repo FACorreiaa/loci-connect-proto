@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 6.0
 import PackageDescription
 
 let package = Package(
@@ -14,8 +14,8 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/connectrpc/connect-swift", from: "1.0.0"),
-        .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.26.0")
+        .package(url: "https://github.com/connectrpc/connect-swift.git", from: "1.2.0"),
+        .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.28.0")
     ],
     targets: [
         .target(
@@ -24,7 +24,11 @@ let package = Package(
                 .product(name: "Connect", package: "connect-swift"),
                 .product(name: "SwiftProtobuf", package: "swift-protobuf")
             ],
-            path: "gen/swift"
+            path: "gen/swift",
+            swiftSettings: [
+                .enableUpcomingFeature("StrictConcurrency")
+            ]
         )
-    ]
+    ],
+    swiftLanguageModes: [.v6]
 )

@@ -11,74 +11,38 @@ import SwiftProtobuf
 
 public protocol Loci_Chat_ChatServiceClientInterface: Sendable {
 
-    @discardableResult
-    func `startChat`(request: Loci_Chat_StartChatRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Chat_ChatResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `startChat`(request: Loci_Chat_StartChatRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Chat_ChatResponse>
-
-    @discardableResult
-    func `continueChat`(request: Loci_Chat_ContinueChatRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Chat_ChatResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `continueChat`(request: Loci_Chat_ContinueChatRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Chat_ChatResponse>
 
-    @discardableResult
-    func `getChatSession`(request: Loci_Chat_GetChatSessionRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Chat_GetChatSessionResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `getChatSession`(request: Loci_Chat_GetChatSessionRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Chat_GetChatSessionResponse>
 
-    @discardableResult
-    func `getChatSessions`(request: Loci_Chat_GetChatSessionsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Chat_GetChatSessionsResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `getChatSessions`(request: Loci_Chat_GetChatSessionsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Chat_GetChatSessionsResponse>
-
-    @discardableResult
-    func `getRecentInteractions`(request: Loci_Chat_GetRecentInteractionsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Chat_GetRecentInteractionsResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `getRecentInteractions`(request: Loci_Chat_GetRecentInteractionsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Chat_GetRecentInteractionsResponse>
 
     /// Reads a page of a stored answer. Generation stays a single up-front call;
     /// only delivery is paged.
-    @discardableResult
-    func `getSessionPois`(request: Loci_Chat_GetSessionPOIsRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Chat_GetSessionPOIsResponse>) -> Void) -> Connect.Cancelable
-
-    /// Reads a page of a stored answer. Generation stays a single up-front call;
-    /// only delivery is paged.
     @available(iOS 13, *)
     func `getSessionPois`(request: Loci_Chat_GetSessionPOIsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Chat_GetSessionPOIsResponse>
-
-    @discardableResult
-    func `endSession`(request: Loci_Chat_GetChatSessionRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `endSession`(request: Loci_Chat_GetChatSessionRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Common_Response>
 
     /// Bookmarking RPCs
-    @discardableResult
-    func `bookmarkPoi`(request: Loci_Chat_BookmarkRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Chat_BookmarkResponse>) -> Void) -> Connect.Cancelable
-
-    /// Bookmarking RPCs
     @available(iOS 13, *)
     func `bookmarkPoi`(request: Loci_Chat_BookmarkRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Chat_BookmarkResponse>
-
-    @discardableResult
-    func `bookmarkItinerary`(request: Loci_Chat_BookmarkRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Chat_BookmarkResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
     func `bookmarkItinerary`(request: Loci_Chat_BookmarkRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Chat_BookmarkResponse>
 
-    @discardableResult
-    func `removeBookmark`(request: Loci_Chat_BookmarkRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Loci_Chat_BookmarkResponse>) -> Void) -> Connect.Cancelable
-
     @available(iOS 13, *)
     func `removeBookmark`(request: Loci_Chat_BookmarkRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Chat_BookmarkResponse>
-
-    /// Streaming RPC for real-time chat responses
-    func `streamChat`(headers: Connect.Headers, onResult: @escaping @Sendable (Connect.StreamResult<Loci_Chat_StreamEvent>) -> Void) -> any Connect.ServerOnlyStreamInterface<Loci_Chat_ChatRequest>
 
     /// Streaming RPC for real-time chat responses
     @available(iOS 13, *)
@@ -93,19 +57,9 @@ public final class Loci_Chat_ChatServiceClient: Loci_Chat_ChatServiceClientInter
         self.client = client
     }
 
-    @discardableResult
-    public func `startChat`(request: Loci_Chat_StartChatRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Chat_ChatResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.chat.ChatService/StartChat", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `startChat`(request: Loci_Chat_StartChatRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Chat_ChatResponse> {
         return await self.client.unary(path: "/loci.chat.ChatService/StartChat", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `continueChat`(request: Loci_Chat_ContinueChatRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Chat_ChatResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.chat.ChatService/ContinueChat", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -113,19 +67,9 @@ public final class Loci_Chat_ChatServiceClient: Loci_Chat_ChatServiceClientInter
         return await self.client.unary(path: "/loci.chat.ChatService/ContinueChat", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getChatSession`(request: Loci_Chat_GetChatSessionRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Chat_GetChatSessionResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.chat.ChatService/GetChatSession", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getChatSession`(request: Loci_Chat_GetChatSessionRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Chat_GetChatSessionResponse> {
         return await self.client.unary(path: "/loci.chat.ChatService/GetChatSession", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getChatSessions`(request: Loci_Chat_GetChatSessionsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Chat_GetChatSessionsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.chat.ChatService/GetChatSessions", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -133,19 +77,9 @@ public final class Loci_Chat_ChatServiceClient: Loci_Chat_ChatServiceClientInter
         return await self.client.unary(path: "/loci.chat.ChatService/GetChatSessions", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `getRecentInteractions`(request: Loci_Chat_GetRecentInteractionsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Chat_GetRecentInteractionsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.chat.ChatService/GetRecentInteractions", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `getRecentInteractions`(request: Loci_Chat_GetRecentInteractionsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Chat_GetRecentInteractionsResponse> {
         return await self.client.unary(path: "/loci.chat.ChatService/GetRecentInteractions", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `getSessionPois`(request: Loci_Chat_GetSessionPOIsRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Chat_GetSessionPOIsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.chat.ChatService/GetSessionPOIs", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -153,19 +87,9 @@ public final class Loci_Chat_ChatServiceClient: Loci_Chat_ChatServiceClientInter
         return await self.client.unary(path: "/loci.chat.ChatService/GetSessionPOIs", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `endSession`(request: Loci_Chat_GetChatSessionRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Common_Response>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.chat.ChatService/EndSession", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `endSession`(request: Loci_Chat_GetChatSessionRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Common_Response> {
         return await self.client.unary(path: "/loci.chat.ChatService/EndSession", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    @discardableResult
-    public func `bookmarkPoi`(request: Loci_Chat_BookmarkRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Chat_BookmarkResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.chat.ChatService/BookmarkPOI", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
@@ -173,28 +97,14 @@ public final class Loci_Chat_ChatServiceClient: Loci_Chat_ChatServiceClientInter
         return await self.client.unary(path: "/loci.chat.ChatService/BookmarkPOI", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `bookmarkItinerary`(request: Loci_Chat_BookmarkRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Chat_BookmarkResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.chat.ChatService/BookmarkItinerary", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `bookmarkItinerary`(request: Loci_Chat_BookmarkRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Chat_BookmarkResponse> {
         return await self.client.unary(path: "/loci.chat.ChatService/BookmarkItinerary", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @discardableResult
-    public func `removeBookmark`(request: Loci_Chat_BookmarkRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Loci_Chat_BookmarkResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/loci.chat.ChatService/RemoveBookmark", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
-    }
-
     @available(iOS 13, *)
     public func `removeBookmark`(request: Loci_Chat_BookmarkRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Chat_BookmarkResponse> {
         return await self.client.unary(path: "/loci.chat.ChatService/RemoveBookmark", idempotencyLevel: .unknown, request: request, headers: headers)
-    }
-
-    public func `streamChat`(headers: Connect.Headers = [:], onResult: @escaping @Sendable (Connect.StreamResult<Loci_Chat_StreamEvent>) -> Void) -> any Connect.ServerOnlyStreamInterface<Loci_Chat_ChatRequest> {
-        return self.client.serverOnlyStream(path: "/loci.chat.ChatService/StreamChat", headers: headers, onResult: onResult)
     }
 
     @available(iOS 13, *)
