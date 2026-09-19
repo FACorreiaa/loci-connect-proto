@@ -1,3 +1,0 @@
-module NIOPosix {
-    header "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/arm64-apple-macosx/debug/NIOPosix.build/include/NIOPosix-Swift.h"
-}
