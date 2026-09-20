@@ -1,0 +1,138 @@
+syntax = "proto3";
+
+package loci.calendar;
+
+import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/calendar;calendarv1";
+
+// CalendarProvider is an OAuth calendar Loci can connect. Apple Calendar is
+// device-local (EventKit) and never appears here.
+enum CalendarProvider {
+  CALENDAR_PROVIDER_UNSPECIFIED = 0;
+  CALENDAR_PROVIDER_GOOGLE = 1;
+  CALENDAR_PROVIDER_CALENDLY = 2;
+}
+
+// CalendarEventSource distinguishes Loci-authored blocks from overlay events.
+enum CalendarEventSource {
+  CALENDAR_EVENT_SOURCE_UNSPECIFIED = 0;
+  CALENDAR_EVENT_SOURCE_LOCI_TRIP = 1;
+  CALENDAR_EVENT_SOURCE_GOOGLE = 2;
+  CALENDAR_EVENT_SOURCE_CALENDLY = 3;
+}
+
+message CalendarConnection {
+  string id = 1 [(buf.validate.field).string = {max_len: 100}];
+  CalendarProvider provider = 2 [(buf.validate.field).enum = {defined_only: true}];
+  // Email or account label shown in Settings. Never a token.
+  string account_label = 3 [(buf.validate.field).string = {max_len: 320}];
+  google.protobuf.Timestamp connected_at = 4;
+}
+
+message CalendarEvent {
+  string id = 1 [(buf.validate.field).string = {max_len: 200}];
+  CalendarEventSource source = 2 [(buf.validate.field).enum = {defined_only: true}];
+  string title = 3 [(buf.validate.field).string = {max_len: 300}];
+  google.protobuf.Timestamp start = 4 [(buf.validate.field).required = true];
+  google.protobuf.Timestamp end = 5 [(buf.validate.field).required = true];
+  string location = 6 [(buf.validate.field).string = {max_len: 500}];
+  optional string trip_id = 7 [(buf.validate.field) = {
+    string: {
+      min_len: 1
+      max_len: 100
+    }
+  }];
+}
+
+message StartCalendarConnectRequest {
+  CalendarProvider provider = 1 [(buf.validate.field).enum = {
+    defined_only: true
+    not_in: [0]
+  }];
+  string redirect_uri = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 500
+  }];
+}
+
+message StartCalendarConnectResponse {
+  string auth_url = 1;
+  string state = 2;
+}
+
+message CompleteCalendarConnectRequest {
+  CalendarProvider provider = 1 [(buf.validate.field).enum = {
+    defined_only: true
+    not_in: [0]
+  }];
+  string code = 2 [(buf.validate.field).string = {min_len: 1}];
+  string state = 3 [(buf.validate.field).string = {min_len: 1}];
+}
+
+message CompleteCalendarConnectResponse {
+  CalendarConnection connection = 1 [(buf.validate.field).required = true];
+}
+
+message ListCalendarConnectionsRequest {}
+
+message ListCalendarConnectionsResponse {
+  repeated CalendarConnection connections = 1;
+}
+
+message DisconnectCalendarRequest {
+  string connection_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+}
+
+message DisconnectCalendarResponse {}
+
+message ListCalendarEventsRequest {
+  google.protobuf.Timestamp from = 1 [(buf.validate.field).required = true];
+  google.protobuf.Timestamp to = 2 [(buf.validate.field).required = true];
+}
+
+message ListCalendarEventsResponse {
+  repeated CalendarEvent events = 1;
+}
+
+message PushTripToCalendarRequest {
+  string trip_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string connection_id = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+}
+
+message PushTripToCalendarResponse {
+  repeated string event_ids = 1;
+}
+
+message GetTripCalendarFeedUrlRequest {}
+
+message GetTripCalendarFeedUrlResponse {
+  // webcal:// or https:// ICS URL the user can subscribe to in Apple Calendar.
+  string url = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 2048
+  }];
+}
+
+// CalendarService connects Google Calendar and Calendly, overlays their events
+// next to Loci trips, and pushes dated trips out. Apple Calendar is iOS-only
+// EventKit and does not go through this service.
+service CalendarService {
+  rpc StartCalendarConnect(StartCalendarConnectRequest) returns (StartCalendarConnectResponse);
+  rpc CompleteCalendarConnect(CompleteCalendarConnectRequest) returns (CompleteCalendarConnectResponse);
+  rpc ListCalendarConnections(ListCalendarConnectionsRequest) returns (ListCalendarConnectionsResponse);
+  rpc DisconnectCalendar(DisconnectCalendarRequest) returns (DisconnectCalendarResponse);
+  rpc ListCalendarEvents(ListCalendarEventsRequest) returns (ListCalendarEventsResponse);
+  rpc PushTripToCalendar(PushTripToCalendarRequest) returns (PushTripToCalendarResponse);
+  rpc GetTripCalendarFeedUrl(GetTripCalendarFeedUrlRequest) returns (GetTripCalendarFeedUrlResponse);
+}

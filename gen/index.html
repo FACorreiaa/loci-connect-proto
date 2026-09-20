@@ -977,6 +977,93 @@
         
           
           <li>
+            <a href="#loci%2fcalendar%2fcalendar.proto">loci/calendar/calendar.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#loci.calendar.CalendarConnection"><span class="badge">M</span>CalendarConnection</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.calendar.CalendarEvent"><span class="badge">M</span>CalendarEvent</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.calendar.CompleteCalendarConnectRequest"><span class="badge">M</span>CompleteCalendarConnectRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.calendar.CompleteCalendarConnectResponse"><span class="badge">M</span>CompleteCalendarConnectResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.calendar.DisconnectCalendarRequest"><span class="badge">M</span>DisconnectCalendarRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.calendar.DisconnectCalendarResponse"><span class="badge">M</span>DisconnectCalendarResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.calendar.GetTripCalendarFeedUrlRequest"><span class="badge">M</span>GetTripCalendarFeedUrlRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.calendar.GetTripCalendarFeedUrlResponse"><span class="badge">M</span>GetTripCalendarFeedUrlResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.calendar.ListCalendarConnectionsRequest"><span class="badge">M</span>ListCalendarConnectionsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.calendar.ListCalendarConnectionsResponse"><span class="badge">M</span>ListCalendarConnectionsResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.calendar.ListCalendarEventsRequest"><span class="badge">M</span>ListCalendarEventsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.calendar.ListCalendarEventsResponse"><span class="badge">M</span>ListCalendarEventsResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.calendar.PushTripToCalendarRequest"><span class="badge">M</span>PushTripToCalendarRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.calendar.PushTripToCalendarResponse"><span class="badge">M</span>PushTripToCalendarResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.calendar.StartCalendarConnectRequest"><span class="badge">M</span>StartCalendarConnectRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.calendar.StartCalendarConnectResponse"><span class="badge">M</span>StartCalendarConnectResponse</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#loci.calendar.CalendarEventSource"><span class="badge">E</span>CalendarEventSource</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.calendar.CalendarProvider"><span class="badge">E</span>CalendarProvider</a>
+                </li>
+              
+              
+              
+                <li>
+                  <a href="#loci.calendar.CalendarService"><span class="badge">S</span>CalendarService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#loci%2fcity%2fcity.proto">loci/city/city.proto</a>
             <ul>
               
@@ -10859,6 +10946,583 @@ price or mode field here, so a client cannot name its own amount. </p></td>
                 <td>ListMyBundles</td>
                 <td><a href="#loci.bundle.v1.ListMyBundlesRequest">ListMyBundlesRequest</a></td>
                 <td><a href="#loci.bundle.v1.ListMyBundlesResponse">ListMyBundlesResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="loci/calendar/calendar.proto">loci/calendar/calendar.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="loci.calendar.CalendarConnection">CalendarConnection</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>provider</td>
+                  <td><a href="#loci.calendar.CalendarProvider">CalendarProvider</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>account_label</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Email or account label shown in Settings. Never a token. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>connected_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.calendar.CalendarEvent">CalendarEvent</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>source</td>
+                  <td><a href="#loci.calendar.CalendarEventSource">CalendarEventSource</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>title</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>start</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>end</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>location</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.calendar.CompleteCalendarConnectRequest">CompleteCalendarConnectRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>provider</td>
+                  <td><a href="#loci.calendar.CalendarProvider">CalendarProvider</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>code</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>state</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.calendar.CompleteCalendarConnectResponse">CompleteCalendarConnectResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>connection</td>
+                  <td><a href="#loci.calendar.CalendarConnection">CalendarConnection</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.calendar.DisconnectCalendarRequest">DisconnectCalendarRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>connection_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.calendar.DisconnectCalendarResponse">DisconnectCalendarResponse</h3>
+        <p></p>
+
+        
+
+        
+      
+        <h3 id="loci.calendar.GetTripCalendarFeedUrlRequest">GetTripCalendarFeedUrlRequest</h3>
+        <p></p>
+
+        
+
+        
+      
+        <h3 id="loci.calendar.GetTripCalendarFeedUrlResponse">GetTripCalendarFeedUrlResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>webcal:// or https:// ICS URL the user can subscribe to in Apple Calendar. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.calendar.ListCalendarConnectionsRequest">ListCalendarConnectionsRequest</h3>
+        <p></p>
+
+        
+
+        
+      
+        <h3 id="loci.calendar.ListCalendarConnectionsResponse">ListCalendarConnectionsResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>connections</td>
+                  <td><a href="#loci.calendar.CalendarConnection">CalendarConnection</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.calendar.ListCalendarEventsRequest">ListCalendarEventsRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>from</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>to</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.calendar.ListCalendarEventsResponse">ListCalendarEventsResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>events</td>
+                  <td><a href="#loci.calendar.CalendarEvent">CalendarEvent</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.calendar.PushTripToCalendarRequest">PushTripToCalendarRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>connection_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.calendar.PushTripToCalendarResponse">PushTripToCalendarResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>event_ids</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.calendar.StartCalendarConnectRequest">StartCalendarConnectRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>provider</td>
+                  <td><a href="#loci.calendar.CalendarProvider">CalendarProvider</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>redirect_uri</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.calendar.StartCalendarConnectResponse">StartCalendarConnectResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>auth_url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>state</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+        <h3 id="loci.calendar.CalendarEventSource">CalendarEventSource</h3>
+        <p>CalendarEventSource distinguishes Loci-authored blocks from overlay events.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>CALENDAR_EVENT_SOURCE_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>CALENDAR_EVENT_SOURCE_LOCI_TRIP</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>CALENDAR_EVENT_SOURCE_GOOGLE</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>CALENDAR_EVENT_SOURCE_CALENDLY</td>
+                <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="loci.calendar.CalendarProvider">CalendarProvider</h3>
+        <p>CalendarProvider is an OAuth calendar Loci can connect. Apple Calendar is</p><p>device-local (EventKit) and never appears here.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>CALENDAR_PROVIDER_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>CALENDAR_PROVIDER_GOOGLE</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>CALENDAR_PROVIDER_CALENDLY</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+
+      
+
+      
+        <h3 id="loci.calendar.CalendarService">CalendarService</h3>
+        <p>CalendarService connects Google Calendar and Calendly, overlays their events</p><p>next to Loci trips, and pushes dated trips out. Apple Calendar is iOS-only</p><p>EventKit and does not go through this service.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>StartCalendarConnect</td>
+                <td><a href="#loci.calendar.StartCalendarConnectRequest">StartCalendarConnectRequest</a></td>
+                <td><a href="#loci.calendar.StartCalendarConnectResponse">StartCalendarConnectResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>CompleteCalendarConnect</td>
+                <td><a href="#loci.calendar.CompleteCalendarConnectRequest">CompleteCalendarConnectRequest</a></td>
+                <td><a href="#loci.calendar.CompleteCalendarConnectResponse">CompleteCalendarConnectResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ListCalendarConnections</td>
+                <td><a href="#loci.calendar.ListCalendarConnectionsRequest">ListCalendarConnectionsRequest</a></td>
+                <td><a href="#loci.calendar.ListCalendarConnectionsResponse">ListCalendarConnectionsResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>DisconnectCalendar</td>
+                <td><a href="#loci.calendar.DisconnectCalendarRequest">DisconnectCalendarRequest</a></td>
+                <td><a href="#loci.calendar.DisconnectCalendarResponse">DisconnectCalendarResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ListCalendarEvents</td>
+                <td><a href="#loci.calendar.ListCalendarEventsRequest">ListCalendarEventsRequest</a></td>
+                <td><a href="#loci.calendar.ListCalendarEventsResponse">ListCalendarEventsResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>PushTripToCalendar</td>
+                <td><a href="#loci.calendar.PushTripToCalendarRequest">PushTripToCalendarRequest</a></td>
+                <td><a href="#loci.calendar.PushTripToCalendarResponse">PushTripToCalendarResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>GetTripCalendarFeedUrl</td>
+                <td><a href="#loci.calendar.GetTripCalendarFeedUrlRequest">GetTripCalendarFeedUrlRequest</a></td>
+                <td><a href="#loci.calendar.GetTripCalendarFeedUrlResponse">GetTripCalendarFeedUrlResponse</a></td>
                 <td><p></p></td>
               </tr>
             
