@@ -1302,6 +1302,251 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.bundle.v1.ListMyBundlesResponse'
+  /loci.calendar.CalendarService/CompleteCalendarConnect:
+    post:
+      tags:
+        - loci.calendar.CalendarService
+      summary: CompleteCalendarConnect
+      operationId: loci.calendar.CalendarService.CompleteCalendarConnect
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.calendar.CompleteCalendarConnectRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.calendar.CompleteCalendarConnectResponse'
+  /loci.calendar.CalendarService/DisconnectCalendar:
+    post:
+      tags:
+        - loci.calendar.CalendarService
+      summary: DisconnectCalendar
+      operationId: loci.calendar.CalendarService.DisconnectCalendar
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.calendar.DisconnectCalendarRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.calendar.DisconnectCalendarResponse'
+  /loci.calendar.CalendarService/GetTripCalendarFeedUrl:
+    post:
+      tags:
+        - loci.calendar.CalendarService
+      summary: GetTripCalendarFeedUrl
+      operationId: loci.calendar.CalendarService.GetTripCalendarFeedUrl
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.calendar.GetTripCalendarFeedUrlRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.calendar.GetTripCalendarFeedUrlResponse'
+  /loci.calendar.CalendarService/ListCalendarConnections:
+    post:
+      tags:
+        - loci.calendar.CalendarService
+      summary: ListCalendarConnections
+      operationId: loci.calendar.CalendarService.ListCalendarConnections
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.calendar.ListCalendarConnectionsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.calendar.ListCalendarConnectionsResponse'
+  /loci.calendar.CalendarService/ListCalendarEvents:
+    post:
+      tags:
+        - loci.calendar.CalendarService
+      summary: ListCalendarEvents
+      operationId: loci.calendar.CalendarService.ListCalendarEvents
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.calendar.ListCalendarEventsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.calendar.ListCalendarEventsResponse'
+  /loci.calendar.CalendarService/PushTripToCalendar:
+    post:
+      tags:
+        - loci.calendar.CalendarService
+      summary: PushTripToCalendar
+      operationId: loci.calendar.CalendarService.PushTripToCalendar
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.calendar.PushTripToCalendarRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.calendar.PushTripToCalendarResponse'
+  /loci.calendar.CalendarService/StartCalendarConnect:
+    post:
+      tags:
+        - loci.calendar.CalendarService
+      summary: StartCalendarConnect
+      operationId: loci.calendar.CalendarService.StartCalendarConnect
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.calendar.StartCalendarConnectRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.calendar.StartCalendarConnectResponse'
   /loci.chat.ChatService/BookmarkItinerary:
     post:
       tags:
@@ -9641,6 +9886,229 @@ components:
           title: pagination
           $ref: '#/components/schemas/loci.common.PaginationMetadata'
       title: ListMyBundlesResponse
+      additionalProperties: false
+    loci.calendar.CalendarConnection:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          maxLength: 100
+        provider:
+          title: provider
+          $ref: '#/components/schemas/loci.calendar.CalendarProvider'
+        accountLabel:
+          type: string
+          title: account_label
+          maxLength: 320
+          description: Email or account label shown in Settings. Never a token.
+        connectedAt:
+          title: connected_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: CalendarConnection
+      additionalProperties: false
+    loci.calendar.CalendarEvent:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          maxLength: 200
+        source:
+          title: source
+          $ref: '#/components/schemas/loci.calendar.CalendarEventSource'
+        title:
+          type: string
+          title: title
+          maxLength: 300
+        start:
+          title: start
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        end:
+          title: end
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        location:
+          type: string
+          title: location
+          maxLength: 500
+        tripId:
+          type:
+            - string
+            - "null"
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+      title: CalendarEvent
+      required:
+        - start
+        - end
+      additionalProperties: false
+    loci.calendar.CalendarEventSource:
+      type: string
+      title: CalendarEventSource
+      enum:
+        - CALENDAR_EVENT_SOURCE_UNSPECIFIED
+        - CALENDAR_EVENT_SOURCE_LOCI_TRIP
+        - CALENDAR_EVENT_SOURCE_GOOGLE
+        - CALENDAR_EVENT_SOURCE_CALENDLY
+      description: CalendarEventSource distinguishes Loci-authored blocks from overlay events.
+    loci.calendar.CalendarProvider:
+      type: string
+      title: CalendarProvider
+      enum:
+        - CALENDAR_PROVIDER_UNSPECIFIED
+        - CALENDAR_PROVIDER_GOOGLE
+        - CALENDAR_PROVIDER_CALENDLY
+      description: |-
+        CalendarProvider is an OAuth calendar Loci can connect. Apple Calendar is
+         device-local (EventKit) and never appears here.
+    loci.calendar.CompleteCalendarConnectRequest:
+      type: object
+      properties:
+        provider:
+          not:
+            enum:
+              - CALENDAR_PROVIDER_UNSPECIFIED
+          title: provider
+          $ref: '#/components/schemas/loci.calendar.CalendarProvider'
+        code:
+          type: string
+          title: code
+          minLength: 1
+        state:
+          type: string
+          title: state
+          minLength: 1
+      title: CompleteCalendarConnectRequest
+      additionalProperties: false
+    loci.calendar.CompleteCalendarConnectResponse:
+      type: object
+      properties:
+        connection:
+          title: connection
+          $ref: '#/components/schemas/loci.calendar.CalendarConnection'
+      title: CompleteCalendarConnectResponse
+      required:
+        - connection
+      additionalProperties: false
+    loci.calendar.DisconnectCalendarRequest:
+      type: object
+      properties:
+        connectionId:
+          type: string
+          title: connection_id
+          maxLength: 100
+          minLength: 1
+      title: DisconnectCalendarRequest
+      additionalProperties: false
+    loci.calendar.DisconnectCalendarResponse:
+      type: object
+      title: DisconnectCalendarResponse
+      additionalProperties: false
+    loci.calendar.GetTripCalendarFeedUrlRequest:
+      type: object
+      title: GetTripCalendarFeedUrlRequest
+      additionalProperties: false
+    loci.calendar.GetTripCalendarFeedUrlResponse:
+      type: object
+      properties:
+        url:
+          type: string
+          title: url
+          maxLength: 2048
+          minLength: 1
+          description: webcal:// or https:// ICS URL the user can subscribe to in Apple Calendar.
+      title: GetTripCalendarFeedUrlResponse
+      additionalProperties: false
+    loci.calendar.ListCalendarConnectionsRequest:
+      type: object
+      title: ListCalendarConnectionsRequest
+      additionalProperties: false
+    loci.calendar.ListCalendarConnectionsResponse:
+      type: object
+      properties:
+        connections:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.calendar.CalendarConnection'
+          title: connections
+      title: ListCalendarConnectionsResponse
+      additionalProperties: false
+    loci.calendar.ListCalendarEventsRequest:
+      type: object
+      properties:
+        from:
+          title: from
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        to:
+          title: to
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: ListCalendarEventsRequest
+      required:
+        - from
+        - to
+      additionalProperties: false
+    loci.calendar.ListCalendarEventsResponse:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.calendar.CalendarEvent'
+          title: events
+      title: ListCalendarEventsResponse
+      additionalProperties: false
+    loci.calendar.PushTripToCalendarRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+        connectionId:
+          type: string
+          title: connection_id
+          maxLength: 100
+          minLength: 1
+      title: PushTripToCalendarRequest
+      additionalProperties: false
+    loci.calendar.PushTripToCalendarResponse:
+      type: object
+      properties:
+        eventIds:
+          type: array
+          items:
+            type: string
+          title: event_ids
+      title: PushTripToCalendarResponse
+      additionalProperties: false
+    loci.calendar.StartCalendarConnectRequest:
+      type: object
+      properties:
+        provider:
+          not:
+            enum:
+              - CALENDAR_PROVIDER_UNSPECIFIED
+          title: provider
+          $ref: '#/components/schemas/loci.calendar.CalendarProvider'
+        redirectUri:
+          type: string
+          title: redirect_uri
+          maxLength: 500
+          minLength: 1
+      title: StartCalendarConnectRequest
+      additionalProperties: false
+    loci.calendar.StartCalendarConnectResponse:
+      type: object
+      properties:
+        authUrl:
+          type: string
+          title: auth_url
+        state:
+          type: string
+          title: state
+      title: StartCalendarConnectResponse
       additionalProperties: false
     loci.chat.AIItineraryResponse:
       type: object
@@ -24663,6 +25131,11 @@ tags:
        ListBundles and GetBundle are public. They still read the caller's identity
        when a token happens to be present, which is how one endpoint can serve a
        teaser to a stranger and the whole pack to someone who bought it.
+  - name: loci.calendar.CalendarService
+    description: |-
+      CalendarService connects Google Calendar and Calendly, overlays their events
+       next to Loci trips, and pushes dated trips out. Apple Calendar is iOS-only
+       EventKit and does not go through this service.
   - name: loci.city.CityService
     description: CityService defines city-related RPCs
   - name: loci.interest.InterestService
