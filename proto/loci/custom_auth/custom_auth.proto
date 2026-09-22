@@ -55,6 +55,30 @@ message OAuthCallbackResponse {
   bool is_new_user = 6;
 }
 
+// SignInWithIDTokenRequest is native sign-in (the iOS Apple and Google
+// sheets). The device already holds an ID token signed by the provider, so
+// there is no code to exchange: the server verifies the token against the
+// provider's published keys and signs the person in by its subject.
+message SignInWithIDTokenRequest {
+  OAuthProvider provider = 1 [(buf.validate.field).enum = {
+    defined_only: true
+    not_in: [0]
+  }];
+  string id_token = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 8192
+  }];
+  // The raw nonce the app generated for this attempt. Google puts it in the
+  // token as-is; Apple puts its SHA-256 hex digest.
+  string nonce = 3 [(buf.validate.field).string = {
+    min_len: 16
+    max_len: 256
+  }];
+  // Apple hands over the person's name once, on first consent, and never puts
+  // it in the token. Empty otherwise.
+  string full_name = 4 [(buf.validate.field).string.max_len = 200];
+}
+
 // =====================
 // Phone Auth Messages
 // =====================
@@ -104,6 +128,7 @@ service CustomAuthService {
   // OAuth authentication
   rpc GetOAuthURL(GetOAuthURLRequest) returns (GetOAuthURLResponse);
   rpc OAuthCallback(OAuthCallbackRequest) returns (OAuthCallbackResponse);
+  rpc SignInWithIDToken(SignInWithIDTokenRequest) returns (OAuthCallbackResponse);
 
   // Phone authentication
   rpc SendPhoneVerification(SendPhoneVerificationRequest) returns (SendPhoneVerificationResponse);
