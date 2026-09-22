@@ -21,6 +21,46 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
+public enum Loci_User_PushPlatform: SwiftProtobuf.Enum, Swift.CaseIterable {
+  public typealias RawValue = Int
+  case unspecified // = 0
+  case webPush // = 1
+
+  /// Reserved for the iOS app; the server does not send to it yet.
+  case apns // = 2
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .unspecified
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unspecified
+    case 1: self = .webPush
+    case 2: self = .apns
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .unspecified: return 0
+    case .webPush: return 1
+    case .apns: return 2
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static let allCases: [Loci_User_PushPlatform] = [
+    .unspecified,
+    .webPush,
+    .apns,
+  ]
+
+}
+
 /// UserStats contains user statistics
 public struct Loci_User_UserStats: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
@@ -627,6 +667,8 @@ public struct Loci_User_NotificationSettings: Sendable {
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {self._updatedAt = nil}
 
+  public var searchFinished: Bool = false
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -668,17 +710,90 @@ public struct Loci_User_UpdateNotificationSettingsRequest: Sendable {
   /// Clears the value of `tripReminders`. Subsequent reads from it will return its default value.
   public mutating func clearTripReminders() {self._tripReminders = nil}
 
+  public var searchFinished: Bool {
+    get {return _searchFinished ?? false}
+    set {_searchFinished = newValue}
+  }
+  /// Returns true if `searchFinished` has been explicitly set.
+  public var hasSearchFinished: Bool {return self._searchFinished != nil}
+  /// Clears the value of `searchFinished`. Subsequent reads from it will return its default value.
+  public mutating func clearSearchFinished() {self._searchFinished = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
   fileprivate var _recommendations: Bool? = nil
   fileprivate var _tripReminders: Bool? = nil
+  fileprivate var _searchFinished: Bool? = nil
+}
+
+public struct Loci_User_RegisterPushDeviceRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var platform: Loci_User_PushPlatform = .unspecified
+
+  /// Web push endpoint URL, or the APNs device token.
+  public var endpoint: String = String()
+
+  /// Web push only.
+  public var p256Dh: String = String()
+
+  public var auth: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_User_UnregisterPushDeviceRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var endpoint: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_User_GetPushConfigRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_User_PushConfig: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// Empty when the server has no VAPID keys: clients must not offer push.
+  public var vapidPublicKey: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
 }
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "loci.user"
+
+extension Loci_User_PushPlatform: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "PUSH_PLATFORM_UNSPECIFIED"),
+    1: .same(proto: "PUSH_PLATFORM_WEB_PUSH"),
+    2: .same(proto: "PUSH_PLATFORM_APNS"),
+  ]
+}
 
 extension Loci_User_UserStats: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UserStats"
@@ -1465,6 +1580,7 @@ extension Loci_User_NotificationSettings: SwiftProtobuf.Message, SwiftProtobuf._
     1: .same(proto: "recommendations"),
     2: .standard(proto: "trip_reminders"),
     3: .standard(proto: "updated_at"),
+    4: .standard(proto: "search_finished"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1476,6 +1592,7 @@ extension Loci_User_NotificationSettings: SwiftProtobuf.Message, SwiftProtobuf._
       case 1: try { try decoder.decodeSingularBoolField(value: &self.recommendations) }()
       case 2: try { try decoder.decodeSingularBoolField(value: &self.tripReminders) }()
       case 3: try { try decoder.decodeSingularMessageField(value: &self._updatedAt) }()
+      case 4: try { try decoder.decodeSingularBoolField(value: &self.searchFinished) }()
       default: break
       }
     }
@@ -1495,6 +1612,9 @@ extension Loci_User_NotificationSettings: SwiftProtobuf.Message, SwiftProtobuf._
     try { if let v = self._updatedAt {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     } }()
+    if self.searchFinished != false {
+      try visitor.visitSingularBoolField(value: self.searchFinished, fieldNumber: 4)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1502,6 +1622,7 @@ extension Loci_User_NotificationSettings: SwiftProtobuf.Message, SwiftProtobuf._
     if lhs.recommendations != rhs.recommendations {return false}
     if lhs.tripReminders != rhs.tripReminders {return false}
     if lhs._updatedAt != rhs._updatedAt {return false}
+    if lhs.searchFinished != rhs.searchFinished {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1531,6 +1652,7 @@ extension Loci_User_UpdateNotificationSettingsRequest: SwiftProtobuf.Message, Sw
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "recommendations"),
     2: .standard(proto: "trip_reminders"),
+    3: .standard(proto: "search_finished"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1541,6 +1663,7 @@ extension Loci_User_UpdateNotificationSettingsRequest: SwiftProtobuf.Message, Sw
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularBoolField(value: &self._recommendations) }()
       case 2: try { try decoder.decodeSingularBoolField(value: &self._tripReminders) }()
+      case 3: try { try decoder.decodeSingularBoolField(value: &self._searchFinished) }()
       default: break
       }
     }
@@ -1557,12 +1680,149 @@ extension Loci_User_UpdateNotificationSettingsRequest: SwiftProtobuf.Message, Sw
     try { if let v = self._tripReminders {
       try visitor.visitSingularBoolField(value: v, fieldNumber: 2)
     } }()
+    try { if let v = self._searchFinished {
+      try visitor.visitSingularBoolField(value: v, fieldNumber: 3)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Loci_User_UpdateNotificationSettingsRequest, rhs: Loci_User_UpdateNotificationSettingsRequest) -> Bool {
     if lhs._recommendations != rhs._recommendations {return false}
     if lhs._tripReminders != rhs._tripReminders {return false}
+    if lhs._searchFinished != rhs._searchFinished {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_User_RegisterPushDeviceRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".RegisterPushDeviceRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "platform"),
+    2: .same(proto: "endpoint"),
+    3: .same(proto: "p256dh"),
+    4: .same(proto: "auth"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.platform) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.endpoint) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.p256Dh) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.auth) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.platform != .unspecified {
+      try visitor.visitSingularEnumField(value: self.platform, fieldNumber: 1)
+    }
+    if !self.endpoint.isEmpty {
+      try visitor.visitSingularStringField(value: self.endpoint, fieldNumber: 2)
+    }
+    if !self.p256Dh.isEmpty {
+      try visitor.visitSingularStringField(value: self.p256Dh, fieldNumber: 3)
+    }
+    if !self.auth.isEmpty {
+      try visitor.visitSingularStringField(value: self.auth, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_User_RegisterPushDeviceRequest, rhs: Loci_User_RegisterPushDeviceRequest) -> Bool {
+    if lhs.platform != rhs.platform {return false}
+    if lhs.endpoint != rhs.endpoint {return false}
+    if lhs.p256Dh != rhs.p256Dh {return false}
+    if lhs.auth != rhs.auth {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_User_UnregisterPushDeviceRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".UnregisterPushDeviceRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "endpoint"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.endpoint) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.endpoint.isEmpty {
+      try visitor.visitSingularStringField(value: self.endpoint, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_User_UnregisterPushDeviceRequest, rhs: Loci_User_UnregisterPushDeviceRequest) -> Bool {
+    if lhs.endpoint != rhs.endpoint {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_User_GetPushConfigRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".GetPushConfigRequest"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    // Load everything into unknown fields
+    while try decoder.nextFieldNumber() != nil {}
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_User_GetPushConfigRequest, rhs: Loci_User_GetPushConfigRequest) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_User_PushConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".PushConfig"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "vapid_public_key"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.vapidPublicKey) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.vapidPublicKey.isEmpty {
+      try visitor.visitSingularStringField(value: self.vapidPublicKey, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_User_PushConfig, rhs: Loci_User_PushConfig) -> Bool {
+    if lhs.vapidPublicKey != rhs.vapidPublicKey {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

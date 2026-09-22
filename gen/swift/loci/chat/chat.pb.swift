@@ -451,6 +451,50 @@ public enum Loci_Chat_SessionPOISection: SwiftProtobuf.Enum, Swift.CaseIterable 
 
 }
 
+/// RunStatus is where one generation is. A run that has been RUNNING for more
+/// than 10 minutes is reported as FAILED (deadline_exceeded).
+public enum Loci_Chat_RunStatus: SwiftProtobuf.Enum, Swift.CaseIterable {
+  public typealias RawValue = Int
+  case unspecified // = 0
+  case running // = 1
+  case done // = 2
+  case failed // = 3
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .unspecified
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unspecified
+    case 1: self = .running
+    case 2: self = .done
+    case 3: self = .failed
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .unspecified: return 0
+    case .running: return 1
+    case .done: return 2
+    case .failed: return 3
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static let allCases: [Loci_Chat_RunStatus] = [
+    .unspecified,
+    .running,
+    .done,
+    .failed,
+  ]
+
+}
+
 /// LlmInteraction represents an interaction with the LLM
 public struct Loci_Chat_LlmInteraction: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
@@ -1370,6 +1414,11 @@ public struct Loci_Chat_CompletePayload: Sendable {
   /// Clears the value of `result`. Subsequent reads from it will return its default value.
   public mutating func clearResult() {self._result = nil}
 
+  /// load_from_session is set on a resume whose buffer is gone but whose run
+  /// already finished: the result is not on this stream, load it with
+  /// GetChatSession / GetSessionPOIs instead.
+  public var loadFromSession: Bool = false
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -2135,6 +2184,66 @@ public struct Loci_Chat_GetBookmarksRequest: Sendable {
   fileprivate var _pagination: Loci_Common_PaginationRequest? = nil
 }
 
+public struct Loci_Chat_GetRunStatusRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var sessionIds: [String] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Chat_RunInfo: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var sessionID: String = String()
+
+  public var domain: Loci_Chat_DomainType = .unspecified
+
+  public var cityName: String = String()
+
+  public var status: Loci_Chat_RunStatus = .unspecified
+
+  public var errorCode: String = String()
+
+  public var finishedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _finishedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_finishedAt = newValue}
+  }
+  /// Returns true if `finishedAt` has been explicitly set.
+  public var hasFinishedAt: Bool {return self._finishedAt != nil}
+  /// Clears the value of `finishedAt`. Subsequent reads from it will return its default value.
+  public mutating func clearFinishedAt() {self._finishedAt = nil}
+
+  /// url is the page that shows this run's result, e.g.
+  /// /itinerary?sessionId=…&cityName=Crete&domain=itinerary
+  public var url: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _finishedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+}
+
+public struct Loci_Chat_GetRunStatusResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// Only the caller's own runs; ids that are not theirs are omitted.
+  public var runs: [Loci_Chat_RunInfo] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "loci.chat"
@@ -2229,6 +2338,15 @@ extension Loci_Chat_SessionPOISection: SwiftProtobuf._ProtoNameProviding {
     3: .same(proto: "SESSION_POI_SECTION_RESTAURANTS"),
     4: .same(proto: "SESSION_POI_SECTION_HOTELS"),
     5: .same(proto: "SESSION_POI_SECTION_ACTIVITIES"),
+  ]
+}
+
+extension Loci_Chat_RunStatus: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "RUN_STATUS_UNSPECIFIED"),
+    1: .same(proto: "RUN_STATUS_RUNNING"),
+    2: .same(proto: "RUN_STATUS_DONE"),
+    3: .same(proto: "RUN_STATUS_FAILED"),
   ]
 }
 
@@ -3833,6 +3951,7 @@ extension Loci_Chat_CompletePayload: SwiftProtobuf.Message, SwiftProtobuf._Messa
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "session_id"),
     2: .same(proto: "result"),
+    3: .standard(proto: "load_from_session"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3843,6 +3962,7 @@ extension Loci_Chat_CompletePayload: SwiftProtobuf.Message, SwiftProtobuf._Messa
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.sessionID) }()
       case 2: try { try decoder.decodeSingularMessageField(value: &self._result) }()
+      case 3: try { try decoder.decodeSingularBoolField(value: &self.loadFromSession) }()
       default: break
       }
     }
@@ -3859,12 +3979,16 @@ extension Loci_Chat_CompletePayload: SwiftProtobuf.Message, SwiftProtobuf._Messa
     try { if let v = self._result {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
+    if self.loadFromSession != false {
+      try visitor.visitSingularBoolField(value: self.loadFromSession, fieldNumber: 3)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Loci_Chat_CompletePayload, rhs: Loci_Chat_CompletePayload) -> Bool {
     if lhs.sessionID != rhs.sessionID {return false}
     if lhs._result != rhs._result {return false}
+    if lhs.loadFromSession != rhs.loadFromSession {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -5111,6 +5235,142 @@ extension Loci_Chat_GetBookmarksRequest: SwiftProtobuf.Message, SwiftProtobuf._M
   public static func ==(lhs: Loci_Chat_GetBookmarksRequest, rhs: Loci_Chat_GetBookmarksRequest) -> Bool {
     if lhs._userID != rhs._userID {return false}
     if lhs._pagination != rhs._pagination {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Chat_GetRunStatusRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".GetRunStatusRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "session_ids"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedStringField(value: &self.sessionIds) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.sessionIds.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.sessionIds, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_GetRunStatusRequest, rhs: Loci_Chat_GetRunStatusRequest) -> Bool {
+    if lhs.sessionIds != rhs.sessionIds {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Chat_RunInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".RunInfo"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "session_id"),
+    2: .same(proto: "domain"),
+    3: .standard(proto: "city_name"),
+    4: .same(proto: "status"),
+    5: .standard(proto: "error_code"),
+    6: .standard(proto: "finished_at"),
+    7: .same(proto: "url"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.sessionID) }()
+      case 2: try { try decoder.decodeSingularEnumField(value: &self.domain) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.cityName) }()
+      case 4: try { try decoder.decodeSingularEnumField(value: &self.status) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.errorCode) }()
+      case 6: try { try decoder.decodeSingularMessageField(value: &self._finishedAt) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.url) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.sessionID.isEmpty {
+      try visitor.visitSingularStringField(value: self.sessionID, fieldNumber: 1)
+    }
+    if self.domain != .unspecified {
+      try visitor.visitSingularEnumField(value: self.domain, fieldNumber: 2)
+    }
+    if !self.cityName.isEmpty {
+      try visitor.visitSingularStringField(value: self.cityName, fieldNumber: 3)
+    }
+    if self.status != .unspecified {
+      try visitor.visitSingularEnumField(value: self.status, fieldNumber: 4)
+    }
+    if !self.errorCode.isEmpty {
+      try visitor.visitSingularStringField(value: self.errorCode, fieldNumber: 5)
+    }
+    try { if let v = self._finishedAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+    } }()
+    if !self.url.isEmpty {
+      try visitor.visitSingularStringField(value: self.url, fieldNumber: 7)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_RunInfo, rhs: Loci_Chat_RunInfo) -> Bool {
+    if lhs.sessionID != rhs.sessionID {return false}
+    if lhs.domain != rhs.domain {return false}
+    if lhs.cityName != rhs.cityName {return false}
+    if lhs.status != rhs.status {return false}
+    if lhs.errorCode != rhs.errorCode {return false}
+    if lhs._finishedAt != rhs._finishedAt {return false}
+    if lhs.url != rhs.url {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Chat_GetRunStatusResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".GetRunStatusResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "runs"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.runs) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.runs.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.runs, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_GetRunStatusResponse, rhs: Loci_Chat_GetRunStatusResponse) -> Bool {
+    if lhs.runs != rhs.runs {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

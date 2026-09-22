@@ -31,6 +31,17 @@ public protocol Loci_User_UserServiceClientInterface: Sendable {
 
     @available(iOS 13, *)
     func `updateNotificationSettings`(request: Loci_User_UpdateNotificationSettingsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_User_NotificationSettings>
+
+    /// Push delivery: a browser (or, later, a phone) that should hear about the
+    /// caller's finished searches.
+    @available(iOS 13, *)
+    func `registerPushDevice`(request: Loci_User_RegisterPushDeviceRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Common_Response>
+
+    @available(iOS 13, *)
+    func `unregisterPushDevice`(request: Loci_User_UnregisterPushDeviceRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Common_Response>
+
+    @available(iOS 13, *)
+    func `getPushConfig`(request: Loci_User_GetPushConfigRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_User_PushConfig>
 }
 
 /// Concrete implementation of `Loci_User_UserServiceClientInterface`.
@@ -71,6 +82,21 @@ public final class Loci_User_UserServiceClient: Loci_User_UserServiceClientInter
         return await self.client.unary(path: "/loci.user.UserService/UpdateNotificationSettings", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
+    @available(iOS 13, *)
+    public func `registerPushDevice`(request: Loci_User_RegisterPushDeviceRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Common_Response> {
+        return await self.client.unary(path: "/loci.user.UserService/RegisterPushDevice", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `unregisterPushDevice`(request: Loci_User_UnregisterPushDeviceRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Common_Response> {
+        return await self.client.unary(path: "/loci.user.UserService/UnregisterPushDevice", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `getPushConfig`(request: Loci_User_GetPushConfigRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_User_PushConfig> {
+        return await self.client.unary(path: "/loci.user.UserService/GetPushConfig", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
     public enum Metadata {
         public enum Methods {
             public static let getUserProfile = Connect.MethodSpec(name: "GetUserProfile", service: "loci.user.UserService", type: .unary)
@@ -79,6 +105,9 @@ public final class Loci_User_UserServiceClient: Loci_User_UserServiceClientInter
             public static let deleteAccount = Connect.MethodSpec(name: "DeleteAccount", service: "loci.user.UserService", type: .unary)
             public static let getNotificationSettings = Connect.MethodSpec(name: "GetNotificationSettings", service: "loci.user.UserService", type: .unary)
             public static let updateNotificationSettings = Connect.MethodSpec(name: "UpdateNotificationSettings", service: "loci.user.UserService", type: .unary)
+            public static let registerPushDevice = Connect.MethodSpec(name: "RegisterPushDevice", service: "loci.user.UserService", type: .unary)
+            public static let unregisterPushDevice = Connect.MethodSpec(name: "UnregisterPushDevice", service: "loci.user.UserService", type: .unary)
+            public static let getPushConfig = Connect.MethodSpec(name: "GetPushConfig", service: "loci.user.UserService", type: .unary)
         }
     }
 }
