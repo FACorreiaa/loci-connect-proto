@@ -1357,6 +1357,14 @@
                 </li>
               
                 <li>
+                  <a href="#loci.chat.GetRunStatusRequest"><span class="badge">M</span>GetRunStatusRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.GetRunStatusResponse"><span class="badge">M</span>GetRunStatusResponse</a>
+                </li>
+              
+                <li>
                   <a href="#loci.chat.GetSessionPOIsRequest"><span class="badge">M</span>GetSessionPOIsRequest</a>
                 </li>
               
@@ -1402,6 +1410,10 @@
               
                 <li>
                   <a href="#loci.chat.RestaurantsPayload"><span class="badge">M</span>RestaurantsPayload</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.RunInfo"><span class="badge">M</span>RunInfo</a>
                 </li>
               
                 <li>
@@ -1459,6 +1471,10 @@
               
                 <li>
                   <a href="#loci.chat.MessageType"><span class="badge">E</span>MessageType</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.RunStatus"><span class="badge">E</span>RunStatus</a>
                 </li>
               
                 <li>
@@ -3312,6 +3328,10 @@
                 </li>
               
                 <li>
+                  <a href="#loci.user.GetPushConfigRequest"><span class="badge">M</span>GetPushConfigRequest</a>
+                </li>
+              
+                <li>
                   <a href="#loci.user.GetUserProfileRequest"><span class="badge">M</span>GetUserProfileRequest</a>
                 </li>
               
@@ -3321,6 +3341,18 @@
               
                 <li>
                   <a href="#loci.user.NotificationSettings"><span class="badge">M</span>NotificationSettings</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.user.PushConfig"><span class="badge">M</span>PushConfig</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.user.RegisterPushDeviceRequest"><span class="badge">M</span>RegisterPushDeviceRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.user.UnregisterPushDeviceRequest"><span class="badge">M</span>UnregisterPushDeviceRequest</a>
                 </li>
               
                 <li>
@@ -3343,6 +3375,10 @@
                   <a href="#loci.user.UserStats"><span class="badge">M</span>UserStats</a>
                 </li>
               
+              
+                <li>
+                  <a href="#loci.user.PushPlatform"><span class="badge">E</span>PushPlatform</a>
+                </li>
               
               
               
@@ -14574,6 +14610,15 @@ starting a new turn; consumers dedup by StreamEvent.event_id. </p></td>
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>load_from_session</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>load_from_session is set on a resume whose buffer is gone but whose run
+already finished: the result is not on this stream, load it with
+GetChatSession / GetSessionPOIs instead. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -14917,6 +14962,54 @@ starting a new turn; consumers dedup by StreamEvent.event_id. </p></td>
                   <td><a href="#loci.common.PaginationMetadata">loci.common.PaginationMetadata</a></td>
                   <td></td>
                   <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.GetRunStatusRequest">GetRunStatusRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>session_ids</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.GetRunStatusResponse">GetRunStatusResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>runs</td>
+                  <td><a href="#loci.chat.RunInfo">RunInfo</a></td>
+                  <td>repeated</td>
+                  <td><p>Only the caller&#39;s own runs; ids that are not theirs are omitted. </p></td>
                 </tr>
               
             </tbody>
@@ -15527,6 +15620,73 @@ starting a new turn; consumers dedup by StreamEvent.event_id. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.RunInfo">RunInfo</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>session_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>domain</td>
+                  <td><a href="#loci.chat.DomainType">DomainType</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#loci.chat.RunStatus">RunStatus</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>error_code</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>finished_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>url is the page that shows this run&#39;s result, e.g.
+/itinerary?sessionId=…&amp;cityName=Crete&amp;domain=itinerary </p></td>
                 </tr>
               
             </tbody>
@@ -16396,6 +16556,41 @@ starting a new turn; consumers dedup by StreamEvent.event_id. </p></td>
           </tbody>
         </table>
       
+        <h3 id="loci.chat.RunStatus">RunStatus</h3>
+        <p>RunStatus is where one generation is. A run that has been RUNNING for more</p><p>than 10 minutes is reported as FAILED (deadline_exceeded).</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>RUN_STATUS_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>RUN_STATUS_RUNNING</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>RUN_STATUS_DONE</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>RUN_STATUS_FAILED</td>
+                <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
         <h3 id="loci.chat.SessionPOISection">SessionPOISection</h3>
         <p>Which list of a session's stored answer a page is read from.</p><p>Hotels and restaurants are returned as POIs like everything else, because</p><p>that is how the stream already delivers them: a page has to look like what</p><p>the first payload looked like.</p>
         <table class="enum-table">
@@ -16656,6 +16851,14 @@ only delivery is paged.</p></td>
                 <td><a href="#loci.chat.ChatRequest">ChatRequest</a></td>
                 <td><a href="#loci.chat.StreamEvent">StreamEvent</a> stream</td>
                 <td><p>Streaming RPC for real-time chat responses</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetRunStatus</td>
+                <td><a href="#loci.chat.GetRunStatusRequest">GetRunStatusRequest</a></td>
+                <td><a href="#loci.chat.GetRunStatusResponse">GetRunStatusResponse</a></td>
+                <td><p>Where the caller&#39;s runs are: running, done or failed. Used after a
+reload or on returning to the app to settle runs nobody was listening to.</p></td>
               </tr>
             
           </tbody>
@@ -35879,6 +36082,13 @@ reverse geocode we do not have, and a guessed country is a fabricated one. </p><
 
         
       
+        <h3 id="loci.user.GetPushConfigRequest">GetPushConfigRequest</h3>
+        <p></p>
+
+        
+
+        
+      
         <h3 id="loci.user.GetUserProfileRequest">GetUserProfileRequest</h3>
         <p>GetUserProfileRequest for retrieving user profile</p>
 
@@ -35958,6 +36168,106 @@ reverse geocode we do not have, and a guessed country is a fabricated one. </p><
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>search_finished</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.user.PushConfig">PushConfig</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>vapid_public_key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Empty when the server has no VAPID keys: clients must not offer push. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.user.RegisterPushDeviceRequest">RegisterPushDeviceRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>platform</td>
+                  <td><a href="#loci.user.PushPlatform">PushPlatform</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>endpoint</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Web push endpoint URL, or the APNs device token. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>p256dh</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Web push only. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>auth</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.user.UnregisterPushDeviceRequest">UnregisterPushDeviceRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>endpoint</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -35984,6 +36294,13 @@ reverse geocode we do not have, and a guessed country is a fabricated one. </p><
               
                 <tr>
                   <td>trip_reminders</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>search_finished</td>
                   <td><a href="#bool">bool</a></td>
                   <td>optional</td>
                   <td><p> </p></td>
@@ -36454,6 +36771,35 @@ to before this existed. </p></td>
       
 
       
+        <h3 id="loci.user.PushPlatform">PushPlatform</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>PUSH_PLATFORM_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>PUSH_PLATFORM_WEB_PUSH</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>PUSH_PLATFORM_APNS</td>
+                <td>2</td>
+                <td><p>Reserved for the iOS app; the server does not send to it yet.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
 
       
 
@@ -36505,6 +36851,28 @@ to before this existed. </p></td>
                 <td>UpdateNotificationSettings</td>
                 <td><a href="#loci.user.UpdateNotificationSettingsRequest">UpdateNotificationSettingsRequest</a></td>
                 <td><a href="#loci.user.NotificationSettings">NotificationSettings</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>RegisterPushDevice</td>
+                <td><a href="#loci.user.RegisterPushDeviceRequest">RegisterPushDeviceRequest</a></td>
+                <td><a href="#loci.common.Response">.loci.common.Response</a></td>
+                <td><p>Push delivery: a browser (or, later, a phone) that should hear about the
+caller&#39;s finished searches.</p></td>
+              </tr>
+            
+              <tr>
+                <td>UnregisterPushDevice</td>
+                <td><a href="#loci.user.UnregisterPushDeviceRequest">UnregisterPushDeviceRequest</a></td>
+                <td><a href="#loci.common.Response">.loci.common.Response</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>GetPushConfig</td>
+                <td><a href="#loci.user.GetPushConfigRequest">GetPushConfigRequest</a></td>
+                <td><a href="#loci.user.PushConfig">PushConfig</a></td>
                 <td><p></p></td>
               </tr>
             

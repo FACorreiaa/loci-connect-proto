@@ -47,6 +47,11 @@ public protocol Loci_Chat_ChatServiceClientInterface: Sendable {
     /// Streaming RPC for real-time chat responses
     @available(iOS 13, *)
     func `streamChat`(headers: Connect.Headers) -> any Connect.ServerOnlyAsyncStreamInterface<Loci_Chat_ChatRequest, Loci_Chat_StreamEvent>
+
+    /// Where the caller's runs are: running, done or failed. Used after a
+    /// reload or on returning to the app to settle runs nobody was listening to.
+    @available(iOS 13, *)
+    func `getRunStatus`(request: Loci_Chat_GetRunStatusRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Chat_GetRunStatusResponse>
 }
 
 /// Concrete implementation of `Loci_Chat_ChatServiceClientInterface`.
@@ -112,6 +117,11 @@ public final class Loci_Chat_ChatServiceClient: Loci_Chat_ChatServiceClientInter
         return self.client.serverOnlyStream(path: "/loci.chat.ChatService/StreamChat", headers: headers)
     }
 
+    @available(iOS 13, *)
+    public func `getRunStatus`(request: Loci_Chat_GetRunStatusRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Chat_GetRunStatusResponse> {
+        return await self.client.unary(path: "/loci.chat.ChatService/GetRunStatus", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
     public enum Metadata {
         public enum Methods {
             public static let startChat = Connect.MethodSpec(name: "StartChat", service: "loci.chat.ChatService", type: .unary)
@@ -125,6 +135,7 @@ public final class Loci_Chat_ChatServiceClient: Loci_Chat_ChatServiceClientInter
             public static let bookmarkItinerary = Connect.MethodSpec(name: "BookmarkItinerary", service: "loci.chat.ChatService", type: .unary)
             public static let removeBookmark = Connect.MethodSpec(name: "RemoveBookmark", service: "loci.chat.ChatService", type: .unary)
             public static let streamChat = Connect.MethodSpec(name: "StreamChat", service: "loci.chat.ChatService", type: .serverStream)
+            public static let getRunStatus = Connect.MethodSpec(name: "GetRunStatus", service: "loci.chat.ChatService", type: .unary)
         }
     }
 }

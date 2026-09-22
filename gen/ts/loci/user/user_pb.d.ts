@@ -2,7 +2,7 @@
 // @generated from file loci/user/user.proto (package loci.user, syntax proto3)
 /* eslint-disable */
 
-import type { GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv2";
+import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv2";
 import type { Message } from "@bufbuild/protobuf";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
 import type { ResponseSchema } from "../common/common_pb";
@@ -487,6 +487,11 @@ export declare type NotificationSettings = Message<"loci.user.NotificationSettin
    * @generated from field: google.protobuf.Timestamp updated_at = 3;
    */
   updatedAt?: Timestamp;
+
+  /**
+   * @generated from field: bool search_finished = 4;
+   */
+  searchFinished: boolean;
 };
 
 /**
@@ -522,6 +527,11 @@ export declare type UpdateNotificationSettingsRequest = Message<"loci.user.Updat
    * @generated from field: optional bool trip_reminders = 2;
    */
   tripReminders?: boolean;
+
+  /**
+   * @generated from field: optional bool search_finished = 3;
+   */
+  searchFinished?: boolean;
 };
 
 /**
@@ -529,6 +539,114 @@ export declare type UpdateNotificationSettingsRequest = Message<"loci.user.Updat
  * Use `create(UpdateNotificationSettingsRequestSchema)` to create a new message.
  */
 export declare const UpdateNotificationSettingsRequestSchema: GenMessage<UpdateNotificationSettingsRequest>;
+
+/**
+ * @generated from message loci.user.RegisterPushDeviceRequest
+ */
+export declare type RegisterPushDeviceRequest = Message<"loci.user.RegisterPushDeviceRequest"> & {
+  /**
+   * @generated from field: loci.user.PushPlatform platform = 1;
+   */
+  platform: PushPlatform;
+
+  /**
+   * Web push endpoint URL, or the APNs device token.
+   *
+   * @generated from field: string endpoint = 2;
+   */
+  endpoint: string;
+
+  /**
+   * Web push only.
+   *
+   * @generated from field: string p256dh = 3;
+   */
+  p256dh: string;
+
+  /**
+   * @generated from field: string auth = 4;
+   */
+  auth: string;
+};
+
+/**
+ * Describes the message loci.user.RegisterPushDeviceRequest.
+ * Use `create(RegisterPushDeviceRequestSchema)` to create a new message.
+ */
+export declare const RegisterPushDeviceRequestSchema: GenMessage<RegisterPushDeviceRequest>;
+
+/**
+ * @generated from message loci.user.UnregisterPushDeviceRequest
+ */
+export declare type UnregisterPushDeviceRequest = Message<"loci.user.UnregisterPushDeviceRequest"> & {
+  /**
+   * @generated from field: string endpoint = 1;
+   */
+  endpoint: string;
+};
+
+/**
+ * Describes the message loci.user.UnregisterPushDeviceRequest.
+ * Use `create(UnregisterPushDeviceRequestSchema)` to create a new message.
+ */
+export declare const UnregisterPushDeviceRequestSchema: GenMessage<UnregisterPushDeviceRequest>;
+
+/**
+ * @generated from message loci.user.GetPushConfigRequest
+ */
+export declare type GetPushConfigRequest = Message<"loci.user.GetPushConfigRequest"> & {
+};
+
+/**
+ * Describes the message loci.user.GetPushConfigRequest.
+ * Use `create(GetPushConfigRequestSchema)` to create a new message.
+ */
+export declare const GetPushConfigRequestSchema: GenMessage<GetPushConfigRequest>;
+
+/**
+ * @generated from message loci.user.PushConfig
+ */
+export declare type PushConfig = Message<"loci.user.PushConfig"> & {
+  /**
+   * Empty when the server has no VAPID keys: clients must not offer push.
+   *
+   * @generated from field: string vapid_public_key = 1;
+   */
+  vapidPublicKey: string;
+};
+
+/**
+ * Describes the message loci.user.PushConfig.
+ * Use `create(PushConfigSchema)` to create a new message.
+ */
+export declare const PushConfigSchema: GenMessage<PushConfig>;
+
+/**
+ * @generated from enum loci.user.PushPlatform
+ */
+export enum PushPlatform {
+  /**
+   * @generated from enum value: PUSH_PLATFORM_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: PUSH_PLATFORM_WEB_PUSH = 1;
+   */
+  WEB_PUSH = 1,
+
+  /**
+   * Reserved for the iOS app; the server does not send to it yet.
+   *
+   * @generated from enum value: PUSH_PLATFORM_APNS = 2;
+   */
+  APNS = 2,
+}
+
+/**
+ * Describes the enum loci.user.PushPlatform.
+ */
+export declare const PushPlatformSchema: GenEnum<PushPlatform>;
 
 /**
  * UserService defines user-related RPCs
@@ -587,6 +705,33 @@ export declare const UserService: GenService<{
     methodKind: "unary";
     input: typeof UpdateNotificationSettingsRequestSchema;
     output: typeof NotificationSettingsSchema;
+  },
+  /**
+   * Push delivery: a browser (or, later, a phone) that should hear about the
+   * caller's finished searches.
+   *
+   * @generated from rpc loci.user.UserService.RegisterPushDevice
+   */
+  registerPushDevice: {
+    methodKind: "unary";
+    input: typeof RegisterPushDeviceRequestSchema;
+    output: typeof ResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.user.UserService.UnregisterPushDevice
+   */
+  unregisterPushDevice: {
+    methodKind: "unary";
+    input: typeof UnregisterPushDeviceRequestSchema;
+    output: typeof ResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.user.UserService.GetPushConfig
+   */
+  getPushConfig: {
+    methodKind: "unary";
+    input: typeof GetPushConfigRequestSchema;
+    output: typeof PushConfigSchema;
   },
 }>;
 
