@@ -2114,6 +2114,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.custom_auth.SendPhoneVerificationResponse'
+  /loci.custom_auth.CustomAuthService/SignInWithIDToken:
+    post:
+      tags:
+        - loci.custom_auth.CustomAuthService
+      summary: SignInWithIDToken
+      operationId: loci.custom_auth.CustomAuthService.SignInWithIDToken
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.custom_auth.SignInWithIDTokenRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.custom_auth.OAuthCallbackResponse'
   /loci.custom_auth.CustomAuthService/VerifyPhone:
     post:
       tags:
@@ -12435,6 +12470,42 @@ components:
       title: SendPhoneVerificationResponse
       additionalProperties: false
       description: SendPhoneVerificationResponse confirms SMS was sent
+    loci.custom_auth.SignInWithIDTokenRequest:
+      type: object
+      properties:
+        provider:
+          not:
+            enum:
+              - OAUTH_PROVIDER_UNSPECIFIED
+          title: provider
+          $ref: '#/components/schemas/loci.custom_auth.OAuthProvider'
+        idToken:
+          type: string
+          title: id_token
+          maxLength: 8192
+          minLength: 1
+        nonce:
+          type: string
+          title: nonce
+          maxLength: 256
+          minLength: 16
+          description: |-
+            The raw nonce the app generated for this attempt. Google puts it in the
+             token as-is; Apple puts its SHA-256 hex digest.
+        fullName:
+          type: string
+          title: full_name
+          maxLength: 200
+          description: |-
+            Apple hands over the person's name once, on first consent, and never puts
+             it in the token. Empty otherwise.
+      title: SignInWithIDTokenRequest
+      additionalProperties: false
+      description: |-
+        SignInWithIDTokenRequest is native sign-in (the iOS Apple and Google
+         sheets). The device already holds an ID token signed by the provider, so
+         there is no code to exchange: the server verifies the token against the
+         provider's published keys and signs the person in by its subject.
     loci.custom_auth.VerifyPhoneRequest:
       type: object
       properties:

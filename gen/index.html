@@ -1662,6 +1662,10 @@
                 </li>
               
                 <li>
+                  <a href="#loci.custom_auth.SignInWithIDTokenRequest"><span class="badge">M</span>SignInWithIDTokenRequest</a>
+                </li>
+              
+                <li>
                   <a href="#loci.custom_auth.VerifyPhoneRequest"><span class="badge">M</span>VerifyPhoneRequest</a>
                 </li>
               
@@ -18486,6 +18490,53 @@ the same weather, travel and POI data shown in this column. </p></td>
 
         
       
+        <h3 id="loci.custom_auth.SignInWithIDTokenRequest">SignInWithIDTokenRequest</h3>
+        <p>SignInWithIDTokenRequest is native sign-in (the iOS Apple and Google</p><p>sheets). The device already holds an ID token signed by the provider, so</p><p>there is no code to exchange: the server verifies the token against the</p><p>provider's published keys and signs the person in by its subject.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>provider</td>
+                  <td><a href="#loci.custom_auth.OAuthProvider">OAuthProvider</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>id_token</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>nonce</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The raw nonce the app generated for this attempt. Google puts it in the
+token as-is; Apple puts its SHA-256 hex digest. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>full_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Apple hands over the person&#39;s name once, on first consent, and never puts
+it in the token. Empty otherwise. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.custom_auth.VerifyPhoneRequest">VerifyPhoneRequest</h3>
         <p>VerifyPhoneRequest for verifying phone code</p>
 
@@ -18615,6 +18666,13 @@ the same weather, travel and POI data shown in this column. </p></td>
               <tr>
                 <td>OAuthCallback</td>
                 <td><a href="#loci.custom_auth.OAuthCallbackRequest">OAuthCallbackRequest</a></td>
+                <td><a href="#loci.custom_auth.OAuthCallbackResponse">OAuthCallbackResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>SignInWithIDToken</td>
+                <td><a href="#loci.custom_auth.SignInWithIDTokenRequest">SignInWithIDTokenRequest</a></td>
                 <td><a href="#loci.custom_auth.OAuthCallbackResponse">OAuthCallbackResponse</a></td>
                 <td><p></p></td>
               </tr>
