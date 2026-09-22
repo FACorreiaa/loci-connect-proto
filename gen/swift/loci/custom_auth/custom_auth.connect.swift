@@ -19,6 +19,9 @@ public protocol Loci_CustomAuth_CustomAuthServiceClientInterface: Sendable {
     @available(iOS 13, *)
     func `oauthCallback`(request: Loci_CustomAuth_OAuthCallbackRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_CustomAuth_OAuthCallbackResponse>
 
+    @available(iOS 13, *)
+    func `signInWithIdtoken`(request: Loci_CustomAuth_SignInWithIDTokenRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_CustomAuth_OAuthCallbackResponse>
+
     /// Phone authentication
     @available(iOS 13, *)
     func `sendPhoneVerification`(request: Loci_CustomAuth_SendPhoneVerificationRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_CustomAuth_SendPhoneVerificationResponse>
@@ -46,6 +49,11 @@ public final class Loci_CustomAuth_CustomAuthServiceClient: Loci_CustomAuth_Cust
     }
 
     @available(iOS 13, *)
+    public func `signInWithIdtoken`(request: Loci_CustomAuth_SignInWithIDTokenRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_CustomAuth_OAuthCallbackResponse> {
+        return await self.client.unary(path: "/loci.custom_auth.CustomAuthService/SignInWithIDToken", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
     public func `sendPhoneVerification`(request: Loci_CustomAuth_SendPhoneVerificationRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_CustomAuth_SendPhoneVerificationResponse> {
         return await self.client.unary(path: "/loci.custom_auth.CustomAuthService/SendPhoneVerification", idempotencyLevel: .unknown, request: request, headers: headers)
     }
@@ -59,6 +67,7 @@ public final class Loci_CustomAuth_CustomAuthServiceClient: Loci_CustomAuth_Cust
         public enum Methods {
             public static let getOauthURL = Connect.MethodSpec(name: "GetOAuthURL", service: "loci.custom_auth.CustomAuthService", type: .unary)
             public static let oauthCallback = Connect.MethodSpec(name: "OAuthCallback", service: "loci.custom_auth.CustomAuthService", type: .unary)
+            public static let signInWithIdtoken = Connect.MethodSpec(name: "SignInWithIDToken", service: "loci.custom_auth.CustomAuthService", type: .unary)
             public static let sendPhoneVerification = Connect.MethodSpec(name: "SendPhoneVerification", service: "loci.custom_auth.CustomAuthService", type: .unary)
             public static let verifyPhone = Connect.MethodSpec(name: "VerifyPhone", service: "loci.custom_auth.CustomAuthService", type: .unary)
         }
