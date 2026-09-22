@@ -1793,6 +1793,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.chat.GetRecentInteractionsResponse'
+  /loci.chat.ChatService/GetRunStatus:
+    post:
+      tags:
+        - loci.chat.ChatService
+      summary: GetRunStatus
+      description: |-
+        Where the caller's runs are: running, done or failed. Used after a
+         reload or on returning to the app to settle runs nobody was listening to.
+      operationId: loci.chat.ChatService.GetRunStatus
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.chat.GetRunStatusRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.chat.GetRunStatusResponse'
   /loci.chat.ChatService/GetSessionPOIs:
     post:
       tags:
@@ -7916,6 +7954,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.user.NotificationSettings'
+  /loci.user.UserService/GetPushConfig:
+    post:
+      tags:
+        - loci.user.UserService
+      summary: GetPushConfig
+      operationId: loci.user.UserService.GetPushConfig
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.user.GetPushConfigRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.user.PushConfig'
   /loci.user.UserService/GetUserProfile:
     post:
       tags:
@@ -7951,6 +8024,79 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.user.GetUserProfileResponse'
+  /loci.user.UserService/RegisterPushDevice:
+    post:
+      tags:
+        - loci.user.UserService
+      summary: RegisterPushDevice
+      description: |-
+        Push delivery: a browser (or, later, a phone) that should hear about the
+         caller's finished searches.
+      operationId: loci.user.UserService.RegisterPushDevice
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.user.RegisterPushDeviceRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.common.Response'
+  /loci.user.UserService/UnregisterPushDevice:
+    post:
+      tags:
+        - loci.user.UserService
+      summary: UnregisterPushDevice
+      operationId: loci.user.UserService.UnregisterPushDevice
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.user.UnregisterPushDeviceRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.common.Response'
   /loci.user.UserService/UpdateNotificationSettings:
     post:
       tags:
@@ -10566,6 +10712,13 @@ components:
             - $ref: '#/components/schemas/loci.chat.AiCityResponse'
             - type: "null"
           title: result
+        loadFromSession:
+          type: boolean
+          title: load_from_session
+          description: |-
+            load_from_session is set on a resume whose buffer is gone but whose run
+             already finished: the result is not on this stream, load it with
+             GetChatSession / GetSessionPOIs instead.
       title: CompletePayload
       additionalProperties: false
       description: CompletePayload terminates a stream, optionally carrying the final aggregate.
@@ -10758,6 +10911,30 @@ components:
       title: GetRecentInteractionsResponse
       additionalProperties: false
       description: GetRecentInteractionsResponse for recent interactions retrieval
+    loci.chat.GetRunStatusRequest:
+      type: object
+      properties:
+        sessionIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          title: session_ids
+          maxItems: 20
+          minItems: 1
+      title: GetRunStatusRequest
+      additionalProperties: false
+    loci.chat.GetRunStatusResponse:
+      type: object
+      properties:
+        runs:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.chat.RunInfo'
+          title: runs
+          description: Only the caller's own runs; ids that are not theirs are omitted.
+      title: GetRunStatusResponse
+      additionalProperties: false
     loci.chat.GetSessionPOIsRequest:
       type: object
       properties:
@@ -11185,6 +11362,46 @@ components:
           minLength: 1
       title: RestaurantsPayload
       additionalProperties: false
+    loci.chat.RunInfo:
+      type: object
+      properties:
+        sessionId:
+          type: string
+          title: session_id
+        domain:
+          title: domain
+          $ref: '#/components/schemas/loci.chat.DomainType'
+        cityName:
+          type: string
+          title: city_name
+        status:
+          title: status
+          $ref: '#/components/schemas/loci.chat.RunStatus'
+        errorCode:
+          type: string
+          title: error_code
+        finishedAt:
+          title: finished_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        url:
+          type: string
+          title: url
+          description: |-
+            url is the page that shows this run's result, e.g.
+             /itinerary?sessionId=…&cityName=Crete&domain=itinerary
+      title: RunInfo
+      additionalProperties: false
+    loci.chat.RunStatus:
+      type: string
+      title: RunStatus
+      enum:
+        - RUN_STATUS_UNSPECIFIED
+        - RUN_STATUS_RUNNING
+        - RUN_STATUS_DONE
+        - RUN_STATUS_FAILED
+      description: |-
+        RunStatus is where one generation is. A run that has been RUNNING for more
+         than 10 minutes is reported as FAILED (deadline_exceeded).
     loci.chat.SessionContentMetrics:
       type: object
       properties:
@@ -24694,6 +24911,10 @@ components:
       type: object
       title: GetNotificationSettingsRequest
       additionalProperties: false
+    loci.user.GetPushConfigRequest:
+      type: object
+      title: GetPushConfigRequest
+      additionalProperties: false
     loci.user.GetUserProfileRequest:
       type: object
       properties:
@@ -24729,6 +24950,9 @@ components:
         updatedAt:
           title: updated_at
           $ref: '#/components/schemas/google.protobuf.Timestamp'
+        searchFinished:
+          type: boolean
+          title: search_finished
       title: NotificationSettings
       additionalProperties: false
       description: |-
@@ -24742,6 +24966,58 @@ components:
          This stores the preference. Delivery — actually sending a push or an email —
          is a separate piece of work, and the UI must not imply otherwise while these
          are only recorded.
+    loci.user.PushConfig:
+      type: object
+      properties:
+        vapidPublicKey:
+          type: string
+          title: vapid_public_key
+          description: 'Empty when the server has no VAPID keys: clients must not offer push.'
+      title: PushConfig
+      additionalProperties: false
+    loci.user.PushPlatform:
+      type: string
+      title: PushPlatform
+      enum:
+        - PUSH_PLATFORM_UNSPECIFIED
+        - PUSH_PLATFORM_WEB_PUSH
+        - PUSH_PLATFORM_APNS
+    loci.user.RegisterPushDeviceRequest:
+      type: object
+      properties:
+        platform:
+          not:
+            enum:
+              - PUSH_PLATFORM_UNSPECIFIED
+          title: platform
+          $ref: '#/components/schemas/loci.user.PushPlatform'
+        endpoint:
+          type: string
+          title: endpoint
+          maxLength: 2048
+          minLength: 1
+          description: Web push endpoint URL, or the APNs device token.
+        p256dh:
+          type: string
+          title: p256dh
+          maxLength: 200
+          description: Web push only.
+        auth:
+          type: string
+          title: auth
+          maxLength: 100
+      title: RegisterPushDeviceRequest
+      additionalProperties: false
+    loci.user.UnregisterPushDeviceRequest:
+      type: object
+      properties:
+        endpoint:
+          type: string
+          title: endpoint
+          maxLength: 2048
+          minLength: 1
+      title: UnregisterPushDeviceRequest
+      additionalProperties: false
     loci.user.UpdateNotificationSettingsRequest:
       type: object
       properties:
@@ -24756,6 +25032,11 @@ components:
             - boolean
             - "null"
           title: trip_reminders
+        searchFinished:
+          type:
+            - boolean
+            - "null"
+          title: search_finished
       title: UpdateNotificationSettingsRequest
       additionalProperties: false
     loci.user.UpdateProfileParams:
