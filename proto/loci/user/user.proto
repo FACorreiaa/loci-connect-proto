@@ -354,6 +354,7 @@ message NotificationSettings {
   bool recommendations = 1;
   bool trip_reminders = 2;
   google.protobuf.Timestamp updated_at = 3;
+  bool search_finished = 4;
 }
 
 message GetNotificationSettingsRequest {}
@@ -362,6 +363,43 @@ message UpdateNotificationSettingsRequest {
   // Absent means "leave this switch as it is".
   optional bool recommendations = 1;
   optional bool trip_reminders = 2;
+  optional bool search_finished = 3;
+}
+
+enum PushPlatform {
+  PUSH_PLATFORM_UNSPECIFIED = 0;
+  PUSH_PLATFORM_WEB_PUSH = 1;
+  // Reserved for the iOS app; the server does not send to it yet.
+  PUSH_PLATFORM_APNS = 2;
+}
+
+message RegisterPushDeviceRequest {
+  PushPlatform platform = 1 [(buf.validate.field).enum = {
+    defined_only: true
+    not_in: [0]
+  }];
+  // Web push endpoint URL, or the APNs device token.
+  string endpoint = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 2048
+  }];
+  // Web push only.
+  string p256dh = 3 [(buf.validate.field).string = {max_len: 200}];
+  string auth = 4 [(buf.validate.field).string = {max_len: 100}];
+}
+
+message UnregisterPushDeviceRequest {
+  string endpoint = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 2048
+  }];
+}
+
+message GetPushConfigRequest {}
+
+message PushConfig {
+  // Empty when the server has no VAPID keys: clients must not offer push.
+  string vapid_public_key = 1;
 }
 
 // UserService defines user-related RPCs
@@ -376,4 +414,10 @@ service UserService {
   // Notification switches, stored against the account rather than the browser.
   rpc GetNotificationSettings(GetNotificationSettingsRequest) returns (NotificationSettings);
   rpc UpdateNotificationSettings(UpdateNotificationSettingsRequest) returns (NotificationSettings);
+
+  // Push delivery: a browser (or, later, a phone) that should hear about the
+  // caller's finished searches.
+  rpc RegisterPushDevice(RegisterPushDeviceRequest) returns (loci.common.Response);
+  rpc UnregisterPushDevice(UnregisterPushDeviceRequest) returns (loci.common.Response);
+  rpc GetPushConfig(GetPushConfigRequest) returns (PushConfig);
 }

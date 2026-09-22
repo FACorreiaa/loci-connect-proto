@@ -542,6 +542,10 @@ message CompletePayload {
     max_len: 200
   }];
   optional AiCityResponse result = 2;
+  // load_from_session is set on a resume whose buffer is gone but whose run
+  // already finished: the result is not on this stream, load it with
+  // GetChatSession / GetSessionPOIs instead.
+  bool load_from_session = 3;
 }
 
 // StreamEvent represents a streaming event. The old free-form `type` string
@@ -888,6 +892,42 @@ message GetBookmarksRequest {
   loci.common.PaginationRequest pagination = 2 [(buf.validate.field).required = true];
 }
 
+// RunStatus is where one generation is. A run that has been RUNNING for more
+// than 10 minutes is reported as FAILED (deadline_exceeded).
+enum RunStatus {
+  RUN_STATUS_UNSPECIFIED = 0;
+  RUN_STATUS_RUNNING = 1;
+  RUN_STATUS_DONE = 2;
+  RUN_STATUS_FAILED = 3;
+}
+
+message GetRunStatusRequest {
+  repeated string session_ids = 1 [(buf.validate.field).repeated = {
+    min_items: 1
+    max_items: 20
+    items: {
+      string: {uuid: true}
+    }
+  }];
+}
+
+message RunInfo {
+  string session_id = 1;
+  DomainType domain = 2;
+  string city_name = 3;
+  RunStatus status = 4;
+  string error_code = 5;
+  google.protobuf.Timestamp finished_at = 6;
+  // url is the page that shows this run's result, e.g.
+  // /itinerary?sessionId=…&cityName=Crete&domain=itinerary
+  string url = 7;
+}
+
+message GetRunStatusResponse {
+  // Only the caller's own runs; ids that are not theirs are omitted.
+  repeated RunInfo runs = 1;
+}
+
 service ChatService {
   rpc StartChat(StartChatRequest) returns (ChatResponse);
   rpc ContinueChat(ContinueChatRequest) returns (ChatResponse);
@@ -906,4 +946,8 @@ service ChatService {
 
   // Streaming RPC for real-time chat responses
   rpc StreamChat(ChatRequest) returns (stream StreamEvent);
+
+  // Where the caller's runs are: running, done or failed. Used after a
+  // reload or on returning to the app to settle runs nobody was listening to.
+  rpc GetRunStatus(GetRunStatusRequest) returns (GetRunStatusResponse);
 }

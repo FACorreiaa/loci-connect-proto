@@ -954,6 +954,15 @@ export declare type CompletePayload = Message<"loci.chat.CompletePayload"> & {
    * @generated from field: optional loci.chat.AiCityResponse result = 2;
    */
   result?: AiCityResponse;
+
+  /**
+   * load_from_session is set on a resume whose buffer is gone but whose run
+   * already finished: the result is not on this stream, load it with
+   * GetChatSession / GetSessionPOIs instead.
+   *
+   * @generated from field: bool load_from_session = 3;
+   */
+  loadFromSession: boolean;
 };
 
 /**
@@ -1648,6 +1657,89 @@ export declare type GetBookmarksRequest = Message<"loci.chat.GetBookmarksRequest
 export declare const GetBookmarksRequestSchema: GenMessage<GetBookmarksRequest>;
 
 /**
+ * @generated from message loci.chat.GetRunStatusRequest
+ */
+export declare type GetRunStatusRequest = Message<"loci.chat.GetRunStatusRequest"> & {
+  /**
+   * @generated from field: repeated string session_ids = 1;
+   */
+  sessionIds: string[];
+};
+
+/**
+ * Describes the message loci.chat.GetRunStatusRequest.
+ * Use `create(GetRunStatusRequestSchema)` to create a new message.
+ */
+export declare const GetRunStatusRequestSchema: GenMessage<GetRunStatusRequest>;
+
+/**
+ * @generated from message loci.chat.RunInfo
+ */
+export declare type RunInfo = Message<"loci.chat.RunInfo"> & {
+  /**
+   * @generated from field: string session_id = 1;
+   */
+  sessionId: string;
+
+  /**
+   * @generated from field: loci.chat.DomainType domain = 2;
+   */
+  domain: DomainType;
+
+  /**
+   * @generated from field: string city_name = 3;
+   */
+  cityName: string;
+
+  /**
+   * @generated from field: loci.chat.RunStatus status = 4;
+   */
+  status: RunStatus;
+
+  /**
+   * @generated from field: string error_code = 5;
+   */
+  errorCode: string;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp finished_at = 6;
+   */
+  finishedAt?: Timestamp;
+
+  /**
+   * url is the page that shows this run's result, e.g.
+   * /itinerary?sessionId=…&cityName=Crete&domain=itinerary
+   *
+   * @generated from field: string url = 7;
+   */
+  url: string;
+};
+
+/**
+ * Describes the message loci.chat.RunInfo.
+ * Use `create(RunInfoSchema)` to create a new message.
+ */
+export declare const RunInfoSchema: GenMessage<RunInfo>;
+
+/**
+ * @generated from message loci.chat.GetRunStatusResponse
+ */
+export declare type GetRunStatusResponse = Message<"loci.chat.GetRunStatusResponse"> & {
+  /**
+   * Only the caller's own runs; ids that are not theirs are omitted.
+   *
+   * @generated from field: repeated loci.chat.RunInfo runs = 1;
+   */
+  runs: RunInfo[];
+};
+
+/**
+ * Describes the message loci.chat.GetRunStatusResponse.
+ * Use `create(GetRunStatusResponseSchema)` to create a new message.
+ */
+export declare const GetRunStatusResponseSchema: GenMessage<GetRunStatusResponse>;
+
+/**
  * Enums for chat types
  *
  * @generated from enum loci.chat.MessageRole
@@ -2027,6 +2119,39 @@ export enum SessionPOISection {
 export declare const SessionPOISectionSchema: GenEnum<SessionPOISection>;
 
 /**
+ * RunStatus is where one generation is. A run that has been RUNNING for more
+ * than 10 minutes is reported as FAILED (deadline_exceeded).
+ *
+ * @generated from enum loci.chat.RunStatus
+ */
+export enum RunStatus {
+  /**
+   * @generated from enum value: RUN_STATUS_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: RUN_STATUS_RUNNING = 1;
+   */
+  RUNNING = 1,
+
+  /**
+   * @generated from enum value: RUN_STATUS_DONE = 2;
+   */
+  DONE = 2,
+
+  /**
+   * @generated from enum value: RUN_STATUS_FAILED = 3;
+   */
+  FAILED = 3,
+}
+
+/**
+ * Describes the enum loci.chat.RunStatus.
+ */
+export declare const RunStatusSchema: GenEnum<RunStatus>;
+
+/**
  * @generated from service loci.chat.ChatService
  */
 export declare const ChatService: GenService<{
@@ -2124,6 +2249,17 @@ export declare const ChatService: GenService<{
     methodKind: "server_streaming";
     input: typeof ChatRequestSchema;
     output: typeof StreamEventSchema;
+  },
+  /**
+   * Where the caller's runs are: running, done or failed. Used after a
+   * reload or on returning to the app to settle runs nobody was listening to.
+   *
+   * @generated from rpc loci.chat.ChatService.GetRunStatus
+   */
+  getRunStatus: {
+    methodKind: "unary";
+    input: typeof GetRunStatusRequestSchema;
+    output: typeof GetRunStatusResponseSchema;
   },
 }>;
 
