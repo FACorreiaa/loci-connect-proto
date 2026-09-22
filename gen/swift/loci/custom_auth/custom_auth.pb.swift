@@ -129,6 +129,32 @@ public struct Loci_CustomAuth_OAuthCallbackResponse: Sendable {
   public init() {}
 }
 
+/// SignInWithIDTokenRequest is native sign-in (the iOS Apple and Google
+/// sheets). The device already holds an ID token signed by the provider, so
+/// there is no code to exchange: the server verifies the token against the
+/// provider's published keys and signs the person in by its subject.
+public struct Loci_CustomAuth_SignInWithIDTokenRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var provider: Loci_CustomAuth_OAuthProvider = .unspecified
+
+  public var idToken: String = String()
+
+  /// The raw nonce the app generated for this attempt. Google puts it in the
+  /// token as-is; Apple puts its SHA-256 hex digest.
+  public var nonce: String = String()
+
+  /// Apple hands over the person's name once, on first consent, and never puts
+  /// it in the token. Empty otherwise.
+  public var fullName: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 /// SendPhoneVerificationRequest for initiating phone auth
 public struct Loci_CustomAuth_SendPhoneVerificationRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
@@ -380,6 +406,56 @@ extension Loci_CustomAuth_OAuthCallbackResponse: SwiftProtobuf.Message, SwiftPro
     if lhs.email != rhs.email {return false}
     if lhs.username != rhs.username {return false}
     if lhs.isNewUser != rhs.isNewUser {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_CustomAuth_SignInWithIDTokenRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".SignInWithIDTokenRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "provider"),
+    2: .standard(proto: "id_token"),
+    3: .same(proto: "nonce"),
+    4: .standard(proto: "full_name"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.provider) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.idToken) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.nonce) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.fullName) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.provider != .unspecified {
+      try visitor.visitSingularEnumField(value: self.provider, fieldNumber: 1)
+    }
+    if !self.idToken.isEmpty {
+      try visitor.visitSingularStringField(value: self.idToken, fieldNumber: 2)
+    }
+    if !self.nonce.isEmpty {
+      try visitor.visitSingularStringField(value: self.nonce, fieldNumber: 3)
+    }
+    if !self.fullName.isEmpty {
+      try visitor.visitSingularStringField(value: self.fullName, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_CustomAuth_SignInWithIDTokenRequest, rhs: Loci_CustomAuth_SignInWithIDTokenRequest) -> Bool {
+    if lhs.provider != rhs.provider {return false}
+    if lhs.idToken != rhs.idToken {return false}
+    if lhs.nonce != rhs.nonce {return false}
+    if lhs.fullName != rhs.fullName {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

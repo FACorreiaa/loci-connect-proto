@@ -128,6 +128,48 @@ export declare type OAuthCallbackResponse = Message<"loci.custom_auth.OAuthCallb
 export declare const OAuthCallbackResponseSchema: GenMessage<OAuthCallbackResponse>;
 
 /**
+ * SignInWithIDTokenRequest is native sign-in (the iOS Apple and Google
+ * sheets). The device already holds an ID token signed by the provider, so
+ * there is no code to exchange: the server verifies the token against the
+ * provider's published keys and signs the person in by its subject.
+ *
+ * @generated from message loci.custom_auth.SignInWithIDTokenRequest
+ */
+export declare type SignInWithIDTokenRequest = Message<"loci.custom_auth.SignInWithIDTokenRequest"> & {
+  /**
+   * @generated from field: loci.custom_auth.OAuthProvider provider = 1;
+   */
+  provider: OAuthProvider;
+
+  /**
+   * @generated from field: string id_token = 2;
+   */
+  idToken: string;
+
+  /**
+   * The raw nonce the app generated for this attempt. Google puts it in the
+   * token as-is; Apple puts its SHA-256 hex digest.
+   *
+   * @generated from field: string nonce = 3;
+   */
+  nonce: string;
+
+  /**
+   * Apple hands over the person's name once, on first consent, and never puts
+   * it in the token. Empty otherwise.
+   *
+   * @generated from field: string full_name = 4;
+   */
+  fullName: string;
+};
+
+/**
+ * Describes the message loci.custom_auth.SignInWithIDTokenRequest.
+ * Use `create(SignInWithIDTokenRequestSchema)` to create a new message.
+ */
+export declare const SignInWithIDTokenRequestSchema: GenMessage<SignInWithIDTokenRequest>;
+
+/**
  * SendPhoneVerificationRequest for initiating phone auth
  *
  * @generated from message loci.custom_auth.SendPhoneVerificationRequest
@@ -273,6 +315,14 @@ export declare const CustomAuthService: GenService<{
   oAuthCallback: {
     methodKind: "unary";
     input: typeof OAuthCallbackRequestSchema;
+    output: typeof OAuthCallbackResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.custom_auth.CustomAuthService.SignInWithIDToken
+   */
+  signInWithIDToken: {
+    methodKind: "unary";
+    input: typeof SignInWithIDTokenRequestSchema;
     output: typeof OAuthCallbackResponseSchema;
   },
   /**
