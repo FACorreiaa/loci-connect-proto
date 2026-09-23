@@ -285,6 +285,44 @@ message SetNewsTickerEnabledResponse {
   bool enabled = 1;
 }
 
+message GetHereBriefRequest {
+  double latitude = 1 [(buf.validate.field).double = {
+    gte: -90
+    lte: 90
+  }];
+  double longitude = 2 [(buf.validate.field).double = {
+    gte: -180
+    lte: 180
+  }];
+}
+
+// HerePlace names a coordinate at town level. Any field may be empty: open
+// sea has no country, and rural points often have a region but no town.
+message HerePlace {
+  string locality = 1;
+  string region = 2;
+  string country_code = 3 [(buf.validate.field).string = {max_len: 2}];
+  string country_name = 4;
+}
+
+// HereBrief is what the home hero says about where the caller is standing.
+// Every part degrades to empty on its own.
+message HereBrief {
+  HerePlace place = 1;
+  // Today and the next two days.
+  repeated WeatherDay weather = 2;
+  bool weather_is_estimated = 3;
+  repeated LocalAlert alerts = 4;
+  // "Around you": headlines naming the town or region.
+  repeated NewsTickerItem local = 5;
+  // "Getting around": strikes, airports, trains, closures, weather warnings.
+  repeated NewsTickerItem disruption = 6;
+  // "What's on": festivals, events, exhibitions, concerts.
+  repeated NewsTickerItem whats_on = 7;
+  // True when a feed is serving cache after an upstream failure.
+  bool stale = 8;
+}
+
 service LocalContextService {
   rpc GetLocalContext(GetLocalContextRequest) returns (LocalContext);
   // GetGoScore answers "should I go this weekend?" for one destination.
@@ -298,4 +336,8 @@ service LocalContextService {
   rpc GetNewsTicker(GetNewsTickerRequest) returns (GetNewsTickerResponse);
   // SetNewsTickerEnabled is the per-user switch for that strip.
   rpc SetNewsTickerEnabled(SetNewsTickerEnabledRequest) returns (SetNewsTickerEnabledResponse);
+  // GetHereBrief describes the place the caller is standing in: its name,
+  // weather, alerts and three short headline lists. The RPC does not fail
+  // because one source did.
+  rpc GetHereBrief(GetHereBriefRequest) returns (HereBrief);
 }

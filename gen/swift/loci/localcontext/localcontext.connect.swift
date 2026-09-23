@@ -34,6 +34,12 @@ public protocol Loci_Localcontext_LocalContextServiceClientInterface: Sendable {
     /// SetNewsTickerEnabled is the per-user switch for that strip.
     @available(iOS 13, *)
     func `setNewsTickerEnabled`(request: Loci_Localcontext_SetNewsTickerEnabledRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Localcontext_SetNewsTickerEnabledResponse>
+
+    /// GetHereBrief describes the place the caller is standing in: its name,
+    /// weather, alerts and three short headline lists. The RPC does not fail
+    /// because one source did.
+    @available(iOS 13, *)
+    func `getHereBrief`(request: Loci_Localcontext_GetHereBriefRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Localcontext_HereBrief>
 }
 
 /// Concrete implementation of `Loci_Localcontext_LocalContextServiceClientInterface`.
@@ -74,6 +80,11 @@ public final class Loci_Localcontext_LocalContextServiceClient: Loci_Localcontex
         return await self.client.unary(path: "/loci.localcontext.LocalContextService/SetNewsTickerEnabled", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
+    @available(iOS 13, *)
+    public func `getHereBrief`(request: Loci_Localcontext_GetHereBriefRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Localcontext_HereBrief> {
+        return await self.client.unary(path: "/loci.localcontext.LocalContextService/GetHereBrief", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
     public enum Metadata {
         public enum Methods {
             public static let getLocalContext = Connect.MethodSpec(name: "GetLocalContext", service: "loci.localcontext.LocalContextService", type: .unary)
@@ -82,6 +93,7 @@ public final class Loci_Localcontext_LocalContextServiceClient: Loci_Localcontex
             public static let estimateDriveCost = Connect.MethodSpec(name: "EstimateDriveCost", service: "loci.localcontext.LocalContextService", type: .unary)
             public static let getNewsTicker = Connect.MethodSpec(name: "GetNewsTicker", service: "loci.localcontext.LocalContextService", type: .unary)
             public static let setNewsTickerEnabled = Connect.MethodSpec(name: "SetNewsTickerEnabled", service: "loci.localcontext.LocalContextService", type: .unary)
+            public static let getHereBrief = Connect.MethodSpec(name: "GetHereBrief", service: "loci.localcontext.LocalContextService", type: .unary)
         }
     }
 }
