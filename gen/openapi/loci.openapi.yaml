@@ -10374,6 +10374,27 @@ components:
           title: session_id
           maxLength: 200
           minLength: 1
+        hotels:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.poi.POIDetailedInfo'
+          title: hotels
+          description: |-
+            The domain lists a hotels, restaurants or activities search produced.
+             The server has always stored them with the session (the Go struct had
+             these fields); without them here, GetChatSession could restore an
+             itinerary but never a hotel, restaurant or activity list, so a client
+             reopening such a session got an empty page.
+        restaurants:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.poi.POIDetailedInfo'
+          title: restaurants
+        activities:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.poi.POIDetailedInfo'
+          title: activities
       title: AiCityResponse
       required:
         - generalCityData
