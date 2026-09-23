@@ -4457,6 +4457,45 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.localcontext.GetGoScoreResponse'
+  /loci.localcontext.LocalContextService/GetHereBrief:
+    post:
+      tags:
+        - loci.localcontext.LocalContextService
+      summary: GetHereBrief
+      description: |-
+        GetHereBrief describes the place the caller is standing in: its name,
+         weather, alerts and three short headline lists. The RPC does not fail
+         because one source did.
+      operationId: loci.localcontext.LocalContextService.GetHereBrief
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.localcontext.GetHereBriefRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.localcontext.HereBrief'
   /loci.localcontext.LocalContextService/GetLocalContext:
     post:
       tags:
@@ -16628,6 +16667,23 @@ components:
       title: GetGoScoreResponse
       additionalProperties: false
       description: GetGoScoreResponse carries the verdict and the resolved destination.
+    loci.localcontext.GetHereBriefRequest:
+      type: object
+      properties:
+        latitude:
+          type: number
+          title: latitude
+          maximum: 90
+          minimum: -90
+          format: double
+        longitude:
+          type: number
+          title: longitude
+          maximum: 180
+          minimum: -180
+          format: double
+      title: GetHereBriefRequest
+      additionalProperties: false
     loci.localcontext.GetLocalContextRequest:
       type: object
       properties:
@@ -16723,6 +16779,74 @@ components:
       title: GoScore
       additionalProperties: false
       description: GoScore answers "should I go here, in this window?".
+    loci.localcontext.HereBrief:
+      type: object
+      properties:
+        place:
+          title: place
+          $ref: '#/components/schemas/loci.localcontext.HerePlace'
+        weather:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.localcontext.WeatherDay'
+          title: weather
+          description: Today and the next two days.
+        weatherIsEstimated:
+          type: boolean
+          title: weather_is_estimated
+        alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.localcontext.LocalAlert'
+          title: alerts
+        local:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.localcontext.NewsTickerItem'
+          title: local
+          description: '"Around you": headlines naming the town or region.'
+        disruption:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.localcontext.NewsTickerItem'
+          title: disruption
+          description: '"Getting around": strikes, airports, trains, closures, weather warnings.'
+        whatsOn:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.localcontext.NewsTickerItem'
+          title: whats_on
+          description: '"What''s on": festivals, events, exhibitions, concerts.'
+        stale:
+          type: boolean
+          title: stale
+          description: True when a feed is serving cache after an upstream failure.
+      title: HereBrief
+      additionalProperties: false
+      description: |-
+        HereBrief is what the home hero says about where the caller is standing.
+         Every part degrades to empty on its own.
+    loci.localcontext.HerePlace:
+      type: object
+      properties:
+        locality:
+          type: string
+          title: locality
+        region:
+          type: string
+          title: region
+        countryCode:
+          type: string
+          title: country_code
+          maxLength: 2
+        countryName:
+          type: string
+          title: country_name
+      title: HerePlace
+      additionalProperties: false
+      description: |-
+        HerePlace names a coordinate at town level. Any field may be empty: open
+         sea has no country, and rural points often have a region but no town.
     loci.localcontext.LocalAlert:
       type: object
       properties:
