@@ -266,6 +266,14 @@ message AiCityResponse {
     min_len: 1
     max_len: 200
   }];
+  // The domain lists a hotels, restaurants or activities search produced.
+  // The server has always stored them with the session (the Go struct had
+  // these fields); without them here, GetChatSession could restore an
+  // itinerary but never a hotel, restaurant or activity list, so a client
+  // reopening such a session got an empty page.
+  repeated loci.poi.POIDetailedInfo hotels = 5;
+  repeated loci.poi.POIDetailedInfo restaurants = 6;
+  repeated loci.poi.POIDetailedInfo activities = 7;
 }
 
 // SessionPerformanceMetrics contains performance metrics
