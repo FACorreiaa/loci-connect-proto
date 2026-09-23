@@ -679,6 +679,125 @@ export declare type SetNewsTickerEnabledResponse = Message<"loci.localcontext.Se
 export declare const SetNewsTickerEnabledResponseSchema: GenMessage<SetNewsTickerEnabledResponse>;
 
 /**
+ * @generated from message loci.localcontext.GetHereBriefRequest
+ */
+export declare type GetHereBriefRequest = Message<"loci.localcontext.GetHereBriefRequest"> & {
+  /**
+   * @generated from field: double latitude = 1;
+   */
+  latitude: number;
+
+  /**
+   * @generated from field: double longitude = 2;
+   */
+  longitude: number;
+};
+
+/**
+ * Describes the message loci.localcontext.GetHereBriefRequest.
+ * Use `create(GetHereBriefRequestSchema)` to create a new message.
+ */
+export declare const GetHereBriefRequestSchema: GenMessage<GetHereBriefRequest>;
+
+/**
+ * HerePlace names a coordinate at town level. Any field may be empty: open
+ * sea has no country, and rural points often have a region but no town.
+ *
+ * @generated from message loci.localcontext.HerePlace
+ */
+export declare type HerePlace = Message<"loci.localcontext.HerePlace"> & {
+  /**
+   * @generated from field: string locality = 1;
+   */
+  locality: string;
+
+  /**
+   * @generated from field: string region = 2;
+   */
+  region: string;
+
+  /**
+   * @generated from field: string country_code = 3;
+   */
+  countryCode: string;
+
+  /**
+   * @generated from field: string country_name = 4;
+   */
+  countryName: string;
+};
+
+/**
+ * Describes the message loci.localcontext.HerePlace.
+ * Use `create(HerePlaceSchema)` to create a new message.
+ */
+export declare const HerePlaceSchema: GenMessage<HerePlace>;
+
+/**
+ * HereBrief is what the home hero says about where the caller is standing.
+ * Every part degrades to empty on its own.
+ *
+ * @generated from message loci.localcontext.HereBrief
+ */
+export declare type HereBrief = Message<"loci.localcontext.HereBrief"> & {
+  /**
+   * @generated from field: loci.localcontext.HerePlace place = 1;
+   */
+  place?: HerePlace;
+
+  /**
+   * Today and the next two days.
+   *
+   * @generated from field: repeated loci.localcontext.WeatherDay weather = 2;
+   */
+  weather: WeatherDay[];
+
+  /**
+   * @generated from field: bool weather_is_estimated = 3;
+   */
+  weatherIsEstimated: boolean;
+
+  /**
+   * @generated from field: repeated loci.localcontext.LocalAlert alerts = 4;
+   */
+  alerts: LocalAlert[];
+
+  /**
+   * "Around you": headlines naming the town or region.
+   *
+   * @generated from field: repeated loci.localcontext.NewsTickerItem local = 5;
+   */
+  local: NewsTickerItem[];
+
+  /**
+   * "Getting around": strikes, airports, trains, closures, weather warnings.
+   *
+   * @generated from field: repeated loci.localcontext.NewsTickerItem disruption = 6;
+   */
+  disruption: NewsTickerItem[];
+
+  /**
+   * "What's on": festivals, events, exhibitions, concerts.
+   *
+   * @generated from field: repeated loci.localcontext.NewsTickerItem whats_on = 7;
+   */
+  whatsOn: NewsTickerItem[];
+
+  /**
+   * True when a feed is serving cache after an upstream failure.
+   *
+   * @generated from field: bool stale = 8;
+   */
+  stale: boolean;
+};
+
+/**
+ * Describes the message loci.localcontext.HereBrief.
+ * Use `create(HereBriefSchema)` to create a new message.
+ */
+export declare const HereBriefSchema: GenMessage<HereBrief>;
+
+/**
  * AlertKind classifies a trip-time heads-up.
  *
  * Values are only ever appended. Reordering or removing one silently changes
@@ -798,6 +917,18 @@ export declare const LocalContextService: GenService<{
     methodKind: "unary";
     input: typeof SetNewsTickerEnabledRequestSchema;
     output: typeof SetNewsTickerEnabledResponseSchema;
+  },
+  /**
+   * GetHereBrief describes the place the caller is standing in: its name,
+   * weather, alerts and three short headline lists. The RPC does not fail
+   * because one source did.
+   *
+   * @generated from rpc loci.localcontext.LocalContextService.GetHereBrief
+   */
+  getHereBrief: {
+    methodKind: "unary";
+    input: typeof GetHereBriefRequestSchema;
+    output: typeof HereBriefSchema;
   },
 }>;
 
