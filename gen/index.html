@@ -1536,6 +1536,10 @@
                 </li>
               
                 <li>
+                  <a href="#loci.localcontext.GetHereBriefRequest"><span class="badge">M</span>GetHereBriefRequest</a>
+                </li>
+              
+                <li>
                   <a href="#loci.localcontext.GetLocalContextRequest"><span class="badge">M</span>GetLocalContextRequest</a>
                 </li>
               
@@ -1549,6 +1553,14 @@
               
                 <li>
                   <a href="#loci.localcontext.GoScore"><span class="badge">M</span>GoScore</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.localcontext.HereBrief"><span class="badge">M</span>HereBrief</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.localcontext.HerePlace"><span class="badge">M</span>HerePlace</a>
                 </li>
               
                 <li>
@@ -17244,6 +17256,37 @@ available&#34; instead of silently showing nothing. </p></td>
 
         
       
+        <h3 id="loci.localcontext.GetHereBriefRequest">GetHereBriefRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>latitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>longitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.localcontext.GetLocalContextRequest">GetLocalContextRequest</h3>
         <p>GetLocalContextRequest asks for weather + alerts near a point.</p>
 
@@ -17396,6 +17439,124 @@ fetch upstream. </p></td>
                   <td></td>
                   <td><p>True when any input was a stub rather than real provider data. Clients MUST
 label the score as estimated when this is set. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.localcontext.HereBrief">HereBrief</h3>
+        <p>HereBrief is what the home hero says about where the caller is standing.</p><p>Every part degrades to empty on its own.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>place</td>
+                  <td><a href="#loci.localcontext.HerePlace">HerePlace</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>weather</td>
+                  <td><a href="#loci.localcontext.WeatherDay">WeatherDay</a></td>
+                  <td>repeated</td>
+                  <td><p>Today and the next two days. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>weather_is_estimated</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>alerts</td>
+                  <td><a href="#loci.localcontext.LocalAlert">LocalAlert</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>local</td>
+                  <td><a href="#loci.localcontext.NewsTickerItem">NewsTickerItem</a></td>
+                  <td>repeated</td>
+                  <td><p>&#34;Around you&#34;: headlines naming the town or region. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>disruption</td>
+                  <td><a href="#loci.localcontext.NewsTickerItem">NewsTickerItem</a></td>
+                  <td>repeated</td>
+                  <td><p>&#34;Getting around&#34;: strikes, airports, trains, closures, weather warnings. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>whats_on</td>
+                  <td><a href="#loci.localcontext.NewsTickerItem">NewsTickerItem</a></td>
+                  <td>repeated</td>
+                  <td><p>&#34;What&#39;s on&#34;: festivals, events, exhibitions, concerts. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>stale</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>True when a feed is serving cache after an upstream failure. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.localcontext.HerePlace">HerePlace</h3>
+        <p>HerePlace names a coordinate at town level. Any field may be empty: open</p><p>sea has no country, and rural points often have a region but no town.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>locality</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>region</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>country_code</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>country_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
                 </tr>
               
             </tbody>
@@ -17848,6 +18009,15 @@ headlines for their home country, next destination and recent visits.</p></td>
                 <td><a href="#loci.localcontext.SetNewsTickerEnabledRequest">SetNewsTickerEnabledRequest</a></td>
                 <td><a href="#loci.localcontext.SetNewsTickerEnabledResponse">SetNewsTickerEnabledResponse</a></td>
                 <td><p>SetNewsTickerEnabled is the per-user switch for that strip.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetHereBrief</td>
+                <td><a href="#loci.localcontext.GetHereBriefRequest">GetHereBriefRequest</a></td>
+                <td><a href="#loci.localcontext.HereBrief">HereBrief</a></td>
+                <td><p>GetHereBrief describes the place the caller is standing in: its name,
+weather, alerts and three short headline lists. The RPC does not fail
+because one source did.</p></td>
               </tr>
             
           </tbody>

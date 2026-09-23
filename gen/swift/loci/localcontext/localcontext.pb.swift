@@ -659,6 +659,82 @@ public struct Loci_Localcontext_SetNewsTickerEnabledResponse: Sendable {
   public init() {}
 }
 
+public struct Loci_Localcontext_GetHereBriefRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var latitude: Double = 0
+
+  public var longitude: Double = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// HerePlace names a coordinate at town level. Any field may be empty: open
+/// sea has no country, and rural points often have a region but no town.
+public struct Loci_Localcontext_HerePlace: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var locality: String = String()
+
+  public var region: String = String()
+
+  public var countryCode: String = String()
+
+  public var countryName: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// HereBrief is what the home hero says about where the caller is standing.
+/// Every part degrades to empty on its own.
+public struct Loci_Localcontext_HereBrief: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var place: Loci_Localcontext_HerePlace {
+    get {return _place ?? Loci_Localcontext_HerePlace()}
+    set {_place = newValue}
+  }
+  /// Returns true if `place` has been explicitly set.
+  public var hasPlace: Bool {return self._place != nil}
+  /// Clears the value of `place`. Subsequent reads from it will return its default value.
+  public mutating func clearPlace() {self._place = nil}
+
+  /// Today and the next two days.
+  public var weather: [Loci_Localcontext_WeatherDay] = []
+
+  public var weatherIsEstimated: Bool = false
+
+  public var alerts: [Loci_Localcontext_LocalAlert] = []
+
+  /// "Around you": headlines naming the town or region.
+  public var local: [Loci_Localcontext_NewsTickerItem] = []
+
+  /// "Getting around": strikes, airports, trains, closures, weather warnings.
+  public var disruption: [Loci_Localcontext_NewsTickerItem] = []
+
+  /// "What's on": festivals, events, exhibitions, concerts.
+  public var whatsOn: [Loci_Localcontext_NewsTickerItem] = []
+
+  /// True when a feed is serving cache after an upstream failure.
+  public var stale: Bool = false
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _place: Loci_Localcontext_HerePlace? = nil
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "loci.localcontext"
@@ -1615,6 +1691,172 @@ extension Loci_Localcontext_SetNewsTickerEnabledResponse: SwiftProtobuf.Message,
 
   public static func ==(lhs: Loci_Localcontext_SetNewsTickerEnabledResponse, rhs: Loci_Localcontext_SetNewsTickerEnabledResponse) -> Bool {
     if lhs.enabled != rhs.enabled {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Localcontext_GetHereBriefRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".GetHereBriefRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "latitude"),
+    2: .same(proto: "longitude"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularDoubleField(value: &self.latitude) }()
+      case 2: try { try decoder.decodeSingularDoubleField(value: &self.longitude) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.latitude.bitPattern != 0 {
+      try visitor.visitSingularDoubleField(value: self.latitude, fieldNumber: 1)
+    }
+    if self.longitude.bitPattern != 0 {
+      try visitor.visitSingularDoubleField(value: self.longitude, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Localcontext_GetHereBriefRequest, rhs: Loci_Localcontext_GetHereBriefRequest) -> Bool {
+    if lhs.latitude != rhs.latitude {return false}
+    if lhs.longitude != rhs.longitude {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Localcontext_HerePlace: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".HerePlace"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "locality"),
+    2: .same(proto: "region"),
+    3: .standard(proto: "country_code"),
+    4: .standard(proto: "country_name"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.locality) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.region) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.countryCode) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.countryName) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.locality.isEmpty {
+      try visitor.visitSingularStringField(value: self.locality, fieldNumber: 1)
+    }
+    if !self.region.isEmpty {
+      try visitor.visitSingularStringField(value: self.region, fieldNumber: 2)
+    }
+    if !self.countryCode.isEmpty {
+      try visitor.visitSingularStringField(value: self.countryCode, fieldNumber: 3)
+    }
+    if !self.countryName.isEmpty {
+      try visitor.visitSingularStringField(value: self.countryName, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Localcontext_HerePlace, rhs: Loci_Localcontext_HerePlace) -> Bool {
+    if lhs.locality != rhs.locality {return false}
+    if lhs.region != rhs.region {return false}
+    if lhs.countryCode != rhs.countryCode {return false}
+    if lhs.countryName != rhs.countryName {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Localcontext_HereBrief: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".HereBrief"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "place"),
+    2: .same(proto: "weather"),
+    3: .standard(proto: "weather_is_estimated"),
+    4: .same(proto: "alerts"),
+    5: .same(proto: "local"),
+    6: .same(proto: "disruption"),
+    7: .standard(proto: "whats_on"),
+    8: .same(proto: "stale"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._place) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.weather) }()
+      case 3: try { try decoder.decodeSingularBoolField(value: &self.weatherIsEstimated) }()
+      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.alerts) }()
+      case 5: try { try decoder.decodeRepeatedMessageField(value: &self.local) }()
+      case 6: try { try decoder.decodeRepeatedMessageField(value: &self.disruption) }()
+      case 7: try { try decoder.decodeRepeatedMessageField(value: &self.whatsOn) }()
+      case 8: try { try decoder.decodeSingularBoolField(value: &self.stale) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._place {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    if !self.weather.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.weather, fieldNumber: 2)
+    }
+    if self.weatherIsEstimated != false {
+      try visitor.visitSingularBoolField(value: self.weatherIsEstimated, fieldNumber: 3)
+    }
+    if !self.alerts.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.alerts, fieldNumber: 4)
+    }
+    if !self.local.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.local, fieldNumber: 5)
+    }
+    if !self.disruption.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.disruption, fieldNumber: 6)
+    }
+    if !self.whatsOn.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.whatsOn, fieldNumber: 7)
+    }
+    if self.stale != false {
+      try visitor.visitSingularBoolField(value: self.stale, fieldNumber: 8)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Localcontext_HereBrief, rhs: Loci_Localcontext_HereBrief) -> Bool {
+    if lhs._place != rhs._place {return false}
+    if lhs.weather != rhs.weather {return false}
+    if lhs.weatherIsEstimated != rhs.weatherIsEstimated {return false}
+    if lhs.alerts != rhs.alerts {return false}
+    if lhs.local != rhs.local {return false}
+    if lhs.disruption != rhs.disruption {return false}
+    if lhs.whatsOn != rhs.whatsOn {return false}
+    if lhs.stale != rhs.stale {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
