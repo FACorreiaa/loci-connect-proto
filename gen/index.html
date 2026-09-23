@@ -14094,6 +14094,31 @@ answers to requests that are not trips. </p></td>
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>hotels</td>
+                  <td><a href="#loci.poi.POIDetailedInfo">loci.poi.POIDetailedInfo</a></td>
+                  <td>repeated</td>
+                  <td><p>The domain lists a hotels, restaurants or activities search produced.
+The server has always stored them with the session (the Go struct had
+these fields); without them here, GetChatSession could restore an
+itinerary but never a hotel, restaurant or activity list, so a client
+reopening such a session got an empty page. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>restaurants</td>
+                  <td><a href="#loci.poi.POIDetailedInfo">loci.poi.POIDetailedInfo</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>activities</td>
+                  <td><a href="#loci.poi.POIDetailedInfo">loci.poi.POIDetailedInfo</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
             </tbody>
           </table>
 

@@ -817,6 +817,26 @@ public struct Loci_Chat_AiCityResponse: @unchecked Sendable {
     set {_uniqueStorage()._sessionID = newValue}
   }
 
+  /// The domain lists a hotels, restaurants or activities search produced.
+  /// The server has always stored them with the session (the Go struct had
+  /// these fields); without them here, GetChatSession could restore an
+  /// itinerary but never a hotel, restaurant or activity list, so a client
+  /// reopening such a session got an empty page.
+  public var hotels: [Loci_Poi_POIDetailedInfo] {
+    get {return _storage._hotels}
+    set {_uniqueStorage()._hotels = newValue}
+  }
+
+  public var restaurants: [Loci_Poi_POIDetailedInfo] {
+    get {return _storage._restaurants}
+    set {_uniqueStorage()._restaurants = newValue}
+  }
+
+  public var activities: [Loci_Poi_POIDetailedInfo] {
+    get {return _storage._activities}
+    set {_uniqueStorage()._activities = newValue}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -2871,6 +2891,9 @@ extension Loci_Chat_AiCityResponse: SwiftProtobuf.Message, SwiftProtobuf._Messag
     2: .standard(proto: "points_of_interest"),
     3: .standard(proto: "itinerary_response"),
     4: .standard(proto: "session_id"),
+    5: .same(proto: "hotels"),
+    6: .same(proto: "restaurants"),
+    7: .same(proto: "activities"),
   ]
 
   fileprivate class _StorageClass {
@@ -2878,6 +2901,9 @@ extension Loci_Chat_AiCityResponse: SwiftProtobuf.Message, SwiftProtobuf._Messag
     var _pointsOfInterest: [Loci_Poi_POIDetailedInfo] = []
     var _itineraryResponse: Loci_Chat_AIItineraryResponse? = nil
     var _sessionID: String = String()
+    var _hotels: [Loci_Poi_POIDetailedInfo] = []
+    var _restaurants: [Loci_Poi_POIDetailedInfo] = []
+    var _activities: [Loci_Poi_POIDetailedInfo] = []
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -2896,6 +2922,9 @@ extension Loci_Chat_AiCityResponse: SwiftProtobuf.Message, SwiftProtobuf._Messag
       _pointsOfInterest = source._pointsOfInterest
       _itineraryResponse = source._itineraryResponse
       _sessionID = source._sessionID
+      _hotels = source._hotels
+      _restaurants = source._restaurants
+      _activities = source._activities
     }
   }
 
@@ -2918,6 +2947,9 @@ extension Loci_Chat_AiCityResponse: SwiftProtobuf.Message, SwiftProtobuf._Messag
         case 2: try { try decoder.decodeRepeatedMessageField(value: &_storage._pointsOfInterest) }()
         case 3: try { try decoder.decodeSingularMessageField(value: &_storage._itineraryResponse) }()
         case 4: try { try decoder.decodeSingularStringField(value: &_storage._sessionID) }()
+        case 5: try { try decoder.decodeRepeatedMessageField(value: &_storage._hotels) }()
+        case 6: try { try decoder.decodeRepeatedMessageField(value: &_storage._restaurants) }()
+        case 7: try { try decoder.decodeRepeatedMessageField(value: &_storage._activities) }()
         default: break
         }
       }
@@ -2942,6 +2974,15 @@ extension Loci_Chat_AiCityResponse: SwiftProtobuf.Message, SwiftProtobuf._Messag
       if !_storage._sessionID.isEmpty {
         try visitor.visitSingularStringField(value: _storage._sessionID, fieldNumber: 4)
       }
+      if !_storage._hotels.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._hotels, fieldNumber: 5)
+      }
+      if !_storage._restaurants.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._restaurants, fieldNumber: 6)
+      }
+      if !_storage._activities.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._activities, fieldNumber: 7)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2955,6 +2996,9 @@ extension Loci_Chat_AiCityResponse: SwiftProtobuf.Message, SwiftProtobuf._Messag
         if _storage._pointsOfInterest != rhs_storage._pointsOfInterest {return false}
         if _storage._itineraryResponse != rhs_storage._itineraryResponse {return false}
         if _storage._sessionID != rhs_storage._sessionID {return false}
+        if _storage._hotels != rhs_storage._hotels {return false}
+        if _storage._restaurants != rhs_storage._restaurants {return false}
+        if _storage._activities != rhs_storage._activities {return false}
         return true
       }
       if !storagesAreEqual {return false}

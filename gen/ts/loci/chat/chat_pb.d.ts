@@ -345,6 +345,27 @@ export declare type AiCityResponse = Message<"loci.chat.AiCityResponse"> & {
    * @generated from field: string session_id = 4;
    */
   sessionId: string;
+
+  /**
+   * The domain lists a hotels, restaurants or activities search produced.
+   * The server has always stored them with the session (the Go struct had
+   * these fields); without them here, GetChatSession could restore an
+   * itinerary but never a hotel, restaurant or activity list, so a client
+   * reopening such a session got an empty page.
+   *
+   * @generated from field: repeated loci.poi.POIDetailedInfo hotels = 5;
+   */
+  hotels: POIDetailedInfo[];
+
+  /**
+   * @generated from field: repeated loci.poi.POIDetailedInfo restaurants = 6;
+   */
+  restaurants: POIDetailedInfo[];
+
+  /**
+   * @generated from field: repeated loci.poi.POIDetailedInfo activities = 7;
+   */
+  activities: POIDetailedInfo[];
 };
 
 /**
