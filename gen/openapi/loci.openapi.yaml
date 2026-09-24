@@ -21458,6 +21458,7 @@ components:
           maximum: 5
           minimum: 1
           format: double
+          description: Whole stars only (1, 2, 3, 4 or 5); the server rejects fractions.
         title:
           type: string
           title: title
@@ -21526,7 +21527,9 @@ components:
           type: string
           title: user_id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Ignored by the server, which acts as the authenticated caller. Kept for
+             wire compatibility; clients should omit it.
         reviewId:
           type: string
           title: review_id
@@ -21695,7 +21698,7 @@ components:
           type: string
           title: user_id
           maxLength: 100
-          minLength: 1
+          description: Whose reviews to list. Empty means the authenticated caller.
         pagination:
           title: pagination
           $ref: '#/components/schemas/loci.common.PaginationRequest'
@@ -21764,7 +21767,9 @@ components:
           type: string
           title: user_id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Ignored by the server, which acts as the authenticated caller. Kept for
+             wire compatibility; clients should omit it.
         reviewId:
           type: string
           title: review_id
@@ -21934,12 +21939,12 @@ components:
           maximum: 5
           minimum: 1
           format: double
-          description: 1.0 - 5.0
+          description: Whole stars, 1 - 5
         title:
           type: string
           title: title
           maxLength: 200
-          minLength: 1
+          description: Empty when the author gave none (the title is optional on create).
         content:
           type: string
           title: content
@@ -21989,7 +21994,7 @@ components:
           maxLength: 10
           minLength: 2
           pattern: ^[a-z]{2}(-[A-Z]{2})?$
-          description: ISO 639-1 language code
+          description: Empty when unknown. ISO 639-1 language code
         aspects:
           title: aspects
           description: Review aspects (detailed ratings)
@@ -22326,12 +22331,13 @@ components:
           type: string
           title: display_name
           maxLength: 200
-          minLength: 1
+          description: Empty when the reviewer has set neither a username nor a display name.
         avatarUrl:
           type: string
           title: avatar_url
           maxLength: 2048
           format: uri
+          description: Empty when the reviewer has no avatar.
         reviewCount:
           type: integer
           title: review_count
@@ -22344,8 +22350,7 @@ components:
           type: string
           title: level
           maxLength: 50
-          minLength: 1
-          description: '"Bronze", "Silver", "Gold", "Platinum"'
+          description: Not computed yet; empty. "Bronze", "Silver", "Gold", "Platinum"
         memberSince:
           title: member_since
           $ref: '#/components/schemas/google.protobuf.Timestamp'
@@ -22368,7 +22373,9 @@ components:
           type: string
           title: user_id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Ignored by the server, which acts as the authenticated caller. Kept for
+             wire compatibility; clients should omit it.
         reviewId:
           type: string
           title: review_id
@@ -22380,11 +22387,14 @@ components:
           maximum: 5
           minimum: 1
           format: double
+          description: Whole stars only (1, 2, 3, 4 or 5); the server rejects fractions.
         title:
           type: string
           title: title
           maxLength: 200
-          minLength: 1
+          description: |-
+            Optional, as on create. The update replaces every field below, so send
+             the full review: an empty title, photo list or visit_date clears it.
         content:
           type: string
           title: content
