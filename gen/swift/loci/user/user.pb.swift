@@ -743,9 +743,35 @@ public struct Loci_User_RegisterPushDeviceRequest: Sendable {
 
   public var auth: String = String()
 
+  /// APNs only. The app's bundle id, which is the APNs topic the server sends
+  /// to, and which APNs host the token belongs to: "production" for App Store
+  /// and TestFlight builds, "sandbox" for builds signed with a development
+  /// profile. A token registered against the wrong host is silently dropped
+  /// by Apple, so the client says which it has.
+  public var apnsTopic: String {
+    get {return _apnsTopic ?? String()}
+    set {_apnsTopic = newValue}
+  }
+  /// Returns true if `apnsTopic` has been explicitly set.
+  public var hasApnsTopic: Bool {return self._apnsTopic != nil}
+  /// Clears the value of `apnsTopic`. Subsequent reads from it will return its default value.
+  public mutating func clearApnsTopic() {self._apnsTopic = nil}
+
+  public var apnsEnvironment: String {
+    get {return _apnsEnvironment ?? String()}
+    set {_apnsEnvironment = newValue}
+  }
+  /// Returns true if `apnsEnvironment` has been explicitly set.
+  public var hasApnsEnvironment: Bool {return self._apnsEnvironment != nil}
+  /// Clears the value of `apnsEnvironment`. Subsequent reads from it will return its default value.
+  public mutating func clearApnsEnvironment() {self._apnsEnvironment = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
+
+  fileprivate var _apnsTopic: String? = nil
+  fileprivate var _apnsEnvironment: String? = nil
 }
 
 public struct Loci_User_UnregisterPushDeviceRequest: Sendable {
@@ -1702,6 +1728,8 @@ extension Loci_User_RegisterPushDeviceRequest: SwiftProtobuf.Message, SwiftProto
     2: .same(proto: "endpoint"),
     3: .same(proto: "p256dh"),
     4: .same(proto: "auth"),
+    5: .standard(proto: "apns_topic"),
+    6: .standard(proto: "apns_environment"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1714,12 +1742,18 @@ extension Loci_User_RegisterPushDeviceRequest: SwiftProtobuf.Message, SwiftProto
       case 2: try { try decoder.decodeSingularStringField(value: &self.endpoint) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.p256Dh) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.auth) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self._apnsTopic) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self._apnsEnvironment) }()
       default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if self.platform != .unspecified {
       try visitor.visitSingularEnumField(value: self.platform, fieldNumber: 1)
     }
@@ -1732,6 +1766,12 @@ extension Loci_User_RegisterPushDeviceRequest: SwiftProtobuf.Message, SwiftProto
     if !self.auth.isEmpty {
       try visitor.visitSingularStringField(value: self.auth, fieldNumber: 4)
     }
+    try { if let v = self._apnsTopic {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 5)
+    } }()
+    try { if let v = self._apnsEnvironment {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 6)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1740,6 +1780,8 @@ extension Loci_User_RegisterPushDeviceRequest: SwiftProtobuf.Message, SwiftProto
     if lhs.endpoint != rhs.endpoint {return false}
     if lhs.p256Dh != rhs.p256Dh {return false}
     if lhs.auth != rhs.auth {return false}
+    if lhs._apnsTopic != rhs._apnsTopic {return false}
+    if lhs._apnsEnvironment != rhs._apnsEnvironment {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

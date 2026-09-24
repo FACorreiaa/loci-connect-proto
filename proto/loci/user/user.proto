@@ -386,6 +386,18 @@ message RegisterPushDeviceRequest {
   // Web push only.
   string p256dh = 3 [(buf.validate.field).string = {max_len: 200}];
   string auth = 4 [(buf.validate.field).string = {max_len: 100}];
+  // APNs only. The app's bundle id, which is the APNs topic the server sends
+  // to, and which APNs host the token belongs to: "production" for App Store
+  // and TestFlight builds, "sandbox" for builds signed with a development
+  // profile. A token registered against the wrong host is silently dropped
+  // by Apple, so the client says which it has.
+  optional string apns_topic = 5 [(buf.validate.field).string = {max_len: 200}];
+  optional string apns_environment = 6 [(buf.validate.field).string = {
+    in: [
+      "production",
+      "sandbox"
+    ]
+  }];
 }
 
 message UnregisterPushDeviceRequest {
