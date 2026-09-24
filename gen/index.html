@@ -25023,7 +25023,8 @@ through an itinerary that silently lacked their calendar.</p></td>
                   <td>user_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Ignored by the server, which acts as the authenticated caller. Kept for
+wire compatibility; clients should omit it. </p></td>
                 </tr>
               
                 <tr>
@@ -25162,7 +25163,8 @@ through an itinerary that silently lacked their calendar.</p></td>
                   <td>user_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Ignored by the server, which acts as the authenticated caller. Kept for
+wire compatibility; clients should omit it. </p></td>
                 </tr>
               
                 <tr>
@@ -25252,7 +25254,8 @@ through an itinerary that silently lacked their calendar.</p></td>
                   <td>user_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Ignored by the server, which acts as the authenticated caller. Kept for
+wire compatibility; clients should omit it. </p></td>
                 </tr>
               
                 <tr>
@@ -25266,14 +25269,14 @@ through an itinerary that silently lacked their calendar.</p></td>
                   <td>description</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Optional. </p></td>
                 </tr>
               
                 <tr>
                   <td>city_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Optional. A city UUID; the list is stored without a city when empty. </p></td>
                 </tr>
               
                 <tr>
@@ -25349,7 +25352,8 @@ through an itinerary that silently lacked their calendar.</p></td>
                   <td>user_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Ignored by the server, which acts as the authenticated caller. Kept for
+wire compatibility; clients should omit it. </p></td>
                 </tr>
               
                 <tr>
@@ -25411,7 +25415,8 @@ through an itinerary that silently lacked their calendar.</p></td>
                   <td>user_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Ignored by the server, which acts as the authenticated caller. Kept for
+wire compatibility; clients should omit it. </p></td>
                 </tr>
               
                 <tr>
@@ -25466,7 +25471,8 @@ through an itinerary that silently lacked their calendar.</p></td>
                   <td>user_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Ignored by the server, which acts as the authenticated caller. Kept for
+wire compatibility; clients should omit it. </p></td>
                 </tr>
               
                 <tr>
@@ -25535,7 +25541,8 @@ through an itinerary that silently lacked their calendar.</p></td>
                   <td>user_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Ignored by the server, which acts as the authenticated caller. Kept for
+wire compatibility; clients should omit it. </p></td>
                 </tr>
               
                 <tr>
@@ -25590,7 +25597,8 @@ through an itinerary that silently lacked their calendar.</p></td>
                   <td>user_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Ignored by the server, which acts as the authenticated caller. Kept for
+wire compatibility; clients should omit it. </p></td>
                 </tr>
               
                 <tr>
@@ -25604,7 +25612,8 @@ through an itinerary that silently lacked their calendar.</p></td>
                   <td>include_detailed_items</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Fill each item&#39;s poi/restaurant/hotel from the stored place. Items are
+returned for every list either way. </p></td>
                 </tr>
               
             </tbody>
@@ -25652,7 +25661,8 @@ through an itinerary that silently lacked their calendar.</p></td>
                   <td>user_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Ignored by the server, which acts as the authenticated caller. Kept for
+wire compatibility; clients should omit it. </p></td>
                 </tr>
               
                 <tr>
@@ -25694,7 +25704,7 @@ through an itinerary that silently lacked their calendar.</p></td>
         
       
         <h3 id="loci.list.GetListsRequest">GetListsRequest</h3>
-        <p></p>
+        <p>Returns every list the caller owns, custom lists and itineraries alike,</p><p>newest first.</p>
 
         
           <table class="field-table">
@@ -25707,14 +25717,15 @@ through an itinerary that silently lacked their calendar.</p></td>
                   <td>user_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Ignored by the server, which acts as the authenticated caller. Kept for
+wire compatibility; clients should omit it. </p></td>
                 </tr>
               
                 <tr>
                   <td>limit</td>
                   <td><a href="#int32">int32</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Page size; 0 returns every list. </p></td>
                 </tr>
               
                 <tr>
@@ -25759,7 +25770,7 @@ through an itinerary that silently lacked their calendar.</p></td>
                   <td>total_count</td>
                   <td><a href="#int32">int32</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Every list the caller owns, before limit/offset. </p></td>
                 </tr>
               
             </tbody>
@@ -25783,7 +25794,8 @@ through an itinerary that silently lacked their calendar.</p></td>
                   <td>user_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Ignored by the server, which acts as the authenticated caller. Kept for
+wire compatibility; clients should omit it. </p></td>
                 </tr>
               
                 <tr>
@@ -25932,7 +25944,7 @@ through an itinerary that silently lacked their calendar.</p></td>
                   <td>description</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Empty when the list has no description. </p></td>
                 </tr>
               
                 <tr>
@@ -25967,7 +25979,7 @@ through an itinerary that silently lacked their calendar.</p></td>
                   <td>city_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Empty when the list is not tied to a city. </p></td>
                 </tr>
               
                 <tr>
@@ -25988,7 +26000,7 @@ through an itinerary that silently lacked their calendar.</p></td>
                   <td>item_count</td>
                   <td><a href="#int32">int32</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Number of items in the list. </p></td>
                 </tr>
               
                 <tr>
@@ -26040,7 +26052,8 @@ through an itinerary that silently lacked their calendar.</p></td>
                   <td>poi_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>For backward compatibility with POI-only items </p></td>
+                  <td><p>For backward compatibility with POI-only items: equals item_id when
+content_type is POI, empty otherwise. </p></td>
                 </tr>
               
                 <tr>
@@ -26128,7 +26141,7 @@ through an itinerary that silently lacked their calendar.</p></td>
         
       
         <h3 id="loci.list.ListItemWithContent">ListItemWithContent</h3>
-        <p>List item with detailed content</p>
+        <p>List item with detailed content. When GetListRequest.include_detailed_items</p><p>is set, the server fills poi (content type POI), restaurant (RESTAURANT) or</p><p>hotel (HOTEL) from the stored place; it is left unset when the place is gone.</p><p>Only the fields the server stores are filled: id, name, latitude, longitude,</p><p>category, description, address, website, phone and rating.</p>
 
         
           <table class="field-table">
@@ -26283,14 +26296,14 @@ through an itinerary that silently lacked their calendar.</p></td>
                   <td>category</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Empty when unknown. </p></td>
                 </tr>
               
                 <tr>
                   <td>description</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Empty when unknown. </p></td>
                 </tr>
               
                 <tr>
@@ -26318,7 +26331,7 @@ through an itinerary that silently lacked their calendar.</p></td>
                   <td>address</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Empty when unknown. </p></td>
                 </tr>
               
                 <tr>
@@ -26350,7 +26363,7 @@ through an itinerary that silently lacked their calendar.</p></td>
         
       
         <h3 id="loci.list.RemoveListItemRequest">RemoveListItemRequest</h3>
-        <p></p>
+        <p>Removes the item from a list the caller owns. content_type narrows the match</p><p>when set; UNSPECIFIED removes the item whatever its type.</p>
 
         
           <table class="field-table">
@@ -26363,7 +26376,8 @@ through an itinerary that silently lacked their calendar.</p></td>
                   <td>user_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Ignored by the server, which acts as the authenticated caller. Kept for
+wire compatibility; clients should omit it. </p></td>
                 </tr>
               
                 <tr>
@@ -26491,7 +26505,8 @@ through an itinerary that silently lacked their calendar.</p></td>
                   <td>user_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Ignored by the server, which acts as the authenticated caller. Kept for
+wire compatibility; clients should omit it. </p></td>
                 </tr>
               
                 <tr>
@@ -26719,7 +26734,8 @@ through an itinerary that silently lacked their calendar.</p></td>
                   <td>user_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Ignored by the server, which acts as the authenticated caller. Kept for
+wire compatibility; clients should omit it. </p></td>
                 </tr>
               
                 <tr>
@@ -26781,7 +26797,8 @@ through an itinerary that silently lacked their calendar.</p></td>
                   <td>user_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Ignored by the server, which acts as the authenticated caller. Kept for
+wire compatibility; clients should omit it. </p></td>
                 </tr>
               
                 <tr>
@@ -26913,7 +26930,8 @@ through an itinerary that silently lacked their calendar.</p></td>
                   <td>user_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Ignored by the server, which acts as the authenticated caller. Kept for
+wire compatibility; clients should omit it. </p></td>
                 </tr>
               
                 <tr>
@@ -26956,6 +26974,13 @@ through an itinerary that silently lacked their calendar.</p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>is_itinerary</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td>optional</td>
+                  <td><p>Switch the list between custom list and itinerary. Unchanged when unset. </p></td>
                 </tr>
               
             </tbody>
