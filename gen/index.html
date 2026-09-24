@@ -36908,6 +36908,24 @@ reverse geocode we do not have, and a guessed country is a fabricated one. </p><
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>apns_topic</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>APNs only. The app&#39;s bundle id, which is the APNs topic the server sends
+to, and which APNs host the token belongs to: &#34;production&#34; for App Store
+and TestFlight builds, &#34;sandbox&#34; for builds signed with a development
+profile. A token registered against the wrong host is silently dropped
+by Apple, so the client says which it has. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>apns_environment</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
