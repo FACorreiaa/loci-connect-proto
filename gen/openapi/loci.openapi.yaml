@@ -25478,6 +25478,26 @@ components:
           type: string
           title: auth
           maxLength: 100
+        apnsTopic:
+          type:
+            - string
+            - "null"
+          title: apns_topic
+          maxLength: 200
+          description: |-
+            APNs only. The app's bundle id, which is the APNs topic the server sends
+             to, and which APNs host the token belongs to: "production" for App Store
+             and TestFlight builds, "sandbox" for builds signed with a development
+             profile. A token registered against the wrong host is silently dropped
+             by Apple, so the client says which it has.
+        apnsEnvironment:
+          type:
+            - string
+            - "null"
+          title: apns_environment
+          enum:
+            - production
+            - sandbox
       title: RegisterPushDeviceRequest
       additionalProperties: false
     loci.user.UnregisterPushDeviceRequest:
