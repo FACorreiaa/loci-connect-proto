@@ -567,6 +567,22 @@ export declare type RegisterPushDeviceRequest = Message<"loci.user.RegisterPushD
    * @generated from field: string auth = 4;
    */
   auth: string;
+
+  /**
+   * APNs only. The app's bundle id, which is the APNs topic the server sends
+   * to, and which APNs host the token belongs to: "production" for App Store
+   * and TestFlight builds, "sandbox" for builds signed with a development
+   * profile. A token registered against the wrong host is silently dropped
+   * by Apple, so the client says which it has.
+   *
+   * @generated from field: optional string apns_topic = 5;
+   */
+  apnsTopic?: string;
+
+  /**
+   * @generated from field: optional string apns_environment = 6;
+   */
+  apnsEnvironment?: string;
 };
 
 /**
