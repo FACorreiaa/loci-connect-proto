@@ -139,3 +139,60 @@ public final class Loci_Chat_ChatServiceClient: Loci_Chat_ChatServiceClientInter
         }
     }
 }
+
+public protocol Loci_Chat_WatchServiceClientInterface: Sendable {
+
+    /// Turns free text into a proposal. Stores nothing.
+    @available(iOS 13, *)
+    func `proposeWatch`(request: Loci_Chat_ProposeWatchRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Chat_ProposeWatchResponse>
+
+    /// Stores a confirmed proposal and posts the confirmation into the thread.
+    @available(iOS 13, *)
+    func `createWatch`(request: Loci_Chat_CreateWatchRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Chat_CreateWatchResponse>
+
+    /// The caller's watches, soonest next run first.
+    @available(iOS 13, *)
+    func `listWatches`(request: Loci_Chat_ListWatchesRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Chat_ListWatchesResponse>
+
+    /// Stops and removes one of the caller's watches.
+    @available(iOS 13, *)
+    func `deleteWatch`(request: Loci_Chat_DeleteWatchRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Chat_DeleteWatchResponse>
+}
+
+/// Concrete implementation of `Loci_Chat_WatchServiceClientInterface`.
+public final class Loci_Chat_WatchServiceClient: Loci_Chat_WatchServiceClientInterface, Sendable {
+    private let client: Connect.ProtocolClientInterface
+
+    public init(client: Connect.ProtocolClientInterface) {
+        self.client = client
+    }
+
+    @available(iOS 13, *)
+    public func `proposeWatch`(request: Loci_Chat_ProposeWatchRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Chat_ProposeWatchResponse> {
+        return await self.client.unary(path: "/loci.chat.WatchService/ProposeWatch", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `createWatch`(request: Loci_Chat_CreateWatchRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Chat_CreateWatchResponse> {
+        return await self.client.unary(path: "/loci.chat.WatchService/CreateWatch", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `listWatches`(request: Loci_Chat_ListWatchesRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Chat_ListWatchesResponse> {
+        return await self.client.unary(path: "/loci.chat.WatchService/ListWatches", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `deleteWatch`(request: Loci_Chat_DeleteWatchRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Chat_DeleteWatchResponse> {
+        return await self.client.unary(path: "/loci.chat.WatchService/DeleteWatch", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    public enum Metadata {
+        public enum Methods {
+            public static let proposeWatch = Connect.MethodSpec(name: "ProposeWatch", service: "loci.chat.WatchService", type: .unary)
+            public static let createWatch = Connect.MethodSpec(name: "CreateWatch", service: "loci.chat.WatchService", type: .unary)
+            public static let listWatches = Connect.MethodSpec(name: "ListWatches", service: "loci.chat.WatchService", type: .unary)
+            public static let deleteWatch = Connect.MethodSpec(name: "DeleteWatch", service: "loci.chat.WatchService", type: .unary)
+        }
+    }
+}

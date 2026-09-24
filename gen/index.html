@@ -1325,6 +1325,22 @@
                 </li>
               
                 <li>
+                  <a href="#loci.chat.CreateWatchRequest"><span class="badge">M</span>CreateWatchRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.CreateWatchResponse"><span class="badge">M</span>CreateWatchResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.DeleteWatchRequest"><span class="badge">M</span>DeleteWatchRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.DeleteWatchResponse"><span class="badge">M</span>DeleteWatchResponse</a>
+                </li>
+              
+                <li>
                   <a href="#loci.chat.GeneralPoisPayload"><span class="badge">M</span>GeneralPoisPayload</a>
                 </li>
               
@@ -1381,6 +1397,14 @@
                 </li>
               
                 <li>
+                  <a href="#loci.chat.ListWatchesRequest"><span class="badge">M</span>ListWatchesRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.ListWatchesResponse"><span class="badge">M</span>ListWatchesResponse</a>
+                </li>
+              
+                <li>
                   <a href="#loci.chat.LlmInteraction"><span class="badge">M</span>LlmInteraction</a>
                 </li>
               
@@ -1402,6 +1426,14 @@
               
                 <li>
                   <a href="#loci.chat.ProgressPayload"><span class="badge">M</span>ProgressPayload</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.ProposeWatchRequest"><span class="badge">M</span>ProposeWatchRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.ProposeWatchResponse"><span class="badge">M</span>ProposeWatchResponse</a>
                 </li>
               
                 <li>
@@ -1456,6 +1488,14 @@
                   <a href="#loci.chat.UserLocation"><span class="badge">M</span>UserLocation</a>
                 </li>
               
+                <li>
+                  <a href="#loci.chat.Watch"><span class="badge">M</span>Watch</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.WatchProposal"><span class="badge">M</span>WatchProposal</a>
+                </li>
+              
               
                 <li>
                   <a href="#loci.chat.DomainType"><span class="badge">E</span>DomainType</a>
@@ -1463,6 +1503,10 @@
               
                 <li>
                   <a href="#loci.chat.IntentType"><span class="badge">E</span>IntentType</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.MessageOrigin"><span class="badge">E</span>MessageOrigin</a>
                 </li>
               
                 <li>
@@ -1493,6 +1537,10 @@
               
                 <li>
                   <a href="#loci.chat.ChatService"><span class="badge">S</span>ChatService</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.WatchService"><span class="badge">S</span>WatchService</a>
                 </li>
               
             </ul>
@@ -14760,10 +14808,120 @@ GetChatSession / GetSessionPOIs instead. </p></td>
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>origin</td>
+                  <td><a href="#loci.chat.MessageOrigin">MessageOrigin</a></td>
+                  <td></td>
+                  <td><p>Why the message is in the thread. UNSPECIFIED (every message stored
+before this field existed) reads as REPLY. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>source_label</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Caption shown above a proactive bubble, e.g. &#34;Standing task&#34; or
+&#34;Briefing · 07:00&#34;. Empty for replies. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
           
+
+        
+      
+        <h3 id="loci.chat.CreateWatchRequest">CreateWatchRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>session_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The chat thread the watch posts into. Must belong to the caller. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>proposal</td>
+                  <td><a href="#loci.chat.WatchProposal">WatchProposal</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.CreateWatchResponse">CreateWatchResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>watch</td>
+                  <td><a href="#loci.chat.Watch">Watch</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>confirmation</td>
+                  <td><a href="#loci.chat.ConversationMessage">ConversationMessage</a></td>
+                  <td></td>
+                  <td><p>&#34;Got it — I&#39;ll …&#34;, already appended to the thread with origin PROACTIVE
+and source_label &#34;Standing task&#34;. Clients can append it without refetching. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.DeleteWatchRequest">DeleteWatchRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.DeleteWatchResponse">DeleteWatchResponse</h3>
+        <p></p>
+
+        
 
         
       
@@ -15201,6 +15359,54 @@ GetChatSession / GetSessionPOIs instead. </p></td>
 
         
       
+        <h3 id="loci.chat.ListWatchesRequest">ListWatchesRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>session_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Only this thread&#39;s watches. Empty lists all of the caller&#39;s watches. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.ListWatchesResponse">ListWatchesResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>watches</td>
+                  <td><a href="#loci.chat.Watch">Watch</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.chat.LlmInteraction">LlmInteraction</h3>
         <p>LlmInteraction represents an interaction with the LLM</p>
 
@@ -15517,6 +15723,61 @@ GetChatSession / GetSessionPOIs instead. </p></td>
                   <td>percent</td>
                   <td><a href="#int32">int32</a></td>
                   <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.ProposeWatchRequest">ProposeWatchRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>text</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>What the user typed, e.g. &#34;every morning at 8 tell me if it will rain in Lisbon&#34;. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>timezone</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>IANA zone the user&#39;s times are in, e.g. &#34;Europe/Lisbon&#34;. Empty means UTC. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.ProposeWatchResponse">ProposeWatchResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>proposal</td>
+                  <td><a href="#loci.chat.WatchProposal">WatchProposal</a></td>
+                  <td></td>
                   <td><p> </p></td>
                 </tr>
               
@@ -16337,6 +16598,145 @@ GetChatSession / GetSessionPOIs instead. </p></td>
 
         
       
+        <h3 id="loci.chat.Watch">Watch</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>session_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>title</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>schedule_human</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>interval_minutes</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>spec</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>enabled</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>next_run_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_run_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Unset until the watch has run once. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.WatchProposal">WatchProposal</h3>
+        <p>WatchProposal is what the server understood. The client echoes it back</p><p>unchanged in CreateWatch.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>title</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Short name for the card, e.g. &#34;Rain in Lisbon tomorrow&#34;. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>schedule_human</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Schedule in words for the card, e.g. &#34;Every day at 08:00&#34;. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>interval_minutes</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>How often the watch runs. At least hourly, at most every 30 days. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>spec</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The instruction the agent runs each time; shown as the card&#39;s spec line. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>first_run_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>First run. Unset means one interval from creation. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
 
       
         <h3 id="loci.chat.DomainType">DomainType</h3>
@@ -16499,6 +16899,35 @@ GetChatSession / GetSessionPOIs instead. </p></td>
               <tr>
                 <td>INTENT_TYPE_SORT_ITINERARY</td>
                 <td>16</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="loci.chat.MessageOrigin">MessageOrigin</h3>
+        <p>MessageOrigin separates an answer to something the user just said from a</p><p>message the agent posted on its own (a standing task, a briefing).</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>MESSAGE_ORIGIN_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>MESSAGE_ORIGIN_REPLY</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>MESSAGE_ORIGIN_PROACTIVE</td>
+                <td>2</td>
                 <td><p></p></td>
               </tr>
             
@@ -16896,6 +17325,46 @@ only delivery is paged.</p></td>
                 <td><a href="#loci.chat.GetRunStatusResponse">GetRunStatusResponse</a></td>
                 <td><p>Where the caller&#39;s runs are: running, done or failed. Used after a
 reload or on returning to the app to settle runs nobody was listening to.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+        <h3 id="loci.chat.WatchService">WatchService</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>ProposeWatch</td>
+                <td><a href="#loci.chat.ProposeWatchRequest">ProposeWatchRequest</a></td>
+                <td><a href="#loci.chat.ProposeWatchResponse">ProposeWatchResponse</a></td>
+                <td><p>Turns free text into a proposal. Stores nothing.</p></td>
+              </tr>
+            
+              <tr>
+                <td>CreateWatch</td>
+                <td><a href="#loci.chat.CreateWatchRequest">CreateWatchRequest</a></td>
+                <td><a href="#loci.chat.CreateWatchResponse">CreateWatchResponse</a></td>
+                <td><p>Stores a confirmed proposal and posts the confirmation into the thread.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListWatches</td>
+                <td><a href="#loci.chat.ListWatchesRequest">ListWatchesRequest</a></td>
+                <td><a href="#loci.chat.ListWatchesResponse">ListWatchesResponse</a></td>
+                <td><p>The caller&#39;s watches, soonest next run first.</p></td>
+              </tr>
+            
+              <tr>
+                <td>DeleteWatch</td>
+                <td><a href="#loci.chat.DeleteWatchRequest">DeleteWatchRequest</a></td>
+                <td><a href="#loci.chat.DeleteWatchResponse">DeleteWatchResponse</a></td>
+                <td><p>Stops and removes one of the caller&#39;s watches.</p></td>
               </tr>
             
           </tbody>
