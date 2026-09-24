@@ -162,7 +162,7 @@ message TripLeg {
   int32 duration_mins = 9 [(buf.validate.field).int32 = {gte: 0}];
   // The day at whose end this leg happens. 0 is the outbound leg from home.
   int32 after_day = 10 [(buf.validate.field).int32 = {gte: 0}];
-  // "drive" today; rail/air slot in without changing the shape.
+  // "drive", "train", "bus" or "flight". An estimate from distance, not a schedule.
   string mode = 11 [(buf.validate.field).string = {max_len: 40}];
   optional string booking_url = 12 [(buf.validate.field) = {
     string: {
@@ -171,6 +171,24 @@ message TripLeg {
       uri: true
     }
   }];
+}
+
+// TripCity is one city of a multi-city trip, in visiting order, with the chat
+// session its places were generated in. Empty for a single-city trip.
+message TripCity {
+  string city_name = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
+  string city_id = 2 [(buf.validate.field).string = {max_len: 100}];
+  // The child chat session this city was generated in; reopening the city's
+  // hotels, restaurants and activities goes through it.
+  string session_id = 3 [(buf.validate.field).string = {max_len: 100}];
+  int32 nights = 4 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 30
+  }];
+  int32 order_index = 5 [(buf.validate.field).int32 = {gte: 0}];
 }
 
 // TripDraft is the full editable trip. `version` powers optimistic concurrency /
@@ -203,6 +221,9 @@ message TripDraft {
   // Travel between cities. Empty for a single-city trip. `city_name` above stays
   // the primary city (titles, exports) even when the trip spans several.
   repeated TripLeg legs = 12;
+  // The cities of a multi-city trip, in visiting order. Empty for a
+  // single-city trip, whose city is city_name above.
+  repeated TripCity cities = 13;
   // Session that generated the initial draft, if any.
   optional string source_session_id = 9 [(buf.validate.field) = {
     string: {

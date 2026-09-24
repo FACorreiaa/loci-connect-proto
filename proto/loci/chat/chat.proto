@@ -8,6 +8,7 @@ import "loci/city/city.proto";
 import "loci/common/common.proto";
 import "loci/poi/poi.proto";
 import "loci/profile/profile.proto";
+import "loci/trip/trip.proto";
 
 option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/chat;chat";
 
@@ -83,6 +84,7 @@ enum StreamEventType {
   STREAM_EVENT_TYPE_PROGRESS = 10;
   STREAM_EVENT_TYPE_ERROR = 11;
   STREAM_EVENT_TYPE_COMPLETE = 12;
+  STREAM_EVENT_TYPE_ROUTE = 13;
 }
 
 // LlmInteraction represents an interaction with the LLM
@@ -380,6 +382,23 @@ message ChatSession {
 }
 
 // ChatRequest for sending a message
+// TripStopInput is one city the traveller asked for, in the order given.
+message TripStopInput {
+  string city_name = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
+  // Nights in this city. Absent: the planner decides.
+  optional int32 nights = 2 [(buf.validate.field).int32 = {
+    gte: 1
+    lte: 14
+  }];
+  optional string city_id = 3 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+}
+
 message ChatRequest {
   optional string session_id = 1 [(buf.validate.field) = {
     string: {
@@ -424,6 +443,11 @@ message ChatRequest {
       max_len: 100
     }
   }];
+  // A multi-city trip, from the stop builder. Two or more stops skip city
+  // extraction; one stop is treated as city_name.
+  repeated TripStopInput stops = 9 [(buf.validate.field).repeated = {max_items: 5}];
+  // Let the server reorder the stops into a sensible route.
+  bool suggest_order = 10;
 }
 
 // ChatResponse for chat response
@@ -570,6 +594,37 @@ message CompletePayload {
   bool load_from_session = 3;
 }
 
+// StopRef names one city of a multi-city stream: every event about that city
+// carries its index in StreamEvent.stop_index.
+message StopRef {
+  int32 index = 1 [(buf.validate.field).int32 = {gte: 0}];
+  string city_name = 2 [(buf.validate.field).string = {max_len: 200}];
+  string city_id = 3 [(buf.validate.field).string = {max_len: 100}];
+  // The child chat session this city is generated in.
+  string session_id = 4 [(buf.validate.field).string = {max_len: 100}];
+  // Trip-wide day numbers spent in this city.
+  repeated int32 day_numbers = 5;
+}
+
+// DroppedStop is a requested city the route left out, and why.
+message DroppedStop {
+  string city_name = 1 [(buf.validate.field).string = {max_len: 200}];
+  string reason = 2 [(buf.validate.field).string = {max_len: 500}];
+}
+
+// RoutePayload opens a multi-city stream, before any per-city event, and is
+// sent again once the parent trip is saved, with trip_id set.
+message RoutePayload {
+  repeated StopRef stops = 1;
+  // Travel between consecutive cities, in trip order.
+  repeated loci.trip.TripLeg legs = 2;
+  string outline = 3 [(buf.validate.field).string = {max_len: 2000}];
+  repeated string warnings = 4;
+  repeated DroppedStop dropped = 5;
+  int32 total_travel_mins = 6 [(buf.validate.field).int32 = {gte: 0}];
+  optional string trip_id = 7 [(buf.validate.field).string = {max_len: 100}];
+}
+
 // StreamEvent represents a streaming event. The old free-form `type` string
 // (field 1), opaque `data` bytes (field 3), and `error` string (field 4) were
 // replaced by the typed `event_type` enum + `payload` oneof below.
@@ -592,6 +647,9 @@ message StreamEvent {
       max_len: 100
     }
   }];
+  // Set on every per-city event of a multi-city stream: the StopRef.index it
+  // belongs to. An ERROR carrying it failed that city only, not the stream.
+  optional int32 stop_index = 11;
 
   // payload is the typed body; its oneof case matches event_type. Absent for
   // events that carry no structured body (some progress/keepalive frames).
@@ -608,6 +666,7 @@ message StreamEvent {
     ProgressPayload progress = 29;
     StreamError error = 30;
     CompletePayload complete = 31;
+    RoutePayload route = 32;
   }
 }
 
