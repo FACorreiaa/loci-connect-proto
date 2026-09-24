@@ -550,6 +550,199 @@ export declare type SuggestPackingResponse = Message<"loci.trip.SuggestPackingRe
 export declare const SuggestPackingResponseSchema: GenMessage<SuggestPackingResponse>;
 
 /**
+ * ChecklistItem is one packing item or one expense on a trip.
+ *
+ * @generated from message loci.trip.ChecklistItem
+ */
+export declare type ChecklistItem = Message<"loci.trip.ChecklistItem"> & {
+  /**
+   * Client-generated UUID; the upsert key together with the trip id.
+   *
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * @generated from field: loci.trip.ChecklistItemKind kind = 2;
+   */
+  kind: ChecklistItemKind;
+
+  /**
+   * @generated from field: string text = 3;
+   */
+  text: string;
+
+  /**
+   * @generated from field: bool done = 4;
+   */
+  done: boolean;
+
+  /**
+   * Expense amount in the currency's minor unit (cents). Zero for packing items.
+   *
+   * @generated from field: int64 amount_minor = 5;
+   */
+  amountMinor: bigint;
+
+  /**
+   * ISO 4217 code (e.g. "EUR"). Empty is allowed, and is the norm for packing
+   * items; clients default expenses to the trip's or the user's currency.
+   *
+   * @generated from field: string currency = 6;
+   */
+  currency: string;
+
+  /**
+   * Display order within its kind (0-based).
+   *
+   * @generated from field: int32 position = 7;
+   */
+  position: number;
+
+  /**
+   * Server-set on every write; ignored on input.
+   *
+   * @generated from field: google.protobuf.Timestamp updated_at = 8;
+   */
+  updatedAt?: Timestamp;
+};
+
+/**
+ * Describes the message loci.trip.ChecklistItem.
+ * Use `create(ChecklistItemSchema)` to create a new message.
+ */
+export declare const ChecklistItemSchema: GenMessage<ChecklistItem>;
+
+/**
+ * @generated from message loci.trip.GetTripChecklistRequest
+ */
+export declare type GetTripChecklistRequest = Message<"loci.trip.GetTripChecklistRequest"> & {
+  /**
+   * @generated from field: string trip_id = 1;
+   */
+  tripId: string;
+};
+
+/**
+ * Describes the message loci.trip.GetTripChecklistRequest.
+ * Use `create(GetTripChecklistRequestSchema)` to create a new message.
+ */
+export declare const GetTripChecklistRequestSchema: GenMessage<GetTripChecklistRequest>;
+
+/**
+ * @generated from message loci.trip.GetTripChecklistResponse
+ */
+export declare type GetTripChecklistResponse = Message<"loci.trip.GetTripChecklistResponse"> & {
+  /**
+   * @generated from field: repeated loci.trip.ChecklistItem items = 1;
+   */
+  items: ChecklistItem[];
+
+  /**
+   * Packing suggestions the user dismissed, lowercased and trimmed, so a client
+   * can hide them from SuggestPacking's output.
+   *
+   * @generated from field: repeated string dismissed_suggestions = 2;
+   */
+  dismissedSuggestions: string[];
+};
+
+/**
+ * Describes the message loci.trip.GetTripChecklistResponse.
+ * Use `create(GetTripChecklistResponseSchema)` to create a new message.
+ */
+export declare const GetTripChecklistResponseSchema: GenMessage<GetTripChecklistResponse>;
+
+/**
+ * @generated from message loci.trip.UpsertChecklistItemRequest
+ */
+export declare type UpsertChecklistItemRequest = Message<"loci.trip.UpsertChecklistItemRequest"> & {
+  /**
+   * @generated from field: string trip_id = 1;
+   */
+  tripId: string;
+
+  /**
+   * @generated from field: loci.trip.ChecklistItem item = 2;
+   */
+  item?: ChecklistItem;
+};
+
+/**
+ * Describes the message loci.trip.UpsertChecklistItemRequest.
+ * Use `create(UpsertChecklistItemRequestSchema)` to create a new message.
+ */
+export declare const UpsertChecklistItemRequestSchema: GenMessage<UpsertChecklistItemRequest>;
+
+/**
+ * @generated from message loci.trip.DeleteChecklistItemRequest
+ */
+export declare type DeleteChecklistItemRequest = Message<"loci.trip.DeleteChecklistItemRequest"> & {
+  /**
+   * @generated from field: string trip_id = 1;
+   */
+  tripId: string;
+
+  /**
+   * @generated from field: string item_id = 2;
+   */
+  itemId: string;
+};
+
+/**
+ * Describes the message loci.trip.DeleteChecklistItemRequest.
+ * Use `create(DeleteChecklistItemRequestSchema)` to create a new message.
+ */
+export declare const DeleteChecklistItemRequestSchema: GenMessage<DeleteChecklistItemRequest>;
+
+/**
+ * @generated from message loci.trip.DeleteChecklistItemResponse
+ */
+export declare type DeleteChecklistItemResponse = Message<"loci.trip.DeleteChecklistItemResponse"> & {
+};
+
+/**
+ * Describes the message loci.trip.DeleteChecklistItemResponse.
+ * Use `create(DeleteChecklistItemResponseSchema)` to create a new message.
+ */
+export declare const DeleteChecklistItemResponseSchema: GenMessage<DeleteChecklistItemResponse>;
+
+/**
+ * @generated from message loci.trip.DismissPackingSuggestionRequest
+ */
+export declare type DismissPackingSuggestionRequest = Message<"loci.trip.DismissPackingSuggestionRequest"> & {
+  /**
+   * @generated from field: string trip_id = 1;
+   */
+  tripId: string;
+
+  /**
+   * The suggestion's text as shown; stored lowercased and trimmed.
+   *
+   * @generated from field: string text = 2;
+   */
+  text: string;
+};
+
+/**
+ * Describes the message loci.trip.DismissPackingSuggestionRequest.
+ * Use `create(DismissPackingSuggestionRequestSchema)` to create a new message.
+ */
+export declare const DismissPackingSuggestionRequestSchema: GenMessage<DismissPackingSuggestionRequest>;
+
+/**
+ * @generated from message loci.trip.DismissPackingSuggestionResponse
+ */
+export declare type DismissPackingSuggestionResponse = Message<"loci.trip.DismissPackingSuggestionResponse"> & {
+};
+
+/**
+ * Describes the message loci.trip.DismissPackingSuggestionResponse.
+ * Use `create(DismissPackingSuggestionResponseSchema)` to create a new message.
+ */
+export declare const DismissPackingSuggestionResponseSchema: GenMessage<DismissPackingSuggestionResponse>;
+
+/**
  * @generated from message loci.trip.SaveTripRequest
  */
 export declare type SaveTripRequest = Message<"loci.trip.SaveTripRequest"> & {
@@ -1018,6 +1211,33 @@ export enum PackingCategory {
 export declare const PackingCategorySchema: GenEnum<PackingCategory>;
 
 /**
+ * ChecklistItemKind says which list an item belongs to.
+ *
+ * @generated from enum loci.trip.ChecklistItemKind
+ */
+export enum ChecklistItemKind {
+  /**
+   * @generated from enum value: CHECKLIST_ITEM_KIND_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: CHECKLIST_ITEM_KIND_PACKING = 1;
+   */
+  PACKING = 1,
+
+  /**
+   * @generated from enum value: CHECKLIST_ITEM_KIND_EXPENSE = 2;
+   */
+  EXPENSE = 2,
+}
+
+/**
+ * Describes the enum loci.trip.ChecklistItemKind.
+ */
+export declare const ChecklistItemKindSchema: GenEnum<ChecklistItemKind>;
+
+/**
  * ExportFormat selects the export artifact.
  *
  * @generated from enum loci.trip.ExportFormat
@@ -1165,6 +1385,48 @@ export declare const TripService: GenService<{
     methodKind: "unary";
     input: typeof SuggestPackingRequestSchema;
     output: typeof SuggestPackingResponseSchema;
+  },
+  /**
+   * GetTripChecklist returns the trip's packing items, expenses and dismissed
+   * packing suggestions. Other users' trips are NotFound.
+   *
+   * @generated from rpc loci.trip.TripService.GetTripChecklist
+   */
+  getTripChecklist: {
+    methodKind: "unary";
+    input: typeof GetTripChecklistRequestSchema;
+    output: typeof GetTripChecklistResponseSchema;
+  },
+  /**
+   * UpsertChecklistItem creates or replaces an item by (trip_id, item.id).
+   * Adding a 501st item is ResourceExhausted.
+   *
+   * @generated from rpc loci.trip.TripService.UpsertChecklistItem
+   */
+  upsertChecklistItem: {
+    methodKind: "unary";
+    input: typeof UpsertChecklistItemRequestSchema;
+    output: typeof ChecklistItemSchema;
+  },
+  /**
+   * DeleteChecklistItem removes an item; deleting a missing item succeeds.
+   *
+   * @generated from rpc loci.trip.TripService.DeleteChecklistItem
+   */
+  deleteChecklistItem: {
+    methodKind: "unary";
+    input: typeof DeleteChecklistItemRequestSchema;
+    output: typeof DeleteChecklistItemResponseSchema;
+  },
+  /**
+   * DismissPackingSuggestion hides a suggestion from this trip's checklist.
+   *
+   * @generated from rpc loci.trip.TripService.DismissPackingSuggestion
+   */
+  dismissPackingSuggestion: {
+    methodKind: "unary";
+    input: typeof DismissPackingSuggestionRequestSchema;
+    output: typeof DismissPackingSuggestionResponseSchema;
   },
 }>;
 

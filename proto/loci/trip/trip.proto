@@ -297,6 +297,91 @@ message SuggestPackingResponse {
   bool used_forecast = 3;
 }
 
+// ---- Checklists ----
+//
+// A trip's checklist (packing items and expenses) is versioned independently of
+// TripDraft.version: ticking an item never conflicts with a stop edit, and the
+// checklist RPCs take no base_version. Item ids are minted by the client so an
+// offline edit can be replayed, and UpsertChecklistItem is idempotent on
+// (trip_id, id). The server caps a trip at 500 items.
+
+// ChecklistItemKind says which list an item belongs to.
+enum ChecklistItemKind {
+  CHECKLIST_ITEM_KIND_UNSPECIFIED = 0;
+  CHECKLIST_ITEM_KIND_PACKING = 1;
+  CHECKLIST_ITEM_KIND_EXPENSE = 2;
+}
+
+// ChecklistItem is one packing item or one expense on a trip.
+message ChecklistItem {
+  // Client-generated UUID; the upsert key together with the trip id.
+  string id = 1 [(buf.validate.field).string = {uuid: true}];
+  ChecklistItemKind kind = 2 [(buf.validate.field).enum = {
+    defined_only: true
+    not_in: [0]
+  }];
+  string text = 3 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 300
+  }];
+  bool done = 4;
+  // Expense amount in the currency's minor unit (cents). Zero for packing items.
+  int64 amount_minor = 5 [(buf.validate.field).int64 = {gte: 0}];
+  // ISO 4217 code (e.g. "EUR"). Empty is allowed, and is the norm for packing
+  // items; clients default expenses to the trip's or the user's currency.
+  string currency = 6 [(buf.validate.field).string = {pattern: "^([A-Z]{3})?$"}];
+  // Display order within its kind (0-based).
+  int32 position = 7 [(buf.validate.field).int32 = {gte: 0}];
+  // Server-set on every write; ignored on input.
+  google.protobuf.Timestamp updated_at = 8;
+}
+
+message GetTripChecklistRequest {
+  string trip_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+}
+
+message GetTripChecklistResponse {
+  repeated ChecklistItem items = 1;
+  // Packing suggestions the user dismissed, lowercased and trimmed, so a client
+  // can hide them from SuggestPacking's output.
+  repeated string dismissed_suggestions = 2;
+}
+
+message UpsertChecklistItemRequest {
+  string trip_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  ChecklistItem item = 2 [(buf.validate.field).required = true];
+}
+
+message DeleteChecklistItemRequest {
+  string trip_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string item_id = 2 [(buf.validate.field).string = {uuid: true}];
+}
+
+message DeleteChecklistItemResponse {}
+
+message DismissPackingSuggestionRequest {
+  string trip_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  // The suggestion's text as shown; stored lowercased and trimmed.
+  string text = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 300
+  }];
+}
+
+message DismissPackingSuggestionResponse {}
+
 // ---- Requests / responses ----
 
 message SaveTripRequest {
@@ -494,4 +579,14 @@ service TripService {
   // SuggestPacking derives a packing list from the trip: its length, its cities'
   // forecasts, the driving between them, and the traveller's stated interests.
   rpc SuggestPacking(SuggestPackingRequest) returns (SuggestPackingResponse);
+  // GetTripChecklist returns the trip's packing items, expenses and dismissed
+  // packing suggestions. Other users' trips are NotFound.
+  rpc GetTripChecklist(GetTripChecklistRequest) returns (GetTripChecklistResponse);
+  // UpsertChecklistItem creates or replaces an item by (trip_id, item.id).
+  // Adding a 501st item is ResourceExhausted.
+  rpc UpsertChecklistItem(UpsertChecklistItemRequest) returns (ChecklistItem);
+  // DeleteChecklistItem removes an item; deleting a missing item succeeds.
+  rpc DeleteChecklistItem(DeleteChecklistItemRequest) returns (DeleteChecklistItemResponse);
+  // DismissPackingSuggestion hides a suggestion from this trip's checklist.
+  rpc DismissPackingSuggestion(DismissPackingSuggestionRequest) returns (DismissPackingSuggestionResponse);
 }

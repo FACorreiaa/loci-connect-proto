@@ -123,6 +123,45 @@ public enum Loci_Trip_PackingCategory: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
+/// ChecklistItemKind says which list an item belongs to.
+public enum Loci_Trip_ChecklistItemKind: SwiftProtobuf.Enum, Swift.CaseIterable {
+  public typealias RawValue = Int
+  case unspecified // = 0
+  case packing // = 1
+  case expense // = 2
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .unspecified
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unspecified
+    case 1: self = .packing
+    case 2: self = .expense
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .unspecified: return 0
+    case .packing: return 1
+    case .expense: return 2
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static let allCases: [Loci_Trip_ChecklistItemKind] = [
+    .unspecified,
+    .packing,
+    .expense,
+  ]
+
+}
+
 /// ExportFormat selects the export artifact.
 public enum Loci_Trip_ExportFormat: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
@@ -649,6 +688,148 @@ public struct Loci_Trip_SuggestPackingResponse: Sendable {
   public init() {}
 }
 
+/// ChecklistItem is one packing item or one expense on a trip.
+public struct Loci_Trip_ChecklistItem: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// Client-generated UUID; the upsert key together with the trip id.
+  public var id: String = String()
+
+  public var kind: Loci_Trip_ChecklistItemKind = .unspecified
+
+  public var text: String = String()
+
+  public var done: Bool = false
+
+  /// Expense amount in the currency's minor unit (cents). Zero for packing items.
+  public var amountMinor: Int64 = 0
+
+  /// ISO 4217 code (e.g. "EUR"). Empty is allowed, and is the norm for packing
+  /// items; clients default expenses to the trip's or the user's currency.
+  public var currency: String = String()
+
+  /// Display order within its kind (0-based).
+  public var position: Int32 = 0
+
+  /// Server-set on every write; ignored on input.
+  public var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_updatedAt = newValue}
+  }
+  /// Returns true if `updatedAt` has been explicitly set.
+  public var hasUpdatedAt: Bool {return self._updatedAt != nil}
+  /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
+  public mutating func clearUpdatedAt() {self._updatedAt = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+}
+
+public struct Loci_Trip_GetTripChecklistRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var tripID: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Trip_GetTripChecklistResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var items: [Loci_Trip_ChecklistItem] = []
+
+  /// Packing suggestions the user dismissed, lowercased and trimmed, so a client
+  /// can hide them from SuggestPacking's output.
+  public var dismissedSuggestions: [String] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Trip_UpsertChecklistItemRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var tripID: String = String()
+
+  public var item: Loci_Trip_ChecklistItem {
+    get {return _item ?? Loci_Trip_ChecklistItem()}
+    set {_item = newValue}
+  }
+  /// Returns true if `item` has been explicitly set.
+  public var hasItem: Bool {return self._item != nil}
+  /// Clears the value of `item`. Subsequent reads from it will return its default value.
+  public mutating func clearItem() {self._item = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _item: Loci_Trip_ChecklistItem? = nil
+}
+
+public struct Loci_Trip_DeleteChecklistItemRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var tripID: String = String()
+
+  public var itemID: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Trip_DeleteChecklistItemResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Trip_DismissPackingSuggestionRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var tripID: String = String()
+
+  /// The suggestion's text as shown; stored lowercased and trimmed.
+  public var text: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Trip_DismissPackingSuggestionResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 public struct Loci_Trip_SaveTripRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -992,6 +1173,14 @@ extension Loci_Trip_PackingCategory: SwiftProtobuf._ProtoNameProviding {
     5: .same(proto: "PACKING_CATEGORY_HEALTH"),
     6: .same(proto: "PACKING_CATEGORY_TRAVEL"),
     7: .same(proto: "PACKING_CATEGORY_ACTIVITY"),
+  ]
+}
+
+extension Loci_Trip_ChecklistItemKind: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "CHECKLIST_ITEM_KIND_UNSPECIFIED"),
+    1: .same(proto: "CHECKLIST_ITEM_KIND_PACKING"),
+    2: .same(proto: "CHECKLIST_ITEM_KIND_EXPENSE"),
   ]
 }
 
@@ -1755,6 +1944,310 @@ extension Loci_Trip_SuggestPackingResponse: SwiftProtobuf.Message, SwiftProtobuf
     if lhs.suggestions != rhs.suggestions {return false}
     if lhs.weatherIsEstimated != rhs.weatherIsEstimated {return false}
     if lhs.usedForecast != rhs.usedForecast {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_ChecklistItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ChecklistItem"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "kind"),
+    3: .same(proto: "text"),
+    4: .same(proto: "done"),
+    5: .standard(proto: "amount_minor"),
+    6: .same(proto: "currency"),
+    7: .same(proto: "position"),
+    8: .standard(proto: "updated_at"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.id) }()
+      case 2: try { try decoder.decodeSingularEnumField(value: &self.kind) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.text) }()
+      case 4: try { try decoder.decodeSingularBoolField(value: &self.done) }()
+      case 5: try { try decoder.decodeSingularInt64Field(value: &self.amountMinor) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.currency) }()
+      case 7: try { try decoder.decodeSingularInt32Field(value: &self.position) }()
+      case 8: try { try decoder.decodeSingularMessageField(value: &self._updatedAt) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.id.isEmpty {
+      try visitor.visitSingularStringField(value: self.id, fieldNumber: 1)
+    }
+    if self.kind != .unspecified {
+      try visitor.visitSingularEnumField(value: self.kind, fieldNumber: 2)
+    }
+    if !self.text.isEmpty {
+      try visitor.visitSingularStringField(value: self.text, fieldNumber: 3)
+    }
+    if self.done != false {
+      try visitor.visitSingularBoolField(value: self.done, fieldNumber: 4)
+    }
+    if self.amountMinor != 0 {
+      try visitor.visitSingularInt64Field(value: self.amountMinor, fieldNumber: 5)
+    }
+    if !self.currency.isEmpty {
+      try visitor.visitSingularStringField(value: self.currency, fieldNumber: 6)
+    }
+    if self.position != 0 {
+      try visitor.visitSingularInt32Field(value: self.position, fieldNumber: 7)
+    }
+    try { if let v = self._updatedAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_ChecklistItem, rhs: Loci_Trip_ChecklistItem) -> Bool {
+    if lhs.id != rhs.id {return false}
+    if lhs.kind != rhs.kind {return false}
+    if lhs.text != rhs.text {return false}
+    if lhs.done != rhs.done {return false}
+    if lhs.amountMinor != rhs.amountMinor {return false}
+    if lhs.currency != rhs.currency {return false}
+    if lhs.position != rhs.position {return false}
+    if lhs._updatedAt != rhs._updatedAt {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_GetTripChecklistRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".GetTripChecklistRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.tripID) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.tripID.isEmpty {
+      try visitor.visitSingularStringField(value: self.tripID, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_GetTripChecklistRequest, rhs: Loci_Trip_GetTripChecklistRequest) -> Bool {
+    if lhs.tripID != rhs.tripID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_GetTripChecklistResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".GetTripChecklistResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "items"),
+    2: .standard(proto: "dismissed_suggestions"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.items) }()
+      case 2: try { try decoder.decodeRepeatedStringField(value: &self.dismissedSuggestions) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.items.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.items, fieldNumber: 1)
+    }
+    if !self.dismissedSuggestions.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.dismissedSuggestions, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_GetTripChecklistResponse, rhs: Loci_Trip_GetTripChecklistResponse) -> Bool {
+    if lhs.items != rhs.items {return false}
+    if lhs.dismissedSuggestions != rhs.dismissedSuggestions {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_UpsertChecklistItemRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".UpsertChecklistItemRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+    2: .same(proto: "item"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.tripID) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._item) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.tripID.isEmpty {
+      try visitor.visitSingularStringField(value: self.tripID, fieldNumber: 1)
+    }
+    try { if let v = self._item {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_UpsertChecklistItemRequest, rhs: Loci_Trip_UpsertChecklistItemRequest) -> Bool {
+    if lhs.tripID != rhs.tripID {return false}
+    if lhs._item != rhs._item {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_DeleteChecklistItemRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".DeleteChecklistItemRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+    2: .standard(proto: "item_id"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.tripID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.itemID) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.tripID.isEmpty {
+      try visitor.visitSingularStringField(value: self.tripID, fieldNumber: 1)
+    }
+    if !self.itemID.isEmpty {
+      try visitor.visitSingularStringField(value: self.itemID, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_DeleteChecklistItemRequest, rhs: Loci_Trip_DeleteChecklistItemRequest) -> Bool {
+    if lhs.tripID != rhs.tripID {return false}
+    if lhs.itemID != rhs.itemID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_DeleteChecklistItemResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".DeleteChecklistItemResponse"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    // Load everything into unknown fields
+    while try decoder.nextFieldNumber() != nil {}
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_DeleteChecklistItemResponse, rhs: Loci_Trip_DeleteChecklistItemResponse) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_DismissPackingSuggestionRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".DismissPackingSuggestionRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+    2: .same(proto: "text"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.tripID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.text) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.tripID.isEmpty {
+      try visitor.visitSingularStringField(value: self.tripID, fieldNumber: 1)
+    }
+    if !self.text.isEmpty {
+      try visitor.visitSingularStringField(value: self.text, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_DismissPackingSuggestionRequest, rhs: Loci_Trip_DismissPackingSuggestionRequest) -> Bool {
+    if lhs.tripID != rhs.tripID {return false}
+    if lhs.text != rhs.text {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_DismissPackingSuggestionResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".DismissPackingSuggestionResponse"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    // Load everything into unknown fields
+    while try decoder.nextFieldNumber() != nil {}
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_DismissPackingSuggestionResponse, rhs: Loci_Trip_DismissPackingSuggestionResponse) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

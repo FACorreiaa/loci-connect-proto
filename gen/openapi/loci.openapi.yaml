@@ -7607,6 +7607,78 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.trip.TripDraft'
+  /loci.trip.TripService/DeleteChecklistItem:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: DeleteChecklistItem
+      description: DeleteChecklistItem removes an item; deleting a missing item succeeds.
+      operationId: loci.trip.TripService.DeleteChecklistItem
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.DeleteChecklistItemRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.DeleteChecklistItemResponse'
+  /loci.trip.TripService/DismissPackingSuggestion:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: DismissPackingSuggestion
+      description: DismissPackingSuggestion hides a suggestion from this trip's checklist.
+      operationId: loci.trip.TripService.DismissPackingSuggestion
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.DismissPackingSuggestionRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.DismissPackingSuggestionResponse'
   /loci.trip.TripService/EditStopDuration:
     post:
       tags:
@@ -7712,6 +7784,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.trip.TripDraft'
+  /loci.trip.TripService/GetTripChecklist:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: GetTripChecklist
+      description: |-
+        GetTripChecklist returns the trip's packing items, expenses and dismissed
+         packing suggestions. Other users' trips are NotFound.
+      operationId: loci.trip.TripService.GetTripChecklist
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.GetTripChecklistRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.GetTripChecklistResponse'
   /loci.trip.TripService/ListTrips:
     post:
       tags:
@@ -8030,6 +8140,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.trip.SuggestPackingResponse'
+  /loci.trip.TripService/UpsertChecklistItem:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: UpsertChecklistItem
+      description: |-
+        UpsertChecklistItem creates or replaces an item by (trip_id, item.id).
+         Adding a 501st item is ResourceExhausted.
+      operationId: loci.trip.TripService.UpsertChecklistItem
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.UpsertChecklistItemRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.ChecklistItem'
   /loci.user.UserService/DeleteAccount:
     post:
       tags:
@@ -24741,6 +24889,102 @@ components:
       required:
         - stop
       additionalProperties: false
+    loci.trip.ChecklistItem:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          format: uuid
+          description: Client-generated UUID; the upsert key together with the trip id.
+        kind:
+          not:
+            enum:
+              - CHECKLIST_ITEM_KIND_UNSPECIFIED
+          title: kind
+          $ref: '#/components/schemas/loci.trip.ChecklistItemKind'
+        text:
+          type: string
+          title: text
+          maxLength: 300
+          minLength: 1
+        done:
+          type: boolean
+          title: done
+        amountMinor:
+          type:
+            - integer
+            - string
+          title: amount_minor
+          minimum: 0
+          format: int64
+          description: Expense amount in the currency's minor unit (cents). Zero for packing items.
+        currency:
+          type: string
+          title: currency
+          pattern: ^([A-Z]{3})?$
+          description: |-
+            ISO 4217 code (e.g. "EUR"). Empty is allowed, and is the norm for packing
+             items; clients default expenses to the trip's or the user's currency.
+        position:
+          type: integer
+          title: position
+          minimum: 0
+          format: int32
+          description: Display order within its kind (0-based).
+        updatedAt:
+          title: updated_at
+          description: Server-set on every write; ignored on input.
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: ChecklistItem
+      additionalProperties: false
+      description: ChecklistItem is one packing item or one expense on a trip.
+    loci.trip.ChecklistItemKind:
+      type: string
+      title: ChecklistItemKind
+      enum:
+        - CHECKLIST_ITEM_KIND_UNSPECIFIED
+        - CHECKLIST_ITEM_KIND_PACKING
+        - CHECKLIST_ITEM_KIND_EXPENSE
+      description: ChecklistItemKind says which list an item belongs to.
+    loci.trip.DeleteChecklistItemRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+        itemId:
+          type: string
+          title: item_id
+          format: uuid
+      title: DeleteChecklistItemRequest
+      additionalProperties: false
+    loci.trip.DeleteChecklistItemResponse:
+      type: object
+      title: DeleteChecklistItemResponse
+      additionalProperties: false
+    loci.trip.DismissPackingSuggestionRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+        text:
+          type: string
+          title: text
+          maxLength: 300
+          minLength: 1
+          description: The suggestion's text as shown; stored lowercased and trimmed.
+      title: DismissPackingSuggestionRequest
+      additionalProperties: false
+    loci.trip.DismissPackingSuggestionResponse:
+      type: object
+      title: DismissPackingSuggestionResponse
+      additionalProperties: false
     loci.trip.EditStopDurationRequest:
       type: object
       properties:
@@ -24820,6 +25064,34 @@ components:
           maxLength: 300
           minLength: 1
       title: ExportTripResponse
+      additionalProperties: false
+    loci.trip.GetTripChecklistRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+      title: GetTripChecklistRequest
+      additionalProperties: false
+    loci.trip.GetTripChecklistResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.trip.ChecklistItem'
+          title: items
+        dismissedSuggestions:
+          type: array
+          items:
+            type: string
+          title: dismissed_suggestions
+          description: |-
+            Packing suggestions the user dismissed, lowercased and trimmed, so a client
+             can hide them from SuggestPacking's output.
+      title: GetTripChecklistResponse
       additionalProperties: false
     loci.trip.GetTripRequest:
       type: object
@@ -25528,6 +25800,21 @@ components:
       title: TripStop
       additionalProperties: false
       description: TripStop is a single place on a day's timeline.
+    loci.trip.UpsertChecklistItemRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+        item:
+          title: item
+          $ref: '#/components/schemas/loci.trip.ChecklistItem'
+      title: UpsertChecklistItemRequest
+      required:
+        - item
+      additionalProperties: false
     loci.user.DeleteAccountRequest:
       type: object
       properties:
