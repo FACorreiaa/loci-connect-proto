@@ -263,12 +263,13 @@ public struct Loci_Review_Review: @unchecked Sendable {
     set {_uniqueStorage()._poiID = newValue}
   }
 
-  /// 1.0 - 5.0
+  /// Whole stars, 1 - 5
   public var rating: Double {
     get {return _storage._rating}
     set {_uniqueStorage()._rating = newValue}
   }
 
+  /// Empty when the author gave none (the title is optional on create).
   public var title: String {
     get {return _storage._title}
     set {_uniqueStorage()._title = newValue}
@@ -335,7 +336,7 @@ public struct Loci_Review_Review: @unchecked Sendable {
     set {_uniqueStorage()._isVerified = newValue}
   }
 
-  /// ISO 639-1 language code
+  /// Empty when unknown.
   public var language: String {
     get {return _storage._language}
     set {_uniqueStorage()._language = newValue}
@@ -438,15 +439,17 @@ public struct Loci_Review_ReviewerInfo: Sendable {
 
   public var userID: String = String()
 
+  /// Empty when the reviewer has set neither a username nor a display name.
   public var displayName: String = String()
 
+  /// Empty when the reviewer has no avatar.
   public var avatarURL: String = String()
 
   public var reviewCount: Int32 = 0
 
   public var isVerified: Bool = false
 
-  /// "Bronze", "Silver", "Gold", "Platinum"
+  /// Not computed yet; empty.
   public var level: String = String()
 
   public var memberSince: SwiftProtobuf.Google_Protobuf_Timestamp {
@@ -785,6 +788,7 @@ public struct Loci_Review_CreateReviewRequest: @unchecked Sendable {
     set {_uniqueStorage()._poiID = newValue}
   }
 
+  /// Whole stars only (1, 2, 3, 4 or 5); the server rejects fractions.
   public var rating: Double {
     get {return _storage._rating}
     set {_uniqueStorage()._rating = newValue}
@@ -1126,6 +1130,8 @@ public struct Loci_Review_UpdateReviewRequest: @unchecked Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// Ignored by the server, which acts as the authenticated caller. Kept for
+  /// wire compatibility; clients should omit it.
   public var userID: String {
     get {return _storage._userID}
     set {_uniqueStorage()._userID = newValue}
@@ -1136,11 +1142,14 @@ public struct Loci_Review_UpdateReviewRequest: @unchecked Sendable {
     set {_uniqueStorage()._reviewID = newValue}
   }
 
+  /// Whole stars only (1, 2, 3, 4 or 5); the server rejects fractions.
   public var rating: Double {
     get {return _storage._rating}
     set {_uniqueStorage()._rating = newValue}
   }
 
+  /// Optional, as on create. The update replaces every field below, so send
+  /// the full review: an empty title, photo list or visit_date clears it.
   public var title: String {
     get {return _storage._title}
     set {_uniqueStorage()._title = newValue}
@@ -1217,6 +1226,8 @@ public struct Loci_Review_DeleteReviewRequest: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// Ignored by the server, which acts as the authenticated caller. Kept for
+  /// wire compatibility; clients should omit it.
   public var userID: String = String()
 
   public var reviewID: String = String()
@@ -1252,6 +1263,7 @@ public struct Loci_Review_GetUserReviewsRequest: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// Whose reviews to list. Empty means the authenticated caller.
   public var userID: String = String()
 
   public var pagination: Loci_Common_PaginationRequest {
@@ -1338,6 +1350,8 @@ public struct Loci_Review_LikeReviewRequest: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// Ignored by the server, which acts as the authenticated caller. Kept for
+  /// wire compatibility; clients should omit it.
   public var userID: String = String()
 
   public var reviewID: String = String()

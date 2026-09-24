@@ -61,11 +61,12 @@ message Review {
   double rating = 4 [(buf.validate.field).double = {
     gte: 1
     lte: 5
-  }]; // 1.0 - 5.0
-  string title = 5 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 200
-  }];
+  }]; // Whole stars, 1 - 5
+  // Empty when the author gave none (the title is optional on create).
+  string title = 5 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 200}
+  ];
   string content = 6 [(buf.validate.field).string = {
     min_len: 1
     max_len: 4000
@@ -89,10 +90,14 @@ message Review {
   int32 helpful_count = 12 [(buf.validate.field).int32 = {gte: 0}]; // Number of helpful votes
   int32 report_count = 13 [(buf.validate.field).int32 = {gte: 0}]; // Number of reports
   bool is_verified = 14; // Verified reviewer
-  string language = 15 [(buf.validate.field).string = {
-    min_len: 2
-    max_len: 10
-    pattern: "^[a-z]{2}(-[A-Z]{2})?$" // ISO 639-1 format (e.g., en, en-US)
+  // Empty when unknown.
+  string language = 15 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE
+    string: {
+      min_len: 2
+      max_len: 10
+      pattern: "^[a-z]{2}(-[A-Z]{2})?$" // ISO 639-1 format (e.g., en, en-US)
+    }
   }]; // ISO 639-1 language code
 
   // Review aspects (detailed ratings)
@@ -194,20 +199,26 @@ message ReviewerInfo {
     min_len: 1
     max_len: 100
   }];
-  string display_name = 2 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 200
-  }];
-  string avatar_url = 3 [(buf.validate.field).string = {
-    max_len: 2048
-    uri: true
-  }];
+  // Empty when the reviewer has set neither a username nor a display name.
+  string display_name = 2 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 200}
+  ];
+  // Empty when the reviewer has no avatar.
+  string avatar_url = 3 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {
+      max_len: 2048
+      uri: true
+    }
+  ];
   int32 review_count = 4 [(buf.validate.field).int32 = {gte: 0}];
   bool is_verified = 5;
-  string level = 6 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 50
-  }]; // "Bronze", "Silver", "Gold", "Platinum"
+  // Not computed yet; empty.
+  string level = 6 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 50}
+  ]; // "Bronze", "Silver", "Gold", "Platinum"
   google.protobuf.Timestamp member_since = 7 [(buf.validate.field).required = true];
 }
 
@@ -426,6 +437,7 @@ message CreateReviewRequest {
     min_len: 1
     max_len: 100
   }]; // Deprecated: use content_id
+  // Whole stars only (1, 2, 3, 4 or 5); the server rejects fractions.
   double rating = 3 [(buf.validate.field).double = {
     gte: 1
     lte: 5
@@ -530,22 +542,24 @@ message GetReviewResponse {
 }
 
 message UpdateReviewRequest {
-  string user_id = 1 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
-  }];
+  // Ignored by the server, which acts as the authenticated caller. Kept for
+  // wire compatibility; clients should omit it.
+  string user_id = 1 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ];
   string review_id = 2 [(buf.validate.field).string = {
     min_len: 1
     max_len: 100
   }];
+  // Whole stars only (1, 2, 3, 4 or 5); the server rejects fractions.
   double rating = 3 [(buf.validate.field).double = {
     gte: 1
     lte: 5
   }];
-  string title = 4 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 200
-  }];
+  // Optional, as on create. The update replaces every field below, so send
+  // the full review: an empty title, photo list or visit_date clears it.
+  string title = 4 [(buf.validate.field).string = {max_len: 200}];
   string content = 5 [(buf.validate.field).string = {
     min_len: 1
     max_len: 4000
@@ -570,10 +584,12 @@ message UpdateReviewResponse {
 }
 
 message DeleteReviewRequest {
-  string user_id = 1 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
-  }];
+  // Ignored by the server, which acts as the authenticated caller. Kept for
+  // wire compatibility; clients should omit it.
+  string user_id = 1 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ];
   string review_id = 2 [(buf.validate.field).string = {
     min_len: 1
     max_len: 100
@@ -585,10 +601,11 @@ message DeleteReviewResponse {
 }
 
 message GetUserReviewsRequest {
-  string user_id = 1 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
-  }];
+  // Whose reviews to list. Empty means the authenticated caller.
+  string user_id = 1 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ];
   loci.common.PaginationRequest pagination = 2;
   ReviewFilter filter = 3;
 }
@@ -614,10 +631,12 @@ message UserReviewStatistics {
 }
 
 message LikeReviewRequest {
-  string user_id = 1 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
-  }];
+  // Ignored by the server, which acts as the authenticated caller. Kept for
+  // wire compatibility; clients should omit it.
+  string user_id = 1 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ];
   string review_id = 2 [(buf.validate.field).string = {
     min_len: 1
     max_len: 100

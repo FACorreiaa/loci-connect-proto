@@ -36,13 +36,15 @@ export declare type Review = Message<"loci.review.Review"> & {
   poiId: string;
 
   /**
-   * 1.0 - 5.0
+   * Whole stars, 1 - 5
    *
    * @generated from field: double rating = 4;
    */
   rating: number;
 
   /**
+   * Empty when the author gave none (the title is optional on create).
+   *
    * @generated from field: string title = 5;
    */
   title: string;
@@ -103,6 +105,8 @@ export declare type Review = Message<"loci.review.Review"> & {
   isVerified: boolean;
 
   /**
+   * Empty when unknown.
+   *
    * ISO 639-1 language code
    *
    * @generated from field: string language = 15;
@@ -241,11 +245,15 @@ export declare type ReviewerInfo = Message<"loci.review.ReviewerInfo"> & {
   userId: string;
 
   /**
+   * Empty when the reviewer has set neither a username nor a display name.
+   *
    * @generated from field: string display_name = 2;
    */
   displayName: string;
 
   /**
+   * Empty when the reviewer has no avatar.
+   *
    * @generated from field: string avatar_url = 3;
    */
   avatarUrl: string;
@@ -261,6 +269,8 @@ export declare type ReviewerInfo = Message<"loci.review.ReviewerInfo"> & {
   isVerified: boolean;
 
   /**
+   * Not computed yet; empty.
+   *
    * "Bronze", "Silver", "Gold", "Platinum"
    *
    * @generated from field: string level = 6;
@@ -720,6 +730,8 @@ export declare type CreateReviewRequest = Message<"loci.review.CreateReviewReque
   poiId: string;
 
   /**
+   * Whole stars only (1, 2, 3, 4 or 5); the server rejects fractions.
+   *
    * @generated from field: double rating = 3;
    */
   rating: number;
@@ -1017,6 +1029,9 @@ export declare const GetReviewResponseSchema: GenMessage<GetReviewResponse>;
  */
 export declare type UpdateReviewRequest = Message<"loci.review.UpdateReviewRequest"> & {
   /**
+   * Ignored by the server, which acts as the authenticated caller. Kept for
+   * wire compatibility; clients should omit it.
+   *
    * @generated from field: string user_id = 1;
    */
   userId: string;
@@ -1027,11 +1042,16 @@ export declare type UpdateReviewRequest = Message<"loci.review.UpdateReviewReque
   reviewId: string;
 
   /**
+   * Whole stars only (1, 2, 3, 4 or 5); the server rejects fractions.
+   *
    * @generated from field: double rating = 3;
    */
   rating: number;
 
   /**
+   * Optional, as on create. The update replaces every field below, so send
+   * the full review: an empty title, photo list or visit_date clears it.
+   *
    * @generated from field: string title = 4;
    */
   title: string;
@@ -1089,6 +1109,9 @@ export declare const UpdateReviewResponseSchema: GenMessage<UpdateReviewResponse
  */
 export declare type DeleteReviewRequest = Message<"loci.review.DeleteReviewRequest"> & {
   /**
+   * Ignored by the server, which acts as the authenticated caller. Kept for
+   * wire compatibility; clients should omit it.
+   *
    * @generated from field: string user_id = 1;
    */
   userId: string;
@@ -1126,6 +1149,8 @@ export declare const DeleteReviewResponseSchema: GenMessage<DeleteReviewResponse
  */
 export declare type GetUserReviewsRequest = Message<"loci.review.GetUserReviewsRequest"> & {
   /**
+   * Whose reviews to list. Empty means the authenticated caller.
+   *
    * @generated from field: string user_id = 1;
    */
   userId: string;
@@ -1214,6 +1239,9 @@ export declare const UserReviewStatisticsSchema: GenMessage<UserReviewStatistics
  */
 export declare type LikeReviewRequest = Message<"loci.review.LikeReviewRequest"> & {
   /**
+   * Ignored by the server, which acts as the authenticated caller. Kept for
+   * wire compatibility; clients should omit it.
+   *
    * @generated from field: string user_id = 1;
    */
   userId: string;
