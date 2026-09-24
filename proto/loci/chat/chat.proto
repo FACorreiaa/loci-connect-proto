@@ -165,6 +165,20 @@ message ConversationMessage {
   MessageType message_type = 4 [(buf.validate.field).enum = {defined_only: true}];
   google.protobuf.Timestamp timestamp = 5 [(buf.validate.field).required = true];
   optional MessageMetadata metadata = 6;
+  // Why the message is in the thread. UNSPECIFIED (every message stored
+  // before this field existed) reads as REPLY.
+  MessageOrigin origin = 7;
+  // Caption shown above a proactive bubble, e.g. "Standing task" or
+  // "Briefing · 07:00". Empty for replies.
+  string source_label = 8 [(buf.validate.field).string = {max_len: 64}];
+}
+
+// MessageOrigin separates an answer to something the user just said from a
+// message the agent posted on its own (a standing task, a briefing).
+enum MessageOrigin {
+  MESSAGE_ORIGIN_UNSPECIFIED = 0;
+  MESSAGE_ORIGIN_REPLY = 1;
+  MESSAGE_ORIGIN_PROACTIVE = 2;
 }
 
 // MessageMetadata contains additional metadata for messages
@@ -958,4 +972,112 @@ service ChatService {
   // Where the caller's runs are: running, done or failed. Used after a
   // reload or on returning to the app to settle runs nobody was listening to.
   rpc GetRunStatus(GetRunStatusRequest) returns (GetRunStatusResponse);
+}
+
+// ---------------------------------------------------------------------------
+// Standing tasks ("watches")
+//
+// A watch is something the user asked Loci to keep an eye on. The flow is
+// propose → confirm: ProposeWatch turns free text into a WatchProposal the
+// client renders as a card (title, human schedule, spec line, Confirm /
+// Not now); CreateWatch stores the confirmed proposal against a chat thread.
+// When a watch is due the server runs it and appends an assistant message
+// with origin PROACTIVE and source_label "Standing task" to that thread.
+// ---------------------------------------------------------------------------
+
+// WatchProposal is what the server understood. The client echoes it back
+// unchanged in CreateWatch.
+message WatchProposal {
+  // Short name for the card, e.g. "Rain in Lisbon tomorrow".
+  string title = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 120
+  }];
+  // Schedule in words for the card, e.g. "Every day at 08:00".
+  string schedule_human = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 80
+  }];
+  // How often the watch runs. At least hourly, at most every 30 days.
+  int32 interval_minutes = 3 [(buf.validate.field).int32 = {
+    gte: 60
+    lte: 43200
+  }];
+  // The instruction the agent runs each time; shown as the card's spec line.
+  string spec = 4 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 2000
+  }];
+  // First run. Unset means one interval from creation.
+  google.protobuf.Timestamp first_run_at = 5;
+}
+
+message Watch {
+  string id = 1;
+  string session_id = 2;
+  string title = 3;
+  string schedule_human = 4;
+  int32 interval_minutes = 5;
+  string spec = 6;
+  bool enabled = 7;
+  google.protobuf.Timestamp next_run_at = 8;
+  // Unset until the watch has run once.
+  google.protobuf.Timestamp last_run_at = 9;
+  google.protobuf.Timestamp created_at = 10;
+}
+
+message ProposeWatchRequest {
+  // What the user typed, e.g. "every morning at 8 tell me if it will rain in Lisbon".
+  string text = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 2000
+  }];
+  // IANA zone the user's times are in, e.g. "Europe/Lisbon". Empty means UTC.
+  string timezone = 2 [(buf.validate.field).string = {max_len: 64}];
+}
+
+message ProposeWatchResponse {
+  WatchProposal proposal = 1;
+}
+
+message CreateWatchRequest {
+  // The chat thread the watch posts into. Must belong to the caller.
+  string session_id = 1 [(buf.validate.field).string.uuid = true];
+  WatchProposal proposal = 2 [(buf.validate.field).required = true];
+}
+
+message CreateWatchResponse {
+  Watch watch = 1;
+  // "Got it — I'll …", already appended to the thread with origin PROACTIVE
+  // and source_label "Standing task". Clients can append it without refetching.
+  ConversationMessage confirmation = 2;
+}
+
+message ListWatchesRequest {
+  // Only this thread's watches. Empty lists all of the caller's watches.
+  string session_id = 1 [(buf.validate.field) = {
+    string: {uuid: true}
+    ignore: IGNORE_IF_ZERO_VALUE
+  }];
+}
+
+message ListWatchesResponse {
+  repeated Watch watches = 1;
+}
+
+message DeleteWatchRequest {
+  string id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+message DeleteWatchResponse {}
+
+service WatchService {
+  // Turns free text into a proposal. Stores nothing.
+  rpc ProposeWatch(ProposeWatchRequest) returns (ProposeWatchResponse);
+  // Stores a confirmed proposal and posts the confirmation into the thread.
+  rpc CreateWatch(CreateWatchRequest) returns (CreateWatchResponse);
+  // The caller's watches, soonest next run first.
+  rpc ListWatches(ListWatchesRequest) returns (ListWatchesResponse);
+  // Stops and removes one of the caller's watches.
+  rpc DeleteWatch(DeleteWatchRequest) returns (DeleteWatchResponse);
 }

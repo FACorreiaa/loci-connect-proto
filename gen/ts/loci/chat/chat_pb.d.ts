@@ -153,6 +153,22 @@ export declare type ConversationMessage = Message<"loci.chat.ConversationMessage
    * @generated from field: optional loci.chat.MessageMetadata metadata = 6;
    */
   metadata?: MessageMetadata;
+
+  /**
+   * Why the message is in the thread. UNSPECIFIED (every message stored
+   * before this field existed) reads as REPLY.
+   *
+   * @generated from field: loci.chat.MessageOrigin origin = 7;
+   */
+  origin: MessageOrigin;
+
+  /**
+   * Caption shown above a proactive bubble, e.g. "Standing task" or
+   * "Briefing · 07:00". Empty for replies.
+   *
+   * @generated from field: string source_label = 8;
+   */
+  sourceLabel: string;
 };
 
 /**
@@ -1761,6 +1777,268 @@ export declare type GetRunStatusResponse = Message<"loci.chat.GetRunStatusRespon
 export declare const GetRunStatusResponseSchema: GenMessage<GetRunStatusResponse>;
 
 /**
+ * WatchProposal is what the server understood. The client echoes it back
+ * unchanged in CreateWatch.
+ *
+ * @generated from message loci.chat.WatchProposal
+ */
+export declare type WatchProposal = Message<"loci.chat.WatchProposal"> & {
+  /**
+   * Short name for the card, e.g. "Rain in Lisbon tomorrow".
+   *
+   * @generated from field: string title = 1;
+   */
+  title: string;
+
+  /**
+   * Schedule in words for the card, e.g. "Every day at 08:00".
+   *
+   * @generated from field: string schedule_human = 2;
+   */
+  scheduleHuman: string;
+
+  /**
+   * How often the watch runs. At least hourly, at most every 30 days.
+   *
+   * @generated from field: int32 interval_minutes = 3;
+   */
+  intervalMinutes: number;
+
+  /**
+   * The instruction the agent runs each time; shown as the card's spec line.
+   *
+   * @generated from field: string spec = 4;
+   */
+  spec: string;
+
+  /**
+   * First run. Unset means one interval from creation.
+   *
+   * @generated from field: google.protobuf.Timestamp first_run_at = 5;
+   */
+  firstRunAt?: Timestamp;
+};
+
+/**
+ * Describes the message loci.chat.WatchProposal.
+ * Use `create(WatchProposalSchema)` to create a new message.
+ */
+export declare const WatchProposalSchema: GenMessage<WatchProposal>;
+
+/**
+ * @generated from message loci.chat.Watch
+ */
+export declare type Watch = Message<"loci.chat.Watch"> & {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * @generated from field: string session_id = 2;
+   */
+  sessionId: string;
+
+  /**
+   * @generated from field: string title = 3;
+   */
+  title: string;
+
+  /**
+   * @generated from field: string schedule_human = 4;
+   */
+  scheduleHuman: string;
+
+  /**
+   * @generated from field: int32 interval_minutes = 5;
+   */
+  intervalMinutes: number;
+
+  /**
+   * @generated from field: string spec = 6;
+   */
+  spec: string;
+
+  /**
+   * @generated from field: bool enabled = 7;
+   */
+  enabled: boolean;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp next_run_at = 8;
+   */
+  nextRunAt?: Timestamp;
+
+  /**
+   * Unset until the watch has run once.
+   *
+   * @generated from field: google.protobuf.Timestamp last_run_at = 9;
+   */
+  lastRunAt?: Timestamp;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp created_at = 10;
+   */
+  createdAt?: Timestamp;
+};
+
+/**
+ * Describes the message loci.chat.Watch.
+ * Use `create(WatchSchema)` to create a new message.
+ */
+export declare const WatchSchema: GenMessage<Watch>;
+
+/**
+ * @generated from message loci.chat.ProposeWatchRequest
+ */
+export declare type ProposeWatchRequest = Message<"loci.chat.ProposeWatchRequest"> & {
+  /**
+   * What the user typed, e.g. "every morning at 8 tell me if it will rain in Lisbon".
+   *
+   * @generated from field: string text = 1;
+   */
+  text: string;
+
+  /**
+   * IANA zone the user's times are in, e.g. "Europe/Lisbon". Empty means UTC.
+   *
+   * @generated from field: string timezone = 2;
+   */
+  timezone: string;
+};
+
+/**
+ * Describes the message loci.chat.ProposeWatchRequest.
+ * Use `create(ProposeWatchRequestSchema)` to create a new message.
+ */
+export declare const ProposeWatchRequestSchema: GenMessage<ProposeWatchRequest>;
+
+/**
+ * @generated from message loci.chat.ProposeWatchResponse
+ */
+export declare type ProposeWatchResponse = Message<"loci.chat.ProposeWatchResponse"> & {
+  /**
+   * @generated from field: loci.chat.WatchProposal proposal = 1;
+   */
+  proposal?: WatchProposal;
+};
+
+/**
+ * Describes the message loci.chat.ProposeWatchResponse.
+ * Use `create(ProposeWatchResponseSchema)` to create a new message.
+ */
+export declare const ProposeWatchResponseSchema: GenMessage<ProposeWatchResponse>;
+
+/**
+ * @generated from message loci.chat.CreateWatchRequest
+ */
+export declare type CreateWatchRequest = Message<"loci.chat.CreateWatchRequest"> & {
+  /**
+   * The chat thread the watch posts into. Must belong to the caller.
+   *
+   * @generated from field: string session_id = 1;
+   */
+  sessionId: string;
+
+  /**
+   * @generated from field: loci.chat.WatchProposal proposal = 2;
+   */
+  proposal?: WatchProposal;
+};
+
+/**
+ * Describes the message loci.chat.CreateWatchRequest.
+ * Use `create(CreateWatchRequestSchema)` to create a new message.
+ */
+export declare const CreateWatchRequestSchema: GenMessage<CreateWatchRequest>;
+
+/**
+ * @generated from message loci.chat.CreateWatchResponse
+ */
+export declare type CreateWatchResponse = Message<"loci.chat.CreateWatchResponse"> & {
+  /**
+   * @generated from field: loci.chat.Watch watch = 1;
+   */
+  watch?: Watch;
+
+  /**
+   * "Got it — I'll …", already appended to the thread with origin PROACTIVE
+   * and source_label "Standing task". Clients can append it without refetching.
+   *
+   * @generated from field: loci.chat.ConversationMessage confirmation = 2;
+   */
+  confirmation?: ConversationMessage;
+};
+
+/**
+ * Describes the message loci.chat.CreateWatchResponse.
+ * Use `create(CreateWatchResponseSchema)` to create a new message.
+ */
+export declare const CreateWatchResponseSchema: GenMessage<CreateWatchResponse>;
+
+/**
+ * @generated from message loci.chat.ListWatchesRequest
+ */
+export declare type ListWatchesRequest = Message<"loci.chat.ListWatchesRequest"> & {
+  /**
+   * Only this thread's watches. Empty lists all of the caller's watches.
+   *
+   * @generated from field: string session_id = 1;
+   */
+  sessionId: string;
+};
+
+/**
+ * Describes the message loci.chat.ListWatchesRequest.
+ * Use `create(ListWatchesRequestSchema)` to create a new message.
+ */
+export declare const ListWatchesRequestSchema: GenMessage<ListWatchesRequest>;
+
+/**
+ * @generated from message loci.chat.ListWatchesResponse
+ */
+export declare type ListWatchesResponse = Message<"loci.chat.ListWatchesResponse"> & {
+  /**
+   * @generated from field: repeated loci.chat.Watch watches = 1;
+   */
+  watches: Watch[];
+};
+
+/**
+ * Describes the message loci.chat.ListWatchesResponse.
+ * Use `create(ListWatchesResponseSchema)` to create a new message.
+ */
+export declare const ListWatchesResponseSchema: GenMessage<ListWatchesResponse>;
+
+/**
+ * @generated from message loci.chat.DeleteWatchRequest
+ */
+export declare type DeleteWatchRequest = Message<"loci.chat.DeleteWatchRequest"> & {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
+};
+
+/**
+ * Describes the message loci.chat.DeleteWatchRequest.
+ * Use `create(DeleteWatchRequestSchema)` to create a new message.
+ */
+export declare const DeleteWatchRequestSchema: GenMessage<DeleteWatchRequest>;
+
+/**
+ * @generated from message loci.chat.DeleteWatchResponse
+ */
+export declare type DeleteWatchResponse = Message<"loci.chat.DeleteWatchResponse"> & {
+};
+
+/**
+ * Describes the message loci.chat.DeleteWatchResponse.
+ * Use `create(DeleteWatchResponseSchema)` to create a new message.
+ */
+export declare const DeleteWatchResponseSchema: GenMessage<DeleteWatchResponse>;
+
+/**
  * Enums for chat types
  *
  * @generated from enum loci.chat.MessageRole
@@ -2091,6 +2369,34 @@ export enum StreamEventType {
 export declare const StreamEventTypeSchema: GenEnum<StreamEventType>;
 
 /**
+ * MessageOrigin separates an answer to something the user just said from a
+ * message the agent posted on its own (a standing task, a briefing).
+ *
+ * @generated from enum loci.chat.MessageOrigin
+ */
+export enum MessageOrigin {
+  /**
+   * @generated from enum value: MESSAGE_ORIGIN_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: MESSAGE_ORIGIN_REPLY = 1;
+   */
+  REPLY = 1,
+
+  /**
+   * @generated from enum value: MESSAGE_ORIGIN_PROACTIVE = 2;
+   */
+  PROACTIVE = 2,
+}
+
+/**
+ * Describes the enum loci.chat.MessageOrigin.
+ */
+export declare const MessageOriginSchema: GenEnum<MessageOrigin>;
+
+/**
  * Which list of a session's stored answer a page is read from.
  *
  * Hotels and restaurants are returned as POIs like everything else, because
@@ -2281,6 +2587,52 @@ export declare const ChatService: GenService<{
     methodKind: "unary";
     input: typeof GetRunStatusRequestSchema;
     output: typeof GetRunStatusResponseSchema;
+  },
+}>;
+
+/**
+ * @generated from service loci.chat.WatchService
+ */
+export declare const WatchService: GenService<{
+  /**
+   * Turns free text into a proposal. Stores nothing.
+   *
+   * @generated from rpc loci.chat.WatchService.ProposeWatch
+   */
+  proposeWatch: {
+    methodKind: "unary";
+    input: typeof ProposeWatchRequestSchema;
+    output: typeof ProposeWatchResponseSchema;
+  },
+  /**
+   * Stores a confirmed proposal and posts the confirmation into the thread.
+   *
+   * @generated from rpc loci.chat.WatchService.CreateWatch
+   */
+  createWatch: {
+    methodKind: "unary";
+    input: typeof CreateWatchRequestSchema;
+    output: typeof CreateWatchResponseSchema;
+  },
+  /**
+   * The caller's watches, soonest next run first.
+   *
+   * @generated from rpc loci.chat.WatchService.ListWatches
+   */
+  listWatches: {
+    methodKind: "unary";
+    input: typeof ListWatchesRequestSchema;
+    output: typeof ListWatchesResponseSchema;
+  },
+  /**
+   * Stops and removes one of the caller's watches.
+   *
+   * @generated from rpc loci.chat.WatchService.DeleteWatch
+   */
+  deleteWatch: {
+    methodKind: "unary";
+    input: typeof DeleteWatchRequestSchema;
+    output: typeof DeleteWatchResponseSchema;
   },
 }>;
 

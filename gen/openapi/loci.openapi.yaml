@@ -1940,6 +1940,150 @@ paths:
               schema:
                 $ref: '#/components/schemas/loci.chat.ChatResponse'
   /loci.chat.ChatService/StreamChat: {}
+  /loci.chat.WatchService/CreateWatch:
+    post:
+      tags:
+        - loci.chat.WatchService
+      summary: CreateWatch
+      description: Stores a confirmed proposal and posts the confirmation into the thread.
+      operationId: loci.chat.WatchService.CreateWatch
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.chat.CreateWatchRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.chat.CreateWatchResponse'
+  /loci.chat.WatchService/DeleteWatch:
+    post:
+      tags:
+        - loci.chat.WatchService
+      summary: DeleteWatch
+      description: Stops and removes one of the caller's watches.
+      operationId: loci.chat.WatchService.DeleteWatch
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.chat.DeleteWatchRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.chat.DeleteWatchResponse'
+  /loci.chat.WatchService/ListWatches:
+    post:
+      tags:
+        - loci.chat.WatchService
+      summary: ListWatches
+      description: The caller's watches, soonest next run first.
+      operationId: loci.chat.WatchService.ListWatches
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.chat.ListWatchesRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.chat.ListWatchesResponse'
+  /loci.chat.WatchService/ProposeWatch:
+    post:
+      tags:
+        - loci.chat.WatchService
+      summary: ProposeWatch
+      description: Turns free text into a proposal. Stores nothing.
+      operationId: loci.chat.WatchService.ProposeWatch
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.chat.ProposeWatchRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.chat.ProposeWatchResponse'
   /loci.city.CityService/GetCity:
     post:
       tags:
@@ -10834,11 +10978,66 @@ components:
             - $ref: '#/components/schemas/loci.chat.MessageMetadata'
             - type: "null"
           title: metadata
+        origin:
+          title: origin
+          description: |-
+            Why the message is in the thread. UNSPECIFIED (every message stored
+             before this field existed) reads as REPLY.
+          $ref: '#/components/schemas/loci.chat.MessageOrigin'
+        sourceLabel:
+          type: string
+          title: source_label
+          maxLength: 64
+          description: |-
+            Caption shown above a proactive bubble, e.g. "Standing task" or
+             "Briefing · 07:00". Empty for replies.
       title: ConversationMessage
       required:
         - timestamp
       additionalProperties: false
       description: ConversationMessage represents a single message in a conversation
+    loci.chat.CreateWatchRequest:
+      type: object
+      properties:
+        sessionId:
+          type: string
+          title: session_id
+          format: uuid
+          description: The chat thread the watch posts into. Must belong to the caller.
+        proposal:
+          title: proposal
+          $ref: '#/components/schemas/loci.chat.WatchProposal'
+      title: CreateWatchRequest
+      required:
+        - proposal
+      additionalProperties: false
+    loci.chat.CreateWatchResponse:
+      type: object
+      properties:
+        watch:
+          title: watch
+          $ref: '#/components/schemas/loci.chat.Watch'
+        confirmation:
+          title: confirmation
+          description: |-
+            "Got it — I'll …", already appended to the thread with origin PROACTIVE
+             and source_label "Standing task". Clients can append it without refetching.
+          $ref: '#/components/schemas/loci.chat.ConversationMessage'
+      title: CreateWatchResponse
+      additionalProperties: false
+    loci.chat.DeleteWatchRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          format: uuid
+      title: DeleteWatchRequest
+      additionalProperties: false
+    loci.chat.DeleteWatchResponse:
+      type: object
+      title: DeleteWatchResponse
+      additionalProperties: false
     loci.chat.DomainType:
       type: string
       title: DomainType
@@ -11097,6 +11296,26 @@ components:
       description: |-
         ItineraryPayload carries the full aggregate city response the itinerary view
          consumes (general_city_data + points_of_interest + itinerary_response).
+    loci.chat.ListWatchesRequest:
+      type: object
+      properties:
+        sessionId:
+          type: string
+          title: session_id
+          format: uuid
+          description: Only this thread's watches. Empty lists all of the caller's watches.
+      title: ListWatchesRequest
+      additionalProperties: false
+    loci.chat.ListWatchesResponse:
+      type: object
+      properties:
+        watches:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.chat.Watch'
+          title: watches
+      title: ListWatchesResponse
+      additionalProperties: false
     loci.chat.LlmInteraction:
       type: object
       properties:
@@ -11234,6 +11453,16 @@ components:
       title: MessageMetadata
       additionalProperties: false
       description: MessageMetadata contains additional metadata for messages
+    loci.chat.MessageOrigin:
+      type: string
+      title: MessageOrigin
+      enum:
+        - MESSAGE_ORIGIN_UNSPECIFIED
+        - MESSAGE_ORIGIN_REPLY
+        - MESSAGE_ORIGIN_PROACTIVE
+      description: |-
+        MessageOrigin separates an answer to something the user just said from a
+         message the agent posted on its own (a standing task, a briefing).
     loci.chat.MessageRole:
       type: string
       title: MessageRole
@@ -11332,6 +11561,30 @@ components:
       title: ProgressPayload
       additionalProperties: false
       description: ProgressPayload reports pipeline progress for STREAM_EVENT_TYPE_PROGRESS.
+    loci.chat.ProposeWatchRequest:
+      type: object
+      properties:
+        text:
+          type: string
+          title: text
+          maxLength: 2000
+          minLength: 1
+          description: What the user typed, e.g. "every morning at 8 tell me if it will rain in Lisbon".
+        timezone:
+          type: string
+          title: timezone
+          maxLength: 64
+          description: IANA zone the user's times are in, e.g. "Europe/Lisbon". Empty means UTC.
+      title: ProposeWatchRequest
+      additionalProperties: false
+    loci.chat.ProposeWatchResponse:
+      type: object
+      properties:
+        proposal:
+          title: proposal
+          $ref: '#/components/schemas/loci.chat.WatchProposal'
+      title: ProposeWatchResponse
+      additionalProperties: false
     loci.chat.RecentInteraction:
       type: object
       properties:
@@ -11932,6 +12185,80 @@ components:
           format: double
       title: UserLocation
       additionalProperties: false
+    loci.chat.Watch:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+        sessionId:
+          type: string
+          title: session_id
+        title:
+          type: string
+          title: title
+        scheduleHuman:
+          type: string
+          title: schedule_human
+        intervalMinutes:
+          type: integer
+          title: interval_minutes
+          format: int32
+        spec:
+          type: string
+          title: spec
+        enabled:
+          type: boolean
+          title: enabled
+        nextRunAt:
+          title: next_run_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        lastRunAt:
+          title: last_run_at
+          description: Unset until the watch has run once.
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: Watch
+      additionalProperties: false
+    loci.chat.WatchProposal:
+      type: object
+      properties:
+        title:
+          type: string
+          title: title
+          maxLength: 120
+          minLength: 1
+          description: Short name for the card, e.g. "Rain in Lisbon tomorrow".
+        scheduleHuman:
+          type: string
+          title: schedule_human
+          maxLength: 80
+          minLength: 1
+          description: Schedule in words for the card, e.g. "Every day at 08:00".
+        intervalMinutes:
+          type: integer
+          title: interval_minutes
+          maximum: 43200
+          minimum: 60
+          format: int32
+          description: How often the watch runs. At least hourly, at most every 30 days.
+        spec:
+          type: string
+          title: spec
+          maxLength: 2000
+          minLength: 1
+          description: The instruction the agent runs each time; shown as the card's spec line.
+        firstRunAt:
+          title: first_run_at
+          description: First run. Unset means one interval from creation.
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: WatchProposal
+      additionalProperties: false
+      description: |-
+        WatchProposal is what the server understood. The client echoes it back
+         unchanged in CreateWatch.
     loci.city.CityDetail:
       type: object
       properties:
@@ -25640,6 +25967,7 @@ tags:
   - name: loci.profile.ProfileService
     description: ProfileService defines profile-related RPCs
   - name: loci.chat.ChatService
+  - name: loci.chat.WatchService
   - name: loci.localcontext.LocalContextService
   - name: loci.compare.v1.CompareService
     description: CompareService compares weekend destinations side-by-side.
