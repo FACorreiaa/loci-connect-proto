@@ -863,6 +863,10 @@
                 </li>
               
                 <li>
+                  <a href="#loci.trip.TripCity"><span class="badge">M</span>TripCity</a>
+                </li>
+              
+                <li>
                   <a href="#loci.trip.TripConstraint"><span class="badge">M</span>TripConstraint</a>
                 </li>
               
@@ -1341,6 +1345,10 @@
                 </li>
               
                 <li>
+                  <a href="#loci.chat.DroppedStop"><span class="badge">M</span>DroppedStop</a>
+                </li>
+              
+                <li>
                   <a href="#loci.chat.GeneralPoisPayload"><span class="badge">M</span>GeneralPoisPayload</a>
                 </li>
               
@@ -1445,6 +1453,10 @@
                 </li>
               
                 <li>
+                  <a href="#loci.chat.RoutePayload"><span class="badge">M</span>RoutePayload</a>
+                </li>
+              
+                <li>
                   <a href="#loci.chat.RunInfo"><span class="badge">M</span>RunInfo</a>
                 </li>
               
@@ -1473,6 +1485,10 @@
                 </li>
               
                 <li>
+                  <a href="#loci.chat.StopRef"><span class="badge">M</span>StopRef</a>
+                </li>
+              
+                <li>
                   <a href="#loci.chat.StreamError"><span class="badge">M</span>StreamError</a>
                 </li>
               
@@ -1482,6 +1498,10 @@
               
                 <li>
                   <a href="#loci.chat.TokenPayload"><span class="badge">M</span>TokenPayload</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.TripStopInput"><span class="badge">M</span>TripStopInput</a>
                 </li>
               
                 <li>
@@ -9727,6 +9747,59 @@ then absent rather than guessed. </p></td>
 
         
       
+        <h3 id="loci.trip.TripCity">TripCity</h3>
+        <p>TripCity is one city of a multi-city trip, in visiting order, with the chat</p><p>session its places were generated in. Empty for a single-city trip.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>session_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The child chat session this city was generated in; reopening the city&#39;s
+hotels, restaurants and activities goes through it. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>nights</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>order_index</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.trip.TripConstraint">TripConstraint</h3>
         <p>TripConstraint holds the planning constraints for a trip. These override the</p><p>user's search profile for this specific trip.</p>
 
@@ -9945,6 +10018,14 @@ the primary city (titles, exports) even when the trip spans several. </p></td>
                 </tr>
               
                 <tr>
+                  <td>cities</td>
+                  <td><a href="#loci.trip.TripCity">TripCity</a></td>
+                  <td>repeated</td>
+                  <td><p>The cities of a multi-city trip, in visiting order. Empty for a
+single-city trip, whose city is city_name above. </p></td>
+                </tr>
+              
+                <tr>
                   <td>source_session_id</td>
                   <td><a href="#string">string</a></td>
                   <td>optional</td>
@@ -10056,7 +10137,7 @@ the primary city (titles, exports) even when the trip spans several. </p></td>
                   <td>mode</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>&#34;drive&#34; today; rail/air slot in without changing the shape. </p></td>
+                  <td><p>&#34;drive&#34;, &#34;train&#34;, &#34;bus&#34; or &#34;flight&#34;. An estimate from distance, not a schedule. </p></td>
                 </tr>
               
                 <tr>
@@ -14312,7 +14393,7 @@ reopening such a session got an empty page. </p></td>
         
       
         <h3 id="loci.chat.ChatRequest">ChatRequest</h3>
-        <p>ChatRequest for sending a message</p>
+        <p></p>
 
         
           <table class="field-table">
@@ -14377,6 +14458,21 @@ starting a new turn; consumers dedup by StreamEvent.event_id. </p></td>
                   <td><a href="#string">string</a></td>
                   <td>optional</td>
                   <td><p>request_id is a client-generated idempotency/tracing id echoed on events. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>stops</td>
+                  <td><a href="#loci.chat.TripStopInput">TripStopInput</a></td>
+                  <td>repeated</td>
+                  <td><p>A multi-city trip, from the stop builder. Two or more stops skip city
+extraction; one stop is treated as city_name. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>suggest_order</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Let the server reorder the stops into a sensible route. </p></td>
                 </tr>
               
             </tbody>
@@ -14922,6 +15018,37 @@ and source_label &#34;Standing task&#34;. Clients can append it without refetchi
         <p></p>
 
         
+
+        
+      
+        <h3 id="loci.chat.DroppedStop">DroppedStop</h3>
+        <p>DroppedStop is a requested city the route left out, and why.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>reason</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
 
         
       
@@ -15927,6 +16054,72 @@ and source_label &#34;Standing task&#34;. Clients can append it without refetchi
 
         
       
+        <h3 id="loci.chat.RoutePayload">RoutePayload</h3>
+        <p>RoutePayload opens a multi-city stream, before any per-city event, and is</p><p>sent again once the parent trip is saved, with trip_id set.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>stops</td>
+                  <td><a href="#loci.chat.StopRef">StopRef</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>legs</td>
+                  <td><a href="#loci.trip.TripLeg">loci.trip.TripLeg</a></td>
+                  <td>repeated</td>
+                  <td><p>Travel between consecutive cities, in trip order. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>outline</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>warnings</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>dropped</td>
+                  <td><a href="#loci.chat.DroppedStop">DroppedStop</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>total_travel_mins</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.chat.RunInfo">RunInfo</h3>
         <p></p>
 
@@ -16341,6 +16534,58 @@ and source_label &#34;Standing task&#34;. Clients can append it without refetchi
 
         
       
+        <h3 id="loci.chat.StopRef">StopRef</h3>
+        <p>StopRef names one city of a multi-city stream: every event about that city</p><p>carries its index in StreamEvent.stop_index.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>index</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>session_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The child chat session this city is generated in. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>day_numbers</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td>repeated</td>
+                  <td><p>Trip-wide day numbers spent in this city. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.chat.StreamError">StreamError</h3>
         <p>StreamError is the typed error payload for STREAM_EVENT_TYPE_ERROR events.</p><p>user_message is safe to render; internal_code is for logs/telemetry.</p>
 
@@ -16446,6 +16691,14 @@ and source_label &#34;Standing task&#34;. Clients can append it without refetchi
                 </tr>
               
                 <tr>
+                  <td>stop_index</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td>optional</td>
+                  <td><p>Set on every per-city event of a multi-city stream: the StopRef.index it
+belongs to. An ERROR carrying it failed that city only, not the stream. </p></td>
+                </tr>
+              
+                <tr>
                   <td>start</td>
                   <td><a href="#loci.chat.StartPayload">StartPayload</a></td>
                   <td></td>
@@ -16529,6 +16782,13 @@ and source_label &#34;Standing task&#34;. Clients can append it without refetchi
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>route</td>
+                  <td><a href="#loci.chat.RoutePayload">RoutePayload</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -16556,6 +16816,44 @@ and source_label &#34;Standing task&#34;. Clients can append it without refetchi
                 <tr>
                   <td>part</td>
                   <td><a href="#int32">int32</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.TripStopInput">TripStopInput</h3>
+        <p>ChatRequest for sending a message</p><p>TripStopInput is one city the traveller asked for, in the order given.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>nights</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td>optional</td>
+                  <td><p>Nights in this city. Absent: the planner decides. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_id</td>
+                  <td><a href="#string">string</a></td>
                   <td>optional</td>
                   <td><p> </p></td>
                 </tr>
@@ -17223,6 +17521,12 @@ itinerary — the same rule the trip builder applies.</p></td>
               <tr>
                 <td>STREAM_EVENT_TYPE_COMPLETE</td>
                 <td>12</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>STREAM_EVENT_TYPE_ROUTE</td>
+                <td>13</td>
                 <td><p></p></td>
               </tr>
             

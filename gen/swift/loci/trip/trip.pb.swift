@@ -401,7 +401,7 @@ public struct Loci_Trip_TripLeg: Sendable {
   /// The day at whose end this leg happens. 0 is the outbound leg from home.
   public var afterDay: Int32 = 0
 
-  /// "drive" today; rail/air slot in without changing the shape.
+  /// "drive", "train", "bus" or "flight". An estimate from distance, not a schedule.
   public var mode: String = String()
 
   public var bookingURL: String {
@@ -418,6 +418,30 @@ public struct Loci_Trip_TripLeg: Sendable {
   public init() {}
 
   fileprivate var _bookingURL: String? = nil
+}
+
+/// TripCity is one city of a multi-city trip, in visiting order, with the chat
+/// session its places were generated in. Empty for a single-city trip.
+public struct Loci_Trip_TripCity: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var cityName: String = String()
+
+  public var cityID: String = String()
+
+  /// The child chat session this city was generated in; reopening the city's
+  /// hotels, restaurants and activities goes through it.
+  public var sessionID: String = String()
+
+  public var nights: Int32 = 0
+
+  public var orderIndex: Int32 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
 }
 
 /// TripDraft is the full editable trip. `version` powers optimistic concurrency /
@@ -485,6 +509,13 @@ public struct Loci_Trip_TripDraft: @unchecked Sendable {
   public var legs: [Loci_Trip_TripLeg] {
     get {return _storage._legs}
     set {_uniqueStorage()._legs = newValue}
+  }
+
+  /// The cities of a multi-city trip, in visiting order. Empty for a
+  /// single-city trip, whose city is city_name above.
+  public var cities: [Loci_Trip_TripCity] {
+    get {return _storage._cities}
+    set {_uniqueStorage()._cities = newValue}
   }
 
   /// Session that generated the initial draft, if any.
@@ -1315,6 +1346,62 @@ extension Loci_Trip_TripLeg: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
   }
 }
 
+extension Loci_Trip_TripCity: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".TripCity"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "city_name"),
+    2: .standard(proto: "city_id"),
+    3: .standard(proto: "session_id"),
+    4: .same(proto: "nights"),
+    5: .standard(proto: "order_index"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.cityName) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.cityID) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.sessionID) }()
+      case 4: try { try decoder.decodeSingularInt32Field(value: &self.nights) }()
+      case 5: try { try decoder.decodeSingularInt32Field(value: &self.orderIndex) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.cityName.isEmpty {
+      try visitor.visitSingularStringField(value: self.cityName, fieldNumber: 1)
+    }
+    if !self.cityID.isEmpty {
+      try visitor.visitSingularStringField(value: self.cityID, fieldNumber: 2)
+    }
+    if !self.sessionID.isEmpty {
+      try visitor.visitSingularStringField(value: self.sessionID, fieldNumber: 3)
+    }
+    if self.nights != 0 {
+      try visitor.visitSingularInt32Field(value: self.nights, fieldNumber: 4)
+    }
+    if self.orderIndex != 0 {
+      try visitor.visitSingularInt32Field(value: self.orderIndex, fieldNumber: 5)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_TripCity, rhs: Loci_Trip_TripCity) -> Bool {
+    if lhs.cityName != rhs.cityName {return false}
+    if lhs.cityID != rhs.cityID {return false}
+    if lhs.sessionID != rhs.sessionID {return false}
+    if lhs.nights != rhs.nights {return false}
+    if lhs.orderIndex != rhs.orderIndex {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".TripDraft"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -1327,6 +1414,7 @@ extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     7: .same(proto: "days"),
     8: .same(proto: "version"),
     12: .same(proto: "legs"),
+    13: .same(proto: "cities"),
     9: .standard(proto: "source_session_id"),
     10: .standard(proto: "created_at"),
     11: .standard(proto: "updated_at"),
@@ -1342,6 +1430,7 @@ extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     var _days: [Loci_Trip_TripDay] = []
     var _version: Int64 = 0
     var _legs: [Loci_Trip_TripLeg] = []
+    var _cities: [Loci_Trip_TripCity] = []
     var _sourceSessionID: String? = nil
     var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
@@ -1368,6 +1457,7 @@ extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       _days = source._days
       _version = source._version
       _legs = source._legs
+      _cities = source._cities
       _sourceSessionID = source._sourceSessionID
       _createdAt = source._createdAt
       _updatedAt = source._updatedAt
@@ -1401,6 +1491,7 @@ extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
         case 10: try { try decoder.decodeSingularMessageField(value: &_storage._createdAt) }()
         case 11: try { try decoder.decodeSingularMessageField(value: &_storage._updatedAt) }()
         case 12: try { try decoder.decodeRepeatedMessageField(value: &_storage._legs) }()
+        case 13: try { try decoder.decodeRepeatedMessageField(value: &_storage._cities) }()
         default: break
         }
       }
@@ -1449,6 +1540,9 @@ extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       if !_storage._legs.isEmpty {
         try visitor.visitRepeatedMessageField(value: _storage._legs, fieldNumber: 12)
       }
+      if !_storage._cities.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._cities, fieldNumber: 13)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1467,6 +1561,7 @@ extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
         if _storage._days != rhs_storage._days {return false}
         if _storage._version != rhs_storage._version {return false}
         if _storage._legs != rhs_storage._legs {return false}
+        if _storage._cities != rhs_storage._cities {return false}
         if _storage._sourceSessionID != rhs_storage._sourceSessionID {return false}
         if _storage._createdAt != rhs_storage._createdAt {return false}
         if _storage._updatedAt != rhs_storage._updatedAt {return false}
