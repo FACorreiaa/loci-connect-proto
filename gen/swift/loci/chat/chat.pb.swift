@@ -330,6 +330,7 @@ public enum Loci_Chat_StreamEventType: SwiftProtobuf.Enum, Swift.CaseIterable {
   case progress // = 10
   case error // = 11
   case complete // = 12
+  case route // = 13
   case UNRECOGNIZED(Int)
 
   public init() {
@@ -351,6 +352,7 @@ public enum Loci_Chat_StreamEventType: SwiftProtobuf.Enum, Swift.CaseIterable {
     case 10: self = .progress
     case 11: self = .error
     case 12: self = .complete
+    case 13: self = .route
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -370,6 +372,7 @@ public enum Loci_Chat_StreamEventType: SwiftProtobuf.Enum, Swift.CaseIterable {
     case .progress: return 10
     case .error: return 11
     case .complete: return 12
+    case .route: return 13
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -389,6 +392,7 @@ public enum Loci_Chat_StreamEventType: SwiftProtobuf.Enum, Swift.CaseIterable {
     .progress,
     .error,
     .complete,
+    .route,
   ]
 
 }
@@ -1090,6 +1094,41 @@ public struct Loci_Chat_ChatSession: @unchecked Sendable {
 }
 
 /// ChatRequest for sending a message
+/// TripStopInput is one city the traveller asked for, in the order given.
+public struct Loci_Chat_TripStopInput: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var cityName: String = String()
+
+  /// Nights in this city. Absent: the planner decides.
+  public var nights: Int32 {
+    get {return _nights ?? 0}
+    set {_nights = newValue}
+  }
+  /// Returns true if `nights` has been explicitly set.
+  public var hasNights: Bool {return self._nights != nil}
+  /// Clears the value of `nights`. Subsequent reads from it will return its default value.
+  public mutating func clearNights() {self._nights = nil}
+
+  public var cityID: String {
+    get {return _cityID ?? String()}
+    set {_cityID = newValue}
+  }
+  /// Returns true if `cityID` has been explicitly set.
+  public var hasCityID: Bool {return self._cityID != nil}
+  /// Clears the value of `cityID`. Subsequent reads from it will return its default value.
+  public mutating func clearCityID() {self._cityID = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _nights: Int32? = nil
+  fileprivate var _cityID: String? = nil
+}
+
 public struct Loci_Chat_ChatRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1164,6 +1203,13 @@ public struct Loci_Chat_ChatRequest: Sendable {
   public var hasRequestID: Bool {return self._requestID != nil}
   /// Clears the value of `requestID`. Subsequent reads from it will return its default value.
   public mutating func clearRequestID() {self._requestID = nil}
+
+  /// A multi-city trip, from the stop builder. Two or more stops skip city
+  /// extraction; one stop is treated as city_name.
+  public var stops: [Loci_Chat_TripStopInput] = []
+
+  /// Let the server reorder the stops into a sensible route.
+  public var suggestOrder: Bool = false
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1494,6 +1540,81 @@ public struct Loci_Chat_CompletePayload: Sendable {
   fileprivate var _result: Loci_Chat_AiCityResponse? = nil
 }
 
+/// StopRef names one city of a multi-city stream: every event about that city
+/// carries its index in StreamEvent.stop_index.
+public struct Loci_Chat_StopRef: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var index: Int32 = 0
+
+  public var cityName: String = String()
+
+  public var cityID: String = String()
+
+  /// The child chat session this city is generated in.
+  public var sessionID: String = String()
+
+  /// Trip-wide day numbers spent in this city.
+  public var dayNumbers: [Int32] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// DroppedStop is a requested city the route left out, and why.
+public struct Loci_Chat_DroppedStop: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var cityName: String = String()
+
+  public var reason: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// RoutePayload opens a multi-city stream, before any per-city event, and is
+/// sent again once the parent trip is saved, with trip_id set.
+public struct Loci_Chat_RoutePayload: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var stops: [Loci_Chat_StopRef] = []
+
+  /// Travel between consecutive cities, in trip order.
+  public var legs: [Loci_Trip_TripLeg] = []
+
+  public var outline: String = String()
+
+  public var warnings: [String] = []
+
+  public var dropped: [Loci_Chat_DroppedStop] = []
+
+  public var totalTravelMins: Int32 = 0
+
+  public var tripID: String {
+    get {return _tripID ?? String()}
+    set {_tripID = newValue}
+  }
+  /// Returns true if `tripID` has been explicitly set.
+  public var hasTripID: Bool {return self._tripID != nil}
+  /// Clears the value of `tripID`. Subsequent reads from it will return its default value.
+  public mutating func clearTripID() {self._tripID = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _tripID: String? = nil
+}
+
 /// StreamEvent represents a streaming event. The old free-form `type` string
 /// (field 1), opaque `data` bytes (field 3), and `error` string (field 4) were
 /// replaced by the typed `event_type` enum + `payload` oneof below.
@@ -1549,6 +1670,17 @@ public struct Loci_Chat_StreamEvent: @unchecked Sendable {
   public var hasRequestID: Bool {return _storage._requestID != nil}
   /// Clears the value of `requestID`. Subsequent reads from it will return its default value.
   public mutating func clearRequestID() {_uniqueStorage()._requestID = nil}
+
+  /// Set on every per-city event of a multi-city stream: the StopRef.index it
+  /// belongs to. An ERROR carrying it failed that city only, not the stream.
+  public var stopIndex: Int32 {
+    get {return _storage._stopIndex ?? 0}
+    set {_uniqueStorage()._stopIndex = newValue}
+  }
+  /// Returns true if `stopIndex` has been explicitly set.
+  public var hasStopIndex: Bool {return _storage._stopIndex != nil}
+  /// Clears the value of `stopIndex`. Subsequent reads from it will return its default value.
+  public mutating func clearStopIndex() {_uniqueStorage()._stopIndex = nil}
 
   /// payload is the typed body; its oneof case matches event_type. Absent for
   /// events that carry no structured body (some progress/keepalive frames).
@@ -1653,6 +1785,14 @@ public struct Loci_Chat_StreamEvent: @unchecked Sendable {
     set {_uniqueStorage()._payload = .complete(newValue)}
   }
 
+  public var route: Loci_Chat_RoutePayload {
+    get {
+      if case .route(let v)? = _storage._payload {return v}
+      return Loci_Chat_RoutePayload()
+    }
+    set {_uniqueStorage()._payload = .route(newValue)}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   /// payload is the typed body; its oneof case matches event_type. Absent for
@@ -1670,6 +1810,7 @@ public struct Loci_Chat_StreamEvent: @unchecked Sendable {
     case progress(Loci_Chat_ProgressPayload)
     case error(Loci_Chat_StreamError)
     case complete(Loci_Chat_CompletePayload)
+    case route(Loci_Chat_RoutePayload)
 
   }
 
@@ -2627,6 +2768,7 @@ extension Loci_Chat_StreamEventType: SwiftProtobuf._ProtoNameProviding {
     10: .same(proto: "STREAM_EVENT_TYPE_PROGRESS"),
     11: .same(proto: "STREAM_EVENT_TYPE_ERROR"),
     12: .same(proto: "STREAM_EVENT_TYPE_COMPLETE"),
+    13: .same(proto: "STREAM_EVENT_TYPE_ROUTE"),
   ]
 }
 
@@ -3690,6 +3832,54 @@ extension Loci_Chat_ChatSession: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
   }
 }
 
+extension Loci_Chat_TripStopInput: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".TripStopInput"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "city_name"),
+    2: .same(proto: "nights"),
+    3: .standard(proto: "city_id"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.cityName) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self._nights) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self._cityID) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.cityName.isEmpty {
+      try visitor.visitSingularStringField(value: self.cityName, fieldNumber: 1)
+    }
+    try { if let v = self._nights {
+      try visitor.visitSingularInt32Field(value: v, fieldNumber: 2)
+    } }()
+    try { if let v = self._cityID {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 3)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_TripStopInput, rhs: Loci_Chat_TripStopInput) -> Bool {
+    if lhs.cityName != rhs.cityName {return false}
+    if lhs._nights != rhs._nights {return false}
+    if lhs._cityID != rhs._cityID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension Loci_Chat_ChatRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ChatRequest"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -3701,6 +3891,8 @@ extension Loci_Chat_ChatRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     6: .standard(proto: "trip_id"),
     7: .standard(proto: "resume_token"),
     8: .standard(proto: "request_id"),
+    9: .same(proto: "stops"),
+    10: .standard(proto: "suggest_order"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3717,6 +3909,8 @@ extension Loci_Chat_ChatRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       case 6: try { try decoder.decodeSingularStringField(value: &self._tripID) }()
       case 7: try { try decoder.decodeSingularStringField(value: &self._resumeToken) }()
       case 8: try { try decoder.decodeSingularStringField(value: &self._requestID) }()
+      case 9: try { try decoder.decodeRepeatedMessageField(value: &self.stops) }()
+      case 10: try { try decoder.decodeSingularBoolField(value: &self.suggestOrder) }()
       default: break
       }
     }
@@ -3751,6 +3945,12 @@ extension Loci_Chat_ChatRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     try { if let v = self._requestID {
       try visitor.visitSingularStringField(value: v, fieldNumber: 8)
     } }()
+    if !self.stops.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.stops, fieldNumber: 9)
+    }
+    if self.suggestOrder != false {
+      try visitor.visitSingularBoolField(value: self.suggestOrder, fieldNumber: 10)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3763,6 +3963,8 @@ extension Loci_Chat_ChatRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if lhs._tripID != rhs._tripID {return false}
     if lhs._resumeToken != rhs._resumeToken {return false}
     if lhs._requestID != rhs._requestID {return false}
+    if lhs.stops != rhs.stops {return false}
+    if lhs.suggestOrder != rhs.suggestOrder {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -4338,6 +4540,172 @@ extension Loci_Chat_CompletePayload: SwiftProtobuf.Message, SwiftProtobuf._Messa
   }
 }
 
+extension Loci_Chat_StopRef: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".StopRef"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "index"),
+    2: .standard(proto: "city_name"),
+    3: .standard(proto: "city_id"),
+    4: .standard(proto: "session_id"),
+    5: .standard(proto: "day_numbers"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularInt32Field(value: &self.index) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.cityName) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.cityID) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.sessionID) }()
+      case 5: try { try decoder.decodeRepeatedInt32Field(value: &self.dayNumbers) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.index != 0 {
+      try visitor.visitSingularInt32Field(value: self.index, fieldNumber: 1)
+    }
+    if !self.cityName.isEmpty {
+      try visitor.visitSingularStringField(value: self.cityName, fieldNumber: 2)
+    }
+    if !self.cityID.isEmpty {
+      try visitor.visitSingularStringField(value: self.cityID, fieldNumber: 3)
+    }
+    if !self.sessionID.isEmpty {
+      try visitor.visitSingularStringField(value: self.sessionID, fieldNumber: 4)
+    }
+    if !self.dayNumbers.isEmpty {
+      try visitor.visitPackedInt32Field(value: self.dayNumbers, fieldNumber: 5)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_StopRef, rhs: Loci_Chat_StopRef) -> Bool {
+    if lhs.index != rhs.index {return false}
+    if lhs.cityName != rhs.cityName {return false}
+    if lhs.cityID != rhs.cityID {return false}
+    if lhs.sessionID != rhs.sessionID {return false}
+    if lhs.dayNumbers != rhs.dayNumbers {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Chat_DroppedStop: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".DroppedStop"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "city_name"),
+    2: .same(proto: "reason"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.cityName) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.reason) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.cityName.isEmpty {
+      try visitor.visitSingularStringField(value: self.cityName, fieldNumber: 1)
+    }
+    if !self.reason.isEmpty {
+      try visitor.visitSingularStringField(value: self.reason, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_DroppedStop, rhs: Loci_Chat_DroppedStop) -> Bool {
+    if lhs.cityName != rhs.cityName {return false}
+    if lhs.reason != rhs.reason {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Chat_RoutePayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".RoutePayload"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "stops"),
+    2: .same(proto: "legs"),
+    3: .same(proto: "outline"),
+    4: .same(proto: "warnings"),
+    5: .same(proto: "dropped"),
+    6: .standard(proto: "total_travel_mins"),
+    7: .standard(proto: "trip_id"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.stops) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.legs) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.outline) }()
+      case 4: try { try decoder.decodeRepeatedStringField(value: &self.warnings) }()
+      case 5: try { try decoder.decodeRepeatedMessageField(value: &self.dropped) }()
+      case 6: try { try decoder.decodeSingularInt32Field(value: &self.totalTravelMins) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self._tripID) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.stops.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.stops, fieldNumber: 1)
+    }
+    if !self.legs.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.legs, fieldNumber: 2)
+    }
+    if !self.outline.isEmpty {
+      try visitor.visitSingularStringField(value: self.outline, fieldNumber: 3)
+    }
+    if !self.warnings.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.warnings, fieldNumber: 4)
+    }
+    if !self.dropped.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.dropped, fieldNumber: 5)
+    }
+    if self.totalTravelMins != 0 {
+      try visitor.visitSingularInt32Field(value: self.totalTravelMins, fieldNumber: 6)
+    }
+    try { if let v = self._tripID {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 7)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_RoutePayload, rhs: Loci_Chat_RoutePayload) -> Bool {
+    if lhs.stops != rhs.stops {return false}
+    if lhs.legs != rhs.legs {return false}
+    if lhs.outline != rhs.outline {return false}
+    if lhs.warnings != rhs.warnings {return false}
+    if lhs.dropped != rhs.dropped {return false}
+    if lhs.totalTravelMins != rhs.totalTravelMins {return false}
+    if lhs._tripID != rhs._tripID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension Loci_Chat_StreamEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".StreamEvent"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -4348,6 +4716,7 @@ extension Loci_Chat_StreamEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     8: .same(proto: "navigation"),
     9: .standard(proto: "event_type"),
     10: .standard(proto: "request_id"),
+    11: .standard(proto: "stop_index"),
     20: .same(proto: "start"),
     21: .same(proto: "token"),
     22: .same(proto: "partial"),
@@ -4360,6 +4729,7 @@ extension Loci_Chat_StreamEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     29: .same(proto: "progress"),
     30: .same(proto: "error"),
     31: .same(proto: "complete"),
+    32: .same(proto: "route"),
   ]
 
   fileprivate class _StorageClass {
@@ -4370,6 +4740,7 @@ extension Loci_Chat_StreamEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     var _navigation: Loci_Chat_NavigationData? = nil
     var _eventType: Loci_Chat_StreamEventType = .unspecified
     var _requestID: String? = nil
+    var _stopIndex: Int32? = nil
     var _payload: Loci_Chat_StreamEvent.OneOf_Payload?
 
     #if swift(>=5.10)
@@ -4392,6 +4763,7 @@ extension Loci_Chat_StreamEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       _navigation = source._navigation
       _eventType = source._eventType
       _requestID = source._requestID
+      _stopIndex = source._stopIndex
       _payload = source._payload
     }
   }
@@ -4418,6 +4790,7 @@ extension Loci_Chat_StreamEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
         case 8: try { try decoder.decodeSingularMessageField(value: &_storage._navigation) }()
         case 9: try { try decoder.decodeSingularEnumField(value: &_storage._eventType) }()
         case 10: try { try decoder.decodeSingularStringField(value: &_storage._requestID) }()
+        case 11: try { try decoder.decodeSingularInt32Field(value: &_storage._stopIndex) }()
         case 20: try {
           var v: Loci_Chat_StartPayload?
           var hadOneofValue = false
@@ -4574,6 +4947,19 @@ extension Loci_Chat_StreamEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
             _storage._payload = .complete(v)
           }
         }()
+        case 32: try {
+          var v: Loci_Chat_RoutePayload?
+          var hadOneofValue = false
+          if let current = _storage._payload {
+            hadOneofValue = true
+            if case .route(let m) = current {v = m}
+          }
+          try decoder.decodeSingularMessageField(value: &v)
+          if let v = v {
+            if hadOneofValue {try decoder.handleConflictingOneOf()}
+            _storage._payload = .route(v)
+          }
+        }()
         default: break
         }
       }
@@ -4606,6 +4992,9 @@ extension Loci_Chat_StreamEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       }
       try { if let v = _storage._requestID {
         try visitor.visitSingularStringField(value: v, fieldNumber: 10)
+      } }()
+      try { if let v = _storage._stopIndex {
+        try visitor.visitSingularInt32Field(value: v, fieldNumber: 11)
       } }()
       switch _storage._payload {
       case .start?: try {
@@ -4656,6 +5045,10 @@ extension Loci_Chat_StreamEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
         guard case .complete(let v)? = _storage._payload else { preconditionFailure() }
         try visitor.visitSingularMessageField(value: v, fieldNumber: 31)
       }()
+      case .route?: try {
+        guard case .route(let v)? = _storage._payload else { preconditionFailure() }
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 32)
+      }()
       case nil: break
       }
     }
@@ -4674,6 +5067,7 @@ extension Loci_Chat_StreamEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
         if _storage._navigation != rhs_storage._navigation {return false}
         if _storage._eventType != rhs_storage._eventType {return false}
         if _storage._requestID != rhs_storage._requestID {return false}
+        if _storage._stopIndex != rhs_storage._stopIndex {return false}
         if _storage._payload != rhs_storage._payload {return false}
         return true
       }

@@ -265,7 +265,7 @@ export declare type TripLeg = Message<"loci.trip.TripLeg"> & {
   afterDay: number;
 
   /**
-   * "drive" today; rail/air slot in without changing the shape.
+   * "drive", "train", "bus" or "flight". An estimate from distance, not a schedule.
    *
    * @generated from field: string mode = 11;
    */
@@ -282,6 +282,48 @@ export declare type TripLeg = Message<"loci.trip.TripLeg"> & {
  * Use `create(TripLegSchema)` to create a new message.
  */
 export declare const TripLegSchema: GenMessage<TripLeg>;
+
+/**
+ * TripCity is one city of a multi-city trip, in visiting order, with the chat
+ * session its places were generated in. Empty for a single-city trip.
+ *
+ * @generated from message loci.trip.TripCity
+ */
+export declare type TripCity = Message<"loci.trip.TripCity"> & {
+  /**
+   * @generated from field: string city_name = 1;
+   */
+  cityName: string;
+
+  /**
+   * @generated from field: string city_id = 2;
+   */
+  cityId: string;
+
+  /**
+   * The child chat session this city was generated in; reopening the city's
+   * hotels, restaurants and activities goes through it.
+   *
+   * @generated from field: string session_id = 3;
+   */
+  sessionId: string;
+
+  /**
+   * @generated from field: int32 nights = 4;
+   */
+  nights: number;
+
+  /**
+   * @generated from field: int32 order_index = 5;
+   */
+  orderIndex: number;
+};
+
+/**
+ * Describes the message loci.trip.TripCity.
+ * Use `create(TripCitySchema)` to create a new message.
+ */
+export declare const TripCitySchema: GenMessage<TripCity>;
 
 /**
  * TripDraft is the full editable trip. `version` powers optimistic concurrency /
@@ -344,6 +386,14 @@ export declare type TripDraft = Message<"loci.trip.TripDraft"> & {
    * @generated from field: repeated loci.trip.TripLeg legs = 12;
    */
   legs: TripLeg[];
+
+  /**
+   * The cities of a multi-city trip, in visiting order. Empty for a
+   * single-city trip, whose city is city_name above.
+   *
+   * @generated from field: repeated loci.trip.TripCity cities = 13;
+   */
+  cities: TripCity[];
 
   /**
    * Session that generated the initial draft, if any.
