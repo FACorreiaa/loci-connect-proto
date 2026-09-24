@@ -10727,9 +10727,21 @@ components:
           maxLength: 100
           minLength: 1
           description: request_id is a client-generated idempotency/tracing id echoed on events.
+        stops:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.chat.TripStopInput'
+          title: stops
+          maxItems: 5
+          description: |-
+            A multi-city trip, from the stop builder. Two or more stops skip city
+             extraction; one stop is treated as city_name.
+        suggestOrder:
+          type: boolean
+          title: suggest_order
+          description: Let the server reorder the stops into a sensible route.
       title: ChatRequest
       additionalProperties: false
-      description: ChatRequest for sending a message
     loci.chat.ChatResponse:
       type: object
       properties:
@@ -11049,6 +11061,20 @@ components:
         - DOMAIN_TYPE_ACTIVITIES
         - DOMAIN_TYPE_ITINERARY
         - DOMAIN_TYPE_TRANSPORT
+    loci.chat.DroppedStop:
+      type: object
+      properties:
+        cityName:
+          type: string
+          title: city_name
+          maxLength: 200
+        reason:
+          type: string
+          title: reason
+          maxLength: 500
+      title: DroppedStop
+      additionalProperties: false
+      description: DroppedStop is a requested city the route left out, and why.
     loci.chat.GeneralPoisPayload:
       type: object
       properties:
@@ -11675,6 +11701,50 @@ components:
           minLength: 1
       title: RestaurantsPayload
       additionalProperties: false
+    loci.chat.RoutePayload:
+      type: object
+      properties:
+        stops:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.chat.StopRef'
+          title: stops
+        legs:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.trip.TripLeg'
+          title: legs
+          description: Travel between consecutive cities, in trip order.
+        outline:
+          type: string
+          title: outline
+          maxLength: 2000
+        warnings:
+          type: array
+          items:
+            type: string
+          title: warnings
+        dropped:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.chat.DroppedStop'
+          title: dropped
+        totalTravelMins:
+          type: integer
+          title: total_travel_mins
+          minimum: 0
+          format: int32
+        tripId:
+          type:
+            - string
+            - "null"
+          title: trip_id
+          maxLength: 100
+      title: RoutePayload
+      additionalProperties: false
+      description: |-
+        RoutePayload opens a multi-city stream, before any per-city event, and is
+         sent again once the parent trip is saved, with trip_id set.
     loci.chat.RunInfo:
       type: object
       properties:
@@ -11966,6 +12036,39 @@ components:
       title: StartPayload
       additionalProperties: false
       description: 'StartPayload opens a stream: the session it is bound to and the resolved domain.'
+    loci.chat.StopRef:
+      type: object
+      properties:
+        index:
+          type: integer
+          title: index
+          minimum: 0
+          format: int32
+        cityName:
+          type: string
+          title: city_name
+          maxLength: 200
+        cityId:
+          type: string
+          title: city_id
+          maxLength: 100
+        sessionId:
+          type: string
+          title: session_id
+          maxLength: 100
+          description: The child chat session this city is generated in.
+        dayNumbers:
+          type: array
+          items:
+            type: integer
+            format: int32
+          title: day_numbers
+          description: Trip-wide day numbers spent in this city.
+      title: StopRef
+      additionalProperties: false
+      description: |-
+        StopRef names one city of a multi-city stream: every event about that city
+         carries its index in StreamEvent.stop_index.
     loci.chat.StreamError:
       type: object
       properties:
@@ -12030,6 +12133,15 @@ components:
               maxLength: 100
               minLength: 1
               description: request_id echoes ChatRequest.request_id for client-side correlation.
+            stopIndex:
+              type:
+                - integer
+                - "null"
+              title: stop_index
+              format: int32
+              description: |-
+                Set on every per-city event of a multi-city stream: the StopRef.index it
+                 belongs to. An ERROR carrying it failed that city only, not the stream.
         - oneOf:
             - properties:
                 activities:
@@ -12102,6 +12214,13 @@ components:
               required:
                 - restaurants
             - properties:
+                route:
+                  title: route
+                  $ref: '#/components/schemas/loci.chat.RoutePayload'
+              title: route
+              required:
+                - route
+            - properties:
                 start:
                   title: start
                   $ref: '#/components/schemas/loci.chat.StartPayload'
@@ -12140,6 +12259,7 @@ components:
         - STREAM_EVENT_TYPE_PROGRESS
         - STREAM_EVENT_TYPE_ERROR
         - STREAM_EVENT_TYPE_COMPLETE
+        - STREAM_EVENT_TYPE_ROUTE
       description: |-
         StreamEventType is the typed discriminator for a StreamEvent. It replaces the
          old free-form string `type` field. The concrete payload (when present) is
@@ -12164,6 +12284,35 @@ components:
         TokenPayload carries an incremental text token (STREAM_EVENT_TYPE_TOKEN) or an
          accumulated partial snapshot (STREAM_EVENT_TYPE_PARTIAL). `part` indexes the
          producing worker so consumers can accumulate per-part.
+    loci.chat.TripStopInput:
+      type: object
+      properties:
+        cityName:
+          type: string
+          title: city_name
+          maxLength: 200
+          minLength: 1
+        nights:
+          type:
+            - integer
+            - "null"
+          title: nights
+          maximum: 14
+          minimum: 1
+          format: int32
+          description: 'Nights in this city. Absent: the planner decides.'
+        cityId:
+          type:
+            - string
+            - "null"
+          title: city_id
+          maxLength: 100
+          minLength: 1
+      title: TripStopInput
+      additionalProperties: false
+      description: |-
+        ChatRequest for sending a message
+         TripStopInput is one city the traveller asked for, in the order given.
     loci.chat.UserLocation:
       type: object
       properties:
@@ -24957,6 +25106,41 @@ components:
       title: SuggestPackingResponse
       additionalProperties: false
       description: SuggestPackingResponse carries the suggestions and how they were derived.
+    loci.trip.TripCity:
+      type: object
+      properties:
+        cityName:
+          type: string
+          title: city_name
+          maxLength: 200
+          minLength: 1
+        cityId:
+          type: string
+          title: city_id
+          maxLength: 100
+        sessionId:
+          type: string
+          title: session_id
+          maxLength: 100
+          description: |-
+            The child chat session this city was generated in; reopening the city's
+             hotels, restaurants and activities goes through it.
+        nights:
+          type: integer
+          title: nights
+          maximum: 30
+          minimum: 0
+          format: int32
+        orderIndex:
+          type: integer
+          title: order_index
+          minimum: 0
+          format: int32
+      title: TripCity
+      additionalProperties: false
+      description: |-
+        TripCity is one city of a multi-city trip, in visiting order, with the chat
+         session its places were generated in. Empty for a single-city trip.
     loci.trip.TripConstraint:
       type: object
       properties:
@@ -25128,6 +25312,14 @@ components:
           description: |-
             Travel between cities. Empty for a single-city trip. `city_name` above stays
              the primary city (titles, exports) even when the trip spans several.
+        cities:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.trip.TripCity'
+          title: cities
+          description: |-
+            The cities of a multi-city trip, in visiting order. Empty for a
+             single-city trip, whose city is city_name above.
         sourceSessionId:
           type:
             - string
@@ -25212,7 +25404,7 @@ components:
           type: string
           title: mode
           maxLength: 40
-          description: '"drive" today; rail/air slot in without changing the shape.'
+          description: '"drive", "train", "bus" or "flight". An estimate from distance, not a schedule.'
         bookingUrl:
           type:
             - string

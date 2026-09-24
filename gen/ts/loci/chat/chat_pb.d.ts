@@ -8,6 +8,7 @@ import type { Timestamp } from "@bufbuild/protobuf/wkt";
 import type { UserPreferenceProfile } from "../profile/profile_pb";
 import type { HotelDetailedInfo, POIDetailedInfo, RestaurantDetailedInfo } from "../poi/poi_pb";
 import type { GeneralCityData } from "../city/city_pb";
+import type { TripLeg } from "../trip/trip_pb";
 import type { PaginationMetadata, PaginationRequest, ResponseSchema } from "../common/common_pb";
 
 /**
@@ -614,7 +615,36 @@ export declare const ChatSessionSchema: GenMessage<ChatSession>;
 
 /**
  * ChatRequest for sending a message
+ * TripStopInput is one city the traveller asked for, in the order given.
  *
+ * @generated from message loci.chat.TripStopInput
+ */
+export declare type TripStopInput = Message<"loci.chat.TripStopInput"> & {
+  /**
+   * @generated from field: string city_name = 1;
+   */
+  cityName: string;
+
+  /**
+   * Nights in this city. Absent: the planner decides.
+   *
+   * @generated from field: optional int32 nights = 2;
+   */
+  nights?: number;
+
+  /**
+   * @generated from field: optional string city_id = 3;
+   */
+  cityId?: string;
+};
+
+/**
+ * Describes the message loci.chat.TripStopInput.
+ * Use `create(TripStopInputSchema)` to create a new message.
+ */
+export declare const TripStopInputSchema: GenMessage<TripStopInput>;
+
+/**
  * @generated from message loci.chat.ChatRequest
  */
 export declare type ChatRequest = Message<"loci.chat.ChatRequest"> & {
@@ -665,6 +695,21 @@ export declare type ChatRequest = Message<"loci.chat.ChatRequest"> & {
    * @generated from field: optional string request_id = 8;
    */
   requestId?: string;
+
+  /**
+   * A multi-city trip, from the stop builder. Two or more stops skip city
+   * extraction; one stop is treated as city_name.
+   *
+   * @generated from field: repeated loci.chat.TripStopInput stops = 9;
+   */
+  stops: TripStopInput[];
+
+  /**
+   * Let the server reorder the stops into a sensible route.
+   *
+   * @generated from field: bool suggest_order = 10;
+   */
+  suggestOrder: boolean;
 };
 
 /**
@@ -1009,6 +1054,123 @@ export declare type CompletePayload = Message<"loci.chat.CompletePayload"> & {
 export declare const CompletePayloadSchema: GenMessage<CompletePayload>;
 
 /**
+ * StopRef names one city of a multi-city stream: every event about that city
+ * carries its index in StreamEvent.stop_index.
+ *
+ * @generated from message loci.chat.StopRef
+ */
+export declare type StopRef = Message<"loci.chat.StopRef"> & {
+  /**
+   * @generated from field: int32 index = 1;
+   */
+  index: number;
+
+  /**
+   * @generated from field: string city_name = 2;
+   */
+  cityName: string;
+
+  /**
+   * @generated from field: string city_id = 3;
+   */
+  cityId: string;
+
+  /**
+   * The child chat session this city is generated in.
+   *
+   * @generated from field: string session_id = 4;
+   */
+  sessionId: string;
+
+  /**
+   * Trip-wide day numbers spent in this city.
+   *
+   * @generated from field: repeated int32 day_numbers = 5;
+   */
+  dayNumbers: number[];
+};
+
+/**
+ * Describes the message loci.chat.StopRef.
+ * Use `create(StopRefSchema)` to create a new message.
+ */
+export declare const StopRefSchema: GenMessage<StopRef>;
+
+/**
+ * DroppedStop is a requested city the route left out, and why.
+ *
+ * @generated from message loci.chat.DroppedStop
+ */
+export declare type DroppedStop = Message<"loci.chat.DroppedStop"> & {
+  /**
+   * @generated from field: string city_name = 1;
+   */
+  cityName: string;
+
+  /**
+   * @generated from field: string reason = 2;
+   */
+  reason: string;
+};
+
+/**
+ * Describes the message loci.chat.DroppedStop.
+ * Use `create(DroppedStopSchema)` to create a new message.
+ */
+export declare const DroppedStopSchema: GenMessage<DroppedStop>;
+
+/**
+ * RoutePayload opens a multi-city stream, before any per-city event, and is
+ * sent again once the parent trip is saved, with trip_id set.
+ *
+ * @generated from message loci.chat.RoutePayload
+ */
+export declare type RoutePayload = Message<"loci.chat.RoutePayload"> & {
+  /**
+   * @generated from field: repeated loci.chat.StopRef stops = 1;
+   */
+  stops: StopRef[];
+
+  /**
+   * Travel between consecutive cities, in trip order.
+   *
+   * @generated from field: repeated loci.trip.TripLeg legs = 2;
+   */
+  legs: TripLeg[];
+
+  /**
+   * @generated from field: string outline = 3;
+   */
+  outline: string;
+
+  /**
+   * @generated from field: repeated string warnings = 4;
+   */
+  warnings: string[];
+
+  /**
+   * @generated from field: repeated loci.chat.DroppedStop dropped = 5;
+   */
+  dropped: DroppedStop[];
+
+  /**
+   * @generated from field: int32 total_travel_mins = 6;
+   */
+  totalTravelMins: number;
+
+  /**
+   * @generated from field: optional string trip_id = 7;
+   */
+  tripId?: string;
+};
+
+/**
+ * Describes the message loci.chat.RoutePayload.
+ * Use `create(RoutePayloadSchema)` to create a new message.
+ */
+export declare const RoutePayloadSchema: GenMessage<RoutePayload>;
+
+/**
  * StreamEvent represents a streaming event. The old free-form `type` string
  * (field 1), opaque `data` bytes (field 3), and `error` string (field 4) were
  * replaced by the typed `event_type` enum + `payload` oneof below.
@@ -1052,6 +1214,14 @@ export declare type StreamEvent = Message<"loci.chat.StreamEvent"> & {
    * @generated from field: optional string request_id = 10;
    */
   requestId?: string;
+
+  /**
+   * Set on every per-city event of a multi-city stream: the StopRef.index it
+   * belongs to. An ERROR carrying it failed that city only, not the stream.
+   *
+   * @generated from field: optional int32 stop_index = 11;
+   */
+  stopIndex?: number;
 
   /**
    * payload is the typed body; its oneof case matches event_type. Absent for
@@ -1131,6 +1301,12 @@ export declare type StreamEvent = Message<"loci.chat.StreamEvent"> & {
      */
     value: CompletePayload;
     case: "complete";
+  } | {
+    /**
+     * @generated from field: loci.chat.RoutePayload route = 32;
+     */
+    value: RoutePayload;
+    case: "route";
   } | { case: undefined; value?: undefined };
 };
 
@@ -2361,6 +2537,11 @@ export enum StreamEventType {
    * @generated from enum value: STREAM_EVENT_TYPE_COMPLETE = 12;
    */
   COMPLETE = 12,
+
+  /**
+   * @generated from enum value: STREAM_EVENT_TYPE_ROUTE = 13;
+   */
+  ROUTE = 13,
 }
 
 /**
