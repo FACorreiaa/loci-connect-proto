@@ -61,20 +61,23 @@ message List {
     min_len: 1
     max_len: 200
   }];
-  string description = 4 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 4000
-  }];
+  // Empty when the list has no description.
+  string description = 4 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 4000}
+  ];
   string image_url = 5 [(buf.validate.field).string = {max_len: 2048}];
   bool is_public = 6;
   bool is_itinerary = 7;
   string parent_list_id = 8 [(buf.validate.field).string = {max_len: 100}];
-  string city_id = 9 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
-  }];
+  // Empty when the list is not tied to a city.
+  string city_id = 9 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ];
   int32 view_count = 10 [(buf.validate.field).int32 = {gte: 0}];
   int32 save_count = 11 [(buf.validate.field).int32 = {gte: 0}];
+  // Number of items in the list.
   int32 item_count = 12 [(buf.validate.field).int32 = {gte: 0}];
   google.protobuf.Timestamp created_at = 13 [(buf.validate.field).required = true];
   google.protobuf.Timestamp updated_at = 14 [(buf.validate.field).required = true];
@@ -90,10 +93,12 @@ message ListItem {
     min_len: 1
     max_len: 100
   }];
-  string poi_id = 3 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
-  }]; // For backward compatibility with POI-only items
+  // For backward compatibility with POI-only items: equals item_id when
+  // content_type is POI, empty otherwise.
+  string poi_id = 3 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ];
   ContentType content_type = 4 [(buf.validate.field).enum = {defined_only: true}];
   int32 position = 5 [(buf.validate.field).int32 = {gte: 0}];
   string notes = 6 [(buf.validate.field).string = {max_len: 4000}];
@@ -113,7 +118,11 @@ message ListWithItems {
   repeated ListItem items = 2;
 }
 
-// List item with detailed content
+// List item with detailed content. When GetListRequest.include_detailed_items
+// is set, the server fills poi (content type POI), restaurant (RESTAURANT) or
+// hotel (HOTEL) from the stored place; it is left unset when the place is gone.
+// Only the fields the server stores are filled: id, name, latitude, longitude,
+// category, description, address, website, phone and rating.
 message ListItemWithContent {
   ListItem list_item = 1;
   POIDetailedInfo poi = 2;
@@ -146,24 +155,27 @@ message POIDetailedInfo {
     gte: -180
     lte: 180
   }];
-  string category = 5 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 200
-  }];
-  string description = 6 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 4000
-  }];
+  // Empty when unknown.
+  string category = 5 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 200}
+  ];
+  // Empty when unknown.
+  string description = 6 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 4000}
+  ];
   double rating = 7 [(buf.validate.field).double = {
     gte: 0
     lte: 5
   }];
   int32 review_count = 8 [(buf.validate.field).int32 = {gte: 0}];
   string price_range = 9 [(buf.validate.field).string = {max_len: 50}];
-  string address = 10 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 500
-  }];
+  // Empty when unknown.
+  string address = 10 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 500}
+  ];
   string phone = 11 [(buf.validate.field).string = {max_len: 50}];
   string website = 12 [(buf.validate.field).string = {max_len: 2048}];
   repeated string photos = 13 [(buf.validate.field).repeated = {
@@ -249,22 +261,26 @@ message UserSavedItinerary {
 
 // List management
 message CreateListRequest {
-  string user_id = 1 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
-  }];
+  // Ignored by the server, which acts as the authenticated caller. Kept for
+  // wire compatibility; clients should omit it.
+  string user_id = 1 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ];
   string name = 2 [(buf.validate.field).string = {
     min_len: 1
     max_len: 200
   }];
-  string description = 3 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 4000
-  }];
-  string city_id = 4 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
-  }];
+  // Optional.
+  string description = 3 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 4000}
+  ];
+  // Optional. A city UUID; the list is stored without a city when empty.
+  string city_id = 4 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ];
   bool is_itinerary = 5;
   bool is_public = 6;
 }
@@ -275,33 +291,46 @@ message CreateListResponse {
   List list = 3;
 }
 
+// Returns every list the caller owns, custom lists and itineraries alike,
+// newest first.
 message GetListsRequest {
-  string user_id = 1 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
-  }];
-  int32 limit = 2 [(buf.validate.field).int32 = {
-    gte: 1
-    lte: 200
-  }];
+  // Ignored by the server, which acts as the authenticated caller. Kept for
+  // wire compatibility; clients should omit it.
+  string user_id = 1 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ];
+  // Page size; 0 returns every list.
+  int32 limit = 2 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).int32 = {
+      gte: 1
+      lte: 200
+    }
+  ];
   int32 offset = 3 [(buf.validate.field).int32 = {gte: 0}];
   bool include_items = 4;
 }
 
 message GetListsResponse {
   repeated ListWithItems lists = 1;
+  // Every list the caller owns, before limit/offset.
   int32 total_count = 2;
 }
 
 message GetListRequest {
-  string user_id = 1 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
-  }];
+  // Ignored by the server, which acts as the authenticated caller. Kept for
+  // wire compatibility; clients should omit it.
+  string user_id = 1 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ];
   string list_id = 2 [(buf.validate.field).string = {
     min_len: 1
     max_len: 100
   }];
+  // Fill each item's poi/restaurant/hotel from the stored place. Items are
+  // returned for every list either way.
   bool include_detailed_items = 3;
 }
 
@@ -310,10 +339,12 @@ message GetListResponse {
 }
 
 message UpdateListRequest {
-  string user_id = 1 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
-  }];
+  // Ignored by the server, which acts as the authenticated caller. Kept for
+  // wire compatibility; clients should omit it.
+  string user_id = 1 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ];
   string list_id = 2 [(buf.validate.field).string = {
     min_len: 1
     max_len: 100
@@ -323,6 +354,8 @@ message UpdateListRequest {
   string image_url = 5 [(buf.validate.field).string = {max_len: 2048}];
   bool is_public = 6;
   string city_id = 7 [(buf.validate.field).string = {max_len: 100}];
+  // Switch the list between custom list and itinerary. Unchanged when unset.
+  optional bool is_itinerary = 8;
 }
 
 message UpdateListResponse {
@@ -332,10 +365,12 @@ message UpdateListResponse {
 }
 
 message DeleteListRequest {
-  string user_id = 1 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
-  }];
+  // Ignored by the server, which acts as the authenticated caller. Kept for
+  // wire compatibility; clients should omit it.
+  string user_id = 1 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ];
   string list_id = 2 [(buf.validate.field).string = {
     min_len: 1
     max_len: 100
@@ -349,10 +384,12 @@ message DeleteListResponse {
 
 // Itinerary creation
 message CreateItineraryRequest {
-  string user_id = 1 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
-  }];
+  // Ignored by the server, which acts as the authenticated caller. Kept for
+  // wire compatibility; clients should omit it.
+  string user_id = 1 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ];
   string parent_list_id = 2 [(buf.validate.field).string = {max_len: 100}];
   string name = 3 [(buf.validate.field).string = {
     min_len: 1
@@ -370,10 +407,12 @@ message CreateItineraryResponse {
 
 // List item management
 message AddListItemRequest {
-  string user_id = 1 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
-  }];
+  // Ignored by the server, which acts as the authenticated caller. Kept for
+  // wire compatibility; clients should omit it.
+  string user_id = 1 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ];
   string list_id = 2 [(buf.validate.field).string = {
     min_len: 1
     max_len: 100
@@ -400,10 +439,12 @@ message AddListItemResponse {
 }
 
 message UpdateListItemRequest {
-  string user_id = 1 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
-  }];
+  // Ignored by the server, which acts as the authenticated caller. Kept for
+  // wire compatibility; clients should omit it.
+  string user_id = 1 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ];
   string list_id = 2 [(buf.validate.field).string = {
     min_len: 1
     max_len: 100
@@ -428,11 +469,15 @@ message UpdateListItemResponse {
   ListItem item = 3;
 }
 
+// Removes the item from a list the caller owns. content_type narrows the match
+// when set; UNSPECIFIED removes the item whatever its type.
 message RemoveListItemRequest {
-  string user_id = 1 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
-  }];
+  // Ignored by the server, which acts as the authenticated caller. Kept for
+  // wire compatibility; clients should omit it.
+  string user_id = 1 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ];
   string list_id = 2 [(buf.validate.field).string = {
     min_len: 1
     max_len: 100
@@ -450,10 +495,12 @@ message RemoveListItemResponse {
 }
 
 message GetListItemsRequest {
-  string user_id = 1 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
-  }];
+  // Ignored by the server, which acts as the authenticated caller. Kept for
+  // wire compatibility; clients should omit it.
+  string user_id = 1 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ];
   string list_id = 2 [(buf.validate.field).string = {
     min_len: 1
     max_len: 100
@@ -468,10 +515,12 @@ message GetListItemsResponse {
 
 // Content-specific item requests
 message GetListRestaurantsRequest {
-  string user_id = 1 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
-  }];
+  // Ignored by the server, which acts as the authenticated caller. Kept for
+  // wire compatibility; clients should omit it.
+  string user_id = 1 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ];
   string list_id = 2 [(buf.validate.field).string = {
     min_len: 1
     max_len: 100
@@ -483,10 +532,12 @@ message GetListRestaurantsResponse {
 }
 
 message GetListHotelsRequest {
-  string user_id = 1 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
-  }];
+  // Ignored by the server, which acts as the authenticated caller. Kept for
+  // wire compatibility; clients should omit it.
+  string user_id = 1 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ];
   string list_id = 2 [(buf.validate.field).string = {
     min_len: 1
     max_len: 100
@@ -498,10 +549,12 @@ message GetListHotelsResponse {
 }
 
 message GetListItinerariesRequest {
-  string user_id = 1 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
-  }];
+  // Ignored by the server, which acts as the authenticated caller. Kept for
+  // wire compatibility; clients should omit it.
+  string user_id = 1 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ];
   string list_id = 2 [(buf.validate.field).string = {
     min_len: 1
     max_len: 100
@@ -514,10 +567,12 @@ message GetListItinerariesResponse {
 
 // Public list management
 message SavePublicListRequest {
-  string user_id = 1 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
-  }];
+  // Ignored by the server, which acts as the authenticated caller. Kept for
+  // wire compatibility; clients should omit it.
+  string user_id = 1 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ];
   string list_id = 2 [(buf.validate.field).string = {
     min_len: 1
     max_len: 100
@@ -530,10 +585,12 @@ message SavePublicListResponse {
 }
 
 message UnsaveListRequest {
-  string user_id = 1 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
-  }];
+  // Ignored by the server, which acts as the authenticated caller. Kept for
+  // wire compatibility; clients should omit it.
+  string user_id = 1 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ];
   string list_id = 2 [(buf.validate.field).string = {
     min_len: 1
     max_len: 100
@@ -546,10 +603,12 @@ message UnsaveListResponse {
 }
 
 message GetSavedListsRequest {
-  string user_id = 1 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
-  }];
+  // Ignored by the server, which acts as the authenticated caller. Kept for
+  // wire compatibility; clients should omit it.
+  string user_id = 1 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ];
   int32 limit = 2 [(buf.validate.field).int32 = {
     gte: 1
     lte: 200

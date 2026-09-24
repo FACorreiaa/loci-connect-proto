@@ -79,6 +79,7 @@ public struct Loci_List_List: Sendable {
 
   public var name: String = String()
 
+  /// Empty when the list has no description.
   public var description_p: String = String()
 
   public var imageURL: String = String()
@@ -89,12 +90,14 @@ public struct Loci_List_List: Sendable {
 
   public var parentListID: String = String()
 
+  /// Empty when the list is not tied to a city.
   public var cityID: String = String()
 
   public var viewCount: Int32 = 0
 
   public var saveCount: Int32 = 0
 
+  /// Number of items in the list.
   public var itemCount: Int32 = 0
 
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
@@ -139,7 +142,8 @@ public struct Loci_List_ListItem: @unchecked Sendable {
     set {_uniqueStorage()._itemID = newValue}
   }
 
-  /// For backward compatibility with POI-only items
+  /// For backward compatibility with POI-only items: equals item_id when
+  /// content_type is POI, empty otherwise.
   public var poiID: String {
     get {return _storage._poiID}
     set {_uniqueStorage()._poiID = newValue}
@@ -251,7 +255,11 @@ public struct Loci_List_ListWithItems: @unchecked Sendable {
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-/// List item with detailed content
+/// List item with detailed content. When GetListRequest.include_detailed_items
+/// is set, the server fills poi (content type POI), restaurant (RESTAURANT) or
+/// hotel (HOTEL) from the stored place; it is left unset when the place is gone.
+/// Only the fields the server stores are filled: id, name, latitude, longitude,
+/// category, description, address, website, phone and rating.
 public struct Loci_List_ListItemWithContent: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -350,8 +358,10 @@ public struct Loci_List_POIDetailedInfo: Sendable {
 
   public var longitude: Double = 0
 
+  /// Empty when unknown.
   public var category: String = String()
 
+  /// Empty when unknown.
   public var description_p: String = String()
 
   public var rating: Double = 0
@@ -360,6 +370,7 @@ public struct Loci_List_POIDetailedInfo: Sendable {
 
   public var priceRange: String = String()
 
+  /// Empty when unknown.
   public var address: String = String()
 
   public var phone: String = String()
@@ -513,12 +524,16 @@ public struct Loci_List_CreateListRequest: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// Ignored by the server, which acts as the authenticated caller. Kept for
+  /// wire compatibility; clients should omit it.
   public var userID: String = String()
 
   public var name: String = String()
 
+  /// Optional.
   public var description_p: String = String()
 
+  /// Optional. A city UUID; the list is stored without a city when empty.
   public var cityID: String = String()
 
   public var isItinerary: Bool = false
@@ -561,13 +576,18 @@ public struct Loci_List_CreateListResponse: @unchecked Sendable {
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
+/// Returns every list the caller owns, custom lists and itineraries alike,
+/// newest first.
 public struct Loci_List_GetListsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// Ignored by the server, which acts as the authenticated caller. Kept for
+  /// wire compatibility; clients should omit it.
   public var userID: String = String()
 
+  /// Page size; 0 returns every list.
   public var limit: Int32 = 0
 
   public var offset: Int32 = 0
@@ -586,6 +606,7 @@ public struct Loci_List_GetListsResponse: Sendable {
 
   public var lists: [Loci_List_ListWithItems] = []
 
+  /// Every list the caller owns, before limit/offset.
   public var totalCount: Int32 = 0
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -598,10 +619,14 @@ public struct Loci_List_GetListRequest: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// Ignored by the server, which acts as the authenticated caller. Kept for
+  /// wire compatibility; clients should omit it.
   public var userID: String = String()
 
   public var listID: String = String()
 
+  /// Fill each item's poi/restaurant/hotel from the stored place. Items are
+  /// returned for every list either way.
   public var includeDetailedItems: Bool = false
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -635,6 +660,8 @@ public struct Loci_List_UpdateListRequest: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// Ignored by the server, which acts as the authenticated caller. Kept for
+  /// wire compatibility; clients should omit it.
   public var userID: String = String()
 
   public var listID: String = String()
@@ -649,9 +676,21 @@ public struct Loci_List_UpdateListRequest: Sendable {
 
   public var cityID: String = String()
 
+  /// Switch the list between custom list and itinerary. Unchanged when unset.
+  public var isItinerary: Bool {
+    get {return _isItinerary ?? false}
+    set {_isItinerary = newValue}
+  }
+  /// Returns true if `isItinerary` has been explicitly set.
+  public var hasIsItinerary: Bool {return self._isItinerary != nil}
+  /// Clears the value of `isItinerary`. Subsequent reads from it will return its default value.
+  public mutating func clearIsItinerary() {self._isItinerary = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
+
+  fileprivate var _isItinerary: Bool? = nil
 }
 
 public struct Loci_List_UpdateListResponse: @unchecked Sendable {
@@ -690,6 +729,8 @@ public struct Loci_List_DeleteListRequest: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// Ignored by the server, which acts as the authenticated caller. Kept for
+  /// wire compatibility; clients should omit it.
   public var userID: String = String()
 
   public var listID: String = String()
@@ -719,6 +760,8 @@ public struct Loci_List_CreateItineraryRequest: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// Ignored by the server, which acts as the authenticated caller. Kept for
+  /// wire compatibility; clients should omit it.
   public var userID: String = String()
 
   public var parentListID: String = String()
@@ -771,6 +814,8 @@ public struct Loci_List_AddListItemRequest: @unchecked Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// Ignored by the server, which acts as the authenticated caller. Kept for
+  /// wire compatibility; clients should omit it.
   public var userID: String {
     get {return _storage._userID}
     set {_uniqueStorage()._userID = newValue}
@@ -876,6 +921,8 @@ public struct Loci_List_UpdateListItemRequest: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// Ignored by the server, which acts as the authenticated caller. Kept for
+  /// wire compatibility; clients should omit it.
   public var userID: String = String()
 
   public var listID: String = String()
@@ -937,11 +984,15 @@ public struct Loci_List_UpdateListItemResponse: Sendable {
   fileprivate var _item: Loci_List_ListItem? = nil
 }
 
+/// Removes the item from a list the caller owns. content_type narrows the match
+/// when set; UNSPECIFIED removes the item whatever its type.
 public struct Loci_List_RemoveListItemRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// Ignored by the server, which acts as the authenticated caller. Kept for
+  /// wire compatibility; clients should omit it.
   public var userID: String = String()
 
   public var listID: String = String()
@@ -974,6 +1025,8 @@ public struct Loci_List_GetListItemsRequest: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// Ignored by the server, which acts as the authenticated caller. Kept for
+  /// wire compatibility; clients should omit it.
   public var userID: String = String()
 
   public var listID: String = String()
@@ -1005,6 +1058,8 @@ public struct Loci_List_GetListRestaurantsRequest: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// Ignored by the server, which acts as the authenticated caller. Kept for
+  /// wire compatibility; clients should omit it.
   public var userID: String = String()
 
   public var listID: String = String()
@@ -1031,6 +1086,8 @@ public struct Loci_List_GetListHotelsRequest: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// Ignored by the server, which acts as the authenticated caller. Kept for
+  /// wire compatibility; clients should omit it.
   public var userID: String = String()
 
   public var listID: String = String()
@@ -1057,6 +1114,8 @@ public struct Loci_List_GetListItinerariesRequest: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// Ignored by the server, which acts as the authenticated caller. Kept for
+  /// wire compatibility; clients should omit it.
   public var userID: String = String()
 
   public var listID: String = String()
@@ -1084,6 +1143,8 @@ public struct Loci_List_SavePublicListRequest: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// Ignored by the server, which acts as the authenticated caller. Kept for
+  /// wire compatibility; clients should omit it.
   public var userID: String = String()
 
   public var listID: String = String()
@@ -1112,6 +1173,8 @@ public struct Loci_List_UnsaveListRequest: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// Ignored by the server, which acts as the authenticated caller. Kept for
+  /// wire compatibility; clients should omit it.
   public var userID: String = String()
 
   public var listID: String = String()
@@ -1140,6 +1203,8 @@ public struct Loci_List_GetSavedListsRequest: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// Ignored by the server, which acts as the authenticated caller. Kept for
+  /// wire compatibility; clients should omit it.
   public var userID: String = String()
 
   public var limit: Int32 = 0
@@ -2551,6 +2616,7 @@ extension Loci_List_UpdateListRequest: SwiftProtobuf.Message, SwiftProtobuf._Mes
     5: .standard(proto: "image_url"),
     6: .standard(proto: "is_public"),
     7: .standard(proto: "city_id"),
+    8: .standard(proto: "is_itinerary"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2566,12 +2632,17 @@ extension Loci_List_UpdateListRequest: SwiftProtobuf.Message, SwiftProtobuf._Mes
       case 5: try { try decoder.decodeSingularStringField(value: &self.imageURL) }()
       case 6: try { try decoder.decodeSingularBoolField(value: &self.isPublic) }()
       case 7: try { try decoder.decodeSingularStringField(value: &self.cityID) }()
+      case 8: try { try decoder.decodeSingularBoolField(value: &self._isItinerary) }()
       default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.userID.isEmpty {
       try visitor.visitSingularStringField(value: self.userID, fieldNumber: 1)
     }
@@ -2593,6 +2664,9 @@ extension Loci_List_UpdateListRequest: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if !self.cityID.isEmpty {
       try visitor.visitSingularStringField(value: self.cityID, fieldNumber: 7)
     }
+    try { if let v = self._isItinerary {
+      try visitor.visitSingularBoolField(value: v, fieldNumber: 8)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2604,6 +2678,7 @@ extension Loci_List_UpdateListRequest: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if lhs.imageURL != rhs.imageURL {return false}
     if lhs.isPublic != rhs.isPublic {return false}
     if lhs.cityID != rhs.cityID {return false}
+    if lhs._isItinerary != rhs._isItinerary {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
