@@ -34,6 +34,8 @@ export declare type List = Message<"loci.list.List"> & {
   name: string;
 
   /**
+   * Empty when the list has no description.
+   *
    * @generated from field: string description = 4;
    */
   description: string;
@@ -59,6 +61,8 @@ export declare type List = Message<"loci.list.List"> & {
   parentListId: string;
 
   /**
+   * Empty when the list is not tied to a city.
+   *
    * @generated from field: string city_id = 9;
    */
   cityId: string;
@@ -74,6 +78,8 @@ export declare type List = Message<"loci.list.List"> & {
   saveCount: number;
 
   /**
+   * Number of items in the list.
+   *
    * @generated from field: int32 item_count = 12;
    */
   itemCount: number;
@@ -112,7 +118,8 @@ export declare type ListItem = Message<"loci.list.ListItem"> & {
   itemId: string;
 
   /**
-   * For backward compatibility with POI-only items
+   * For backward compatibility with POI-only items: equals item_id when
+   * content_type is POI, empty otherwise.
    *
    * @generated from field: string poi_id = 3;
    */
@@ -206,7 +213,11 @@ export declare type ListWithItems = Message<"loci.list.ListWithItems"> & {
 export declare const ListWithItemsSchema: GenMessage<ListWithItems>;
 
 /**
- * List item with detailed content
+ * List item with detailed content. When GetListRequest.include_detailed_items
+ * is set, the server fills poi (content type POI), restaurant (RESTAURANT) or
+ * hotel (HOTEL) from the stored place; it is left unset when the place is gone.
+ * Only the fields the server stores are filled: id, name, latitude, longitude,
+ * category, description, address, website, phone and rating.
  *
  * @generated from message loci.list.ListItemWithContent
  */
@@ -293,11 +304,15 @@ export declare type POIDetailedInfo = Message<"loci.list.POIDetailedInfo"> & {
   longitude: number;
 
   /**
+   * Empty when unknown.
+   *
    * @generated from field: string category = 5;
    */
   category: string;
 
   /**
+   * Empty when unknown.
+   *
    * @generated from field: string description = 6;
    */
   description: string;
@@ -318,6 +333,8 @@ export declare type POIDetailedInfo = Message<"loci.list.POIDetailedInfo"> & {
   priceRange: string;
 
   /**
+   * Empty when unknown.
+   *
    * @generated from field: string address = 10;
    */
   address: string;
@@ -487,6 +504,9 @@ export declare const UserSavedItinerarySchema: GenMessage<UserSavedItinerary>;
  */
 export declare type CreateListRequest = Message<"loci.list.CreateListRequest"> & {
   /**
+   * Ignored by the server, which acts as the authenticated caller. Kept for
+   * wire compatibility; clients should omit it.
+   *
    * @generated from field: string user_id = 1;
    */
   userId: string;
@@ -497,11 +517,15 @@ export declare type CreateListRequest = Message<"loci.list.CreateListRequest"> &
   name: string;
 
   /**
+   * Optional.
+   *
    * @generated from field: string description = 3;
    */
   description: string;
 
   /**
+   * Optional. A city UUID; the list is stored without a city when empty.
+   *
    * @generated from field: string city_id = 4;
    */
   cityId: string;
@@ -550,15 +574,23 @@ export declare type CreateListResponse = Message<"loci.list.CreateListResponse">
 export declare const CreateListResponseSchema: GenMessage<CreateListResponse>;
 
 /**
+ * Returns every list the caller owns, custom lists and itineraries alike,
+ * newest first.
+ *
  * @generated from message loci.list.GetListsRequest
  */
 export declare type GetListsRequest = Message<"loci.list.GetListsRequest"> & {
   /**
+   * Ignored by the server, which acts as the authenticated caller. Kept for
+   * wire compatibility; clients should omit it.
+   *
    * @generated from field: string user_id = 1;
    */
   userId: string;
 
   /**
+   * Page size; 0 returns every list.
+   *
    * @generated from field: int32 limit = 2;
    */
   limit: number;
@@ -590,6 +622,8 @@ export declare type GetListsResponse = Message<"loci.list.GetListsResponse"> & {
   lists: ListWithItems[];
 
   /**
+   * Every list the caller owns, before limit/offset.
+   *
    * @generated from field: int32 total_count = 2;
    */
   totalCount: number;
@@ -606,6 +640,9 @@ export declare const GetListsResponseSchema: GenMessage<GetListsResponse>;
  */
 export declare type GetListRequest = Message<"loci.list.GetListRequest"> & {
   /**
+   * Ignored by the server, which acts as the authenticated caller. Kept for
+   * wire compatibility; clients should omit it.
+   *
    * @generated from field: string user_id = 1;
    */
   userId: string;
@@ -616,6 +653,9 @@ export declare type GetListRequest = Message<"loci.list.GetListRequest"> & {
   listId: string;
 
   /**
+   * Fill each item's poi/restaurant/hotel from the stored place. Items are
+   * returned for every list either way.
+   *
    * @generated from field: bool include_detailed_items = 3;
    */
   includeDetailedItems: boolean;
@@ -648,6 +688,9 @@ export declare const GetListResponseSchema: GenMessage<GetListResponse>;
  */
 export declare type UpdateListRequest = Message<"loci.list.UpdateListRequest"> & {
   /**
+   * Ignored by the server, which acts as the authenticated caller. Kept for
+   * wire compatibility; clients should omit it.
+   *
    * @generated from field: string user_id = 1;
    */
   userId: string;
@@ -681,6 +724,13 @@ export declare type UpdateListRequest = Message<"loci.list.UpdateListRequest"> &
    * @generated from field: string city_id = 7;
    */
   cityId: string;
+
+  /**
+   * Switch the list between custom list and itinerary. Unchanged when unset.
+   *
+   * @generated from field: optional bool is_itinerary = 8;
+   */
+  isItinerary?: boolean;
 };
 
 /**
@@ -720,6 +770,9 @@ export declare const UpdateListResponseSchema: GenMessage<UpdateListResponse>;
  */
 export declare type DeleteListRequest = Message<"loci.list.DeleteListRequest"> & {
   /**
+   * Ignored by the server, which acts as the authenticated caller. Kept for
+   * wire compatibility; clients should omit it.
+   *
    * @generated from field: string user_id = 1;
    */
   userId: string;
@@ -764,6 +817,9 @@ export declare const DeleteListResponseSchema: GenMessage<DeleteListResponse>;
  */
 export declare type CreateItineraryRequest = Message<"loci.list.CreateItineraryRequest"> & {
   /**
+   * Ignored by the server, which acts as the authenticated caller. Kept for
+   * wire compatibility; clients should omit it.
+   *
    * @generated from field: string user_id = 1;
    */
   userId: string;
@@ -828,6 +884,9 @@ export declare const CreateItineraryResponseSchema: GenMessage<CreateItineraryRe
  */
 export declare type AddListItemRequest = Message<"loci.list.AddListItemRequest"> & {
   /**
+   * Ignored by the server, which acts as the authenticated caller. Kept for
+   * wire compatibility; clients should omit it.
+   *
    * @generated from field: string user_id = 1;
    */
   userId: string;
@@ -925,6 +984,9 @@ export declare const AddListItemResponseSchema: GenMessage<AddListItemResponse>;
  */
 export declare type UpdateListItemRequest = Message<"loci.list.UpdateListItemRequest"> & {
   /**
+   * Ignored by the server, which acts as the authenticated caller. Kept for
+   * wire compatibility; clients should omit it.
+   *
    * @generated from field: string user_id = 1;
    */
   userId: string;
@@ -1013,10 +1075,16 @@ export declare type UpdateListItemResponse = Message<"loci.list.UpdateListItemRe
 export declare const UpdateListItemResponseSchema: GenMessage<UpdateListItemResponse>;
 
 /**
+ * Removes the item from a list the caller owns. content_type narrows the match
+ * when set; UNSPECIFIED removes the item whatever its type.
+ *
  * @generated from message loci.list.RemoveListItemRequest
  */
 export declare type RemoveListItemRequest = Message<"loci.list.RemoveListItemRequest"> & {
   /**
+   * Ignored by the server, which acts as the authenticated caller. Kept for
+   * wire compatibility; clients should omit it.
+   *
    * @generated from field: string user_id = 1;
    */
   userId: string;
@@ -1069,6 +1137,9 @@ export declare const RemoveListItemResponseSchema: GenMessage<RemoveListItemResp
  */
 export declare type GetListItemsRequest = Message<"loci.list.GetListItemsRequest"> & {
   /**
+   * Ignored by the server, which acts as the authenticated caller. Kept for
+   * wire compatibility; clients should omit it.
+   *
    * @generated from field: string user_id = 1;
    */
   userId: string;
@@ -1118,6 +1189,9 @@ export declare const GetListItemsResponseSchema: GenMessage<GetListItemsResponse
  */
 export declare type GetListRestaurantsRequest = Message<"loci.list.GetListRestaurantsRequest"> & {
   /**
+   * Ignored by the server, which acts as the authenticated caller. Kept for
+   * wire compatibility; clients should omit it.
+   *
    * @generated from field: string user_id = 1;
    */
   userId: string;
@@ -1155,6 +1229,9 @@ export declare const GetListRestaurantsResponseSchema: GenMessage<GetListRestaur
  */
 export declare type GetListHotelsRequest = Message<"loci.list.GetListHotelsRequest"> & {
   /**
+   * Ignored by the server, which acts as the authenticated caller. Kept for
+   * wire compatibility; clients should omit it.
+   *
    * @generated from field: string user_id = 1;
    */
   userId: string;
@@ -1192,6 +1269,9 @@ export declare const GetListHotelsResponseSchema: GenMessage<GetListHotelsRespon
  */
 export declare type GetListItinerariesRequest = Message<"loci.list.GetListItinerariesRequest"> & {
   /**
+   * Ignored by the server, which acts as the authenticated caller. Kept for
+   * wire compatibility; clients should omit it.
+   *
    * @generated from field: string user_id = 1;
    */
   userId: string;
@@ -1231,6 +1311,9 @@ export declare const GetListItinerariesResponseSchema: GenMessage<GetListItinera
  */
 export declare type SavePublicListRequest = Message<"loci.list.SavePublicListRequest"> & {
   /**
+   * Ignored by the server, which acts as the authenticated caller. Kept for
+   * wire compatibility; clients should omit it.
+   *
    * @generated from field: string user_id = 1;
    */
   userId: string;
@@ -1273,6 +1356,9 @@ export declare const SavePublicListResponseSchema: GenMessage<SavePublicListResp
  */
 export declare type UnsaveListRequest = Message<"loci.list.UnsaveListRequest"> & {
   /**
+   * Ignored by the server, which acts as the authenticated caller. Kept for
+   * wire compatibility; clients should omit it.
+   *
    * @generated from field: string user_id = 1;
    */
   userId: string;
@@ -1315,6 +1401,9 @@ export declare const UnsaveListResponseSchema: GenMessage<UnsaveListResponse>;
  */
 export declare type GetSavedListsRequest = Message<"loci.list.GetSavedListsRequest"> & {
   /**
+   * Ignored by the server, which acts as the authenticated caller. Kept for
+   * wire compatibility; clients should omit it.
+   *
    * @generated from field: string user_id = 1;
    */
   userId: string;
