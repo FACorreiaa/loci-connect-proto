@@ -54,6 +54,24 @@ public protocol Loci_Trip_TripServiceClientInterface: Sendable {
     /// forecasts, the driving between them, and the traveller's stated interests.
     @available(iOS 13, *)
     func `suggestPacking`(request: Loci_Trip_SuggestPackingRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_SuggestPackingResponse>
+
+    /// GetTripChecklist returns the trip's packing items, expenses and dismissed
+    /// packing suggestions. Other users' trips are NotFound.
+    @available(iOS 13, *)
+    func `getTripChecklist`(request: Loci_Trip_GetTripChecklistRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_GetTripChecklistResponse>
+
+    /// UpsertChecklistItem creates or replaces an item by (trip_id, item.id).
+    /// Adding a 501st item is ResourceExhausted.
+    @available(iOS 13, *)
+    func `upsertChecklistItem`(request: Loci_Trip_UpsertChecklistItemRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_ChecklistItem>
+
+    /// DeleteChecklistItem removes an item; deleting a missing item succeeds.
+    @available(iOS 13, *)
+    func `deleteChecklistItem`(request: Loci_Trip_DeleteChecklistItemRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_DeleteChecklistItemResponse>
+
+    /// DismissPackingSuggestion hides a suggestion from this trip's checklist.
+    @available(iOS 13, *)
+    func `dismissPackingSuggestion`(request: Loci_Trip_DismissPackingSuggestionRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_DismissPackingSuggestionResponse>
 }
 
 /// Concrete implementation of `Loci_Trip_TripServiceClientInterface`.
@@ -129,6 +147,26 @@ public final class Loci_Trip_TripServiceClient: Loci_Trip_TripServiceClientInter
         return await self.client.unary(path: "/loci.trip.TripService/SuggestPacking", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
+    @available(iOS 13, *)
+    public func `getTripChecklist`(request: Loci_Trip_GetTripChecklistRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_GetTripChecklistResponse> {
+        return await self.client.unary(path: "/loci.trip.TripService/GetTripChecklist", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `upsertChecklistItem`(request: Loci_Trip_UpsertChecklistItemRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_ChecklistItem> {
+        return await self.client.unary(path: "/loci.trip.TripService/UpsertChecklistItem", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `deleteChecklistItem`(request: Loci_Trip_DeleteChecklistItemRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_DeleteChecklistItemResponse> {
+        return await self.client.unary(path: "/loci.trip.TripService/DeleteChecklistItem", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `dismissPackingSuggestion`(request: Loci_Trip_DismissPackingSuggestionRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_DismissPackingSuggestionResponse> {
+        return await self.client.unary(path: "/loci.trip.TripService/DismissPackingSuggestion", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
     public enum Metadata {
         public enum Methods {
             public static let saveTrip = Connect.MethodSpec(name: "SaveTrip", service: "loci.trip.TripService", type: .unary)
@@ -144,6 +182,10 @@ public final class Loci_Trip_TripServiceClient: Loci_Trip_TripServiceClientInter
             public static let replaceStop = Connect.MethodSpec(name: "ReplaceStop", service: "loci.trip.TripService", type: .unary)
             public static let exportTrip = Connect.MethodSpec(name: "ExportTrip", service: "loci.trip.TripService", type: .unary)
             public static let suggestPacking = Connect.MethodSpec(name: "SuggestPacking", service: "loci.trip.TripService", type: .unary)
+            public static let getTripChecklist = Connect.MethodSpec(name: "GetTripChecklist", service: "loci.trip.TripService", type: .unary)
+            public static let upsertChecklistItem = Connect.MethodSpec(name: "UpsertChecklistItem", service: "loci.trip.TripService", type: .unary)
+            public static let deleteChecklistItem = Connect.MethodSpec(name: "DeleteChecklistItem", service: "loci.trip.TripService", type: .unary)
+            public static let dismissPackingSuggestion = Connect.MethodSpec(name: "DismissPackingSuggestion", service: "loci.trip.TripService", type: .unary)
         }
     }
 }

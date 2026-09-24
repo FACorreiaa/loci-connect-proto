@@ -795,6 +795,26 @@
                 </li>
               
                 <li>
+                  <a href="#loci.trip.ChecklistItem"><span class="badge">M</span>ChecklistItem</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.DeleteChecklistItemRequest"><span class="badge">M</span>DeleteChecklistItemRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.DeleteChecklistItemResponse"><span class="badge">M</span>DeleteChecklistItemResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.DismissPackingSuggestionRequest"><span class="badge">M</span>DismissPackingSuggestionRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.DismissPackingSuggestionResponse"><span class="badge">M</span>DismissPackingSuggestionResponse</a>
+                </li>
+              
+                <li>
                   <a href="#loci.trip.EditStopDurationRequest"><span class="badge">M</span>EditStopDurationRequest</a>
                 </li>
               
@@ -804,6 +824,14 @@
               
                 <li>
                   <a href="#loci.trip.ExportTripResponse"><span class="badge">M</span>ExportTripResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.GetTripChecklistRequest"><span class="badge">M</span>GetTripChecklistRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.GetTripChecklistResponse"><span class="badge">M</span>GetTripChecklistResponse</a>
                 </li>
               
                 <li>
@@ -890,6 +918,14 @@
                   <a href="#loci.trip.TripStop"><span class="badge">M</span>TripStop</a>
                 </li>
               
+                <li>
+                  <a href="#loci.trip.UpsertChecklistItemRequest"><span class="badge">M</span>UpsertChecklistItemRequest</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#loci.trip.ChecklistItemKind"><span class="badge">E</span>ChecklistItemKind</a>
+                </li>
               
                 <li>
                   <a href="#loci.trip.ExportFormat"><span class="badge">E</span>ExportFormat</a>
@@ -9133,6 +9169,156 @@ renders one renders the other. </p></td>
 
         
       
+        <h3 id="loci.trip.ChecklistItem">ChecklistItem</h3>
+        <p>ChecklistItem is one packing item or one expense on a trip.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Client-generated UUID; the upsert key together with the trip id. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>kind</td>
+                  <td><a href="#loci.trip.ChecklistItemKind">ChecklistItemKind</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>text</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>done</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>amount_minor</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>Expense amount in the currency&#39;s minor unit (cents). Zero for packing items. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>currency</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ISO 4217 code (e.g. &#34;EUR&#34;). Empty is allowed, and is the norm for packing
+items; clients default expenses to the trip&#39;s or the user&#39;s currency. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>position</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Display order within its kind (0-based). </p></td>
+                </tr>
+              
+                <tr>
+                  <td>updated_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Server-set on every write; ignored on input. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.DeleteChecklistItemRequest">DeleteChecklistItemRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>item_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.DeleteChecklistItemResponse">DeleteChecklistItemResponse</h3>
+        <p></p>
+
+        
+
+        
+      
+        <h3 id="loci.trip.DismissPackingSuggestionRequest">DismissPackingSuggestionRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>text</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The suggestion&#39;s text as shown; stored lowercased and trimmed. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.DismissPackingSuggestionResponse">DismissPackingSuggestionResponse</h3>
+        <p></p>
+
+        
+
+        
+      
         <h3 id="loci.trip.EditStopDurationRequest">EditStopDurationRequest</h3>
         <p></p>
 
@@ -9245,6 +9431,62 @@ renders one renders the other. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.GetTripChecklistRequest">GetTripChecklistRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.GetTripChecklistResponse">GetTripChecklistResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>items</td>
+                  <td><a href="#loci.trip.ChecklistItem">ChecklistItem</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>dismissed_suggestions</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>Packing suggestions the user dismissed, lowercased and trimmed, so a client
+can hide them from SuggestPacking&#39;s output. </p></td>
                 </tr>
               
             </tbody>
@@ -10294,7 +10536,67 @@ editing an existing stop. </p></td>
 
         
       
+        <h3 id="loci.trip.UpsertChecklistItemRequest">UpsertChecklistItemRequest</h3>
+        <p></p>
 
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>item</td>
+                  <td><a href="#loci.trip.ChecklistItem">ChecklistItem</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+        <h3 id="loci.trip.ChecklistItemKind">ChecklistItemKind</h3>
+        <p>ChecklistItemKind says which list an item belongs to.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>CHECKLIST_ITEM_KIND_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>CHECKLIST_ITEM_KIND_PACKING</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>CHECKLIST_ITEM_KIND_EXPENSE</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
       
         <h3 id="loci.trip.ExportFormat">ExportFormat</h3>
         <p>ExportFormat selects the export artifact.</p>
@@ -10527,6 +10829,36 @@ editing an existing stop. </p></td>
                 <td><a href="#loci.trip.SuggestPackingResponse">SuggestPackingResponse</a></td>
                 <td><p>SuggestPacking derives a packing list from the trip: its length, its cities&#39;
 forecasts, the driving between them, and the traveller&#39;s stated interests.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetTripChecklist</td>
+                <td><a href="#loci.trip.GetTripChecklistRequest">GetTripChecklistRequest</a></td>
+                <td><a href="#loci.trip.GetTripChecklistResponse">GetTripChecklistResponse</a></td>
+                <td><p>GetTripChecklist returns the trip&#39;s packing items, expenses and dismissed
+packing suggestions. Other users&#39; trips are NotFound.</p></td>
+              </tr>
+            
+              <tr>
+                <td>UpsertChecklistItem</td>
+                <td><a href="#loci.trip.UpsertChecklistItemRequest">UpsertChecklistItemRequest</a></td>
+                <td><a href="#loci.trip.ChecklistItem">ChecklistItem</a></td>
+                <td><p>UpsertChecklistItem creates or replaces an item by (trip_id, item.id).
+Adding a 501st item is ResourceExhausted.</p></td>
+              </tr>
+            
+              <tr>
+                <td>DeleteChecklistItem</td>
+                <td><a href="#loci.trip.DeleteChecklistItemRequest">DeleteChecklistItemRequest</a></td>
+                <td><a href="#loci.trip.DeleteChecklistItemResponse">DeleteChecklistItemResponse</a></td>
+                <td><p>DeleteChecklistItem removes an item; deleting a missing item succeeds.</p></td>
+              </tr>
+            
+              <tr>
+                <td>DismissPackingSuggestion</td>
+                <td><a href="#loci.trip.DismissPackingSuggestionRequest">DismissPackingSuggestionRequest</a></td>
+                <td><a href="#loci.trip.DismissPackingSuggestionResponse">DismissPackingSuggestionResponse</a></td>
+                <td><p>DismissPackingSuggestion hides a suggestion from this trip&#39;s checklist.</p></td>
               </tr>
             
           </tbody>
