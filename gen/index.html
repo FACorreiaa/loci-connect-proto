@@ -30777,7 +30777,7 @@ for wire compatibility; do not require it — clients correctly omit it. </p></t
                   <td>rating</td>
                   <td><a href="#double">double</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Whole stars only (1, 2, 3, 4 or 5); the server rejects fractions. </p></td>
                 </tr>
               
                 <tr>
@@ -30898,7 +30898,8 @@ so this cannot be required. </p></td>
                   <td>user_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Ignored by the server, which acts as the authenticated caller. Kept for
+wire compatibility; clients should omit it. </p></td>
                 </tr>
               
                 <tr>
@@ -31305,7 +31306,7 @@ so this cannot be required. </p></td>
                   <td>user_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Whose reviews to list. Empty means the authenticated caller. </p></td>
                 </tr>
               
                 <tr>
@@ -31450,7 +31451,8 @@ so this cannot be required. </p></td>
                   <td>user_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Ignored by the server, which acts as the authenticated caller. Kept for
+wire compatibility; clients should omit it. </p></td>
                 </tr>
               
                 <tr>
@@ -31758,14 +31760,14 @@ so this cannot be required. </p></td>
                   <td>rating</td>
                   <td><a href="#double">double</a></td>
                   <td></td>
-                  <td><p>1.0 - 5.0 </p></td>
+                  <td><p>Whole stars, 1 - 5 </p></td>
                 </tr>
               
                 <tr>
                   <td>title</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Empty when the author gave none (the title is optional on create). </p></td>
                 </tr>
               
                 <tr>
@@ -31837,7 +31839,9 @@ Number of helpful votes </p></td>
                   <td>language</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>ISO 639-1 language code </p></td>
+                  <td><p>Empty when unknown.
+
+ISO 639-1 language code </p></td>
                 </tr>
               
                 <tr>
@@ -32291,14 +32295,14 @@ Type of content being reviewed </p></td>
                   <td>display_name</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Empty when the reviewer has set neither a username nor a display name. </p></td>
                 </tr>
               
                 <tr>
                   <td>avatar_url</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Empty when the reviewer has no avatar. </p></td>
                 </tr>
               
                 <tr>
@@ -32319,7 +32323,9 @@ Type of content being reviewed </p></td>
                   <td>level</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>&#34;Bronze&#34;, &#34;Silver&#34;, &#34;Gold&#34;, &#34;Platinum&#34; </p></td>
+                  <td><p>Not computed yet; empty.
+
+&#34;Bronze&#34;, &#34;Silver&#34;, &#34;Gold&#34;, &#34;Platinum&#34; </p></td>
                 </tr>
               
                 <tr>
@@ -32350,7 +32356,8 @@ Type of content being reviewed </p></td>
                   <td>user_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Ignored by the server, which acts as the authenticated caller. Kept for
+wire compatibility; clients should omit it. </p></td>
                 </tr>
               
                 <tr>
@@ -32364,14 +32371,15 @@ Type of content being reviewed </p></td>
                   <td>rating</td>
                   <td><a href="#double">double</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Whole stars only (1, 2, 3, 4 or 5); the server rejects fractions. </p></td>
                 </tr>
               
                 <tr>
                   <td>title</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Optional, as on create. The update replaces every field below, so send
+the full review: an empty title, photo list or visit_date clears it. </p></td>
                 </tr>
               
                 <tr>
