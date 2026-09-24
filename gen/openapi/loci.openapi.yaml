@@ -15974,7 +15974,9 @@ components:
           type: string
           title: user_id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Ignored by the server, which acts as the authenticated caller. Kept for
+             wire compatibility; clients should omit it.
         listId:
           type: string
           title: list_id
@@ -16058,7 +16060,9 @@ components:
           type: string
           title: user_id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Ignored by the server, which acts as the authenticated caller. Kept for
+             wire compatibility; clients should omit it.
         parentListId:
           type: string
           title: parent_list_id
@@ -16100,7 +16104,9 @@ components:
           type: string
           title: user_id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Ignored by the server, which acts as the authenticated caller. Kept for
+             wire compatibility; clients should omit it.
         name:
           type: string
           title: name
@@ -16110,12 +16116,12 @@ components:
           type: string
           title: description
           maxLength: 4000
-          minLength: 1
+          description: Optional.
         cityId:
           type: string
           title: city_id
           maxLength: 100
-          minLength: 1
+          description: Optional. A city UUID; the list is stored without a city when empty.
         isItinerary:
           type: boolean
           title: is_itinerary
@@ -16147,7 +16153,9 @@ components:
           type: string
           title: user_id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Ignored by the server, which acts as the authenticated caller. Kept for
+             wire compatibility; clients should omit it.
         listId:
           type: string
           title: list_id
@@ -16174,7 +16182,9 @@ components:
           type: string
           title: user_id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Ignored by the server, which acts as the authenticated caller. Kept for
+             wire compatibility; clients should omit it.
         listId:
           type: string
           title: list_id
@@ -16199,7 +16209,9 @@ components:
           type: string
           title: user_id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Ignored by the server, which acts as the authenticated caller. Kept for
+             wire compatibility; clients should omit it.
         listId:
           type: string
           title: list_id
@@ -16231,7 +16243,9 @@ components:
           type: string
           title: user_id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Ignored by the server, which acts as the authenticated caller. Kept for
+             wire compatibility; clients should omit it.
         listId:
           type: string
           title: list_id
@@ -16256,7 +16270,9 @@ components:
           type: string
           title: user_id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Ignored by the server, which acts as the authenticated caller. Kept for
+             wire compatibility; clients should omit it.
         listId:
           type: string
           title: list_id
@@ -16265,6 +16281,9 @@ components:
         includeDetailedItems:
           type: boolean
           title: include_detailed_items
+          description: |-
+            Fill each item's poi/restaurant/hotel from the stored place. Items are
+             returned for every list either way.
       title: GetListRequest
       additionalProperties: false
     loci.list.GetListResponse:
@@ -16282,7 +16301,9 @@ components:
           type: string
           title: user_id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Ignored by the server, which acts as the authenticated caller. Kept for
+             wire compatibility; clients should omit it.
         listId:
           type: string
           title: list_id
@@ -16308,13 +16329,16 @@ components:
           type: string
           title: user_id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Ignored by the server, which acts as the authenticated caller. Kept for
+             wire compatibility; clients should omit it.
         limit:
           type: integer
           title: limit
           maximum: 200
           minimum: 1
           format: int32
+          description: Page size; 0 returns every list.
         offset:
           type: integer
           title: offset
@@ -16325,6 +16349,9 @@ components:
           title: include_items
       title: GetListsRequest
       additionalProperties: false
+      description: |-
+        Returns every list the caller owns, custom lists and itineraries alike,
+         newest first.
     loci.list.GetListsResponse:
       type: object
       properties:
@@ -16337,6 +16364,7 @@ components:
           type: integer
           title: total_count
           format: int32
+          description: Every list the caller owns, before limit/offset.
       title: GetListsResponse
       additionalProperties: false
     loci.list.GetSavedListsRequest:
@@ -16346,7 +16374,9 @@ components:
           type: string
           title: user_id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Ignored by the server, which acts as the authenticated caller. Kept for
+             wire compatibility; clients should omit it.
         limit:
           type: integer
           title: limit
@@ -16437,7 +16467,7 @@ components:
           type: string
           title: description
           maxLength: 4000
-          minLength: 1
+          description: Empty when the list has no description.
         imageUrl:
           type: string
           title: image_url
@@ -16456,7 +16486,7 @@ components:
           type: string
           title: city_id
           maxLength: 100
-          minLength: 1
+          description: Empty when the list is not tied to a city.
         viewCount:
           type: integer
           title: view_count
@@ -16472,6 +16502,7 @@ components:
           title: item_count
           minimum: 0
           format: int32
+          description: Number of items in the list.
         createdAt:
           title: created_at
           $ref: '#/components/schemas/google.protobuf.Timestamp'
@@ -16501,8 +16532,9 @@ components:
           type: string
           title: poi_id
           maxLength: 100
-          minLength: 1
-          description: For backward compatibility with POI-only items
+          description: |-
+            For backward compatibility with POI-only items: equals item_id when
+             content_type is POI, empty otherwise.
         contentType:
           title: content_type
           $ref: '#/components/schemas/loci.list.ContentType'
@@ -16574,7 +16606,12 @@ components:
           $ref: '#/components/schemas/loci.list.UserSavedItinerary'
       title: ListItemWithContent
       additionalProperties: false
-      description: List item with detailed content
+      description: |-
+        List item with detailed content. When GetListRequest.include_detailed_items
+         is set, the server fills poi (content type POI), restaurant (RESTAURANT) or
+         hotel (HOTEL) from the stored place; it is left unset when the place is gone.
+         Only the fields the server stores are filled: id, name, latitude, longitude,
+         category, description, address, website, phone and rating.
     loci.list.ListWithDetailedItems:
       type: object
       properties:
@@ -16632,12 +16669,12 @@ components:
           type: string
           title: category
           maxLength: 200
-          minLength: 1
+          description: Empty when unknown.
         description:
           type: string
           title: description
           maxLength: 4000
-          minLength: 1
+          description: Empty when unknown.
         rating:
           type: number
           title: rating
@@ -16657,7 +16694,7 @@ components:
           type: string
           title: address
           maxLength: 500
-          minLength: 1
+          description: Empty when unknown.
         phone:
           type: string
           title: phone
@@ -16685,7 +16722,9 @@ components:
           type: string
           title: user_id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Ignored by the server, which acts as the authenticated caller. Kept for
+             wire compatibility; clients should omit it.
         listId:
           type: string
           title: list_id
@@ -16701,6 +16740,9 @@ components:
           $ref: '#/components/schemas/loci.list.ContentType'
       title: RemoveListItemRequest
       additionalProperties: false
+      description: |-
+        Removes the item from a list the caller owns. content_type narrows the match
+         when set; UNSPECIFIED removes the item whatever its type.
     loci.list.RemoveListItemResponse:
       type: object
       properties:
@@ -16750,7 +16792,9 @@ components:
           type: string
           title: user_id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Ignored by the server, which acts as the authenticated caller. Kept for
+             wire compatibility; clients should omit it.
         listId:
           type: string
           title: list_id
@@ -16862,7 +16906,9 @@ components:
           type: string
           title: user_id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Ignored by the server, which acts as the authenticated caller. Kept for
+             wire compatibility; clients should omit it.
         listId:
           type: string
           title: list_id
@@ -16889,7 +16935,9 @@ components:
           type: string
           title: user_id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Ignored by the server, which acts as the authenticated caller. Kept for
+             wire compatibility; clients should omit it.
         listId:
           type: string
           title: list_id
@@ -16957,7 +17005,9 @@ components:
           type: string
           title: user_id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Ignored by the server, which acts as the authenticated caller. Kept for
+             wire compatibility; clients should omit it.
         listId:
           type: string
           title: list_id
@@ -16982,6 +17032,12 @@ components:
           type: string
           title: city_id
           maxLength: 100
+        isItinerary:
+          type:
+            - boolean
+            - "null"
+          title: is_itinerary
+          description: Switch the list between custom list and itinerary. Unchanged when unset.
       title: UpdateListRequest
       additionalProperties: false
     loci.list.UpdateListResponse:
