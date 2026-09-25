@@ -635,6 +635,9 @@ public struct Loci_Poi_SearchPOIRequest: Sendable {
 
   public var query: String = String()
 
+  /// Optional. Empty means "no city": the server searches around
+  /// latitude/longitude when they are set, otherwise across every city.
+  /// "nearby" is treated the same as empty.
   public var cityName: String = String()
 
   public var latitude: Double = 0

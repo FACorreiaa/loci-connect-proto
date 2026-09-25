@@ -115,6 +115,8 @@ message ContributorProfile {
   }];
   int32 submitted_claims = 2 [(buf.validate.field).int32 = {gte: 0}];
   int32 accepted_claims = 3 [(buf.validate.field).int32 = {gte: 0}];
+  // Badge slugs. Kept for older clients; prefer badge_details, which carries
+  // the same badges, in the same order, with display copy.
   repeated string badges = 4 [(buf.validate.field).repeated = {
     max_items: 20
     items: {
@@ -124,6 +126,47 @@ message ContributorProfile {
       }
     }
   }];
+  repeated Badge badge_details = 5 [(buf.validate.field).repeated = {max_items: 20}];
+}
+
+// Badge is one contributor badge with the copy a client shows for it, so the
+// wording lives on the server rather than in each client.
+message Badge {
+  // Stable identifier, the same value as in ContributorProfile.badges.
+  string slug = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string display_name = 2 [(buf.validate.field).string = {max_len: 100}];
+  string description = 3 [(buf.validate.field).string = {max_len: 300}];
+}
+
+// MyPlaceClaim is one fact the caller reported, with where it stands now.
+message MyPlaceClaim {
+  string claim_id = 1;
+  string poi_id = 2;
+  // Empty when the place has since been removed.
+  string poi_name = 3;
+  PlaceFactField field = 4;
+  string value = 5;
+  PlaceClaimStatus status = 6;
+  google.protobuf.Timestamp created_at = 7;
+}
+
+message ListMyClaimsRequest {
+  // Defaults to 20 when zero.
+  int32 limit = 1 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 100
+  }];
+  // 1-based. Zero means the first page.
+  int32 page = 2 [(buf.validate.field).int32 = {gte: 0}];
+}
+
+message ListMyClaimsResponse {
+  // Newest first.
+  repeated MyPlaceClaim claims = 1;
+  int32 total = 2;
 }
 
 message GetMyContributorProfileRequest {}
@@ -214,4 +257,6 @@ service PlaceIntelligenceService {
   rpc SubmitPlace(SubmitPlaceRequest) returns (SubmitPlaceResponse);
   rpc ConfirmPlace(ConfirmPlaceRequest) returns (ConfirmPlaceResponse);
   rpc ListPendingPlaces(ListPendingPlacesRequest) returns (ListPendingPlacesResponse);
+  // ListMyClaims lists the caller's own claims, newest first.
+  rpc ListMyClaims(ListMyClaimsRequest) returns (ListMyClaimsResponse);
 }
