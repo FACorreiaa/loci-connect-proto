@@ -156,6 +156,15 @@ export declare type Review = Message<"loci.review.Review"> & {
    * @generated from field: string content_name = 21;
    */
   contentName: string;
+
+  /**
+   * True when the authenticated caller has marked this review helpful. Always
+   * false for anonymous reads. Lets a client render the vote toggle's state
+   * instead of guessing, so un-voting sends is_like = false.
+   *
+   * @generated from field: bool voted_by_me = 22;
+   */
+  votedByMe: boolean;
 };
 
 /**
@@ -1218,6 +1227,8 @@ export declare type UserReviewStatistics = Message<"loci.review.UserReviewStatis
   helpfulVotesReceived: number;
 
   /**
+   * Not computed yet; empty.
+   *
    * @generated from field: string reviewer_level = 4;
    */
   reviewerLevel: string;
@@ -1226,6 +1237,13 @@ export declare type UserReviewStatistics = Message<"loci.review.UserReviewStatis
    * @generated from field: repeated string top_categories_reviewed = 5;
    */
   topCategoriesReviewed: string[];
+
+  /**
+   * How many of the user's published reviews gave each star count.
+   *
+   * @generated from field: loci.review.RatingBreakdown rating_distribution = 6;
+   */
+  ratingDistribution?: RatingBreakdown;
 };
 
 /**
@@ -1291,6 +1309,9 @@ export declare const LikeReviewResponseSchema: GenMessage<LikeReviewResponse>;
  */
 export declare type ReportReviewRequest = Message<"loci.review.ReportReviewRequest"> & {
   /**
+   * Ignored by the server, which acts as the authenticated caller. Kept for
+   * wire compatibility; clients should omit it.
+   *
    * @generated from field: string user_id = 1;
    */
   userId: string;
@@ -1301,7 +1322,8 @@ export declare type ReportReviewRequest = Message<"loci.review.ReportReviewReque
   reviewId: string;
 
   /**
-   * "spam", "inappropriate", "fake", "offensive"
+   * One of "spam", "inappropriate", "fake", "offensive", "other"
+   * (case-insensitive). The server rejects anything else with InvalidArgument.
    *
    * @generated from field: string reason = 3;
    */
@@ -1334,6 +1356,38 @@ export declare type ReportReviewResponse = Message<"loci.review.ReportReviewResp
  * Use `create(ReportReviewResponseSchema)` to create a new message.
  */
 export declare const ReportReviewResponseSchema: GenMessage<ReportReviewResponse>;
+
+/**
+ * @generated from message loci.review.GetMyPOIReviewRequest
+ */
+export declare type GetMyPOIReviewRequest = Message<"loci.review.GetMyPOIReviewRequest"> & {
+  /**
+   * @generated from field: string poi_id = 1;
+   */
+  poiId: string;
+};
+
+/**
+ * Describes the message loci.review.GetMyPOIReviewRequest.
+ * Use `create(GetMyPOIReviewRequestSchema)` to create a new message.
+ */
+export declare const GetMyPOIReviewRequestSchema: GenMessage<GetMyPOIReviewRequest>;
+
+/**
+ * @generated from message loci.review.GetMyPOIReviewResponse
+ */
+export declare type GetMyPOIReviewResponse = Message<"loci.review.GetMyPOIReviewResponse"> & {
+  /**
+   * @generated from field: loci.review.Review review = 1;
+   */
+  review?: Review;
+};
+
+/**
+ * Describes the message loci.review.GetMyPOIReviewResponse.
+ * Use `create(GetMyPOIReviewResponseSchema)` to create a new message.
+ */
+export declare const GetMyPOIReviewResponseSchema: GenMessage<GetMyPOIReviewResponse>;
 
 /**
  * @generated from message loci.review.GetReviewStatisticsRequest
@@ -1645,7 +1699,8 @@ export declare const ReviewService: GenService<{
     output: typeof LikeReviewResponseSchema;
   },
   /**
-   * Report a review
+   * Report a review. One report per reporter per review; reporting again
+   * updates the reason. Reporting your own review is rejected.
    *
    * @generated from rpc loci.review.ReviewService.ReportReview
    */
@@ -1653,6 +1708,17 @@ export declare const ReviewService: GenService<{
     methodKind: "unary";
     input: typeof ReportReviewRequestSchema;
     output: typeof ReportReviewResponseSchema;
+  },
+  /**
+   * The caller's own review of a POI. NotFound when they have not reviewed it,
+   * so a client can choose between "Write a review" and "Edit your review".
+   *
+   * @generated from rpc loci.review.ReviewService.GetMyPOIReview
+   */
+  getMyPOIReview: {
+    methodKind: "unary";
+    input: typeof GetMyPOIReviewRequestSchema;
+    output: typeof GetMyPOIReviewResponseSchema;
   },
   /**
    * Get review statistics for any content type

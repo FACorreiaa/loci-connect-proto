@@ -200,7 +200,14 @@ export declare type TravelSummary = Message<"loci.travelhistory.TravelSummary"> 
   lastVisitAt?: Timestamp;
 
   /**
-   * The same window one period earlier.
+   * Counts for the previous window, from 2 * period_days to period_days ago.
+   * Compare each against the matching *_this_period field, not the all-time
+   * totals above. A city (or country) counts in the window its first visit
+   * falls in; POIs count every visit in the window. Zero when nothing fell in
+   * the window.
+   *
+   * Servers before the *_this_period fields existed sent the all-time totals as
+   * they stood when the current window opened, which only ever trended upward.
    *
    * @generated from field: int32 cities_visited_prev_period = 8;
    */
@@ -222,6 +229,24 @@ export declare type TravelSummary = Message<"loci.travelhistory.TravelSummary"> 
    * @generated from field: int32 period_days = 11;
    */
   periodDays: number;
+
+  /**
+   * Counts for the current window, the last period_days, counted the same way
+   * as *_prev_period. A trend is *_this_period against *_prev_period.
+   *
+   * @generated from field: int32 cities_visited_this_period = 12;
+   */
+  citiesVisitedThisPeriod: number;
+
+  /**
+   * @generated from field: int32 countries_visited_this_period = 13;
+   */
+  countriesVisitedThisPeriod: number;
+
+  /**
+   * @generated from field: int32 pois_visited_this_period = 14;
+   */
+  poisVisitedThisPeriod: number;
 };
 
 /**
@@ -290,6 +315,21 @@ export declare type GlobeArc = Message<"loci.travelhistory.GlobeArc"> & {
    * @generated from field: google.protobuf.Timestamp occurred_at = 10;
    */
   occurredAt?: Timestamp;
+
+  /**
+   * The trip_legs row id. Stable across reads; it changes only when the trip
+   * is saved again, because SaveTrip rewrites a trip's legs.
+   *
+   * @generated from field: string id = 11;
+   */
+  id: string;
+
+  /**
+   * Travel time recorded on the leg, in minutes. Zero when unknown.
+   *
+   * @generated from field: int32 duration_mins = 12;
+   */
+  durationMins: number;
 };
 
 /**

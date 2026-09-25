@@ -90,12 +90,24 @@ message TravelSummary {
   int32 trips_completed = 5;
   google.protobuf.Timestamp first_visit_at = 6;
   google.protobuf.Timestamp last_visit_at = 7;
-  // The same window one period earlier.
+  // Counts for the previous window, from 2 * period_days to period_days ago.
+  // Compare each against the matching *_this_period field, not the all-time
+  // totals above. A city (or country) counts in the window its first visit
+  // falls in; POIs count every visit in the window. Zero when nothing fell in
+  // the window.
+  //
+  // Servers before the *_this_period fields existed sent the all-time totals as
+  // they stood when the current window opened, which only ever trended upward.
   int32 cities_visited_prev_period = 8;
   int32 countries_visited_prev_period = 9;
   int32 pois_visited_prev_period = 10;
   // Width of the comparison window actually used, in days.
   int32 period_days = 11;
+  // Counts for the current window, the last period_days, counted the same way
+  // as *_prev_period. A trend is *_this_period against *_prev_period.
+  int32 cities_visited_this_period = 12;
+  int32 countries_visited_this_period = 13;
+  int32 pois_visited_this_period = 14;
 }
 
 // GlobeArc is one leg between two placed points, ready to draw as a great
@@ -126,6 +138,11 @@ message GlobeArc {
   // when the trip did not record one.
   string mode = 9 [(buf.validate.field).string = {max_len: 50}];
   google.protobuf.Timestamp occurred_at = 10;
+  // The trip_legs row id. Stable across reads; it changes only when the trip
+  // is saved again, because SaveTrip rewrites a trip's legs.
+  string id = 11;
+  // Travel time recorded on the leg, in minutes. Zero when unknown.
+  int32 duration_mins = 12 [(buf.validate.field).int32 = {gte: 0}];
 }
 
 message ListVisitedCitiesRequest {

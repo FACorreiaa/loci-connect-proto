@@ -31,6 +31,10 @@ public protocol Loci_Place_PlaceIntelligenceServiceClientInterface: Sendable {
 
     @available(iOS 13, *)
     func `listPendingPlaces`(request: Loci_Place_ListPendingPlacesRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Place_ListPendingPlacesResponse>
+
+    /// ListMyClaims lists the caller's own claims, newest first.
+    @available(iOS 13, *)
+    func `listMyClaims`(request: Loci_Place_ListMyClaimsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Place_ListMyClaimsResponse>
 }
 
 /// Concrete implementation of `Loci_Place_PlaceIntelligenceServiceClientInterface`.
@@ -76,6 +80,11 @@ public final class Loci_Place_PlaceIntelligenceServiceClient: Loci_Place_PlaceIn
         return await self.client.unary(path: "/loci.place.PlaceIntelligenceService/ListPendingPlaces", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
+    @available(iOS 13, *)
+    public func `listMyClaims`(request: Loci_Place_ListMyClaimsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Place_ListMyClaimsResponse> {
+        return await self.client.unary(path: "/loci.place.PlaceIntelligenceService/ListMyClaims", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
     public enum Metadata {
         public enum Methods {
             public static let getPlaceFacts = Connect.MethodSpec(name: "GetPlaceFacts", service: "loci.place.PlaceIntelligenceService", type: .unary)
@@ -85,6 +94,7 @@ public final class Loci_Place_PlaceIntelligenceServiceClient: Loci_Place_PlaceIn
             public static let submitPlace = Connect.MethodSpec(name: "SubmitPlace", service: "loci.place.PlaceIntelligenceService", type: .unary)
             public static let confirmPlace = Connect.MethodSpec(name: "ConfirmPlace", service: "loci.place.PlaceIntelligenceService", type: .unary)
             public static let listPendingPlaces = Connect.MethodSpec(name: "ListPendingPlaces", service: "loci.place.PlaceIntelligenceService", type: .unary)
+            public static let listMyClaims = Connect.MethodSpec(name: "ListMyClaims", service: "loci.place.PlaceIntelligenceService", type: .unary)
         }
     }
 }

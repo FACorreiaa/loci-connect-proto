@@ -5506,6 +5506,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.place.PlaceFacts'
+  /loci.place.PlaceIntelligenceService/ListMyClaims:
+    post:
+      tags:
+        - loci.place.PlaceIntelligenceService
+      summary: ListMyClaims
+      description: ListMyClaims lists the caller's own claims, newest first.
+      operationId: loci.place.PlaceIntelligenceService.ListMyClaims
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.place.ListMyClaimsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.place.ListMyClaimsResponse'
   /loci.place.PlaceIntelligenceService/ListPendingPlaces:
     post:
       tags:
@@ -6566,6 +6602,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.review.GetContentReviewsResponse'
+  /loci.review.ReviewService/GetMyPOIReview:
+    post:
+      tags:
+        - loci.review.ReviewService
+      summary: GetMyPOIReview
+      description: |-
+        The caller's own review of a POI. NotFound when they have not reviewed it,
+         so a client can choose between "Write a review" and "Edit your review".
+      operationId: loci.review.ReviewService.GetMyPOIReview
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.review.GetMyPOIReviewRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.review.GetMyPOIReviewResponse'
   /loci.review.ReviewService/GetPOIReviews:
     post:
       tags:
@@ -6787,7 +6861,9 @@ paths:
       tags:
         - loci.review.ReviewService
       summary: ReportReview
-      description: Report a review
+      description: |-
+        Report a review. One report per reporter per review; reporting again
+         updates the reason. Reporting your own review is rejected.
       operationId: loci.review.ReviewService.ReportReview
       parameters:
         - name: Connect-Protocol-Version
@@ -18467,6 +18543,28 @@ components:
           format: int32
       title: SubscriptionUsage
       additionalProperties: false
+    loci.place.Badge:
+      type: object
+      properties:
+        slug:
+          type: string
+          title: slug
+          maxLength: 100
+          minLength: 1
+          description: Stable identifier, the same value as in ContributorProfile.badges.
+        displayName:
+          type: string
+          title: display_name
+          maxLength: 100
+        description:
+          type: string
+          title: description
+          maxLength: 300
+      title: Badge
+      additionalProperties: false
+      description: |-
+        Badge is one contributor badge with the copy a client shows for it, so the
+         wording lives on the server rather than in each client.
     loci.place.ConfirmPlaceRequest:
       type: object
       properties:
@@ -18523,6 +18621,15 @@ components:
             minLength: 1
           title: badges
           maxItems: 20
+          description: |-
+            Badge slugs. Kept for older clients; prefer badge_details, which carries
+             the same badges, in the same order, with display copy.
+        badgeDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.place.Badge'
+          title: badge_details
+          maxItems: 20
       title: ContributorProfile
       additionalProperties: false
     loci.place.GetMyContributorProfileRequest:
@@ -18538,6 +18645,39 @@ components:
           maxLength: 100
           minLength: 1
       title: GetPlaceFactsRequest
+      additionalProperties: false
+    loci.place.ListMyClaimsRequest:
+      type: object
+      properties:
+        limit:
+          type: integer
+          title: limit
+          maximum: 100
+          minimum: 0
+          format: int32
+          description: Defaults to 20 when zero.
+        page:
+          type: integer
+          title: page
+          minimum: 0
+          format: int32
+          description: 1-based. Zero means the first page.
+      title: ListMyClaimsRequest
+      additionalProperties: false
+    loci.place.ListMyClaimsResponse:
+      type: object
+      properties:
+        claims:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.place.MyPlaceClaim'
+          title: claims
+          description: Newest first.
+        total:
+          type: integer
+          title: total
+          format: int32
+      title: ListMyClaimsResponse
       additionalProperties: false
     loci.place.ListPendingPlacesRequest:
       type: object
@@ -18581,6 +18721,34 @@ components:
           title: tasks
       title: ListVerificationTasksResponse
       additionalProperties: false
+    loci.place.MyPlaceClaim:
+      type: object
+      properties:
+        claimId:
+          type: string
+          title: claim_id
+        poiId:
+          type: string
+          title: poi_id
+        poiName:
+          type: string
+          title: poi_name
+          description: Empty when the place has since been removed.
+        field:
+          title: field
+          $ref: '#/components/schemas/loci.place.PlaceFactField'
+        value:
+          type: string
+          title: value
+        status:
+          title: status
+          $ref: '#/components/schemas/loci.place.PlaceClaimStatus'
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: MyPlaceClaim
+      additionalProperties: false
+      description: MyPlaceClaim is one fact the caller reported, with where it stands now.
     loci.place.PendingPlace:
       type: object
       properties:
@@ -19453,6 +19621,10 @@ components:
           title: city_name
           maxLength: 200
           minLength: 1
+          description: |-
+            Optional. Empty means "no city": the server searches around
+             latitude/longitude when they are set, otherwise across every city.
+             "nearby" is treated the same as empty.
         latitude:
           type: number
           title: latitude
@@ -21785,6 +21957,24 @@ components:
           $ref: '#/components/schemas/loci.review.ReviewStatistics'
       title: GetContentReviewsResponse
       additionalProperties: false
+    loci.review.GetMyPOIReviewRequest:
+      type: object
+      properties:
+        poiId:
+          type: string
+          title: poi_id
+          maxLength: 100
+          minLength: 1
+      title: GetMyPOIReviewRequest
+      additionalProperties: false
+    loci.review.GetMyPOIReviewResponse:
+      type: object
+      properties:
+        review:
+          title: review
+          $ref: '#/components/schemas/loci.review.Review'
+      title: GetMyPOIReviewResponse
+      additionalProperties: false
     loci.review.GetPOIReviewsRequest:
       type: object
       properties:
@@ -22092,7 +22282,9 @@ components:
           type: string
           title: user_id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Ignored by the server, which acts as the authenticated caller. Kept for
+             wire compatibility; clients should omit it.
         reviewId:
           type: string
           title: review_id
@@ -22103,7 +22295,9 @@ components:
           title: reason
           maxLength: 200
           minLength: 1
-          description: '"spam", "inappropriate", "fake", "offensive"'
+          description: |-
+            One of "spam", "inappropriate", "fake", "offensive", "other"
+             (case-insensitive). The server rejects anything else with InvalidArgument.
         details:
           type: string
           title: details
@@ -22226,6 +22420,13 @@ components:
           title: content_name
           maxLength: 300
           description: Name of content for display
+        votedByMe:
+          type: boolean
+          title: voted_by_me
+          description: |-
+            True when the authenticated caller has marked this review helpful. Always
+             false for anonymous reads. Lets a client render the vote toggle's state
+             instead of guessing, so un-voting sends is_like = false.
       title: Review
       required:
         - createdAt
@@ -22655,12 +22856,16 @@ components:
           type: string
           title: reviewer_level
           maxLength: 50
-          minLength: 1
+          description: Not computed yet; empty.
         topCategoriesReviewed:
           type: array
           items:
             type: string
           title: top_categories_reviewed
+        ratingDistribution:
+          title: rating_distribution
+          description: How many of the user's published reviews gave each star count.
+          $ref: '#/components/schemas/loci.review.RatingBreakdown'
       title: UserReviewStatistics
       additionalProperties: false
     loci.share.CreateShareLinkRequest:
@@ -24624,6 +24829,18 @@ components:
         occurredAt:
           title: occurred_at
           $ref: '#/components/schemas/google.protobuf.Timestamp'
+        id:
+          type: string
+          title: id
+          description: |-
+            The trip_legs row id. Stable across reads; it changes only when the trip
+             is saved again, because SaveTrip rewrites a trip's legs.
+        durationMins:
+          type: integer
+          title: duration_mins
+          minimum: 0
+          format: int32
+          description: Travel time recorded on the leg, in minutes. Zero when unknown.
       title: GlobeArc
       additionalProperties: false
       description: |-
@@ -24782,7 +24999,15 @@ components:
           type: integer
           title: cities_visited_prev_period
           format: int32
-          description: The same window one period earlier.
+          description: |-
+            Counts for the previous window, from 2 * period_days to period_days ago.
+             Compare each against the matching *_this_period field, not the all-time
+             totals above. A city (or country) counts in the window its first visit
+             falls in; POIs count every visit in the window. Zero when nothing fell in
+             the window.
+
+             Servers before the *_this_period fields existed sent the all-time totals as
+             they stood when the current window opened, which only ever trended upward.
         countriesVisitedPrevPeriod:
           type: integer
           title: countries_visited_prev_period
@@ -24796,6 +25021,21 @@ components:
           title: period_days
           format: int32
           description: Width of the comparison window actually used, in days.
+        citiesVisitedThisPeriod:
+          type: integer
+          title: cities_visited_this_period
+          format: int32
+          description: |-
+            Counts for the current window, the last period_days, counted the same way
+             as *_prev_period. A trend is *_this_period against *_prev_period.
+        countriesVisitedThisPeriod:
+          type: integer
+          title: countries_visited_this_period
+          format: int32
+        poisVisitedThisPeriod:
+          type: integer
+          title: pois_visited_this_period
+          format: int32
       title: TravelSummary
       additionalProperties: false
       description: |-
@@ -25609,7 +25849,9 @@ components:
           type: string
           title: user_id
           maxLength: 100
-          minLength: 1
+          description: |-
+            Owner. Set on every trip the server returns. Ignored on SaveTrip, which
+             takes the owner from the auth token, so a client may leave it empty.
         cityId:
           type:
             - string
@@ -25668,14 +25910,15 @@ components:
           description: Session that generated the initial draft, if any.
         createdAt:
           title: created_at
+          description: |-
+            Set on every trip the server returns. Ignored on SaveTrip, which stamps
+             both itself, so a client creating a trip may leave them unset. (Requiring
+             them rejected every create that did not invent a timestamp.)
           $ref: '#/components/schemas/google.protobuf.Timestamp'
         updatedAt:
           title: updated_at
           $ref: '#/components/schemas/google.protobuf.Timestamp'
       title: TripDraft
-      required:
-        - createdAt
-        - updatedAt
       additionalProperties: false
       description: |-
         TripDraft is the full editable trip. `version` powers optimistic concurrency /

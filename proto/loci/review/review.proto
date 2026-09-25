@@ -34,8 +34,13 @@ service ReviewService {
   // Like/unlike a review
   rpc LikeReview(LikeReviewRequest) returns (LikeReviewResponse);
 
-  // Report a review
+  // Report a review. One report per reporter per review; reporting again
+  // updates the reason. Reporting your own review is rejected.
   rpc ReportReview(ReportReviewRequest) returns (ReportReviewResponse);
+
+  // The caller's own review of a POI. NotFound when they have not reviewed it,
+  // so a client can choose between "Write a review" and "Edit your review".
+  rpc GetMyPOIReview(GetMyPOIReviewRequest) returns (GetMyPOIReviewResponse);
 
   // Get review statistics for any content type
   rpc GetReviewStatistics(GetReviewStatisticsRequest) returns (GetReviewStatisticsResponse);
@@ -116,6 +121,11 @@ message Review {
     max_len: 100
   }]; // ID of content being reviewed
   string content_name = 21 [(buf.validate.field).string = {max_len: 300}]; // Name of content for display
+
+  // True when the authenticated caller has marked this review helpful. Always
+  // false for anonymous reads. Lets a client render the vote toggle's state
+  // instead of guessing, so un-voting sends is_like = false.
+  bool voted_by_me = 22;
 }
 
 // Type of content being reviewed
@@ -623,11 +633,14 @@ message UserReviewStatistics {
     lte: 5
   }];
   int32 helpful_votes_received = 3 [(buf.validate.field).int32 = {gte: 0}];
-  string reviewer_level = 4 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 50
-  }];
+  // Not computed yet; empty.
+  string reviewer_level = 4 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 50}
+  ];
   repeated string top_categories_reviewed = 5;
+  // How many of the user's published reviews gave each star count.
+  RatingBreakdown rating_distribution = 6;
 }
 
 message LikeReviewRequest {
@@ -650,18 +663,22 @@ message LikeReviewResponse {
 }
 
 message ReportReviewRequest {
-  string user_id = 1 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
-  }];
+  // Ignored by the server, which acts as the authenticated caller. Kept for
+  // wire compatibility; clients should omit it.
+  string user_id = 1 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ];
   string review_id = 2 [(buf.validate.field).string = {
     min_len: 1
     max_len: 100
   }];
+  // One of "spam", "inappropriate", "fake", "offensive", "other"
+  // (case-insensitive). The server rejects anything else with InvalidArgument.
   string reason = 3 [(buf.validate.field).string = {
     min_len: 1
     max_len: 200
-  }]; // "spam", "inappropriate", "fake", "offensive"
+  }];
   string details = 4 [
     (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
     (buf.validate.field).string = {max_len: 1000}
@@ -670,6 +687,17 @@ message ReportReviewRequest {
 
 message ReportReviewResponse {
   loci.common.Response response = 1;
+}
+
+message GetMyPOIReviewRequest {
+  string poi_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+}
+
+message GetMyPOIReviewResponse {
+  Review review = 1;
 }
 
 message GetReviewStatisticsRequest {

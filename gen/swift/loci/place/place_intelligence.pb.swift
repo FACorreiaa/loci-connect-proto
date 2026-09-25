@@ -344,7 +344,96 @@ public struct Loci_Place_ContributorProfile: Sendable {
 
   public var acceptedClaims: Int32 = 0
 
+  /// Badge slugs. Kept for older clients; prefer badge_details, which carries
+  /// the same badges, in the same order, with display copy.
   public var badges: [String] = []
+
+  public var badgeDetails: [Loci_Place_Badge] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// Badge is one contributor badge with the copy a client shows for it, so the
+/// wording lives on the server rather than in each client.
+public struct Loci_Place_Badge: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// Stable identifier, the same value as in ContributorProfile.badges.
+  public var slug: String = String()
+
+  public var displayName: String = String()
+
+  public var description_p: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// MyPlaceClaim is one fact the caller reported, with where it stands now.
+public struct Loci_Place_MyPlaceClaim: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var claimID: String = String()
+
+  public var poiID: String = String()
+
+  /// Empty when the place has since been removed.
+  public var poiName: String = String()
+
+  public var field: Loci_Place_PlaceFactField = .unspecified
+
+  public var value: String = String()
+
+  public var status: Loci_Place_PlaceClaimStatus = .unspecified
+
+  public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_createdAt = newValue}
+  }
+  /// Returns true if `createdAt` has been explicitly set.
+  public var hasCreatedAt: Bool {return self._createdAt != nil}
+  /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
+  public mutating func clearCreatedAt() {self._createdAt = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+}
+
+public struct Loci_Place_ListMyClaimsRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// Defaults to 20 when zero.
+  public var limit: Int32 = 0
+
+  /// 1-based. Zero means the first page.
+  public var page: Int32 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Place_ListMyClaimsResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// Newest first.
+  public var claims: [Loci_Place_MyPlaceClaim] = []
+
+  public var total: Int32 = 0
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -954,6 +1043,7 @@ extension Loci_Place_ContributorProfile: SwiftProtobuf.Message, SwiftProtobuf._M
     2: .standard(proto: "submitted_claims"),
     3: .standard(proto: "accepted_claims"),
     4: .same(proto: "badges"),
+    5: .standard(proto: "badge_details"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -966,6 +1056,7 @@ extension Loci_Place_ContributorProfile: SwiftProtobuf.Message, SwiftProtobuf._M
       case 2: try { try decoder.decodeSingularInt32Field(value: &self.submittedClaims) }()
       case 3: try { try decoder.decodeSingularInt32Field(value: &self.acceptedClaims) }()
       case 4: try { try decoder.decodeRepeatedStringField(value: &self.badges) }()
+      case 5: try { try decoder.decodeRepeatedMessageField(value: &self.badgeDetails) }()
       default: break
       }
     }
@@ -984,6 +1075,9 @@ extension Loci_Place_ContributorProfile: SwiftProtobuf.Message, SwiftProtobuf._M
     if !self.badges.isEmpty {
       try visitor.visitRepeatedStringField(value: self.badges, fieldNumber: 4)
     }
+    if !self.badgeDetails.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.badgeDetails, fieldNumber: 5)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -992,6 +1086,199 @@ extension Loci_Place_ContributorProfile: SwiftProtobuf.Message, SwiftProtobuf._M
     if lhs.submittedClaims != rhs.submittedClaims {return false}
     if lhs.acceptedClaims != rhs.acceptedClaims {return false}
     if lhs.badges != rhs.badges {return false}
+    if lhs.badgeDetails != rhs.badgeDetails {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Place_Badge: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".Badge"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "slug"),
+    2: .standard(proto: "display_name"),
+    3: .same(proto: "description"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.slug) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.displayName) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.description_p) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.slug.isEmpty {
+      try visitor.visitSingularStringField(value: self.slug, fieldNumber: 1)
+    }
+    if !self.displayName.isEmpty {
+      try visitor.visitSingularStringField(value: self.displayName, fieldNumber: 2)
+    }
+    if !self.description_p.isEmpty {
+      try visitor.visitSingularStringField(value: self.description_p, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Place_Badge, rhs: Loci_Place_Badge) -> Bool {
+    if lhs.slug != rhs.slug {return false}
+    if lhs.displayName != rhs.displayName {return false}
+    if lhs.description_p != rhs.description_p {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Place_MyPlaceClaim: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".MyPlaceClaim"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "claim_id"),
+    2: .standard(proto: "poi_id"),
+    3: .standard(proto: "poi_name"),
+    4: .same(proto: "field"),
+    5: .same(proto: "value"),
+    6: .same(proto: "status"),
+    7: .standard(proto: "created_at"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.claimID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.poiID) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.poiName) }()
+      case 4: try { try decoder.decodeSingularEnumField(value: &self.field) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.value) }()
+      case 6: try { try decoder.decodeSingularEnumField(value: &self.status) }()
+      case 7: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.claimID.isEmpty {
+      try visitor.visitSingularStringField(value: self.claimID, fieldNumber: 1)
+    }
+    if !self.poiID.isEmpty {
+      try visitor.visitSingularStringField(value: self.poiID, fieldNumber: 2)
+    }
+    if !self.poiName.isEmpty {
+      try visitor.visitSingularStringField(value: self.poiName, fieldNumber: 3)
+    }
+    if self.field != .unspecified {
+      try visitor.visitSingularEnumField(value: self.field, fieldNumber: 4)
+    }
+    if !self.value.isEmpty {
+      try visitor.visitSingularStringField(value: self.value, fieldNumber: 5)
+    }
+    if self.status != .unspecified {
+      try visitor.visitSingularEnumField(value: self.status, fieldNumber: 6)
+    }
+    try { if let v = self._createdAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Place_MyPlaceClaim, rhs: Loci_Place_MyPlaceClaim) -> Bool {
+    if lhs.claimID != rhs.claimID {return false}
+    if lhs.poiID != rhs.poiID {return false}
+    if lhs.poiName != rhs.poiName {return false}
+    if lhs.field != rhs.field {return false}
+    if lhs.value != rhs.value {return false}
+    if lhs.status != rhs.status {return false}
+    if lhs._createdAt != rhs._createdAt {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Place_ListMyClaimsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ListMyClaimsRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "limit"),
+    2: .same(proto: "page"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularInt32Field(value: &self.limit) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.page) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.limit != 0 {
+      try visitor.visitSingularInt32Field(value: self.limit, fieldNumber: 1)
+    }
+    if self.page != 0 {
+      try visitor.visitSingularInt32Field(value: self.page, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Place_ListMyClaimsRequest, rhs: Loci_Place_ListMyClaimsRequest) -> Bool {
+    if lhs.limit != rhs.limit {return false}
+    if lhs.page != rhs.page {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Place_ListMyClaimsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ListMyClaimsResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "claims"),
+    2: .same(proto: "total"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.claims) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.total) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.claims.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.claims, fieldNumber: 1)
+    }
+    if self.total != 0 {
+      try visitor.visitSingularInt32Field(value: self.total, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Place_ListMyClaimsResponse, rhs: Loci_Place_ListMyClaimsResponse) -> Bool {
+    if lhs.claims != rhs.claims {return false}
+    if lhs.total != rhs.total {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

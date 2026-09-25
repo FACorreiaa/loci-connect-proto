@@ -44,9 +44,15 @@ public protocol Loci_Review_ReviewServiceClientInterface: Sendable {
     @available(iOS 13, *)
     func `likeReview`(request: Loci_Review_LikeReviewRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Review_LikeReviewResponse>
 
-    /// Report a review
+    /// Report a review. One report per reporter per review; reporting again
+    /// updates the reason. Reporting your own review is rejected.
     @available(iOS 13, *)
     func `reportReview`(request: Loci_Review_ReportReviewRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Review_ReportReviewResponse>
+
+    /// The caller's own review of a POI. NotFound when they have not reviewed it,
+    /// so a client can choose between "Write a review" and "Edit your review".
+    @available(iOS 13, *)
+    func `getMyPoireview`(request: Loci_Review_GetMyPOIReviewRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Review_GetMyPOIReviewResponse>
 
     /// Get review statistics for any content type
     @available(iOS 13, *)
@@ -111,6 +117,11 @@ public final class Loci_Review_ReviewServiceClient: Loci_Review_ReviewServiceCli
     }
 
     @available(iOS 13, *)
+    public func `getMyPoireview`(request: Loci_Review_GetMyPOIReviewRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Review_GetMyPOIReviewResponse> {
+        return await self.client.unary(path: "/loci.review.ReviewService/GetMyPOIReview", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
     public func `getReviewStatistics`(request: Loci_Review_GetReviewStatisticsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Review_GetReviewStatisticsResponse> {
         return await self.client.unary(path: "/loci.review.ReviewService/GetReviewStatistics", idempotencyLevel: .unknown, request: request, headers: headers)
     }
@@ -131,6 +142,7 @@ public final class Loci_Review_ReviewServiceClient: Loci_Review_ReviewServiceCli
             public static let getUserReviews = Connect.MethodSpec(name: "GetUserReviews", service: "loci.review.ReviewService", type: .unary)
             public static let likeReview = Connect.MethodSpec(name: "LikeReview", service: "loci.review.ReviewService", type: .unary)
             public static let reportReview = Connect.MethodSpec(name: "ReportReview", service: "loci.review.ReviewService", type: .unary)
+            public static let getMyPoireview = Connect.MethodSpec(name: "GetMyPOIReview", service: "loci.review.ReviewService", type: .unary)
             public static let getReviewStatistics = Connect.MethodSpec(name: "GetReviewStatistics", service: "loci.review.ReviewService", type: .unary)
             public static let getRecentReviews = Connect.MethodSpec(name: "GetRecentReviews", service: "loci.review.ReviewService", type: .unary)
         }
