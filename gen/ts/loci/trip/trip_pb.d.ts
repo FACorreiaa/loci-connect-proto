@@ -343,6 +343,9 @@ export declare type TripDraft = Message<"loci.trip.TripDraft"> & {
   id: string;
 
   /**
+   * Owner. Set on every trip the server returns. Ignored on SaveTrip, which
+   * takes the owner from the auth token, so a client may leave it empty.
+   *
    * @generated from field: string user_id = 2;
    */
   userId: string;
@@ -403,6 +406,10 @@ export declare type TripDraft = Message<"loci.trip.TripDraft"> & {
   sourceSessionId?: string;
 
   /**
+   * Set on every trip the server returns. Ignored on SaveTrip, which stamps
+   * both itself, so a client creating a trip may leave them unset. (Requiring
+   * them rejected every create that did not invent a timestamp.)
+   *
    * @generated from field: google.protobuf.Timestamp created_at = 10;
    */
   createdAt?: Timestamp;

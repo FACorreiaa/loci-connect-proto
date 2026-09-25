@@ -199,10 +199,12 @@ message TripDraft {
   // nil id as "new trip"). Requiring it made creating a trip impossible, which
   // is the one thing every trip has to do first.
   string id = 1 [(buf.validate.field).string = {max_len: 100}];
-  string user_id = 2 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
-  }];
+  // Owner. Set on every trip the server returns. Ignored on SaveTrip, which
+  // takes the owner from the auth token, so a client may leave it empty.
+  string user_id = 2 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {max_len: 100}
+  ];
   optional string city_id = 3 [(buf.validate.field) = {
     string: {
       min_len: 1
@@ -231,8 +233,11 @@ message TripDraft {
       max_len: 200
     }
   }];
-  google.protobuf.Timestamp created_at = 10 [(buf.validate.field).required = true];
-  google.protobuf.Timestamp updated_at = 11 [(buf.validate.field).required = true];
+  // Set on every trip the server returns. Ignored on SaveTrip, which stamps
+  // both itself, so a client creating a trip may leave them unset. (Requiring
+  // them rejected every create that did not invent a timestamp.)
+  google.protobuf.Timestamp created_at = 10;
+  google.protobuf.Timestamp updated_at = 11;
 }
 
 // TripSnapshot is an immutable point-in-time copy of a trip, written on each

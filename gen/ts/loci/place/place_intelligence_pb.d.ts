@@ -229,9 +229,17 @@ export declare type ContributorProfile = Message<"loci.place.ContributorProfile"
   acceptedClaims: number;
 
   /**
+   * Badge slugs. Kept for older clients; prefer badge_details, which carries
+   * the same badges, in the same order, with display copy.
+   *
    * @generated from field: repeated string badges = 4;
    */
   badges: string[];
+
+  /**
+   * @generated from field: repeated loci.place.Badge badge_details = 5;
+   */
+  badgeDetails: Badge[];
 };
 
 /**
@@ -239,6 +247,135 @@ export declare type ContributorProfile = Message<"loci.place.ContributorProfile"
  * Use `create(ContributorProfileSchema)` to create a new message.
  */
 export declare const ContributorProfileSchema: GenMessage<ContributorProfile>;
+
+/**
+ * Badge is one contributor badge with the copy a client shows for it, so the
+ * wording lives on the server rather than in each client.
+ *
+ * @generated from message loci.place.Badge
+ */
+export declare type Badge = Message<"loci.place.Badge"> & {
+  /**
+   * Stable identifier, the same value as in ContributorProfile.badges.
+   *
+   * @generated from field: string slug = 1;
+   */
+  slug: string;
+
+  /**
+   * @generated from field: string display_name = 2;
+   */
+  displayName: string;
+
+  /**
+   * @generated from field: string description = 3;
+   */
+  description: string;
+};
+
+/**
+ * Describes the message loci.place.Badge.
+ * Use `create(BadgeSchema)` to create a new message.
+ */
+export declare const BadgeSchema: GenMessage<Badge>;
+
+/**
+ * MyPlaceClaim is one fact the caller reported, with where it stands now.
+ *
+ * @generated from message loci.place.MyPlaceClaim
+ */
+export declare type MyPlaceClaim = Message<"loci.place.MyPlaceClaim"> & {
+  /**
+   * @generated from field: string claim_id = 1;
+   */
+  claimId: string;
+
+  /**
+   * @generated from field: string poi_id = 2;
+   */
+  poiId: string;
+
+  /**
+   * Empty when the place has since been removed.
+   *
+   * @generated from field: string poi_name = 3;
+   */
+  poiName: string;
+
+  /**
+   * @generated from field: loci.place.PlaceFactField field = 4;
+   */
+  field: PlaceFactField;
+
+  /**
+   * @generated from field: string value = 5;
+   */
+  value: string;
+
+  /**
+   * @generated from field: loci.place.PlaceClaimStatus status = 6;
+   */
+  status: PlaceClaimStatus;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp created_at = 7;
+   */
+  createdAt?: Timestamp;
+};
+
+/**
+ * Describes the message loci.place.MyPlaceClaim.
+ * Use `create(MyPlaceClaimSchema)` to create a new message.
+ */
+export declare const MyPlaceClaimSchema: GenMessage<MyPlaceClaim>;
+
+/**
+ * @generated from message loci.place.ListMyClaimsRequest
+ */
+export declare type ListMyClaimsRequest = Message<"loci.place.ListMyClaimsRequest"> & {
+  /**
+   * Defaults to 20 when zero.
+   *
+   * @generated from field: int32 limit = 1;
+   */
+  limit: number;
+
+  /**
+   * 1-based. Zero means the first page.
+   *
+   * @generated from field: int32 page = 2;
+   */
+  page: number;
+};
+
+/**
+ * Describes the message loci.place.ListMyClaimsRequest.
+ * Use `create(ListMyClaimsRequestSchema)` to create a new message.
+ */
+export declare const ListMyClaimsRequestSchema: GenMessage<ListMyClaimsRequest>;
+
+/**
+ * @generated from message loci.place.ListMyClaimsResponse
+ */
+export declare type ListMyClaimsResponse = Message<"loci.place.ListMyClaimsResponse"> & {
+  /**
+   * Newest first.
+   *
+   * @generated from field: repeated loci.place.MyPlaceClaim claims = 1;
+   */
+  claims: MyPlaceClaim[];
+
+  /**
+   * @generated from field: int32 total = 2;
+   */
+  total: number;
+};
+
+/**
+ * Describes the message loci.place.ListMyClaimsResponse.
+ * Use `create(ListMyClaimsResponseSchema)` to create a new message.
+ */
+export declare const ListMyClaimsResponseSchema: GenMessage<ListMyClaimsResponse>;
 
 /**
  * @generated from message loci.place.GetMyContributorProfileRequest
@@ -639,6 +776,16 @@ export declare const PlaceIntelligenceService: GenService<{
     methodKind: "unary";
     input: typeof ListPendingPlacesRequestSchema;
     output: typeof ListPendingPlacesResponseSchema;
+  },
+  /**
+   * ListMyClaims lists the caller's own claims, newest first.
+   *
+   * @generated from rpc loci.place.PlaceIntelligenceService.ListMyClaims
+   */
+  listMyClaims: {
+    methodKind: "unary";
+    input: typeof ListMyClaimsRequestSchema;
+    output: typeof ListMyClaimsResponseSchema;
   },
 }>;
 
