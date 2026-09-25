@@ -390,6 +390,14 @@ public struct Loci_Review_Review: @unchecked Sendable {
     set {_uniqueStorage()._contentName = newValue}
   }
 
+  /// True when the authenticated caller has marked this review helpful. Always
+  /// false for anonymous reads. Lets a client render the vote toggle's state
+  /// instead of guessing, so un-voting sends is_like = false.
+  public var votedByMe: Bool {
+    get {return _storage._votedByMe}
+    set {_uniqueStorage()._votedByMe = newValue}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -1336,13 +1344,26 @@ public struct Loci_Review_UserReviewStatistics: Sendable {
 
   public var helpfulVotesReceived: Int32 = 0
 
+  /// Not computed yet; empty.
   public var reviewerLevel: String = String()
 
   public var topCategoriesReviewed: [String] = []
 
+  /// How many of the user's published reviews gave each star count.
+  public var ratingDistribution: Loci_Review_RatingBreakdown {
+    get {return _ratingDistribution ?? Loci_Review_RatingBreakdown()}
+    set {_ratingDistribution = newValue}
+  }
+  /// Returns true if `ratingDistribution` has been explicitly set.
+  public var hasRatingDistribution: Bool {return self._ratingDistribution != nil}
+  /// Clears the value of `ratingDistribution`. Subsequent reads from it will return its default value.
+  public mutating func clearRatingDistribution() {self._ratingDistribution = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
+
+  fileprivate var _ratingDistribution: Loci_Review_RatingBreakdown? = nil
 }
 
 public struct Loci_Review_LikeReviewRequest: Sendable {
@@ -1392,11 +1413,14 @@ public struct Loci_Review_ReportReviewRequest: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// Ignored by the server, which acts as the authenticated caller. Kept for
+  /// wire compatibility; clients should omit it.
   public var userID: String = String()
 
   public var reviewID: String = String()
 
-  /// "spam", "inappropriate", "fake", "offensive"
+  /// One of "spam", "inappropriate", "fake", "offensive", "other"
+  /// (case-insensitive). The server rejects anything else with InvalidArgument.
   public var reason: String = String()
 
   public var details: String = String()
@@ -1425,6 +1449,39 @@ public struct Loci_Review_ReportReviewResponse: Sendable {
   public init() {}
 
   fileprivate var _response: Loci_Common_Response? = nil
+}
+
+public struct Loci_Review_GetMyPOIReviewRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var poiID: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Review_GetMyPOIReviewResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var review: Loci_Review_Review {
+    get {return _review ?? Loci_Review_Review()}
+    set {_review = newValue}
+  }
+  /// Returns true if `review` has been explicitly set.
+  public var hasReview: Bool {return self._review != nil}
+  /// Clears the value of `review`. Subsequent reads from it will return its default value.
+  public mutating func clearReview() {self._review = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _review: Loci_Review_Review? = nil
 }
 
 public struct Loci_Review_GetReviewStatisticsRequest: Sendable {
@@ -1533,6 +1590,7 @@ extension Loci_Review_Review: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     19: .standard(proto: "content_type"),
     20: .standard(proto: "content_id"),
     21: .standard(proto: "content_name"),
+    22: .standard(proto: "voted_by_me"),
   ]
 
   fileprivate class _StorageClass {
@@ -1557,6 +1615,7 @@ extension Loci_Review_Review: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _contentType: Loci_Review_ReviewContentType = .unspecified
     var _contentID: String = String()
     var _contentName: String = String()
+    var _votedByMe: Bool = false
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -1592,6 +1651,7 @@ extension Loci_Review_Review: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       _contentType = source._contentType
       _contentID = source._contentID
       _contentName = source._contentName
+      _votedByMe = source._votedByMe
     }
   }
 
@@ -1631,6 +1691,7 @@ extension Loci_Review_Review: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         case 19: try { try decoder.decodeSingularEnumField(value: &_storage._contentType) }()
         case 20: try { try decoder.decodeSingularStringField(value: &_storage._contentID) }()
         case 21: try { try decoder.decodeSingularStringField(value: &_storage._contentName) }()
+        case 22: try { try decoder.decodeSingularBoolField(value: &_storage._votedByMe) }()
         default: break
         }
       }
@@ -1706,6 +1767,9 @@ extension Loci_Review_Review: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       if !_storage._contentName.isEmpty {
         try visitor.visitSingularStringField(value: _storage._contentName, fieldNumber: 21)
       }
+      if _storage._votedByMe != false {
+        try visitor.visitSingularBoolField(value: _storage._votedByMe, fieldNumber: 22)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1736,6 +1800,7 @@ extension Loci_Review_Review: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         if _storage._contentType != rhs_storage._contentType {return false}
         if _storage._contentID != rhs_storage._contentID {return false}
         if _storage._contentName != rhs_storage._contentName {return false}
+        if _storage._votedByMe != rhs_storage._votedByMe {return false}
         return true
       }
       if !storagesAreEqual {return false}
@@ -3545,6 +3610,7 @@ extension Loci_Review_UserReviewStatistics: SwiftProtobuf.Message, SwiftProtobuf
     3: .standard(proto: "helpful_votes_received"),
     4: .standard(proto: "reviewer_level"),
     5: .standard(proto: "top_categories_reviewed"),
+    6: .standard(proto: "rating_distribution"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3558,12 +3624,17 @@ extension Loci_Review_UserReviewStatistics: SwiftProtobuf.Message, SwiftProtobuf
       case 3: try { try decoder.decodeSingularInt32Field(value: &self.helpfulVotesReceived) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.reviewerLevel) }()
       case 5: try { try decoder.decodeRepeatedStringField(value: &self.topCategoriesReviewed) }()
+      case 6: try { try decoder.decodeSingularMessageField(value: &self._ratingDistribution) }()
       default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if self.totalReviews != 0 {
       try visitor.visitSingularInt32Field(value: self.totalReviews, fieldNumber: 1)
     }
@@ -3579,6 +3650,9 @@ extension Loci_Review_UserReviewStatistics: SwiftProtobuf.Message, SwiftProtobuf
     if !self.topCategoriesReviewed.isEmpty {
       try visitor.visitRepeatedStringField(value: self.topCategoriesReviewed, fieldNumber: 5)
     }
+    try { if let v = self._ratingDistribution {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3588,6 +3662,7 @@ extension Loci_Review_UserReviewStatistics: SwiftProtobuf.Message, SwiftProtobuf
     if lhs.helpfulVotesReceived != rhs.helpfulVotesReceived {return false}
     if lhs.reviewerLevel != rhs.reviewerLevel {return false}
     if lhs.topCategoriesReviewed != rhs.topCategoriesReviewed {return false}
+    if lhs._ratingDistribution != rhs._ratingDistribution {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -3760,6 +3835,74 @@ extension Loci_Review_ReportReviewResponse: SwiftProtobuf.Message, SwiftProtobuf
 
   public static func ==(lhs: Loci_Review_ReportReviewResponse, rhs: Loci_Review_ReportReviewResponse) -> Bool {
     if lhs._response != rhs._response {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Review_GetMyPOIReviewRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".GetMyPOIReviewRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "poi_id"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.poiID) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.poiID.isEmpty {
+      try visitor.visitSingularStringField(value: self.poiID, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Review_GetMyPOIReviewRequest, rhs: Loci_Review_GetMyPOIReviewRequest) -> Bool {
+    if lhs.poiID != rhs.poiID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Review_GetMyPOIReviewResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".GetMyPOIReviewResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "review"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._review) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._review {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Review_GetMyPOIReviewResponse, rhs: Loci_Review_GetMyPOIReviewResponse) -> Bool {
+    if lhs._review != rhs._review {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

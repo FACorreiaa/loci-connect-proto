@@ -499,6 +499,8 @@ public struct Loci_Trip_TripDraft: @unchecked Sendable {
     set {_uniqueStorage()._id = newValue}
   }
 
+  /// Owner. Set on every trip the server returns. Ignored on SaveTrip, which
+  /// takes the owner from the auth token, so a client may leave it empty.
   public var userID: String {
     get {return _storage._userID}
     set {_uniqueStorage()._userID = newValue}
@@ -567,6 +569,9 @@ public struct Loci_Trip_TripDraft: @unchecked Sendable {
   /// Clears the value of `sourceSessionID`. Subsequent reads from it will return its default value.
   public mutating func clearSourceSessionID() {_uniqueStorage()._sourceSessionID = nil}
 
+  /// Set on every trip the server returns. Ignored on SaveTrip, which stamps
+  /// both itself, so a client creating a trip may leave them unset. (Requiring
+  /// them rejected every create that did not invent a timestamp.)
   public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
     get {return _storage._createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._createdAt = newValue}

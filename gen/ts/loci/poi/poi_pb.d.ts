@@ -535,6 +535,10 @@ export declare type SearchPOIRequest = Message<"loci.poi.SearchPOIRequest"> & {
   query: string;
 
   /**
+   * Optional. Empty means "no city": the server searches around
+   * latitude/longitude when they are set, otherwise across every city.
+   * "nearby" is treated the same as empty.
+   *
    * @generated from field: string city_name = 2;
    */
   cityName: string;

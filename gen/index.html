@@ -558,6 +558,10 @@
             <ul>
               
                 <li>
+                  <a href="#loci.place.Badge"><span class="badge">M</span>Badge</a>
+                </li>
+              
+                <li>
                   <a href="#loci.place.ConfirmPlaceRequest"><span class="badge">M</span>ConfirmPlaceRequest</a>
                 </li>
               
@@ -578,6 +582,14 @@
                 </li>
               
                 <li>
+                  <a href="#loci.place.ListMyClaimsRequest"><span class="badge">M</span>ListMyClaimsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.place.ListMyClaimsResponse"><span class="badge">M</span>ListMyClaimsResponse</a>
+                </li>
+              
+                <li>
                   <a href="#loci.place.ListPendingPlacesRequest"><span class="badge">M</span>ListPendingPlacesRequest</a>
                 </li>
               
@@ -591,6 +603,10 @@
               
                 <li>
                   <a href="#loci.place.ListVerificationTasksResponse"><span class="badge">M</span>ListVerificationTasksResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.place.MyPlaceClaim"><span class="badge">M</span>MyPlaceClaim</a>
                 </li>
               
                 <li>
@@ -2835,6 +2851,14 @@
               
                 <li>
                   <a href="#loci.review.GetContentReviewsResponse"><span class="badge">M</span>GetContentReviewsResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.review.GetMyPOIReviewRequest"><span class="badge">M</span>GetMyPOIReviewRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.review.GetMyPOIReviewResponse"><span class="badge">M</span>GetMyPOIReviewResponse</a>
                 </li>
               
                 <li>
@@ -6605,6 +6629,44 @@ client_ip; these are what let somebody see and end them.</p></td>
       <p></p>
 
       
+        <h3 id="loci.place.Badge">Badge</h3>
+        <p>Badge is one contributor badge with the copy a client shows for it, so the</p><p>wording lives on the server rather than in each client.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>slug</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Stable identifier, the same value as in ContributorProfile.badges. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>display_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.place.ConfirmPlaceRequest">ConfirmPlaceRequest</h3>
         <p></p>
 
@@ -6702,6 +6764,14 @@ client_ip; these are what let somebody see and end them.</p></td>
                   <td>badges</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
+                  <td><p>Badge slugs. Kept for older clients; prefer badge_details, which carries
+the same badges, in the same order, with display copy. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>badge_details</td>
+                  <td><a href="#loci.place.Badge">Badge</a></td>
+                  <td>repeated</td>
                   <td><p> </p></td>
                 </tr>
               
@@ -6732,6 +6802,68 @@ client_ip; these are what let somebody see and end them.</p></td>
                 <tr>
                   <td>poi_id</td>
                   <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.place.ListMyClaimsRequest">ListMyClaimsRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>limit</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Defaults to 20 when zero. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>page</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>1-based. Zero means the first page. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.place.ListMyClaimsResponse">ListMyClaimsResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>claims</td>
+                  <td><a href="#loci.place.MyPlaceClaim">MyPlaceClaim</a></td>
+                  <td>repeated</td>
+                  <td><p>Newest first. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>total</td>
+                  <td><a href="#int32">int32</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -6829,6 +6961,72 @@ client_ip; these are what let somebody see and end them.</p></td>
                   <td>tasks</td>
                   <td><a href="#loci.place.VerificationTask">VerificationTask</a></td>
                   <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.place.MyPlaceClaim">MyPlaceClaim</h3>
+        <p>MyPlaceClaim is one fact the caller reported, with where it stands now.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>claim_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>poi_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>poi_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Empty when the place has since been removed. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>field</td>
+                  <td><a href="#loci.place.PlaceFactField">PlaceFactField</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#loci.place.PlaceClaimStatus">PlaceClaimStatus</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
                   <td><p> </p></td>
                 </tr>
               
@@ -7442,6 +7640,13 @@ client_ip; these are what let somebody see and end them.</p></td>
                 <td><a href="#loci.place.ListPendingPlacesRequest">ListPendingPlacesRequest</a></td>
                 <td><a href="#loci.place.ListPendingPlacesResponse">ListPendingPlacesResponse</a></td>
                 <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ListMyClaims</td>
+                <td><a href="#loci.place.ListMyClaimsRequest">ListMyClaimsRequest</a></td>
+                <td><a href="#loci.place.ListMyClaimsResponse">ListMyClaimsResponse</a></td>
+                <td><p>ListMyClaims lists the caller&#39;s own claims, newest first.</p></td>
               </tr>
             
           </tbody>
@@ -8966,7 +9171,9 @@ renders one renders the other. </p></td>
                   <td>city_name</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Optional. Empty means &#34;no city&#34;: the server searches around
+latitude/longitude when they are set, otherwise across every city.
+&#34;nearby&#34; is treated the same as empty. </p></td>
                 </tr>
               
                 <tr>
@@ -10206,7 +10413,8 @@ is the one thing every trip has to do first. </p></td>
                   <td>user_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Owner. Set on every trip the server returns. Ignored on SaveTrip, which
+takes the owner from the auth token, so a client may leave it empty. </p></td>
                 </tr>
               
                 <tr>
@@ -10278,7 +10486,9 @@ single-city trip, whose city is city_name above. </p></td>
                   <td>created_at</td>
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Set on every trip the server returns. Ignored on SaveTrip, which stamps
+both itself, so a client creating a trip may leave them unset. (Requiring
+them rejected every create that did not invent a timestamp.) </p></td>
                 </tr>
               
                 <tr>
@@ -31048,6 +31258,54 @@ wire compatibility; clients should omit it. </p></td>
 
         
       
+        <h3 id="loci.review.GetMyPOIReviewRequest">GetMyPOIReviewRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>poi_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.review.GetMyPOIReviewResponse">GetMyPOIReviewResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>review</td>
+                  <td><a href="#loci.review.Review">Review</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.review.GetPOIReviewsRequest">GetPOIReviewsRequest</h3>
         <p></p>
 
@@ -31695,7 +31953,8 @@ wire compatibility; clients should omit it. </p></td>
                   <td>user_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Ignored by the server, which acts as the authenticated caller. Kept for
+wire compatibility; clients should omit it. </p></td>
                 </tr>
               
                 <tr>
@@ -31709,7 +31968,8 @@ wire compatibility; clients should omit it. </p></td>
                   <td>reason</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>&#34;spam&#34;, &#34;inappropriate&#34;, &#34;fake&#34;, &#34;offensive&#34; </p></td>
+                  <td><p>One of &#34;spam&#34;, &#34;inappropriate&#34;, &#34;fake&#34;, &#34;offensive&#34;, &#34;other&#34;
+(case-insensitive). The server rejects anything else with InvalidArgument. </p></td>
                 </tr>
               
                 <tr>
@@ -31911,6 +32171,15 @@ Type of content being reviewed </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Name of content for display </p></td>
+                </tr>
+              
+                <tr>
+                  <td>voted_by_me</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>True when the authenticated caller has marked this review helpful. Always
+false for anonymous reads. Lets a client render the vote toggle&#39;s state
+instead of guessing, so un-voting sends is_like = false. </p></td>
                 </tr>
               
             </tbody>
@@ -32508,7 +32777,7 @@ the full review: an empty title, photo list or visit_date clears it. </p></td>
                   <td>reviewer_level</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Not computed yet; empty. </p></td>
                 </tr>
               
                 <tr>
@@ -32516,6 +32785,13 @@ the full review: an empty title, photo list or visit_date clears it. </p></td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
                   <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>rating_distribution</td>
+                  <td><a href="#loci.review.RatingBreakdown">RatingBreakdown</a></td>
+                  <td></td>
+                  <td><p>How many of the user&#39;s published reviews gave each star count. </p></td>
                 </tr>
               
             </tbody>
@@ -32769,7 +33045,16 @@ the full review: an empty title, photo list or visit_date clears it. </p></td>
                 <td>ReportReview</td>
                 <td><a href="#loci.review.ReportReviewRequest">ReportReviewRequest</a></td>
                 <td><a href="#loci.review.ReportReviewResponse">ReportReviewResponse</a></td>
-                <td><p>Report a review</p></td>
+                <td><p>Report a review. One report per reporter per review; reporting again
+updates the reason. Reporting your own review is rejected.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetMyPOIReview</td>
+                <td><a href="#loci.review.GetMyPOIReviewRequest">GetMyPOIReviewRequest</a></td>
+                <td><a href="#loci.review.GetMyPOIReviewResponse">GetMyPOIReviewResponse</a></td>
+                <td><p>The caller&#39;s own review of a POI. NotFound when they have not reviewed it,
+so a client can choose between &#34;Write a review&#34; and &#34;Edit your review&#34;.</p></td>
               </tr>
             
               <tr>
@@ -36719,6 +37004,21 @@ when the trip did not record one. </p></td>
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The trip_legs row id. Stable across reads; it changes only when the trip
+is saved again, because SaveTrip rewrites a trip&#39;s legs. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>duration_mins</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Travel time recorded on the leg, in minutes. Zero when unknown. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -37017,7 +37317,14 @@ when the trip did not record one. </p></td>
                   <td>cities_visited_prev_period</td>
                   <td><a href="#int32">int32</a></td>
                   <td></td>
-                  <td><p>The same window one period earlier. </p></td>
+                  <td><p>Counts for the previous window, from 2 * period_days to period_days ago.
+Compare each against the matching *_this_period field, not the all-time
+totals above. A city (or country) counts in the window its first visit
+falls in; POIs count every visit in the window. Zero when nothing fell in
+the window.
+
+Servers before the *_this_period fields existed sent the all-time totals as
+they stood when the current window opened, which only ever trended upward. </p></td>
                 </tr>
               
                 <tr>
@@ -37039,6 +37346,28 @@ when the trip did not record one. </p></td>
                   <td><a href="#int32">int32</a></td>
                   <td></td>
                   <td><p>Width of the comparison window actually used, in days. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>cities_visited_this_period</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Counts for the current window, the last period_days, counted the same way
+as *_prev_period. A trend is *_this_period against *_prev_period. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>countries_visited_this_period</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>pois_visited_this_period</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
                 </tr>
               
             </tbody>

@@ -229,7 +229,14 @@ public struct Loci_Travelhistory_TravelSummary: Sendable {
   /// Clears the value of `lastVisitAt`. Subsequent reads from it will return its default value.
   public mutating func clearLastVisitAt() {self._lastVisitAt = nil}
 
-  /// The same window one period earlier.
+  /// Counts for the previous window, from 2 * period_days to period_days ago.
+  /// Compare each against the matching *_this_period field, not the all-time
+  /// totals above. A city (or country) counts in the window its first visit
+  /// falls in; POIs count every visit in the window. Zero when nothing fell in
+  /// the window.
+  ///
+  /// Servers before the *_this_period fields existed sent the all-time totals as
+  /// they stood when the current window opened, which only ever trended upward.
   public var citiesVisitedPrevPeriod: Int32 = 0
 
   public var countriesVisitedPrevPeriod: Int32 = 0
@@ -238,6 +245,14 @@ public struct Loci_Travelhistory_TravelSummary: Sendable {
 
   /// Width of the comparison window actually used, in days.
   public var periodDays: Int32 = 0
+
+  /// Counts for the current window, the last period_days, counted the same way
+  /// as *_prev_period. A trend is *_this_period against *_prev_period.
+  public var citiesVisitedThisPeriod: Int32 = 0
+
+  public var countriesVisitedThisPeriod: Int32 = 0
+
+  public var poisVisitedThisPeriod: Int32 = 0
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -283,6 +298,13 @@ public struct Loci_Travelhistory_GlobeArc: Sendable {
   public var hasOccurredAt: Bool {return self._occurredAt != nil}
   /// Clears the value of `occurredAt`. Subsequent reads from it will return its default value.
   public mutating func clearOccurredAt() {self._occurredAt = nil}
+
+  /// The trip_legs row id. Stable across reads; it changes only when the trip
+  /// is saved again, because SaveTrip rewrites a trip's legs.
+  public var id: String = String()
+
+  /// Travel time recorded on the leg, in minutes. Zero when unknown.
+  public var durationMins: Int32 = 0
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -500,33 +522,42 @@ public struct Loci_Travelhistory_GetGlobeDataRequest: Sendable {
   public init() {}
 }
 
-public struct Loci_Travelhistory_GetGlobeDataResponse: Sendable {
+public struct Loci_Travelhistory_GetGlobeDataResponse: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var cities: [Loci_Travelhistory_VisitedCity] = []
+  public var cities: [Loci_Travelhistory_VisitedCity] {
+    get {return _storage._cities}
+    set {_uniqueStorage()._cities = newValue}
+  }
 
-  public var arcs: [Loci_Travelhistory_GlobeArc] = []
+  public var arcs: [Loci_Travelhistory_GlobeArc] {
+    get {return _storage._arcs}
+    set {_uniqueStorage()._arcs = newValue}
+  }
 
   public var summary: Loci_Travelhistory_TravelSummary {
-    get {return _summary ?? Loci_Travelhistory_TravelSummary()}
-    set {_summary = newValue}
+    get {return _storage._summary ?? Loci_Travelhistory_TravelSummary()}
+    set {_uniqueStorage()._summary = newValue}
   }
   /// Returns true if `summary` has been explicitly set.
-  public var hasSummary: Bool {return self._summary != nil}
+  public var hasSummary: Bool {return _storage._summary != nil}
   /// Clears the value of `summary`. Subsequent reads from it will return its default value.
-  public mutating func clearSummary() {self._summary = nil}
+  public mutating func clearSummary() {_uniqueStorage()._summary = nil}
 
   /// True when the lazy backfill has completed for this user. The client uses
   /// this to tell "you have been nowhere yet" apart from "we have not looked".
-  public var backfilled: Bool = false
+  public var backfilled: Bool {
+    get {return _storage._backfilled}
+    set {_uniqueStorage()._backfilled = newValue}
+  }
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
-  fileprivate var _summary: Loci_Travelhistory_TravelSummary? = nil
+  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -743,6 +774,9 @@ extension Loci_Travelhistory_TravelSummary: SwiftProtobuf.Message, SwiftProtobuf
     9: .standard(proto: "countries_visited_prev_period"),
     10: .standard(proto: "pois_visited_prev_period"),
     11: .standard(proto: "period_days"),
+    12: .standard(proto: "cities_visited_this_period"),
+    13: .standard(proto: "countries_visited_this_period"),
+    14: .standard(proto: "pois_visited_this_period"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -762,6 +796,9 @@ extension Loci_Travelhistory_TravelSummary: SwiftProtobuf.Message, SwiftProtobuf
       case 9: try { try decoder.decodeSingularInt32Field(value: &self.countriesVisitedPrevPeriod) }()
       case 10: try { try decoder.decodeSingularInt32Field(value: &self.poisVisitedPrevPeriod) }()
       case 11: try { try decoder.decodeSingularInt32Field(value: &self.periodDays) }()
+      case 12: try { try decoder.decodeSingularInt32Field(value: &self.citiesVisitedThisPeriod) }()
+      case 13: try { try decoder.decodeSingularInt32Field(value: &self.countriesVisitedThisPeriod) }()
+      case 14: try { try decoder.decodeSingularInt32Field(value: &self.poisVisitedThisPeriod) }()
       default: break
       }
     }
@@ -805,6 +842,15 @@ extension Loci_Travelhistory_TravelSummary: SwiftProtobuf.Message, SwiftProtobuf
     if self.periodDays != 0 {
       try visitor.visitSingularInt32Field(value: self.periodDays, fieldNumber: 11)
     }
+    if self.citiesVisitedThisPeriod != 0 {
+      try visitor.visitSingularInt32Field(value: self.citiesVisitedThisPeriod, fieldNumber: 12)
+    }
+    if self.countriesVisitedThisPeriod != 0 {
+      try visitor.visitSingularInt32Field(value: self.countriesVisitedThisPeriod, fieldNumber: 13)
+    }
+    if self.poisVisitedThisPeriod != 0 {
+      try visitor.visitSingularInt32Field(value: self.poisVisitedThisPeriod, fieldNumber: 14)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -820,6 +866,9 @@ extension Loci_Travelhistory_TravelSummary: SwiftProtobuf.Message, SwiftProtobuf
     if lhs.countriesVisitedPrevPeriod != rhs.countriesVisitedPrevPeriod {return false}
     if lhs.poisVisitedPrevPeriod != rhs.poisVisitedPrevPeriod {return false}
     if lhs.periodDays != rhs.periodDays {return false}
+    if lhs.citiesVisitedThisPeriod != rhs.citiesVisitedThisPeriod {return false}
+    if lhs.countriesVisitedThisPeriod != rhs.countriesVisitedThisPeriod {return false}
+    if lhs.poisVisitedThisPeriod != rhs.poisVisitedThisPeriod {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -838,6 +887,8 @@ extension Loci_Travelhistory_GlobeArc: SwiftProtobuf.Message, SwiftProtobuf._Mes
     8: .standard(proto: "trip_id"),
     9: .same(proto: "mode"),
     10: .standard(proto: "occurred_at"),
+    11: .same(proto: "id"),
+    12: .standard(proto: "duration_mins"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -856,6 +907,8 @@ extension Loci_Travelhistory_GlobeArc: SwiftProtobuf.Message, SwiftProtobuf._Mes
       case 8: try { try decoder.decodeSingularStringField(value: &self.tripID) }()
       case 9: try { try decoder.decodeSingularStringField(value: &self.mode) }()
       case 10: try { try decoder.decodeSingularMessageField(value: &self._occurredAt) }()
+      case 11: try { try decoder.decodeSingularStringField(value: &self.id) }()
+      case 12: try { try decoder.decodeSingularInt32Field(value: &self.durationMins) }()
       default: break
       }
     }
@@ -896,6 +949,12 @@ extension Loci_Travelhistory_GlobeArc: SwiftProtobuf.Message, SwiftProtobuf._Mes
     try { if let v = self._occurredAt {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
     } }()
+    if !self.id.isEmpty {
+      try visitor.visitSingularStringField(value: self.id, fieldNumber: 11)
+    }
+    if self.durationMins != 0 {
+      try visitor.visitSingularInt32Field(value: self.durationMins, fieldNumber: 12)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -910,6 +969,8 @@ extension Loci_Travelhistory_GlobeArc: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if lhs.tripID != rhs.tripID {return false}
     if lhs.mode != rhs.mode {return false}
     if lhs._occurredAt != rhs._occurredAt {return false}
+    if lhs.id != rhs.id {return false}
+    if lhs.durationMins != rhs.durationMins {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1366,46 +1427,92 @@ extension Loci_Travelhistory_GetGlobeDataResponse: SwiftProtobuf.Message, SwiftP
     4: .same(proto: "backfilled"),
   ]
 
+  fileprivate class _StorageClass {
+    var _cities: [Loci_Travelhistory_VisitedCity] = []
+    var _arcs: [Loci_Travelhistory_GlobeArc] = []
+    var _summary: Loci_Travelhistory_TravelSummary? = nil
+    var _backfilled: Bool = false
+
+    #if swift(>=5.10)
+      // This property is used as the initial default value for new instances of the type.
+      // The type itself is protecting the reference to its storage via CoW semantics.
+      // This will force a copy to be made of this reference when the first mutation occurs;
+      // hence, it is safe to mark this as `nonisolated(unsafe)`.
+      static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _cities = source._cities
+      _arcs = source._arcs
+      _summary = source._summary
+      _backfilled = source._backfilled
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.cities) }()
-      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.arcs) }()
-      case 3: try { try decoder.decodeSingularMessageField(value: &self._summary) }()
-      case 4: try { try decoder.decodeSingularBoolField(value: &self.backfilled) }()
-      default: break
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeRepeatedMessageField(value: &_storage._cities) }()
+        case 2: try { try decoder.decodeRepeatedMessageField(value: &_storage._arcs) }()
+        case 3: try { try decoder.decodeSingularMessageField(value: &_storage._summary) }()
+        case 4: try { try decoder.decodeSingularBoolField(value: &_storage._backfilled) }()
+        default: break
+        }
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    if !self.cities.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.cities, fieldNumber: 1)
-    }
-    if !self.arcs.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.arcs, fieldNumber: 2)
-    }
-    try { if let v = self._summary {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-    } }()
-    if self.backfilled != false {
-      try visitor.visitSingularBoolField(value: self.backfilled, fieldNumber: 4)
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      if !_storage._cities.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._cities, fieldNumber: 1)
+      }
+      if !_storage._arcs.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._arcs, fieldNumber: 2)
+      }
+      try { if let v = _storage._summary {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+      } }()
+      if _storage._backfilled != false {
+        try visitor.visitSingularBoolField(value: _storage._backfilled, fieldNumber: 4)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Loci_Travelhistory_GetGlobeDataResponse, rhs: Loci_Travelhistory_GetGlobeDataResponse) -> Bool {
-    if lhs.cities != rhs.cities {return false}
-    if lhs.arcs != rhs.arcs {return false}
-    if lhs._summary != rhs._summary {return false}
-    if lhs.backfilled != rhs.backfilled {return false}
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._cities != rhs_storage._cities {return false}
+        if _storage._arcs != rhs_storage._arcs {return false}
+        if _storage._summary != rhs_storage._summary {return false}
+        if _storage._backfilled != rhs_storage._backfilled {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

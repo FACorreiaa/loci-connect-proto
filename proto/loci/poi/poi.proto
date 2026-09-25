@@ -454,10 +454,16 @@ message SearchPOIRequest {
     min_len: 1
     max_len: 500
   }];
-  string city_name = 2 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 200
-  }];
+  // Optional. Empty means "no city": the server searches around
+  // latitude/longitude when they are set, otherwise across every city.
+  // "nearby" is treated the same as empty.
+  string city_name = 2 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {
+      min_len: 1
+      max_len: 200
+    }
+  ];
   double latitude = 3 [(buf.validate.field).double = {
     gte: -90
     lte: 90
