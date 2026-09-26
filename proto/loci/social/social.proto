@@ -1,0 +1,281 @@
+syntax = "proto3";
+
+package loci.social;
+
+import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/social;social";
+
+// SocialService is Loci's friends layer: mutual friendships (a request one
+// side sends and the other accepts), invite links, blocking, and finding
+// friends by username or by phone contacts.
+//
+// Friendship is mutual on purpose. "Friends" trip visibility, and later
+// location sharing, are seen only by people both sides approved.
+//
+// GetInvite and GetPublicProfile accept anonymous callers (an invite link or
+// a profile opened signed out); every other RPC needs a session.
+service SocialService {
+  // GetMyInvite returns the caller's invite link, creating it on first use.
+  rpc GetMyInvite(GetMyInviteRequest) returns (GetMyInviteResponse);
+  // RotateInvite replaces the caller's invite code; the old link stops working.
+  rpc RotateInvite(RotateInviteRequest) returns (GetMyInviteResponse);
+  // GetInvite describes an invite for its landing page. Expired or rotated
+  // codes are NotFound.
+  rpc GetInvite(GetInviteRequest) returns (GetInviteResponse);
+  // AcceptInvite makes the caller and the inviter friends at once: opening a
+  // friend's link is the consent on both sides.
+  rpc AcceptInvite(AcceptInviteRequest) returns (AcceptInviteResponse);
+
+  rpc SendFriendRequest(SendFriendRequestRequest) returns (SendFriendRequestResponse);
+  // RespondFriendRequest accepts or declines an incoming request.
+  rpc RespondFriendRequest(RespondFriendRequestRequest) returns (RespondFriendRequestResponse);
+  // CancelFriendRequest withdraws a request the caller sent.
+  rpc CancelFriendRequest(CancelFriendRequestRequest) returns (CancelFriendRequestResponse);
+  rpc ListFriendRequests(ListFriendRequestsRequest) returns (ListFriendRequestsResponse);
+
+  rpc ListFriends(ListFriendsRequest) returns (ListFriendsResponse);
+  rpc RemoveFriend(RemoveFriendRequest) returns (RemoveFriendResponse);
+
+  // BlockUser ends any friendship and pending request between the two, and
+  // hides each side's content and profile from the other.
+  rpc BlockUser(BlockUserRequest) returns (BlockUserResponse);
+  rpc UnblockUser(UnblockUserRequest) returns (UnblockUserResponse);
+
+  // MatchContacts finds Loci users among the caller's contacts. Clients send
+  // SHA-256 hashes of normalised identifiers, never the identifiers; only
+  // verified phone numbers and emails match, and nothing is stored for
+  // contacts who are not on Loci.
+  rpc MatchContacts(MatchContactsRequest) returns (MatchContactsResponse);
+
+  // SearchUsers finds users by username prefix.
+  rpc SearchUsers(SearchUsersRequest) returns (SearchUsersResponse);
+  // GetPublicProfile is a user's profile as the caller may see it. A user who
+  // blocked the caller is NotFound.
+  rpc GetPublicProfile(GetPublicProfileRequest) returns (GetPublicProfileResponse);
+}
+
+// PublicUser is what anyone may see about a user: never email or phone.
+message PublicUser {
+  string id = 1 [(buf.validate.field).string.max_len = 100];
+  string username = 2 [(buf.validate.field).string.max_len = 100];
+  string display_name = 3 [(buf.validate.field).string.max_len = 200];
+  string avatar_url = 4 [(buf.validate.field).string.max_len = 2048];
+  string home_city = 5 [(buf.validate.field).string.max_len = 200];
+}
+
+// Relationship is the caller's relation to another user.
+enum Relationship {
+  RELATIONSHIP_UNSPECIFIED = 0;
+  RELATIONSHIP_NONE = 1;
+  // The caller sent a request that is still pending.
+  RELATIONSHIP_REQUESTED = 2;
+  // The other user sent the caller a request that is still pending.
+  RELATIONSHIP_INCOMING = 3;
+  RELATIONSHIP_FRIENDS = 4;
+  // The caller blocked this user.
+  RELATIONSHIP_BLOCKED = 5;
+  RELATIONSHIP_SELF = 6;
+}
+
+message Friend {
+  PublicUser user = 1;
+  google.protobuf.Timestamp since = 2;
+}
+
+message FriendRequest {
+  string id = 1 [(buf.validate.field).string.max_len = 100];
+  PublicUser from = 2;
+  PublicUser to = 3;
+  google.protobuf.Timestamp created_at = 4;
+}
+
+message Invite {
+  string code = 1 [(buf.validate.field).string.max_len = 50];
+  string url = 2 [(buf.validate.field).string.max_len = 2048];
+  google.protobuf.Timestamp expires_at = 3;
+  PublicUser inviter = 4;
+}
+
+// ProfileStats are the counts a profile shows. Travel counts come from the
+// user's travel history.
+message ProfileStats {
+  int32 cities = 1 [(buf.validate.field).int32.gte = 0];
+  int32 countries = 2 [(buf.validate.field).int32.gte = 0];
+  // Trips the caller may see on this profile.
+  int32 visible_trips = 3 [(buf.validate.field).int32.gte = 0];
+  int32 friends = 4 [(buf.validate.field).int32.gte = 0];
+}
+
+message GetMyInviteRequest {}
+
+message GetMyInviteResponse {
+  Invite invite = 1 [(buf.validate.field).required = true];
+}
+
+message RotateInviteRequest {}
+
+message GetInviteRequest {
+  string code = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 50
+  }];
+}
+
+message GetInviteResponse {
+  Invite invite = 1 [(buf.validate.field).required = true];
+  // The caller's relation to the inviter; UNSPECIFIED when signed out.
+  Relationship relationship = 2;
+}
+
+message AcceptInviteRequest {
+  string code = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 50
+  }];
+}
+
+message AcceptInviteResponse {
+  Friend friend = 1 [(buf.validate.field).required = true];
+}
+
+message SendFriendRequestRequest {
+  oneof target {
+    option (buf.validate.oneof).required = true;
+    string user_id = 1 [(buf.validate.field).string.uuid = true];
+    string username = 2 [(buf.validate.field).string = {
+      min_len: 1
+      max_len: 100
+    }];
+  }
+}
+
+message SendFriendRequestResponse {
+  // FRIENDS when the other user had already asked the caller: the two
+  // requests meet and become a friendship.
+  Relationship relationship = 1;
+  FriendRequest request = 2;
+}
+
+message RespondFriendRequestRequest {
+  string request_id = 1 [(buf.validate.field).string.uuid = true];
+  bool accept = 2;
+}
+
+message RespondFriendRequestResponse {
+  // Set when accepted.
+  Friend friend = 1;
+}
+
+message CancelFriendRequestRequest {
+  string request_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+message CancelFriendRequestResponse {}
+
+enum RequestDirection {
+  REQUEST_DIRECTION_UNSPECIFIED = 0;
+  REQUEST_DIRECTION_INCOMING = 1;
+  REQUEST_DIRECTION_OUTGOING = 2;
+}
+
+message ListFriendRequestsRequest {
+  RequestDirection direction = 1 [(buf.validate.field).enum = {
+    defined_only: true
+    not_in: [0]
+  }];
+}
+
+message ListFriendRequestsResponse {
+  repeated FriendRequest requests = 1;
+}
+
+message ListFriendsRequest {}
+
+message ListFriendsResponse {
+  repeated Friend friends = 1;
+}
+
+message RemoveFriendRequest {
+  string user_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+message RemoveFriendResponse {}
+
+message BlockUserRequest {
+  string user_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+message BlockUserResponse {}
+
+message UnblockUserRequest {
+  string user_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+message UnblockUserResponse {}
+
+message MatchContactsRequest {
+  // Lower-case hex SHA-256 of each normalised identifier: phone numbers in
+  // E.164 ("+351912345678"), emails trimmed and lower-cased.
+  repeated string hashes = 1 [(buf.validate.field).repeated = {
+    min_items: 1
+    max_items: 2000
+    items: {
+      string: {
+        len: 64
+        pattern: "^[0-9a-f]{64}$"
+      }
+    }
+  }];
+}
+
+message ContactMatch {
+  // The hash the client sent, so it can show which contact matched.
+  string hash = 1 [(buf.validate.field).string.len = 64];
+  PublicUser user = 2;
+  Relationship relationship = 3;
+}
+
+message MatchContactsResponse {
+  repeated ContactMatch matches = 1;
+}
+
+message SearchUsersRequest {
+  string query = 1 [(buf.validate.field).string = {
+    min_len: 2
+    max_len: 100
+  }];
+  int32 limit = 2 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 50
+  }];
+}
+
+message UserResult {
+  PublicUser user = 1;
+  Relationship relationship = 2;
+}
+
+message SearchUsersResponse {
+  repeated UserResult users = 1;
+}
+
+message GetPublicProfileRequest {
+  oneof target {
+    option (buf.validate.oneof).required = true;
+    string user_id = 1 [(buf.validate.field).string.uuid = true];
+    string username = 2 [(buf.validate.field).string = {
+      min_len: 1
+      max_len: 100
+    }];
+  }
+}
+
+message GetPublicProfileResponse {
+  PublicUser user = 1 [(buf.validate.field).required = true];
+  ProfileStats stats = 2;
+  // UNSPECIFIED when signed out.
+  Relationship relationship = 3;
+  google.protobuf.Timestamp member_since = 4;
+}
