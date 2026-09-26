@@ -1,0 +1,106 @@
+syntax = "proto3";
+
+package loci.gastronomy;
+
+import "buf/validate/validate.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/gastronomy;gastronomy";
+
+// GastronomyService answers "what do people eat here, and where?" for a city.
+// The same CityGastronomy is appended to itinerary and discovery results on
+// ChatService.StreamChat; this service is the standalone lookup. Both read
+// one city-scoped cache entry, so a city is generated once for everyone.
+service GastronomyService {
+  rpc GetCityGastronomy(GetCityGastronomyRequest) returns (GetCityGastronomyResponse);
+}
+
+// DishCategory groups dishes on screen. Unknown values render as "main".
+enum DishCategory {
+  DISH_CATEGORY_UNSPECIFIED = 0;
+  DISH_CATEGORY_MAIN = 1;
+  DISH_CATEGORY_STREET_FOOD = 2;
+  DISH_CATEGORY_SNACK = 3;
+  DISH_CATEGORY_DESSERT = 4;
+  DISH_CATEGORY_DRINK = 5;
+}
+
+// GastronomyPlace is a light reference to a well-known place to eat a dish.
+// It is not a POI: it carries no id and is not saved to points_of_interest.
+// Coordinates are optional because the model is not asked to guess them;
+// clients fall back to a map search on name + address.
+message GastronomyPlace {
+  string name = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 300
+  }];
+  string neighborhood = 2 [(buf.validate.field).string.max_len = 200];
+  string address = 3 [(buf.validate.field).string.max_len = 500];
+  // Why this place is known for the dish ("serving it since 1953").
+  string why_famous = 4 [(buf.validate.field).string.max_len = 1000];
+  // "€", "€€", "€€€" or "$".."$$$"; empty when unknown.
+  string price_range = 5 [(buf.validate.field).string.max_len = 20];
+  optional double latitude = 6 [(buf.validate.field).double = {
+    gte: -90
+    lte: 90
+  }];
+  optional double longitude = 7 [(buf.validate.field).double = {
+    gte: -180
+    lte: 180
+  }];
+  optional string website = 8 [(buf.validate.field).string.max_len = 2048];
+}
+
+// Dish is one typical dish or drink of the city.
+message Dish {
+  string name = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
+  // Name in the local language when it differs from `name`.
+  string local_name = 2 [(buf.validate.field).string.max_len = 200];
+  string description = 3 [(buf.validate.field).string.max_len = 2000];
+  DishCategory category = 4;
+  // True for the handful of dishes the city is best known for.
+  bool is_signature = 5;
+  repeated GastronomyPlace places = 6 [(buf.validate.field).repeated.max_items = 10];
+}
+
+// CityGastronomy is the typical gastronomy of one city.
+message CityGastronomy {
+  string city_name = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
+  string country = 2 [(buf.validate.field).string.max_len = 200];
+  string overview = 3 [(buf.validate.field).string.max_len = 4000];
+  repeated string culinary_traditions = 4 [(buf.validate.field).repeated = {
+    max_items: 20
+    items: {
+      string: {max_len: 500}
+    }
+  }];
+  repeated Dish dishes = 5 [(buf.validate.field).repeated.max_items = 30];
+  repeated string dining_tips = 6 [(buf.validate.field).repeated = {
+    max_items: 20
+    items: {
+      string: {max_len: 500}
+    }
+  }];
+}
+
+message GetCityGastronomyRequest {
+  oneof city {
+    option (buf.validate.oneof).required = true;
+    string city_name = 1 [(buf.validate.field).string = {
+      min_len: 1
+      max_len: 200
+    }];
+    string city_id = 2 [(buf.validate.field).string.uuid = true];
+  }
+}
+
+message GetCityGastronomyResponse {
+  CityGastronomy gastronomy = 1 [(buf.validate.field).required = true];
+  // True when the answer came from cache rather than a fresh generation.
+  bool cached = 2;
+}

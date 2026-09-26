@@ -6,6 +6,7 @@ import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
 import "loci/city/city.proto";
 import "loci/common/common.proto";
+import "loci/gastronomy/gastronomy.proto";
 import "loci/poi/poi.proto";
 import "loci/profile/profile.proto";
 import "loci/trip/trip.proto";
@@ -85,6 +86,7 @@ enum StreamEventType {
   STREAM_EVENT_TYPE_ERROR = 11;
   STREAM_EVENT_TYPE_COMPLETE = 12;
   STREAM_EVENT_TYPE_ROUTE = 13;
+  STREAM_EVENT_TYPE_GASTRONOMY = 14;
 }
 
 // LlmInteraction represents an interaction with the LLM
@@ -290,6 +292,10 @@ message AiCityResponse {
   repeated loci.poi.POIDetailedInfo hotels = 5;
   repeated loci.poi.POIDetailedInfo restaurants = 6;
   repeated loci.poi.POIDetailedInfo activities = 7;
+  // The city's typical gastronomy, generated alongside itinerary and
+  // discovery (general) results. Absent for other domains, and when its
+  // generation failed: it never fails the response it rides on.
+  optional loci.gastronomy.CityGastronomy gastronomy = 8;
 }
 
 // SessionPerformanceMetrics contains performance metrics
@@ -625,6 +631,14 @@ message RoutePayload {
   optional string trip_id = 7 [(buf.validate.field).string = {max_len: 100}];
 }
 
+// GastronomyPayload carries STREAM_EVENT_TYPE_GASTRONOMY: the city's typical
+// gastronomy, sent as soon as it is parsed so clients can render the section
+// before COMPLETE. The same value is on AiCityResponse.gastronomy.
+message GastronomyPayload {
+  loci.gastronomy.CityGastronomy gastronomy = 1 [(buf.validate.field).required = true];
+  string session_id = 2 [(buf.validate.field).string = {max_len: 200}];
+}
+
 // StreamEvent represents a streaming event. The old free-form `type` string
 // (field 1), opaque `data` bytes (field 3), and `error` string (field 4) were
 // replaced by the typed `event_type` enum + `payload` oneof below.
@@ -667,6 +681,7 @@ message StreamEvent {
     StreamError error = 30;
     CompletePayload complete = 31;
     RoutePayload route = 32;
+    GastronomyPayload gastronomy = 33;
   }
 }
 
