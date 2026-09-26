@@ -109,6 +109,16 @@ export declare type Dish = Message<"loci.gastronomy.Dish"> & {
    * @generated from field: repeated loci.gastronomy.GastronomyPlace places = 6;
    */
   places: GastronomyPlace[];
+
+  /**
+   * Main-ingredient and diet tags, lower-case, for filtering. The prompt asks
+   * for tags from this vocabulary: seafood, fish, meat, pork, beef, poultry,
+   * vegetarian, vegan, cheese, pastry, bread, soup, rice, fruit, spicy,
+   * alcoholic. Clients show unknown tags as-is.
+   *
+   * @generated from field: repeated string tags = 7;
+   */
+  tags: string[];
 };
 
 /**

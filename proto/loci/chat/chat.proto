@@ -66,6 +66,9 @@ enum DomainType {
   DOMAIN_TYPE_ACTIVITIES = 4;
   DOMAIN_TYPE_ITINERARY = 5;
   DOMAIN_TYPE_TRANSPORT = 6;
+  // A city's typical food ("gastronomy in Madeira", "food in Porto"): the
+  // stream carries a GASTRONOMY event rather than a place list.
+  DOMAIN_TYPE_GASTRONOMY = 7;
 }
 
 // StreamEventType is the typed discriminator for a StreamEvent. It replaces the
