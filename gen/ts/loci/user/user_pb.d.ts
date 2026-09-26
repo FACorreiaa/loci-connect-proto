@@ -492,6 +492,13 @@ export declare type NotificationSettings = Message<"loci.user.NotificationSettin
    * @generated from field: bool search_finished = 4;
    */
   searchFinished: boolean;
+
+  /**
+   * Friend requests and accepted friendships.
+   *
+   * @generated from field: bool friend_activity = 5;
+   */
+  friendActivity: boolean;
 };
 
 /**
@@ -532,6 +539,11 @@ export declare type UpdateNotificationSettingsRequest = Message<"loci.user.Updat
    * @generated from field: optional bool search_finished = 3;
    */
   searchFinished?: boolean;
+
+  /**
+   * @generated from field: optional bool friend_activity = 4;
+   */
+  friendActivity?: boolean;
 };
 
 /**
