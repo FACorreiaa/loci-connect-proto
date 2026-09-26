@@ -28,6 +28,8 @@ enum ShareContentType {
   SHARE_CONTENT_TYPE_ITINERARY = 4;
   SHARE_CONTENT_TYPE_LIST = 5;
   SHARE_CONTENT_TYPE_ACTIVITY = 6;
+  // A trip; its share code opens TripService.GetSharedTrip.
+  SHARE_CONTENT_TYPE_TRIP = 7;
 }
 
 // Shared content metadata for OG tags

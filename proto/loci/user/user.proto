@@ -355,6 +355,8 @@ message NotificationSettings {
   bool trip_reminders = 2;
   google.protobuf.Timestamp updated_at = 3;
   bool search_finished = 4;
+  // Friend requests and accepted friendships.
+  bool friend_activity = 5;
 }
 
 message GetNotificationSettingsRequest {}
@@ -364,6 +366,7 @@ message UpdateNotificationSettingsRequest {
   optional bool recommendations = 1;
   optional bool trip_reminders = 2;
   optional bool search_finished = 3;
+  optional bool friend_activity = 4;
 }
 
 enum PushPlatform {
