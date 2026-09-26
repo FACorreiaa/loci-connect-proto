@@ -8,6 +8,7 @@ import type { Timestamp } from "@bufbuild/protobuf/wkt";
 import type { UserPreferenceProfile } from "../profile/profile_pb";
 import type { HotelDetailedInfo, POIDetailedInfo, RestaurantDetailedInfo } from "../poi/poi_pb";
 import type { GeneralCityData } from "../city/city_pb";
+import type { CityGastronomy } from "../gastronomy/gastronomy_pb";
 import type { TripLeg } from "../trip/trip_pb";
 import type { PaginationMetadata, PaginationRequest, ResponseSchema } from "../common/common_pb";
 
@@ -383,6 +384,15 @@ export declare type AiCityResponse = Message<"loci.chat.AiCityResponse"> & {
    * @generated from field: repeated loci.poi.POIDetailedInfo activities = 7;
    */
   activities: POIDetailedInfo[];
+
+  /**
+   * The city's typical gastronomy, generated alongside itinerary and
+   * discovery (general) results. Absent for other domains, and when its
+   * generation failed: it never fails the response it rides on.
+   *
+   * @generated from field: optional loci.gastronomy.CityGastronomy gastronomy = 8;
+   */
+  gastronomy?: CityGastronomy;
 };
 
 /**
@@ -1171,6 +1181,31 @@ export declare type RoutePayload = Message<"loci.chat.RoutePayload"> & {
 export declare const RoutePayloadSchema: GenMessage<RoutePayload>;
 
 /**
+ * GastronomyPayload carries STREAM_EVENT_TYPE_GASTRONOMY: the city's typical
+ * gastronomy, sent as soon as it is parsed so clients can render the section
+ * before COMPLETE. The same value is on AiCityResponse.gastronomy.
+ *
+ * @generated from message loci.chat.GastronomyPayload
+ */
+export declare type GastronomyPayload = Message<"loci.chat.GastronomyPayload"> & {
+  /**
+   * @generated from field: loci.gastronomy.CityGastronomy gastronomy = 1;
+   */
+  gastronomy?: CityGastronomy;
+
+  /**
+   * @generated from field: string session_id = 2;
+   */
+  sessionId: string;
+};
+
+/**
+ * Describes the message loci.chat.GastronomyPayload.
+ * Use `create(GastronomyPayloadSchema)` to create a new message.
+ */
+export declare const GastronomyPayloadSchema: GenMessage<GastronomyPayload>;
+
+/**
  * StreamEvent represents a streaming event. The old free-form `type` string
  * (field 1), opaque `data` bytes (field 3), and `error` string (field 4) were
  * replaced by the typed `event_type` enum + `payload` oneof below.
@@ -1307,6 +1342,12 @@ export declare type StreamEvent = Message<"loci.chat.StreamEvent"> & {
      */
     value: RoutePayload;
     case: "route";
+  } | {
+    /**
+     * @generated from field: loci.chat.GastronomyPayload gastronomy = 33;
+     */
+    value: GastronomyPayload;
+    case: "gastronomy";
   } | { case: undefined; value?: undefined };
 };
 
@@ -2454,6 +2495,14 @@ export enum DomainType {
    * @generated from enum value: DOMAIN_TYPE_TRANSPORT = 6;
    */
   TRANSPORT = 6,
+
+  /**
+   * A city's typical food ("gastronomy in Madeira", "food in Porto"): the
+   * stream carries a GASTRONOMY event rather than a place list.
+   *
+   * @generated from enum value: DOMAIN_TYPE_GASTRONOMY = 7;
+   */
+  GASTRONOMY = 7,
 }
 
 /**
@@ -2542,6 +2591,11 @@ export enum StreamEventType {
    * @generated from enum value: STREAM_EVENT_TYPE_ROUTE = 13;
    */
   ROUTE = 13,
+
+  /**
+   * @generated from enum value: STREAM_EVENT_TYPE_GASTRONOMY = 14;
+   */
+  GASTRONOMY = 14,
 }
 
 /**
