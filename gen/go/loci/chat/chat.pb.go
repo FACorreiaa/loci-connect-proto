@@ -296,6 +296,9 @@ const (
 	DomainType_DOMAIN_TYPE_ACTIVITIES    DomainType = 4
 	DomainType_DOMAIN_TYPE_ITINERARY     DomainType = 5
 	DomainType_DOMAIN_TYPE_TRANSPORT     DomainType = 6
+	// A city's typical food ("gastronomy in Madeira", "food in Porto"): the
+	// stream carries a GASTRONOMY event rather than a place list.
+	DomainType_DOMAIN_TYPE_GASTRONOMY DomainType = 7
 )
 
 // Enum value maps for DomainType.
@@ -308,6 +311,7 @@ var (
 		4: "DOMAIN_TYPE_ACTIVITIES",
 		5: "DOMAIN_TYPE_ITINERARY",
 		6: "DOMAIN_TYPE_TRANSPORT",
+		7: "DOMAIN_TYPE_GASTRONOMY",
 	}
 	DomainType_value = map[string]int32{
 		"DOMAIN_TYPE_UNSPECIFIED":   0,
@@ -317,6 +321,7 @@ var (
 		"DOMAIN_TYPE_ACTIVITIES":    4,
 		"DOMAIN_TYPE_ITINERARY":     5,
 		"DOMAIN_TYPE_TRANSPORT":     6,
+		"DOMAIN_TYPE_GASTRONOMY":    7,
 	}
 )
 
@@ -5788,7 +5793,7 @@ const file_loci_chat_chat_proto_rawDesc = "" +
 	"\x17INTENT_TYPE_REPLACE_POI\x10\r\x12\x1b\n" +
 	"\x17INTENT_TYPE_CHANGE_DATE\x10\x0e\x12\x1f\n" +
 	"\x1bINTENT_TYPE_CHANGE_LOCATION\x10\x0f\x12\x1e\n" +
-	"\x1aINTENT_TYPE_SORT_ITINERARY\x10\x10*\xcb\x01\n" +
+	"\x1aINTENT_TYPE_SORT_ITINERARY\x10\x10*\xe7\x01\n" +
 	"\n" +
 	"DomainType\x12\x1b\n" +
 	"\x17DOMAIN_TYPE_UNSPECIFIED\x10\x00\x12\x17\n" +
@@ -5797,7 +5802,8 @@ const file_loci_chat_chat_proto_rawDesc = "" +
 	"\x12DOMAIN_TYPE_DINING\x10\x03\x12\x1a\n" +
 	"\x16DOMAIN_TYPE_ACTIVITIES\x10\x04\x12\x19\n" +
 	"\x15DOMAIN_TYPE_ITINERARY\x10\x05\x12\x19\n" +
-	"\x15DOMAIN_TYPE_TRANSPORT\x10\x06*\xf2\x03\n" +
+	"\x15DOMAIN_TYPE_TRANSPORT\x10\x06\x12\x1a\n" +
+	"\x16DOMAIN_TYPE_GASTRONOMY\x10\a*\xf2\x03\n" +
 	"\x0fStreamEventType\x12!\n" +
 	"\x1dSTREAM_EVENT_TYPE_UNSPECIFIED\x10\x00\x12\x1b\n" +
 	"\x17STREAM_EVENT_TYPE_START\x10\x01\x12\x1b\n" +

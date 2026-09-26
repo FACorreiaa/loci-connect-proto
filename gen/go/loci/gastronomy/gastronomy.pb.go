@@ -196,8 +196,13 @@ type Dish struct {
 	Description string       `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
 	Category    DishCategory `protobuf:"varint,4,opt,name=category,proto3,enum=loci.gastronomy.DishCategory" json:"category,omitempty"`
 	// True for the handful of dishes the city is best known for.
-	IsSignature   bool               `protobuf:"varint,5,opt,name=is_signature,json=isSignature,proto3" json:"is_signature,omitempty"`
-	Places        []*GastronomyPlace `protobuf:"bytes,6,rep,name=places,proto3" json:"places,omitempty"`
+	IsSignature bool               `protobuf:"varint,5,opt,name=is_signature,json=isSignature,proto3" json:"is_signature,omitempty"`
+	Places      []*GastronomyPlace `protobuf:"bytes,6,rep,name=places,proto3" json:"places,omitempty"`
+	// Main-ingredient and diet tags, lower-case, for filtering. The prompt asks
+	// for tags from this vocabulary: seafood, fish, meat, pork, beef, poultry,
+	// vegetarian, vegan, cheese, pastry, bread, soup, rice, fruit, spicy,
+	// alcoholic. Clients show unknown tags as-is.
+	Tags          []string `protobuf:"bytes,7,rep,name=tags,proto3" json:"tags,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -270,6 +275,13 @@ func (x *Dish) GetIsSignature() bool {
 func (x *Dish) GetPlaces() []*GastronomyPlace {
 	if x != nil {
 		return x.Places
+	}
+	return nil
+}
+
+func (x *Dish) GetTags() []string {
+	if x != nil {
+		return x.Tags
 	}
 	return nil
 }
@@ -515,7 +527,7 @@ const file_loci_gastronomy_gastronomy_proto_rawDesc = "" +
 	"\n" +
 	"_longitudeB\n" +
 	"\n" +
-	"\b_website\"\x9d\x02\n" +
+	"\b_website\"\xc1\x02\n" +
 	"\x04Dish\x12\x1e\n" +
 	"\x04name\x18\x01 \x01(\tB\n" +
 	"\xbaH\ar\x05\x10\x01\x18\xc8\x01R\x04name\x12'\n" +
@@ -525,7 +537,8 @@ const file_loci_gastronomy_gastronomy_proto_rawDesc = "" +
 	"\bcategory\x18\x04 \x01(\x0e2\x1d.loci.gastronomy.DishCategoryR\bcategory\x12!\n" +
 	"\fis_signature\x18\x05 \x01(\bR\visSignature\x12B\n" +
 	"\x06places\x18\x06 \x03(\v2 .loci.gastronomy.GastronomyPlaceB\b\xbaH\x05\x92\x01\x02\x10\n" +
-	"R\x06places\"\xb0\x02\n" +
+	"R\x06places\x12\"\n" +
+	"\x04tags\x18\a \x03(\tB\x0e\xbaH\v\x92\x01\b\x10\f\"\x04r\x02\x18(R\x04tags\"\xb0\x02\n" +
 	"\x0eCityGastronomy\x12'\n" +
 	"\tcity_name\x18\x01 \x01(\tB\n" +
 	"\xbaH\ar\x05\x10\x01\x18\xc8\x01R\bcityName\x12\"\n" +

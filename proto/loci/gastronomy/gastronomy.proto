@@ -63,6 +63,16 @@ message Dish {
   // True for the handful of dishes the city is best known for.
   bool is_signature = 5;
   repeated GastronomyPlace places = 6 [(buf.validate.field).repeated.max_items = 10];
+  // Main-ingredient and diet tags, lower-case, for filtering. The prompt asks
+  // for tags from this vocabulary: seafood, fish, meat, pork, beef, poultry,
+  // vegetarian, vegan, cheese, pastry, bread, soup, rice, fruit, spicy,
+  // alcoholic. Clients show unknown tags as-is.
+  repeated string tags = 7 [(buf.validate.field).repeated = {
+    max_items: 12
+    items: {
+      string: {max_len: 40}
+    }
+  }];
 }
 
 // CityGastronomy is the typical gastronomy of one city.

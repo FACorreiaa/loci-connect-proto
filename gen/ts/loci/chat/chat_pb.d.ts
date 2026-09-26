@@ -2495,6 +2495,14 @@ export enum DomainType {
    * @generated from enum value: DOMAIN_TYPE_TRANSPORT = 6;
    */
   TRANSPORT = 6,
+
+  /**
+   * A city's typical food ("gastronomy in Madeira", "food in Porto"): the
+   * stream carries a GASTRONOMY event rather than a place list.
+   *
+   * @generated from enum value: DOMAIN_TYPE_GASTRONOMY = 7;
+   */
+  GASTRONOMY = 7,
 }
 
 /**
