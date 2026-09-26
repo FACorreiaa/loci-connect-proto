@@ -1159,6 +1159,45 @@
         
           
           <li>
+            <a href="#loci%2fgastronomy%2fgastronomy.proto">loci/gastronomy/gastronomy.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#loci.gastronomy.CityGastronomy"><span class="badge">M</span>CityGastronomy</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.gastronomy.Dish"><span class="badge">M</span>Dish</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.gastronomy.GastronomyPlace"><span class="badge">M</span>GastronomyPlace</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.gastronomy.GetCityGastronomyRequest"><span class="badge">M</span>GetCityGastronomyRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.gastronomy.GetCityGastronomyResponse"><span class="badge">M</span>GetCityGastronomyResponse</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#loci.gastronomy.DishCategory"><span class="badge">E</span>DishCategory</a>
+                </li>
+              
+              
+              
+                <li>
+                  <a href="#loci.gastronomy.GastronomyService"><span class="badge">S</span>GastronomyService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#loci%2finterest%2finterest.proto">loci/interest/interest.proto</a>
             <ul>
               
@@ -1398,6 +1437,10 @@
               
                 <li>
                   <a href="#loci.chat.DroppedStop"><span class="badge">M</span>DroppedStop</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.GastronomyPayload"><span class="badge">M</span>GastronomyPayload</a>
                 </li>
               
                 <li>
@@ -12582,6 +12625,349 @@ that initial load fail validation before it ever reached the query. </p></td>
     
       
       <div class="file-heading">
+        <h2 id="loci/gastronomy/gastronomy.proto">loci/gastronomy/gastronomy.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="loci.gastronomy.CityGastronomy">CityGastronomy</h3>
+        <p>CityGastronomy is the typical gastronomy of one city.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>country</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>overview</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>culinary_traditions</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>dishes</td>
+                  <td><a href="#loci.gastronomy.Dish">Dish</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>dining_tips</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.gastronomy.Dish">Dish</h3>
+        <p>Dish is one typical dish or drink of the city.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>local_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Name in the local language when it differs from `name`. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>category</td>
+                  <td><a href="#loci.gastronomy.DishCategory">DishCategory</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>is_signature</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>True for the handful of dishes the city is best known for. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>places</td>
+                  <td><a href="#loci.gastronomy.GastronomyPlace">GastronomyPlace</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>tags</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>Main-ingredient and diet tags, lower-case, for filtering. The prompt asks
+for tags from this vocabulary: seafood, fish, meat, pork, beef, poultry,
+vegetarian, vegan, cheese, pastry, bread, soup, rice, fruit, spicy,
+alcoholic. Clients show unknown tags as-is. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.gastronomy.GastronomyPlace">GastronomyPlace</h3>
+        <p>GastronomyPlace is a light reference to a well-known place to eat a dish.</p><p>It is not a POI: it carries no id and is not saved to points_of_interest.</p><p>Coordinates are optional because the model is not asked to guess them;</p><p>clients fall back to a map search on name + address.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>neighborhood</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>address</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>why_famous</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Why this place is known for the dish (&#34;serving it since 1953&#34;). </p></td>
+                </tr>
+              
+                <tr>
+                  <td>price_range</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>&#34;€&#34;, &#34;€€&#34;, &#34;€€€&#34; or &#34;$&#34;..&#34;$$$&#34;; empty when unknown. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>latitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>longitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>website</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.gastronomy.GetCityGastronomyRequest">GetCityGastronomyRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.gastronomy.GetCityGastronomyResponse">GetCityGastronomyResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>gastronomy</td>
+                  <td><a href="#loci.gastronomy.CityGastronomy">CityGastronomy</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>cached</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>True when the answer came from cache rather than a fresh generation. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+        <h3 id="loci.gastronomy.DishCategory">DishCategory</h3>
+        <p>DishCategory groups dishes on screen. Unknown values render as "main".</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>DISH_CATEGORY_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>DISH_CATEGORY_MAIN</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>DISH_CATEGORY_STREET_FOOD</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>DISH_CATEGORY_SNACK</td>
+                <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>DISH_CATEGORY_DESSERT</td>
+                <td>4</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>DISH_CATEGORY_DRINK</td>
+                <td>5</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+
+      
+
+      
+        <h3 id="loci.gastronomy.GastronomyService">GastronomyService</h3>
+        <p>GastronomyService answers "what do people eat here, and where?" for a city.</p><p>The same CityGastronomy is appended to itinerary and discovery results on</p><p>ChatService.StreamChat; this service is the standalone lookup. Both read</p><p>one city-scoped cache entry, so a city is generated once for everyone.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>GetCityGastronomy</td>
+                <td><a href="#loci.gastronomy.GetCityGastronomyRequest">GetCityGastronomyRequest</a></td>
+                <td><a href="#loci.gastronomy.GetCityGastronomyResponse">GetCityGastronomyResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+    
+      
+      <div class="file-heading">
         <h2 id="loci/interest/interest.proto">loci/interest/interest.proto</h2><a href="#title">Top</a>
       </div>
       <p></p>
@@ -14802,6 +15188,15 @@ reopening such a session got an empty page. </p></td>
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>gastronomy</td>
+                  <td><a href="#loci.gastronomy.CityGastronomy">loci.gastronomy.CityGastronomy</a></td>
+                  <td>optional</td>
+                  <td><p>The city&#39;s typical gastronomy, generated alongside itinerary and
+discovery (general) results. Absent for other domains, and when its
+generation failed: it never fails the response it rides on. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -15582,6 +15977,37 @@ and source_label &#34;Standing task&#34;. Clients can append it without refetchi
               
                 <tr>
                   <td>reason</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.GastronomyPayload">GastronomyPayload</h3>
+        <p>GastronomyPayload carries STREAM_EVENT_TYPE_GASTRONOMY: the city's typical</p><p>gastronomy, sent as soon as it is parsed so clients can render the section</p><p>before COMPLETE. The same value is on AiCityResponse.gastronomy.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>gastronomy</td>
+                  <td><a href="#loci.gastronomy.CityGastronomy">loci.gastronomy.CityGastronomy</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>session_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
@@ -17331,6 +17757,13 @@ belongs to. An ERROR carrying it failed that city only, not the stream. </p></td
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>gastronomy</td>
+                  <td><a href="#loci.chat.GastronomyPayload">GastronomyPayload</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -17627,6 +18060,13 @@ belongs to. An ERROR carrying it failed that city only, not the stream. </p></td
                 <td>DOMAIN_TYPE_TRANSPORT</td>
                 <td>6</td>
                 <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>DOMAIN_TYPE_GASTRONOMY</td>
+                <td>7</td>
+                <td><p>A city&#39;s typical food (&#34;gastronomy in Madeira&#34;, &#34;food in Porto&#34;): the
+stream carries a GASTRONOMY event rather than a place list.</p></td>
               </tr>
             
           </tbody>
@@ -18069,6 +18509,12 @@ itinerary — the same rule the trip builder applies.</p></td>
               <tr>
                 <td>STREAM_EVENT_TYPE_ROUTE</td>
                 <td>13</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>STREAM_EVENT_TYPE_GASTRONOMY</td>
+                <td>14</td>
                 <td><p></p></td>
               </tr>
             

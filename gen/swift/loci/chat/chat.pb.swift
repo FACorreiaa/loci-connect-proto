@@ -263,6 +263,10 @@ public enum Loci_Chat_DomainType: SwiftProtobuf.Enum, Swift.CaseIterable {
   case activities // = 4
   case itinerary // = 5
   case transport // = 6
+
+  /// A city's typical food ("gastronomy in Madeira", "food in Porto"): the
+  /// stream carries a GASTRONOMY event rather than a place list.
+  case gastronomy // = 7
   case UNRECOGNIZED(Int)
 
   public init() {
@@ -278,6 +282,7 @@ public enum Loci_Chat_DomainType: SwiftProtobuf.Enum, Swift.CaseIterable {
     case 4: self = .activities
     case 5: self = .itinerary
     case 6: self = .transport
+    case 7: self = .gastronomy
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -291,6 +296,7 @@ public enum Loci_Chat_DomainType: SwiftProtobuf.Enum, Swift.CaseIterable {
     case .activities: return 4
     case .itinerary: return 5
     case .transport: return 6
+    case .gastronomy: return 7
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -304,6 +310,7 @@ public enum Loci_Chat_DomainType: SwiftProtobuf.Enum, Swift.CaseIterable {
     .activities,
     .itinerary,
     .transport,
+    .gastronomy,
   ]
 
 }
@@ -331,6 +338,7 @@ public enum Loci_Chat_StreamEventType: SwiftProtobuf.Enum, Swift.CaseIterable {
   case error // = 11
   case complete // = 12
   case route // = 13
+  case gastronomy // = 14
   case UNRECOGNIZED(Int)
 
   public init() {
@@ -353,6 +361,7 @@ public enum Loci_Chat_StreamEventType: SwiftProtobuf.Enum, Swift.CaseIterable {
     case 11: self = .error
     case 12: self = .complete
     case 13: self = .route
+    case 14: self = .gastronomy
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -373,6 +382,7 @@ public enum Loci_Chat_StreamEventType: SwiftProtobuf.Enum, Swift.CaseIterable {
     case .error: return 11
     case .complete: return 12
     case .route: return 13
+    case .gastronomy: return 14
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -393,6 +403,7 @@ public enum Loci_Chat_StreamEventType: SwiftProtobuf.Enum, Swift.CaseIterable {
     .error,
     .complete,
     .route,
+    .gastronomy,
   ]
 
 }
@@ -888,6 +899,18 @@ public struct Loci_Chat_AiCityResponse: @unchecked Sendable {
     get {return _storage._activities}
     set {_uniqueStorage()._activities = newValue}
   }
+
+  /// The city's typical gastronomy, generated alongside itinerary and
+  /// discovery (general) results. Absent for other domains, and when its
+  /// generation failed: it never fails the response it rides on.
+  public var gastronomy: Loci_Gastronomy_CityGastronomy {
+    get {return _storage._gastronomy ?? Loci_Gastronomy_CityGastronomy()}
+    set {_uniqueStorage()._gastronomy = newValue}
+  }
+  /// Returns true if `gastronomy` has been explicitly set.
+  public var hasGastronomy: Bool {return _storage._gastronomy != nil}
+  /// Clears the value of `gastronomy`. Subsequent reads from it will return its default value.
+  public mutating func clearGastronomy() {_uniqueStorage()._gastronomy = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1615,6 +1638,32 @@ public struct Loci_Chat_RoutePayload: Sendable {
   fileprivate var _tripID: String? = nil
 }
 
+/// GastronomyPayload carries STREAM_EVENT_TYPE_GASTRONOMY: the city's typical
+/// gastronomy, sent as soon as it is parsed so clients can render the section
+/// before COMPLETE. The same value is on AiCityResponse.gastronomy.
+public struct Loci_Chat_GastronomyPayload: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var gastronomy: Loci_Gastronomy_CityGastronomy {
+    get {return _gastronomy ?? Loci_Gastronomy_CityGastronomy()}
+    set {_gastronomy = newValue}
+  }
+  /// Returns true if `gastronomy` has been explicitly set.
+  public var hasGastronomy: Bool {return self._gastronomy != nil}
+  /// Clears the value of `gastronomy`. Subsequent reads from it will return its default value.
+  public mutating func clearGastronomy() {self._gastronomy = nil}
+
+  public var sessionID: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _gastronomy: Loci_Gastronomy_CityGastronomy? = nil
+}
+
 /// StreamEvent represents a streaming event. The old free-form `type` string
 /// (field 1), opaque `data` bytes (field 3), and `error` string (field 4) were
 /// replaced by the typed `event_type` enum + `payload` oneof below.
@@ -1793,6 +1842,14 @@ public struct Loci_Chat_StreamEvent: @unchecked Sendable {
     set {_uniqueStorage()._payload = .route(newValue)}
   }
 
+  public var gastronomy: Loci_Chat_GastronomyPayload {
+    get {
+      if case .gastronomy(let v)? = _storage._payload {return v}
+      return Loci_Chat_GastronomyPayload()
+    }
+    set {_uniqueStorage()._payload = .gastronomy(newValue)}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   /// payload is the typed body; its oneof case matches event_type. Absent for
@@ -1811,6 +1868,7 @@ public struct Loci_Chat_StreamEvent: @unchecked Sendable {
     case error(Loci_Chat_StreamError)
     case complete(Loci_Chat_CompletePayload)
     case route(Loci_Chat_RoutePayload)
+    case gastronomy(Loci_Chat_GastronomyPayload)
 
   }
 
@@ -2750,6 +2808,7 @@ extension Loci_Chat_DomainType: SwiftProtobuf._ProtoNameProviding {
     4: .same(proto: "DOMAIN_TYPE_ACTIVITIES"),
     5: .same(proto: "DOMAIN_TYPE_ITINERARY"),
     6: .same(proto: "DOMAIN_TYPE_TRANSPORT"),
+    7: .same(proto: "DOMAIN_TYPE_GASTRONOMY"),
   ]
 }
 
@@ -2769,6 +2828,7 @@ extension Loci_Chat_StreamEventType: SwiftProtobuf._ProtoNameProviding {
     11: .same(proto: "STREAM_EVENT_TYPE_ERROR"),
     12: .same(proto: "STREAM_EVENT_TYPE_COMPLETE"),
     13: .same(proto: "STREAM_EVENT_TYPE_ROUTE"),
+    14: .same(proto: "STREAM_EVENT_TYPE_GASTRONOMY"),
   ]
 }
 
@@ -3336,6 +3396,7 @@ extension Loci_Chat_AiCityResponse: SwiftProtobuf.Message, SwiftProtobuf._Messag
     5: .same(proto: "hotels"),
     6: .same(proto: "restaurants"),
     7: .same(proto: "activities"),
+    8: .same(proto: "gastronomy"),
   ]
 
   fileprivate class _StorageClass {
@@ -3346,6 +3407,7 @@ extension Loci_Chat_AiCityResponse: SwiftProtobuf.Message, SwiftProtobuf._Messag
     var _hotels: [Loci_Poi_POIDetailedInfo] = []
     var _restaurants: [Loci_Poi_POIDetailedInfo] = []
     var _activities: [Loci_Poi_POIDetailedInfo] = []
+    var _gastronomy: Loci_Gastronomy_CityGastronomy? = nil
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -3367,6 +3429,7 @@ extension Loci_Chat_AiCityResponse: SwiftProtobuf.Message, SwiftProtobuf._Messag
       _hotels = source._hotels
       _restaurants = source._restaurants
       _activities = source._activities
+      _gastronomy = source._gastronomy
     }
   }
 
@@ -3392,6 +3455,7 @@ extension Loci_Chat_AiCityResponse: SwiftProtobuf.Message, SwiftProtobuf._Messag
         case 5: try { try decoder.decodeRepeatedMessageField(value: &_storage._hotels) }()
         case 6: try { try decoder.decodeRepeatedMessageField(value: &_storage._restaurants) }()
         case 7: try { try decoder.decodeRepeatedMessageField(value: &_storage._activities) }()
+        case 8: try { try decoder.decodeSingularMessageField(value: &_storage._gastronomy) }()
         default: break
         }
       }
@@ -3425,6 +3489,9 @@ extension Loci_Chat_AiCityResponse: SwiftProtobuf.Message, SwiftProtobuf._Messag
       if !_storage._activities.isEmpty {
         try visitor.visitRepeatedMessageField(value: _storage._activities, fieldNumber: 7)
       }
+      try { if let v = _storage._gastronomy {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -3441,6 +3508,7 @@ extension Loci_Chat_AiCityResponse: SwiftProtobuf.Message, SwiftProtobuf._Messag
         if _storage._hotels != rhs_storage._hotels {return false}
         if _storage._restaurants != rhs_storage._restaurants {return false}
         if _storage._activities != rhs_storage._activities {return false}
+        if _storage._gastronomy != rhs_storage._gastronomy {return false}
         return true
       }
       if !storagesAreEqual {return false}
@@ -4706,6 +4774,48 @@ extension Loci_Chat_RoutePayload: SwiftProtobuf.Message, SwiftProtobuf._MessageI
   }
 }
 
+extension Loci_Chat_GastronomyPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".GastronomyPayload"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "gastronomy"),
+    2: .standard(proto: "session_id"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._gastronomy) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.sessionID) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._gastronomy {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    if !self.sessionID.isEmpty {
+      try visitor.visitSingularStringField(value: self.sessionID, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_GastronomyPayload, rhs: Loci_Chat_GastronomyPayload) -> Bool {
+    if lhs._gastronomy != rhs._gastronomy {return false}
+    if lhs.sessionID != rhs.sessionID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension Loci_Chat_StreamEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".StreamEvent"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -4730,6 +4840,7 @@ extension Loci_Chat_StreamEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     30: .same(proto: "error"),
     31: .same(proto: "complete"),
     32: .same(proto: "route"),
+    33: .same(proto: "gastronomy"),
   ]
 
   fileprivate class _StorageClass {
@@ -4960,6 +5071,19 @@ extension Loci_Chat_StreamEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
             _storage._payload = .route(v)
           }
         }()
+        case 33: try {
+          var v: Loci_Chat_GastronomyPayload?
+          var hadOneofValue = false
+          if let current = _storage._payload {
+            hadOneofValue = true
+            if case .gastronomy(let m) = current {v = m}
+          }
+          try decoder.decodeSingularMessageField(value: &v)
+          if let v = v {
+            if hadOneofValue {try decoder.handleConflictingOneOf()}
+            _storage._payload = .gastronomy(v)
+          }
+        }()
         default: break
         }
       }
@@ -5048,6 +5172,10 @@ extension Loci_Chat_StreamEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       case .route?: try {
         guard case .route(let v)? = _storage._payload else { preconditionFailure() }
         try visitor.visitSingularMessageField(value: v, fieldNumber: 32)
+      }()
+      case .gastronomy?: try {
+        guard case .gastronomy(let v)? = _storage._payload else { preconditionFailure() }
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 33)
       }()
       case nil: break
       }
