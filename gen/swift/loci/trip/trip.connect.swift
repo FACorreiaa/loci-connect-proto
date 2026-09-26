@@ -23,8 +23,41 @@ public protocol Loci_Trip_TripServiceClientInterface: Sendable {
     @available(iOS 13, *)
     func `listTrips`(request: Loci_Trip_ListTripsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_ListTripsResponse>
 
-    @available(iOS 13, *)
+    /// ShareTrip is the old sharing call: is_public = true sets LINK visibility,
+    /// false sets PRIVATE. Use SetTripVisibility.
+    @available(iOS, introduced: 13, deprecated: 13, message: "This RPC has been marked as deprecated in its `.proto` file.")
     func `shareTrip`(request: Loci_Trip_ShareTripRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_ShareTripResponse>
+
+    /// SetTripVisibility sets who may open the trip and returns its share link
+    /// (minted on first use; empty for PRIVATE).
+    @available(iOS 13, *)
+    func `setTripVisibility`(request: Loci_Trip_SetTripVisibilityRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_SetTripVisibilityResponse>
+
+    /// GetSharedTrip opens a trip by its share code. Accepts anonymous callers.
+    /// PRIVATE trips, and trips whose owner blocked the caller, are NotFound.
+    /// Stop notes and booking links are left out unless the owner opted in.
+    @available(iOS 13, *)
+    func `getSharedTrip`(request: Loci_Trip_GetSharedTripRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripDraft>
+
+    /// GetFriendTrip opens another user's trip by id when the caller may see it
+    /// (FRIENDS for a friend, or PUBLIC); otherwise NotFound.
+    @available(iOS 13, *)
+    func `getFriendTrip`(request: Loci_Trip_GetFriendTripRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripDraft>
+
+    /// ListFriendTrips is the caller's feed: trips friends shared as FRIENDS or
+    /// PUBLIC, most recently updated first.
+    @available(iOS 13, *)
+    func `listFriendTrips`(request: Loci_Trip_ListFriendTripsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_ListTripsResponse>
+
+    /// ListUserTrips lists the trips of one user that the caller may see.
+    @available(iOS 13, *)
+    func `listUserTrips`(request: Loci_Trip_ListUserTripsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_ListTripsResponse>
+
+    /// CopyTrip saves a trip the caller may see as a new trip of their own,
+    /// private, with copied_from_trip_id set. Later changes to the source do
+    /// not touch the copy.
+    @available(iOS 13, *)
+    func `copyTrip`(request: Loci_Trip_CopyTripRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_CopyTripResponse>
 
     @available(iOS 13, *)
     func `reorderStops`(request: Loci_Trip_ReorderStopsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripDraft>
@@ -97,9 +130,39 @@ public final class Loci_Trip_TripServiceClient: Loci_Trip_TripServiceClientInter
         return await self.client.unary(path: "/loci.trip.TripService/ListTrips", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
-    @available(iOS 13, *)
+    @available(iOS, introduced: 13, deprecated: 13, message: "This RPC has been marked as deprecated in its `.proto` file.")
     public func `shareTrip`(request: Loci_Trip_ShareTripRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_ShareTripResponse> {
         return await self.client.unary(path: "/loci.trip.TripService/ShareTrip", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `setTripVisibility`(request: Loci_Trip_SetTripVisibilityRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_SetTripVisibilityResponse> {
+        return await self.client.unary(path: "/loci.trip.TripService/SetTripVisibility", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `getSharedTrip`(request: Loci_Trip_GetSharedTripRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_TripDraft> {
+        return await self.client.unary(path: "/loci.trip.TripService/GetSharedTrip", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `getFriendTrip`(request: Loci_Trip_GetFriendTripRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_TripDraft> {
+        return await self.client.unary(path: "/loci.trip.TripService/GetFriendTrip", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `listFriendTrips`(request: Loci_Trip_ListFriendTripsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_ListTripsResponse> {
+        return await self.client.unary(path: "/loci.trip.TripService/ListFriendTrips", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `listUserTrips`(request: Loci_Trip_ListUserTripsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_ListTripsResponse> {
+        return await self.client.unary(path: "/loci.trip.TripService/ListUserTrips", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `copyTrip`(request: Loci_Trip_CopyTripRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_CopyTripResponse> {
+        return await self.client.unary(path: "/loci.trip.TripService/CopyTrip", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @available(iOS 13, *)
@@ -173,6 +236,12 @@ public final class Loci_Trip_TripServiceClient: Loci_Trip_TripServiceClientInter
             public static let getTrip = Connect.MethodSpec(name: "GetTrip", service: "loci.trip.TripService", type: .unary)
             public static let listTrips = Connect.MethodSpec(name: "ListTrips", service: "loci.trip.TripService", type: .unary)
             public static let shareTrip = Connect.MethodSpec(name: "ShareTrip", service: "loci.trip.TripService", type: .unary)
+            public static let setTripVisibility = Connect.MethodSpec(name: "SetTripVisibility", service: "loci.trip.TripService", type: .unary)
+            public static let getSharedTrip = Connect.MethodSpec(name: "GetSharedTrip", service: "loci.trip.TripService", type: .unary)
+            public static let getFriendTrip = Connect.MethodSpec(name: "GetFriendTrip", service: "loci.trip.TripService", type: .unary)
+            public static let listFriendTrips = Connect.MethodSpec(name: "ListFriendTrips", service: "loci.trip.TripService", type: .unary)
+            public static let listUserTrips = Connect.MethodSpec(name: "ListUserTrips", service: "loci.trip.TripService", type: .unary)
+            public static let copyTrip = Connect.MethodSpec(name: "CopyTrip", service: "loci.trip.TripService", type: .unary)
             public static let reorderStops = Connect.MethodSpec(name: "ReorderStops", service: "loci.trip.TripService", type: .unary)
             public static let renameStop = Connect.MethodSpec(name: "RenameStop", service: "loci.trip.TripService", type: .unary)
             public static let editStopDuration = Connect.MethodSpec(name: "EditStopDuration", service: "loci.trip.TripService", type: .unary)

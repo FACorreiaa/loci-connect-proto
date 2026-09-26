@@ -30,6 +30,9 @@ public enum Loci_Share_ShareContentType: SwiftProtobuf.Enum, Swift.CaseIterable 
   case itinerary // = 4
   case list // = 5
   case activity // = 6
+
+  /// A trip; its share code opens TripService.GetSharedTrip.
+  case trip // = 7
   case UNRECOGNIZED(Int)
 
   public init() {
@@ -45,6 +48,7 @@ public enum Loci_Share_ShareContentType: SwiftProtobuf.Enum, Swift.CaseIterable 
     case 4: self = .itinerary
     case 5: self = .list
     case 6: self = .activity
+    case 7: self = .trip
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -58,6 +62,7 @@ public enum Loci_Share_ShareContentType: SwiftProtobuf.Enum, Swift.CaseIterable 
     case .itinerary: return 4
     case .list: return 5
     case .activity: return 6
+    case .trip: return 7
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -71,6 +76,7 @@ public enum Loci_Share_ShareContentType: SwiftProtobuf.Enum, Swift.CaseIterable 
     .itinerary,
     .list,
     .activity,
+    .trip,
   ]
 
 }
@@ -443,6 +449,7 @@ extension Loci_Share_ShareContentType: SwiftProtobuf._ProtoNameProviding {
     4: .same(proto: "SHARE_CONTENT_TYPE_ITINERARY"),
     5: .same(proto: "SHARE_CONTENT_TYPE_LIST"),
     6: .same(proto: "SHARE_CONTENT_TYPE_ACTIVITY"),
+    7: .same(proto: "SHARE_CONTENT_TYPE_TRIP"),
   ]
 }
 

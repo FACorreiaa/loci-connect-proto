@@ -7073,6 +7073,553 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.share.GetSharedContentResponse'
+  /loci.social.SocialService/AcceptInvite:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: AcceptInvite
+      description: |-
+        AcceptInvite makes the caller and the inviter friends at once: opening a
+         friend's link is the consent on both sides.
+      operationId: loci.social.SocialService.AcceptInvite
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.AcceptInviteRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.AcceptInviteResponse'
+  /loci.social.SocialService/BlockUser:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: BlockUser
+      description: |-
+        BlockUser ends any friendship and pending request between the two, and
+         hides each side's content and profile from the other.
+      operationId: loci.social.SocialService.BlockUser
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.BlockUserRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.BlockUserResponse'
+  /loci.social.SocialService/CancelFriendRequest:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: CancelFriendRequest
+      description: CancelFriendRequest withdraws a request the caller sent.
+      operationId: loci.social.SocialService.CancelFriendRequest
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.CancelFriendRequestRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.CancelFriendRequestResponse'
+  /loci.social.SocialService/GetInvite:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: GetInvite
+      description: |-
+        GetInvite describes an invite for its landing page. Expired or rotated
+         codes are NotFound.
+      operationId: loci.social.SocialService.GetInvite
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.GetInviteRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.GetInviteResponse'
+  /loci.social.SocialService/GetMyInvite:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: GetMyInvite
+      description: GetMyInvite returns the caller's invite link, creating it on first use.
+      operationId: loci.social.SocialService.GetMyInvite
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.GetMyInviteRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.GetMyInviteResponse'
+  /loci.social.SocialService/GetPublicProfile:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: GetPublicProfile
+      description: |-
+        GetPublicProfile is a user's profile as the caller may see it. A user who
+         blocked the caller is NotFound.
+      operationId: loci.social.SocialService.GetPublicProfile
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.GetPublicProfileRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.GetPublicProfileResponse'
+  /loci.social.SocialService/ListFriendRequests:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: ListFriendRequests
+      operationId: loci.social.SocialService.ListFriendRequests
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.ListFriendRequestsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.ListFriendRequestsResponse'
+  /loci.social.SocialService/ListFriends:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: ListFriends
+      operationId: loci.social.SocialService.ListFriends
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.ListFriendsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.ListFriendsResponse'
+  /loci.social.SocialService/MatchContacts:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: MatchContacts
+      description: |-
+        MatchContacts finds Loci users among the caller's contacts. Clients send
+         SHA-256 hashes of normalised identifiers, never the identifiers; only
+         verified phone numbers and emails match, and nothing is stored for
+         contacts who are not on Loci.
+      operationId: loci.social.SocialService.MatchContacts
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.MatchContactsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.MatchContactsResponse'
+  /loci.social.SocialService/RemoveFriend:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: RemoveFriend
+      operationId: loci.social.SocialService.RemoveFriend
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.RemoveFriendRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.RemoveFriendResponse'
+  /loci.social.SocialService/RespondFriendRequest:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: RespondFriendRequest
+      description: RespondFriendRequest accepts or declines an incoming request.
+      operationId: loci.social.SocialService.RespondFriendRequest
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.RespondFriendRequestRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.RespondFriendRequestResponse'
+  /loci.social.SocialService/RotateInvite:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: RotateInvite
+      description: RotateInvite replaces the caller's invite code; the old link stops working.
+      operationId: loci.social.SocialService.RotateInvite
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.RotateInviteRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.GetMyInviteResponse'
+  /loci.social.SocialService/SearchUsers:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: SearchUsers
+      description: SearchUsers finds users by username prefix.
+      operationId: loci.social.SocialService.SearchUsers
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.SearchUsersRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.SearchUsersResponse'
+  /loci.social.SocialService/SendFriendRequest:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: SendFriendRequest
+      operationId: loci.social.SocialService.SendFriendRequest
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.SendFriendRequestRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.SendFriendRequestResponse'
+  /loci.social.SocialService/UnblockUser:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: UnblockUser
+      operationId: loci.social.SocialService.UnblockUser
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.UnblockUserRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.UnblockUserResponse'
   /loci.speech.SpeechService/Transcribe:
     post:
       tags:
@@ -7718,6 +8265,45 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.trip.TripDraft'
+  /loci.trip.TripService/CopyTrip:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: CopyTrip
+      description: |-
+        CopyTrip saves a trip the caller may see as a new trip of their own,
+         private, with copied_from_trip_id set. Later changes to the source do
+         not touch the copy.
+      operationId: loci.trip.TripService.CopyTrip
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.CopyTripRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.CopyTripResponse'
   /loci.trip.TripService/DeleteChecklistItem:
     post:
       tags:
@@ -7860,6 +8446,83 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.trip.ExportTripResponse'
+  /loci.trip.TripService/GetFriendTrip:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: GetFriendTrip
+      description: |-
+        GetFriendTrip opens another user's trip by id when the caller may see it
+         (FRIENDS for a friend, or PUBLIC); otherwise NotFound.
+      operationId: loci.trip.TripService.GetFriendTrip
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.GetFriendTripRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.TripDraft'
+  /loci.trip.TripService/GetSharedTrip:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: GetSharedTrip
+      description: |-
+        GetSharedTrip opens a trip by its share code. Accepts anonymous callers.
+         PRIVATE trips, and trips whose owner blocked the caller, are NotFound.
+         Stop notes and booking links are left out unless the owner opted in.
+      operationId: loci.trip.TripService.GetSharedTrip
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.GetSharedTripRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.TripDraft'
   /loci.trip.TripService/GetTrip:
     post:
       tags:
@@ -7933,6 +8596,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.trip.GetTripChecklistResponse'
+  /loci.trip.TripService/ListFriendTrips:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: ListFriendTrips
+      description: |-
+        ListFriendTrips is the caller's feed: trips friends shared as FRIENDS or
+         PUBLIC, most recently updated first.
+      operationId: loci.trip.TripService.ListFriendTrips
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.ListFriendTripsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.ListTripsResponse'
   /loci.trip.TripService/ListTrips:
     post:
       tags:
@@ -7954,6 +8655,42 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/loci.trip.ListTripsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.ListTripsResponse'
+  /loci.trip.TripService/ListUserTrips:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: ListUserTrips
+      description: ListUserTrips lists the trips of one user that the caller may see.
+      operationId: loci.trip.TripService.ListUserTrips
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.ListUserTripsRequest'
         required: true
       responses:
         default:
@@ -8178,11 +8915,52 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.trip.TripDraft'
+  /loci.trip.TripService/SetTripVisibility:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: SetTripVisibility
+      description: |-
+        SetTripVisibility sets who may open the trip and returns its share link
+         (minted on first use; empty for PRIVATE).
+      operationId: loci.trip.TripService.SetTripVisibility
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.SetTripVisibilityRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.SetTripVisibilityResponse'
   /loci.trip.TripService/ShareTrip:
     post:
       tags:
         - loci.trip.TripService
       summary: ShareTrip
+      description: |-
+        ShareTrip is the old sharing call: is_public = true sets LINK visibility,
+         false sets PRIVATE. Use SetTripVisibility.
       operationId: loci.trip.TripService.ShareTrip
       parameters:
         - name: Connect-Protocol-Version
@@ -8213,6 +8991,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.trip.ShareTripResponse'
+      deprecated: true
   /loci.trip.TripService/SuggestPacking:
     post:
       tags:
@@ -23396,6 +24175,7 @@ components:
         - SHARE_CONTENT_TYPE_ITINERARY
         - SHARE_CONTENT_TYPE_LIST
         - SHARE_CONTENT_TYPE_ACTIVITY
+        - SHARE_CONTENT_TYPE_TRIP
       description: Type of content being shared
     loci.share.ShareMetadata:
       type: object
@@ -23456,6 +24236,458 @@ components:
       title: SharedContent
       additionalProperties: false
       description: Shared content details
+    loci.social.AcceptInviteRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          title: code
+          maxLength: 50
+          minLength: 1
+      title: AcceptInviteRequest
+      additionalProperties: false
+    loci.social.AcceptInviteResponse:
+      type: object
+      properties:
+        friend:
+          title: friend
+          $ref: '#/components/schemas/loci.social.Friend'
+      title: AcceptInviteResponse
+      required:
+        - friend
+      additionalProperties: false
+    loci.social.BlockUserRequest:
+      type: object
+      properties:
+        userId:
+          type: string
+          title: user_id
+          format: uuid
+      title: BlockUserRequest
+      additionalProperties: false
+    loci.social.BlockUserResponse:
+      type: object
+      title: BlockUserResponse
+      additionalProperties: false
+    loci.social.CancelFriendRequestRequest:
+      type: object
+      properties:
+        requestId:
+          type: string
+          title: request_id
+          format: uuid
+      title: CancelFriendRequestRequest
+      additionalProperties: false
+    loci.social.CancelFriendRequestResponse:
+      type: object
+      title: CancelFriendRequestResponse
+      additionalProperties: false
+    loci.social.ContactMatch:
+      type: object
+      properties:
+        hash:
+          type: string
+          title: hash
+          maxLength: 64
+          minLength: 64
+          description: The hash the client sent, so it can show which contact matched.
+        user:
+          title: user
+          $ref: '#/components/schemas/loci.social.PublicUser'
+        relationship:
+          title: relationship
+          $ref: '#/components/schemas/loci.social.Relationship'
+      title: ContactMatch
+      additionalProperties: false
+    loci.social.Friend:
+      type: object
+      properties:
+        user:
+          title: user
+          $ref: '#/components/schemas/loci.social.PublicUser'
+        since:
+          title: since
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: Friend
+      additionalProperties: false
+    loci.social.FriendRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          maxLength: 100
+        from:
+          title: from
+          $ref: '#/components/schemas/loci.social.PublicUser'
+        to:
+          title: to
+          $ref: '#/components/schemas/loci.social.PublicUser'
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: FriendRequest
+      additionalProperties: false
+    loci.social.GetInviteRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          title: code
+          maxLength: 50
+          minLength: 1
+      title: GetInviteRequest
+      additionalProperties: false
+    loci.social.GetInviteResponse:
+      type: object
+      properties:
+        invite:
+          title: invite
+          $ref: '#/components/schemas/loci.social.Invite'
+        relationship:
+          title: relationship
+          description: The caller's relation to the inviter; UNSPECIFIED when signed out.
+          $ref: '#/components/schemas/loci.social.Relationship'
+      title: GetInviteResponse
+      required:
+        - invite
+      additionalProperties: false
+    loci.social.GetMyInviteRequest:
+      type: object
+      title: GetMyInviteRequest
+      additionalProperties: false
+    loci.social.GetMyInviteResponse:
+      type: object
+      properties:
+        invite:
+          title: invite
+          $ref: '#/components/schemas/loci.social.Invite'
+      title: GetMyInviteResponse
+      required:
+        - invite
+      additionalProperties: false
+    loci.social.GetPublicProfileRequest:
+      type: object
+      oneOf:
+        - properties:
+            userId:
+              type: string
+              title: user_id
+              format: uuid
+          title: user_id
+          required:
+            - userId
+        - properties:
+            username:
+              type: string
+              title: username
+              maxLength: 100
+              minLength: 1
+          title: username
+          required:
+            - username
+      title: GetPublicProfileRequest
+      additionalProperties: false
+    loci.social.GetPublicProfileResponse:
+      type: object
+      properties:
+        user:
+          title: user
+          $ref: '#/components/schemas/loci.social.PublicUser'
+        stats:
+          title: stats
+          $ref: '#/components/schemas/loci.social.ProfileStats'
+        relationship:
+          title: relationship
+          description: UNSPECIFIED when signed out.
+          $ref: '#/components/schemas/loci.social.Relationship'
+        memberSince:
+          title: member_since
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: GetPublicProfileResponse
+      required:
+        - user
+      additionalProperties: false
+    loci.social.Invite:
+      type: object
+      properties:
+        code:
+          type: string
+          title: code
+          maxLength: 50
+        url:
+          type: string
+          title: url
+          maxLength: 2048
+        expiresAt:
+          title: expires_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        inviter:
+          title: inviter
+          $ref: '#/components/schemas/loci.social.PublicUser'
+      title: Invite
+      additionalProperties: false
+    loci.social.ListFriendRequestsRequest:
+      type: object
+      properties:
+        direction:
+          not:
+            enum:
+              - REQUEST_DIRECTION_UNSPECIFIED
+          title: direction
+          $ref: '#/components/schemas/loci.social.RequestDirection'
+      title: ListFriendRequestsRequest
+      additionalProperties: false
+    loci.social.ListFriendRequestsResponse:
+      type: object
+      properties:
+        requests:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.social.FriendRequest'
+          title: requests
+      title: ListFriendRequestsResponse
+      additionalProperties: false
+    loci.social.ListFriendsRequest:
+      type: object
+      title: ListFriendsRequest
+      additionalProperties: false
+    loci.social.ListFriendsResponse:
+      type: object
+      properties:
+        friends:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.social.Friend'
+          title: friends
+      title: ListFriendsResponse
+      additionalProperties: false
+    loci.social.MatchContactsRequest:
+      type: object
+      properties:
+        hashes:
+          type: array
+          items:
+            type: string
+            maxLength: 64
+            minLength: 64
+            pattern: ^[0-9a-f]{64}$
+          title: hashes
+          maxItems: 2000
+          minItems: 1
+          description: |-
+            Lower-case hex SHA-256 of each normalised identifier: phone numbers in
+             E.164 ("+351912345678"), emails trimmed and lower-cased.
+      title: MatchContactsRequest
+      additionalProperties: false
+    loci.social.MatchContactsResponse:
+      type: object
+      properties:
+        matches:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.social.ContactMatch'
+          title: matches
+      title: MatchContactsResponse
+      additionalProperties: false
+    loci.social.ProfileStats:
+      type: object
+      properties:
+        cities:
+          type: integer
+          title: cities
+          minimum: 0
+          format: int32
+        countries:
+          type: integer
+          title: countries
+          minimum: 0
+          format: int32
+        visibleTrips:
+          type: integer
+          title: visible_trips
+          minimum: 0
+          format: int32
+          description: Trips the caller may see on this profile.
+        friends:
+          type: integer
+          title: friends
+          minimum: 0
+          format: int32
+      title: ProfileStats
+      additionalProperties: false
+      description: |-
+        ProfileStats are the counts a profile shows. Travel counts come from the
+         user's travel history.
+    loci.social.PublicUser:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          maxLength: 100
+        username:
+          type: string
+          title: username
+          maxLength: 100
+        displayName:
+          type: string
+          title: display_name
+          maxLength: 200
+        avatarUrl:
+          type: string
+          title: avatar_url
+          maxLength: 2048
+        homeCity:
+          type: string
+          title: home_city
+          maxLength: 200
+      title: PublicUser
+      additionalProperties: false
+      description: 'PublicUser is what anyone may see about a user: never email or phone.'
+    loci.social.Relationship:
+      type: string
+      title: Relationship
+      enum:
+        - RELATIONSHIP_UNSPECIFIED
+        - RELATIONSHIP_NONE
+        - RELATIONSHIP_REQUESTED
+        - RELATIONSHIP_INCOMING
+        - RELATIONSHIP_FRIENDS
+        - RELATIONSHIP_BLOCKED
+        - RELATIONSHIP_SELF
+      description: Relationship is the caller's relation to another user.
+    loci.social.RemoveFriendRequest:
+      type: object
+      properties:
+        userId:
+          type: string
+          title: user_id
+          format: uuid
+      title: RemoveFriendRequest
+      additionalProperties: false
+    loci.social.RemoveFriendResponse:
+      type: object
+      title: RemoveFriendResponse
+      additionalProperties: false
+    loci.social.RequestDirection:
+      type: string
+      title: RequestDirection
+      enum:
+        - REQUEST_DIRECTION_UNSPECIFIED
+        - REQUEST_DIRECTION_INCOMING
+        - REQUEST_DIRECTION_OUTGOING
+    loci.social.RespondFriendRequestRequest:
+      type: object
+      properties:
+        requestId:
+          type: string
+          title: request_id
+          format: uuid
+        accept:
+          type: boolean
+          title: accept
+      title: RespondFriendRequestRequest
+      additionalProperties: false
+    loci.social.RespondFriendRequestResponse:
+      type: object
+      properties:
+        friend:
+          title: friend
+          description: Set when accepted.
+          $ref: '#/components/schemas/loci.social.Friend'
+      title: RespondFriendRequestResponse
+      additionalProperties: false
+    loci.social.RotateInviteRequest:
+      type: object
+      title: RotateInviteRequest
+      additionalProperties: false
+    loci.social.SearchUsersRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          title: query
+          maxLength: 100
+          minLength: 2
+        limit:
+          type: integer
+          title: limit
+          maximum: 50
+          minimum: 0
+          format: int32
+      title: SearchUsersRequest
+      additionalProperties: false
+    loci.social.SearchUsersResponse:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.social.UserResult'
+          title: users
+      title: SearchUsersResponse
+      additionalProperties: false
+    loci.social.SendFriendRequestRequest:
+      type: object
+      oneOf:
+        - properties:
+            userId:
+              type: string
+              title: user_id
+              format: uuid
+          title: user_id
+          required:
+            - userId
+        - properties:
+            username:
+              type: string
+              title: username
+              maxLength: 100
+              minLength: 1
+          title: username
+          required:
+            - username
+      title: SendFriendRequestRequest
+      additionalProperties: false
+    loci.social.SendFriendRequestResponse:
+      type: object
+      properties:
+        relationship:
+          title: relationship
+          description: |-
+            FRIENDS when the other user had already asked the caller: the two
+             requests meet and become a friendship.
+          $ref: '#/components/schemas/loci.social.Relationship'
+        request:
+          title: request
+          $ref: '#/components/schemas/loci.social.FriendRequest'
+      title: SendFriendRequestResponse
+      additionalProperties: false
+    loci.social.UnblockUserRequest:
+      type: object
+      properties:
+        userId:
+          type: string
+          title: user_id
+          format: uuid
+      title: UnblockUserRequest
+      additionalProperties: false
+    loci.social.UnblockUserResponse:
+      type: object
+      title: UnblockUserResponse
+      additionalProperties: false
+    loci.social.UserResult:
+      type: object
+      properties:
+        user:
+          title: user
+          $ref: '#/components/schemas/loci.social.PublicUser'
+        relationship:
+          title: relationship
+          $ref: '#/components/schemas/loci.social.Relationship'
+      title: UserResult
+      additionalProperties: false
     loci.speech.TranscribeRequest:
       type: object
       properties:
@@ -25510,6 +26742,38 @@ components:
         - CHECKLIST_ITEM_KIND_PACKING
         - CHECKLIST_ITEM_KIND_EXPENSE
       description: ChecklistItemKind says which list an item belongs to.
+    loci.trip.CopyTripRequest:
+      type: object
+      oneOf:
+        - properties:
+            shareCode:
+              type: string
+              title: share_code
+              maxLength: 50
+              minLength: 1
+          title: share_code
+          required:
+            - shareCode
+        - properties:
+            tripId:
+              type: string
+              title: trip_id
+              format: uuid
+          title: trip_id
+          required:
+            - tripId
+      title: CopyTripRequest
+      additionalProperties: false
+    loci.trip.CopyTripResponse:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+      title: CopyTripResponse
+      additionalProperties: false
     loci.trip.DeleteChecklistItemRequest:
       type: object
       properties:
@@ -25628,6 +26892,25 @@ components:
           minLength: 1
       title: ExportTripResponse
       additionalProperties: false
+    loci.trip.GetFriendTripRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          format: uuid
+      title: GetFriendTripRequest
+      additionalProperties: false
+    loci.trip.GetSharedTripRequest:
+      type: object
+      properties:
+        shareCode:
+          type: string
+          title: share_code
+          maxLength: 50
+          minLength: 1
+      title: GetSharedTripRequest
+      additionalProperties: false
     loci.trip.GetTripChecklistRequest:
       type: object
       properties:
@@ -25666,6 +26949,16 @@ components:
           minLength: 1
       title: GetTripRequest
       additionalProperties: false
+    loci.trip.ListFriendTripsRequest:
+      type: object
+      properties:
+        pagination:
+          title: pagination
+          $ref: '#/components/schemas/loci.common.PaginationRequest'
+      title: ListFriendTripsRequest
+      required:
+        - pagination
+      additionalProperties: false
     loci.trip.ListTripsRequest:
       type: object
       properties:
@@ -25688,6 +26981,20 @@ components:
           title: pagination
           $ref: '#/components/schemas/loci.common.PaginationMetadata'
       title: ListTripsResponse
+      additionalProperties: false
+    loci.trip.ListUserTripsRequest:
+      type: object
+      properties:
+        userId:
+          type: string
+          title: user_id
+          format: uuid
+        pagination:
+          title: pagination
+          $ref: '#/components/schemas/loci.common.PaginationRequest'
+      title: ListUserTripsRequest
+      required:
+        - pagination
       additionalProperties: false
     loci.trip.PackingCategory:
       type: string
@@ -25878,6 +27185,43 @@ components:
       title: SetConstraintRequest
       required:
         - constraints
+      additionalProperties: false
+    loci.trip.SetTripVisibilityRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+        visibility:
+          not:
+            enum:
+              - TRIP_VISIBILITY_UNSPECIFIED
+          title: visibility
+          $ref: '#/components/schemas/loci.trip.TripVisibility'
+        shareDetails:
+          type: boolean
+          title: share_details
+          description: Include stop notes and booking links in what others see.
+      title: SetTripVisibilityRequest
+      additionalProperties: false
+    loci.trip.SetTripVisibilityResponse:
+      type: object
+      properties:
+        visibility:
+          title: visibility
+          $ref: '#/components/schemas/loci.trip.TripVisibility'
+        shareCode:
+          type: string
+          title: share_code
+          maxLength: 50
+          description: Empty for PRIVATE.
+        shareUrl:
+          type: string
+          title: share_url
+          maxLength: 2048
+      title: SetTripVisibilityResponse
       additionalProperties: false
     loci.trip.ShareTripRequest:
       type: object
@@ -26175,6 +27519,28 @@ components:
         updatedAt:
           title: updated_at
           $ref: '#/components/schemas/google.protobuf.Timestamp'
+        visibility:
+          title: visibility
+          description: |-
+            Who besides the owner may open the trip. Set with SetTripVisibility;
+             SaveTrip ignores it.
+          $ref: '#/components/schemas/loci.trip.TripVisibility'
+        shareCode:
+          type: string
+          title: share_code
+          maxLength: 50
+          description: The share code, once the trip has been shared by link. Owner reads only.
+        owner:
+          title: owner
+          description: The owner, set when someone other than the owner reads the trip.
+          $ref: '#/components/schemas/loci.social.PublicUser'
+        copiedFromTripId:
+          type:
+            - string
+            - "null"
+          title: copied_from_trip_id
+          maxLength: 100
+          description: The trip this one was copied from with CopyTrip, if any.
       title: TripDraft
       additionalProperties: false
       description: |-
@@ -26366,6 +27732,16 @@ components:
       title: TripStop
       additionalProperties: false
       description: TripStop is a single place on a day's timeline.
+    loci.trip.TripVisibility:
+      type: string
+      title: TripVisibility
+      enum:
+        - TRIP_VISIBILITY_UNSPECIFIED
+        - TRIP_VISIBILITY_PRIVATE
+        - TRIP_VISIBILITY_FRIENDS
+        - TRIP_VISIBILITY_LINK
+        - TRIP_VISIBILITY_PUBLIC
+      description: TripVisibility is who may open a trip besides its owner.
     loci.trip.UpsertChecklistItemRequest:
       type: object
       properties:
@@ -26470,6 +27846,10 @@ components:
         searchFinished:
           type: boolean
           title: search_finished
+        friendActivity:
+          type: boolean
+          title: friend_activity
+          description: Friend requests and accepted friendships.
       title: NotificationSettings
       additionalProperties: false
       description: |-
@@ -26574,6 +27954,11 @@ components:
             - boolean
             - "null"
           title: search_finished
+        friendActivity:
+          type:
+            - boolean
+            - "null"
+          title: friend_activity
       title: UpdateNotificationSettingsRequest
       additionalProperties: false
     loci.user.UpdateProfileParams:
@@ -27007,6 +28392,17 @@ tags:
     description: RecommendationService owns private learning controls and client-side exposure events.
   - name: loci.poi.POIService
     description: POIService defines POI-related RPCs
+  - name: loci.social.SocialService
+    description: |-
+      SocialService is Loci's friends layer: mutual friendships (a request one
+       side sends and the other accepts), invite links, blocking, and finding
+       friends by username or by phone contacts.
+
+       Friendship is mutual on purpose. "Friends" trip visibility, and later
+       location sharing, are seen only by people both sides approved.
+
+       GetInvite and GetPublicProfile accept anonymous callers (an invite link or
+       a profile opened signed out); every other RPC needs a session.
   - name: loci.trip.TripService
     description: |-
       TripService persists and mutates editable day-by-day trips. All mutations that

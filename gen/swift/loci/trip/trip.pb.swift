@@ -21,6 +21,62 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
+/// TripVisibility is who may open a trip besides its owner.
+public enum Loci_Trip_TripVisibility: SwiftProtobuf.Enum, Swift.CaseIterable {
+  public typealias RawValue = Int
+  case unspecified // = 0
+
+  /// Only the owner. The default.
+  case `private` // = 1
+
+  /// The owner's friends: listed on their feeds and on the owner's profile
+  /// for them.
+  case friends // = 2
+
+  /// Anyone with the share link; listed nowhere.
+  case link // = 3
+
+  /// Anyone with the link, and listed on the owner's public profile.
+  case `public` // = 4
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .unspecified
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unspecified
+    case 1: self = .private
+    case 2: self = .friends
+    case 3: self = .link
+    case 4: self = .public
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .unspecified: return 0
+    case .private: return 1
+    case .friends: return 2
+    case .link: return 3
+    case .public: return 4
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static let allCases: [Loci_Trip_TripVisibility] = [
+    .unspecified,
+    .private,
+    .friends,
+    .link,
+    .public,
+  ]
+
+}
+
 /// TripPace is how densely a day is packed.
 public enum Loci_Trip_TripPace: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
@@ -590,6 +646,39 @@ public struct Loci_Trip_TripDraft: @unchecked Sendable {
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {_uniqueStorage()._updatedAt = nil}
 
+  /// Who besides the owner may open the trip. Set with SetTripVisibility;
+  /// SaveTrip ignores it.
+  public var visibility: Loci_Trip_TripVisibility {
+    get {return _storage._visibility}
+    set {_uniqueStorage()._visibility = newValue}
+  }
+
+  /// The share code, once the trip has been shared by link. Owner reads only.
+  public var shareCode: String {
+    get {return _storage._shareCode}
+    set {_uniqueStorage()._shareCode = newValue}
+  }
+
+  /// The owner, set when someone other than the owner reads the trip.
+  public var owner: Loci_Social_PublicUser {
+    get {return _storage._owner ?? Loci_Social_PublicUser()}
+    set {_uniqueStorage()._owner = newValue}
+  }
+  /// Returns true if `owner` has been explicitly set.
+  public var hasOwner: Bool {return _storage._owner != nil}
+  /// Clears the value of `owner`. Subsequent reads from it will return its default value.
+  public mutating func clearOwner() {_uniqueStorage()._owner = nil}
+
+  /// The trip this one was copied from with CopyTrip, if any.
+  public var copiedFromTripID: String {
+    get {return _storage._copiedFromTripID ?? String()}
+    set {_uniqueStorage()._copiedFromTripID = newValue}
+  }
+  /// Returns true if `copiedFromTripID` has been explicitly set.
+  public var hasCopiedFromTripID: Bool {return _storage._copiedFromTripID != nil}
+  /// Clears the value of `copiedFromTripID`. Subsequent reads from it will return its default value.
+  public mutating func clearCopiedFromTripID() {_uniqueStorage()._copiedFromTripID = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -931,6 +1020,154 @@ public struct Loci_Trip_ShareTripRequest: Sendable {
   public init() {}
 }
 
+public struct Loci_Trip_SetTripVisibilityRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var tripID: String = String()
+
+  public var visibility: Loci_Trip_TripVisibility = .unspecified
+
+  /// Include stop notes and booking links in what others see.
+  public var shareDetails: Bool = false
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Trip_SetTripVisibilityResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var visibility: Loci_Trip_TripVisibility = .unspecified
+
+  /// Empty for PRIVATE.
+  public var shareCode: String = String()
+
+  public var shareURL: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Trip_GetSharedTripRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var shareCode: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Trip_GetFriendTripRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var tripID: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Trip_ListFriendTripsRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var pagination: Loci_Common_PaginationRequest {
+    get {return _pagination ?? Loci_Common_PaginationRequest()}
+    set {_pagination = newValue}
+  }
+  /// Returns true if `pagination` has been explicitly set.
+  public var hasPagination: Bool {return self._pagination != nil}
+  /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
+  public mutating func clearPagination() {self._pagination = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _pagination: Loci_Common_PaginationRequest? = nil
+}
+
+public struct Loci_Trip_ListUserTripsRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var userID: String = String()
+
+  public var pagination: Loci_Common_PaginationRequest {
+    get {return _pagination ?? Loci_Common_PaginationRequest()}
+    set {_pagination = newValue}
+  }
+  /// Returns true if `pagination` has been explicitly set.
+  public var hasPagination: Bool {return self._pagination != nil}
+  /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
+  public mutating func clearPagination() {self._pagination = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _pagination: Loci_Common_PaginationRequest? = nil
+}
+
+public struct Loci_Trip_CopyTripRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var source: Loci_Trip_CopyTripRequest.OneOf_Source? = nil
+
+  public var tripID: String {
+    get {
+      if case .tripID(let v)? = source {return v}
+      return String()
+    }
+    set {source = .tripID(newValue)}
+  }
+
+  public var shareCode: String {
+    get {
+      if case .shareCode(let v)? = source {return v}
+      return String()
+    }
+    set {source = .shareCode(newValue)}
+  }
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public enum OneOf_Source: Equatable, Sendable {
+    case tripID(String)
+    case shareCode(String)
+
+  }
+
+  public init() {}
+}
+
+public struct Loci_Trip_CopyTripResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var tripID: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 public struct Loci_Trip_ShareTripResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1158,6 +1395,16 @@ public struct Loci_Trip_ExportTripResponse: @unchecked Sendable {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "loci.trip"
+
+extension Loci_Trip_TripVisibility: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "TRIP_VISIBILITY_UNSPECIFIED"),
+    1: .same(proto: "TRIP_VISIBILITY_PRIVATE"),
+    2: .same(proto: "TRIP_VISIBILITY_FRIENDS"),
+    3: .same(proto: "TRIP_VISIBILITY_LINK"),
+    4: .same(proto: "TRIP_VISIBILITY_PUBLIC"),
+  ]
+}
 
 extension Loci_Trip_TripPace: SwiftProtobuf._ProtoNameProviding {
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -1612,6 +1859,10 @@ extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     9: .standard(proto: "source_session_id"),
     10: .standard(proto: "created_at"),
     11: .standard(proto: "updated_at"),
+    14: .same(proto: "visibility"),
+    15: .standard(proto: "share_code"),
+    16: .same(proto: "owner"),
+    17: .standard(proto: "copied_from_trip_id"),
   ]
 
   fileprivate class _StorageClass {
@@ -1628,6 +1879,10 @@ extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     var _sourceSessionID: String? = nil
     var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+    var _visibility: Loci_Trip_TripVisibility = .unspecified
+    var _shareCode: String = String()
+    var _owner: Loci_Social_PublicUser? = nil
+    var _copiedFromTripID: String? = nil
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -1655,6 +1910,10 @@ extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       _sourceSessionID = source._sourceSessionID
       _createdAt = source._createdAt
       _updatedAt = source._updatedAt
+      _visibility = source._visibility
+      _shareCode = source._shareCode
+      _owner = source._owner
+      _copiedFromTripID = source._copiedFromTripID
     }
   }
 
@@ -1686,6 +1945,10 @@ extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
         case 11: try { try decoder.decodeSingularMessageField(value: &_storage._updatedAt) }()
         case 12: try { try decoder.decodeRepeatedMessageField(value: &_storage._legs) }()
         case 13: try { try decoder.decodeRepeatedMessageField(value: &_storage._cities) }()
+        case 14: try { try decoder.decodeSingularEnumField(value: &_storage._visibility) }()
+        case 15: try { try decoder.decodeSingularStringField(value: &_storage._shareCode) }()
+        case 16: try { try decoder.decodeSingularMessageField(value: &_storage._owner) }()
+        case 17: try { try decoder.decodeSingularStringField(value: &_storage._copiedFromTripID) }()
         default: break
         }
       }
@@ -1737,6 +2000,18 @@ extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       if !_storage._cities.isEmpty {
         try visitor.visitRepeatedMessageField(value: _storage._cities, fieldNumber: 13)
       }
+      if _storage._visibility != .unspecified {
+        try visitor.visitSingularEnumField(value: _storage._visibility, fieldNumber: 14)
+      }
+      if !_storage._shareCode.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._shareCode, fieldNumber: 15)
+      }
+      try { if let v = _storage._owner {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
+      } }()
+      try { if let v = _storage._copiedFromTripID {
+        try visitor.visitSingularStringField(value: v, fieldNumber: 17)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1759,6 +2034,10 @@ extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
         if _storage._sourceSessionID != rhs_storage._sourceSessionID {return false}
         if _storage._createdAt != rhs_storage._createdAt {return false}
         if _storage._updatedAt != rhs_storage._updatedAt {return false}
+        if _storage._visibility != rhs_storage._visibility {return false}
+        if _storage._shareCode != rhs_storage._shareCode {return false}
+        if _storage._owner != rhs_storage._owner {return false}
+        if _storage._copiedFromTripID != rhs_storage._copiedFromTripID {return false}
         return true
       }
       if !storagesAreEqual {return false}
@@ -2443,6 +2722,328 @@ extension Loci_Trip_ShareTripRequest: SwiftProtobuf.Message, SwiftProtobuf._Mess
   public static func ==(lhs: Loci_Trip_ShareTripRequest, rhs: Loci_Trip_ShareTripRequest) -> Bool {
     if lhs.tripID != rhs.tripID {return false}
     if lhs.isPublic != rhs.isPublic {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_SetTripVisibilityRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".SetTripVisibilityRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+    2: .same(proto: "visibility"),
+    3: .standard(proto: "share_details"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.tripID) }()
+      case 2: try { try decoder.decodeSingularEnumField(value: &self.visibility) }()
+      case 3: try { try decoder.decodeSingularBoolField(value: &self.shareDetails) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.tripID.isEmpty {
+      try visitor.visitSingularStringField(value: self.tripID, fieldNumber: 1)
+    }
+    if self.visibility != .unspecified {
+      try visitor.visitSingularEnumField(value: self.visibility, fieldNumber: 2)
+    }
+    if self.shareDetails != false {
+      try visitor.visitSingularBoolField(value: self.shareDetails, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_SetTripVisibilityRequest, rhs: Loci_Trip_SetTripVisibilityRequest) -> Bool {
+    if lhs.tripID != rhs.tripID {return false}
+    if lhs.visibility != rhs.visibility {return false}
+    if lhs.shareDetails != rhs.shareDetails {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_SetTripVisibilityResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".SetTripVisibilityResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "visibility"),
+    2: .standard(proto: "share_code"),
+    3: .standard(proto: "share_url"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.visibility) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.shareCode) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.shareURL) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.visibility != .unspecified {
+      try visitor.visitSingularEnumField(value: self.visibility, fieldNumber: 1)
+    }
+    if !self.shareCode.isEmpty {
+      try visitor.visitSingularStringField(value: self.shareCode, fieldNumber: 2)
+    }
+    if !self.shareURL.isEmpty {
+      try visitor.visitSingularStringField(value: self.shareURL, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_SetTripVisibilityResponse, rhs: Loci_Trip_SetTripVisibilityResponse) -> Bool {
+    if lhs.visibility != rhs.visibility {return false}
+    if lhs.shareCode != rhs.shareCode {return false}
+    if lhs.shareURL != rhs.shareURL {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_GetSharedTripRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".GetSharedTripRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "share_code"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.shareCode) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.shareCode.isEmpty {
+      try visitor.visitSingularStringField(value: self.shareCode, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_GetSharedTripRequest, rhs: Loci_Trip_GetSharedTripRequest) -> Bool {
+    if lhs.shareCode != rhs.shareCode {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_GetFriendTripRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".GetFriendTripRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.tripID) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.tripID.isEmpty {
+      try visitor.visitSingularStringField(value: self.tripID, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_GetFriendTripRequest, rhs: Loci_Trip_GetFriendTripRequest) -> Bool {
+    if lhs.tripID != rhs.tripID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_ListFriendTripsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ListFriendTripsRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "pagination"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._pagination) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._pagination {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_ListFriendTripsRequest, rhs: Loci_Trip_ListFriendTripsRequest) -> Bool {
+    if lhs._pagination != rhs._pagination {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_ListUserTripsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ListUserTripsRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .same(proto: "pagination"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.userID) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._pagination) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.userID.isEmpty {
+      try visitor.visitSingularStringField(value: self.userID, fieldNumber: 1)
+    }
+    try { if let v = self._pagination {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_ListUserTripsRequest, rhs: Loci_Trip_ListUserTripsRequest) -> Bool {
+    if lhs.userID != rhs.userID {return false}
+    if lhs._pagination != rhs._pagination {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_CopyTripRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".CopyTripRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+    2: .standard(proto: "share_code"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try {
+        var v: String?
+        try decoder.decodeSingularStringField(value: &v)
+        if let v = v {
+          if self.source != nil {try decoder.handleConflictingOneOf()}
+          self.source = .tripID(v)
+        }
+      }()
+      case 2: try {
+        var v: String?
+        try decoder.decodeSingularStringField(value: &v)
+        if let v = v {
+          if self.source != nil {try decoder.handleConflictingOneOf()}
+          self.source = .shareCode(v)
+        }
+      }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    switch self.source {
+    case .tripID?: try {
+      guard case .tripID(let v)? = self.source else { preconditionFailure() }
+      try visitor.visitSingularStringField(value: v, fieldNumber: 1)
+    }()
+    case .shareCode?: try {
+      guard case .shareCode(let v)? = self.source else { preconditionFailure() }
+      try visitor.visitSingularStringField(value: v, fieldNumber: 2)
+    }()
+    case nil: break
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_CopyTripRequest, rhs: Loci_Trip_CopyTripRequest) -> Bool {
+    if lhs.source != rhs.source {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_CopyTripResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".CopyTripResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.tripID) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.tripID.isEmpty {
+      try visitor.visitSingularStringField(value: self.tripID, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_CopyTripResponse, rhs: Loci_Trip_CopyTripResponse) -> Bool {
+    if lhs.tripID != rhs.tripID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
