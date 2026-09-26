@@ -669,6 +669,9 @@ public struct Loci_User_NotificationSettings: Sendable {
 
   public var searchFinished: Bool = false
 
+  /// Friend requests and accepted friendships.
+  public var friendActivity: Bool = false
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -719,6 +722,15 @@ public struct Loci_User_UpdateNotificationSettingsRequest: Sendable {
   /// Clears the value of `searchFinished`. Subsequent reads from it will return its default value.
   public mutating func clearSearchFinished() {self._searchFinished = nil}
 
+  public var friendActivity: Bool {
+    get {return _friendActivity ?? false}
+    set {_friendActivity = newValue}
+  }
+  /// Returns true if `friendActivity` has been explicitly set.
+  public var hasFriendActivity: Bool {return self._friendActivity != nil}
+  /// Clears the value of `friendActivity`. Subsequent reads from it will return its default value.
+  public mutating func clearFriendActivity() {self._friendActivity = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -726,6 +738,7 @@ public struct Loci_User_UpdateNotificationSettingsRequest: Sendable {
   fileprivate var _recommendations: Bool? = nil
   fileprivate var _tripReminders: Bool? = nil
   fileprivate var _searchFinished: Bool? = nil
+  fileprivate var _friendActivity: Bool? = nil
 }
 
 public struct Loci_User_RegisterPushDeviceRequest: Sendable {
@@ -1607,6 +1620,7 @@ extension Loci_User_NotificationSettings: SwiftProtobuf.Message, SwiftProtobuf._
     2: .standard(proto: "trip_reminders"),
     3: .standard(proto: "updated_at"),
     4: .standard(proto: "search_finished"),
+    5: .standard(proto: "friend_activity"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1619,6 +1633,7 @@ extension Loci_User_NotificationSettings: SwiftProtobuf.Message, SwiftProtobuf._
       case 2: try { try decoder.decodeSingularBoolField(value: &self.tripReminders) }()
       case 3: try { try decoder.decodeSingularMessageField(value: &self._updatedAt) }()
       case 4: try { try decoder.decodeSingularBoolField(value: &self.searchFinished) }()
+      case 5: try { try decoder.decodeSingularBoolField(value: &self.friendActivity) }()
       default: break
       }
     }
@@ -1641,6 +1656,9 @@ extension Loci_User_NotificationSettings: SwiftProtobuf.Message, SwiftProtobuf._
     if self.searchFinished != false {
       try visitor.visitSingularBoolField(value: self.searchFinished, fieldNumber: 4)
     }
+    if self.friendActivity != false {
+      try visitor.visitSingularBoolField(value: self.friendActivity, fieldNumber: 5)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1649,6 +1667,7 @@ extension Loci_User_NotificationSettings: SwiftProtobuf.Message, SwiftProtobuf._
     if lhs.tripReminders != rhs.tripReminders {return false}
     if lhs._updatedAt != rhs._updatedAt {return false}
     if lhs.searchFinished != rhs.searchFinished {return false}
+    if lhs.friendActivity != rhs.friendActivity {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1679,6 +1698,7 @@ extension Loci_User_UpdateNotificationSettingsRequest: SwiftProtobuf.Message, Sw
     1: .same(proto: "recommendations"),
     2: .standard(proto: "trip_reminders"),
     3: .standard(proto: "search_finished"),
+    4: .standard(proto: "friend_activity"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1690,6 +1710,7 @@ extension Loci_User_UpdateNotificationSettingsRequest: SwiftProtobuf.Message, Sw
       case 1: try { try decoder.decodeSingularBoolField(value: &self._recommendations) }()
       case 2: try { try decoder.decodeSingularBoolField(value: &self._tripReminders) }()
       case 3: try { try decoder.decodeSingularBoolField(value: &self._searchFinished) }()
+      case 4: try { try decoder.decodeSingularBoolField(value: &self._friendActivity) }()
       default: break
       }
     }
@@ -1709,6 +1730,9 @@ extension Loci_User_UpdateNotificationSettingsRequest: SwiftProtobuf.Message, Sw
     try { if let v = self._searchFinished {
       try visitor.visitSingularBoolField(value: v, fieldNumber: 3)
     } }()
+    try { if let v = self._friendActivity {
+      try visitor.visitSingularBoolField(value: v, fieldNumber: 4)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1716,6 +1740,7 @@ extension Loci_User_UpdateNotificationSettingsRequest: SwiftProtobuf.Message, Sw
     if lhs._recommendations != rhs._recommendations {return false}
     if lhs._tripReminders != rhs._tripReminders {return false}
     if lhs._searchFinished != rhs._searchFinished {return false}
+    if lhs._friendActivity != rhs._friendActivity {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
