@@ -7,6 +7,7 @@ import type { Message } from "@bufbuild/protobuf";
 import type { POIDetailedInfo } from "../poi/poi_pb";
 import type { RecommendationTrace } from "../recommendation/recommendation_pb";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
+import type { PublicUser } from "../social/social_pb";
 import type { PaginationMetadata, PaginationRequest } from "../common/common_pb";
 
 /**
@@ -418,6 +419,35 @@ export declare type TripDraft = Message<"loci.trip.TripDraft"> & {
    * @generated from field: google.protobuf.Timestamp updated_at = 11;
    */
   updatedAt?: Timestamp;
+
+  /**
+   * Who besides the owner may open the trip. Set with SetTripVisibility;
+   * SaveTrip ignores it.
+   *
+   * @generated from field: loci.trip.TripVisibility visibility = 14;
+   */
+  visibility: TripVisibility;
+
+  /**
+   * The share code, once the trip has been shared by link. Owner reads only.
+   *
+   * @generated from field: string share_code = 15;
+   */
+  shareCode: string;
+
+  /**
+   * The owner, set when someone other than the owner reads the trip.
+   *
+   * @generated from field: loci.social.PublicUser owner = 16;
+   */
+  owner?: PublicUser;
+
+  /**
+   * The trip this one was copied from with CopyTrip, if any.
+   *
+   * @generated from field: optional string copied_from_trip_id = 17;
+   */
+  copiedFromTripId?: string;
 };
 
 /**
@@ -850,6 +880,175 @@ export declare type ShareTripRequest = Message<"loci.trip.ShareTripRequest"> & {
 export declare const ShareTripRequestSchema: GenMessage<ShareTripRequest>;
 
 /**
+ * @generated from message loci.trip.SetTripVisibilityRequest
+ */
+export declare type SetTripVisibilityRequest = Message<"loci.trip.SetTripVisibilityRequest"> & {
+  /**
+   * @generated from field: string trip_id = 1;
+   */
+  tripId: string;
+
+  /**
+   * @generated from field: loci.trip.TripVisibility visibility = 2;
+   */
+  visibility: TripVisibility;
+
+  /**
+   * Include stop notes and booking links in what others see.
+   *
+   * @generated from field: bool share_details = 3;
+   */
+  shareDetails: boolean;
+};
+
+/**
+ * Describes the message loci.trip.SetTripVisibilityRequest.
+ * Use `create(SetTripVisibilityRequestSchema)` to create a new message.
+ */
+export declare const SetTripVisibilityRequestSchema: GenMessage<SetTripVisibilityRequest>;
+
+/**
+ * @generated from message loci.trip.SetTripVisibilityResponse
+ */
+export declare type SetTripVisibilityResponse = Message<"loci.trip.SetTripVisibilityResponse"> & {
+  /**
+   * @generated from field: loci.trip.TripVisibility visibility = 1;
+   */
+  visibility: TripVisibility;
+
+  /**
+   * Empty for PRIVATE.
+   *
+   * @generated from field: string share_code = 2;
+   */
+  shareCode: string;
+
+  /**
+   * @generated from field: string share_url = 3;
+   */
+  shareUrl: string;
+};
+
+/**
+ * Describes the message loci.trip.SetTripVisibilityResponse.
+ * Use `create(SetTripVisibilityResponseSchema)` to create a new message.
+ */
+export declare const SetTripVisibilityResponseSchema: GenMessage<SetTripVisibilityResponse>;
+
+/**
+ * @generated from message loci.trip.GetSharedTripRequest
+ */
+export declare type GetSharedTripRequest = Message<"loci.trip.GetSharedTripRequest"> & {
+  /**
+   * @generated from field: string share_code = 1;
+   */
+  shareCode: string;
+};
+
+/**
+ * Describes the message loci.trip.GetSharedTripRequest.
+ * Use `create(GetSharedTripRequestSchema)` to create a new message.
+ */
+export declare const GetSharedTripRequestSchema: GenMessage<GetSharedTripRequest>;
+
+/**
+ * @generated from message loci.trip.GetFriendTripRequest
+ */
+export declare type GetFriendTripRequest = Message<"loci.trip.GetFriendTripRequest"> & {
+  /**
+   * @generated from field: string trip_id = 1;
+   */
+  tripId: string;
+};
+
+/**
+ * Describes the message loci.trip.GetFriendTripRequest.
+ * Use `create(GetFriendTripRequestSchema)` to create a new message.
+ */
+export declare const GetFriendTripRequestSchema: GenMessage<GetFriendTripRequest>;
+
+/**
+ * @generated from message loci.trip.ListFriendTripsRequest
+ */
+export declare type ListFriendTripsRequest = Message<"loci.trip.ListFriendTripsRequest"> & {
+  /**
+   * @generated from field: loci.common.PaginationRequest pagination = 1;
+   */
+  pagination?: PaginationRequest;
+};
+
+/**
+ * Describes the message loci.trip.ListFriendTripsRequest.
+ * Use `create(ListFriendTripsRequestSchema)` to create a new message.
+ */
+export declare const ListFriendTripsRequestSchema: GenMessage<ListFriendTripsRequest>;
+
+/**
+ * @generated from message loci.trip.ListUserTripsRequest
+ */
+export declare type ListUserTripsRequest = Message<"loci.trip.ListUserTripsRequest"> & {
+  /**
+   * @generated from field: string user_id = 1;
+   */
+  userId: string;
+
+  /**
+   * @generated from field: loci.common.PaginationRequest pagination = 2;
+   */
+  pagination?: PaginationRequest;
+};
+
+/**
+ * Describes the message loci.trip.ListUserTripsRequest.
+ * Use `create(ListUserTripsRequestSchema)` to create a new message.
+ */
+export declare const ListUserTripsRequestSchema: GenMessage<ListUserTripsRequest>;
+
+/**
+ * @generated from message loci.trip.CopyTripRequest
+ */
+export declare type CopyTripRequest = Message<"loci.trip.CopyTripRequest"> & {
+  /**
+   * @generated from oneof loci.trip.CopyTripRequest.source
+   */
+  source: {
+    /**
+     * @generated from field: string trip_id = 1;
+     */
+    value: string;
+    case: "tripId";
+  } | {
+    /**
+     * @generated from field: string share_code = 2;
+     */
+    value: string;
+    case: "shareCode";
+  } | { case: undefined; value?: undefined };
+};
+
+/**
+ * Describes the message loci.trip.CopyTripRequest.
+ * Use `create(CopyTripRequestSchema)` to create a new message.
+ */
+export declare const CopyTripRequestSchema: GenMessage<CopyTripRequest>;
+
+/**
+ * @generated from message loci.trip.CopyTripResponse
+ */
+export declare type CopyTripResponse = Message<"loci.trip.CopyTripResponse"> & {
+  /**
+   * @generated from field: string trip_id = 1;
+   */
+  tripId: string;
+};
+
+/**
+ * Describes the message loci.trip.CopyTripResponse.
+ * Use `create(CopyTripResponseSchema)` to create a new message.
+ */
+export declare const CopyTripResponseSchema: GenMessage<CopyTripResponse>;
+
+/**
  * @generated from message loci.trip.ShareTripResponse
  */
 export declare type ShareTripResponse = Message<"loci.trip.ShareTripResponse"> & {
@@ -1134,6 +1333,52 @@ export declare type ExportTripResponse = Message<"loci.trip.ExportTripResponse">
 export declare const ExportTripResponseSchema: GenMessage<ExportTripResponse>;
 
 /**
+ * TripVisibility is who may open a trip besides its owner.
+ *
+ * @generated from enum loci.trip.TripVisibility
+ */
+export enum TripVisibility {
+  /**
+   * @generated from enum value: TRIP_VISIBILITY_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * Only the owner. The default.
+   *
+   * @generated from enum value: TRIP_VISIBILITY_PRIVATE = 1;
+   */
+  PRIVATE = 1,
+
+  /**
+   * The owner's friends: listed on their feeds and on the owner's profile
+   * for them.
+   *
+   * @generated from enum value: TRIP_VISIBILITY_FRIENDS = 2;
+   */
+  FRIENDS = 2,
+
+  /**
+   * Anyone with the share link; listed nowhere.
+   *
+   * @generated from enum value: TRIP_VISIBILITY_LINK = 3;
+   */
+  LINK = 3,
+
+  /**
+   * Anyone with the link, and listed on the owner's public profile.
+   *
+   * @generated from enum value: TRIP_VISIBILITY_PUBLIC = 4;
+   */
+  PUBLIC = 4,
+}
+
+/**
+ * Describes the enum loci.trip.TripVisibility.
+ */
+export declare const TripVisibilitySchema: GenEnum<TripVisibility>;
+
+/**
  * TripPace is how densely a day is packed.
  *
  * @generated from enum loci.trip.TripPace
@@ -1311,12 +1556,83 @@ export declare const TripService: GenService<{
     output: typeof ListTripsResponseSchema;
   },
   /**
+   * ShareTrip is the old sharing call: is_public = true sets LINK visibility,
+   * false sets PRIVATE. Use SetTripVisibility.
+   *
    * @generated from rpc loci.trip.TripService.ShareTrip
+   * @deprecated
    */
   shareTrip: {
     methodKind: "unary";
     input: typeof ShareTripRequestSchema;
     output: typeof ShareTripResponseSchema;
+  },
+  /**
+   * SetTripVisibility sets who may open the trip and returns its share link
+   * (minted on first use; empty for PRIVATE).
+   *
+   * @generated from rpc loci.trip.TripService.SetTripVisibility
+   */
+  setTripVisibility: {
+    methodKind: "unary";
+    input: typeof SetTripVisibilityRequestSchema;
+    output: typeof SetTripVisibilityResponseSchema;
+  },
+  /**
+   * GetSharedTrip opens a trip by its share code. Accepts anonymous callers.
+   * PRIVATE trips, and trips whose owner blocked the caller, are NotFound.
+   * Stop notes and booking links are left out unless the owner opted in.
+   *
+   * @generated from rpc loci.trip.TripService.GetSharedTrip
+   */
+  getSharedTrip: {
+    methodKind: "unary";
+    input: typeof GetSharedTripRequestSchema;
+    output: typeof TripDraftSchema;
+  },
+  /**
+   * GetFriendTrip opens another user's trip by id when the caller may see it
+   * (FRIENDS for a friend, or PUBLIC); otherwise NotFound.
+   *
+   * @generated from rpc loci.trip.TripService.GetFriendTrip
+   */
+  getFriendTrip: {
+    methodKind: "unary";
+    input: typeof GetFriendTripRequestSchema;
+    output: typeof TripDraftSchema;
+  },
+  /**
+   * ListFriendTrips is the caller's feed: trips friends shared as FRIENDS or
+   * PUBLIC, most recently updated first.
+   *
+   * @generated from rpc loci.trip.TripService.ListFriendTrips
+   */
+  listFriendTrips: {
+    methodKind: "unary";
+    input: typeof ListFriendTripsRequestSchema;
+    output: typeof ListTripsResponseSchema;
+  },
+  /**
+   * ListUserTrips lists the trips of one user that the caller may see.
+   *
+   * @generated from rpc loci.trip.TripService.ListUserTrips
+   */
+  listUserTrips: {
+    methodKind: "unary";
+    input: typeof ListUserTripsRequestSchema;
+    output: typeof ListTripsResponseSchema;
+  },
+  /**
+   * CopyTrip saves a trip the caller may see as a new trip of their own,
+   * private, with copied_from_trip_id set. Later changes to the source do
+   * not touch the copy.
+   *
+   * @generated from rpc loci.trip.TripService.CopyTrip
+   */
+  copyTrip: {
+    methodKind: "unary";
+    input: typeof CopyTripRequestSchema;
+    output: typeof CopyTripResponseSchema;
   },
   /**
    * @generated from rpc loci.trip.TripService.ReorderStops

@@ -572,6 +572,13 @@ export enum ShareContentType {
    * @generated from enum value: SHARE_CONTENT_TYPE_ACTIVITY = 6;
    */
   ACTIVITY = 6,
+
+  /**
+   * A trip; its share code opens TripService.GetSharedTrip.
+   *
+   * @generated from enum value: SHARE_CONTENT_TYPE_TRIP = 7;
+   */
+  TRIP = 7,
 }
 
 /**

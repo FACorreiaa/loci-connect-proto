@@ -7,8 +7,23 @@ import "google/protobuf/timestamp.proto";
 import "loci/common/common.proto";
 import "loci/poi/poi.proto";
 import "loci/recommendation/recommendation.proto";
+import "loci/social/social.proto";
 
 option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/trip;trip";
+
+// TripVisibility is who may open a trip besides its owner.
+enum TripVisibility {
+  TRIP_VISIBILITY_UNSPECIFIED = 0;
+  // Only the owner. The default.
+  TRIP_VISIBILITY_PRIVATE = 1;
+  // The owner's friends: listed on their feeds and on the owner's profile
+  // for them.
+  TRIP_VISIBILITY_FRIENDS = 2;
+  // Anyone with the share link; listed nowhere.
+  TRIP_VISIBILITY_LINK = 3;
+  // Anyone with the link, and listed on the owner's public profile.
+  TRIP_VISIBILITY_PUBLIC = 4;
+}
 
 // TripPace is how densely a day is packed.
 enum TripPace {
@@ -238,6 +253,15 @@ message TripDraft {
   // them rejected every create that did not invent a timestamp.)
   google.protobuf.Timestamp created_at = 10;
   google.protobuf.Timestamp updated_at = 11;
+  // Who besides the owner may open the trip. Set with SetTripVisibility;
+  // SaveTrip ignores it.
+  TripVisibility visibility = 14;
+  // The share code, once the trip has been shared by link. Owner reads only.
+  string share_code = 15 [(buf.validate.field).string.max_len = 50];
+  // The owner, set when someone other than the owner reads the trip.
+  loci.social.PublicUser owner = 16;
+  // The trip this one was copied from with CopyTrip, if any.
+  optional string copied_from_trip_id = 17 [(buf.validate.field).string.max_len = 100];
 }
 
 // TripSnapshot is an immutable point-in-time copy of a trip, written on each
@@ -421,6 +445,64 @@ message ShareTripRequest {
   bool is_public = 2;
 }
 
+message SetTripVisibilityRequest {
+  string trip_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  TripVisibility visibility = 2 [(buf.validate.field).enum = {
+    defined_only: true
+    not_in: [0]
+  }];
+  // Include stop notes and booking links in what others see.
+  bool share_details = 3;
+}
+
+message SetTripVisibilityResponse {
+  TripVisibility visibility = 1;
+  // Empty for PRIVATE.
+  string share_code = 2 [(buf.validate.field).string.max_len = 50];
+  string share_url = 3 [(buf.validate.field).string.max_len = 2048];
+}
+
+message GetSharedTripRequest {
+  string share_code = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 50
+  }];
+}
+
+message GetFriendTripRequest {
+  string trip_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+message ListFriendTripsRequest {
+  loci.common.PaginationRequest pagination = 1 [(buf.validate.field).required = true];
+}
+
+message ListUserTripsRequest {
+  string user_id = 1 [(buf.validate.field).string.uuid = true];
+  loci.common.PaginationRequest pagination = 2 [(buf.validate.field).required = true];
+}
+
+message CopyTripRequest {
+  oneof source {
+    option (buf.validate.oneof).required = true;
+    string trip_id = 1 [(buf.validate.field).string.uuid = true];
+    string share_code = 2 [(buf.validate.field).string = {
+      min_len: 1
+      max_len: 50
+    }];
+  }
+}
+
+message CopyTripResponse {
+  string trip_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+}
+
 message ShareTripResponse {
   string share_id = 1 [(buf.validate.field).string = {
     min_len: 1
@@ -572,7 +654,30 @@ service TripService {
   rpc SaveTrip(SaveTripRequest) returns (TripDraft);
   rpc GetTrip(GetTripRequest) returns (TripDraft);
   rpc ListTrips(ListTripsRequest) returns (ListTripsResponse);
-  rpc ShareTrip(ShareTripRequest) returns (ShareTripResponse);
+  // ShareTrip is the old sharing call: is_public = true sets LINK visibility,
+  // false sets PRIVATE. Use SetTripVisibility.
+  rpc ShareTrip(ShareTripRequest) returns (ShareTripResponse) {
+    option deprecated = true;
+  }
+  // SetTripVisibility sets who may open the trip and returns its share link
+  // (minted on first use; empty for PRIVATE).
+  rpc SetTripVisibility(SetTripVisibilityRequest) returns (SetTripVisibilityResponse);
+  // GetSharedTrip opens a trip by its share code. Accepts anonymous callers.
+  // PRIVATE trips, and trips whose owner blocked the caller, are NotFound.
+  // Stop notes and booking links are left out unless the owner opted in.
+  rpc GetSharedTrip(GetSharedTripRequest) returns (TripDraft);
+  // GetFriendTrip opens another user's trip by id when the caller may see it
+  // (FRIENDS for a friend, or PUBLIC); otherwise NotFound.
+  rpc GetFriendTrip(GetFriendTripRequest) returns (TripDraft);
+  // ListFriendTrips is the caller's feed: trips friends shared as FRIENDS or
+  // PUBLIC, most recently updated first.
+  rpc ListFriendTrips(ListFriendTripsRequest) returns (ListTripsResponse);
+  // ListUserTrips lists the trips of one user that the caller may see.
+  rpc ListUserTrips(ListUserTripsRequest) returns (ListTripsResponse);
+  // CopyTrip saves a trip the caller may see as a new trip of their own,
+  // private, with copied_from_trip_id set. Later changes to the source do
+  // not touch the copy.
+  rpc CopyTrip(CopyTripRequest) returns (CopyTripResponse);
   rpc ReorderStops(ReorderStopsRequest) returns (TripDraft);
   rpc RenameStop(RenameStopRequest) returns (TripDraft);
   rpc EditStopDuration(EditStopDurationRequest) returns (TripDraft);
