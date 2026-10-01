@@ -4,7 +4,7 @@
 
 import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv2";
 import type { Message } from "@bufbuild/protobuf";
-import type { POIDetailedInfo } from "../poi/poi_pb";
+import type { POIDetailedInfo, POIImage } from "../poi/poi_pb";
 import type { RecommendationTrace } from "../recommendation/recommendation_pb";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
 import type { PublicUser } from "../social/social_pb";
@@ -131,6 +131,17 @@ export declare type TripStop = Message<"loci.trip.TripStop"> & {
    * @generated from field: optional loci.recommendation.RecommendationTrace recommendation_trace = 10;
    */
   recommendationTrace?: RecommendationTrace;
+
+  /**
+   * A picture of the stop's place, with the credit it must be shown with
+   * (read side only; not persisted on the stop). Taken from the stored images
+   * of the linked POI, so it is absent when the stop has no poi_id or that POI
+   * has no picture yet; render the usual placeholder then. Filled on City Pack
+   * stops (BundleDay.stops).
+   *
+   * @generated from field: optional loci.poi.POIImage image = 11;
+   */
+  image?: POIImage;
 };
 
 /**
