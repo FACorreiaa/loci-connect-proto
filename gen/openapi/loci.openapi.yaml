@@ -1127,6 +1127,538 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.auth.LoginResponse'
+  /loci.boards.v1.BoardsService/CreateBoard:
+    post:
+      tags:
+        - loci.boards.v1.BoardsService
+      summary: CreateBoard
+      operationId: loci.boards.v1.BoardsService.CreateBoard
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.boards.v1.CreateBoardRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.boards.v1.CreateBoardResponse'
+  /loci.boards.v1.BoardsService/CreateComment:
+    post:
+      tags:
+        - loci.boards.v1.BoardsService
+      summary: CreateComment
+      operationId: loci.boards.v1.BoardsService.CreateComment
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.boards.v1.CreateCommentRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.boards.v1.CreateCommentResponse'
+  /loci.boards.v1.BoardsService/CreatePost:
+    post:
+      tags:
+        - loci.boards.v1.BoardsService
+      summary: CreatePost
+      operationId: loci.boards.v1.BoardsService.CreatePost
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.boards.v1.CreatePostRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.boards.v1.CreatePostResponse'
+  /loci.boards.v1.BoardsService/DeleteBoard:
+    post:
+      tags:
+        - loci.boards.v1.BoardsService
+      summary: DeleteBoard
+      description: Admin only.
+      operationId: loci.boards.v1.BoardsService.DeleteBoard
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.boards.v1.DeleteBoardRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.boards.v1.DeleteBoardResponse'
+  /loci.boards.v1.BoardsService/DeleteComment:
+    post:
+      tags:
+        - loci.boards.v1.BoardsService
+      summary: DeleteComment
+      description: The author or an admin.
+      operationId: loci.boards.v1.BoardsService.DeleteComment
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.boards.v1.DeleteCommentRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.boards.v1.DeleteCommentResponse'
+  /loci.boards.v1.BoardsService/DeletePost:
+    post:
+      tags:
+        - loci.boards.v1.BoardsService
+      summary: DeletePost
+      description: The author or an admin.
+      operationId: loci.boards.v1.BoardsService.DeletePost
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.boards.v1.DeletePostRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.boards.v1.DeletePostResponse'
+  /loci.boards.v1.BoardsService/GetBoard:
+    post:
+      tags:
+        - loci.boards.v1.BoardsService
+      summary: GetBoard
+      operationId: loci.boards.v1.BoardsService.GetBoard
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.boards.v1.GetBoardRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.boards.v1.GetBoardResponse'
+  /loci.boards.v1.BoardsService/GetBoardsViewer:
+    post:
+      tags:
+        - loci.boards.v1.BoardsService
+      summary: GetBoardsViewer
+      description: 'What the caller may do here: admin controls and any active sanction.'
+      operationId: loci.boards.v1.BoardsService.GetBoardsViewer
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.boards.v1.GetBoardsViewerRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.boards.v1.GetBoardsViewerResponse'
+  /loci.boards.v1.BoardsService/GetPost:
+    post:
+      tags:
+        - loci.boards.v1.BoardsService
+      summary: GetPost
+      description: A post and its whole comment tree, flat; clients nest by parent_id.
+      operationId: loci.boards.v1.BoardsService.GetPost
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.boards.v1.GetPostRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.boards.v1.GetPostResponse'
+  /loci.boards.v1.BoardsService/LiftSanction:
+    post:
+      tags:
+        - loci.boards.v1.BoardsService
+      summary: LiftSanction
+      operationId: loci.boards.v1.BoardsService.LiftSanction
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.boards.v1.LiftSanctionRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.boards.v1.LiftSanctionResponse'
+  /loci.boards.v1.BoardsService/ListBoards:
+    post:
+      tags:
+        - loci.boards.v1.BoardsService
+      summary: ListBoards
+      operationId: loci.boards.v1.BoardsService.ListBoards
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.boards.v1.ListBoardsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.boards.v1.ListBoardsResponse'
+  /loci.boards.v1.BoardsService/ListPosts:
+    post:
+      tags:
+        - loci.boards.v1.BoardsService
+      summary: ListPosts
+      description: Lists posts in one board, or across every board when board_slug is empty.
+      operationId: loci.boards.v1.BoardsService.ListPosts
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.boards.v1.ListPostsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.boards.v1.ListPostsResponse'
+  /loci.boards.v1.BoardsService/ListSanctions:
+    post:
+      tags:
+        - loci.boards.v1.BoardsService
+      summary: ListSanctions
+      operationId: loci.boards.v1.BoardsService.ListSanctions
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.boards.v1.ListSanctionsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.boards.v1.ListSanctionsResponse'
+  /loci.boards.v1.BoardsService/SanctionUser:
+    post:
+      tags:
+        - loci.boards.v1.BoardsService
+      summary: SanctionUser
+      operationId: loci.boards.v1.BoardsService.SanctionUser
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.boards.v1.SanctionUserRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.boards.v1.SanctionUserResponse'
+  /loci.boards.v1.BoardsService/VotePost:
+    post:
+      tags:
+        - loci.boards.v1.BoardsService
+      summary: VotePost
+      description: value 1 upvotes, -1 downvotes, 0 clears the caller's vote.
+      operationId: loci.boards.v1.BoardsService.VotePost
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.boards.v1.VotePostRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.boards.v1.VotePostResponse'
   /loci.bundle.v1.BundleService/ClaimBundle:
     post:
       tags:
@@ -11188,6 +11720,603 @@ components:
       title: VerifyMFARequest
       additionalProperties: false
       description: VerifyMFARequest completes a login that was challenged for a second factor.
+    loci.boards.v1.Attachment:
+      type: object
+      properties:
+        kind:
+          title: kind
+          $ref: '#/components/schemas/loci.boards.v1.AttachmentKind'
+        ref:
+          type: string
+          title: ref
+          maxLength: 100
+        title:
+          type: string
+          title: title
+          maxLength: 300
+        subtitle:
+          type: string
+          title: subtitle
+          maxLength: 300
+        imageUrl:
+          type: string
+          title: image_url
+          maxLength: 2048
+        city:
+          type: string
+          title: city
+          maxLength: 200
+      title: Attachment
+      additionalProperties: false
+      description: |-
+        Attachment is a Loci item frozen at post time, so the card still renders
+         after the item itself changes or is deleted.
+    loci.boards.v1.AttachmentInput:
+      type: object
+      properties:
+        kind:
+          not:
+            enum:
+              - ATTACHMENT_KIND_UNSPECIFIED
+          title: kind
+          $ref: '#/components/schemas/loci.boards.v1.AttachmentKind'
+        ref:
+          type: string
+          title: ref
+          maxLength: 100
+          minLength: 1
+      title: AttachmentInput
+      additionalProperties: false
+    loci.boards.v1.AttachmentKind:
+      type: string
+      title: AttachmentKind
+      enum:
+        - ATTACHMENT_KIND_UNSPECIFIED
+        - ATTACHMENT_KIND_ITINERARY
+        - ATTACHMENT_KIND_POI
+        - ATTACHMENT_KIND_CITY
+    loci.boards.v1.Board:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          maxLength: 100
+        slug:
+          type: string
+          title: slug
+          maxLength: 32
+        name:
+          type: string
+          title: name
+          maxLength: 60
+        description:
+          type: string
+          title: description
+          maxLength: 500
+        createdBy:
+          title: created_by
+          $ref: '#/components/schemas/loci.social.PublicUser'
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        postCount:
+          type: integer
+          title: post_count
+          minimum: 0
+          format: int32
+        lastActivityAt:
+          title: last_activity_at
+          description: Newest post, or created_at when the board has none.
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: Board
+      additionalProperties: false
+    loci.boards.v1.BoardRef:
+      type: object
+      properties:
+        slug:
+          type: string
+          title: slug
+          maxLength: 32
+        name:
+          type: string
+          title: name
+          maxLength: 60
+      title: BoardRef
+      additionalProperties: false
+      description: BoardRef is the board chip a post carries in a cross-board feed.
+    loci.boards.v1.Comment:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          maxLength: 100
+        postId:
+          type: string
+          title: post_id
+          maxLength: 100
+        parentId:
+          type: string
+          title: parent_id
+          maxLength: 100
+          description: Empty for a top-level comment.
+        author:
+          title: author
+          description: Unset when deleted.
+          $ref: '#/components/schemas/loci.social.PublicUser'
+        body:
+          type: string
+          title: body
+          maxLength: 5000
+          description: Empty when deleted.
+        deleted:
+          type: boolean
+          title: deleted
+          description: A deleted comment is kept only while it has replies, shown as "[deleted]".
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: Comment
+      additionalProperties: false
+    loci.boards.v1.CreateBoardRequest:
+      type: object
+      properties:
+        slug:
+          type: string
+          title: slug
+          pattern: ^[a-z0-9-]{3,32}$
+        name:
+          type: string
+          title: name
+          maxLength: 60
+          minLength: 3
+        description:
+          type: string
+          title: description
+          maxLength: 500
+      title: CreateBoardRequest
+      additionalProperties: false
+    loci.boards.v1.CreateBoardResponse:
+      type: object
+      properties:
+        board:
+          title: board
+          $ref: '#/components/schemas/loci.boards.v1.Board'
+      title: CreateBoardResponse
+      additionalProperties: false
+    loci.boards.v1.CreateCommentRequest:
+      type: object
+      properties:
+        postId:
+          type: string
+          title: post_id
+          format: uuid
+        parentId:
+          type: string
+          title: parent_id
+          maxLength: 100
+          description: Empty for a top-level comment.
+        body:
+          type: string
+          title: body
+          maxLength: 5000
+          minLength: 1
+      title: CreateCommentRequest
+      additionalProperties: false
+    loci.boards.v1.CreateCommentResponse:
+      type: object
+      properties:
+        comment:
+          title: comment
+          $ref: '#/components/schemas/loci.boards.v1.Comment'
+      title: CreateCommentResponse
+      additionalProperties: false
+    loci.boards.v1.CreatePostRequest:
+      type: object
+      properties:
+        boardSlug:
+          type: string
+          title: board_slug
+          maxLength: 32
+          minLength: 3
+        title:
+          type: string
+          title: title
+          maxLength: 200
+          minLength: 3
+        url:
+          type: string
+          title: url
+          maxLength: 2048
+          description: http or https only.
+        body:
+          type: string
+          title: body
+          maxLength: 10000
+        attachment:
+          oneOf:
+            - $ref: '#/components/schemas/loci.boards.v1.AttachmentInput'
+            - type: "null"
+          title: attachment
+      title: CreatePostRequest
+      additionalProperties: false
+    loci.boards.v1.CreatePostResponse:
+      type: object
+      properties:
+        post:
+          title: post
+          $ref: '#/components/schemas/loci.boards.v1.Post'
+      title: CreatePostResponse
+      additionalProperties: false
+    loci.boards.v1.DeleteBoardRequest:
+      type: object
+      properties:
+        slug:
+          type: string
+          title: slug
+          maxLength: 32
+          minLength: 3
+      title: DeleteBoardRequest
+      additionalProperties: false
+    loci.boards.v1.DeleteBoardResponse:
+      type: object
+      title: DeleteBoardResponse
+      additionalProperties: false
+    loci.boards.v1.DeleteCommentRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          format: uuid
+      title: DeleteCommentRequest
+      additionalProperties: false
+    loci.boards.v1.DeleteCommentResponse:
+      type: object
+      title: DeleteCommentResponse
+      additionalProperties: false
+    loci.boards.v1.DeletePostRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          format: uuid
+      title: DeletePostRequest
+      additionalProperties: false
+    loci.boards.v1.DeletePostResponse:
+      type: object
+      title: DeletePostResponse
+      additionalProperties: false
+    loci.boards.v1.GetBoardRequest:
+      type: object
+      properties:
+        slug:
+          type: string
+          title: slug
+          maxLength: 32
+          minLength: 3
+      title: GetBoardRequest
+      additionalProperties: false
+    loci.boards.v1.GetBoardResponse:
+      type: object
+      properties:
+        board:
+          title: board
+          $ref: '#/components/schemas/loci.boards.v1.Board'
+      title: GetBoardResponse
+      additionalProperties: false
+    loci.boards.v1.GetBoardsViewerRequest:
+      type: object
+      title: GetBoardsViewerRequest
+      additionalProperties: false
+    loci.boards.v1.GetBoardsViewerResponse:
+      type: object
+      properties:
+        signedIn:
+          type: boolean
+          title: signed_in
+        isAdmin:
+          type: boolean
+          title: is_admin
+        activeSanction:
+          oneOf:
+            - $ref: '#/components/schemas/loci.boards.v1.Sanction'
+            - type: "null"
+          title: active_sanction
+          description: Set while the caller is muted or banned.
+      title: GetBoardsViewerResponse
+      additionalProperties: false
+    loci.boards.v1.GetPostRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          format: uuid
+      title: GetPostRequest
+      additionalProperties: false
+    loci.boards.v1.GetPostResponse:
+      type: object
+      properties:
+        post:
+          title: post
+          $ref: '#/components/schemas/loci.boards.v1.Post'
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.boards.v1.Comment'
+          title: comments
+      title: GetPostResponse
+      additionalProperties: false
+    loci.boards.v1.LiftSanctionRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          format: uuid
+      title: LiftSanctionRequest
+      additionalProperties: false
+    loci.boards.v1.LiftSanctionResponse:
+      type: object
+      title: LiftSanctionResponse
+      additionalProperties: false
+    loci.boards.v1.ListBoardsRequest:
+      type: object
+      properties:
+        cursor:
+          type: string
+          title: cursor
+          maxLength: 200
+        pageSize:
+          type: integer
+          title: page_size
+          maximum: 100
+          minimum: 0
+          format: int32
+      title: ListBoardsRequest
+      additionalProperties: false
+    loci.boards.v1.ListBoardsResponse:
+      type: object
+      properties:
+        boards:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.boards.v1.Board'
+          title: boards
+        nextCursor:
+          type: string
+          title: next_cursor
+      title: ListBoardsResponse
+      additionalProperties: false
+    loci.boards.v1.ListPostsRequest:
+      type: object
+      properties:
+        boardSlug:
+          type: string
+          title: board_slug
+          maxLength: 32
+          description: Empty lists every board.
+        sort:
+          title: sort
+          description: Unspecified means NEW.
+          $ref: '#/components/schemas/loci.boards.v1.PostSort'
+        window:
+          title: window
+          description: Only read for TOP; unspecified means WEEK.
+          $ref: '#/components/schemas/loci.boards.v1.TopWindow'
+        cursor:
+          type: string
+          title: cursor
+          maxLength: 200
+        pageSize:
+          type: integer
+          title: page_size
+          maximum: 100
+          minimum: 0
+          format: int32
+      title: ListPostsRequest
+      additionalProperties: false
+    loci.boards.v1.ListPostsResponse:
+      type: object
+      properties:
+        posts:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.boards.v1.Post'
+          title: posts
+        nextCursor:
+          type: string
+          title: next_cursor
+      title: ListPostsResponse
+      additionalProperties: false
+    loci.boards.v1.ListSanctionsRequest:
+      type: object
+      properties:
+        activeOnly:
+          type: boolean
+          title: active_only
+      title: ListSanctionsRequest
+      additionalProperties: false
+    loci.boards.v1.ListSanctionsResponse:
+      type: object
+      properties:
+        sanctions:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.boards.v1.Sanction'
+          title: sanctions
+      title: ListSanctionsResponse
+      additionalProperties: false
+    loci.boards.v1.Post:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          maxLength: 100
+        board:
+          title: board
+          $ref: '#/components/schemas/loci.boards.v1.BoardRef'
+        author:
+          title: author
+          $ref: '#/components/schemas/loci.social.PublicUser'
+        title:
+          type: string
+          title: title
+          maxLength: 200
+        url:
+          type: string
+          title: url
+          maxLength: 2048
+        domain:
+          type: string
+          title: domain
+          maxLength: 255
+          description: Hostname of url, without "www.".
+        body:
+          type: string
+          title: body
+          maxLength: 10000
+        attachment:
+          oneOf:
+            - $ref: '#/components/schemas/loci.boards.v1.Attachment'
+            - type: "null"
+          title: attachment
+        score:
+          type: integer
+          title: score
+          format: int32
+        commentCount:
+          type: integer
+          title: comment_count
+          minimum: 0
+          format: int32
+        myVote:
+          type: integer
+          title: my_vote
+          maximum: 1
+          minimum: -1
+          format: int32
+          description: 'The caller''s vote: -1, 0 or 1. Always 0 for anonymous callers.'
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: Post
+      additionalProperties: false
+    loci.boards.v1.PostSort:
+      type: string
+      title: PostSort
+      enum:
+        - POST_SORT_UNSPECIFIED
+        - POST_SORT_NEW
+        - POST_SORT_TOP
+    loci.boards.v1.Sanction:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          maxLength: 100
+        user:
+          title: user
+          $ref: '#/components/schemas/loci.social.PublicUser'
+        kind:
+          title: kind
+          $ref: '#/components/schemas/loci.boards.v1.SanctionKind'
+        reason:
+          type: string
+          title: reason
+          maxLength: 500
+        expiresAt:
+          title: expires_at
+          description: Unset means permanent.
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        liftedAt:
+          title: lifted_at
+          description: Set once an admin lifted it early.
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: Sanction
+      additionalProperties: false
+    loci.boards.v1.SanctionKind:
+      type: string
+      title: SanctionKind
+      enum:
+        - SANCTION_KIND_UNSPECIFIED
+        - SANCTION_KIND_MUTE
+        - SANCTION_KIND_BAN
+    loci.boards.v1.SanctionUserRequest:
+      type: object
+      properties:
+        userId:
+          type: string
+          title: user_id
+          format: uuid
+        kind:
+          not:
+            enum:
+              - SANCTION_KIND_UNSPECIFIED
+          title: kind
+          $ref: '#/components/schemas/loci.boards.v1.SanctionKind'
+        reason:
+          type: string
+          title: reason
+          maxLength: 500
+        expiresAt:
+          title: expires_at
+          description: Unset means permanent.
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: SanctionUserRequest
+      additionalProperties: false
+    loci.boards.v1.SanctionUserResponse:
+      type: object
+      properties:
+        sanction:
+          title: sanction
+          $ref: '#/components/schemas/loci.boards.v1.Sanction'
+      title: SanctionUserResponse
+      additionalProperties: false
+    loci.boards.v1.TopWindow:
+      type: string
+      title: TopWindow
+      enum:
+        - TOP_WINDOW_UNSPECIFIED
+        - TOP_WINDOW_DAY
+        - TOP_WINDOW_WEEK
+        - TOP_WINDOW_ALL
+    loci.boards.v1.VotePostRequest:
+      type: object
+      properties:
+        postId:
+          type: string
+          title: post_id
+          format: uuid
+        value:
+          type: integer
+          title: value
+          maximum: 1
+          minimum: -1
+          format: int32
+      title: VotePostRequest
+      additionalProperties: false
+    loci.boards.v1.VotePostResponse:
+      type: object
+      properties:
+        score:
+          type: integer
+          title: score
+          format: int32
+        myVote:
+          type: integer
+          title: my_vote
+          format: int32
+      title: VotePostResponse
+      additionalProperties: false
     loci.bundle.v1.Bundle:
       type: object
       properties:
@@ -28989,11 +30118,6 @@ tags:
        (MCP clients, integrations). Keys authenticate as the owning user.
   - name: loci.auth.AuthService
     description: AuthService defines authentication-related RPCs
-  - name: loci.place.PlaceIntelligenceService
-  - name: loci.recommendation.RecommendationService
-    description: RecommendationService owns private learning controls and client-side exposure events.
-  - name: loci.poi.POIService
-    description: POIService defines POI-related RPCs
   - name: loci.social.SocialService
     description: |-
       SocialService is Loci's friends layer: mutual friendships (a request one
@@ -29005,6 +30129,20 @@ tags:
 
        GetInvite and GetPublicProfile accept anonymous callers (an invite link or
        a profile opened signed out); every other RPC needs a session.
+  - name: loci.boards.v1.BoardsService
+    description: |-
+      BoardsService is Loci's community: topic boards anyone signed in can open,
+       posts (a title, an optional link, an optional body and an optional Loci
+       item), threaded comments and up/down votes on posts.
+
+       Reads accept anonymous callers; a signed-in caller also gets my_vote.
+       Every write needs a session and fails PermissionDenied while the caller is
+       muted or banned. Admin RPCs fail PermissionDenied for everyone but admins.
+  - name: loci.place.PlaceIntelligenceService
+  - name: loci.recommendation.RecommendationService
+    description: RecommendationService owns private learning controls and client-side exposure events.
+  - name: loci.poi.POIService
+    description: POIService defines POI-related RPCs
   - name: loci.trip.TripService
     description: |-
       TripService persists and mutates editable day-by-day trips. All mutations that
