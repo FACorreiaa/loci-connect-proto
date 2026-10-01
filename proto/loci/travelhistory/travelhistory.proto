@@ -217,10 +217,33 @@ message RecordVisitRequest {
   optional string poi_name = 7 [(buf.validate.field).string = {max_len: 300}];
   // Defaults to server time when omitted.
   optional google.protobuf.Timestamp visited_at = 8;
+  // Where the device was when the visit was recorded (an arrival detected on
+  // the spot). A visit earns points only when this fix is recent and close to
+  // the place's own coordinates; without it the visit is recorded, unscored.
+  optional DeviceFix device_location = 9;
+}
+
+message DeviceFix {
+  double latitude = 1 [(buf.validate.field).double = {
+    gte: -90
+    lte: 90
+  }];
+  double longitude = 2 [(buf.validate.field).double = {
+    gte: -180
+    lte: 180
+  }];
+  // Horizontal accuracy in metres as the device reported it.
+  double accuracy_m = 3 [(buf.validate.field).double = {
+    gte: 0
+    lte: 10000
+  }];
+  google.protobuf.Timestamp observed_at = 4;
 }
 
 message RecordVisitResponse {
   VisitedCity city = 1;
+  // Points the visit earned (place, and a new city); 0 when unscored.
+  int32 points_awarded = 2 [(buf.validate.field).int32.gte = 0];
 }
 
 message DeleteVisitRequest {

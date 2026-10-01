@@ -49,6 +49,12 @@ service SocialService {
   // contacts who are not on Loci.
   rpc MatchContacts(MatchContactsRequest) returns (MatchContactsResponse);
 
+  // MatchFacebookFriends finds Loci users among the caller's Facebook friends.
+  // It reads the friend list Facebook granted at LinkFacebook, so it only
+  // finds friends who also linked Facebook to Loci; it is FailedPrecondition
+  // when the caller has not linked Facebook.
+  rpc MatchFacebookFriends(MatchFacebookFriendsRequest) returns (MatchFacebookFriendsResponse);
+
   // SearchUsers finds users by username prefix.
   rpc SearchUsers(SearchUsersRequest) returns (SearchUsersResponse);
   // GetPublicProfile is a user's profile as the caller may see it. A user who
@@ -239,6 +245,12 @@ message ContactMatch {
 
 message MatchContactsResponse {
   repeated ContactMatch matches = 1;
+}
+
+message MatchFacebookFriendsRequest {}
+
+message MatchFacebookFriendsResponse {
+  repeated UserResult matches = 1;
 }
 
 message SearchUsersRequest {

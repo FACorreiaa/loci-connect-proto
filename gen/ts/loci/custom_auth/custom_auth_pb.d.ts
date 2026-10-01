@@ -267,6 +267,90 @@ export declare type VerifyPhoneResponse = Message<"loci.custom_auth.VerifyPhoneR
 export declare const VerifyPhoneResponseSchema: GenMessage<VerifyPhoneResponse>;
 
 /**
+ * AttachVerifiedPhoneRequest checks an SMS code (sent with
+ * SendPhoneVerification) and attaches the number to the signed-in caller, so
+ * friends can find them from their contacts.
+ *
+ * @generated from message loci.custom_auth.AttachVerifiedPhoneRequest
+ */
+export declare type AttachVerifiedPhoneRequest = Message<"loci.custom_auth.AttachVerifiedPhoneRequest"> & {
+  /**
+   * @generated from field: string phone_number = 1;
+   */
+  phoneNumber: string;
+
+  /**
+   * @generated from field: string code = 2;
+   */
+  code: string;
+};
+
+/**
+ * Describes the message loci.custom_auth.AttachVerifiedPhoneRequest.
+ * Use `create(AttachVerifiedPhoneRequestSchema)` to create a new message.
+ */
+export declare const AttachVerifiedPhoneRequestSchema: GenMessage<AttachVerifiedPhoneRequest>;
+
+/**
+ * @generated from message loci.custom_auth.AttachVerifiedPhoneResponse
+ */
+export declare type AttachVerifiedPhoneResponse = Message<"loci.custom_auth.AttachVerifiedPhoneResponse"> & {
+  /**
+   * The number as stored, E.164.
+   *
+   * @generated from field: string phone_number = 1;
+   */
+  phoneNumber: string;
+};
+
+/**
+ * Describes the message loci.custom_auth.AttachVerifiedPhoneResponse.
+ * Use `create(AttachVerifiedPhoneResponseSchema)` to create a new message.
+ */
+export declare const AttachVerifiedPhoneResponseSchema: GenMessage<AttachVerifiedPhoneResponse>;
+
+/**
+ * LinkFacebookRequest links a Facebook account to the signed-in caller so
+ * friends who also linked theirs can be found. The token is a Limited Login
+ * token, verified like SignInWithIDToken.
+ *
+ * @generated from message loci.custom_auth.LinkFacebookRequest
+ */
+export declare type LinkFacebookRequest = Message<"loci.custom_auth.LinkFacebookRequest"> & {
+  /**
+   * @generated from field: string id_token = 1;
+   */
+  idToken: string;
+
+  /**
+   * @generated from field: string nonce = 2;
+   */
+  nonce: string;
+};
+
+/**
+ * Describes the message loci.custom_auth.LinkFacebookRequest.
+ * Use `create(LinkFacebookRequestSchema)` to create a new message.
+ */
+export declare const LinkFacebookRequestSchema: GenMessage<LinkFacebookRequest>;
+
+/**
+ * @generated from message loci.custom_auth.LinkFacebookResponse
+ */
+export declare type LinkFacebookResponse = Message<"loci.custom_auth.LinkFacebookResponse"> & {
+  /**
+   * @generated from field: bool linked = 1;
+   */
+  linked: boolean;
+};
+
+/**
+ * Describes the message loci.custom_auth.LinkFacebookResponse.
+ * Use `create(LinkFacebookResponseSchema)` to create a new message.
+ */
+export declare const LinkFacebookResponseSchema: GenMessage<LinkFacebookResponse>;
+
+/**
  * OAuthProvider enum for supported OAuth providers
  *
  * @generated from enum loci.custom_auth.OAuthProvider
@@ -286,6 +370,15 @@ export enum OAuthProvider {
    * @generated from enum value: OAUTH_PROVIDER_APPLE = 2;
    */
   OAUTH_PROVIDER_APPLE = 2,
+
+  /**
+   * Facebook Limited Login: the iOS SDK hands over an OIDC token signed by
+   * Meta. It may carry no email, so it can link to a signed-in account but
+   * cannot create one on its own.
+   *
+   * @generated from enum value: OAUTH_PROVIDER_FACEBOOK = 3;
+   */
+  OAUTH_PROVIDER_FACEBOOK = 3,
 }
 
 /**
@@ -342,6 +435,28 @@ export declare const CustomAuthService: GenService<{
     methodKind: "unary";
     input: typeof VerifyPhoneRequestSchema;
     output: typeof VerifyPhoneResponseSchema;
+  },
+  /**
+   * AttachVerifiedPhone needs a session. A number already verified on another
+   * account is AlreadyExists.
+   *
+   * @generated from rpc loci.custom_auth.CustomAuthService.AttachVerifiedPhone
+   */
+  attachVerifiedPhone: {
+    methodKind: "unary";
+    input: typeof AttachVerifiedPhoneRequestSchema;
+    output: typeof AttachVerifiedPhoneResponseSchema;
+  },
+  /**
+   * LinkFacebook needs a session. A Facebook account linked to another Loci
+   * account is AlreadyExists.
+   *
+   * @generated from rpc loci.custom_auth.CustomAuthService.LinkFacebook
+   */
+  linkFacebook: {
+    methodKind: "unary";
+    input: typeof LinkFacebookRequestSchema;
+    output: typeof LinkFacebookResponseSchema;
   },
 }>;
 
