@@ -11,6 +11,10 @@ enum OAuthProvider {
   OAUTH_PROVIDER_UNSPECIFIED = 0;
   OAUTH_PROVIDER_GOOGLE = 1;
   OAUTH_PROVIDER_APPLE = 2;
+  // Facebook Limited Login: the iOS SDK hands over an OIDC token signed by
+  // Meta. It may carry no email, so it can link to a signed-in account but
+  // cannot create one on its own.
+  OAUTH_PROVIDER_FACEBOOK = 3;
 }
 
 // =====================
@@ -119,6 +123,44 @@ message VerifyPhoneResponse {
   bool is_new_user = 4;
 }
 
+// AttachVerifiedPhoneRequest checks an SMS code (sent with
+// SendPhoneVerification) and attaches the number to the signed-in caller, so
+// friends can find them from their contacts.
+message AttachVerifiedPhoneRequest {
+  string phone_number = 1 [(buf.validate.field).string = {
+    min_len: 10
+    max_len: 20
+    pattern: "^\\+[1-9]\\d{1,14}$"
+  }];
+  string code = 2 [(buf.validate.field).string = {
+    min_len: 4
+    max_len: 8
+  }];
+}
+
+message AttachVerifiedPhoneResponse {
+  // The number as stored, E.164.
+  string phone_number = 1;
+}
+
+// LinkFacebookRequest links a Facebook account to the signed-in caller so
+// friends who also linked theirs can be found. The token is a Limited Login
+// token, verified like SignInWithIDToken.
+message LinkFacebookRequest {
+  string id_token = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 16384
+  }];
+  string nonce = 2 [(buf.validate.field).string = {
+    min_len: 16
+    max_len: 256
+  }];
+}
+
+message LinkFacebookResponse {
+  bool linked = 1;
+}
+
 // =====================
 // Service Definition
 // =====================
@@ -133,4 +175,11 @@ service CustomAuthService {
   // Phone authentication
   rpc SendPhoneVerification(SendPhoneVerificationRequest) returns (SendPhoneVerificationResponse);
   rpc VerifyPhone(VerifyPhoneRequest) returns (VerifyPhoneResponse);
+  // AttachVerifiedPhone needs a session. A number already verified on another
+  // account is AlreadyExists.
+  rpc AttachVerifiedPhone(AttachVerifiedPhoneRequest) returns (AttachVerifiedPhoneResponse);
+
+  // LinkFacebook needs a session. A Facebook account linked to another Loci
+  // account is AlreadyExists.
+  rpc LinkFacebook(LinkFacebookRequest) returns (LinkFacebookResponse);
 }

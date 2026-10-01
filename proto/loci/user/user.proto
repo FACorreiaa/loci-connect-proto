@@ -357,6 +357,13 @@ message NotificationSettings {
   bool search_finished = 4;
   // Friend requests and accepted friendships.
   bool friend_activity = 5;
+  // Whether friends see the caller on their leaderboards.
+  bool leaderboard_visible = 6;
+  // Evening reminder when the day's check-in would break a streak (sent by
+  // the device; the server only stores the choice).
+  bool streak_reminders = 7;
+  // Badges earned and a friend passing the caller on the week's leaderboard.
+  bool progress_updates = 8;
 }
 
 message GetNotificationSettingsRequest {}
@@ -367,6 +374,9 @@ message UpdateNotificationSettingsRequest {
   optional bool trip_reminders = 2;
   optional bool search_finished = 3;
   optional bool friend_activity = 4;
+  optional bool leaderboard_visible = 5;
+  optional bool streak_reminders = 6;
+  optional bool progress_updates = 7;
 }
 
 enum PushPlatform {
