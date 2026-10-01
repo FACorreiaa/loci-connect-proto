@@ -501,6 +501,18 @@ public struct Loci_Travelhistory_RecordVisitRequest: Sendable {
   /// Clears the value of `visitedAt`. Subsequent reads from it will return its default value.
   public mutating func clearVisitedAt() {self._visitedAt = nil}
 
+  /// Where the device was when the visit was recorded (an arrival detected on
+  /// the spot). A visit earns points only when this fix is recent and close to
+  /// the place's own coordinates; without it the visit is recorded, unscored.
+  public var deviceLocation: Loci_Travelhistory_DeviceFix {
+    get {return _deviceLocation ?? Loci_Travelhistory_DeviceFix()}
+    set {_deviceLocation = newValue}
+  }
+  /// Returns true if `deviceLocation` has been explicitly set.
+  public var hasDeviceLocation: Bool {return self._deviceLocation != nil}
+  /// Clears the value of `deviceLocation`. Subsequent reads from it will return its default value.
+  public mutating func clearDeviceLocation() {self._deviceLocation = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -508,6 +520,35 @@ public struct Loci_Travelhistory_RecordVisitRequest: Sendable {
   fileprivate var _poiID: String? = nil
   fileprivate var _poiName: String? = nil
   fileprivate var _visitedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _deviceLocation: Loci_Travelhistory_DeviceFix? = nil
+}
+
+public struct Loci_Travelhistory_DeviceFix: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var latitude: Double = 0
+
+  public var longitude: Double = 0
+
+  /// Horizontal accuracy in metres as the device reported it.
+  public var accuracyM: Double = 0
+
+  public var observedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _observedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_observedAt = newValue}
+  }
+  /// Returns true if `observedAt` has been explicitly set.
+  public var hasObservedAt: Bool {return self._observedAt != nil}
+  /// Clears the value of `observedAt`. Subsequent reads from it will return its default value.
+  public mutating func clearObservedAt() {self._observedAt = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _observedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
 public struct Loci_Travelhistory_RecordVisitResponse: Sendable {
@@ -523,6 +564,9 @@ public struct Loci_Travelhistory_RecordVisitResponse: Sendable {
   public var hasCity: Bool {return self._city != nil}
   /// Clears the value of `city`. Subsequent reads from it will return its default value.
   public mutating func clearCity() {self._city = nil}
+
+  /// Points the visit earned (place, and a new city); 0 when unscored.
+  public var pointsAwarded: Int32 = 0
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1330,6 +1374,7 @@ extension Loci_Travelhistory_RecordVisitRequest: SwiftProtobuf.Message, SwiftPro
     6: .standard(proto: "poi_id"),
     7: .standard(proto: "poi_name"),
     8: .standard(proto: "visited_at"),
+    9: .standard(proto: "device_location"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1346,6 +1391,7 @@ extension Loci_Travelhistory_RecordVisitRequest: SwiftProtobuf.Message, SwiftPro
       case 6: try { try decoder.decodeSingularStringField(value: &self._poiID) }()
       case 7: try { try decoder.decodeSingularStringField(value: &self._poiName) }()
       case 8: try { try decoder.decodeSingularMessageField(value: &self._visitedAt) }()
+      case 9: try { try decoder.decodeSingularMessageField(value: &self._deviceLocation) }()
       default: break
       }
     }
@@ -1380,6 +1426,9 @@ extension Loci_Travelhistory_RecordVisitRequest: SwiftProtobuf.Message, SwiftPro
     try { if let v = self._visitedAt {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
     } }()
+    try { if let v = self._deviceLocation {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1392,6 +1441,61 @@ extension Loci_Travelhistory_RecordVisitRequest: SwiftProtobuf.Message, SwiftPro
     if lhs._poiID != rhs._poiID {return false}
     if lhs._poiName != rhs._poiName {return false}
     if lhs._visitedAt != rhs._visitedAt {return false}
+    if lhs._deviceLocation != rhs._deviceLocation {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Travelhistory_DeviceFix: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".DeviceFix"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "latitude"),
+    2: .same(proto: "longitude"),
+    3: .standard(proto: "accuracy_m"),
+    4: .standard(proto: "observed_at"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularDoubleField(value: &self.latitude) }()
+      case 2: try { try decoder.decodeSingularDoubleField(value: &self.longitude) }()
+      case 3: try { try decoder.decodeSingularDoubleField(value: &self.accuracyM) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._observedAt) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if self.latitude.bitPattern != 0 {
+      try visitor.visitSingularDoubleField(value: self.latitude, fieldNumber: 1)
+    }
+    if self.longitude.bitPattern != 0 {
+      try visitor.visitSingularDoubleField(value: self.longitude, fieldNumber: 2)
+    }
+    if self.accuracyM.bitPattern != 0 {
+      try visitor.visitSingularDoubleField(value: self.accuracyM, fieldNumber: 3)
+    }
+    try { if let v = self._observedAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Travelhistory_DeviceFix, rhs: Loci_Travelhistory_DeviceFix) -> Bool {
+    if lhs.latitude != rhs.latitude {return false}
+    if lhs.longitude != rhs.longitude {return false}
+    if lhs.accuracyM != rhs.accuracyM {return false}
+    if lhs._observedAt != rhs._observedAt {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1401,6 +1505,7 @@ extension Loci_Travelhistory_RecordVisitResponse: SwiftProtobuf.Message, SwiftPr
   public static let protoMessageName: String = _protobuf_package + ".RecordVisitResponse"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "city"),
+    2: .standard(proto: "points_awarded"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1410,6 +1515,7 @@ extension Loci_Travelhistory_RecordVisitResponse: SwiftProtobuf.Message, SwiftPr
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularMessageField(value: &self._city) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.pointsAwarded) }()
       default: break
       }
     }
@@ -1423,11 +1529,15 @@ extension Loci_Travelhistory_RecordVisitResponse: SwiftProtobuf.Message, SwiftPr
     try { if let v = self._city {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     } }()
+    if self.pointsAwarded != 0 {
+      try visitor.visitSingularInt32Field(value: self.pointsAwarded, fieldNumber: 2)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Loci_Travelhistory_RecordVisitResponse, rhs: Loci_Travelhistory_RecordVisitResponse) -> Bool {
     if lhs._city != rhs._city {return false}
+    if lhs.pointsAwarded != rhs.pointsAwarded {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

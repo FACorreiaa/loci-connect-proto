@@ -73,6 +73,13 @@ public protocol Loci_Social_SocialServiceClientInterface: Sendable {
     @available(iOS 13, *)
     func `matchContacts`(request: Loci_Social_MatchContactsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Social_MatchContactsResponse>
 
+    /// MatchFacebookFriends finds Loci users among the caller's Facebook friends.
+    /// It reads the friend list Facebook granted at LinkFacebook, so it only
+    /// finds friends who also linked Facebook to Loci; it is FailedPrecondition
+    /// when the caller has not linked Facebook.
+    @available(iOS 13, *)
+    func `matchFacebookFriends`(request: Loci_Social_MatchFacebookFriendsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Social_MatchFacebookFriendsResponse>
+
     /// SearchUsers finds users by username prefix.
     @available(iOS 13, *)
     func `searchUsers`(request: Loci_Social_SearchUsersRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Social_SearchUsersResponse>
@@ -157,6 +164,11 @@ public final class Loci_Social_SocialServiceClient: Loci_Social_SocialServiceCli
     }
 
     @available(iOS 13, *)
+    public func `matchFacebookFriends`(request: Loci_Social_MatchFacebookFriendsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Social_MatchFacebookFriendsResponse> {
+        return await self.client.unary(path: "/loci.social.SocialService/MatchFacebookFriends", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
     public func `searchUsers`(request: Loci_Social_SearchUsersRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Social_SearchUsersResponse> {
         return await self.client.unary(path: "/loci.social.SocialService/SearchUsers", idempotencyLevel: .unknown, request: request, headers: headers)
     }
@@ -181,6 +193,7 @@ public final class Loci_Social_SocialServiceClient: Loci_Social_SocialServiceCli
             public static let blockUser = Connect.MethodSpec(name: "BlockUser", service: "loci.social.SocialService", type: .unary)
             public static let unblockUser = Connect.MethodSpec(name: "UnblockUser", service: "loci.social.SocialService", type: .unary)
             public static let matchContacts = Connect.MethodSpec(name: "MatchContacts", service: "loci.social.SocialService", type: .unary)
+            public static let matchFacebookFriends = Connect.MethodSpec(name: "MatchFacebookFriends", service: "loci.social.SocialService", type: .unary)
             public static let searchUsers = Connect.MethodSpec(name: "SearchUsers", service: "loci.social.SocialService", type: .unary)
             public static let getPublicProfile = Connect.MethodSpec(name: "GetPublicProfile", service: "loci.social.SocialService", type: .unary)
         }

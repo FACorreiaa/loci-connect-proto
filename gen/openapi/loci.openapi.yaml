@@ -2189,6 +2189,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.compare.v1.CompareWeekendResponse'
+  /loci.custom_auth.CustomAuthService/AttachVerifiedPhone:
+    post:
+      tags:
+        - loci.custom_auth.CustomAuthService
+      summary: AttachVerifiedPhone
+      description: |-
+        AttachVerifiedPhone needs a session. A number already verified on another
+         account is AlreadyExists.
+      operationId: loci.custom_auth.CustomAuthService.AttachVerifiedPhone
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.custom_auth.AttachVerifiedPhoneRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.custom_auth.AttachVerifiedPhoneResponse'
   /loci.custom_auth.CustomAuthService/GetOAuthURL:
     post:
       tags:
@@ -2225,6 +2263,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.custom_auth.GetOAuthURLResponse'
+  /loci.custom_auth.CustomAuthService/LinkFacebook:
+    post:
+      tags:
+        - loci.custom_auth.CustomAuthService
+      summary: LinkFacebook
+      description: |-
+        LinkFacebook needs a session. A Facebook account linked to another Loci
+         account is AlreadyExists.
+      operationId: loci.custom_auth.CustomAuthService.LinkFacebook
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.custom_auth.LinkFacebookRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.custom_auth.LinkFacebookResponse'
   /loci.custom_auth.CustomAuthService/OAuthCallback:
     post:
       tags:
@@ -3116,6 +3192,196 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.favorites.v1.RemoveFromFavoritesResponse'
+  /loci.gamification.GamificationService/CompleteTripDay:
+    post:
+      tags:
+        - loci.gamification.GamificationService
+      summary: CompleteTripDay
+      description: |-
+        CompleteTripDay records that the caller walked a day of their own trip.
+         Completing every day of a trip also completes the trip.
+      operationId: loci.gamification.GamificationService.CompleteTripDay
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.gamification.CompleteTripDayRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.gamification.CompleteTripDayResponse'
+  /loci.gamification.GamificationService/DailyCheckIn:
+    post:
+      tags:
+        - loci.gamification.GamificationService
+      summary: DailyCheckIn
+      description: |-
+        DailyCheckIn marks the caller active on their local date. It is idempotent
+         per local date: the first call of the day awards points and extends the
+         streak, later calls only return progress.
+      operationId: loci.gamification.GamificationService.DailyCheckIn
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.gamification.DailyCheckInRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.gamification.DailyCheckInResponse'
+  /loci.gamification.GamificationService/GetLeaderboard:
+    post:
+      tags:
+        - loci.gamification.GamificationService
+      summary: GetLeaderboard
+      description: |-
+        GetLeaderboard ranks the caller and their friends. Friends who turned off
+         leaderboard visibility, and blocked users, are left out. The caller's own
+         entry is always present.
+      operationId: loci.gamification.GamificationService.GetLeaderboard
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.gamification.GetLeaderboardRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.gamification.GetLeaderboardResponse'
+  /loci.gamification.GamificationService/GetMyProgress:
+    post:
+      tags:
+        - loci.gamification.GamificationService
+      summary: GetMyProgress
+      description: |-
+        GetMyProgress is the caller's total, level, streak, badges and today's
+         checklist.
+      operationId: loci.gamification.GamificationService.GetMyProgress
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.gamification.GetMyProgressRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.gamification.GetMyProgressResponse'
+  /loci.gamification.GamificationService/ListPointsHistory:
+    post:
+      tags:
+        - loci.gamification.GamificationService
+      summary: ListPointsHistory
+      description: ListPointsHistory is the caller's ledger, newest first.
+      operationId: loci.gamification.GamificationService.ListPointsHistory
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.gamification.ListPointsHistoryRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.gamification.ListPointsHistoryResponse'
   /loci.gastronomy.GastronomyService/GetCityGastronomy:
     post:
       tags:
@@ -7407,6 +7673,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.social.MatchContactsResponse'
+  /loci.social.SocialService/MatchFacebookFriends:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: MatchFacebookFriends
+      description: |-
+        MatchFacebookFriends finds Loci users among the caller's Facebook friends.
+         It reads the friend list Facebook granted at LinkFacebook, so it only
+         finds friends who also linked Facebook to Loci; it is FailedPrecondition
+         when the caller has not linked Facebook.
+      operationId: loci.social.SocialService.MatchFacebookFriends
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.MatchFacebookFriendsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.MatchFacebookFriendsResponse'
   /loci.social.SocialService/RemoveFriend:
     post:
       tags:
@@ -14405,6 +14711,35 @@ components:
       title: TransportLink
       additionalProperties: false
       description: TransportLink is a ride/transit deeplink or estimate.
+    loci.custom_auth.AttachVerifiedPhoneRequest:
+      type: object
+      properties:
+        phoneNumber:
+          type: string
+          title: phone_number
+          maxLength: 20
+          minLength: 10
+          pattern: ^\+[1-9]\d{1,14}$
+        code:
+          type: string
+          title: code
+          maxLength: 8
+          minLength: 4
+      title: AttachVerifiedPhoneRequest
+      additionalProperties: false
+      description: |-
+        AttachVerifiedPhoneRequest checks an SMS code (sent with
+         SendPhoneVerification) and attaches the number to the signed-in caller, so
+         friends can find them from their contacts.
+    loci.custom_auth.AttachVerifiedPhoneResponse:
+      type: object
+      properties:
+        phoneNumber:
+          type: string
+          title: phone_number
+          description: The number as stored, E.164.
+      title: AttachVerifiedPhoneResponse
+      additionalProperties: false
     loci.custom_auth.GetOAuthURLRequest:
       type: object
       properties:
@@ -14434,6 +14769,33 @@ components:
       title: GetOAuthURLResponse
       additionalProperties: false
       description: GetOAuthURLResponse returns the OAuth authorization URL
+    loci.custom_auth.LinkFacebookRequest:
+      type: object
+      properties:
+        idToken:
+          type: string
+          title: id_token
+          maxLength: 16384
+          minLength: 1
+        nonce:
+          type: string
+          title: nonce
+          maxLength: 256
+          minLength: 16
+      title: LinkFacebookRequest
+      additionalProperties: false
+      description: |-
+        LinkFacebookRequest links a Facebook account to the signed-in caller so
+         friends who also linked theirs can be found. The token is a Limited Login
+         token, verified like SignInWithIDToken.
+    loci.custom_auth.LinkFacebookResponse:
+      type: object
+      properties:
+        linked:
+          type: boolean
+          title: linked
+      title: LinkFacebookResponse
+      additionalProperties: false
     loci.custom_auth.OAuthCallbackRequest:
       type: object
       properties:
@@ -14485,6 +14847,7 @@ components:
         - OAUTH_PROVIDER_UNSPECIFIED
         - OAUTH_PROVIDER_GOOGLE
         - OAUTH_PROVIDER_APPLE
+        - OAUTH_PROVIDER_FACEBOOK
       description: OAuthProvider enum for supported OAuth providers
     loci.custom_auth.SendPhoneVerificationRequest:
       type: object
@@ -16025,6 +16388,331 @@ components:
           title: desserts
       title: RestaurantMenu
       additionalProperties: false
+    loci.gamification.Badge:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          maxLength: 50
+        title:
+          type: string
+          title: title
+          maxLength: 100
+        description:
+          type: string
+          title: description
+          maxLength: 300
+        awardedAt:
+          title: awarded_at
+          description: Absent while the badge is still locked.
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: Badge
+      additionalProperties: false
+    loci.gamification.CompleteTripDayRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+        dayId:
+          type: string
+          title: day_id
+          maxLength: 100
+          minLength: 1
+        stopsDone:
+          type: integer
+          title: stops_done
+          maximum: 200
+          minimum: 0
+          format: int32
+          description: Stops reached on the day. A day with none does not count.
+        timezone:
+          type: string
+          title: timezone
+          maxLength: 64
+          minLength: 1
+          description: IANA zone of the device, as in DailyCheckInRequest.
+      title: CompleteTripDayRequest
+      additionalProperties: false
+    loci.gamification.CompleteTripDayResponse:
+      type: object
+      properties:
+        progress:
+          title: progress
+          $ref: '#/components/schemas/loci.gamification.Progress'
+        pointsAwarded:
+          type: integer
+          title: points_awarded
+          minimum: 0
+          format: int32
+        tripCompleted:
+          type: boolean
+          title: trip_completed
+        newBadges:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.gamification.Badge'
+          title: new_badges
+      title: CompleteTripDayResponse
+      additionalProperties: false
+    loci.gamification.DailyCheckInRequest:
+      type: object
+      properties:
+        timezone:
+          type: string
+          title: timezone
+          maxLength: 64
+          minLength: 1
+          description: |-
+            IANA zone of the device ("Europe/Lisbon"), which decides the local date
+             for streaks and daily caps.
+      title: DailyCheckInRequest
+      additionalProperties: false
+    loci.gamification.DailyCheckInResponse:
+      type: object
+      properties:
+        progress:
+          title: progress
+          $ref: '#/components/schemas/loci.gamification.Progress'
+        pointsAwarded:
+          type: integer
+          title: points_awarded
+          minimum: 0
+          format: int32
+          description: 'Points this call awarded: 0 when the caller already checked in today.'
+        newBadges:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.gamification.Badge'
+          title: new_badges
+          description: Badges this call earned.
+      title: DailyCheckInResponse
+      additionalProperties: false
+    loci.gamification.GetLeaderboardRequest:
+      type: object
+      properties:
+        period:
+          not:
+            enum:
+              - LEADERBOARD_PERIOD_UNSPECIFIED
+          title: period
+          $ref: '#/components/schemas/loci.gamification.LeaderboardPeriod'
+        metric:
+          not:
+            enum:
+              - LEADERBOARD_METRIC_UNSPECIFIED
+          title: metric
+          $ref: '#/components/schemas/loci.gamification.LeaderboardMetric'
+      title: GetLeaderboardRequest
+      additionalProperties: false
+    loci.gamification.GetLeaderboardResponse:
+      type: object
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.gamification.LeaderboardEntry'
+          title: entries
+        periodStart:
+          title: period_start
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        periodEnd:
+          title: period_end
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: GetLeaderboardResponse
+      additionalProperties: false
+    loci.gamification.GetMyProgressRequest:
+      type: object
+      title: GetMyProgressRequest
+      additionalProperties: false
+    loci.gamification.GetMyProgressResponse:
+      type: object
+      properties:
+        progress:
+          title: progress
+          $ref: '#/components/schemas/loci.gamification.Progress'
+      title: GetMyProgressResponse
+      additionalProperties: false
+    loci.gamification.LeaderboardEntry:
+      type: object
+      properties:
+        user:
+          title: user
+          $ref: '#/components/schemas/loci.social.PublicUser'
+        rank:
+          type: integer
+          title: rank
+          minimum: 1
+          format: int32
+          description: Equal values share a rank.
+        value:
+          type:
+            - integer
+            - string
+          title: value
+          minimum: 0
+          format: int64
+        level:
+          type: integer
+          title: level
+          minimum: 1
+          format: int32
+        currentStreak:
+          type: integer
+          title: current_streak
+          minimum: 0
+          format: int32
+        isMe:
+          type: boolean
+          title: is_me
+      title: LeaderboardEntry
+      additionalProperties: false
+    loci.gamification.LeaderboardMetric:
+      type: string
+      title: LeaderboardMetric
+      enum:
+        - LEADERBOARD_METRIC_UNSPECIFIED
+        - LEADERBOARD_METRIC_POINTS
+        - LEADERBOARD_METRIC_CITIES
+        - LEADERBOARD_METRIC_PLACES
+    loci.gamification.LeaderboardPeriod:
+      type: string
+      title: LeaderboardPeriod
+      enum:
+        - LEADERBOARD_PERIOD_UNSPECIFIED
+        - LEADERBOARD_PERIOD_WEEK
+        - LEADERBOARD_PERIOD_MONTH
+        - LEADERBOARD_PERIOD_ALL_TIME
+    loci.gamification.ListPointsHistoryRequest:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+          title: page_size
+          maximum: 100
+          minimum: 0
+          format: int32
+        pageToken:
+          type: string
+          title: page_token
+          maxLength: 200
+      title: ListPointsHistoryRequest
+      additionalProperties: false
+    loci.gamification.ListPointsHistoryResponse:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.gamification.PointsEvent'
+          title: events
+        nextPageToken:
+          type: string
+          title: next_page_token
+      title: ListPointsHistoryResponse
+      additionalProperties: false
+    loci.gamification.PointsEvent:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          maxLength: 100
+        kind:
+          title: kind
+          $ref: '#/components/schemas/loci.gamification.PointsKind'
+        points:
+          type: integer
+          title: points
+          minimum: 0
+          format: int32
+        label:
+          type: string
+          title: label
+          maxLength: 300
+          description: 'What it was for, ready to show: "Visited Pantheon", "New city: Rome".'
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: PointsEvent
+      additionalProperties: false
+    loci.gamification.PointsKind:
+      type: string
+      title: PointsKind
+      enum:
+        - POINTS_KIND_UNSPECIFIED
+        - POINTS_KIND_DAILY_CHECK_IN
+        - POINTS_KIND_DAILY_SEARCH
+        - POINTS_KIND_PLACE_VISITED
+        - POINTS_KIND_NEW_CITY
+        - POINTS_KIND_SCOUT_CLAIM
+        - POINTS_KIND_PLACE_SUBMISSION
+        - POINTS_KIND_TRIP_DAY_COMPLETED
+        - POINTS_KIND_TRIP_COMPLETED
+    loci.gamification.Progress:
+      type: object
+      properties:
+        totalPoints:
+          type:
+            - integer
+            - string
+          title: total_points
+          minimum: 0
+          format: int64
+        level:
+          type: integer
+          title: level
+          minimum: 1
+          format: int32
+        pointsToNextLevel:
+          type:
+            - integer
+            - string
+          title: points_to_next_level
+          minimum: 0
+          format: int64
+          description: Points needed to reach the next level from the current total.
+        currentStreak:
+          type: integer
+          title: current_streak
+          minimum: 0
+          format: int32
+        longestStreak:
+          type: integer
+          title: longest_streak
+          minimum: 0
+          format: int32
+        badges:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.gamification.Badge'
+          title: badges
+          description: Every badge, earned or not; earned ones carry awarded_at.
+        today:
+          title: today
+          $ref: '#/components/schemas/loci.gamification.TodayChecklist'
+      title: Progress
+      additionalProperties: false
+    loci.gamification.TodayChecklist:
+      type: object
+      properties:
+        checkedIn:
+          type: boolean
+          title: checked_in
+        searched:
+          type: boolean
+          title: searched
+        placesVisited:
+          type: integer
+          title: places_visited
+          minimum: 0
+          format: int32
+      title: TodayChecklist
+      additionalProperties: false
+      description: TodayChecklist is what still earns points today.
     loci.gastronomy.CityGastronomy:
       type: object
       properties:
@@ -24708,6 +25396,20 @@ components:
           title: matches
       title: MatchContactsResponse
       additionalProperties: false
+    loci.social.MatchFacebookFriendsRequest:
+      type: object
+      title: MatchFacebookFriendsRequest
+      additionalProperties: false
+    loci.social.MatchFacebookFriendsResponse:
+      type: object
+      properties:
+        matches:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.social.UserResult'
+          title: matches
+      title: MatchFacebookFriendsResponse
+      additionalProperties: false
     loci.social.ProfileStats:
       type: object
       properties:
@@ -26416,6 +27118,33 @@ components:
           title: deleted
       title: DeleteVisitResponse
       additionalProperties: false
+    loci.travelhistory.DeviceFix:
+      type: object
+      properties:
+        latitude:
+          type: number
+          title: latitude
+          maximum: 90
+          minimum: -90
+          format: double
+        longitude:
+          type: number
+          title: longitude
+          maximum: 180
+          minimum: -180
+          format: double
+        accuracyM:
+          type: number
+          title: accuracy_m
+          maximum: 10000
+          minimum: 0
+          format: double
+          description: Horizontal accuracy in metres as the device reported it.
+        observedAt:
+          title: observed_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: DeviceFix
+      additionalProperties: false
     loci.travelhistory.GetGlobeDataRequest:
       type: object
       properties:
@@ -26665,6 +27394,15 @@ components:
             - type: "null"
           title: visited_at
           description: Defaults to server time when omitted.
+        deviceLocation:
+          oneOf:
+            - $ref: '#/components/schemas/loci.travelhistory.DeviceFix'
+            - type: "null"
+          title: device_location
+          description: |-
+            Where the device was when the visit was recorded (an arrival detected on
+             the spot). A visit earns points only when this fix is recent and close to
+             the place's own coordinates; without it the visit is recorded, unscored.
       title: RecordVisitRequest
       additionalProperties: false
     loci.travelhistory.RecordVisitResponse:
@@ -26673,6 +27411,12 @@ components:
         city:
           title: city
           $ref: '#/components/schemas/loci.travelhistory.VisitedCity'
+        pointsAwarded:
+          type: integer
+          title: points_awarded
+          minimum: 0
+          format: int32
+          description: Points the visit earned (place, and a new city); 0 when unscored.
       title: RecordVisitResponse
       additionalProperties: false
     loci.travelhistory.TravelSummary:
@@ -28452,6 +29196,20 @@ components:
           type: boolean
           title: friend_activity
           description: Friend requests and accepted friendships.
+        leaderboardVisible:
+          type: boolean
+          title: leaderboard_visible
+          description: Whether friends see the caller on their leaderboards.
+        streakReminders:
+          type: boolean
+          title: streak_reminders
+          description: |-
+            Evening reminder when the day's check-in would break a streak (sent by
+             the device; the server only stores the choice).
+        progressUpdates:
+          type: boolean
+          title: progress_updates
+          description: Badges earned and a friend passing the caller on the week's leaderboard.
       title: NotificationSettings
       additionalProperties: false
       description: |-
@@ -28561,6 +29319,21 @@ components:
             - boolean
             - "null"
           title: friend_activity
+        leaderboardVisible:
+          type:
+            - boolean
+            - "null"
+          title: leaderboard_visible
+        streakReminders:
+          type:
+            - boolean
+            - "null"
+          title: streak_reminders
+        progressUpdates:
+          type:
+            - boolean
+            - "null"
+          title: progress_updates
       title: UpdateNotificationSettingsRequest
       additionalProperties: false
     loci.user.UpdateProfileParams:
@@ -29052,6 +29825,16 @@ tags:
     description: ExportService handles PDF export for various content types
   - name: loci.favorites.v1.FavoritesService
     description: FavoritesService provides favorites management functionality
+  - name: loci.gamification.GamificationService
+    description: |-
+      GamificationService is Loci's points layer: a ledger of things a traveller
+       actually did (checked in, searched, visited a place on the spot, saw a new
+       city, scouted, walked a trip day), the streak and badges it earns, and
+       leaderboards shared only with friends.
+
+       Points are awarded by the server in the code paths that already record those
+       actions; the client never names a point value. Every award is idempotent, so
+       a retried request cannot count twice. Every RPC needs a session.
   - name: loci.integrations.IntegrationService
     description: |-
       IntegrationService registers external MCP servers that Loci may call on the

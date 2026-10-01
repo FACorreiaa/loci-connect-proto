@@ -26,6 +26,11 @@ public enum Loci_CustomAuth_OAuthProvider: SwiftProtobuf.Enum, Swift.CaseIterabl
   case unspecified // = 0
   case google // = 1
   case apple // = 2
+
+  /// Facebook Limited Login: the iOS SDK hands over an OIDC token signed by
+  /// Meta. It may carry no email, so it can link to a signed-in account but
+  /// cannot create one on its own.
+  case facebook // = 3
   case UNRECOGNIZED(Int)
 
   public init() {
@@ -37,6 +42,7 @@ public enum Loci_CustomAuth_OAuthProvider: SwiftProtobuf.Enum, Swift.CaseIterabl
     case 0: self = .unspecified
     case 1: self = .google
     case 2: self = .apple
+    case 3: self = .facebook
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -46,6 +52,7 @@ public enum Loci_CustomAuth_OAuthProvider: SwiftProtobuf.Enum, Swift.CaseIterabl
     case .unspecified: return 0
     case .google: return 1
     case .apple: return 2
+    case .facebook: return 3
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -55,6 +62,7 @@ public enum Loci_CustomAuth_OAuthProvider: SwiftProtobuf.Enum, Swift.CaseIterabl
     .unspecified,
     .google,
     .apple,
+    .facebook,
   ]
 
 }
@@ -217,6 +225,65 @@ public struct Loci_CustomAuth_VerifyPhoneResponse: Sendable {
   public init() {}
 }
 
+/// AttachVerifiedPhoneRequest checks an SMS code (sent with
+/// SendPhoneVerification) and attaches the number to the signed-in caller, so
+/// friends can find them from their contacts.
+public struct Loci_CustomAuth_AttachVerifiedPhoneRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var phoneNumber: String = String()
+
+  public var code: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_CustomAuth_AttachVerifiedPhoneResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// The number as stored, E.164.
+  public var phoneNumber: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// LinkFacebookRequest links a Facebook account to the signed-in caller so
+/// friends who also linked theirs can be found. The token is a Limited Login
+/// token, verified like SignInWithIDToken.
+public struct Loci_CustomAuth_LinkFacebookRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var idToken: String = String()
+
+  public var nonce: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_CustomAuth_LinkFacebookResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var linked: Bool = false
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "loci.custom_auth"
@@ -226,6 +293,7 @@ extension Loci_CustomAuth_OAuthProvider: SwiftProtobuf._ProtoNameProviding {
     0: .same(proto: "OAUTH_PROVIDER_UNSPECIFIED"),
     1: .same(proto: "OAUTH_PROVIDER_GOOGLE"),
     2: .same(proto: "OAUTH_PROVIDER_APPLE"),
+    3: .same(proto: "OAUTH_PROVIDER_FACEBOOK"),
   ]
 }
 
@@ -614,6 +682,146 @@ extension Loci_CustomAuth_VerifyPhoneResponse: SwiftProtobuf.Message, SwiftProto
     if lhs.refreshToken != rhs.refreshToken {return false}
     if lhs.userID != rhs.userID {return false}
     if lhs.isNewUser != rhs.isNewUser {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_CustomAuth_AttachVerifiedPhoneRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".AttachVerifiedPhoneRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "phone_number"),
+    2: .same(proto: "code"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.phoneNumber) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.code) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.phoneNumber.isEmpty {
+      try visitor.visitSingularStringField(value: self.phoneNumber, fieldNumber: 1)
+    }
+    if !self.code.isEmpty {
+      try visitor.visitSingularStringField(value: self.code, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_CustomAuth_AttachVerifiedPhoneRequest, rhs: Loci_CustomAuth_AttachVerifiedPhoneRequest) -> Bool {
+    if lhs.phoneNumber != rhs.phoneNumber {return false}
+    if lhs.code != rhs.code {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_CustomAuth_AttachVerifiedPhoneResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".AttachVerifiedPhoneResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "phone_number"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.phoneNumber) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.phoneNumber.isEmpty {
+      try visitor.visitSingularStringField(value: self.phoneNumber, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_CustomAuth_AttachVerifiedPhoneResponse, rhs: Loci_CustomAuth_AttachVerifiedPhoneResponse) -> Bool {
+    if lhs.phoneNumber != rhs.phoneNumber {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_CustomAuth_LinkFacebookRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".LinkFacebookRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "id_token"),
+    2: .same(proto: "nonce"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.idToken) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.nonce) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.idToken.isEmpty {
+      try visitor.visitSingularStringField(value: self.idToken, fieldNumber: 1)
+    }
+    if !self.nonce.isEmpty {
+      try visitor.visitSingularStringField(value: self.nonce, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_CustomAuth_LinkFacebookRequest, rhs: Loci_CustomAuth_LinkFacebookRequest) -> Bool {
+    if lhs.idToken != rhs.idToken {return false}
+    if lhs.nonce != rhs.nonce {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_CustomAuth_LinkFacebookResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".LinkFacebookResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "linked"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularBoolField(value: &self.linked) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.linked != false {
+      try visitor.visitSingularBoolField(value: self.linked, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_CustomAuth_LinkFacebookResponse, rhs: Loci_CustomAuth_LinkFacebookResponse) -> Bool {
+    if lhs.linked != rhs.linked {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
