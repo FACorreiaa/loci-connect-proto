@@ -1,0 +1,327 @@
+syntax = "proto3";
+
+package loci.boards.v1;
+
+import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+import "loci/social/social.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/boards/v1;boardsv1";
+
+// BoardsService is Loci's community: topic boards anyone signed in can open,
+// posts (a title, an optional link, an optional body and an optional Loci
+// item), threaded comments and up/down votes on posts.
+//
+// Reads accept anonymous callers; a signed-in caller also gets my_vote.
+// Every write needs a session and fails PermissionDenied while the caller is
+// muted or banned. Admin RPCs fail PermissionDenied for everyone but admins.
+service BoardsService {
+  rpc ListBoards(ListBoardsRequest) returns (ListBoardsResponse);
+  rpc GetBoard(GetBoardRequest) returns (GetBoardResponse);
+  // Lists posts in one board, or across every board when board_slug is empty.
+  rpc ListPosts(ListPostsRequest) returns (ListPostsResponse);
+  // A post and its whole comment tree, flat; clients nest by parent_id.
+  rpc GetPost(GetPostRequest) returns (GetPostResponse);
+  // What the caller may do here: admin controls and any active sanction.
+  rpc GetBoardsViewer(GetBoardsViewerRequest) returns (GetBoardsViewerResponse);
+
+  rpc CreateBoard(CreateBoardRequest) returns (CreateBoardResponse);
+  rpc CreatePost(CreatePostRequest) returns (CreatePostResponse);
+  // The author or an admin.
+  rpc DeletePost(DeletePostRequest) returns (DeletePostResponse);
+  rpc CreateComment(CreateCommentRequest) returns (CreateCommentResponse);
+  // The author or an admin.
+  rpc DeleteComment(DeleteCommentRequest) returns (DeleteCommentResponse);
+  // value 1 upvotes, -1 downvotes, 0 clears the caller's vote.
+  rpc VotePost(VotePostRequest) returns (VotePostResponse);
+
+  // Admin only.
+  rpc DeleteBoard(DeleteBoardRequest) returns (DeleteBoardResponse);
+  rpc SanctionUser(SanctionUserRequest) returns (SanctionUserResponse);
+  rpc LiftSanction(LiftSanctionRequest) returns (LiftSanctionResponse);
+  rpc ListSanctions(ListSanctionsRequest) returns (ListSanctionsResponse);
+}
+
+message Board {
+  string id = 1 [(buf.validate.field).string.max_len = 100];
+  string slug = 2 [(buf.validate.field).string.max_len = 32];
+  string name = 3 [(buf.validate.field).string.max_len = 60];
+  string description = 4 [(buf.validate.field).string.max_len = 500];
+  loci.social.PublicUser created_by = 5;
+  google.protobuf.Timestamp created_at = 6;
+  int32 post_count = 7 [(buf.validate.field).int32.gte = 0];
+  // Newest post, or created_at when the board has none.
+  google.protobuf.Timestamp last_activity_at = 8;
+}
+
+// BoardRef is the board chip a post carries in a cross-board feed.
+message BoardRef {
+  string slug = 1 [(buf.validate.field).string.max_len = 32];
+  string name = 2 [(buf.validate.field).string.max_len = 60];
+}
+
+enum AttachmentKind {
+  ATTACHMENT_KIND_UNSPECIFIED = 0;
+  ATTACHMENT_KIND_ITINERARY = 1;
+  ATTACHMENT_KIND_POI = 2;
+  ATTACHMENT_KIND_CITY = 3;
+}
+
+// Attachment is a Loci item frozen at post time, so the card still renders
+// after the item itself changes or is deleted.
+message Attachment {
+  AttachmentKind kind = 1;
+  string ref = 2 [(buf.validate.field).string.max_len = 100];
+  string title = 3 [(buf.validate.field).string.max_len = 300];
+  string subtitle = 4 [(buf.validate.field).string.max_len = 300];
+  string image_url = 5 [(buf.validate.field).string.max_len = 2048];
+  string city = 6 [(buf.validate.field).string.max_len = 200];
+}
+
+message Post {
+  string id = 1 [(buf.validate.field).string.max_len = 100];
+  BoardRef board = 2;
+  loci.social.PublicUser author = 3;
+  string title = 4 [(buf.validate.field).string.max_len = 200];
+  string url = 5 [(buf.validate.field).string.max_len = 2048];
+  // Hostname of url, without "www.".
+  string domain = 6 [(buf.validate.field).string.max_len = 255];
+  string body = 7 [(buf.validate.field).string.max_len = 10000];
+  optional Attachment attachment = 8;
+  int32 score = 9;
+  int32 comment_count = 10 [(buf.validate.field).int32.gte = 0];
+  // The caller's vote: -1, 0 or 1. Always 0 for anonymous callers.
+  int32 my_vote = 11 [(buf.validate.field).int32 = {
+    gte: -1
+    lte: 1
+  }];
+  google.protobuf.Timestamp created_at = 12;
+}
+
+message Comment {
+  string id = 1 [(buf.validate.field).string.max_len = 100];
+  string post_id = 2 [(buf.validate.field).string.max_len = 100];
+  // Empty for a top-level comment.
+  string parent_id = 3 [(buf.validate.field).string.max_len = 100];
+  // Unset when deleted.
+  loci.social.PublicUser author = 4;
+  // Empty when deleted.
+  string body = 5 [(buf.validate.field).string.max_len = 5000];
+  // A deleted comment is kept only while it has replies, shown as "[deleted]".
+  bool deleted = 6;
+  google.protobuf.Timestamp created_at = 7;
+}
+
+enum SanctionKind {
+  SANCTION_KIND_UNSPECIFIED = 0;
+  // Can read, cannot write or vote.
+  SANCTION_KIND_MUTE = 1;
+  // A mute that also hides everything the user wrote.
+  SANCTION_KIND_BAN = 2;
+}
+
+message Sanction {
+  string id = 1 [(buf.validate.field).string.max_len = 100];
+  loci.social.PublicUser user = 2;
+  SanctionKind kind = 3;
+  string reason = 4 [(buf.validate.field).string.max_len = 500];
+  // Unset means permanent.
+  google.protobuf.Timestamp expires_at = 5;
+  google.protobuf.Timestamp created_at = 6;
+  // Set once an admin lifted it early.
+  google.protobuf.Timestamp lifted_at = 7;
+}
+
+enum PostSort {
+  POST_SORT_UNSPECIFIED = 0;
+  POST_SORT_NEW = 1;
+  POST_SORT_TOP = 2;
+}
+
+enum TopWindow {
+  TOP_WINDOW_UNSPECIFIED = 0;
+  TOP_WINDOW_DAY = 1;
+  TOP_WINDOW_WEEK = 2;
+  TOP_WINDOW_ALL = 3;
+}
+
+message ListBoardsRequest {
+  string cursor = 1 [(buf.validate.field).string.max_len = 200];
+  int32 page_size = 2 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 100
+  }];
+}
+
+message ListBoardsResponse {
+  repeated Board boards = 1;
+  string next_cursor = 2;
+}
+
+message GetBoardRequest {
+  string slug = 1 [(buf.validate.field).string = {
+    min_len: 3
+    max_len: 32
+  }];
+}
+
+message GetBoardResponse {
+  Board board = 1;
+}
+
+message ListPostsRequest {
+  // Empty lists every board.
+  string board_slug = 1 [(buf.validate.field).string.max_len = 32];
+  // Unspecified means NEW.
+  PostSort sort = 2;
+  // Only read for TOP; unspecified means WEEK.
+  TopWindow window = 3;
+  string cursor = 4 [(buf.validate.field).string.max_len = 200];
+  int32 page_size = 5 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 100
+  }];
+}
+
+message ListPostsResponse {
+  repeated Post posts = 1;
+  string next_cursor = 2;
+}
+
+message GetPostRequest {
+  string id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+message GetPostResponse {
+  Post post = 1;
+  repeated Comment comments = 2;
+}
+
+message GetBoardsViewerRequest {}
+
+message GetBoardsViewerResponse {
+  bool signed_in = 1;
+  bool is_admin = 2;
+  // Set while the caller is muted or banned.
+  optional Sanction active_sanction = 3;
+}
+
+message CreateBoardRequest {
+  string slug = 1 [(buf.validate.field).string = {pattern: "^[a-z0-9-]{3,32}$"}];
+  string name = 2 [(buf.validate.field).string = {
+    min_len: 3
+    max_len: 60
+  }];
+  string description = 3 [(buf.validate.field).string.max_len = 500];
+}
+
+message CreateBoardResponse {
+  Board board = 1;
+}
+
+message AttachmentInput {
+  AttachmentKind kind = 1 [(buf.validate.field).enum = {
+    defined_only: true
+    not_in: [0]
+  }];
+  string ref = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+}
+
+message CreatePostRequest {
+  string board_slug = 1 [(buf.validate.field).string = {
+    min_len: 3
+    max_len: 32
+  }];
+  string title = 2 [(buf.validate.field).string = {
+    min_len: 3
+    max_len: 200
+  }];
+  // http or https only.
+  string url = 3 [(buf.validate.field).string.max_len = 2048];
+  string body = 4 [(buf.validate.field).string.max_len = 10000];
+  optional AttachmentInput attachment = 5;
+}
+
+message CreatePostResponse {
+  Post post = 1;
+}
+
+message DeletePostRequest {
+  string id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+message DeletePostResponse {}
+
+message CreateCommentRequest {
+  string post_id = 1 [(buf.validate.field).string.uuid = true];
+  // Empty for a top-level comment.
+  string parent_id = 2 [(buf.validate.field).string.max_len = 100];
+  string body = 3 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 5000
+  }];
+}
+
+message CreateCommentResponse {
+  Comment comment = 1;
+}
+
+message DeleteCommentRequest {
+  string id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+message DeleteCommentResponse {}
+
+message VotePostRequest {
+  string post_id = 1 [(buf.validate.field).string.uuid = true];
+  int32 value = 2 [(buf.validate.field).int32 = {
+    gte: -1
+    lte: 1
+  }];
+}
+
+message VotePostResponse {
+  int32 score = 1;
+  int32 my_vote = 2;
+}
+
+message DeleteBoardRequest {
+  string slug = 1 [(buf.validate.field).string = {
+    min_len: 3
+    max_len: 32
+  }];
+}
+
+message DeleteBoardResponse {}
+
+message SanctionUserRequest {
+  string user_id = 1 [(buf.validate.field).string.uuid = true];
+  SanctionKind kind = 2 [(buf.validate.field).enum = {
+    defined_only: true
+    not_in: [0]
+  }];
+  string reason = 3 [(buf.validate.field).string.max_len = 500];
+  // Unset means permanent.
+  google.protobuf.Timestamp expires_at = 4;
+}
+
+message SanctionUserResponse {
+  Sanction sanction = 1;
+}
+
+message LiftSanctionRequest {
+  string id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+message LiftSanctionResponse {}
+
+message ListSanctionsRequest {
+  bool active_only = 1;
+}
+
+message ListSanctionsResponse {
+  repeated Sanction sanctions = 1;
+}
