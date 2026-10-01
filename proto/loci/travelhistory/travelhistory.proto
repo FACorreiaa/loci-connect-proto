@@ -108,6 +108,16 @@ message TravelSummary {
   int32 cities_visited_this_period = 12;
   int32 countries_visited_this_period = 13;
   int32 pois_visited_this_period = 14;
+  // True when the *_this_period and *_prev_period fields above are the real
+  // windowed counts, so a zero in them means "nothing in this window" and can
+  // be trusted. Every server that sets this sends it as true.
+  //
+  // False only from servers that predate it. Those may have sent zero
+  // *_this_period fields because the field did not exist yet, which is why
+  // clients fell back to all-time-minus-previous math on zero; that fallback
+  // turns "no activity this period, some last period" into a fake up arrow.
+  // When this is true, use *_this_period as sent and never fall back.
+  bool has_period_counts = 15;
 }
 
 // GlobeArc is one leg between two placed points, ready to draw as a great
@@ -138,8 +148,11 @@ message GlobeArc {
   // when the trip did not record one.
   string mode = 9 [(buf.validate.field).string = {max_len: 50}];
   google.protobuf.Timestamp occurred_at = 10;
-  // The trip_legs row id. Stable across reads; it changes only when the trip
-  // is saved again, because SaveTrip rewrites a trip's legs.
+  // The trip_legs row id. Stable across reads and across saves: SaveTrip keeps
+  // a leg's id when the client sends it back, or when the saved leg is on the
+  // same hop (after_day, from and to) as an existing one. Only a leg that is
+  // removed from the trip, or a brand-new hop, has a new id. Servers before
+  // this guarantee issued new ids on every save.
   string id = 11;
   // Travel time recorded on the leg, in minutes. Zero when unknown.
   int32 duration_mins = 12 [(buf.validate.field).int32 = {gte: 0}];

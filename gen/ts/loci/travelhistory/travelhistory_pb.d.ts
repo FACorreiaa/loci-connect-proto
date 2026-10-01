@@ -247,6 +247,21 @@ export declare type TravelSummary = Message<"loci.travelhistory.TravelSummary"> 
    * @generated from field: int32 pois_visited_this_period = 14;
    */
   poisVisitedThisPeriod: number;
+
+  /**
+   * True when the *_this_period and *_prev_period fields above are the real
+   * windowed counts, so a zero in them means "nothing in this window" and can
+   * be trusted. Every server that sets this sends it as true.
+   *
+   * False only from servers that predate it. Those may have sent zero
+   * *_this_period fields because the field did not exist yet, which is why
+   * clients fell back to all-time-minus-previous math on zero; that fallback
+   * turns "no activity this period, some last period" into a fake up arrow.
+   * When this is true, use *_this_period as sent and never fall back.
+   *
+   * @generated from field: bool has_period_counts = 15;
+   */
+  hasPeriodCounts: boolean;
 };
 
 /**
@@ -317,8 +332,11 @@ export declare type GlobeArc = Message<"loci.travelhistory.GlobeArc"> & {
   occurredAt?: Timestamp;
 
   /**
-   * The trip_legs row id. Stable across reads; it changes only when the trip
-   * is saved again, because SaveTrip rewrites a trip's legs.
+   * The trip_legs row id. Stable across reads and across saves: SaveTrip keeps
+   * a leg's id when the client sends it back, or when the saved leg is on the
+   * same hop (after_day, from and to) as an existing one. Only a leg that is
+   * removed from the trip, or a brand-new hop, has a new id. Servers before
+   * this guarantee issued new ids on every save.
    *
    * @generated from field: string id = 11;
    */

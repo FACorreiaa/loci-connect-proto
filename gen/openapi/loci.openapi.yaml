@@ -20652,6 +20652,11 @@ components:
           title: query
           maxLength: 500
           minLength: 1
+          description: |-
+            Optional. Empty asks for a nearby listing rather than a search: the places
+             around latitude/longitude, nearest first, at most 50, optionally narrowed
+             to the category in search_tags[0]. An empty query with no location is
+             rejected with INVALID_ARGUMENT, since there is nothing to rank by.
         cityName:
           type: string
           title: city_name
@@ -26322,8 +26327,11 @@ components:
           type: string
           title: id
           description: |-
-            The trip_legs row id. Stable across reads; it changes only when the trip
-             is saved again, because SaveTrip rewrites a trip's legs.
+            The trip_legs row id. Stable across reads and across saves: SaveTrip keeps
+             a leg's id when the client sends it back, or when the saved leg is on the
+             same hop (after_day, from and to) as an existing one. Only a leg that is
+             removed from the trip, or a brand-new hop, has a new id. Servers before
+             this guarantee issued new ids on every save.
         durationMins:
           type: integer
           title: duration_mins
@@ -26525,6 +26533,19 @@ components:
           type: integer
           title: pois_visited_this_period
           format: int32
+        hasPeriodCounts:
+          type: boolean
+          title: has_period_counts
+          description: |-
+            True when the *_this_period and *_prev_period fields above are the real
+             windowed counts, so a zero in them means "nothing in this window" and can
+             be trusted. Every server that sets this sends it as true.
+
+             False only from servers that predate it. Those may have sent zero
+             *_this_period fields because the field did not exist yet, which is why
+             clients fell back to all-time-minus-previous math on zero; that fallback
+             turns "no activity this period, some last period" into a fake up arrow.
+             When this is true, use *_this_period as sent and never fall back.
       title: TravelSummary
       additionalProperties: false
       description: |-
@@ -27729,6 +27750,17 @@ components:
             - $ref: '#/components/schemas/loci.recommendation.RecommendationTrace'
             - type: "null"
           title: recommendation_trace
+        image:
+          oneOf:
+            - $ref: '#/components/schemas/loci.poi.POIImage'
+            - type: "null"
+          title: image
+          description: |-
+            A picture of the stop's place, with the credit it must be shown with
+             (read side only; not persisted on the stop). Taken from the stored images
+             of the linked POI, so it is absent when the stop has no poi_id or that POI
+             has no picture yet; render the usual placeholder then. Filled on City Pack
+             stops (BundleDay.stops).
       title: TripStop
       additionalProperties: false
       description: TripStop is a single place on a day's timeline.
