@@ -212,6 +212,83 @@ message TripCity {
   int32 order_index = 5 [(buf.validate.field).int32 = {gte: 0}];
 }
 
+// TripStay is where the traveller sleeps in one city of the trip. Stays are
+// keyed by city name, not hung on TripCity, because a single-city trip keeps
+// its city on the draft and has no cities entries to hang one on.
+message TripStay {
+  string city_name = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
+  string poi_id = 2 [(buf.validate.field).string.max_len = 100];
+  string name = 3 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 300
+  }];
+  string star_rating = 4 [(buf.validate.field).string.max_len = 10];
+  optional string check_in = 5 [(buf.validate.field).string.pattern = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"];
+  optional string check_out = 6 [(buf.validate.field).string.pattern = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"];
+  // Shown to friends only when the trip shares details, like a stop's link.
+  optional string booking_url = 7 [(buf.validate.field).string = {
+    max_len: 2000
+    prefix: "https://"
+  }];
+}
+
+enum FlightCabin {
+  FLIGHT_CABIN_UNSPECIFIED = 0;
+  FLIGHT_CABIN_ECONOMY = 1;
+  FLIGHT_CABIN_PREMIUM_ECONOMY = 2;
+  FLIGHT_CABIN_BUSINESS = 3;
+  FLIGHT_CABIN_FIRST = 4;
+}
+
+// FlightPlace is one end of a flight. iata is optional: Google Flights takes a
+// city name, and Skyscanner links are only built when both ends have one.
+message FlightPlace {
+  string name = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
+  optional string iata = 2 [(buf.validate.field).string.pattern = "^[A-Z]{3}$"];
+}
+
+// FlightLink is a prefilled search on a site that sells the ticket. The server
+// builds these; any a client sends are ignored.
+message FlightLink {
+  string provider = 1;
+  string label = 2;
+  string url = 3;
+}
+
+// TripFlight is a flight the traveller chose. Loci never quotes a fare:
+// price_text is whatever the traveller typed, shown back to them as-is.
+message TripFlight {
+  // Assigned by the server on AddFlight.
+  string id = 1 [(buf.validate.field).string.max_len = 100];
+  FlightPlace origin = 2 [(buf.validate.field).required = true];
+  FlightPlace destination = 3 [(buf.validate.field).required = true];
+  string depart_date = 4 [(buf.validate.field).string.pattern = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"];
+  optional string return_date = 5 [(buf.validate.field).string.pattern = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"];
+  int32 passengers = 6 [(buf.validate.field).int32 = {
+    gte: 1
+    lte: 9
+  }];
+  FlightCabin cabin = 7;
+  // Server-built; ignored on the way in.
+  repeated FlightLink links = 8;
+  optional string carrier = 9 [(buf.validate.field).string.max_len = 100];
+  optional string flight_no = 10 [(buf.validate.field).string.max_len = 20];
+  optional string price_text = 11 [(buf.validate.field).string.max_len = 50];
+  optional string notes = 12 [(buf.validate.field).string.max_len = 1000];
+
+  option (buf.validate.message).cel = {
+    id: "trip_flight.return_after_depart"
+    message: "return_date must not be before depart_date"
+    expression: "!has(this.return_date) || this.return_date >= this.depart_date"
+  };
+}
+
 // TripDraft is the full editable trip. `version` powers optimistic concurrency /
 // merge-safe multi-device edits: SaveTrip rejects a write whose base version is
 // stale.
@@ -268,6 +345,14 @@ message TripDraft {
   loci.social.PublicUser owner = 16;
   // The trip this one was copied from with CopyTrip, if any.
   optional string copied_from_trip_id = 17 [(buf.validate.field).string.max_len = 100];
+  // The trip's plan: dates, where it sleeps and its flights. SaveTrip neither
+  // reads nor writes these; SetTripDates, SetStay/ClearStay and
+  // AddFlight/RemoveFlight own them, so a client that predates them cannot
+  // wipe them by saving.
+  optional string start_date = 18 [(buf.validate.field).string.pattern = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"];
+  optional string end_date = 19 [(buf.validate.field).string.pattern = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"];
+  repeated TripStay stays = 20;
+  repeated TripFlight flights = 21;
 }
 
 // TripSnapshot is an immutable point-in-time copy of a trip, written on each
@@ -587,6 +672,91 @@ message SetConstraintRequest {
   int64 base_version = 3 [(buf.validate.field).int64 = {gte: 0}];
 }
 
+// SetTripDatesRequest dates the trip and stamps each day: day N falls on
+// start_date + N - 1. Days are never added or removed; when the day count and
+// the span differ, the client offers to re-plan.
+message SetTripDatesRequest {
+  string trip_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string start_date = 2 [(buf.validate.field).string.pattern = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"];
+  string end_date = 3 [(buf.validate.field).string.pattern = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"];
+  int64 base_version = 4 [(buf.validate.field).int64 = {gte: 0}];
+
+  option (buf.validate.message).cel = {
+    id: "set_trip_dates.end_after_start"
+    message: "end_date must not be before start_date"
+    expression: "this.end_date >= this.start_date"
+  };
+}
+
+message SetStayRequest {
+  string trip_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  TripStay stay = 2 [(buf.validate.field).required = true];
+  int64 base_version = 3 [(buf.validate.field).int64 = {gte: 0}];
+}
+
+message ClearStayRequest {
+  string trip_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string city_name = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
+  int64 base_version = 3 [(buf.validate.field).int64 = {gte: 0}];
+}
+
+message AddFlightRequest {
+  string trip_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  TripFlight flight = 2 [(buf.validate.field).required = true];
+  int64 base_version = 3 [(buf.validate.field).int64 = {gte: 0}];
+}
+
+message RemoveFlightRequest {
+  string trip_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string flight_id = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  int64 base_version = 3 [(buf.validate.field).int64 = {gte: 0}];
+}
+
+// BuildFlightLinksRequest is the manual flight form's search: no trip, no
+// write, just the links the server would attach on AddFlight.
+message BuildFlightLinksRequest {
+  FlightPlace origin = 1 [(buf.validate.field).required = true];
+  FlightPlace destination = 2 [(buf.validate.field).required = true];
+  string depart_date = 3 [(buf.validate.field).string.pattern = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"];
+  optional string return_date = 4 [(buf.validate.field).string.pattern = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"];
+  int32 passengers = 5 [(buf.validate.field).int32 = {
+    gte: 1
+    lte: 9
+  }];
+  FlightCabin cabin = 6;
+
+  option (buf.validate.message).cel = {
+    id: "build_flight_links.return_after_depart"
+    message: "return_date must not be before depart_date"
+    expression: "!has(this.return_date) || this.return_date >= this.depart_date"
+  };
+}
+
+message BuildFlightLinksResponse {
+  repeated FlightLink links = 1;
+}
+
 message AddStopRequest {
   string trip_id = 1 [(buf.validate.field).string = {
     min_len: 1
@@ -691,6 +861,14 @@ service TripService {
   rpc AddStop(AddStopRequest) returns (TripDraft);
   rpc RemoveStop(RemoveStopRequest) returns (TripDraft);
   rpc ReplaceStop(ReplaceStopRequest) returns (TripDraft);
+  // The trip's plan. Each takes base_version and answers FailedPrecondition
+  // when it is stale, like the stop edits above.
+  rpc SetTripDates(SetTripDatesRequest) returns (TripDraft);
+  rpc SetStay(SetStayRequest) returns (TripDraft);
+  rpc ClearStay(ClearStayRequest) returns (TripDraft);
+  rpc AddFlight(AddFlightRequest) returns (TripDraft);
+  rpc RemoveFlight(RemoveFlightRequest) returns (TripDraft);
+  rpc BuildFlightLinks(BuildFlightLinksRequest) returns (BuildFlightLinksResponse);
   rpc ExportTrip(ExportTripRequest) returns (ExportTripResponse);
   // SuggestPacking derives a packing list from the trip: its length, its cities'
   // forecasts, the driving between them, and the traveller's stated interests.

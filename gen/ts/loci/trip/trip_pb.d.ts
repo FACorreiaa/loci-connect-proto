@@ -338,6 +338,189 @@ export declare type TripCity = Message<"loci.trip.TripCity"> & {
 export declare const TripCitySchema: GenMessage<TripCity>;
 
 /**
+ * TripStay is where the traveller sleeps in one city of the trip. Stays are
+ * keyed by city name, not hung on TripCity, because a single-city trip keeps
+ * its city on the draft and has no cities entries to hang one on.
+ *
+ * @generated from message loci.trip.TripStay
+ */
+export declare type TripStay = Message<"loci.trip.TripStay"> & {
+  /**
+   * @generated from field: string city_name = 1;
+   */
+  cityName: string;
+
+  /**
+   * @generated from field: string poi_id = 2;
+   */
+  poiId: string;
+
+  /**
+   * @generated from field: string name = 3;
+   */
+  name: string;
+
+  /**
+   * @generated from field: string star_rating = 4;
+   */
+  starRating: string;
+
+  /**
+   * @generated from field: optional string check_in = 5;
+   */
+  checkIn?: string;
+
+  /**
+   * @generated from field: optional string check_out = 6;
+   */
+  checkOut?: string;
+
+  /**
+   * Shown to friends only when the trip shares details, like a stop's link.
+   *
+   * @generated from field: optional string booking_url = 7;
+   */
+  bookingUrl?: string;
+};
+
+/**
+ * Describes the message loci.trip.TripStay.
+ * Use `create(TripStaySchema)` to create a new message.
+ */
+export declare const TripStaySchema: GenMessage<TripStay>;
+
+/**
+ * FlightPlace is one end of a flight. iata is optional: Google Flights takes a
+ * city name, and Skyscanner links are only built when both ends have one.
+ *
+ * @generated from message loci.trip.FlightPlace
+ */
+export declare type FlightPlace = Message<"loci.trip.FlightPlace"> & {
+  /**
+   * @generated from field: string name = 1;
+   */
+  name: string;
+
+  /**
+   * @generated from field: optional string iata = 2;
+   */
+  iata?: string;
+};
+
+/**
+ * Describes the message loci.trip.FlightPlace.
+ * Use `create(FlightPlaceSchema)` to create a new message.
+ */
+export declare const FlightPlaceSchema: GenMessage<FlightPlace>;
+
+/**
+ * FlightLink is a prefilled search on a site that sells the ticket. The server
+ * builds these; any a client sends are ignored.
+ *
+ * @generated from message loci.trip.FlightLink
+ */
+export declare type FlightLink = Message<"loci.trip.FlightLink"> & {
+  /**
+   * @generated from field: string provider = 1;
+   */
+  provider: string;
+
+  /**
+   * @generated from field: string label = 2;
+   */
+  label: string;
+
+  /**
+   * @generated from field: string url = 3;
+   */
+  url: string;
+};
+
+/**
+ * Describes the message loci.trip.FlightLink.
+ * Use `create(FlightLinkSchema)` to create a new message.
+ */
+export declare const FlightLinkSchema: GenMessage<FlightLink>;
+
+/**
+ * TripFlight is a flight the traveller chose. Loci never quotes a fare:
+ * price_text is whatever the traveller typed, shown back to them as-is.
+ *
+ * @generated from message loci.trip.TripFlight
+ */
+export declare type TripFlight = Message<"loci.trip.TripFlight"> & {
+  /**
+   * Assigned by the server on AddFlight.
+   *
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * @generated from field: loci.trip.FlightPlace origin = 2;
+   */
+  origin?: FlightPlace;
+
+  /**
+   * @generated from field: loci.trip.FlightPlace destination = 3;
+   */
+  destination?: FlightPlace;
+
+  /**
+   * @generated from field: string depart_date = 4;
+   */
+  departDate: string;
+
+  /**
+   * @generated from field: optional string return_date = 5;
+   */
+  returnDate?: string;
+
+  /**
+   * @generated from field: int32 passengers = 6;
+   */
+  passengers: number;
+
+  /**
+   * @generated from field: loci.trip.FlightCabin cabin = 7;
+   */
+  cabin: FlightCabin;
+
+  /**
+   * Server-built; ignored on the way in.
+   *
+   * @generated from field: repeated loci.trip.FlightLink links = 8;
+   */
+  links: FlightLink[];
+
+  /**
+   * @generated from field: optional string carrier = 9;
+   */
+  carrier?: string;
+
+  /**
+   * @generated from field: optional string flight_no = 10;
+   */
+  flightNo?: string;
+
+  /**
+   * @generated from field: optional string price_text = 11;
+   */
+  priceText?: string;
+
+  /**
+   * @generated from field: optional string notes = 12;
+   */
+  notes?: string;
+};
+
+/**
+ * Describes the message loci.trip.TripFlight.
+ * Use `create(TripFlightSchema)` to create a new message.
+ */
+export declare const TripFlightSchema: GenMessage<TripFlight>;
+
+/**
  * TripDraft is the full editable trip. `version` powers optimistic concurrency /
  * merge-safe multi-device edits: SaveTrip rejects a write whose base version is
  * stale.
@@ -459,6 +642,31 @@ export declare type TripDraft = Message<"loci.trip.TripDraft"> & {
    * @generated from field: optional string copied_from_trip_id = 17;
    */
   copiedFromTripId?: string;
+
+  /**
+   * The trip's plan: dates, where it sleeps and its flights. SaveTrip neither
+   * reads nor writes these; SetTripDates, SetStay/ClearStay and
+   * AddFlight/RemoveFlight own them, so a client that predates them cannot
+   * wipe them by saving.
+   *
+   * @generated from field: optional string start_date = 18;
+   */
+  startDate?: string;
+
+  /**
+   * @generated from field: optional string end_date = 19;
+   */
+  endDate?: string;
+
+  /**
+   * @generated from field: repeated loci.trip.TripStay stays = 20;
+   */
+  stays: TripStay[];
+
+  /**
+   * @generated from field: repeated loci.trip.TripFlight flights = 21;
+   */
+  flights: TripFlight[];
 };
 
 /**
@@ -1207,6 +1415,205 @@ export declare type SetConstraintRequest = Message<"loci.trip.SetConstraintReque
 export declare const SetConstraintRequestSchema: GenMessage<SetConstraintRequest>;
 
 /**
+ * SetTripDatesRequest dates the trip and stamps each day: day N falls on
+ * start_date + N - 1. Days are never added or removed; when the day count and
+ * the span differ, the client offers to re-plan.
+ *
+ * @generated from message loci.trip.SetTripDatesRequest
+ */
+export declare type SetTripDatesRequest = Message<"loci.trip.SetTripDatesRequest"> & {
+  /**
+   * @generated from field: string trip_id = 1;
+   */
+  tripId: string;
+
+  /**
+   * @generated from field: string start_date = 2;
+   */
+  startDate: string;
+
+  /**
+   * @generated from field: string end_date = 3;
+   */
+  endDate: string;
+
+  /**
+   * @generated from field: int64 base_version = 4;
+   */
+  baseVersion: bigint;
+};
+
+/**
+ * Describes the message loci.trip.SetTripDatesRequest.
+ * Use `create(SetTripDatesRequestSchema)` to create a new message.
+ */
+export declare const SetTripDatesRequestSchema: GenMessage<SetTripDatesRequest>;
+
+/**
+ * @generated from message loci.trip.SetStayRequest
+ */
+export declare type SetStayRequest = Message<"loci.trip.SetStayRequest"> & {
+  /**
+   * @generated from field: string trip_id = 1;
+   */
+  tripId: string;
+
+  /**
+   * @generated from field: loci.trip.TripStay stay = 2;
+   */
+  stay?: TripStay;
+
+  /**
+   * @generated from field: int64 base_version = 3;
+   */
+  baseVersion: bigint;
+};
+
+/**
+ * Describes the message loci.trip.SetStayRequest.
+ * Use `create(SetStayRequestSchema)` to create a new message.
+ */
+export declare const SetStayRequestSchema: GenMessage<SetStayRequest>;
+
+/**
+ * @generated from message loci.trip.ClearStayRequest
+ */
+export declare type ClearStayRequest = Message<"loci.trip.ClearStayRequest"> & {
+  /**
+   * @generated from field: string trip_id = 1;
+   */
+  tripId: string;
+
+  /**
+   * @generated from field: string city_name = 2;
+   */
+  cityName: string;
+
+  /**
+   * @generated from field: int64 base_version = 3;
+   */
+  baseVersion: bigint;
+};
+
+/**
+ * Describes the message loci.trip.ClearStayRequest.
+ * Use `create(ClearStayRequestSchema)` to create a new message.
+ */
+export declare const ClearStayRequestSchema: GenMessage<ClearStayRequest>;
+
+/**
+ * @generated from message loci.trip.AddFlightRequest
+ */
+export declare type AddFlightRequest = Message<"loci.trip.AddFlightRequest"> & {
+  /**
+   * @generated from field: string trip_id = 1;
+   */
+  tripId: string;
+
+  /**
+   * @generated from field: loci.trip.TripFlight flight = 2;
+   */
+  flight?: TripFlight;
+
+  /**
+   * @generated from field: int64 base_version = 3;
+   */
+  baseVersion: bigint;
+};
+
+/**
+ * Describes the message loci.trip.AddFlightRequest.
+ * Use `create(AddFlightRequestSchema)` to create a new message.
+ */
+export declare const AddFlightRequestSchema: GenMessage<AddFlightRequest>;
+
+/**
+ * @generated from message loci.trip.RemoveFlightRequest
+ */
+export declare type RemoveFlightRequest = Message<"loci.trip.RemoveFlightRequest"> & {
+  /**
+   * @generated from field: string trip_id = 1;
+   */
+  tripId: string;
+
+  /**
+   * @generated from field: string flight_id = 2;
+   */
+  flightId: string;
+
+  /**
+   * @generated from field: int64 base_version = 3;
+   */
+  baseVersion: bigint;
+};
+
+/**
+ * Describes the message loci.trip.RemoveFlightRequest.
+ * Use `create(RemoveFlightRequestSchema)` to create a new message.
+ */
+export declare const RemoveFlightRequestSchema: GenMessage<RemoveFlightRequest>;
+
+/**
+ * BuildFlightLinksRequest is the manual flight form's search: no trip, no
+ * write, just the links the server would attach on AddFlight.
+ *
+ * @generated from message loci.trip.BuildFlightLinksRequest
+ */
+export declare type BuildFlightLinksRequest = Message<"loci.trip.BuildFlightLinksRequest"> & {
+  /**
+   * @generated from field: loci.trip.FlightPlace origin = 1;
+   */
+  origin?: FlightPlace;
+
+  /**
+   * @generated from field: loci.trip.FlightPlace destination = 2;
+   */
+  destination?: FlightPlace;
+
+  /**
+   * @generated from field: string depart_date = 3;
+   */
+  departDate: string;
+
+  /**
+   * @generated from field: optional string return_date = 4;
+   */
+  returnDate?: string;
+
+  /**
+   * @generated from field: int32 passengers = 5;
+   */
+  passengers: number;
+
+  /**
+   * @generated from field: loci.trip.FlightCabin cabin = 6;
+   */
+  cabin: FlightCabin;
+};
+
+/**
+ * Describes the message loci.trip.BuildFlightLinksRequest.
+ * Use `create(BuildFlightLinksRequestSchema)` to create a new message.
+ */
+export declare const BuildFlightLinksRequestSchema: GenMessage<BuildFlightLinksRequest>;
+
+/**
+ * @generated from message loci.trip.BuildFlightLinksResponse
+ */
+export declare type BuildFlightLinksResponse = Message<"loci.trip.BuildFlightLinksResponse"> & {
+  /**
+   * @generated from field: repeated loci.trip.FlightLink links = 1;
+   */
+  links: FlightLink[];
+};
+
+/**
+ * Describes the message loci.trip.BuildFlightLinksResponse.
+ * Use `create(BuildFlightLinksResponseSchema)` to create a new message.
+ */
+export declare const BuildFlightLinksResponseSchema: GenMessage<BuildFlightLinksResponse>;
+
+/**
  * @generated from message loci.trip.AddStopRequest
  */
 export declare type AddStopRequest = Message<"loci.trip.AddStopRequest"> & {
@@ -1420,6 +1827,41 @@ export enum TripPace {
  * Describes the enum loci.trip.TripPace.
  */
 export declare const TripPaceSchema: GenEnum<TripPace>;
+
+/**
+ * @generated from enum loci.trip.FlightCabin
+ */
+export enum FlightCabin {
+  /**
+   * @generated from enum value: FLIGHT_CABIN_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: FLIGHT_CABIN_ECONOMY = 1;
+   */
+  ECONOMY = 1,
+
+  /**
+   * @generated from enum value: FLIGHT_CABIN_PREMIUM_ECONOMY = 2;
+   */
+  PREMIUM_ECONOMY = 2,
+
+  /**
+   * @generated from enum value: FLIGHT_CABIN_BUSINESS = 3;
+   */
+  BUSINESS = 3,
+
+  /**
+   * @generated from enum value: FLIGHT_CABIN_FIRST = 4;
+   */
+  FIRST = 4,
+}
+
+/**
+ * Describes the enum loci.trip.FlightCabin.
+ */
+export declare const FlightCabinSchema: GenEnum<FlightCabin>;
 
 /**
  * PackingCategory groups suggestions so a long list stays scannable.
@@ -1700,6 +2142,57 @@ export declare const TripService: GenService<{
     methodKind: "unary";
     input: typeof ReplaceStopRequestSchema;
     output: typeof TripDraftSchema;
+  },
+  /**
+   * The trip's plan. Each takes base_version and answers FailedPrecondition
+   * when it is stale, like the stop edits above.
+   *
+   * @generated from rpc loci.trip.TripService.SetTripDates
+   */
+  setTripDates: {
+    methodKind: "unary";
+    input: typeof SetTripDatesRequestSchema;
+    output: typeof TripDraftSchema;
+  },
+  /**
+   * @generated from rpc loci.trip.TripService.SetStay
+   */
+  setStay: {
+    methodKind: "unary";
+    input: typeof SetStayRequestSchema;
+    output: typeof TripDraftSchema;
+  },
+  /**
+   * @generated from rpc loci.trip.TripService.ClearStay
+   */
+  clearStay: {
+    methodKind: "unary";
+    input: typeof ClearStayRequestSchema;
+    output: typeof TripDraftSchema;
+  },
+  /**
+   * @generated from rpc loci.trip.TripService.AddFlight
+   */
+  addFlight: {
+    methodKind: "unary";
+    input: typeof AddFlightRequestSchema;
+    output: typeof TripDraftSchema;
+  },
+  /**
+   * @generated from rpc loci.trip.TripService.RemoveFlight
+   */
+  removeFlight: {
+    methodKind: "unary";
+    input: typeof RemoveFlightRequestSchema;
+    output: typeof TripDraftSchema;
+  },
+  /**
+   * @generated from rpc loci.trip.TripService.BuildFlightLinks
+   */
+  buildFlightLinks: {
+    methodKind: "unary";
+    input: typeof BuildFlightLinksRequestSchema;
+    output: typeof BuildFlightLinksResponseSchema;
   },
   /**
    * @generated from rpc loci.trip.TripService.ExportTrip
