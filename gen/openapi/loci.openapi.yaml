@@ -7763,6 +7763,45 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.review.LikeReviewResponse'
+  /loci.review.ReviewService/ListReportedReviews:
+    post:
+      tags:
+        - loci.review.ReviewService
+      summary: ListReportedReviews
+      description: |-
+        Admin only: reviews with open reports (reports made since the review was
+         last moderated), most-reported first, with their report counts and
+         reasons. PermissionDenied for everyone but admins.
+      operationId: loci.review.ReviewService.ListReportedReviews
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.review.ListReportedReviewsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.review.ListReportedReviewsResponse'
   /loci.review.ReviewService/ReportReview:
     post:
       tags:
@@ -7801,6 +7840,45 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.review.ReportReviewResponse'
+  /loci.review.ReviewService/ResolveReviewReport:
+    post:
+      tags:
+        - loci.review.ReviewService
+      summary: ResolveReviewReport
+      description: |-
+        Admin only: settle a review's open reports. KEEP closes them and leaves
+         the review public (later reports open a new round); REMOVE takes the
+         review out of every public read for good. The author still sees it.
+      operationId: loci.review.ReviewService.ResolveReviewReport
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.review.ResolveReviewReportRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.review.ResolveReviewReportResponse'
   /loci.review.ReviewService/UpdateReview:
     post:
       tags:
@@ -25558,6 +25636,37 @@ components:
           format: int32
       title: LikeReviewResponse
       additionalProperties: false
+    loci.review.ListReportedReviewsRequest:
+      type: object
+      properties:
+        limit:
+          type: integer
+          title: limit
+          maximum: 100
+          minimum: 0
+          format: int32
+          description: Page size; 0 means the server default (20).
+        page:
+          type: integer
+          title: page
+          minimum: 0
+          format: int32
+          description: 1-based; 0 means the first page.
+      title: ListReportedReviewsRequest
+      additionalProperties: false
+    loci.review.ListReportedReviewsResponse:
+      type: object
+      properties:
+        reviews:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.review.ReportedReview'
+          title: reviews
+        pagination:
+          title: pagination
+          $ref: '#/components/schemas/loci.common.PaginationMetadata'
+      title: ListReportedReviewsResponse
+      additionalProperties: false
     loci.review.MonthlyReviewData:
       type: object
       properties:
@@ -25683,6 +25792,61 @@ components:
           $ref: '#/components/schemas/loci.common.Response'
       title: ReportReviewResponse
       additionalProperties: false
+    loci.review.ReportedReview:
+      type: object
+      properties:
+        review:
+          title: review
+          $ref: '#/components/schemas/loci.review.Review'
+        reportCount:
+          type: integer
+          title: report_count
+          format: int32
+          description: Distinct people with an open report on the review.
+        reasons:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.review.ReviewReportReasonCount'
+          title: reasons
+        details:
+          type: array
+          items:
+            type: string
+          title: details
+          description: The free-text details reporters gave, newest first; empty ones omitted.
+        lastReportedAt:
+          title: last_reported_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        hidden:
+          type: boolean
+          title: hidden
+          description: True when the review is currently out of public reads.
+      title: ReportedReview
+      additionalProperties: false
+    loci.review.ResolveReviewReportRequest:
+      type: object
+      properties:
+        reviewId:
+          type: string
+          title: review_id
+          maxLength: 100
+          minLength: 1
+        action:
+          not:
+            enum:
+              - REVIEW_MODERATION_ACTION_UNSPECIFIED
+          title: action
+          $ref: '#/components/schemas/loci.review.ReviewModerationAction'
+      title: ResolveReviewReportRequest
+      additionalProperties: false
+    loci.review.ResolveReviewReportResponse:
+      type: object
+      properties:
+        response:
+          title: response
+          $ref: '#/components/schemas/loci.common.Response'
+      title: ResolveReviewReportResponse
+      additionalProperties: false
     loci.review.Review:
       type: object
       properties:
@@ -25798,6 +25962,14 @@ components:
             True when the authenticated caller has marked this review helpful. Always
              false for anonymous reads. Lets a client render the vote toggle's state
              instead of guessing, so un-voting sends is_like = false.
+        hidden:
+          type: boolean
+          title: hidden
+          description: |-
+            True when the review is out of public reads: three or more people
+             reported it, or a moderator removed it. Only its author (and admins) are
+             ever sent a hidden review, so a client can label it rather than present
+             it as live.
       title: Review
       required:
         - createdAt
@@ -26002,6 +26174,27 @@ components:
       title: ReviewFilter
       additionalProperties: false
       description: Review filter options
+    loci.review.ReviewModerationAction:
+      type: string
+      title: ReviewModerationAction
+      enum:
+        - REVIEW_MODERATION_ACTION_UNSPECIFIED
+        - REVIEW_MODERATION_ACTION_KEEP
+        - REVIEW_MODERATION_ACTION_REMOVE
+      description: What a moderator decides about a reported review.
+    loci.review.ReviewReportReasonCount:
+      type: object
+      properties:
+        reason:
+          type: string
+          title: reason
+        count:
+          type: integer
+          title: count
+          format: int32
+      title: ReviewReportReasonCount
+      additionalProperties: false
+      description: How many open reports gave one reason.
     loci.review.ReviewSortBy:
       type: string
       title: ReviewSortBy

@@ -165,6 +165,16 @@ export declare type Review = Message<"loci.review.Review"> & {
    * @generated from field: bool voted_by_me = 22;
    */
   votedByMe: boolean;
+
+  /**
+   * True when the review is out of public reads: three or more people
+   * reported it, or a moderator removed it. Only its author (and admins) are
+   * ever sent a hidden review, so a client can label it rather than present
+   * it as live.
+   *
+   * @generated from field: bool hidden = 23;
+   */
+  hidden: boolean;
 };
 
 /**
@@ -1432,6 +1442,159 @@ export declare type GetReviewStatisticsResponse = Message<"loci.review.GetReview
 export declare const GetReviewStatisticsResponseSchema: GenMessage<GetReviewStatisticsResponse>;
 
 /**
+ * @generated from message loci.review.ListReportedReviewsRequest
+ */
+export declare type ListReportedReviewsRequest = Message<"loci.review.ListReportedReviewsRequest"> & {
+  /**
+   * Page size; 0 means the server default (20).
+   *
+   * @generated from field: int32 limit = 1;
+   */
+  limit: number;
+
+  /**
+   * 1-based; 0 means the first page.
+   *
+   * @generated from field: int32 page = 2;
+   */
+  page: number;
+};
+
+/**
+ * Describes the message loci.review.ListReportedReviewsRequest.
+ * Use `create(ListReportedReviewsRequestSchema)` to create a new message.
+ */
+export declare const ListReportedReviewsRequestSchema: GenMessage<ListReportedReviewsRequest>;
+
+/**
+ * How many open reports gave one reason.
+ *
+ * @generated from message loci.review.ReviewReportReasonCount
+ */
+export declare type ReviewReportReasonCount = Message<"loci.review.ReviewReportReasonCount"> & {
+  /**
+   * @generated from field: string reason = 1;
+   */
+  reason: string;
+
+  /**
+   * @generated from field: int32 count = 2;
+   */
+  count: number;
+};
+
+/**
+ * Describes the message loci.review.ReviewReportReasonCount.
+ * Use `create(ReviewReportReasonCountSchema)` to create a new message.
+ */
+export declare const ReviewReportReasonCountSchema: GenMessage<ReviewReportReasonCount>;
+
+/**
+ * @generated from message loci.review.ReportedReview
+ */
+export declare type ReportedReview = Message<"loci.review.ReportedReview"> & {
+  /**
+   * @generated from field: loci.review.Review review = 1;
+   */
+  review?: Review;
+
+  /**
+   * Distinct people with an open report on the review.
+   *
+   * @generated from field: int32 report_count = 2;
+   */
+  reportCount: number;
+
+  /**
+   * @generated from field: repeated loci.review.ReviewReportReasonCount reasons = 3;
+   */
+  reasons: ReviewReportReasonCount[];
+
+  /**
+   * The free-text details reporters gave, newest first; empty ones omitted.
+   *
+   * @generated from field: repeated string details = 4;
+   */
+  details: string[];
+
+  /**
+   * @generated from field: google.protobuf.Timestamp last_reported_at = 5;
+   */
+  lastReportedAt?: Timestamp;
+
+  /**
+   * True when the review is currently out of public reads.
+   *
+   * @generated from field: bool hidden = 6;
+   */
+  hidden: boolean;
+};
+
+/**
+ * Describes the message loci.review.ReportedReview.
+ * Use `create(ReportedReviewSchema)` to create a new message.
+ */
+export declare const ReportedReviewSchema: GenMessage<ReportedReview>;
+
+/**
+ * @generated from message loci.review.ListReportedReviewsResponse
+ */
+export declare type ListReportedReviewsResponse = Message<"loci.review.ListReportedReviewsResponse"> & {
+  /**
+   * @generated from field: repeated loci.review.ReportedReview reviews = 1;
+   */
+  reviews: ReportedReview[];
+
+  /**
+   * @generated from field: loci.common.PaginationMetadata pagination = 2;
+   */
+  pagination?: PaginationMetadata;
+};
+
+/**
+ * Describes the message loci.review.ListReportedReviewsResponse.
+ * Use `create(ListReportedReviewsResponseSchema)` to create a new message.
+ */
+export declare const ListReportedReviewsResponseSchema: GenMessage<ListReportedReviewsResponse>;
+
+/**
+ * @generated from message loci.review.ResolveReviewReportRequest
+ */
+export declare type ResolveReviewReportRequest = Message<"loci.review.ResolveReviewReportRequest"> & {
+  /**
+   * @generated from field: string review_id = 1;
+   */
+  reviewId: string;
+
+  /**
+   * @generated from field: loci.review.ReviewModerationAction action = 2;
+   */
+  action: ReviewModerationAction;
+};
+
+/**
+ * Describes the message loci.review.ResolveReviewReportRequest.
+ * Use `create(ResolveReviewReportRequestSchema)` to create a new message.
+ */
+export declare const ResolveReviewReportRequestSchema: GenMessage<ResolveReviewReportRequest>;
+
+/**
+ * @generated from message loci.review.ResolveReviewReportResponse
+ */
+export declare type ResolveReviewReportResponse = Message<"loci.review.ResolveReviewReportResponse"> & {
+  /**
+   * @generated from field: loci.common.Response response = 1;
+   */
+  response?: Response;
+};
+
+/**
+ * Describes the message loci.review.ResolveReviewReportResponse.
+ * Use `create(ResolveReviewReportResponseSchema)` to create a new message.
+ */
+export declare const ResolveReviewReportResponseSchema: GenMessage<ResolveReviewReportResponse>;
+
+/**
  * Type of content being reviewed
  *
  * @generated from enum loci.review.ReviewContentType
@@ -1613,6 +1776,37 @@ export enum ReviewSortBy {
 export declare const ReviewSortBySchema: GenEnum<ReviewSortBy>;
 
 /**
+ * What a moderator decides about a reported review.
+ *
+ * @generated from enum loci.review.ReviewModerationAction
+ */
+export enum ReviewModerationAction {
+  /**
+   * @generated from enum value: REVIEW_MODERATION_ACTION_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * The review stays public; its open reports are closed.
+   *
+   * @generated from enum value: REVIEW_MODERATION_ACTION_KEEP = 1;
+   */
+  KEEP = 1,
+
+  /**
+   * The review leaves every public read. Its author still sees it.
+   *
+   * @generated from enum value: REVIEW_MODERATION_ACTION_REMOVE = 2;
+   */
+  REMOVE = 2,
+}
+
+/**
+ * Describes the enum loci.review.ReviewModerationAction.
+ */
+export declare const ReviewModerationActionSchema: GenEnum<ReviewModerationAction>;
+
+/**
  * ReviewService provides review and rating functionality for POIs
  *
  * @generated from service loci.review.ReviewService
@@ -1739,6 +1933,30 @@ export declare const ReviewService: GenService<{
     methodKind: "unary";
     input: typeof GetRecentReviewsRequestSchema;
     output: typeof GetRecentReviewsResponseSchema;
+  },
+  /**
+   * Admin only: reviews with open reports (reports made since the review was
+   * last moderated), most-reported first, with their report counts and
+   * reasons. PermissionDenied for everyone but admins.
+   *
+   * @generated from rpc loci.review.ReviewService.ListReportedReviews
+   */
+  listReportedReviews: {
+    methodKind: "unary";
+    input: typeof ListReportedReviewsRequestSchema;
+    output: typeof ListReportedReviewsResponseSchema;
+  },
+  /**
+   * Admin only: settle a review's open reports. KEEP closes them and leaves
+   * the review public (later reports open a new round); REMOVE takes the
+   * review out of every public read for good. The author still sees it.
+   *
+   * @generated from rpc loci.review.ReviewService.ResolveReviewReport
+   */
+  resolveReviewReport: {
+    methodKind: "unary";
+    input: typeof ResolveReviewReportRequestSchema;
+    output: typeof ResolveReviewReportResponseSchema;
   },
 }>;
 

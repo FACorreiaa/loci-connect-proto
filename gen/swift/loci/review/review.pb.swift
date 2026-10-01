@@ -241,6 +241,49 @@ public enum Loci_Review_ReviewSortBy: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
+/// What a moderator decides about a reported review.
+public enum Loci_Review_ReviewModerationAction: SwiftProtobuf.Enum, Swift.CaseIterable {
+  public typealias RawValue = Int
+  case unspecified // = 0
+
+  /// The review stays public; its open reports are closed.
+  case keep // = 1
+
+  /// The review leaves every public read. Its author still sees it.
+  case remove // = 2
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .unspecified
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unspecified
+    case 1: self = .keep
+    case 2: self = .remove
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .unspecified: return 0
+    case .keep: return 1
+    case .remove: return 2
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static let allCases: [Loci_Review_ReviewModerationAction] = [
+    .unspecified,
+    .keep,
+    .remove,
+  ]
+
+}
+
 /// Core review entity
 public struct Loci_Review_Review: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
@@ -396,6 +439,15 @@ public struct Loci_Review_Review: @unchecked Sendable {
   public var votedByMe: Bool {
     get {return _storage._votedByMe}
     set {_uniqueStorage()._votedByMe = newValue}
+  }
+
+  /// True when the review is out of public reads: three or more people
+  /// reported it, or a moderator removed it. Only its author (and admins) are
+  /// ever sent a hidden review, so a client can label it rather than present
+  /// it as live.
+  public var hidden: Bool {
+    get {return _storage._hidden}
+    set {_uniqueStorage()._hidden = newValue}
   }
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -1521,6 +1573,137 @@ public struct Loci_Review_GetReviewStatisticsResponse: Sendable {
   fileprivate var _statistics: Loci_Review_ReviewStatistics? = nil
 }
 
+public struct Loci_Review_ListReportedReviewsRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// Page size; 0 means the server default (20).
+  public var limit: Int32 = 0
+
+  /// 1-based; 0 means the first page.
+  public var page: Int32 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// How many open reports gave one reason.
+public struct Loci_Review_ReviewReportReasonCount: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var reason: String = String()
+
+  public var count: Int32 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Review_ReportedReview: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var review: Loci_Review_Review {
+    get {return _review ?? Loci_Review_Review()}
+    set {_review = newValue}
+  }
+  /// Returns true if `review` has been explicitly set.
+  public var hasReview: Bool {return self._review != nil}
+  /// Clears the value of `review`. Subsequent reads from it will return its default value.
+  public mutating func clearReview() {self._review = nil}
+
+  /// Distinct people with an open report on the review.
+  public var reportCount: Int32 = 0
+
+  public var reasons: [Loci_Review_ReviewReportReasonCount] = []
+
+  /// The free-text details reporters gave, newest first; empty ones omitted.
+  public var details: [String] = []
+
+  public var lastReportedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _lastReportedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_lastReportedAt = newValue}
+  }
+  /// Returns true if `lastReportedAt` has been explicitly set.
+  public var hasLastReportedAt: Bool {return self._lastReportedAt != nil}
+  /// Clears the value of `lastReportedAt`. Subsequent reads from it will return its default value.
+  public mutating func clearLastReportedAt() {self._lastReportedAt = nil}
+
+  /// True when the review is currently out of public reads.
+  public var hidden: Bool = false
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _review: Loci_Review_Review? = nil
+  fileprivate var _lastReportedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+}
+
+public struct Loci_Review_ListReportedReviewsResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var reviews: [Loci_Review_ReportedReview] = []
+
+  public var pagination: Loci_Common_PaginationMetadata {
+    get {return _pagination ?? Loci_Common_PaginationMetadata()}
+    set {_pagination = newValue}
+  }
+  /// Returns true if `pagination` has been explicitly set.
+  public var hasPagination: Bool {return self._pagination != nil}
+  /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
+  public mutating func clearPagination() {self._pagination = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _pagination: Loci_Common_PaginationMetadata? = nil
+}
+
+public struct Loci_Review_ResolveReviewReportRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var reviewID: String = String()
+
+  public var action: Loci_Review_ReviewModerationAction = .unspecified
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Review_ResolveReviewReportResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var response: Loci_Common_Response {
+    get {return _response ?? Loci_Common_Response()}
+    set {_response = newValue}
+  }
+  /// Returns true if `response` has been explicitly set.
+  public var hasResponse: Bool {return self._response != nil}
+  /// Clears the value of `response`. Subsequent reads from it will return its default value.
+  public mutating func clearResponse() {self._response = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _response: Loci_Common_Response? = nil
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "loci.review"
@@ -1566,6 +1749,14 @@ extension Loci_Review_ReviewSortBy: SwiftProtobuf._ProtoNameProviding {
   ]
 }
 
+extension Loci_Review_ReviewModerationAction: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "REVIEW_MODERATION_ACTION_UNSPECIFIED"),
+    1: .same(proto: "REVIEW_MODERATION_ACTION_KEEP"),
+    2: .same(proto: "REVIEW_MODERATION_ACTION_REMOVE"),
+  ]
+}
+
 extension Loci_Review_Review: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Review"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -1591,6 +1782,7 @@ extension Loci_Review_Review: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     20: .standard(proto: "content_id"),
     21: .standard(proto: "content_name"),
     22: .standard(proto: "voted_by_me"),
+    23: .same(proto: "hidden"),
   ]
 
   fileprivate class _StorageClass {
@@ -1616,6 +1808,7 @@ extension Loci_Review_Review: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _contentID: String = String()
     var _contentName: String = String()
     var _votedByMe: Bool = false
+    var _hidden: Bool = false
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -1652,6 +1845,7 @@ extension Loci_Review_Review: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       _contentID = source._contentID
       _contentName = source._contentName
       _votedByMe = source._votedByMe
+      _hidden = source._hidden
     }
   }
 
@@ -1692,6 +1886,7 @@ extension Loci_Review_Review: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         case 20: try { try decoder.decodeSingularStringField(value: &_storage._contentID) }()
         case 21: try { try decoder.decodeSingularStringField(value: &_storage._contentName) }()
         case 22: try { try decoder.decodeSingularBoolField(value: &_storage._votedByMe) }()
+        case 23: try { try decoder.decodeSingularBoolField(value: &_storage._hidden) }()
         default: break
         }
       }
@@ -1770,6 +1965,9 @@ extension Loci_Review_Review: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       if _storage._votedByMe != false {
         try visitor.visitSingularBoolField(value: _storage._votedByMe, fieldNumber: 22)
       }
+      if _storage._hidden != false {
+        try visitor.visitSingularBoolField(value: _storage._hidden, fieldNumber: 23)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1801,6 +1999,7 @@ extension Loci_Review_Review: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         if _storage._contentID != rhs_storage._contentID {return false}
         if _storage._contentName != rhs_storage._contentName {return false}
         if _storage._votedByMe != rhs_storage._votedByMe {return false}
+        if _storage._hidden != rhs_storage._hidden {return false}
         return true
       }
       if !storagesAreEqual {return false}
@@ -3983,6 +4182,264 @@ extension Loci_Review_GetReviewStatisticsResponse: SwiftProtobuf.Message, SwiftP
 
   public static func ==(lhs: Loci_Review_GetReviewStatisticsResponse, rhs: Loci_Review_GetReviewStatisticsResponse) -> Bool {
     if lhs._statistics != rhs._statistics {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Review_ListReportedReviewsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ListReportedReviewsRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "limit"),
+    2: .same(proto: "page"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularInt32Field(value: &self.limit) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.page) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.limit != 0 {
+      try visitor.visitSingularInt32Field(value: self.limit, fieldNumber: 1)
+    }
+    if self.page != 0 {
+      try visitor.visitSingularInt32Field(value: self.page, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Review_ListReportedReviewsRequest, rhs: Loci_Review_ListReportedReviewsRequest) -> Bool {
+    if lhs.limit != rhs.limit {return false}
+    if lhs.page != rhs.page {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Review_ReviewReportReasonCount: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ReviewReportReasonCount"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "reason"),
+    2: .same(proto: "count"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.reason) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.count) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.reason.isEmpty {
+      try visitor.visitSingularStringField(value: self.reason, fieldNumber: 1)
+    }
+    if self.count != 0 {
+      try visitor.visitSingularInt32Field(value: self.count, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Review_ReviewReportReasonCount, rhs: Loci_Review_ReviewReportReasonCount) -> Bool {
+    if lhs.reason != rhs.reason {return false}
+    if lhs.count != rhs.count {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Review_ReportedReview: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ReportedReview"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "review"),
+    2: .standard(proto: "report_count"),
+    3: .same(proto: "reasons"),
+    4: .same(proto: "details"),
+    5: .standard(proto: "last_reported_at"),
+    6: .same(proto: "hidden"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._review) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.reportCount) }()
+      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.reasons) }()
+      case 4: try { try decoder.decodeRepeatedStringField(value: &self.details) }()
+      case 5: try { try decoder.decodeSingularMessageField(value: &self._lastReportedAt) }()
+      case 6: try { try decoder.decodeSingularBoolField(value: &self.hidden) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._review {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    if self.reportCount != 0 {
+      try visitor.visitSingularInt32Field(value: self.reportCount, fieldNumber: 2)
+    }
+    if !self.reasons.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.reasons, fieldNumber: 3)
+    }
+    if !self.details.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.details, fieldNumber: 4)
+    }
+    try { if let v = self._lastReportedAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+    } }()
+    if self.hidden != false {
+      try visitor.visitSingularBoolField(value: self.hidden, fieldNumber: 6)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Review_ReportedReview, rhs: Loci_Review_ReportedReview) -> Bool {
+    if lhs._review != rhs._review {return false}
+    if lhs.reportCount != rhs.reportCount {return false}
+    if lhs.reasons != rhs.reasons {return false}
+    if lhs.details != rhs.details {return false}
+    if lhs._lastReportedAt != rhs._lastReportedAt {return false}
+    if lhs.hidden != rhs.hidden {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Review_ListReportedReviewsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ListReportedReviewsResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "reviews"),
+    2: .same(proto: "pagination"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.reviews) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._pagination) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.reviews.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.reviews, fieldNumber: 1)
+    }
+    try { if let v = self._pagination {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Review_ListReportedReviewsResponse, rhs: Loci_Review_ListReportedReviewsResponse) -> Bool {
+    if lhs.reviews != rhs.reviews {return false}
+    if lhs._pagination != rhs._pagination {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Review_ResolveReviewReportRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ResolveReviewReportRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "review_id"),
+    2: .same(proto: "action"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.reviewID) }()
+      case 2: try { try decoder.decodeSingularEnumField(value: &self.action) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.reviewID.isEmpty {
+      try visitor.visitSingularStringField(value: self.reviewID, fieldNumber: 1)
+    }
+    if self.action != .unspecified {
+      try visitor.visitSingularEnumField(value: self.action, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Review_ResolveReviewReportRequest, rhs: Loci_Review_ResolveReviewReportRequest) -> Bool {
+    if lhs.reviewID != rhs.reviewID {return false}
+    if lhs.action != rhs.action {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Review_ResolveReviewReportResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ResolveReviewReportResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "response"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._response) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._response {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Review_ResolveReviewReportResponse, rhs: Loci_Review_ResolveReviewReportResponse) -> Bool {
+    if lhs._response != rhs._response {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
