@@ -9410,7 +9410,10 @@ renders one renders the other. </p></td>
                   <td>query</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Optional. Empty asks for a nearby listing rather than a search: the places
+around latitude/longitude, nearest first, at most 50, optionally narrowed
+to the category in search_tags[0]. An empty query with no location is
+rejected with INVALID_ARGUMENT, since there is nothing to rank by. </p></td>
                 </tr>
               
                 <tr>
@@ -12395,6 +12398,17 @@ editing an existing stop. </p></td>
                   <td><a href="#loci.recommendation.RecommendationTrace">loci.recommendation.RecommendationTrace</a></td>
                   <td>optional</td>
                   <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>image</td>
+                  <td><a href="#loci.poi.POIImage">loci.poi.POIImage</a></td>
+                  <td>optional</td>
+                  <td><p>A picture of the stop&#39;s place, with the credit it must be shown with
+(read side only; not persisted on the stop). Taken from the stored images
+of the linked POI, so it is absent when the stop has no poi_id or that POI
+has no picture yet; render the usual placeholder then. Filled on City Pack
+stops (BundleDay.stops). </p></td>
                 </tr>
               
             </tbody>
@@ -39188,8 +39202,11 @@ when the trip did not record one. </p></td>
                   <td>id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>The trip_legs row id. Stable across reads; it changes only when the trip
-is saved again, because SaveTrip rewrites a trip&#39;s legs. </p></td>
+                  <td><p>The trip_legs row id. Stable across reads and across saves: SaveTrip keeps
+a leg&#39;s id when the client sends it back, or when the saved leg is on the
+same hop (after_day, from and to) as an existing one. Only a leg that is
+removed from the trip, or a brand-new hop, has a new id. Servers before
+this guarantee issued new ids on every save. </p></td>
                 </tr>
               
                 <tr>
@@ -39548,6 +39565,21 @@ as *_prev_period. A trend is *_this_period against *_prev_period. </p></td>
                   <td><a href="#int32">int32</a></td>
                   <td></td>
                   <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>has_period_counts</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>True when the *_this_period and *_prev_period fields above are the real
+windowed counts, so a zero in them means &#34;nothing in this window&#34; and can
+be trusted. Every server that sets this sends it as true.
+
+False only from servers that predate it. Those may have sent zero
+*_this_period fields because the field did not exist yet, which is why
+clients fell back to all-time-minus-previous math on zero; that fallback
+turns &#34;no activity this period, some last period&#34; into a fake up arrow.
+When this is true, use *_this_period as sent and never fall back. </p></td>
                 </tr>
               
             </tbody>

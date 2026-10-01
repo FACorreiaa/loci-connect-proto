@@ -109,6 +109,12 @@ message TripStop {
   // Hydrated POI details for rendering (read side only; not persisted here).
   optional loci.poi.POIDetailedInfo poi = 9;
   optional loci.recommendation.RecommendationTrace recommendation_trace = 10;
+  // A picture of the stop's place, with the credit it must be shown with
+  // (read side only; not persisted on the stop). Taken from the stored images
+  // of the linked POI, so it is absent when the stop has no poi_id or that POI
+  // has no picture yet; render the usual placeholder then. Filled on City Pack
+  // stops (BundleDay.stops).
+  optional loci.poi.POIImage image = 11;
 }
 
 // TripDay is one day of a trip.

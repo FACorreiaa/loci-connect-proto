@@ -450,10 +450,17 @@ message POIFilters {
 
 // SearchPOIRequest for searching POIs
 message SearchPOIRequest {
-  string query = 1 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 500
-  }];
+  // Optional. Empty asks for a nearby listing rather than a search: the places
+  // around latitude/longitude, nearest first, at most 50, optionally narrowed
+  // to the category in search_tags[0]. An empty query with no location is
+  // rejected with INVALID_ARGUMENT, since there is nothing to rank by.
+  string query = 1 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string = {
+      min_len: 1
+      max_len: 500
+    }
+  ];
   // Optional. Empty means "no city": the server searches around
   // latitude/longitude when they are set, otherwise across every city.
   // "nearby" is treated the same as empty.

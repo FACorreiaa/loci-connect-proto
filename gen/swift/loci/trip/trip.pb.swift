@@ -323,82 +323,107 @@ public struct Loci_Trip_TripConstraint: Sendable {
 }
 
 /// TripStop is a single place on a day's timeline.
-public struct Loci_Trip_TripStop: Sendable {
+public struct Loci_Trip_TripStop: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   /// Empty on create; the database assigns it. Clients may send their own id when
   /// editing an existing stop.
-  public var id: String = String()
+  public var id: String {
+    get {return _storage._id}
+    set {_uniqueStorage()._id = newValue}
+  }
 
-  public var poiID: String = String()
+  public var poiID: String {
+    get {return _storage._poiID}
+    set {_uniqueStorage()._poiID = newValue}
+  }
 
   /// order_index positions the stop within its day (0-based).
-  public var orderIndex: Int32 = 0
+  public var orderIndex: Int32 {
+    get {return _storage._orderIndex}
+    set {_uniqueStorage()._orderIndex = newValue}
+  }
 
   /// Display name; user-editable (RenameStop) and defaults to the POI name.
-  public var name: String = String()
+  public var name: String {
+    get {return _storage._name}
+    set {_uniqueStorage()._name = newValue}
+  }
 
   /// start_minute is minutes from midnight for the stop's start.
   public var startMinute: Int32 {
-    get {return _startMinute ?? 0}
-    set {_startMinute = newValue}
+    get {return _storage._startMinute ?? 0}
+    set {_uniqueStorage()._startMinute = newValue}
   }
   /// Returns true if `startMinute` has been explicitly set.
-  public var hasStartMinute: Bool {return self._startMinute != nil}
+  public var hasStartMinute: Bool {return _storage._startMinute != nil}
   /// Clears the value of `startMinute`. Subsequent reads from it will return its default value.
-  public mutating func clearStartMinute() {self._startMinute = nil}
+  public mutating func clearStartMinute() {_uniqueStorage()._startMinute = nil}
 
   /// duration_minutes is how long to spend here.
   public var durationMinutes: Int32 {
-    get {return _durationMinutes ?? 0}
-    set {_durationMinutes = newValue}
+    get {return _storage._durationMinutes ?? 0}
+    set {_uniqueStorage()._durationMinutes = newValue}
   }
   /// Returns true if `durationMinutes` has been explicitly set.
-  public var hasDurationMinutes: Bool {return self._durationMinutes != nil}
+  public var hasDurationMinutes: Bool {return _storage._durationMinutes != nil}
   /// Clears the value of `durationMinutes`. Subsequent reads from it will return its default value.
-  public mutating func clearDurationMinutes() {self._durationMinutes = nil}
+  public mutating func clearDurationMinutes() {_uniqueStorage()._durationMinutes = nil}
 
-  public var notes: String = String()
+  public var notes: String {
+    get {return _storage._notes}
+    set {_uniqueStorage()._notes = newValue}
+  }
 
   public var bookingURL: String {
-    get {return _bookingURL ?? String()}
-    set {_bookingURL = newValue}
+    get {return _storage._bookingURL ?? String()}
+    set {_uniqueStorage()._bookingURL = newValue}
   }
   /// Returns true if `bookingURL` has been explicitly set.
-  public var hasBookingURL: Bool {return self._bookingURL != nil}
+  public var hasBookingURL: Bool {return _storage._bookingURL != nil}
   /// Clears the value of `bookingURL`. Subsequent reads from it will return its default value.
-  public mutating func clearBookingURL() {self._bookingURL = nil}
+  public mutating func clearBookingURL() {_uniqueStorage()._bookingURL = nil}
 
   /// Hydrated POI details for rendering (read side only; not persisted here).
   public var poi: Loci_Poi_POIDetailedInfo {
-    get {return _poi ?? Loci_Poi_POIDetailedInfo()}
-    set {_poi = newValue}
+    get {return _storage._poi ?? Loci_Poi_POIDetailedInfo()}
+    set {_uniqueStorage()._poi = newValue}
   }
   /// Returns true if `poi` has been explicitly set.
-  public var hasPoi: Bool {return self._poi != nil}
+  public var hasPoi: Bool {return _storage._poi != nil}
   /// Clears the value of `poi`. Subsequent reads from it will return its default value.
-  public mutating func clearPoi() {self._poi = nil}
+  public mutating func clearPoi() {_uniqueStorage()._poi = nil}
 
   public var recommendationTrace: Loci_Recommendation_RecommendationTrace {
-    get {return _recommendationTrace ?? Loci_Recommendation_RecommendationTrace()}
-    set {_recommendationTrace = newValue}
+    get {return _storage._recommendationTrace ?? Loci_Recommendation_RecommendationTrace()}
+    set {_uniqueStorage()._recommendationTrace = newValue}
   }
   /// Returns true if `recommendationTrace` has been explicitly set.
-  public var hasRecommendationTrace: Bool {return self._recommendationTrace != nil}
+  public var hasRecommendationTrace: Bool {return _storage._recommendationTrace != nil}
   /// Clears the value of `recommendationTrace`. Subsequent reads from it will return its default value.
-  public mutating func clearRecommendationTrace() {self._recommendationTrace = nil}
+  public mutating func clearRecommendationTrace() {_uniqueStorage()._recommendationTrace = nil}
+
+  /// A picture of the stop's place, with the credit it must be shown with
+  /// (read side only; not persisted on the stop). Taken from the stored images
+  /// of the linked POI, so it is absent when the stop has no poi_id or that POI
+  /// has no picture yet; render the usual placeholder then. Filled on City Pack
+  /// stops (BundleDay.stops).
+  public var image: Loci_Poi_POIImage {
+    get {return _storage._image ?? Loci_Poi_POIImage()}
+    set {_uniqueStorage()._image = newValue}
+  }
+  /// Returns true if `image` has been explicitly set.
+  public var hasImage: Bool {return _storage._image != nil}
+  /// Clears the value of `image`. Subsequent reads from it will return its default value.
+  public mutating func clearImage() {_uniqueStorage()._image = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
-  fileprivate var _startMinute: Int32? = nil
-  fileprivate var _durationMinutes: Int32? = nil
-  fileprivate var _bookingURL: String? = nil
-  fileprivate var _poi: Loci_Poi_POIDetailedInfo? = nil
-  fileprivate var _recommendationTrace: Loci_Recommendation_RecommendationTrace? = nil
+  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 /// TripDay is one day of a trip.
@@ -1273,40 +1298,31 @@ public struct Loci_Trip_SetConstraintRequest: Sendable {
   fileprivate var _constraints: Loci_Trip_TripConstraint? = nil
 }
 
-public struct Loci_Trip_AddStopRequest: @unchecked Sendable {
+public struct Loci_Trip_AddStopRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var tripID: String {
-    get {return _storage._tripID}
-    set {_uniqueStorage()._tripID = newValue}
-  }
+  public var tripID: String = String()
 
-  public var dayID: String {
-    get {return _storage._dayID}
-    set {_uniqueStorage()._dayID = newValue}
-  }
+  public var dayID: String = String()
 
   public var stop: Loci_Trip_TripStop {
-    get {return _storage._stop ?? Loci_Trip_TripStop()}
-    set {_uniqueStorage()._stop = newValue}
+    get {return _stop ?? Loci_Trip_TripStop()}
+    set {_stop = newValue}
   }
   /// Returns true if `stop` has been explicitly set.
-  public var hasStop: Bool {return _storage._stop != nil}
+  public var hasStop: Bool {return self._stop != nil}
   /// Clears the value of `stop`. Subsequent reads from it will return its default value.
-  public mutating func clearStop() {_uniqueStorage()._stop = nil}
+  public mutating func clearStop() {self._stop = nil}
 
-  public var baseVersion: Int64 {
-    get {return _storage._baseVersion}
-    set {_uniqueStorage()._baseVersion = newValue}
-  }
+  public var baseVersion: Int64 = 0
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
-  fileprivate var _storage = _StorageClass.defaultInstance
+  fileprivate var _stop: Loci_Trip_TripStop? = nil
 }
 
 public struct Loci_Trip_RemoveStopRequest: Sendable {
@@ -1325,40 +1341,31 @@ public struct Loci_Trip_RemoveStopRequest: Sendable {
   public init() {}
 }
 
-public struct Loci_Trip_ReplaceStopRequest: @unchecked Sendable {
+public struct Loci_Trip_ReplaceStopRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var tripID: String {
-    get {return _storage._tripID}
-    set {_uniqueStorage()._tripID = newValue}
-  }
+  public var tripID: String = String()
 
-  public var stopID: String {
-    get {return _storage._stopID}
-    set {_uniqueStorage()._stopID = newValue}
-  }
+  public var stopID: String = String()
 
   public var replacement: Loci_Trip_TripStop {
-    get {return _storage._replacement ?? Loci_Trip_TripStop()}
-    set {_uniqueStorage()._replacement = newValue}
+    get {return _replacement ?? Loci_Trip_TripStop()}
+    set {_replacement = newValue}
   }
   /// Returns true if `replacement` has been explicitly set.
-  public var hasReplacement: Bool {return _storage._replacement != nil}
+  public var hasReplacement: Bool {return self._replacement != nil}
   /// Clears the value of `replacement`. Subsequent reads from it will return its default value.
-  public mutating func clearReplacement() {_uniqueStorage()._replacement = nil}
+  public mutating func clearReplacement() {self._replacement = nil}
 
-  public var baseVersion: Int64 {
-    get {return _storage._baseVersion}
-    set {_uniqueStorage()._baseVersion = newValue}
-  }
+  public var baseVersion: Int64 = 0
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
-  fileprivate var _storage = _StorageClass.defaultInstance
+  fileprivate var _replacement: Loci_Trip_TripStop? = nil
 }
 
 public struct Loci_Trip_ExportTripRequest: Sendable {
@@ -1524,78 +1531,144 @@ extension Loci_Trip_TripStop: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     8: .standard(proto: "booking_url"),
     9: .same(proto: "poi"),
     10: .standard(proto: "recommendation_trace"),
+    11: .same(proto: "image"),
   ]
 
+  fileprivate class _StorageClass {
+    var _id: String = String()
+    var _poiID: String = String()
+    var _orderIndex: Int32 = 0
+    var _name: String = String()
+    var _startMinute: Int32? = nil
+    var _durationMinutes: Int32? = nil
+    var _notes: String = String()
+    var _bookingURL: String? = nil
+    var _poi: Loci_Poi_POIDetailedInfo? = nil
+    var _recommendationTrace: Loci_Recommendation_RecommendationTrace? = nil
+    var _image: Loci_Poi_POIImage? = nil
+
+    #if swift(>=5.10)
+      // This property is used as the initial default value for new instances of the type.
+      // The type itself is protecting the reference to its storage via CoW semantics.
+      // This will force a copy to be made of this reference when the first mutation occurs;
+      // hence, it is safe to mark this as `nonisolated(unsafe)`.
+      static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _id = source._id
+      _poiID = source._poiID
+      _orderIndex = source._orderIndex
+      _name = source._name
+      _startMinute = source._startMinute
+      _durationMinutes = source._durationMinutes
+      _notes = source._notes
+      _bookingURL = source._bookingURL
+      _poi = source._poi
+      _recommendationTrace = source._recommendationTrace
+      _image = source._image
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.id) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.poiID) }()
-      case 3: try { try decoder.decodeSingularInt32Field(value: &self.orderIndex) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.name) }()
-      case 5: try { try decoder.decodeSingularInt32Field(value: &self._startMinute) }()
-      case 6: try { try decoder.decodeSingularInt32Field(value: &self._durationMinutes) }()
-      case 7: try { try decoder.decodeSingularStringField(value: &self.notes) }()
-      case 8: try { try decoder.decodeSingularStringField(value: &self._bookingURL) }()
-      case 9: try { try decoder.decodeSingularMessageField(value: &self._poi) }()
-      case 10: try { try decoder.decodeSingularMessageField(value: &self._recommendationTrace) }()
-      default: break
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularStringField(value: &_storage._id) }()
+        case 2: try { try decoder.decodeSingularStringField(value: &_storage._poiID) }()
+        case 3: try { try decoder.decodeSingularInt32Field(value: &_storage._orderIndex) }()
+        case 4: try { try decoder.decodeSingularStringField(value: &_storage._name) }()
+        case 5: try { try decoder.decodeSingularInt32Field(value: &_storage._startMinute) }()
+        case 6: try { try decoder.decodeSingularInt32Field(value: &_storage._durationMinutes) }()
+        case 7: try { try decoder.decodeSingularStringField(value: &_storage._notes) }()
+        case 8: try { try decoder.decodeSingularStringField(value: &_storage._bookingURL) }()
+        case 9: try { try decoder.decodeSingularMessageField(value: &_storage._poi) }()
+        case 10: try { try decoder.decodeSingularMessageField(value: &_storage._recommendationTrace) }()
+        case 11: try { try decoder.decodeSingularMessageField(value: &_storage._image) }()
+        default: break
+        }
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    if !self.id.isEmpty {
-      try visitor.visitSingularStringField(value: self.id, fieldNumber: 1)
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      if !_storage._id.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._id, fieldNumber: 1)
+      }
+      if !_storage._poiID.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._poiID, fieldNumber: 2)
+      }
+      if _storage._orderIndex != 0 {
+        try visitor.visitSingularInt32Field(value: _storage._orderIndex, fieldNumber: 3)
+      }
+      if !_storage._name.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._name, fieldNumber: 4)
+      }
+      try { if let v = _storage._startMinute {
+        try visitor.visitSingularInt32Field(value: v, fieldNumber: 5)
+      } }()
+      try { if let v = _storage._durationMinutes {
+        try visitor.visitSingularInt32Field(value: v, fieldNumber: 6)
+      } }()
+      if !_storage._notes.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._notes, fieldNumber: 7)
+      }
+      try { if let v = _storage._bookingURL {
+        try visitor.visitSingularStringField(value: v, fieldNumber: 8)
+      } }()
+      try { if let v = _storage._poi {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
+      } }()
+      try { if let v = _storage._recommendationTrace {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
+      } }()
+      try { if let v = _storage._image {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
+      } }()
     }
-    if !self.poiID.isEmpty {
-      try visitor.visitSingularStringField(value: self.poiID, fieldNumber: 2)
-    }
-    if self.orderIndex != 0 {
-      try visitor.visitSingularInt32Field(value: self.orderIndex, fieldNumber: 3)
-    }
-    if !self.name.isEmpty {
-      try visitor.visitSingularStringField(value: self.name, fieldNumber: 4)
-    }
-    try { if let v = self._startMinute {
-      try visitor.visitSingularInt32Field(value: v, fieldNumber: 5)
-    } }()
-    try { if let v = self._durationMinutes {
-      try visitor.visitSingularInt32Field(value: v, fieldNumber: 6)
-    } }()
-    if !self.notes.isEmpty {
-      try visitor.visitSingularStringField(value: self.notes, fieldNumber: 7)
-    }
-    try { if let v = self._bookingURL {
-      try visitor.visitSingularStringField(value: v, fieldNumber: 8)
-    } }()
-    try { if let v = self._poi {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
-    } }()
-    try { if let v = self._recommendationTrace {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
-    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Loci_Trip_TripStop, rhs: Loci_Trip_TripStop) -> Bool {
-    if lhs.id != rhs.id {return false}
-    if lhs.poiID != rhs.poiID {return false}
-    if lhs.orderIndex != rhs.orderIndex {return false}
-    if lhs.name != rhs.name {return false}
-    if lhs._startMinute != rhs._startMinute {return false}
-    if lhs._durationMinutes != rhs._durationMinutes {return false}
-    if lhs.notes != rhs.notes {return false}
-    if lhs._bookingURL != rhs._bookingURL {return false}
-    if lhs._poi != rhs._poi {return false}
-    if lhs._recommendationTrace != rhs._recommendationTrace {return false}
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._id != rhs_storage._id {return false}
+        if _storage._poiID != rhs_storage._poiID {return false}
+        if _storage._orderIndex != rhs_storage._orderIndex {return false}
+        if _storage._name != rhs_storage._name {return false}
+        if _storage._startMinute != rhs_storage._startMinute {return false}
+        if _storage._durationMinutes != rhs_storage._durationMinutes {return false}
+        if _storage._notes != rhs_storage._notes {return false}
+        if _storage._bookingURL != rhs_storage._bookingURL {return false}
+        if _storage._poi != rhs_storage._poi {return false}
+        if _storage._recommendationTrace != rhs_storage._recommendationTrace {return false}
+        if _storage._image != rhs_storage._image {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -3304,92 +3377,46 @@ extension Loci_Trip_AddStopRequest: SwiftProtobuf.Message, SwiftProtobuf._Messag
     4: .standard(proto: "base_version"),
   ]
 
-  fileprivate class _StorageClass {
-    var _tripID: String = String()
-    var _dayID: String = String()
-    var _stop: Loci_Trip_TripStop? = nil
-    var _baseVersion: Int64 = 0
-
-    #if swift(>=5.10)
-      // This property is used as the initial default value for new instances of the type.
-      // The type itself is protecting the reference to its storage via CoW semantics.
-      // This will force a copy to be made of this reference when the first mutation occurs;
-      // hence, it is safe to mark this as `nonisolated(unsafe)`.
-      static nonisolated(unsafe) let defaultInstance = _StorageClass()
-    #else
-      static let defaultInstance = _StorageClass()
-    #endif
-
-    private init() {}
-
-    init(copying source: _StorageClass) {
-      _tripID = source._tripID
-      _dayID = source._dayID
-      _stop = source._stop
-      _baseVersion = source._baseVersion
-    }
-  }
-
-  fileprivate mutating func _uniqueStorage() -> _StorageClass {
-    if !isKnownUniquelyReferenced(&_storage) {
-      _storage = _StorageClass(copying: _storage)
-    }
-    return _storage
-  }
-
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    _ = _uniqueStorage()
-    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
-      while let fieldNumber = try decoder.nextFieldNumber() {
-        // The use of inline closures is to circumvent an issue where the compiler
-        // allocates stack space for every case branch when no optimizations are
-        // enabled. https://github.com/apple/swift-protobuf/issues/1034
-        switch fieldNumber {
-        case 1: try { try decoder.decodeSingularStringField(value: &_storage._tripID) }()
-        case 2: try { try decoder.decodeSingularStringField(value: &_storage._dayID) }()
-        case 3: try { try decoder.decodeSingularMessageField(value: &_storage._stop) }()
-        case 4: try { try decoder.decodeSingularInt64Field(value: &_storage._baseVersion) }()
-        default: break
-        }
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.tripID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.dayID) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._stop) }()
+      case 4: try { try decoder.decodeSingularInt64Field(value: &self.baseVersion) }()
+      default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every if/case branch local when no optimizations
-      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-      // https://github.com/apple/swift-protobuf/issues/1182
-      if !_storage._tripID.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._tripID, fieldNumber: 1)
-      }
-      if !_storage._dayID.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._dayID, fieldNumber: 2)
-      }
-      try { if let v = _storage._stop {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-      } }()
-      if _storage._baseVersion != 0 {
-        try visitor.visitSingularInt64Field(value: _storage._baseVersion, fieldNumber: 4)
-      }
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.tripID.isEmpty {
+      try visitor.visitSingularStringField(value: self.tripID, fieldNumber: 1)
+    }
+    if !self.dayID.isEmpty {
+      try visitor.visitSingularStringField(value: self.dayID, fieldNumber: 2)
+    }
+    try { if let v = self._stop {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
+    if self.baseVersion != 0 {
+      try visitor.visitSingularInt64Field(value: self.baseVersion, fieldNumber: 4)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Loci_Trip_AddStopRequest, rhs: Loci_Trip_AddStopRequest) -> Bool {
-    if lhs._storage !== rhs._storage {
-      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
-        let _storage = _args.0
-        let rhs_storage = _args.1
-        if _storage._tripID != rhs_storage._tripID {return false}
-        if _storage._dayID != rhs_storage._dayID {return false}
-        if _storage._stop != rhs_storage._stop {return false}
-        if _storage._baseVersion != rhs_storage._baseVersion {return false}
-        return true
-      }
-      if !storagesAreEqual {return false}
-    }
+    if lhs.tripID != rhs.tripID {return false}
+    if lhs.dayID != rhs.dayID {return false}
+    if lhs._stop != rhs._stop {return false}
+    if lhs.baseVersion != rhs.baseVersion {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -3448,92 +3475,46 @@ extension Loci_Trip_ReplaceStopRequest: SwiftProtobuf.Message, SwiftProtobuf._Me
     4: .standard(proto: "base_version"),
   ]
 
-  fileprivate class _StorageClass {
-    var _tripID: String = String()
-    var _stopID: String = String()
-    var _replacement: Loci_Trip_TripStop? = nil
-    var _baseVersion: Int64 = 0
-
-    #if swift(>=5.10)
-      // This property is used as the initial default value for new instances of the type.
-      // The type itself is protecting the reference to its storage via CoW semantics.
-      // This will force a copy to be made of this reference when the first mutation occurs;
-      // hence, it is safe to mark this as `nonisolated(unsafe)`.
-      static nonisolated(unsafe) let defaultInstance = _StorageClass()
-    #else
-      static let defaultInstance = _StorageClass()
-    #endif
-
-    private init() {}
-
-    init(copying source: _StorageClass) {
-      _tripID = source._tripID
-      _stopID = source._stopID
-      _replacement = source._replacement
-      _baseVersion = source._baseVersion
-    }
-  }
-
-  fileprivate mutating func _uniqueStorage() -> _StorageClass {
-    if !isKnownUniquelyReferenced(&_storage) {
-      _storage = _StorageClass(copying: _storage)
-    }
-    return _storage
-  }
-
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    _ = _uniqueStorage()
-    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
-      while let fieldNumber = try decoder.nextFieldNumber() {
-        // The use of inline closures is to circumvent an issue where the compiler
-        // allocates stack space for every case branch when no optimizations are
-        // enabled. https://github.com/apple/swift-protobuf/issues/1034
-        switch fieldNumber {
-        case 1: try { try decoder.decodeSingularStringField(value: &_storage._tripID) }()
-        case 2: try { try decoder.decodeSingularStringField(value: &_storage._stopID) }()
-        case 3: try { try decoder.decodeSingularMessageField(value: &_storage._replacement) }()
-        case 4: try { try decoder.decodeSingularInt64Field(value: &_storage._baseVersion) }()
-        default: break
-        }
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.tripID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.stopID) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._replacement) }()
+      case 4: try { try decoder.decodeSingularInt64Field(value: &self.baseVersion) }()
+      default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every if/case branch local when no optimizations
-      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-      // https://github.com/apple/swift-protobuf/issues/1182
-      if !_storage._tripID.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._tripID, fieldNumber: 1)
-      }
-      if !_storage._stopID.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._stopID, fieldNumber: 2)
-      }
-      try { if let v = _storage._replacement {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-      } }()
-      if _storage._baseVersion != 0 {
-        try visitor.visitSingularInt64Field(value: _storage._baseVersion, fieldNumber: 4)
-      }
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.tripID.isEmpty {
+      try visitor.visitSingularStringField(value: self.tripID, fieldNumber: 1)
+    }
+    if !self.stopID.isEmpty {
+      try visitor.visitSingularStringField(value: self.stopID, fieldNumber: 2)
+    }
+    try { if let v = self._replacement {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
+    if self.baseVersion != 0 {
+      try visitor.visitSingularInt64Field(value: self.baseVersion, fieldNumber: 4)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Loci_Trip_ReplaceStopRequest, rhs: Loci_Trip_ReplaceStopRequest) -> Bool {
-    if lhs._storage !== rhs._storage {
-      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
-        let _storage = _args.0
-        let rhs_storage = _args.1
-        if _storage._tripID != rhs_storage._tripID {return false}
-        if _storage._stopID != rhs_storage._stopID {return false}
-        if _storage._replacement != rhs_storage._replacement {return false}
-        if _storage._baseVersion != rhs_storage._baseVersion {return false}
-        return true
-      }
-      if !storagesAreEqual {return false}
-    }
+    if lhs.tripID != rhs.tripID {return false}
+    if lhs.stopID != rhs.stopID {return false}
+    if lhs._replacement != rhs._replacement {return false}
+    if lhs.baseVersion != rhs.baseVersion {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

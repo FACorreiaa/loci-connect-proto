@@ -633,6 +633,10 @@ public struct Loci_Poi_SearchPOIRequest: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// Optional. Empty asks for a nearby listing rather than a search: the places
+  /// around latitude/longitude, nearest first, at most 50, optionally narrowed
+  /// to the category in search_tags[0]. An empty query with no location is
+  /// rejected with INVALID_ARGUMENT, since there is nothing to rank by.
   public var query: String = String()
 
   /// Optional. Empty means "no city": the server searches around
