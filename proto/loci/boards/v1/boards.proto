@@ -207,9 +207,7 @@ message GetBoardsViewerResponse {
 }
 
 message CreateBoardRequest {
-  string slug = 1 [(buf.validate.field).string = {
-    pattern: "^[a-z0-9-]{3,32}$"
-  }];
+  string slug = 1 [(buf.validate.field).string = {pattern: "^[a-z0-9-]{3,32}$"}];
   string name = 2 [(buf.validate.field).string = {
     min_len: 3
     max_len: 60
