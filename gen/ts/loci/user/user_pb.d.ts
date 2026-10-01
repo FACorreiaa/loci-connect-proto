@@ -499,6 +499,28 @@ export declare type NotificationSettings = Message<"loci.user.NotificationSettin
    * @generated from field: bool friend_activity = 5;
    */
   friendActivity: boolean;
+
+  /**
+   * Whether friends see the caller on their leaderboards.
+   *
+   * @generated from field: bool leaderboard_visible = 6;
+   */
+  leaderboardVisible: boolean;
+
+  /**
+   * Evening reminder when the day's check-in would break a streak (sent by
+   * the device; the server only stores the choice).
+   *
+   * @generated from field: bool streak_reminders = 7;
+   */
+  streakReminders: boolean;
+
+  /**
+   * Badges earned and a friend passing the caller on the week's leaderboard.
+   *
+   * @generated from field: bool progress_updates = 8;
+   */
+  progressUpdates: boolean;
 };
 
 /**
@@ -544,6 +566,21 @@ export declare type UpdateNotificationSettingsRequest = Message<"loci.user.Updat
    * @generated from field: optional bool friend_activity = 4;
    */
   friendActivity?: boolean;
+
+  /**
+   * @generated from field: optional bool leaderboard_visible = 5;
+   */
+  leaderboardVisible?: boolean;
+
+  /**
+   * @generated from field: optional bool streak_reminders = 6;
+   */
+  streakReminders?: boolean;
+
+  /**
+   * @generated from field: optional bool progress_updates = 7;
+   */
+  progressUpdates?: boolean;
 };
 
 /**

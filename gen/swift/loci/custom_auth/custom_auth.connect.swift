@@ -28,6 +28,16 @@ public protocol Loci_CustomAuth_CustomAuthServiceClientInterface: Sendable {
 
     @available(iOS 13, *)
     func `verifyPhone`(request: Loci_CustomAuth_VerifyPhoneRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_CustomAuth_VerifyPhoneResponse>
+
+    /// AttachVerifiedPhone needs a session. A number already verified on another
+    /// account is AlreadyExists.
+    @available(iOS 13, *)
+    func `attachVerifiedPhone`(request: Loci_CustomAuth_AttachVerifiedPhoneRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_CustomAuth_AttachVerifiedPhoneResponse>
+
+    /// LinkFacebook needs a session. A Facebook account linked to another Loci
+    /// account is AlreadyExists.
+    @available(iOS 13, *)
+    func `linkFacebook`(request: Loci_CustomAuth_LinkFacebookRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_CustomAuth_LinkFacebookResponse>
 }
 
 /// Concrete implementation of `Loci_CustomAuth_CustomAuthServiceClientInterface`.
@@ -63,6 +73,16 @@ public final class Loci_CustomAuth_CustomAuthServiceClient: Loci_CustomAuth_Cust
         return await self.client.unary(path: "/loci.custom_auth.CustomAuthService/VerifyPhone", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
+    @available(iOS 13, *)
+    public func `attachVerifiedPhone`(request: Loci_CustomAuth_AttachVerifiedPhoneRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_CustomAuth_AttachVerifiedPhoneResponse> {
+        return await self.client.unary(path: "/loci.custom_auth.CustomAuthService/AttachVerifiedPhone", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `linkFacebook`(request: Loci_CustomAuth_LinkFacebookRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_CustomAuth_LinkFacebookResponse> {
+        return await self.client.unary(path: "/loci.custom_auth.CustomAuthService/LinkFacebook", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
     public enum Metadata {
         public enum Methods {
             public static let getOauthURL = Connect.MethodSpec(name: "GetOAuthURL", service: "loci.custom_auth.CustomAuthService", type: .unary)
@@ -70,6 +90,8 @@ public final class Loci_CustomAuth_CustomAuthServiceClient: Loci_CustomAuth_Cust
             public static let signInWithIdtoken = Connect.MethodSpec(name: "SignInWithIDToken", service: "loci.custom_auth.CustomAuthService", type: .unary)
             public static let sendPhoneVerification = Connect.MethodSpec(name: "SendPhoneVerification", service: "loci.custom_auth.CustomAuthService", type: .unary)
             public static let verifyPhone = Connect.MethodSpec(name: "VerifyPhone", service: "loci.custom_auth.CustomAuthService", type: .unary)
+            public static let attachVerifiedPhone = Connect.MethodSpec(name: "AttachVerifiedPhone", service: "loci.custom_auth.CustomAuthService", type: .unary)
+            public static let linkFacebook = Connect.MethodSpec(name: "LinkFacebook", service: "loci.custom_auth.CustomAuthService", type: .unary)
         }
     }
 }

@@ -526,6 +526,15 @@ export declare type RecordVisitRequest = Message<"loci.travelhistory.RecordVisit
    * @generated from field: optional google.protobuf.Timestamp visited_at = 8;
    */
   visitedAt?: Timestamp;
+
+  /**
+   * Where the device was when the visit was recorded (an arrival detected on
+   * the spot). A visit earns points only when this fix is recent and close to
+   * the place's own coordinates; without it the visit is recorded, unscored.
+   *
+   * @generated from field: optional loci.travelhistory.DeviceFix device_location = 9;
+   */
+  deviceLocation?: DeviceFix;
 };
 
 /**
@@ -535,6 +544,39 @@ export declare type RecordVisitRequest = Message<"loci.travelhistory.RecordVisit
 export declare const RecordVisitRequestSchema: GenMessage<RecordVisitRequest>;
 
 /**
+ * @generated from message loci.travelhistory.DeviceFix
+ */
+export declare type DeviceFix = Message<"loci.travelhistory.DeviceFix"> & {
+  /**
+   * @generated from field: double latitude = 1;
+   */
+  latitude: number;
+
+  /**
+   * @generated from field: double longitude = 2;
+   */
+  longitude: number;
+
+  /**
+   * Horizontal accuracy in metres as the device reported it.
+   *
+   * @generated from field: double accuracy_m = 3;
+   */
+  accuracyM: number;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp observed_at = 4;
+   */
+  observedAt?: Timestamp;
+};
+
+/**
+ * Describes the message loci.travelhistory.DeviceFix.
+ * Use `create(DeviceFixSchema)` to create a new message.
+ */
+export declare const DeviceFixSchema: GenMessage<DeviceFix>;
+
+/**
  * @generated from message loci.travelhistory.RecordVisitResponse
  */
 export declare type RecordVisitResponse = Message<"loci.travelhistory.RecordVisitResponse"> & {
@@ -542,6 +584,13 @@ export declare type RecordVisitResponse = Message<"loci.travelhistory.RecordVisi
    * @generated from field: loci.travelhistory.VisitedCity city = 1;
    */
   city?: VisitedCity;
+
+  /**
+   * Points the visit earned (place, and a new city); 0 when unscored.
+   *
+   * @generated from field: int32 points_awarded = 2;
+   */
+  pointsAwarded: number;
 };
 
 /**

@@ -606,6 +606,34 @@ export declare type MatchContactsResponse = Message<"loci.social.MatchContactsRe
 export declare const MatchContactsResponseSchema: GenMessage<MatchContactsResponse>;
 
 /**
+ * @generated from message loci.social.MatchFacebookFriendsRequest
+ */
+export declare type MatchFacebookFriendsRequest = Message<"loci.social.MatchFacebookFriendsRequest"> & {
+};
+
+/**
+ * Describes the message loci.social.MatchFacebookFriendsRequest.
+ * Use `create(MatchFacebookFriendsRequestSchema)` to create a new message.
+ */
+export declare const MatchFacebookFriendsRequestSchema: GenMessage<MatchFacebookFriendsRequest>;
+
+/**
+ * @generated from message loci.social.MatchFacebookFriendsResponse
+ */
+export declare type MatchFacebookFriendsResponse = Message<"loci.social.MatchFacebookFriendsResponse"> & {
+  /**
+   * @generated from field: repeated loci.social.UserResult matches = 1;
+   */
+  matches: UserResult[];
+};
+
+/**
+ * Describes the message loci.social.MatchFacebookFriendsResponse.
+ * Use `create(MatchFacebookFriendsResponseSchema)` to create a new message.
+ */
+export declare const MatchFacebookFriendsResponseSchema: GenMessage<MatchFacebookFriendsResponse>;
+
+/**
  * @generated from message loci.social.SearchUsersRequest
  */
 export declare type SearchUsersRequest = Message<"loci.social.SearchUsersRequest"> & {
@@ -941,6 +969,19 @@ export declare const SocialService: GenService<{
     methodKind: "unary";
     input: typeof MatchContactsRequestSchema;
     output: typeof MatchContactsResponseSchema;
+  },
+  /**
+   * MatchFacebookFriends finds Loci users among the caller's Facebook friends.
+   * It reads the friend list Facebook granted at LinkFacebook, so it only
+   * finds friends who also linked Facebook to Loci; it is FailedPrecondition
+   * when the caller has not linked Facebook.
+   *
+   * @generated from rpc loci.social.SocialService.MatchFacebookFriends
+   */
+  matchFacebookFriends: {
+    methodKind: "unary";
+    input: typeof MatchFacebookFriendsRequestSchema;
+    output: typeof MatchFacebookFriendsResponseSchema;
   },
   /**
    * SearchUsers finds users by username prefix.

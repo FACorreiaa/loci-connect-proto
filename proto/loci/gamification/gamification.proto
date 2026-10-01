@@ -1,0 +1,197 @@
+syntax = "proto3";
+
+package loci.gamification;
+
+import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+import "loci/social/social.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/gamification;gamification";
+
+// GamificationService is Loci's points layer: a ledger of things a traveller
+// actually did (checked in, searched, visited a place on the spot, saw a new
+// city, scouted, walked a trip day), the streak and badges it earns, and
+// leaderboards shared only with friends.
+//
+// Points are awarded by the server in the code paths that already record those
+// actions; the client never names a point value. Every award is idempotent, so
+// a retried request cannot count twice. Every RPC needs a session.
+service GamificationService {
+  // GetMyProgress is the caller's total, level, streak, badges and today's
+  // checklist.
+  rpc GetMyProgress(GetMyProgressRequest) returns (GetMyProgressResponse);
+  // DailyCheckIn marks the caller active on their local date. It is idempotent
+  // per local date: the first call of the day awards points and extends the
+  // streak, later calls only return progress.
+  rpc DailyCheckIn(DailyCheckInRequest) returns (DailyCheckInResponse);
+  // GetLeaderboard ranks the caller and their friends. Friends who turned off
+  // leaderboard visibility, and blocked users, are left out. The caller's own
+  // entry is always present.
+  rpc GetLeaderboard(GetLeaderboardRequest) returns (GetLeaderboardResponse);
+  // ListPointsHistory is the caller's ledger, newest first.
+  rpc ListPointsHistory(ListPointsHistoryRequest) returns (ListPointsHistoryResponse);
+  // CompleteTripDay records that the caller walked a day of their own trip.
+  // Completing every day of a trip also completes the trip.
+  rpc CompleteTripDay(CompleteTripDayRequest) returns (CompleteTripDayResponse);
+}
+
+enum PointsKind {
+  POINTS_KIND_UNSPECIFIED = 0;
+  POINTS_KIND_DAILY_CHECK_IN = 1;
+  // The first search or chat turn of a local day.
+  POINTS_KIND_DAILY_SEARCH = 2;
+  // A place visited while the device was there (server checks the distance).
+  POINTS_KIND_PLACE_VISITED = 3;
+  // The first visit recorded in a city.
+  POINTS_KIND_NEW_CITY = 4;
+  // A field report others corroborated.
+  POINTS_KIND_SCOUT_CLAIM = 5;
+  // A submitted place others confirmed.
+  POINTS_KIND_PLACE_SUBMISSION = 6;
+  POINTS_KIND_TRIP_DAY_COMPLETED = 7;
+  POINTS_KIND_TRIP_COMPLETED = 8;
+}
+
+message Badge {
+  string id = 1 [(buf.validate.field).string.max_len = 50];
+  string title = 2 [(buf.validate.field).string.max_len = 100];
+  string description = 3 [(buf.validate.field).string.max_len = 300];
+  // Absent while the badge is still locked.
+  google.protobuf.Timestamp awarded_at = 4;
+}
+
+// TodayChecklist is what still earns points today.
+message TodayChecklist {
+  bool checked_in = 1;
+  bool searched = 2;
+  int32 places_visited = 3 [(buf.validate.field).int32.gte = 0];
+}
+
+message Progress {
+  int64 total_points = 1 [(buf.validate.field).int64.gte = 0];
+  int32 level = 2 [(buf.validate.field).int32.gte = 1];
+  // Points needed to reach the next level from the current total.
+  int64 points_to_next_level = 3 [(buf.validate.field).int64.gte = 0];
+  int32 current_streak = 4 [(buf.validate.field).int32.gte = 0];
+  int32 longest_streak = 5 [(buf.validate.field).int32.gte = 0];
+  // Every badge, earned or not; earned ones carry awarded_at.
+  repeated Badge badges = 6;
+  TodayChecklist today = 7;
+}
+
+message GetMyProgressRequest {}
+
+message GetMyProgressResponse {
+  Progress progress = 1;
+}
+
+message DailyCheckInRequest {
+  // IANA zone of the device ("Europe/Lisbon"), which decides the local date
+  // for streaks and daily caps.
+  string timezone = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 64
+  }];
+}
+
+message DailyCheckInResponse {
+  Progress progress = 1;
+  // Points this call awarded: 0 when the caller already checked in today.
+  int32 points_awarded = 2 [(buf.validate.field).int32.gte = 0];
+  // Badges this call earned.
+  repeated Badge new_badges = 3;
+}
+
+enum LeaderboardPeriod {
+  LEADERBOARD_PERIOD_UNSPECIFIED = 0;
+  // Monday to Sunday in the caller's timezone.
+  LEADERBOARD_PERIOD_WEEK = 1;
+  LEADERBOARD_PERIOD_MONTH = 2;
+  LEADERBOARD_PERIOD_ALL_TIME = 3;
+}
+
+enum LeaderboardMetric {
+  LEADERBOARD_METRIC_UNSPECIFIED = 0;
+  LEADERBOARD_METRIC_POINTS = 1;
+  // Distinct cities first visited in the period.
+  LEADERBOARD_METRIC_CITIES = 2;
+  // Distinct places visited on the spot in the period.
+  LEADERBOARD_METRIC_PLACES = 3;
+}
+
+message GetLeaderboardRequest {
+  LeaderboardPeriod period = 1 [(buf.validate.field).enum = {
+    defined_only: true
+    not_in: [0]
+  }];
+  LeaderboardMetric metric = 2 [(buf.validate.field).enum = {
+    defined_only: true
+    not_in: [0]
+  }];
+}
+
+message LeaderboardEntry {
+  loci.social.PublicUser user = 1;
+  // Equal values share a rank.
+  int32 rank = 2 [(buf.validate.field).int32.gte = 1];
+  int64 value = 3 [(buf.validate.field).int64.gte = 0];
+  int32 level = 4 [(buf.validate.field).int32.gte = 1];
+  int32 current_streak = 5 [(buf.validate.field).int32.gte = 0];
+  bool is_me = 6;
+}
+
+message GetLeaderboardResponse {
+  repeated LeaderboardEntry entries = 1;
+  google.protobuf.Timestamp period_start = 2;
+  google.protobuf.Timestamp period_end = 3;
+}
+
+message PointsEvent {
+  string id = 1 [(buf.validate.field).string.max_len = 100];
+  PointsKind kind = 2;
+  int32 points = 3 [(buf.validate.field).int32.gte = 0];
+  // What it was for, ready to show: "Visited Pantheon", "New city: Rome".
+  string label = 4 [(buf.validate.field).string.max_len = 300];
+  google.protobuf.Timestamp created_at = 5;
+}
+
+message ListPointsHistoryRequest {
+  int32 page_size = 1 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 100
+  }];
+  string page_token = 2 [(buf.validate.field).string.max_len = 200];
+}
+
+message ListPointsHistoryResponse {
+  repeated PointsEvent events = 1;
+  string next_page_token = 2;
+}
+
+message CompleteTripDayRequest {
+  string trip_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string day_id = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  // Stops reached on the day. A day with none does not count.
+  int32 stops_done = 3 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 200
+  }];
+  // IANA zone of the device, as in DailyCheckInRequest.
+  string timezone = 4 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 64
+  }];
+}
+
+message CompleteTripDayResponse {
+  Progress progress = 1;
+  int32 points_awarded = 2 [(buf.validate.field).int32.gte = 0];
+  bool trip_completed = 3;
+  repeated Badge new_badges = 4;
+}
