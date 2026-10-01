@@ -8230,6 +8230,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.travelhistory.RecordVisitResponse'
+  /loci.trip.TripService/AddFlight:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: AddFlight
+      operationId: loci.trip.TripService.AddFlight
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.AddFlightRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.TripDraft'
   /loci.trip.TripService/AddStop:
     post:
       tags:
@@ -8251,6 +8286,76 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/loci.trip.AddStopRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.TripDraft'
+  /loci.trip.TripService/BuildFlightLinks:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: BuildFlightLinks
+      operationId: loci.trip.TripService.BuildFlightLinks
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.BuildFlightLinksRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.BuildFlightLinksResponse'
+  /loci.trip.TripService/ClearStay:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: ClearStay
+      operationId: loci.trip.TripService.ClearStay
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.ClearStayRequest'
         required: true
       responses:
         default:
@@ -8705,6 +8810,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.trip.ListTripsResponse'
+  /loci.trip.TripService/RemoveFlight:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: RemoveFlight
+      operationId: loci.trip.TripService.RemoveFlight
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.RemoveFlightRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.TripDraft'
   /loci.trip.TripService/RemoveStop:
     post:
       tags:
@@ -8901,6 +9041,79 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/loci.trip.SetConstraintRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.TripDraft'
+  /loci.trip.TripService/SetStay:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: SetStay
+      operationId: loci.trip.TripService.SetStay
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.SetStayRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.TripDraft'
+  /loci.trip.TripService/SetTripDates:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: SetTripDates
+      description: |-
+        The trip's plan. Each takes base_version and answers FailedPrecondition
+         when it is stale, like the stop edits above.
+      operationId: loci.trip.TripService.SetTripDates
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.SetTripDatesRequest'
         required: true
       responses:
         default:
@@ -26678,6 +26891,28 @@ components:
       description: |-
         VisitedPOI is a single confirmed stop. Kept per-visit (not rolled up) so the
          city totals can be RECOMPUTED from evidence rather than trusted.
+    loci.trip.AddFlightRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+        flight:
+          title: flight
+          $ref: '#/components/schemas/loci.trip.TripFlight'
+        baseVersion:
+          type:
+            - integer
+            - string
+          title: base_version
+          minimum: 0
+          format: int64
+      title: AddFlightRequest
+      required:
+        - flight
+      additionalProperties: false
     loci.trip.AddStopRequest:
       type: object
       properties:
@@ -26704,6 +26939,53 @@ components:
       title: AddStopRequest
       required:
         - stop
+      additionalProperties: false
+    loci.trip.BuildFlightLinksRequest:
+      type: object
+      properties:
+        origin:
+          title: origin
+          $ref: '#/components/schemas/loci.trip.FlightPlace'
+        destination:
+          title: destination
+          $ref: '#/components/schemas/loci.trip.FlightPlace'
+        departDate:
+          type: string
+          title: depart_date
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}$
+        returnDate:
+          type:
+            - string
+            - "null"
+          title: return_date
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}$
+        passengers:
+          type: integer
+          title: passengers
+          maximum: 9
+          minimum: 1
+          format: int32
+        cabin:
+          title: cabin
+          $ref: '#/components/schemas/loci.trip.FlightCabin'
+      title: BuildFlightLinksRequest
+      required:
+        - origin
+        - destination
+      additionalProperties: false
+      description: |
+        BuildFlightLinksRequest is the manual flight form's search: no trip, no
+         write, just the links the server would attach on AddFlight.
+        build_flight_links.return_after_depart // return_date must not be before depart_date
+    loci.trip.BuildFlightLinksResponse:
+      type: object
+      properties:
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.trip.FlightLink'
+          title: links
+      title: BuildFlightLinksResponse
       additionalProperties: false
     loci.trip.ChecklistItem:
       type: object
@@ -26763,6 +27045,28 @@ components:
         - CHECKLIST_ITEM_KIND_PACKING
         - CHECKLIST_ITEM_KIND_EXPENSE
       description: ChecklistItemKind says which list an item belongs to.
+    loci.trip.ClearStayRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+        cityName:
+          type: string
+          title: city_name
+          maxLength: 200
+          minLength: 1
+        baseVersion:
+          type:
+            - integer
+            - string
+          title: base_version
+          minimum: 0
+          format: int64
+      title: ClearStayRequest
+      additionalProperties: false
     loci.trip.CopyTripRequest:
       type: object
       oneOf:
@@ -26913,6 +27217,51 @@ components:
           minLength: 1
       title: ExportTripResponse
       additionalProperties: false
+    loci.trip.FlightCabin:
+      type: string
+      title: FlightCabin
+      enum:
+        - FLIGHT_CABIN_UNSPECIFIED
+        - FLIGHT_CABIN_ECONOMY
+        - FLIGHT_CABIN_PREMIUM_ECONOMY
+        - FLIGHT_CABIN_BUSINESS
+        - FLIGHT_CABIN_FIRST
+    loci.trip.FlightLink:
+      type: object
+      properties:
+        provider:
+          type: string
+          title: provider
+        label:
+          type: string
+          title: label
+        url:
+          type: string
+          title: url
+      title: FlightLink
+      additionalProperties: false
+      description: |-
+        FlightLink is a prefilled search on a site that sells the ticket. The server
+         builds these; any a client sends are ignored.
+    loci.trip.FlightPlace:
+      type: object
+      properties:
+        name:
+          type: string
+          title: name
+          maxLength: 200
+          minLength: 1
+        iata:
+          type:
+            - string
+            - "null"
+          title: iata
+          pattern: ^[A-Z]{3}$
+      title: FlightPlace
+      additionalProperties: false
+      description: |-
+        FlightPlace is one end of a flight. iata is optional: Google Flights takes a
+         city name, and Skyscanner links are only built when both ends have one.
     loci.trip.GetFriendTripRequest:
       type: object
       properties:
@@ -27056,6 +27405,28 @@ components:
         PackingSuggestion is one suggested item, with the reason this trip earned it.
          The reason is not decoration: a suggestion the user cannot evaluate is noise,
          and they need enough to disagree with it.
+    loci.trip.RemoveFlightRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+        flightId:
+          type: string
+          title: flight_id
+          maxLength: 100
+          minLength: 1
+        baseVersion:
+          type:
+            - integer
+            - string
+          title: base_version
+          minimum: 0
+          format: int64
+      title: RemoveFlightRequest
+      additionalProperties: false
     loci.trip.RemoveStopRequest:
       type: object
       properties:
@@ -27207,6 +27578,58 @@ components:
       required:
         - constraints
       additionalProperties: false
+    loci.trip.SetStayRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+        stay:
+          title: stay
+          $ref: '#/components/schemas/loci.trip.TripStay'
+        baseVersion:
+          type:
+            - integer
+            - string
+          title: base_version
+          minimum: 0
+          format: int64
+      title: SetStayRequest
+      required:
+        - stay
+      additionalProperties: false
+    loci.trip.SetTripDatesRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+        startDate:
+          type: string
+          title: start_date
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}$
+        endDate:
+          type: string
+          title: end_date
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}$
+        baseVersion:
+          type:
+            - integer
+            - string
+          title: base_version
+          minimum: 0
+          format: int64
+      title: SetTripDatesRequest
+      additionalProperties: false
+      description: |
+        SetTripDatesRequest dates the trip and stamps each day: day N falls on
+         start_date + N - 1. Days are never added or removed; when the day count and
+         the span differ, the client offers to re-plan.
+        set_trip_dates.end_after_start // end_date must not be before start_date
     loci.trip.SetTripVisibilityRequest:
       type: object
       properties:
@@ -27562,12 +27985,111 @@ components:
           title: copied_from_trip_id
           maxLength: 100
           description: The trip this one was copied from with CopyTrip, if any.
+        startDate:
+          type:
+            - string
+            - "null"
+          title: start_date
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}$
+          description: |-
+            The trip's plan: dates, where it sleeps and its flights. SaveTrip neither
+             reads nor writes these; SetTripDates, SetStay/ClearStay and
+             AddFlight/RemoveFlight own them, so a client that predates them cannot
+             wipe them by saving.
+        endDate:
+          type:
+            - string
+            - "null"
+          title: end_date
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}$
+        stays:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.trip.TripStay'
+          title: stays
+        flights:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.trip.TripFlight'
+          title: flights
       title: TripDraft
       additionalProperties: false
       description: |-
         TripDraft is the full editable trip. `version` powers optimistic concurrency /
          merge-safe multi-device edits: SaveTrip rejects a write whose base version is
          stale.
+    loci.trip.TripFlight:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          maxLength: 100
+          description: Assigned by the server on AddFlight.
+        origin:
+          title: origin
+          $ref: '#/components/schemas/loci.trip.FlightPlace'
+        destination:
+          title: destination
+          $ref: '#/components/schemas/loci.trip.FlightPlace'
+        departDate:
+          type: string
+          title: depart_date
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}$
+        returnDate:
+          type:
+            - string
+            - "null"
+          title: return_date
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}$
+        passengers:
+          type: integer
+          title: passengers
+          maximum: 9
+          minimum: 1
+          format: int32
+        cabin:
+          title: cabin
+          $ref: '#/components/schemas/loci.trip.FlightCabin'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.trip.FlightLink'
+          title: links
+          description: Server-built; ignored on the way in.
+        carrier:
+          type:
+            - string
+            - "null"
+          title: carrier
+          maxLength: 100
+        flightNo:
+          type:
+            - string
+            - "null"
+          title: flight_no
+          maxLength: 20
+        priceText:
+          type:
+            - string
+            - "null"
+          title: price_text
+          maxLength: 50
+        notes:
+          type:
+            - string
+            - "null"
+          title: notes
+          maxLength: 1000
+      title: TripFlight
+      required:
+        - origin
+        - destination
+      additionalProperties: false
+      description: |
+        TripFlight is a flight the traveller chose. Loci never quotes a fare:
+         price_text is whatever the traveller typed, shown back to them as-is.
+        trip_flight.return_after_depart // return_date must not be before depart_date
     loci.trip.TripLeg:
       type: object
       properties:
@@ -27684,6 +28206,54 @@ components:
       description: |-
         TripSnapshot is an immutable point-in-time copy of a trip, written on each
          save so a device can reconcile against a known base version.
+    loci.trip.TripStay:
+      type: object
+      properties:
+        cityName:
+          type: string
+          title: city_name
+          maxLength: 200
+          minLength: 1
+        poiId:
+          type: string
+          title: poi_id
+          maxLength: 100
+        name:
+          type: string
+          title: name
+          maxLength: 300
+          minLength: 1
+        starRating:
+          type: string
+          title: star_rating
+          maxLength: 10
+        checkIn:
+          type:
+            - string
+            - "null"
+          title: check_in
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}$
+        checkOut:
+          type:
+            - string
+            - "null"
+          title: check_out
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}$
+        bookingUrl:
+          type:
+            - string
+            - "null"
+          title: booking_url
+          maxLength: 2000
+          description: |
+            Shown to friends only when the trip shares details, like a stop's link.
+            string.prefix = "https://"
+      title: TripStay
+      additionalProperties: false
+      description: |-
+        TripStay is where the traveller sleeps in one city of the trip. Stays are
+         keyed by city name, not hung on TripCity, because a single-city trip keeps
+         its city on the draft and has no cities entries to hang one on.
     loci.trip.TripStop:
       type: object
       properties:
