@@ -2079,6 +2079,45 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.calendar.StartCalendarConnectResponse'
+  /loci.chat.ChatService/ApplyTripAction:
+    post:
+      tags:
+        - loci.chat.ChatService
+      summary: ApplyTripAction
+      description: |-
+        Applies a proposal the agent streamed (action_proposal) to its trip.
+         FailedPrecondition when it was already applied or dismissed, has
+         expired, or base_version is stale.
+      operationId: loci.chat.ChatService.ApplyTripAction
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.chat.ApplyTripActionRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.chat.ApplyTripActionResponse'
   /loci.chat.ChatService/BookmarkItinerary:
     post:
       tags:
@@ -2185,6 +2224,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.chat.ChatResponse'
+  /loci.chat.ChatService/DismissTripAction:
+    post:
+      tags:
+        - loci.chat.ChatService
+      summary: DismissTripAction
+      operationId: loci.chat.ChatService.DismissTripAction
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.chat.DismissTripActionRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.chat.DismissTripActionResponse'
   /loci.chat.ChatService/EndSession:
     post:
       tags:
@@ -12898,6 +12972,70 @@ components:
       title: AIItineraryResponse
       additionalProperties: false
       description: AIItineraryResponse represents an AI-generated itinerary response
+    loci.chat.ActionOption:
+      type: object
+      allOf:
+        - properties:
+            label:
+              type: string
+              title: label
+            detail:
+              type: string
+              title: detail
+        - oneOf:
+            - properties:
+                flight:
+                  title: flight
+                  $ref: '#/components/schemas/loci.trip.TripFlight'
+              title: flight
+              required:
+                - flight
+            - properties:
+                stay:
+                  title: stay
+                  $ref: '#/components/schemas/loci.trip.TripStay'
+              title: stay
+              required:
+                - stay
+      title: ActionOption
+      additionalProperties: false
+      description: |-
+        ActionOption is one choice of a pick-one action: a hotel to stay at, or the
+         flight search to save. Write actions (dates, re-plan) have none.
+    loci.chat.ActionProposal:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+        tripId:
+          type: string
+          title: trip_id
+        action:
+          title: action
+          $ref: '#/components/schemas/loci.chat.TripAction'
+        summary:
+          type: string
+          title: summary
+          description: 'One line the card shows, e.g. "4★ hotels in Lisbon: pick one to stay at".'
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.chat.ActionOption'
+          title: options
+        expiresAt:
+          title: expires_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: ActionProposal
+      additionalProperties: false
+    loci.chat.ActionProposalPayload:
+      type: object
+      properties:
+        proposal:
+          title: proposal
+          $ref: '#/components/schemas/loci.chat.ActionProposal'
+      title: ActionProposalPayload
+      additionalProperties: false
     loci.chat.ActivitiesPayload:
       type: object
       properties:
@@ -12972,6 +13110,43 @@ components:
         - generalCityData
       additionalProperties: false
       description: AiCityResponse represents a complete AI city response
+    loci.chat.ApplyTripActionRequest:
+      type: object
+      properties:
+        proposalId:
+          type: string
+          title: proposal_id
+          format: uuid
+        optionIndex:
+          type:
+            - integer
+            - "null"
+          title: option_index
+          minimum: 0
+          format: int32
+          description: Required for actions with options; ignored otherwise.
+        baseVersion:
+          type:
+            - integer
+            - string
+          title: base_version
+          minimum: 0
+          format: int64
+          description: The trip version the card was shown against.
+      title: ApplyTripActionRequest
+      additionalProperties: false
+    loci.chat.ApplyTripActionResponse:
+      type: object
+      properties:
+        trip:
+          title: trip
+          $ref: '#/components/schemas/loci.trip.TripDraft'
+        confirmation:
+          title: confirmation
+          description: Posted into the chat thread when the proposal came from one.
+          $ref: '#/components/schemas/loci.chat.ConversationMessage'
+      title: ApplyTripActionResponse
+      additionalProperties: false
     loci.chat.BookmarkRequest:
       type: object
       properties:
@@ -13438,6 +13613,19 @@ components:
     loci.chat.DeleteWatchResponse:
       type: object
       title: DeleteWatchResponse
+      additionalProperties: false
+    loci.chat.DismissTripActionRequest:
+      type: object
+      properties:
+        proposalId:
+          type: string
+          title: proposal_id
+          format: uuid
+      title: DismissTripActionRequest
+      additionalProperties: false
+    loci.chat.DismissTripActionResponse:
+      type: object
+      title: DismissTripActionResponse
       additionalProperties: false
     loci.chat.DomainType:
       type: string
@@ -14089,6 +14277,18 @@ components:
         - createdAt
       additionalProperties: false
       description: RecentInteraction represents a recent user interaction
+    loci.chat.RegenerateDaysAction:
+      type: object
+      properties:
+        days:
+          type: integer
+          title: days
+          format: int32
+      title: RegenerateDaysAction
+      additionalProperties: false
+      description: |-
+        Re-plans the trip's itinerary as this many days, keeping its dates, stays
+         and flights.
     loci.chat.RestaurantsPayload:
       type: object
       properties:
@@ -14193,6 +14393,49 @@ components:
       description: |-
         RunStatus is where one generation is. A run that has been RUNNING for more
          than 10 minutes is reported as FAILED (deadline_exceeded).
+    loci.chat.SearchFlightsAction:
+      type: object
+      properties:
+        origin:
+          title: origin
+          $ref: '#/components/schemas/loci.trip.FlightPlace'
+        destination:
+          title: destination
+          $ref: '#/components/schemas/loci.trip.FlightPlace'
+        departDate:
+          type: string
+          title: depart_date
+        returnDate:
+          type:
+            - string
+            - "null"
+          title: return_date
+        passengers:
+          type: integer
+          title: passengers
+          format: int32
+        cabin:
+          title: cabin
+          $ref: '#/components/schemas/loci.trip.FlightCabin'
+      title: SearchFlightsAction
+      additionalProperties: false
+    loci.chat.SearchHotelsAction:
+      type: object
+      properties:
+        cityName:
+          type: string
+          title: city_name
+        minStars:
+          type: integer
+          title: min_stars
+          format: int32
+        maxStars:
+          type: integer
+          title: max_stars
+          format: int32
+      title: SearchHotelsAction
+      additionalProperties: false
+      description: 0..0 means any star rating; 4..4 means exactly four.
     loci.chat.SessionContentMetrics:
       type: object
       properties:
@@ -14390,6 +14633,17 @@ components:
         - SESSION_STATUS_ACTIVE
         - SESSION_STATUS_EXPIRED
         - SESSION_STATUS_CLOSED
+    loci.chat.SetDatesAction:
+      type: object
+      properties:
+        startDate:
+          type: string
+          title: start_date
+        endDate:
+          type: string
+          title: end_date
+      title: SetDatesAction
+      additionalProperties: false
     loci.chat.StartChatRequest:
       type: object
       properties:
@@ -14552,6 +14806,13 @@ components:
                  belongs to. An ERROR carrying it failed that city only, not the stream.
         - oneOf:
             - properties:
+                actionProposal:
+                  title: action_proposal
+                  $ref: '#/components/schemas/loci.chat.ActionProposalPayload'
+              title: action_proposal
+              required:
+                - actionProposal
+            - properties:
                 activities:
                   title: activities
                   $ref: '#/components/schemas/loci.chat.ActivitiesPayload'
@@ -14676,6 +14937,7 @@ components:
         - STREAM_EVENT_TYPE_COMPLETE
         - STREAM_EVENT_TYPE_ROUTE
         - STREAM_EVENT_TYPE_GASTRONOMY
+        - STREAM_EVENT_TYPE_ACTION_PROPOSAL
       description: |-
         StreamEventType is the typed discriminator for a StreamEvent. It replaces the
          old free-form string `type` field. The concrete payload (when present) is
@@ -14700,6 +14962,44 @@ components:
         TokenPayload carries an incremental text token (STREAM_EVENT_TYPE_TOKEN) or an
          accumulated partial snapshot (STREAM_EVENT_TYPE_PARTIAL). `part` indexes the
          producing worker so consumers can accumulate per-part.
+    loci.chat.TripAction:
+      type: object
+      oneOf:
+        - properties:
+            regenerateDays:
+              title: regenerate_days
+              $ref: '#/components/schemas/loci.chat.RegenerateDaysAction'
+          title: regenerate_days
+          required:
+            - regenerateDays
+        - properties:
+            searchFlights:
+              title: search_flights
+              $ref: '#/components/schemas/loci.chat.SearchFlightsAction'
+          title: search_flights
+          required:
+            - searchFlights
+        - properties:
+            searchHotels:
+              title: search_hotels
+              $ref: '#/components/schemas/loci.chat.SearchHotelsAction'
+          title: search_hotels
+          required:
+            - searchHotels
+        - properties:
+            setDates:
+              title: set_dates
+              $ref: '#/components/schemas/loci.chat.SetDatesAction'
+          title: set_dates
+          required:
+            - setDates
+      title: TripAction
+      additionalProperties: false
+      description: |-
+        Trip actions: the agent proposes, the traveller confirms. On a chat turn
+         bound to a trip, the server turns the message into ActionProposals (stored
+         server-side, one per change) and streams each as action_proposal. Nothing
+         changes until ApplyTripAction; DismissTripAction drops one.
     loci.chat.TripStopInput:
       type: object
       properties:
