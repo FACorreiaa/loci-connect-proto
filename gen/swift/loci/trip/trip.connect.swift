@@ -80,6 +80,26 @@ public protocol Loci_Trip_TripServiceClientInterface: Sendable {
     @available(iOS 13, *)
     func `replaceStop`(request: Loci_Trip_ReplaceStopRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripDraft>
 
+    /// The trip's plan. Each takes base_version and answers FailedPrecondition
+    /// when it is stale, like the stop edits above.
+    @available(iOS 13, *)
+    func `setTripDates`(request: Loci_Trip_SetTripDatesRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripDraft>
+
+    @available(iOS 13, *)
+    func `setStay`(request: Loci_Trip_SetStayRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripDraft>
+
+    @available(iOS 13, *)
+    func `clearStay`(request: Loci_Trip_ClearStayRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripDraft>
+
+    @available(iOS 13, *)
+    func `addFlight`(request: Loci_Trip_AddFlightRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripDraft>
+
+    @available(iOS 13, *)
+    func `removeFlight`(request: Loci_Trip_RemoveFlightRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripDraft>
+
+    @available(iOS 13, *)
+    func `buildFlightLinks`(request: Loci_Trip_BuildFlightLinksRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_BuildFlightLinksResponse>
+
     @available(iOS 13, *)
     func `exportTrip`(request: Loci_Trip_ExportTripRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_ExportTripResponse>
 
@@ -201,6 +221,36 @@ public final class Loci_Trip_TripServiceClient: Loci_Trip_TripServiceClientInter
     }
 
     @available(iOS 13, *)
+    public func `setTripDates`(request: Loci_Trip_SetTripDatesRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_TripDraft> {
+        return await self.client.unary(path: "/loci.trip.TripService/SetTripDates", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `setStay`(request: Loci_Trip_SetStayRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_TripDraft> {
+        return await self.client.unary(path: "/loci.trip.TripService/SetStay", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `clearStay`(request: Loci_Trip_ClearStayRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_TripDraft> {
+        return await self.client.unary(path: "/loci.trip.TripService/ClearStay", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `addFlight`(request: Loci_Trip_AddFlightRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_TripDraft> {
+        return await self.client.unary(path: "/loci.trip.TripService/AddFlight", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `removeFlight`(request: Loci_Trip_RemoveFlightRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_TripDraft> {
+        return await self.client.unary(path: "/loci.trip.TripService/RemoveFlight", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `buildFlightLinks`(request: Loci_Trip_BuildFlightLinksRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_BuildFlightLinksResponse> {
+        return await self.client.unary(path: "/loci.trip.TripService/BuildFlightLinks", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
     public func `exportTrip`(request: Loci_Trip_ExportTripRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_ExportTripResponse> {
         return await self.client.unary(path: "/loci.trip.TripService/ExportTrip", idempotencyLevel: .unknown, request: request, headers: headers)
     }
@@ -249,6 +299,12 @@ public final class Loci_Trip_TripServiceClient: Loci_Trip_TripServiceClientInter
             public static let addStop = Connect.MethodSpec(name: "AddStop", service: "loci.trip.TripService", type: .unary)
             public static let removeStop = Connect.MethodSpec(name: "RemoveStop", service: "loci.trip.TripService", type: .unary)
             public static let replaceStop = Connect.MethodSpec(name: "ReplaceStop", service: "loci.trip.TripService", type: .unary)
+            public static let setTripDates = Connect.MethodSpec(name: "SetTripDates", service: "loci.trip.TripService", type: .unary)
+            public static let setStay = Connect.MethodSpec(name: "SetStay", service: "loci.trip.TripService", type: .unary)
+            public static let clearStay = Connect.MethodSpec(name: "ClearStay", service: "loci.trip.TripService", type: .unary)
+            public static let addFlight = Connect.MethodSpec(name: "AddFlight", service: "loci.trip.TripService", type: .unary)
+            public static let removeFlight = Connect.MethodSpec(name: "RemoveFlight", service: "loci.trip.TripService", type: .unary)
+            public static let buildFlightLinks = Connect.MethodSpec(name: "BuildFlightLinks", service: "loci.trip.TripService", type: .unary)
             public static let exportTrip = Connect.MethodSpec(name: "ExportTrip", service: "loci.trip.TripService", type: .unary)
             public static let suggestPacking = Connect.MethodSpec(name: "SuggestPacking", service: "loci.trip.TripService", type: .unary)
             public static let getTripChecklist = Connect.MethodSpec(name: "GetTripChecklist", service: "loci.trip.TripService", type: .unary)

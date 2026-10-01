@@ -974,11 +974,27 @@
             <ul>
               
                 <li>
+                  <a href="#loci.trip.AddFlightRequest"><span class="badge">M</span>AddFlightRequest</a>
+                </li>
+              
+                <li>
                   <a href="#loci.trip.AddStopRequest"><span class="badge">M</span>AddStopRequest</a>
                 </li>
               
                 <li>
+                  <a href="#loci.trip.BuildFlightLinksRequest"><span class="badge">M</span>BuildFlightLinksRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.BuildFlightLinksResponse"><span class="badge">M</span>BuildFlightLinksResponse</a>
+                </li>
+              
+                <li>
                   <a href="#loci.trip.ChecklistItem"><span class="badge">M</span>ChecklistItem</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.ClearStayRequest"><span class="badge">M</span>ClearStayRequest</a>
                 </li>
               
                 <li>
@@ -1015,6 +1031,14 @@
               
                 <li>
                   <a href="#loci.trip.ExportTripResponse"><span class="badge">M</span>ExportTripResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.FlightLink"><span class="badge">M</span>FlightLink</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.FlightPlace"><span class="badge">M</span>FlightPlace</a>
                 </li>
               
                 <li>
@@ -1058,6 +1082,10 @@
                 </li>
               
                 <li>
+                  <a href="#loci.trip.RemoveFlightRequest"><span class="badge">M</span>RemoveFlightRequest</a>
+                </li>
+              
+                <li>
                   <a href="#loci.trip.RemoveStopRequest"><span class="badge">M</span>RemoveStopRequest</a>
                 </li>
               
@@ -1079,6 +1107,14 @@
               
                 <li>
                   <a href="#loci.trip.SetConstraintRequest"><span class="badge">M</span>SetConstraintRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.SetStayRequest"><span class="badge">M</span>SetStayRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.SetTripDatesRequest"><span class="badge">M</span>SetTripDatesRequest</a>
                 </li>
               
                 <li>
@@ -1122,11 +1158,19 @@
                 </li>
               
                 <li>
+                  <a href="#loci.trip.TripFlight"><span class="badge">M</span>TripFlight</a>
+                </li>
+              
+                <li>
                   <a href="#loci.trip.TripLeg"><span class="badge">M</span>TripLeg</a>
                 </li>
               
                 <li>
                   <a href="#loci.trip.TripSnapshot"><span class="badge">M</span>TripSnapshot</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.TripStay"><span class="badge">M</span>TripStay</a>
                 </li>
               
                 <li>
@@ -1144,6 +1188,10 @@
               
                 <li>
                   <a href="#loci.trip.ExportFormat"><span class="badge">E</span>ExportFormat</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.FlightCabin"><span class="badge">E</span>FlightCabin</a>
                 </li>
               
                 <li>
@@ -10729,6 +10777,44 @@ blocked the caller is NotFound.</p></td>
       <p></p>
 
       
+        <h3 id="loci.trip.AddFlightRequest">AddFlightRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>flight</td>
+                  <td><a href="#loci.trip.TripFlight">TripFlight</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base_version</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.trip.AddStopRequest">AddStopRequest</h3>
         <p></p>
 
@@ -10764,6 +10850,89 @@ blocked the caller is NotFound.</p></td>
                   <td>base_version</td>
                   <td><a href="#int64">int64</a></td>
                   <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.BuildFlightLinksRequest">BuildFlightLinksRequest</h3>
+        <p>BuildFlightLinksRequest is the manual flight form's search: no trip, no</p><p>write, just the links the server would attach on AddFlight.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>origin</td>
+                  <td><a href="#loci.trip.FlightPlace">FlightPlace</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>destination</td>
+                  <td><a href="#loci.trip.FlightPlace">FlightPlace</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>depart_date</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>return_date</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>passengers</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>cabin</td>
+                  <td><a href="#loci.trip.FlightCabin">FlightCabin</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.BuildFlightLinksResponse">BuildFlightLinksResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>links</td>
+                  <td><a href="#loci.trip.FlightLink">FlightLink</a></td>
+                  <td>repeated</td>
                   <td><p> </p></td>
                 </tr>
               
@@ -10839,6 +11008,44 @@ items; clients default expenses to the trip&#39;s or the user&#39;s currency. </
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
                   <td><p>Server-set on every write; ignored on input. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.ClearStayRequest">ClearStayRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base_version</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p> </p></td>
                 </tr>
               
             </tbody>
@@ -11090,6 +11297,75 @@ items; clients default expenses to the trip&#39;s or the user&#39;s currency. </
                   <td>filename</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.FlightLink">FlightLink</h3>
+        <p>FlightLink is a prefilled search on a site that sells the ticket. The server</p><p>builds these; any a client sends are ignored.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>provider</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>label</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.FlightPlace">FlightPlace</h3>
+        <p>FlightPlace is one end of a flight. iata is optional: Google Flights takes a</p><p>city name, and Skyscanner links are only built when both ends have one.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>iata</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
                   <td><p> </p></td>
                 </tr>
               
@@ -11383,6 +11659,44 @@ can hide them from SuggestPacking&#39;s output. </p></td>
 
         
       
+        <h3 id="loci.trip.RemoveFlightRequest">RemoveFlightRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>flight_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base_version</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.trip.RemoveStopRequest">RemoveStopRequest</h3>
         <p></p>
 
@@ -11608,6 +11922,89 @@ write with FailedPrecondition if the stored version has moved past it. </p></td>
                 <tr>
                   <td>constraints</td>
                   <td><a href="#loci.trip.TripConstraint">TripConstraint</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base_version</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.SetStayRequest">SetStayRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>stay</td>
+                  <td><a href="#loci.trip.TripStay">TripStay</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base_version</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.SetTripDatesRequest">SetTripDatesRequest</h3>
+        <p>SetTripDatesRequest dates the trip and stamps each day: day N falls on</p><p>start_date + N - 1. Days are never added or removed; when the day count and</p><p>the span differ, the client offers to re-plan.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>start_date</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>end_date</td>
+                  <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -12159,6 +12556,138 @@ SaveTrip ignores it. </p></td>
                   <td><p>The trip this one was copied from with CopyTrip, if any. </p></td>
                 </tr>
               
+                <tr>
+                  <td>start_date</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>The trip&#39;s plan: dates, where it sleeps and its flights. SaveTrip neither
+reads nor writes these; SetTripDates, SetStay/ClearStay and
+AddFlight/RemoveFlight own them, so a client that predates them cannot
+wipe them by saving. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>end_date</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>stays</td>
+                  <td><a href="#loci.trip.TripStay">TripStay</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>flights</td>
+                  <td><a href="#loci.trip.TripFlight">TripFlight</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.TripFlight">TripFlight</h3>
+        <p>TripFlight is a flight the traveller chose. Loci never quotes a fare:</p><p>price_text is whatever the traveller typed, shown back to them as-is.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Assigned by the server on AddFlight. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>origin</td>
+                  <td><a href="#loci.trip.FlightPlace">FlightPlace</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>destination</td>
+                  <td><a href="#loci.trip.FlightPlace">FlightPlace</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>depart_date</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>return_date</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>passengers</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>cabin</td>
+                  <td><a href="#loci.trip.FlightCabin">FlightCabin</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>links</td>
+                  <td><a href="#loci.trip.FlightLink">FlightLink</a></td>
+                  <td>repeated</td>
+                  <td><p>Server-built; ignored on the way in. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>carrier</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>flight_no</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>price_text</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>notes</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -12310,6 +12839,72 @@ SaveTrip ignores it. </p></td>
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
                   <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.TripStay">TripStay</h3>
+        <p>TripStay is where the traveller sleeps in one city of the trip. Stays are</p><p>keyed by city name, not hung on TripCity, because a single-city trip keeps</p><p>its city on the draft and has no cities entries to hang one on.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>poi_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>star_rating</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>check_in</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>check_out</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>booking_url</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>Shown to friends only when the trip shares details, like a stop&#39;s link. </p></td>
                 </tr>
               
             </tbody>
@@ -12510,6 +13105,47 @@ stops (BundleDay.stops). </p></td>
                 <td>EXPORT_FORMAT_MARKDOWN</td>
                 <td>3</td>
                 <td><p>Premium — full itinerary as Markdown</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="loci.trip.FlightCabin">FlightCabin</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>FLIGHT_CABIN_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>FLIGHT_CABIN_ECONOMY</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>FLIGHT_CABIN_PREMIUM_ECONOMY</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>FLIGHT_CABIN_BUSINESS</td>
+                <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>FLIGHT_CABIN_FIRST</td>
+                <td>4</td>
+                <td><p></p></td>
               </tr>
             
           </tbody>
@@ -12787,6 +13423,49 @@ not touch the copy.</p></td>
                 <td>ReplaceStop</td>
                 <td><a href="#loci.trip.ReplaceStopRequest">ReplaceStopRequest</a></td>
                 <td><a href="#loci.trip.TripDraft">TripDraft</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>SetTripDates</td>
+                <td><a href="#loci.trip.SetTripDatesRequest">SetTripDatesRequest</a></td>
+                <td><a href="#loci.trip.TripDraft">TripDraft</a></td>
+                <td><p>The trip&#39;s plan. Each takes base_version and answers FailedPrecondition
+when it is stale, like the stop edits above.</p></td>
+              </tr>
+            
+              <tr>
+                <td>SetStay</td>
+                <td><a href="#loci.trip.SetStayRequest">SetStayRequest</a></td>
+                <td><a href="#loci.trip.TripDraft">TripDraft</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ClearStay</td>
+                <td><a href="#loci.trip.ClearStayRequest">ClearStayRequest</a></td>
+                <td><a href="#loci.trip.TripDraft">TripDraft</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>AddFlight</td>
+                <td><a href="#loci.trip.AddFlightRequest">AddFlightRequest</a></td>
+                <td><a href="#loci.trip.TripDraft">TripDraft</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>RemoveFlight</td>
+                <td><a href="#loci.trip.RemoveFlightRequest">RemoveFlightRequest</a></td>
+                <td><a href="#loci.trip.TripDraft">TripDraft</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BuildFlightLinks</td>
+                <td><a href="#loci.trip.BuildFlightLinksRequest">BuildFlightLinksRequest</a></td>
+                <td><a href="#loci.trip.BuildFlightLinksResponse">BuildFlightLinksResponse</a></td>
                 <td><p></p></td>
               </tr>
             
