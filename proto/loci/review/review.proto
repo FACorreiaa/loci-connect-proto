@@ -47,6 +47,16 @@ service ReviewService {
 
   // Get the most recent reviews across all content (global feed)
   rpc GetRecentReviews(GetRecentReviewsRequest) returns (GetRecentReviewsResponse);
+
+  // Admin only: reviews with open reports (reports made since the review was
+  // last moderated), most-reported first, with their report counts and
+  // reasons. PermissionDenied for everyone but admins.
+  rpc ListReportedReviews(ListReportedReviewsRequest) returns (ListReportedReviewsResponse);
+
+  // Admin only: settle a review's open reports. KEEP closes them and leaves
+  // the review public (later reports open a new round); REMOVE takes the
+  // review out of every public read for good. The author still sees it.
+  rpc ResolveReviewReport(ResolveReviewReportRequest) returns (ResolveReviewReportResponse);
 }
 
 // Core review entity
@@ -126,6 +136,12 @@ message Review {
   // false for anonymous reads. Lets a client render the vote toggle's state
   // instead of guessing, so un-voting sends is_like = false.
   bool voted_by_me = 22;
+
+  // True when the review is out of public reads: three or more people
+  // reported it, or a moderator removed it. Only its author (and admins) are
+  // ever sent a hidden review, so a client can label it rather than present
+  // it as live.
+  bool hidden = 23;
 }
 
 // Type of content being reviewed
@@ -711,4 +727,61 @@ message GetReviewStatisticsRequest {
 
 message GetReviewStatisticsResponse {
   ReviewStatistics statistics = 1;
+}
+
+// What a moderator decides about a reported review.
+enum ReviewModerationAction {
+  REVIEW_MODERATION_ACTION_UNSPECIFIED = 0;
+  // The review stays public; its open reports are closed.
+  REVIEW_MODERATION_ACTION_KEEP = 1;
+  // The review leaves every public read. Its author still sees it.
+  REVIEW_MODERATION_ACTION_REMOVE = 2;
+}
+
+message ListReportedReviewsRequest {
+  // Page size; 0 means the server default (20).
+  int32 limit = 1 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 100
+  }];
+  // 1-based; 0 means the first page.
+  int32 page = 2 [(buf.validate.field).int32 = {gte: 0}];
+}
+
+// How many open reports gave one reason.
+message ReviewReportReasonCount {
+  string reason = 1;
+  int32 count = 2;
+}
+
+message ReportedReview {
+  Review review = 1;
+  // Distinct people with an open report on the review.
+  int32 report_count = 2;
+  repeated ReviewReportReasonCount reasons = 3;
+  // The free-text details reporters gave, newest first; empty ones omitted.
+  repeated string details = 4;
+  google.protobuf.Timestamp last_reported_at = 5;
+  // True when the review is currently out of public reads.
+  bool hidden = 6;
+}
+
+message ListReportedReviewsResponse {
+  repeated ReportedReview reviews = 1;
+  loci.common.PaginationMetadata pagination = 2;
+}
+
+message ResolveReviewReportRequest {
+  string review_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  ReviewModerationAction action = 2 [(buf.validate.field).enum = {
+    defined_only: true
+    not_in: [0]
+  }];
+}
+
+message ResolveReviewReportResponse {
+  loci.common.Response response = 1;
 }

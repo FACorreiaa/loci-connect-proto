@@ -61,6 +61,18 @@ public protocol Loci_Review_ReviewServiceClientInterface: Sendable {
     /// Get the most recent reviews across all content (global feed)
     @available(iOS 13, *)
     func `getRecentReviews`(request: Loci_Review_GetRecentReviewsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Review_GetRecentReviewsResponse>
+
+    /// Admin only: reviews with open reports (reports made since the review was
+    /// last moderated), most-reported first, with their report counts and
+    /// reasons. PermissionDenied for everyone but admins.
+    @available(iOS 13, *)
+    func `listReportedReviews`(request: Loci_Review_ListReportedReviewsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Review_ListReportedReviewsResponse>
+
+    /// Admin only: settle a review's open reports. KEEP closes them and leaves
+    /// the review public (later reports open a new round); REMOVE takes the
+    /// review out of every public read for good. The author still sees it.
+    @available(iOS 13, *)
+    func `resolveReviewReport`(request: Loci_Review_ResolveReviewReportRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Review_ResolveReviewReportResponse>
 }
 
 /// Concrete implementation of `Loci_Review_ReviewServiceClientInterface`.
@@ -131,6 +143,16 @@ public final class Loci_Review_ReviewServiceClient: Loci_Review_ReviewServiceCli
         return await self.client.unary(path: "/loci.review.ReviewService/GetRecentReviews", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
+    @available(iOS 13, *)
+    public func `listReportedReviews`(request: Loci_Review_ListReportedReviewsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Review_ListReportedReviewsResponse> {
+        return await self.client.unary(path: "/loci.review.ReviewService/ListReportedReviews", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `resolveReviewReport`(request: Loci_Review_ResolveReviewReportRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Review_ResolveReviewReportResponse> {
+        return await self.client.unary(path: "/loci.review.ReviewService/ResolveReviewReport", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
     public enum Metadata {
         public enum Methods {
             public static let createReview = Connect.MethodSpec(name: "CreateReview", service: "loci.review.ReviewService", type: .unary)
@@ -145,6 +167,8 @@ public final class Loci_Review_ReviewServiceClient: Loci_Review_ReviewServiceCli
             public static let getMyPoireview = Connect.MethodSpec(name: "GetMyPOIReview", service: "loci.review.ReviewService", type: .unary)
             public static let getReviewStatistics = Connect.MethodSpec(name: "GetReviewStatistics", service: "loci.review.ReviewService", type: .unary)
             public static let getRecentReviews = Connect.MethodSpec(name: "GetRecentReviews", service: "loci.review.ReviewService", type: .unary)
+            public static let listReportedReviews = Connect.MethodSpec(name: "ListReportedReviews", service: "loci.review.ReviewService", type: .unary)
+            public static let resolveReviewReport = Connect.MethodSpec(name: "ResolveReviewReport", service: "loci.review.ReviewService", type: .unary)
         }
     }
 }
