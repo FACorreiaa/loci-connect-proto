@@ -52,6 +52,15 @@ public protocol Loci_Chat_ChatServiceClientInterface: Sendable {
     /// reload or on returning to the app to settle runs nobody was listening to.
     @available(iOS 13, *)
     func `getRunStatus`(request: Loci_Chat_GetRunStatusRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Chat_GetRunStatusResponse>
+
+    /// Applies a proposal the agent streamed (action_proposal) to its trip.
+    /// FailedPrecondition when it was already applied or dismissed, has
+    /// expired, or base_version is stale.
+    @available(iOS 13, *)
+    func `applyTripAction`(request: Loci_Chat_ApplyTripActionRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Chat_ApplyTripActionResponse>
+
+    @available(iOS 13, *)
+    func `dismissTripAction`(request: Loci_Chat_DismissTripActionRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Chat_DismissTripActionResponse>
 }
 
 /// Concrete implementation of `Loci_Chat_ChatServiceClientInterface`.
@@ -122,6 +131,16 @@ public final class Loci_Chat_ChatServiceClient: Loci_Chat_ChatServiceClientInter
         return await self.client.unary(path: "/loci.chat.ChatService/GetRunStatus", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
+    @available(iOS 13, *)
+    public func `applyTripAction`(request: Loci_Chat_ApplyTripActionRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Chat_ApplyTripActionResponse> {
+        return await self.client.unary(path: "/loci.chat.ChatService/ApplyTripAction", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `dismissTripAction`(request: Loci_Chat_DismissTripActionRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Chat_DismissTripActionResponse> {
+        return await self.client.unary(path: "/loci.chat.ChatService/DismissTripAction", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
     public enum Metadata {
         public enum Methods {
             public static let startChat = Connect.MethodSpec(name: "StartChat", service: "loci.chat.ChatService", type: .unary)
@@ -136,6 +155,8 @@ public final class Loci_Chat_ChatServiceClient: Loci_Chat_ChatServiceClientInter
             public static let removeBookmark = Connect.MethodSpec(name: "RemoveBookmark", service: "loci.chat.ChatService", type: .unary)
             public static let streamChat = Connect.MethodSpec(name: "StreamChat", service: "loci.chat.ChatService", type: .serverStream)
             public static let getRunStatus = Connect.MethodSpec(name: "GetRunStatus", service: "loci.chat.ChatService", type: .unary)
+            public static let applyTripAction = Connect.MethodSpec(name: "ApplyTripAction", service: "loci.chat.ChatService", type: .unary)
+            public static let dismissTripAction = Connect.MethodSpec(name: "DismissTripAction", service: "loci.chat.ChatService", type: .unary)
         }
     }
 }

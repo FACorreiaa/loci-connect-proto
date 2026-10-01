@@ -90,6 +90,7 @@ enum StreamEventType {
   STREAM_EVENT_TYPE_COMPLETE = 12;
   STREAM_EVENT_TYPE_ROUTE = 13;
   STREAM_EVENT_TYPE_GASTRONOMY = 14;
+  STREAM_EVENT_TYPE_ACTION_PROPOSAL = 15;
 }
 
 // LlmInteraction represents an interaction with the LLM
@@ -685,6 +686,7 @@ message StreamEvent {
     CompletePayload complete = 31;
     RoutePayload route = 32;
     GastronomyPayload gastronomy = 33;
+    ActionProposalPayload action_proposal = 34;
   }
 }
 
@@ -1027,6 +1029,91 @@ message GetRunStatusResponse {
   repeated RunInfo runs = 1;
 }
 
+// Trip actions: the agent proposes, the traveller confirms. On a chat turn
+// bound to a trip, the server turns the message into ActionProposals (stored
+// server-side, one per change) and streams each as action_proposal. Nothing
+// changes until ApplyTripAction; DismissTripAction drops one.
+message TripAction {
+  oneof kind {
+    SetDatesAction set_dates = 1;
+    SearchHotelsAction search_hotels = 2;
+    RegenerateDaysAction regenerate_days = 3;
+    SearchFlightsAction search_flights = 4;
+  }
+}
+
+message SetDatesAction {
+  string start_date = 1;
+  string end_date = 2;
+}
+
+// 0..0 means any star rating; 4..4 means exactly four.
+message SearchHotelsAction {
+  string city_name = 1;
+  int32 min_stars = 2;
+  int32 max_stars = 3;
+}
+
+// Re-plans the trip's itinerary as this many days, keeping its dates, stays
+// and flights.
+message RegenerateDaysAction {
+  int32 days = 1;
+}
+
+message SearchFlightsAction {
+  loci.trip.FlightPlace origin = 1;
+  loci.trip.FlightPlace destination = 2;
+  string depart_date = 3;
+  optional string return_date = 4;
+  int32 passengers = 5;
+  loci.trip.FlightCabin cabin = 6;
+}
+
+// ActionOption is one choice of a pick-one action: a hotel to stay at, or the
+// flight search to save. Write actions (dates, re-plan) have none.
+message ActionOption {
+  string label = 1;
+  string detail = 2;
+  oneof choice {
+    loci.trip.TripStay stay = 3;
+    loci.trip.TripFlight flight = 4;
+  }
+}
+
+message ActionProposal {
+  string id = 1;
+  string trip_id = 2;
+  TripAction action = 3;
+  // One line the card shows, e.g. "4★ hotels in Lisbon: pick one to stay at".
+  string summary = 4;
+  repeated ActionOption options = 5;
+  google.protobuf.Timestamp expires_at = 6;
+}
+
+message ActionProposalPayload {
+  ActionProposal proposal = 1;
+}
+
+message ApplyTripActionRequest {
+  string proposal_id = 1 [(buf.validate.field).string.uuid = true];
+  // Required for actions with options; ignored otherwise.
+  optional int32 option_index = 2 [(buf.validate.field).int32.gte = 0];
+  // The trip version the card was shown against.
+  int64 base_version = 3 [(buf.validate.field).int64.gte = 0];
+}
+
+message ApplyTripActionResponse {
+  loci.trip.TripDraft trip = 1;
+  // Posted into the chat thread when the proposal came from one.
+  ConversationMessage confirmation = 2;
+}
+
+message DismissTripActionRequest {
+  string proposal_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+message DismissTripActionResponse {}
+
 service ChatService {
   rpc StartChat(StartChatRequest) returns (ChatResponse);
   rpc ContinueChat(ContinueChatRequest) returns (ChatResponse);
@@ -1049,6 +1136,11 @@ service ChatService {
   // Where the caller's runs are: running, done or failed. Used after a
   // reload or on returning to the app to settle runs nobody was listening to.
   rpc GetRunStatus(GetRunStatusRequest) returns (GetRunStatusResponse);
+  // Applies a proposal the agent streamed (action_proposal) to its trip.
+  // FailedPrecondition when it was already applied or dismissed, has
+  // expired, or base_version is stale.
+  rpc ApplyTripAction(ApplyTripActionRequest) returns (ApplyTripActionResponse);
+  rpc DismissTripAction(DismissTripActionRequest) returns (DismissTripActionResponse);
 }
 
 // ---------------------------------------------------------------------------
