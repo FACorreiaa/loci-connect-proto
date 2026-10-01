@@ -3391,6 +3391,14 @@
                 </li>
               
                 <li>
+                  <a href="#loci.review.ListReportedReviewsRequest"><span class="badge">M</span>ListReportedReviewsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.review.ListReportedReviewsResponse"><span class="badge">M</span>ListReportedReviewsResponse</a>
+                </li>
+              
+                <li>
                   <a href="#loci.review.MonthlyReviewData"><span class="badge">M</span>MonthlyReviewData</a>
                 </li>
               
@@ -3411,6 +3419,18 @@
                 </li>
               
                 <li>
+                  <a href="#loci.review.ReportedReview"><span class="badge">M</span>ReportedReview</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.review.ResolveReviewReportRequest"><span class="badge">M</span>ResolveReviewReportRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.review.ResolveReviewReportResponse"><span class="badge">M</span>ResolveReviewReportResponse</a>
+                </li>
+              
+                <li>
                   <a href="#loci.review.Review"><span class="badge">M</span>Review</a>
                 </li>
               
@@ -3424,6 +3444,10 @@
               
                 <li>
                   <a href="#loci.review.ReviewFilter"><span class="badge">M</span>ReviewFilter</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.review.ReviewReportReasonCount"><span class="badge">M</span>ReviewReportReasonCount</a>
                 </li>
               
                 <li>
@@ -3453,6 +3477,10 @@
               
                 <li>
                   <a href="#loci.review.ReviewContentType"><span class="badge">E</span>ReviewContentType</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.review.ReviewModerationAction"><span class="badge">E</span>ReviewModerationAction</a>
                 </li>
               
                 <li>
@@ -36318,6 +36346,68 @@ wire compatibility; clients should omit it. </p></td>
 
         
       
+        <h3 id="loci.review.ListReportedReviewsRequest">ListReportedReviewsRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>limit</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Page size; 0 means the server default (20). </p></td>
+                </tr>
+              
+                <tr>
+                  <td>page</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>1-based; 0 means the first page. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.review.ListReportedReviewsResponse">ListReportedReviewsResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>reviews</td>
+                  <td><a href="#loci.review.ReportedReview">ReportedReview</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>pagination</td>
+                  <td><a href="#loci.common.PaginationMetadata">loci.common.PaginationMetadata</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.review.MonthlyReviewData">MonthlyReviewData</h3>
         <p></p>
 
@@ -36538,6 +36628,120 @@ wire compatibility; clients should omit it. </p></td>
 
         
       
+        <h3 id="loci.review.ReportedReview">ReportedReview</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>review</td>
+                  <td><a href="#loci.review.Review">Review</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>report_count</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Distinct people with an open report on the review. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>reasons</td>
+                  <td><a href="#loci.review.ReviewReportReasonCount">ReviewReportReasonCount</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>details</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>The free-text details reporters gave, newest first; empty ones omitted. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_reported_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>hidden</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>True when the review is currently out of public reads. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.review.ResolveReviewReportRequest">ResolveReviewReportRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>review_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>action</td>
+                  <td><a href="#loci.review.ReviewModerationAction">ReviewModerationAction</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.review.ResolveReviewReportResponse">ResolveReviewReportResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>response</td>
+                  <td><a href="#loci.common.Response">loci.common.Response</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.review.Review">Review</h3>
         <p>Core review entity</p>
 
@@ -36708,6 +36912,16 @@ Type of content being reviewed </p></td>
                   <td><p>True when the authenticated caller has marked this review helpful. Always
 false for anonymous reads. Lets a client render the vote toggle&#39;s state
 instead of guessing, so un-voting sends is_like = false. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>hidden</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>True when the review is out of public reads: three or more people
+reported it, or a moderator removed it. Only its author (and admins) are
+ever sent a hidden review, so a client can label it rather than present
+it as live. </p></td>
                 </tr>
               
             </tbody>
@@ -36960,6 +37174,37 @@ instead of guessing, so un-voting sends is_like = false. </p></td>
                 <tr>
                   <td>sort_direction</td>
                   <td><a href="#loci.review.SortDirection">SortDirection</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.review.ReviewReportReasonCount">ReviewReportReasonCount</h3>
+        <p>How many open reports gave one reason.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>reason</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>count</td>
+                  <td><a href="#int32">int32</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -37384,6 +37629,35 @@ the full review: an empty title, photo list or visit_date clears it. </p></td>
           </tbody>
         </table>
       
+        <h3 id="loci.review.ReviewModerationAction">ReviewModerationAction</h3>
+        <p>What a moderator decides about a reported review.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>REVIEW_MODERATION_ACTION_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>REVIEW_MODERATION_ACTION_KEEP</td>
+                <td>1</td>
+                <td><p>The review stays public; its open reports are closed.</p></td>
+              </tr>
+            
+              <tr>
+                <td>REVIEW_MODERATION_ACTION_REMOVE</td>
+                <td>2</td>
+                <td><p>The review leaves every public read. Its author still sees it.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
         <h3 id="loci.review.ReviewSortBy">ReviewSortBy</h3>
         <p>Sort options for reviews</p>
         <table class="enum-table">
@@ -37597,6 +37871,24 @@ so a client can choose between &#34;Write a review&#34; and &#34;Edit your revie
                 <td><a href="#loci.review.GetRecentReviewsRequest">GetRecentReviewsRequest</a></td>
                 <td><a href="#loci.review.GetRecentReviewsResponse">GetRecentReviewsResponse</a></td>
                 <td><p>Get the most recent reviews across all content (global feed)</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListReportedReviews</td>
+                <td><a href="#loci.review.ListReportedReviewsRequest">ListReportedReviewsRequest</a></td>
+                <td><a href="#loci.review.ListReportedReviewsResponse">ListReportedReviewsResponse</a></td>
+                <td><p>Admin only: reviews with open reports (reports made since the review was
+last moderated), most-reported first, with their report counts and
+reasons. PermissionDenied for everyone but admins.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ResolveReviewReport</td>
+                <td><a href="#loci.review.ResolveReviewReportRequest">ResolveReviewReportRequest</a></td>
+                <td><a href="#loci.review.ResolveReviewReportResponse">ResolveReviewReportResponse</a></td>
+                <td><p>Admin only: settle a review&#39;s open reports. KEEP closes them and leaves
+the review public (later reports open a new round); REMOVE takes the
+review out of every public read for good. The author still sees it.</p></td>
               </tr>
             
           </tbody>
