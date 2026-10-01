@@ -339,6 +339,7 @@ public enum Loci_Chat_StreamEventType: SwiftProtobuf.Enum, Swift.CaseIterable {
   case complete // = 12
   case route // = 13
   case gastronomy // = 14
+  case actionProposal // = 15
   case UNRECOGNIZED(Int)
 
   public init() {
@@ -362,6 +363,7 @@ public enum Loci_Chat_StreamEventType: SwiftProtobuf.Enum, Swift.CaseIterable {
     case 12: self = .complete
     case 13: self = .route
     case 14: self = .gastronomy
+    case 15: self = .actionProposal
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -383,6 +385,7 @@ public enum Loci_Chat_StreamEventType: SwiftProtobuf.Enum, Swift.CaseIterable {
     case .complete: return 12
     case .route: return 13
     case .gastronomy: return 14
+    case .actionProposal: return 15
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -404,6 +407,7 @@ public enum Loci_Chat_StreamEventType: SwiftProtobuf.Enum, Swift.CaseIterable {
     .complete,
     .route,
     .gastronomy,
+    .actionProposal,
   ]
 
 }
@@ -1850,6 +1854,14 @@ public struct Loci_Chat_StreamEvent: @unchecked Sendable {
     set {_uniqueStorage()._payload = .gastronomy(newValue)}
   }
 
+  public var actionProposal: Loci_Chat_ActionProposalPayload {
+    get {
+      if case .actionProposal(let v)? = _storage._payload {return v}
+      return Loci_Chat_ActionProposalPayload()
+    }
+    set {_uniqueStorage()._payload = .actionProposal(newValue)}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   /// payload is the typed body; its oneof case matches event_type. Absent for
@@ -1869,6 +1881,7 @@ public struct Loci_Chat_StreamEvent: @unchecked Sendable {
     case complete(Loci_Chat_CompletePayload)
     case route(Loci_Chat_RoutePayload)
     case gastronomy(Loci_Chat_GastronomyPayload)
+    case actionProposal(Loci_Chat_ActionProposalPayload)
 
   }
 
@@ -2511,6 +2524,336 @@ public struct Loci_Chat_GetRunStatusResponse: Sendable {
   public init() {}
 }
 
+/// Trip actions: the agent proposes, the traveller confirms. On a chat turn
+/// bound to a trip, the server turns the message into ActionProposals (stored
+/// server-side, one per change) and streams each as action_proposal. Nothing
+/// changes until ApplyTripAction; DismissTripAction drops one.
+public struct Loci_Chat_TripAction: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var kind: Loci_Chat_TripAction.OneOf_Kind? = nil
+
+  public var setDates: Loci_Chat_SetDatesAction {
+    get {
+      if case .setDates(let v)? = kind {return v}
+      return Loci_Chat_SetDatesAction()
+    }
+    set {kind = .setDates(newValue)}
+  }
+
+  public var searchHotels: Loci_Chat_SearchHotelsAction {
+    get {
+      if case .searchHotels(let v)? = kind {return v}
+      return Loci_Chat_SearchHotelsAction()
+    }
+    set {kind = .searchHotels(newValue)}
+  }
+
+  public var regenerateDays: Loci_Chat_RegenerateDaysAction {
+    get {
+      if case .regenerateDays(let v)? = kind {return v}
+      return Loci_Chat_RegenerateDaysAction()
+    }
+    set {kind = .regenerateDays(newValue)}
+  }
+
+  public var searchFlights: Loci_Chat_SearchFlightsAction {
+    get {
+      if case .searchFlights(let v)? = kind {return v}
+      return Loci_Chat_SearchFlightsAction()
+    }
+    set {kind = .searchFlights(newValue)}
+  }
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public enum OneOf_Kind: Equatable, Sendable {
+    case setDates(Loci_Chat_SetDatesAction)
+    case searchHotels(Loci_Chat_SearchHotelsAction)
+    case regenerateDays(Loci_Chat_RegenerateDaysAction)
+    case searchFlights(Loci_Chat_SearchFlightsAction)
+
+  }
+
+  public init() {}
+}
+
+public struct Loci_Chat_SetDatesAction: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var startDate: String = String()
+
+  public var endDate: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// 0..0 means any star rating; 4..4 means exactly four.
+public struct Loci_Chat_SearchHotelsAction: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var cityName: String = String()
+
+  public var minStars: Int32 = 0
+
+  public var maxStars: Int32 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// Re-plans the trip's itinerary as this many days, keeping its dates, stays
+/// and flights.
+public struct Loci_Chat_RegenerateDaysAction: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var days: Int32 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Chat_SearchFlightsAction: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var origin: Loci_Trip_FlightPlace {
+    get {return _origin ?? Loci_Trip_FlightPlace()}
+    set {_origin = newValue}
+  }
+  /// Returns true if `origin` has been explicitly set.
+  public var hasOrigin: Bool {return self._origin != nil}
+  /// Clears the value of `origin`. Subsequent reads from it will return its default value.
+  public mutating func clearOrigin() {self._origin = nil}
+
+  public var destination: Loci_Trip_FlightPlace {
+    get {return _destination ?? Loci_Trip_FlightPlace()}
+    set {_destination = newValue}
+  }
+  /// Returns true if `destination` has been explicitly set.
+  public var hasDestination: Bool {return self._destination != nil}
+  /// Clears the value of `destination`. Subsequent reads from it will return its default value.
+  public mutating func clearDestination() {self._destination = nil}
+
+  public var departDate: String = String()
+
+  public var returnDate: String {
+    get {return _returnDate ?? String()}
+    set {_returnDate = newValue}
+  }
+  /// Returns true if `returnDate` has been explicitly set.
+  public var hasReturnDate: Bool {return self._returnDate != nil}
+  /// Clears the value of `returnDate`. Subsequent reads from it will return its default value.
+  public mutating func clearReturnDate() {self._returnDate = nil}
+
+  public var passengers: Int32 = 0
+
+  public var cabin: Loci_Trip_FlightCabin = .unspecified
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _origin: Loci_Trip_FlightPlace? = nil
+  fileprivate var _destination: Loci_Trip_FlightPlace? = nil
+  fileprivate var _returnDate: String? = nil
+}
+
+/// ActionOption is one choice of a pick-one action: a hotel to stay at, or the
+/// flight search to save. Write actions (dates, re-plan) have none.
+public struct Loci_Chat_ActionOption: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var label: String = String()
+
+  public var detail: String = String()
+
+  public var choice: Loci_Chat_ActionOption.OneOf_Choice? = nil
+
+  public var stay: Loci_Trip_TripStay {
+    get {
+      if case .stay(let v)? = choice {return v}
+      return Loci_Trip_TripStay()
+    }
+    set {choice = .stay(newValue)}
+  }
+
+  public var flight: Loci_Trip_TripFlight {
+    get {
+      if case .flight(let v)? = choice {return v}
+      return Loci_Trip_TripFlight()
+    }
+    set {choice = .flight(newValue)}
+  }
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public enum OneOf_Choice: Equatable, Sendable {
+    case stay(Loci_Trip_TripStay)
+    case flight(Loci_Trip_TripFlight)
+
+  }
+
+  public init() {}
+}
+
+public struct Loci_Chat_ActionProposal: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var id: String = String()
+
+  public var tripID: String = String()
+
+  public var action: Loci_Chat_TripAction {
+    get {return _action ?? Loci_Chat_TripAction()}
+    set {_action = newValue}
+  }
+  /// Returns true if `action` has been explicitly set.
+  public var hasAction: Bool {return self._action != nil}
+  /// Clears the value of `action`. Subsequent reads from it will return its default value.
+  public mutating func clearAction() {self._action = nil}
+
+  /// One line the card shows, e.g. "4★ hotels in Lisbon: pick one to stay at".
+  public var summary: String = String()
+
+  public var options: [Loci_Chat_ActionOption] = []
+
+  public var expiresAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _expiresAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_expiresAt = newValue}
+  }
+  /// Returns true if `expiresAt` has been explicitly set.
+  public var hasExpiresAt: Bool {return self._expiresAt != nil}
+  /// Clears the value of `expiresAt`. Subsequent reads from it will return its default value.
+  public mutating func clearExpiresAt() {self._expiresAt = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _action: Loci_Chat_TripAction? = nil
+  fileprivate var _expiresAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+}
+
+public struct Loci_Chat_ActionProposalPayload: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var proposal: Loci_Chat_ActionProposal {
+    get {return _proposal ?? Loci_Chat_ActionProposal()}
+    set {_proposal = newValue}
+  }
+  /// Returns true if `proposal` has been explicitly set.
+  public var hasProposal: Bool {return self._proposal != nil}
+  /// Clears the value of `proposal`. Subsequent reads from it will return its default value.
+  public mutating func clearProposal() {self._proposal = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _proposal: Loci_Chat_ActionProposal? = nil
+}
+
+public struct Loci_Chat_ApplyTripActionRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var proposalID: String = String()
+
+  /// Required for actions with options; ignored otherwise.
+  public var optionIndex: Int32 {
+    get {return _optionIndex ?? 0}
+    set {_optionIndex = newValue}
+  }
+  /// Returns true if `optionIndex` has been explicitly set.
+  public var hasOptionIndex: Bool {return self._optionIndex != nil}
+  /// Clears the value of `optionIndex`. Subsequent reads from it will return its default value.
+  public mutating func clearOptionIndex() {self._optionIndex = nil}
+
+  /// The trip version the card was shown against.
+  public var baseVersion: Int64 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _optionIndex: Int32? = nil
+}
+
+public struct Loci_Chat_ApplyTripActionResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var trip: Loci_Trip_TripDraft {
+    get {return _trip ?? Loci_Trip_TripDraft()}
+    set {_trip = newValue}
+  }
+  /// Returns true if `trip` has been explicitly set.
+  public var hasTrip: Bool {return self._trip != nil}
+  /// Clears the value of `trip`. Subsequent reads from it will return its default value.
+  public mutating func clearTrip() {self._trip = nil}
+
+  /// Posted into the chat thread when the proposal came from one.
+  public var confirmation: Loci_Chat_ConversationMessage {
+    get {return _confirmation ?? Loci_Chat_ConversationMessage()}
+    set {_confirmation = newValue}
+  }
+  /// Returns true if `confirmation` has been explicitly set.
+  public var hasConfirmation: Bool {return self._confirmation != nil}
+  /// Clears the value of `confirmation`. Subsequent reads from it will return its default value.
+  public mutating func clearConfirmation() {self._confirmation = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _trip: Loci_Trip_TripDraft? = nil
+  fileprivate var _confirmation: Loci_Chat_ConversationMessage? = nil
+}
+
+public struct Loci_Chat_DismissTripActionRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var proposalID: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Chat_DismissTripActionResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 /// WatchProposal is what the server understood. The client echoes it back
 /// unchanged in CreateWatch.
 public struct Loci_Chat_WatchProposal: Sendable {
@@ -2829,6 +3172,7 @@ extension Loci_Chat_StreamEventType: SwiftProtobuf._ProtoNameProviding {
     12: .same(proto: "STREAM_EVENT_TYPE_COMPLETE"),
     13: .same(proto: "STREAM_EVENT_TYPE_ROUTE"),
     14: .same(proto: "STREAM_EVENT_TYPE_GASTRONOMY"),
+    15: .same(proto: "STREAM_EVENT_TYPE_ACTION_PROPOSAL"),
   ]
 }
 
@@ -4841,6 +5185,7 @@ extension Loci_Chat_StreamEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     31: .same(proto: "complete"),
     32: .same(proto: "route"),
     33: .same(proto: "gastronomy"),
+    34: .standard(proto: "action_proposal"),
   ]
 
   fileprivate class _StorageClass {
@@ -5084,6 +5429,19 @@ extension Loci_Chat_StreamEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
             _storage._payload = .gastronomy(v)
           }
         }()
+        case 34: try {
+          var v: Loci_Chat_ActionProposalPayload?
+          var hadOneofValue = false
+          if let current = _storage._payload {
+            hadOneofValue = true
+            if case .actionProposal(let m) = current {v = m}
+          }
+          try decoder.decodeSingularMessageField(value: &v)
+          if let v = v {
+            if hadOneofValue {try decoder.handleConflictingOneOf()}
+            _storage._payload = .actionProposal(v)
+          }
+        }()
         default: break
         }
       }
@@ -5176,6 +5534,10 @@ extension Loci_Chat_StreamEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       case .gastronomy?: try {
         guard case .gastronomy(let v)? = _storage._payload else { preconditionFailure() }
         try visitor.visitSingularMessageField(value: v, fieldNumber: 33)
+      }()
+      case .actionProposal?: try {
+        guard case .actionProposal(let v)? = _storage._payload else { preconditionFailure() }
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 34)
       }()
       case nil: break
       }
@@ -6237,6 +6599,617 @@ extension Loci_Chat_GetRunStatusResponse: SwiftProtobuf.Message, SwiftProtobuf._
 
   public static func ==(lhs: Loci_Chat_GetRunStatusResponse, rhs: Loci_Chat_GetRunStatusResponse) -> Bool {
     if lhs.runs != rhs.runs {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Chat_TripAction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".TripAction"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "set_dates"),
+    2: .standard(proto: "search_hotels"),
+    3: .standard(proto: "regenerate_days"),
+    4: .standard(proto: "search_flights"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try {
+        var v: Loci_Chat_SetDatesAction?
+        var hadOneofValue = false
+        if let current = self.kind {
+          hadOneofValue = true
+          if case .setDates(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.kind = .setDates(v)
+        }
+      }()
+      case 2: try {
+        var v: Loci_Chat_SearchHotelsAction?
+        var hadOneofValue = false
+        if let current = self.kind {
+          hadOneofValue = true
+          if case .searchHotels(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.kind = .searchHotels(v)
+        }
+      }()
+      case 3: try {
+        var v: Loci_Chat_RegenerateDaysAction?
+        var hadOneofValue = false
+        if let current = self.kind {
+          hadOneofValue = true
+          if case .regenerateDays(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.kind = .regenerateDays(v)
+        }
+      }()
+      case 4: try {
+        var v: Loci_Chat_SearchFlightsAction?
+        var hadOneofValue = false
+        if let current = self.kind {
+          hadOneofValue = true
+          if case .searchFlights(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.kind = .searchFlights(v)
+        }
+      }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    switch self.kind {
+    case .setDates?: try {
+      guard case .setDates(let v)? = self.kind else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    }()
+    case .searchHotels?: try {
+      guard case .searchHotels(let v)? = self.kind else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    }()
+    case .regenerateDays?: try {
+      guard case .regenerateDays(let v)? = self.kind else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    }()
+    case .searchFlights?: try {
+      guard case .searchFlights(let v)? = self.kind else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    }()
+    case nil: break
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_TripAction, rhs: Loci_Chat_TripAction) -> Bool {
+    if lhs.kind != rhs.kind {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Chat_SetDatesAction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".SetDatesAction"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "start_date"),
+    2: .standard(proto: "end_date"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.startDate) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.endDate) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.startDate.isEmpty {
+      try visitor.visitSingularStringField(value: self.startDate, fieldNumber: 1)
+    }
+    if !self.endDate.isEmpty {
+      try visitor.visitSingularStringField(value: self.endDate, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_SetDatesAction, rhs: Loci_Chat_SetDatesAction) -> Bool {
+    if lhs.startDate != rhs.startDate {return false}
+    if lhs.endDate != rhs.endDate {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Chat_SearchHotelsAction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".SearchHotelsAction"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "city_name"),
+    2: .standard(proto: "min_stars"),
+    3: .standard(proto: "max_stars"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.cityName) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.minStars) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self.maxStars) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.cityName.isEmpty {
+      try visitor.visitSingularStringField(value: self.cityName, fieldNumber: 1)
+    }
+    if self.minStars != 0 {
+      try visitor.visitSingularInt32Field(value: self.minStars, fieldNumber: 2)
+    }
+    if self.maxStars != 0 {
+      try visitor.visitSingularInt32Field(value: self.maxStars, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_SearchHotelsAction, rhs: Loci_Chat_SearchHotelsAction) -> Bool {
+    if lhs.cityName != rhs.cityName {return false}
+    if lhs.minStars != rhs.minStars {return false}
+    if lhs.maxStars != rhs.maxStars {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Chat_RegenerateDaysAction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".RegenerateDaysAction"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "days"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularInt32Field(value: &self.days) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.days != 0 {
+      try visitor.visitSingularInt32Field(value: self.days, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_RegenerateDaysAction, rhs: Loci_Chat_RegenerateDaysAction) -> Bool {
+    if lhs.days != rhs.days {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Chat_SearchFlightsAction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".SearchFlightsAction"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "origin"),
+    2: .same(proto: "destination"),
+    3: .standard(proto: "depart_date"),
+    4: .standard(proto: "return_date"),
+    5: .same(proto: "passengers"),
+    6: .same(proto: "cabin"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._origin) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._destination) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.departDate) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self._returnDate) }()
+      case 5: try { try decoder.decodeSingularInt32Field(value: &self.passengers) }()
+      case 6: try { try decoder.decodeSingularEnumField(value: &self.cabin) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._origin {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try { if let v = self._destination {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    if !self.departDate.isEmpty {
+      try visitor.visitSingularStringField(value: self.departDate, fieldNumber: 3)
+    }
+    try { if let v = self._returnDate {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 4)
+    } }()
+    if self.passengers != 0 {
+      try visitor.visitSingularInt32Field(value: self.passengers, fieldNumber: 5)
+    }
+    if self.cabin != .unspecified {
+      try visitor.visitSingularEnumField(value: self.cabin, fieldNumber: 6)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_SearchFlightsAction, rhs: Loci_Chat_SearchFlightsAction) -> Bool {
+    if lhs._origin != rhs._origin {return false}
+    if lhs._destination != rhs._destination {return false}
+    if lhs.departDate != rhs.departDate {return false}
+    if lhs._returnDate != rhs._returnDate {return false}
+    if lhs.passengers != rhs.passengers {return false}
+    if lhs.cabin != rhs.cabin {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Chat_ActionOption: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ActionOption"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "label"),
+    2: .same(proto: "detail"),
+    3: .same(proto: "stay"),
+    4: .same(proto: "flight"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.label) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.detail) }()
+      case 3: try {
+        var v: Loci_Trip_TripStay?
+        var hadOneofValue = false
+        if let current = self.choice {
+          hadOneofValue = true
+          if case .stay(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.choice = .stay(v)
+        }
+      }()
+      case 4: try {
+        var v: Loci_Trip_TripFlight?
+        var hadOneofValue = false
+        if let current = self.choice {
+          hadOneofValue = true
+          if case .flight(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.choice = .flight(v)
+        }
+      }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.label.isEmpty {
+      try visitor.visitSingularStringField(value: self.label, fieldNumber: 1)
+    }
+    if !self.detail.isEmpty {
+      try visitor.visitSingularStringField(value: self.detail, fieldNumber: 2)
+    }
+    switch self.choice {
+    case .stay?: try {
+      guard case .stay(let v)? = self.choice else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    }()
+    case .flight?: try {
+      guard case .flight(let v)? = self.choice else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    }()
+    case nil: break
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_ActionOption, rhs: Loci_Chat_ActionOption) -> Bool {
+    if lhs.label != rhs.label {return false}
+    if lhs.detail != rhs.detail {return false}
+    if lhs.choice != rhs.choice {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Chat_ActionProposal: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ActionProposal"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "trip_id"),
+    3: .same(proto: "action"),
+    4: .same(proto: "summary"),
+    5: .same(proto: "options"),
+    6: .standard(proto: "expires_at"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.id) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.tripID) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._action) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.summary) }()
+      case 5: try { try decoder.decodeRepeatedMessageField(value: &self.options) }()
+      case 6: try { try decoder.decodeSingularMessageField(value: &self._expiresAt) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.id.isEmpty {
+      try visitor.visitSingularStringField(value: self.id, fieldNumber: 1)
+    }
+    if !self.tripID.isEmpty {
+      try visitor.visitSingularStringField(value: self.tripID, fieldNumber: 2)
+    }
+    try { if let v = self._action {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
+    if !self.summary.isEmpty {
+      try visitor.visitSingularStringField(value: self.summary, fieldNumber: 4)
+    }
+    if !self.options.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.options, fieldNumber: 5)
+    }
+    try { if let v = self._expiresAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_ActionProposal, rhs: Loci_Chat_ActionProposal) -> Bool {
+    if lhs.id != rhs.id {return false}
+    if lhs.tripID != rhs.tripID {return false}
+    if lhs._action != rhs._action {return false}
+    if lhs.summary != rhs.summary {return false}
+    if lhs.options != rhs.options {return false}
+    if lhs._expiresAt != rhs._expiresAt {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Chat_ActionProposalPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ActionProposalPayload"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "proposal"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._proposal) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._proposal {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_ActionProposalPayload, rhs: Loci_Chat_ActionProposalPayload) -> Bool {
+    if lhs._proposal != rhs._proposal {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Chat_ApplyTripActionRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ApplyTripActionRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "proposal_id"),
+    2: .standard(proto: "option_index"),
+    3: .standard(proto: "base_version"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.proposalID) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self._optionIndex) }()
+      case 3: try { try decoder.decodeSingularInt64Field(value: &self.baseVersion) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.proposalID.isEmpty {
+      try visitor.visitSingularStringField(value: self.proposalID, fieldNumber: 1)
+    }
+    try { if let v = self._optionIndex {
+      try visitor.visitSingularInt32Field(value: v, fieldNumber: 2)
+    } }()
+    if self.baseVersion != 0 {
+      try visitor.visitSingularInt64Field(value: self.baseVersion, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_ApplyTripActionRequest, rhs: Loci_Chat_ApplyTripActionRequest) -> Bool {
+    if lhs.proposalID != rhs.proposalID {return false}
+    if lhs._optionIndex != rhs._optionIndex {return false}
+    if lhs.baseVersion != rhs.baseVersion {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Chat_ApplyTripActionResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ApplyTripActionResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "trip"),
+    2: .same(proto: "confirmation"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._trip) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._confirmation) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._trip {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try { if let v = self._confirmation {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_ApplyTripActionResponse, rhs: Loci_Chat_ApplyTripActionResponse) -> Bool {
+    if lhs._trip != rhs._trip {return false}
+    if lhs._confirmation != rhs._confirmation {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Chat_DismissTripActionRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".DismissTripActionRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "proposal_id"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.proposalID) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.proposalID.isEmpty {
+      try visitor.visitSingularStringField(value: self.proposalID, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_DismissTripActionRequest, rhs: Loci_Chat_DismissTripActionRequest) -> Bool {
+    if lhs.proposalID != rhs.proposalID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Chat_DismissTripActionResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".DismissTripActionResponse"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    // Load everything into unknown fields
+    while try decoder.nextFieldNumber() != nil {}
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_DismissTripActionResponse, rhs: Loci_Chat_DismissTripActionResponse) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

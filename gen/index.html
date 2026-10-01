@@ -1802,11 +1802,31 @@
                 </li>
               
                 <li>
+                  <a href="#loci.chat.ActionOption"><span class="badge">M</span>ActionOption</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.ActionProposal"><span class="badge">M</span>ActionProposal</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.ActionProposalPayload"><span class="badge">M</span>ActionProposalPayload</a>
+                </li>
+              
+                <li>
                   <a href="#loci.chat.ActivitiesPayload"><span class="badge">M</span>ActivitiesPayload</a>
                 </li>
               
                 <li>
                   <a href="#loci.chat.AiCityResponse"><span class="badge">M</span>AiCityResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.ApplyTripActionRequest"><span class="badge">M</span>ApplyTripActionRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.ApplyTripActionResponse"><span class="badge">M</span>ApplyTripActionResponse</a>
                 </li>
               
                 <li>
@@ -1863,6 +1883,14 @@
               
                 <li>
                   <a href="#loci.chat.DeleteWatchResponse"><span class="badge">M</span>DeleteWatchResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.DismissTripActionRequest"><span class="badge">M</span>DismissTripActionRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.DismissTripActionResponse"><span class="badge">M</span>DismissTripActionResponse</a>
                 </li>
               
                 <li>
@@ -1974,6 +2002,10 @@
                 </li>
               
                 <li>
+                  <a href="#loci.chat.RegenerateDaysAction"><span class="badge">M</span>RegenerateDaysAction</a>
+                </li>
+              
+                <li>
                   <a href="#loci.chat.RestaurantsPayload"><span class="badge">M</span>RestaurantsPayload</a>
                 </li>
               
@@ -1983,6 +2015,14 @@
               
                 <li>
                   <a href="#loci.chat.RunInfo"><span class="badge">M</span>RunInfo</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.SearchFlightsAction"><span class="badge">M</span>SearchFlightsAction</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.SearchHotelsAction"><span class="badge">M</span>SearchHotelsAction</a>
                 </li>
               
                 <li>
@@ -1999,6 +2039,10 @@
               
                 <li>
                   <a href="#loci.chat.SessionPerformanceMetrics"><span class="badge">M</span>SessionPerformanceMetrics</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.SetDatesAction"><span class="badge">M</span>SetDatesAction</a>
                 </li>
               
                 <li>
@@ -2023,6 +2067,10 @@
               
                 <li>
                   <a href="#loci.chat.TokenPayload"><span class="badge">M</span>TokenPayload</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.TripAction"><span class="badge">M</span>TripAction</a>
                 </li>
               
                 <li>
@@ -19169,6 +19217,134 @@ answers to requests that are not trips. </p></td>
 
         
       
+        <h3 id="loci.chat.ActionOption">ActionOption</h3>
+        <p>ActionOption is one choice of a pick-one action: a hotel to stay at, or the</p><p>flight search to save. Write actions (dates, re-plan) have none.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>label</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>detail</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>stay</td>
+                  <td><a href="#loci.trip.TripStay">loci.trip.TripStay</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>flight</td>
+                  <td><a href="#loci.trip.TripFlight">loci.trip.TripFlight</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.ActionProposal">ActionProposal</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>action</td>
+                  <td><a href="#loci.chat.TripAction">TripAction</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>summary</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>One line the card shows, e.g. &#34;4★ hotels in Lisbon: pick one to stay at&#34;. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>options</td>
+                  <td><a href="#loci.chat.ActionOption">ActionOption</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>expires_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.ActionProposalPayload">ActionProposalPayload</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>proposal</td>
+                  <td><a href="#loci.chat.ActionProposal">ActionProposal</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.chat.ActivitiesPayload">ActivitiesPayload</h3>
         <p></p>
 
@@ -19277,6 +19453,75 @@ reopening such a session got an empty page. </p></td>
                   <td><p>The city&#39;s typical gastronomy, generated alongside itinerary and
 discovery (general) results. Absent for other domains, and when its
 generation failed: it never fails the response it rides on. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.ApplyTripActionRequest">ApplyTripActionRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>proposal_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>option_index</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td>optional</td>
+                  <td><p>Required for actions with options; ignored otherwise. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base_version</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>The trip version the card was shown against. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.ApplyTripActionResponse">ApplyTripActionResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip</td>
+                  <td><a href="#loci.trip.TripDraft">loci.trip.TripDraft</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>confirmation</td>
+                  <td><a href="#loci.chat.ConversationMessage">ConversationMessage</a></td>
+                  <td></td>
+                  <td><p>Posted into the chat thread when the proposal came from one. </p></td>
                 </tr>
               
             </tbody>
@@ -20034,6 +20279,37 @@ and source_label &#34;Standing task&#34;. Clients can append it without refetchi
         
       
         <h3 id="loci.chat.DeleteWatchResponse">DeleteWatchResponse</h3>
+        <p></p>
+
+        
+
+        
+      
+        <h3 id="loci.chat.DismissTripActionRequest">DismissTripActionRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>proposal_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.DismissTripActionResponse">DismissTripActionResponse</h3>
         <p></p>
 
         
@@ -21066,6 +21342,30 @@ and source_label &#34;Standing task&#34;. Clients can append it without refetchi
 
         
       
+        <h3 id="loci.chat.RegenerateDaysAction">RegenerateDaysAction</h3>
+        <p>Re-plans the trip's itinerary as this many days, keeping its dates, stays</p><p>and flights.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>days</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.chat.RestaurantsPayload">RestaurantsPayload</h3>
         <p></p>
 
@@ -21228,6 +21528,103 @@ and source_label &#34;Standing task&#34;. Clients can append it without refetchi
                   <td></td>
                   <td><p>url is the page that shows this run&#39;s result, e.g.
 /itinerary?sessionId=…&amp;cityName=Crete&amp;domain=itinerary </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.SearchFlightsAction">SearchFlightsAction</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>origin</td>
+                  <td><a href="#loci.trip.FlightPlace">loci.trip.FlightPlace</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>destination</td>
+                  <td><a href="#loci.trip.FlightPlace">loci.trip.FlightPlace</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>depart_date</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>return_date</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>passengers</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>cabin</td>
+                  <td><a href="#loci.trip.FlightCabin">loci.trip.FlightCabin</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.SearchHotelsAction">SearchHotelsAction</h3>
+        <p>0..0 means any star rating; 4..4 means exactly four.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>min_stars</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>max_stars</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
                 </tr>
               
             </tbody>
@@ -21483,6 +21880,37 @@ and source_label &#34;Standing task&#34;. Clients can append it without refetchi
                 <tr>
                   <td>total_latency_ms</td>
                   <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.SetDatesAction">SetDatesAction</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>start_date</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>end_date</td>
+                  <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -21846,6 +22274,13 @@ belongs to. An ERROR carrying it failed that city only, not the stream. </p></td
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>action_proposal</td>
+                  <td><a href="#loci.chat.ActionProposalPayload">ActionProposalPayload</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -21874,6 +22309,51 @@ belongs to. An ERROR carrying it failed that city only, not the stream. </p></td
                   <td>part</td>
                   <td><a href="#int32">int32</a></td>
                   <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.TripAction">TripAction</h3>
+        <p>Trip actions: the agent proposes, the traveller confirms. On a chat turn</p><p>bound to a trip, the server turns the message into ActionProposals (stored</p><p>server-side, one per change) and streams each as action_proposal. Nothing</p><p>changes until ApplyTripAction; DismissTripAction drops one.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>set_dates</td>
+                  <td><a href="#loci.chat.SetDatesAction">SetDatesAction</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>search_hotels</td>
+                  <td><a href="#loci.chat.SearchHotelsAction">SearchHotelsAction</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>regenerate_days</td>
+                  <td><a href="#loci.chat.RegenerateDaysAction">RegenerateDaysAction</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>search_flights</td>
+                  <td><a href="#loci.chat.SearchFlightsAction">SearchFlightsAction</a></td>
+                  <td></td>
                   <td><p> </p></td>
                 </tr>
               
@@ -22600,6 +23080,12 @@ itinerary — the same rule the trip builder applies.</p></td>
                 <td><p></p></td>
               </tr>
             
+              <tr>
+                <td>STREAM_EVENT_TYPE_ACTION_PROPOSAL</td>
+                <td>15</td>
+                <td><p></p></td>
+              </tr>
+            
           </tbody>
         </table>
       
@@ -22699,6 +23185,22 @@ only delivery is paged.</p></td>
                 <td><a href="#loci.chat.GetRunStatusResponse">GetRunStatusResponse</a></td>
                 <td><p>Where the caller&#39;s runs are: running, done or failed. Used after a
 reload or on returning to the app to settle runs nobody was listening to.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ApplyTripAction</td>
+                <td><a href="#loci.chat.ApplyTripActionRequest">ApplyTripActionRequest</a></td>
+                <td><a href="#loci.chat.ApplyTripActionResponse">ApplyTripActionResponse</a></td>
+                <td><p>Applies a proposal the agent streamed (action_proposal) to its trip.
+FailedPrecondition when it was already applied or dismissed, has
+expired, or base_version is stale.</p></td>
+              </tr>
+            
+              <tr>
+                <td>DismissTripAction</td>
+                <td><a href="#loci.chat.DismissTripActionRequest">DismissTripActionRequest</a></td>
+                <td><a href="#loci.chat.DismissTripActionResponse">DismissTripActionResponse</a></td>
+                <td><p></p></td>
               </tr>
             
           </tbody>

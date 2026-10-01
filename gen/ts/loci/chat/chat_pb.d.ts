@@ -9,7 +9,7 @@ import type { UserPreferenceProfile } from "../profile/profile_pb";
 import type { HotelDetailedInfo, POIDetailedInfo, RestaurantDetailedInfo } from "../poi/poi_pb";
 import type { GeneralCityData } from "../city/city_pb";
 import type { CityGastronomy } from "../gastronomy/gastronomy_pb";
-import type { TripLeg } from "../trip/trip_pb";
+import type { FlightCabin, FlightPlace, TripDraft, TripFlight, TripLeg, TripStay } from "../trip/trip_pb";
 import type { PaginationMetadata, PaginationRequest, ResponseSchema } from "../common/common_pb";
 
 /**
@@ -1348,6 +1348,12 @@ export declare type StreamEvent = Message<"loci.chat.StreamEvent"> & {
      */
     value: GastronomyPayload;
     case: "gastronomy";
+  } | {
+    /**
+     * @generated from field: loci.chat.ActionProposalPayload action_proposal = 34;
+     */
+    value: ActionProposalPayload;
+    case: "actionProposal";
   } | { case: undefined; value?: undefined };
 };
 
@@ -1994,6 +2000,341 @@ export declare type GetRunStatusResponse = Message<"loci.chat.GetRunStatusRespon
 export declare const GetRunStatusResponseSchema: GenMessage<GetRunStatusResponse>;
 
 /**
+ * Trip actions: the agent proposes, the traveller confirms. On a chat turn
+ * bound to a trip, the server turns the message into ActionProposals (stored
+ * server-side, one per change) and streams each as action_proposal. Nothing
+ * changes until ApplyTripAction; DismissTripAction drops one.
+ *
+ * @generated from message loci.chat.TripAction
+ */
+export declare type TripAction = Message<"loci.chat.TripAction"> & {
+  /**
+   * @generated from oneof loci.chat.TripAction.kind
+   */
+  kind: {
+    /**
+     * @generated from field: loci.chat.SetDatesAction set_dates = 1;
+     */
+    value: SetDatesAction;
+    case: "setDates";
+  } | {
+    /**
+     * @generated from field: loci.chat.SearchHotelsAction search_hotels = 2;
+     */
+    value: SearchHotelsAction;
+    case: "searchHotels";
+  } | {
+    /**
+     * @generated from field: loci.chat.RegenerateDaysAction regenerate_days = 3;
+     */
+    value: RegenerateDaysAction;
+    case: "regenerateDays";
+  } | {
+    /**
+     * @generated from field: loci.chat.SearchFlightsAction search_flights = 4;
+     */
+    value: SearchFlightsAction;
+    case: "searchFlights";
+  } | { case: undefined; value?: undefined };
+};
+
+/**
+ * Describes the message loci.chat.TripAction.
+ * Use `create(TripActionSchema)` to create a new message.
+ */
+export declare const TripActionSchema: GenMessage<TripAction>;
+
+/**
+ * @generated from message loci.chat.SetDatesAction
+ */
+export declare type SetDatesAction = Message<"loci.chat.SetDatesAction"> & {
+  /**
+   * @generated from field: string start_date = 1;
+   */
+  startDate: string;
+
+  /**
+   * @generated from field: string end_date = 2;
+   */
+  endDate: string;
+};
+
+/**
+ * Describes the message loci.chat.SetDatesAction.
+ * Use `create(SetDatesActionSchema)` to create a new message.
+ */
+export declare const SetDatesActionSchema: GenMessage<SetDatesAction>;
+
+/**
+ * 0..0 means any star rating; 4..4 means exactly four.
+ *
+ * @generated from message loci.chat.SearchHotelsAction
+ */
+export declare type SearchHotelsAction = Message<"loci.chat.SearchHotelsAction"> & {
+  /**
+   * @generated from field: string city_name = 1;
+   */
+  cityName: string;
+
+  /**
+   * @generated from field: int32 min_stars = 2;
+   */
+  minStars: number;
+
+  /**
+   * @generated from field: int32 max_stars = 3;
+   */
+  maxStars: number;
+};
+
+/**
+ * Describes the message loci.chat.SearchHotelsAction.
+ * Use `create(SearchHotelsActionSchema)` to create a new message.
+ */
+export declare const SearchHotelsActionSchema: GenMessage<SearchHotelsAction>;
+
+/**
+ * Re-plans the trip's itinerary as this many days, keeping its dates, stays
+ * and flights.
+ *
+ * @generated from message loci.chat.RegenerateDaysAction
+ */
+export declare type RegenerateDaysAction = Message<"loci.chat.RegenerateDaysAction"> & {
+  /**
+   * @generated from field: int32 days = 1;
+   */
+  days: number;
+};
+
+/**
+ * Describes the message loci.chat.RegenerateDaysAction.
+ * Use `create(RegenerateDaysActionSchema)` to create a new message.
+ */
+export declare const RegenerateDaysActionSchema: GenMessage<RegenerateDaysAction>;
+
+/**
+ * @generated from message loci.chat.SearchFlightsAction
+ */
+export declare type SearchFlightsAction = Message<"loci.chat.SearchFlightsAction"> & {
+  /**
+   * @generated from field: loci.trip.FlightPlace origin = 1;
+   */
+  origin?: FlightPlace;
+
+  /**
+   * @generated from field: loci.trip.FlightPlace destination = 2;
+   */
+  destination?: FlightPlace;
+
+  /**
+   * @generated from field: string depart_date = 3;
+   */
+  departDate: string;
+
+  /**
+   * @generated from field: optional string return_date = 4;
+   */
+  returnDate?: string;
+
+  /**
+   * @generated from field: int32 passengers = 5;
+   */
+  passengers: number;
+
+  /**
+   * @generated from field: loci.trip.FlightCabin cabin = 6;
+   */
+  cabin: FlightCabin;
+};
+
+/**
+ * Describes the message loci.chat.SearchFlightsAction.
+ * Use `create(SearchFlightsActionSchema)` to create a new message.
+ */
+export declare const SearchFlightsActionSchema: GenMessage<SearchFlightsAction>;
+
+/**
+ * ActionOption is one choice of a pick-one action: a hotel to stay at, or the
+ * flight search to save. Write actions (dates, re-plan) have none.
+ *
+ * @generated from message loci.chat.ActionOption
+ */
+export declare type ActionOption = Message<"loci.chat.ActionOption"> & {
+  /**
+   * @generated from field: string label = 1;
+   */
+  label: string;
+
+  /**
+   * @generated from field: string detail = 2;
+   */
+  detail: string;
+
+  /**
+   * @generated from oneof loci.chat.ActionOption.choice
+   */
+  choice: {
+    /**
+     * @generated from field: loci.trip.TripStay stay = 3;
+     */
+    value: TripStay;
+    case: "stay";
+  } | {
+    /**
+     * @generated from field: loci.trip.TripFlight flight = 4;
+     */
+    value: TripFlight;
+    case: "flight";
+  } | { case: undefined; value?: undefined };
+};
+
+/**
+ * Describes the message loci.chat.ActionOption.
+ * Use `create(ActionOptionSchema)` to create a new message.
+ */
+export declare const ActionOptionSchema: GenMessage<ActionOption>;
+
+/**
+ * @generated from message loci.chat.ActionProposal
+ */
+export declare type ActionProposal = Message<"loci.chat.ActionProposal"> & {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * @generated from field: string trip_id = 2;
+   */
+  tripId: string;
+
+  /**
+   * @generated from field: loci.chat.TripAction action = 3;
+   */
+  action?: TripAction;
+
+  /**
+   * One line the card shows, e.g. "4★ hotels in Lisbon: pick one to stay at".
+   *
+   * @generated from field: string summary = 4;
+   */
+  summary: string;
+
+  /**
+   * @generated from field: repeated loci.chat.ActionOption options = 5;
+   */
+  options: ActionOption[];
+
+  /**
+   * @generated from field: google.protobuf.Timestamp expires_at = 6;
+   */
+  expiresAt?: Timestamp;
+};
+
+/**
+ * Describes the message loci.chat.ActionProposal.
+ * Use `create(ActionProposalSchema)` to create a new message.
+ */
+export declare const ActionProposalSchema: GenMessage<ActionProposal>;
+
+/**
+ * @generated from message loci.chat.ActionProposalPayload
+ */
+export declare type ActionProposalPayload = Message<"loci.chat.ActionProposalPayload"> & {
+  /**
+   * @generated from field: loci.chat.ActionProposal proposal = 1;
+   */
+  proposal?: ActionProposal;
+};
+
+/**
+ * Describes the message loci.chat.ActionProposalPayload.
+ * Use `create(ActionProposalPayloadSchema)` to create a new message.
+ */
+export declare const ActionProposalPayloadSchema: GenMessage<ActionProposalPayload>;
+
+/**
+ * @generated from message loci.chat.ApplyTripActionRequest
+ */
+export declare type ApplyTripActionRequest = Message<"loci.chat.ApplyTripActionRequest"> & {
+  /**
+   * @generated from field: string proposal_id = 1;
+   */
+  proposalId: string;
+
+  /**
+   * Required for actions with options; ignored otherwise.
+   *
+   * @generated from field: optional int32 option_index = 2;
+   */
+  optionIndex?: number;
+
+  /**
+   * The trip version the card was shown against.
+   *
+   * @generated from field: int64 base_version = 3;
+   */
+  baseVersion: bigint;
+};
+
+/**
+ * Describes the message loci.chat.ApplyTripActionRequest.
+ * Use `create(ApplyTripActionRequestSchema)` to create a new message.
+ */
+export declare const ApplyTripActionRequestSchema: GenMessage<ApplyTripActionRequest>;
+
+/**
+ * @generated from message loci.chat.ApplyTripActionResponse
+ */
+export declare type ApplyTripActionResponse = Message<"loci.chat.ApplyTripActionResponse"> & {
+  /**
+   * @generated from field: loci.trip.TripDraft trip = 1;
+   */
+  trip?: TripDraft;
+
+  /**
+   * Posted into the chat thread when the proposal came from one.
+   *
+   * @generated from field: loci.chat.ConversationMessage confirmation = 2;
+   */
+  confirmation?: ConversationMessage;
+};
+
+/**
+ * Describes the message loci.chat.ApplyTripActionResponse.
+ * Use `create(ApplyTripActionResponseSchema)` to create a new message.
+ */
+export declare const ApplyTripActionResponseSchema: GenMessage<ApplyTripActionResponse>;
+
+/**
+ * @generated from message loci.chat.DismissTripActionRequest
+ */
+export declare type DismissTripActionRequest = Message<"loci.chat.DismissTripActionRequest"> & {
+  /**
+   * @generated from field: string proposal_id = 1;
+   */
+  proposalId: string;
+};
+
+/**
+ * Describes the message loci.chat.DismissTripActionRequest.
+ * Use `create(DismissTripActionRequestSchema)` to create a new message.
+ */
+export declare const DismissTripActionRequestSchema: GenMessage<DismissTripActionRequest>;
+
+/**
+ * @generated from message loci.chat.DismissTripActionResponse
+ */
+export declare type DismissTripActionResponse = Message<"loci.chat.DismissTripActionResponse"> & {
+};
+
+/**
+ * Describes the message loci.chat.DismissTripActionResponse.
+ * Use `create(DismissTripActionResponseSchema)` to create a new message.
+ */
+export declare const DismissTripActionResponseSchema: GenMessage<DismissTripActionResponse>;
+
+/**
  * WatchProposal is what the server understood. The client echoes it back
  * unchanged in CreateWatch.
  *
@@ -2596,6 +2937,11 @@ export enum StreamEventType {
    * @generated from enum value: STREAM_EVENT_TYPE_GASTRONOMY = 14;
    */
   GASTRONOMY = 14,
+
+  /**
+   * @generated from enum value: STREAM_EVENT_TYPE_ACTION_PROPOSAL = 15;
+   */
+  ACTION_PROPOSAL = 15,
 }
 
 /**
@@ -2822,6 +3168,26 @@ export declare const ChatService: GenService<{
     methodKind: "unary";
     input: typeof GetRunStatusRequestSchema;
     output: typeof GetRunStatusResponseSchema;
+  },
+  /**
+   * Applies a proposal the agent streamed (action_proposal) to its trip.
+   * FailedPrecondition when it was already applied or dismissed, has
+   * expired, or base_version is stale.
+   *
+   * @generated from rpc loci.chat.ChatService.ApplyTripAction
+   */
+  applyTripAction: {
+    methodKind: "unary";
+    input: typeof ApplyTripActionRequestSchema;
+    output: typeof ApplyTripActionResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.chat.ChatService.DismissTripAction
+   */
+  dismissTripAction: {
+    methodKind: "unary";
+    input: typeof DismissTripActionRequestSchema;
+    output: typeof DismissTripActionResponseSchema;
   },
 }>;
 
