@@ -47,6 +47,12 @@ public protocol Loci_Favorites_V1_FavoritesServiceClientInterface: Sendable {
     /// Get nearby restaurants
     @available(iOS 13, *)
     func `getNearbyRestaurants`(request: Loci_Favorites_V1_GetNearbyRestaurantsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Favorites_V1_GetNearbyRestaurantsResponse>
+
+    /// UpdateFavoriteNote sets the caller's note on one of their saved items
+    /// without changing when it was saved. A note of 40 or more characters in the
+    /// caller's own words counts once toward their field score.
+    @available(iOS 13, *)
+    func `updateFavoriteNote`(request: Loci_Favorites_V1_UpdateFavoriteNoteRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Favorites_V1_UpdateFavoriteNoteResponse>
 }
 
 /// Concrete implementation of `Loci_Favorites_V1_FavoritesServiceClientInterface`.
@@ -102,6 +108,11 @@ public final class Loci_Favorites_V1_FavoritesServiceClient: Loci_Favorites_V1_F
         return await self.client.unary(path: "/loci.favorites.v1.FavoritesService/GetNearbyRestaurants", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
+    @available(iOS 13, *)
+    public func `updateFavoriteNote`(request: Loci_Favorites_V1_UpdateFavoriteNoteRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Favorites_V1_UpdateFavoriteNoteResponse> {
+        return await self.client.unary(path: "/loci.favorites.v1.FavoritesService/UpdateFavoriteNote", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
     public enum Metadata {
         public enum Methods {
             public static let addToFavorites = Connect.MethodSpec(name: "AddToFavorites", service: "loci.favorites.v1.FavoritesService", type: .unary)
@@ -113,6 +124,7 @@ public final class Loci_Favorites_V1_FavoritesServiceClient: Loci_Favorites_V1_F
             public static let getRestaurantDetails = Connect.MethodSpec(name: "GetRestaurantDetails", service: "loci.favorites.v1.FavoritesService", type: .unary)
             public static let getNearbyHotels = Connect.MethodSpec(name: "GetNearbyHotels", service: "loci.favorites.v1.FavoritesService", type: .unary)
             public static let getNearbyRestaurants = Connect.MethodSpec(name: "GetNearbyRestaurants", service: "loci.favorites.v1.FavoritesService", type: .unary)
+            public static let updateFavoriteNote = Connect.MethodSpec(name: "UpdateFavoriteNote", service: "loci.favorites.v1.FavoritesService", type: .unary)
         }
     }
 }

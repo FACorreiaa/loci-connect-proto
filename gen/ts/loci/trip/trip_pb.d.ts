@@ -142,6 +142,21 @@ export declare type TripStop = Message<"loci.trip.TripStop"> & {
    * @generated from field: optional loci.poi.POIImage image = 11;
    */
   image?: POIImage;
+
+  /**
+   * Whether the traveller walked or skipped the stop (read side only; set with
+   * GamificationService.MarkStop, ignored by SaveTrip).
+   *
+   * @generated from field: loci.trip.TripStopStatus status = 12;
+   */
+  status: TripStopStatus;
+
+  /**
+   * When status last changed; absent while the stop is open.
+   *
+   * @generated from field: google.protobuf.Timestamp status_at = 13;
+   */
+  statusAt?: Timestamp;
 };
 
 /**
@@ -210,6 +225,14 @@ export declare type TripDay = Message<"loci.trip.TripDay"> & {
    * @generated from field: bool travel_day = 9;
    */
   travelDay: boolean;
+
+  /**
+   * When the traveller finished the day (read side only; ignored by
+   * SaveTrip). Absent while unfinished.
+   *
+   * @generated from field: google.protobuf.Timestamp completed_at = 10;
+   */
+  completedAt?: Timestamp;
 };
 
 /**
@@ -1827,6 +1850,36 @@ export enum TripPace {
  * Describes the enum loci.trip.TripPace.
  */
 export declare const TripPaceSchema: GenEnum<TripPace>;
+
+/**
+ * @generated from enum loci.trip.TripStopStatus
+ */
+export enum TripStopStatus {
+  /**
+   * @generated from enum value: TRIP_STOP_STATUS_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: TRIP_STOP_STATUS_OPEN = 1;
+   */
+  OPEN = 1,
+
+  /**
+   * @generated from enum value: TRIP_STOP_STATUS_DONE = 2;
+   */
+  DONE = 2,
+
+  /**
+   * @generated from enum value: TRIP_STOP_STATUS_SKIPPED = 3;
+   */
+  SKIPPED = 3,
+}
+
+/**
+ * Describes the enum loci.trip.TripStopStatus.
+ */
+export declare const TripStopStatusSchema: GenEnum<TripStopStatus>;
 
 /**
  * @generated from enum loci.trip.FlightCabin

@@ -5,24 +5,26 @@ package loci.gamification;
 import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
 import "loci/social/social.proto";
+import "loci/trip/trip.proto";
 
 option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/gamification;gamification";
 
-// GamificationService is Loci's points layer: a ledger of things a traveller
-// actually did (checked in, searched, visited a place on the spot, saw a new
-// city, scouted, walked a trip day), the streak and badges it earns, and
-// leaderboards shared only with friends.
+// GamificationService is Loci's field score: a ledger of exploration a
+// traveller can show they did (kept a place, walked a stop, finished a day or a
+// trip, reached a new neighborhood or city, visited a place on the spot,
+// scouted), the permanent rank it earns per city, and weekly boards scoped to a
+// city or to friends.
 //
-// Points are awarded by the server in the code paths that already record those
-// actions; the client never names a point value. Every award is idempotent, so
-// a retried request cannot count twice. Every RPC needs a session.
+// Opening the app and generating recommendations earn nothing. Points are
+// awarded by the server in the code paths that already record those actions;
+// the client never names a point value. Every award is idempotent, so a
+// retried request cannot count twice. Every RPC needs a session.
 service GamificationService {
-  // GetMyProgress is the caller's total, level, streak, badges and today's
-  // checklist.
+  // GetMyProgress is the caller's lifetime field score with the older level,
+  // streak and badge fields kept for clients that still render them.
   rpc GetMyProgress(GetMyProgressRequest) returns (GetMyProgressResponse);
-  // DailyCheckIn marks the caller active on their local date. It is idempotent
-  // per local date: the first call of the day awards points and extends the
-  // streak, later calls only return progress.
+  // DailyCheckIn records the device timezone. It no longer awards points or
+  // extends a streak; points_awarded is always 0.
   rpc DailyCheckIn(DailyCheckInRequest) returns (DailyCheckInResponse);
   // GetLeaderboard ranks the caller and their friends. Friends who turned off
   // leaderboard visibility, and blocked users, are left out. The caller's own
@@ -31,15 +33,30 @@ service GamificationService {
   // ListPointsHistory is the caller's ledger, newest first.
   rpc ListPointsHistory(ListPointsHistoryRequest) returns (ListPointsHistoryResponse);
   // CompleteTripDay records that the caller walked a day of their own trip.
-  // Completing every day of a trip also completes the trip.
+  // Completing every day of a trip also completes the trip. When any stop of
+  // the day has been marked with MarkStop, the day is judged from those marks
+  // and stops_done is ignored.
   rpc CompleteTripDay(CompleteTripDayRequest) returns (CompleteTripDayResponse);
+  // GetFieldProfile is the caller's lifetime field score, rank overall and per
+  // city, and this week against last week.
+  rpc GetFieldProfile(GetFieldProfileRequest) returns (GetFieldProfileResponse);
+  // GetFieldBoard is one weekly board: the top ten, the caller's own row and
+  // the row just above it. Never a rank among everyone.
+  rpc GetFieldBoard(GetFieldBoardRequest) returns (GetFieldBoardResponse);
+  // MarkStop marks a stop of the caller's own trip done, skipped, or open
+  // again. A day is finished when every stop is done or skipped and at least
+  // one is done; finishing every day finishes the trip. Reopening a stop never
+  // takes back points already awarded, and marking it again never repays them.
+  rpc MarkStop(MarkStopRequest) returns (MarkStopResponse);
 }
 
 enum PointsKind {
   POINTS_KIND_UNSPECIFIED = 0;
-  POINTS_KIND_DAILY_CHECK_IN = 1;
-  // The first search or chat turn of a local day.
-  POINTS_KIND_DAILY_SEARCH = 2;
+  // Retired: no longer awarded. Older rows keep their history but count 0
+  // toward the field score.
+  POINTS_KIND_DAILY_CHECK_IN = 1 [deprecated = true];
+  // Retired, as POINTS_KIND_DAILY_CHECK_IN.
+  POINTS_KIND_DAILY_SEARCH = 2 [deprecated = true];
   // A place visited while the device was there (server checks the distance).
   POINTS_KIND_PLACE_VISITED = 3;
   // The first visit recorded in a city.
@@ -50,6 +67,16 @@ enum PointsKind {
   POINTS_KIND_PLACE_SUBMISSION = 6;
   POINTS_KIND_TRIP_DAY_COMPLETED = 7;
   POINTS_KIND_TRIP_COMPLETED = 8;
+  // A place saved for the first time. Saving it again never pays again.
+  POINTS_KIND_PLACE_SAVED = 9;
+  // A saved place still kept seven days later.
+  POINTS_KIND_PLACE_KEPT = 10;
+  // A stop of the caller's trip marked done.
+  POINTS_KIND_STOP_DONE = 11;
+  // The first place in a neighborhood of a city.
+  POINTS_KIND_FIRST_NEIGHBORHOOD = 12;
+  // A note of the caller's own words on a saved place.
+  POINTS_KIND_PLACE_NOTE = 13;
 }
 
 message Badge {
@@ -67,7 +94,12 @@ message TodayChecklist {
   int32 places_visited = 3 [(buf.validate.field).int32.gte = 0];
 }
 
+// Progress predates the field score. total_points is now the lifetime field
+// score; level, points_to_next_level, the streaks, badges and today are no
+// longer advanced and are kept only for clients that still render them. Use
+// GetFieldProfile instead.
 message Progress {
+  // Lifetime field score.
   int64 total_points = 1 [(buf.validate.field).int64.gte = 0];
   int32 level = 2 [(buf.validate.field).int32.gte = 1];
   // Points needed to reach the next level from the current total.
@@ -153,6 +185,14 @@ message PointsEvent {
   // What it was for, ready to show: "Visited Pantheon", "New city: Rome".
   string label = 4 [(buf.validate.field).string.max_len = 300];
   google.protobuf.Timestamp created_at = 5;
+  // The city the event happened in; empty when it has none.
+  string city_id = 6 [(buf.validate.field).string.max_len = 100];
+  string city_name = 7 [(buf.validate.field).string.max_len = 200];
+  // What the event counts toward the field score. points keeps the value it
+  // was awarded with; retired kinds have 0 here.
+  int32 field_points = 8 [(buf.validate.field).int32.gte = 0];
+  // ISO week of the caller's local date as year*100+week (202641).
+  int32 season_id = 9 [(buf.validate.field).int32.gte = 0];
 }
 
 message ListPointsHistoryRequest {
@@ -161,6 +201,8 @@ message ListPointsHistoryRequest {
     lte: 100
   }];
   string page_token = 2 [(buf.validate.field).string.max_len = 200];
+  // Leave out events that count nothing toward the field score.
+  bool field_only = 3;
 }
 
 message ListPointsHistoryResponse {
@@ -194,4 +236,165 @@ message CompleteTripDayResponse {
   int32 points_awarded = 2 [(buf.validate.field).int32.gte = 0];
   bool trip_completed = 3;
   repeated Badge new_badges = 4;
+}
+
+// FieldRank is permanent: it follows the lifetime score and is never lost.
+// Thresholds live in server configuration.
+enum FieldRank {
+  FIELD_RANK_UNSPECIFIED = 0;
+  FIELD_RANK_SCOUT = 1;
+  FIELD_RANK_WALKER = 2;
+  FIELD_RANK_GUIDE = 3;
+  FIELD_RANK_LOCAL = 4;
+  FIELD_RANK_KEEPER = 5;
+}
+
+enum FieldBoardScope {
+  FIELD_BOARD_SCOPE_UNSPECIFIED = 0;
+  // Everyone scored in one city this week who has not opted out.
+  FIELD_BOARD_SCOPE_CITY_WEEK = 1;
+  // The caller and their friends, across all cities, this week.
+  FIELD_BOARD_SCOPE_FRIENDS_WEEK = 2;
+  // The caller alone: this week against last week.
+  FIELD_BOARD_SCOPE_PERSONAL = 3;
+}
+
+enum FieldBoardMetric {
+  FIELD_BOARD_METRIC_UNSPECIFIED = 0;
+  FIELD_BOARD_METRIC_OVERALL = 1;
+  FIELD_BOARD_METRIC_PLACES_KEPT = 2;
+  FIELD_BOARD_METRIC_DAYS_FINISHED = 3;
+}
+
+message CityRank {
+  string city_id = 1 [(buf.validate.field).string.max_len = 100];
+  string city_name = 2 [(buf.validate.field).string.max_len = 200];
+  FieldRank rank = 3;
+  // Lifetime field score in this city.
+  int64 score = 4 [(buf.validate.field).int64.gte = 0];
+  // Lifetime score that reaches the next rank; 0 at the top rank.
+  int64 next_threshold = 5 [(buf.validate.field).int64.gte = 0];
+}
+
+message FieldProfile {
+  int64 lifetime_score = 1 [(buf.validate.field).int64.gte = 0];
+  FieldRank overall_rank = 2;
+  // Lifetime score that reaches the next overall rank; 0 at the top rank.
+  int64 overall_next_threshold = 3 [(buf.validate.field).int64.gte = 0];
+  int64 week_score = 4 [(buf.validate.field).int64.gte = 0];
+  int64 last_week_score = 5 [(buf.validate.field).int64.gte = 0];
+  // Cities the caller has scored in, highest score first.
+  repeated CityRank cities = 6;
+  // The current season, as PointsEvent.season_id.
+  int32 season_id = 7 [(buf.validate.field).int32.gte = 0];
+  // Lifetime counts.
+  int32 places_kept = 8 [(buf.validate.field).int32.gte = 0];
+  int32 days_finished = 9 [(buf.validate.field).int32.gte = 0];
+}
+
+message GetFieldProfileRequest {}
+
+message GetFieldProfileResponse {
+  FieldProfile profile = 1;
+}
+
+message GetFieldBoardRequest {
+  // Unspecified means FIELD_BOARD_SCOPE_CITY_WEEK.
+  FieldBoardScope scope = 1 [(buf.validate.field).enum.defined_only = true];
+  // City for FIELD_BOARD_SCOPE_CITY_WEEK. Empty means the city of the
+  // caller's current trip, else of their latest trip or search.
+  string city_id = 2 [(buf.validate.field).string.max_len = 100];
+  // Unspecified means FIELD_BOARD_METRIC_OVERALL.
+  FieldBoardMetric metric = 3 [(buf.validate.field).enum.defined_only = true];
+  // 0 is this week, -1 last week and so on. Past weeks may need a plan.
+  int32 season_offset = 4 [(buf.validate.field).int32 = {
+    gte: -52
+    lte: 0
+  }];
+}
+
+message FieldBoardRow {
+  // 1-based place on the board; equal values share it.
+  int32 position = 1 [(buf.validate.field).int32.gte = 1];
+  // Always set. For people who are not the caller's friends this is all that
+  // is shown.
+  string display_name = 2 [(buf.validate.field).string.max_len = 200];
+  // Set only for the caller and their friends.
+  loci.social.PublicUser user = 3;
+  int64 value = 4 [(buf.validate.field).int64.gte = 0];
+  bool is_me = 5;
+  // Lifetime rank in the board's city (overall rank on other boards).
+  FieldRank rank = 6;
+}
+
+message PersonalWeek {
+  int64 this_week = 1 [(buf.validate.field).int64.gte = 0];
+  int64 last_week = 2 [(buf.validate.field).int64.gte = 0];
+  int32 places_kept = 3 [(buf.validate.field).int32.gte = 0];
+  int32 places_kept_last_week = 4 [(buf.validate.field).int32.gte = 0];
+  int32 days_finished = 5 [(buf.validate.field).int32.gte = 0];
+  int32 days_finished_last_week = 6 [(buf.validate.field).int32.gte = 0];
+}
+
+message GetFieldBoardResponse {
+  FieldBoardScope scope = 1;
+  string city_id = 2 [(buf.validate.field).string.max_len = 100];
+  string city_name = 3 [(buf.validate.field).string.max_len = 200];
+  int32 season_id = 4 [(buf.validate.field).int32.gte = 0];
+  google.protobuf.Timestamp season_start = 5;
+  google.protobuf.Timestamp season_end = 6;
+  // At most ten rows, best first.
+  repeated FieldBoardRow top = 7;
+  // The caller, when they have scored and are not already in top.
+  FieldBoardRow me = 8;
+  // The row just above the caller, when it is not already in top.
+  FieldBoardRow above = 9;
+  // People scored on this board.
+  int32 scored_users = 10 [(buf.validate.field).int32.gte = 0];
+  // True when fewer than eight people are on the board.
+  bool too_few = 11;
+  // False when the caller has no friends yet; hide the friends board then.
+  bool friends_available = 12;
+  // Set for FIELD_BOARD_SCOPE_PERSONAL.
+  PersonalWeek personal = 13;
+  // True when a past week was asked for and the caller's plan does not
+  // include it; the rows are empty then.
+  bool history_locked = 14;
+  // True when the caller opted out of city boards, so others do not see them.
+  bool me_hidden = 15;
+}
+
+message MarkStopRequest {
+  string trip_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string day_id = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string stop_id = 3 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  loci.trip.TripStopStatus status = 4 [(buf.validate.field).enum = {
+    defined_only: true
+    not_in: [0]
+  }];
+  // IANA zone of the device, as in DailyCheckInRequest.
+  string timezone = 5 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 64
+  }];
+}
+
+message MarkStopResponse {
+  loci.trip.TripStopStatus status = 1;
+  int32 points_awarded = 2 [(buf.validate.field).int32.gte = 0];
+  // True when this call finished the stop's day.
+  bool day_finished = 3;
+  // True when this call finished the whole trip.
+  bool trip_finished = 4;
+  // The caller's field score this week after the call.
+  int64 week_score = 5 [(buf.validate.field).int64.gte = 0];
 }

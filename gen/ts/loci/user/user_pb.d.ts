@@ -521,6 +521,14 @@ export declare type NotificationSettings = Message<"loci.user.NotificationSettin
    * @generated from field: bool progress_updates = 8;
    */
   progressUpdates: boolean;
+
+  /**
+   * Whether people who are not friends see the caller's display name and
+   * weekly field score on city boards. On unless turned off.
+   *
+   * @generated from field: bool city_board_visible = 9;
+   */
+  cityBoardVisible: boolean;
 };
 
 /**
@@ -581,6 +589,11 @@ export declare type UpdateNotificationSettingsRequest = Message<"loci.user.Updat
    * @generated from field: optional bool progress_updates = 7;
    */
   progressUpdates?: boolean;
+
+  /**
+   * @generated from field: optional bool city_board_visible = 8;
+   */
+  cityBoardVisible?: boolean;
 };
 
 /**

@@ -284,6 +284,52 @@ public struct Loci_Favorites_V1_RemoveFromFavoritesRequest: Sendable {
   public init() {}
 }
 
+/// UpdateFavoriteNote. The caller comes from the session.
+public struct Loci_Favorites_V1_UpdateFavoriteNoteRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var itemID: String = String()
+
+  public var contentType: Loci_Favorites_V1_ContentType = .unspecified
+
+  /// Empty clears the note.
+  public var notes: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Favorites_V1_UpdateFavoriteNoteResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var favorite: Loci_Favorites_V1_FavoriteItem {
+    get {return _favorite ?? Loci_Favorites_V1_FavoriteItem()}
+    set {_favorite = newValue}
+  }
+  /// Returns true if `favorite` has been explicitly set.
+  public var hasFavorite: Bool {return self._favorite != nil}
+  /// Clears the value of `favorite`. Subsequent reads from it will return its default value.
+  public mutating func clearFavorite() {self._favorite = nil}
+
+  /// Field points this call awarded.
+  public var pointsAwarded: Int32 = 0
+
+  /// True when the note counts as the caller's own words. False for short
+  /// notes and ones that repeat the place's description.
+  public var noteCounts: Bool = false
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _favorite: Loci_Favorites_V1_FavoriteItem? = nil
+}
+
 public struct Loci_Favorites_V1_RemoveFromFavoritesResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1397,6 +1443,98 @@ extension Loci_Favorites_V1_RemoveFromFavoritesRequest: SwiftProtobuf.Message, S
     if lhs.userID != rhs.userID {return false}
     if lhs.itemID != rhs.itemID {return false}
     if lhs.contentType != rhs.contentType {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Favorites_V1_UpdateFavoriteNoteRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".UpdateFavoriteNoteRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "item_id"),
+    2: .standard(proto: "content_type"),
+    3: .same(proto: "notes"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.itemID) }()
+      case 2: try { try decoder.decodeSingularEnumField(value: &self.contentType) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.notes) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.itemID.isEmpty {
+      try visitor.visitSingularStringField(value: self.itemID, fieldNumber: 1)
+    }
+    if self.contentType != .unspecified {
+      try visitor.visitSingularEnumField(value: self.contentType, fieldNumber: 2)
+    }
+    if !self.notes.isEmpty {
+      try visitor.visitSingularStringField(value: self.notes, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Favorites_V1_UpdateFavoriteNoteRequest, rhs: Loci_Favorites_V1_UpdateFavoriteNoteRequest) -> Bool {
+    if lhs.itemID != rhs.itemID {return false}
+    if lhs.contentType != rhs.contentType {return false}
+    if lhs.notes != rhs.notes {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Favorites_V1_UpdateFavoriteNoteResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".UpdateFavoriteNoteResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "favorite"),
+    2: .standard(proto: "points_awarded"),
+    3: .standard(proto: "note_counts"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._favorite) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.pointsAwarded) }()
+      case 3: try { try decoder.decodeSingularBoolField(value: &self.noteCounts) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._favorite {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    if self.pointsAwarded != 0 {
+      try visitor.visitSingularInt32Field(value: self.pointsAwarded, fieldNumber: 2)
+    }
+    if self.noteCounts != false {
+      try visitor.visitSingularBoolField(value: self.noteCounts, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Favorites_V1_UpdateFavoriteNoteResponse, rhs: Loci_Favorites_V1_UpdateFavoriteNoteResponse) -> Bool {
+    if lhs._favorite != rhs._favorite {return false}
+    if lhs.pointsAwarded != rhs.pointsAwarded {return false}
+    if lhs.noteCounts != rhs.noteCounts {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
