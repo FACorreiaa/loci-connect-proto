@@ -9,24 +9,25 @@ import Connect
 import Foundation
 import SwiftProtobuf
 
-/// GamificationService is Loci's points layer: a ledger of things a traveller
-/// actually did (checked in, searched, visited a place on the spot, saw a new
-/// city, scouted, walked a trip day), the streak and badges it earns, and
-/// leaderboards shared only with friends.
+/// GamificationService is Loci's field score: a ledger of exploration a
+/// traveller can show they did (kept a place, walked a stop, finished a day or a
+/// trip, reached a new neighborhood or city, visited a place on the spot,
+/// scouted), the permanent rank it earns per city, and weekly boards scoped to a
+/// city or to friends.
 ///
-/// Points are awarded by the server in the code paths that already record those
-/// actions; the client never names a point value. Every award is idempotent, so
-/// a retried request cannot count twice. Every RPC needs a session.
+/// Opening the app and generating recommendations earn nothing. Points are
+/// awarded by the server in the code paths that already record those actions;
+/// the client never names a point value. Every award is idempotent, so a
+/// retried request cannot count twice. Every RPC needs a session.
 public protocol Loci_Gamification_GamificationServiceClientInterface: Sendable {
 
-    /// GetMyProgress is the caller's total, level, streak, badges and today's
-    /// checklist.
+    /// GetMyProgress is the caller's lifetime field score with the older level,
+    /// streak and badge fields kept for clients that still render them.
     @available(iOS 13, *)
     func `getMyProgress`(request: Loci_Gamification_GetMyProgressRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Gamification_GetMyProgressResponse>
 
-    /// DailyCheckIn marks the caller active on their local date. It is idempotent
-    /// per local date: the first call of the day awards points and extends the
-    /// streak, later calls only return progress.
+    /// DailyCheckIn records the device timezone. It no longer awards points or
+    /// extends a streak; points_awarded is always 0.
     @available(iOS 13, *)
     func `dailyCheckIn`(request: Loci_Gamification_DailyCheckInRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Gamification_DailyCheckInResponse>
 
@@ -41,9 +42,28 @@ public protocol Loci_Gamification_GamificationServiceClientInterface: Sendable {
     func `listPointsHistory`(request: Loci_Gamification_ListPointsHistoryRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Gamification_ListPointsHistoryResponse>
 
     /// CompleteTripDay records that the caller walked a day of their own trip.
-    /// Completing every day of a trip also completes the trip.
+    /// Completing every day of a trip also completes the trip. When any stop of
+    /// the day has been marked with MarkStop, the day is judged from those marks
+    /// and stops_done is ignored.
     @available(iOS 13, *)
     func `completeTripDay`(request: Loci_Gamification_CompleteTripDayRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Gamification_CompleteTripDayResponse>
+
+    /// GetFieldProfile is the caller's lifetime field score, rank overall and per
+    /// city, and this week against last week.
+    @available(iOS 13, *)
+    func `getFieldProfile`(request: Loci_Gamification_GetFieldProfileRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Gamification_GetFieldProfileResponse>
+
+    /// GetFieldBoard is one weekly board: the top ten, the caller's own row and
+    /// the row just above it. Never a rank among everyone.
+    @available(iOS 13, *)
+    func `getFieldBoard`(request: Loci_Gamification_GetFieldBoardRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Gamification_GetFieldBoardResponse>
+
+    /// MarkStop marks a stop of the caller's own trip done, skipped, or open
+    /// again. A day is finished when every stop is done or skipped and at least
+    /// one is done; finishing every day finishes the trip. Reopening a stop never
+    /// takes back points already awarded, and marking it again never repays them.
+    @available(iOS 13, *)
+    func `markStop`(request: Loci_Gamification_MarkStopRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Gamification_MarkStopResponse>
 }
 
 /// Concrete implementation of `Loci_Gamification_GamificationServiceClientInterface`.
@@ -79,6 +99,21 @@ public final class Loci_Gamification_GamificationServiceClient: Loci_Gamificatio
         return await self.client.unary(path: "/loci.gamification.GamificationService/CompleteTripDay", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
+    @available(iOS 13, *)
+    public func `getFieldProfile`(request: Loci_Gamification_GetFieldProfileRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Gamification_GetFieldProfileResponse> {
+        return await self.client.unary(path: "/loci.gamification.GamificationService/GetFieldProfile", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `getFieldBoard`(request: Loci_Gamification_GetFieldBoardRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Gamification_GetFieldBoardResponse> {
+        return await self.client.unary(path: "/loci.gamification.GamificationService/GetFieldBoard", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `markStop`(request: Loci_Gamification_MarkStopRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Gamification_MarkStopResponse> {
+        return await self.client.unary(path: "/loci.gamification.GamificationService/MarkStop", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
     public enum Metadata {
         public enum Methods {
             public static let getMyProgress = Connect.MethodSpec(name: "GetMyProgress", service: "loci.gamification.GamificationService", type: .unary)
@@ -86,6 +121,9 @@ public final class Loci_Gamification_GamificationServiceClient: Loci_Gamificatio
             public static let getLeaderboard = Connect.MethodSpec(name: "GetLeaderboard", service: "loci.gamification.GamificationService", type: .unary)
             public static let listPointsHistory = Connect.MethodSpec(name: "ListPointsHistory", service: "loci.gamification.GamificationService", type: .unary)
             public static let completeTripDay = Connect.MethodSpec(name: "CompleteTripDay", service: "loci.gamification.GamificationService", type: .unary)
+            public static let getFieldProfile = Connect.MethodSpec(name: "GetFieldProfile", service: "loci.gamification.GamificationService", type: .unary)
+            public static let getFieldBoard = Connect.MethodSpec(name: "GetFieldBoard", service: "loci.gamification.GamificationService", type: .unary)
+            public static let markStop = Connect.MethodSpec(name: "MarkStop", service: "loci.gamification.GamificationService", type: .unary)
         }
     }
 }

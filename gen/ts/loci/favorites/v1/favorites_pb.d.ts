@@ -232,6 +232,67 @@ export declare type RemoveFromFavoritesRequest = Message<"loci.favorites.v1.Remo
 export declare const RemoveFromFavoritesRequestSchema: GenMessage<RemoveFromFavoritesRequest>;
 
 /**
+ * UpdateFavoriteNote. The caller comes from the session.
+ *
+ * @generated from message loci.favorites.v1.UpdateFavoriteNoteRequest
+ */
+export declare type UpdateFavoriteNoteRequest = Message<"loci.favorites.v1.UpdateFavoriteNoteRequest"> & {
+  /**
+   * @generated from field: string item_id = 1;
+   */
+  itemId: string;
+
+  /**
+   * @generated from field: loci.favorites.v1.ContentType content_type = 2;
+   */
+  contentType: ContentType;
+
+  /**
+   * Empty clears the note.
+   *
+   * @generated from field: string notes = 3;
+   */
+  notes: string;
+};
+
+/**
+ * Describes the message loci.favorites.v1.UpdateFavoriteNoteRequest.
+ * Use `create(UpdateFavoriteNoteRequestSchema)` to create a new message.
+ */
+export declare const UpdateFavoriteNoteRequestSchema: GenMessage<UpdateFavoriteNoteRequest>;
+
+/**
+ * @generated from message loci.favorites.v1.UpdateFavoriteNoteResponse
+ */
+export declare type UpdateFavoriteNoteResponse = Message<"loci.favorites.v1.UpdateFavoriteNoteResponse"> & {
+  /**
+   * @generated from field: loci.favorites.v1.FavoriteItem favorite = 1;
+   */
+  favorite?: FavoriteItem;
+
+  /**
+   * Field points this call awarded.
+   *
+   * @generated from field: int32 points_awarded = 2;
+   */
+  pointsAwarded: number;
+
+  /**
+   * True when the note counts as the caller's own words. False for short
+   * notes and ones that repeat the place's description.
+   *
+   * @generated from field: bool note_counts = 3;
+   */
+  noteCounts: boolean;
+};
+
+/**
+ * Describes the message loci.favorites.v1.UpdateFavoriteNoteResponse.
+ * Use `create(UpdateFavoriteNoteResponseSchema)` to create a new message.
+ */
+export declare const UpdateFavoriteNoteResponseSchema: GenMessage<UpdateFavoriteNoteResponse>;
+
+/**
  * @generated from message loci.favorites.v1.RemoveFromFavoritesResponse
  */
 export declare type RemoveFromFavoritesResponse = Message<"loci.favorites.v1.RemoveFromFavoritesResponse"> & {
@@ -1183,6 +1244,18 @@ export declare const FavoritesService: GenService<{
     methodKind: "unary";
     input: typeof GetNearbyRestaurantsRequestSchema;
     output: typeof GetNearbyRestaurantsResponseSchema;
+  },
+  /**
+   * UpdateFavoriteNote sets the caller's note on one of their saved items
+   * without changing when it was saved. A note of 40 or more characters in the
+   * caller's own words counts once toward their field score.
+   *
+   * @generated from rpc loci.favorites.v1.FavoritesService.UpdateFavoriteNote
+   */
+  updateFavoriteNote: {
+    methodKind: "unary";
+    input: typeof UpdateFavoriteNoteRequestSchema;
+    output: typeof UpdateFavoriteNoteResponseSchema;
   },
 }>;
 
