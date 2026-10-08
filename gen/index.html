@@ -6868,6 +6868,14 @@ its own. </p></td>
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>invite_code</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>Invite code from the link that brought this person here. Unvalidated on
+purpose: a bad code is ignored and never fails the signup. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -7771,7 +7779,7 @@ client_ip; these are what let somebody see and end them.</p></td>
                   <td>expires_at</td>
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Unset: the code does not expire. </p></td>
                 </tr>
               
                 <tr>
@@ -7779,6 +7787,15 @@ client_ip; these are what let somebody see and end them.</p></td>
                   <td><a href="#loci.social.PublicUser">PublicUser</a></td>
                   <td></td>
                   <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>share_text</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Message to send with the link, without the url. Share sheets take the url
+as its own item; append it only where a channel takes one string (SMS,
+a copied message). </p></td>
                 </tr>
               
             </tbody>
@@ -25528,6 +25545,14 @@ the same weather, travel and POI data shown in this column. </p></td>
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>invite_code</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>Invite code from the link that brought this person here. Used only when
+the sign-in creates the account; a bad code is ignored, never an error. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -25687,6 +25712,14 @@ token as-is; Apple puts its SHA-256 hex digest. </p></td>
                   <td></td>
                   <td><p>Apple hands over the person&#39;s name once, on first consent, and never puts
 it in the token. Empty otherwise. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>invite_code</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>Invite code from the link that brought this person here. Used only when
+the sign-in creates the account; a bad code is ignored, never an error. </p></td>
                 </tr>
               
             </tbody>

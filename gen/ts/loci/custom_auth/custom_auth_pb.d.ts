@@ -76,6 +76,14 @@ export declare type OAuthCallbackRequest = Message<"loci.custom_auth.OAuthCallba
    * @generated from field: string state = 3;
    */
   state: string;
+
+  /**
+   * Invite code from the link that brought this person here. Used only when
+   * the sign-in creates the account; a bad code is ignored, never an error.
+   *
+   * @generated from field: optional string invite_code = 4;
+   */
+  inviteCode?: string;
 };
 
 /**
@@ -161,6 +169,14 @@ export declare type SignInWithIDTokenRequest = Message<"loci.custom_auth.SignInW
    * @generated from field: string full_name = 4;
    */
   fullName: string;
+
+  /**
+   * Invite code from the link that brought this person here. Used only when
+   * the sign-in creates the account; a bad code is ignored, never an error.
+   *
+   * @generated from field: optional string invite_code = 5;
+   */
+  inviteCode?: string;
 };
 
 /**

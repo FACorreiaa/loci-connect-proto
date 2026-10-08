@@ -116,6 +116,8 @@ export declare type Invite = Message<"loci.social.Invite"> & {
   url: string;
 
   /**
+   * Unset: the code does not expire.
+   *
    * @generated from field: google.protobuf.Timestamp expires_at = 3;
    */
   expiresAt?: Timestamp;
@@ -124,6 +126,15 @@ export declare type Invite = Message<"loci.social.Invite"> & {
    * @generated from field: loci.social.PublicUser inviter = 4;
    */
   inviter?: PublicUser;
+
+  /**
+   * Message to send with the link, without the url. Share sheets take the url
+   * as its own item; append it only where a channel takes one string (SMS,
+   * a copied message).
+   *
+   * @generated from field: string share_text = 5;
+   */
+  shareText: string;
 };
 
 /**

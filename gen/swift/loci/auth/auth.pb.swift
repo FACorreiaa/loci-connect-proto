@@ -345,11 +345,23 @@ public struct Loci_Auth_RegisterRequest: Sendable {
   /// Clears the value of `role`. Subsequent reads from it will return its default value.
   public mutating func clearRole() {self._role = nil}
 
+  /// Invite code from the link that brought this person here. Unvalidated on
+  /// purpose: a bad code is ignored and never fails the signup.
+  public var inviteCode: String {
+    get {return _inviteCode ?? String()}
+    set {_inviteCode = newValue}
+  }
+  /// Returns true if `inviteCode` has been explicitly set.
+  public var hasInviteCode: Bool {return self._inviteCode != nil}
+  /// Clears the value of `inviteCode`. Subsequent reads from it will return its default value.
+  public mutating func clearInviteCode() {self._inviteCode = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
   fileprivate var _role: String? = nil
+  fileprivate var _inviteCode: String? = nil
 }
 
 /// RefreshTokenRequest for refreshing tokens
@@ -1286,6 +1298,7 @@ extension Loci_Auth_RegisterRequest: SwiftProtobuf.Message, SwiftProtobuf._Messa
     2: .same(proto: "email"),
     3: .same(proto: "password"),
     4: .same(proto: "role"),
+    5: .standard(proto: "invite_code"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1298,6 +1311,7 @@ extension Loci_Auth_RegisterRequest: SwiftProtobuf.Message, SwiftProtobuf._Messa
       case 2: try { try decoder.decodeSingularStringField(value: &self.email) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.password) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self._role) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self._inviteCode) }()
       default: break
       }
     }
@@ -1320,6 +1334,9 @@ extension Loci_Auth_RegisterRequest: SwiftProtobuf.Message, SwiftProtobuf._Messa
     try { if let v = self._role {
       try visitor.visitSingularStringField(value: v, fieldNumber: 4)
     } }()
+    try { if let v = self._inviteCode {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 5)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1328,6 +1345,7 @@ extension Loci_Auth_RegisterRequest: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if lhs.email != rhs.email {return false}
     if lhs.password != rhs.password {return false}
     if lhs._role != rhs._role {return false}
+    if lhs._inviteCode != rhs._inviteCode {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
