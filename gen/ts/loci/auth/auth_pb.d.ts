@@ -407,6 +407,14 @@ export declare type RegisterRequest = Message<"loci.auth.RegisterRequest"> & {
    * @generated from field: optional string role = 4;
    */
   role?: string;
+
+  /**
+   * Invite code from the link that brought this person here. Unvalidated on
+   * purpose: a bad code is ignored and never fails the signup.
+   *
+   * @generated from field: optional string invite_code = 5;
+   */
+  inviteCode?: string;
 };
 
 /**

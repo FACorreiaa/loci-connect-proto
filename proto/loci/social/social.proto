@@ -100,8 +100,13 @@ message FriendRequest {
 message Invite {
   string code = 1 [(buf.validate.field).string.max_len = 50];
   string url = 2 [(buf.validate.field).string.max_len = 2048];
+  // Unset: the code does not expire.
   google.protobuf.Timestamp expires_at = 3;
   PublicUser inviter = 4;
+  // Message to send with the link, without the url. Share sheets take the url
+  // as its own item; append it only where a channel takes one string (SMS,
+  // a copied message).
+  string share_text = 5 [(buf.validate.field).string.max_len = 500];
 }
 
 // ProfileStats are the counts a profile shows. Travel counts come from the
