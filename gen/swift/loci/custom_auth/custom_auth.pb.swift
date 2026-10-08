@@ -109,9 +109,22 @@ public struct Loci_CustomAuth_OAuthCallbackRequest: Sendable {
 
   public var state: String = String()
 
+  /// Invite code from the link that brought this person here. Used only when
+  /// the sign-in creates the account; a bad code is ignored, never an error.
+  public var inviteCode: String {
+    get {return _inviteCode ?? String()}
+    set {_inviteCode = newValue}
+  }
+  /// Returns true if `inviteCode` has been explicitly set.
+  public var hasInviteCode: Bool {return self._inviteCode != nil}
+  /// Clears the value of `inviteCode`. Subsequent reads from it will return its default value.
+  public mutating func clearInviteCode() {self._inviteCode = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
+
+  fileprivate var _inviteCode: String? = nil
 }
 
 /// OAuthCallbackResponse returns tokens after OAuth authentication
@@ -158,9 +171,22 @@ public struct Loci_CustomAuth_SignInWithIDTokenRequest: Sendable {
   /// it in the token. Empty otherwise.
   public var fullName: String = String()
 
+  /// Invite code from the link that brought this person here. Used only when
+  /// the sign-in creates the account; a bad code is ignored, never an error.
+  public var inviteCode: String {
+    get {return _inviteCode ?? String()}
+    set {_inviteCode = newValue}
+  }
+  /// Returns true if `inviteCode` has been explicitly set.
+  public var hasInviteCode: Bool {return self._inviteCode != nil}
+  /// Clears the value of `inviteCode`. Subsequent reads from it will return its default value.
+  public mutating func clearInviteCode() {self._inviteCode = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
+
+  fileprivate var _inviteCode: String? = nil
 }
 
 /// SendPhoneVerificationRequest for initiating phone auth
@@ -379,6 +405,7 @@ extension Loci_CustomAuth_OAuthCallbackRequest: SwiftProtobuf.Message, SwiftProt
     1: .same(proto: "provider"),
     2: .same(proto: "code"),
     3: .same(proto: "state"),
+    4: .standard(proto: "invite_code"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -390,12 +417,17 @@ extension Loci_CustomAuth_OAuthCallbackRequest: SwiftProtobuf.Message, SwiftProt
       case 1: try { try decoder.decodeSingularEnumField(value: &self.provider) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.code) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.state) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self._inviteCode) }()
       default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if self.provider != .unspecified {
       try visitor.visitSingularEnumField(value: self.provider, fieldNumber: 1)
     }
@@ -405,6 +437,9 @@ extension Loci_CustomAuth_OAuthCallbackRequest: SwiftProtobuf.Message, SwiftProt
     if !self.state.isEmpty {
       try visitor.visitSingularStringField(value: self.state, fieldNumber: 3)
     }
+    try { if let v = self._inviteCode {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 4)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -412,6 +447,7 @@ extension Loci_CustomAuth_OAuthCallbackRequest: SwiftProtobuf.Message, SwiftProt
     if lhs.provider != rhs.provider {return false}
     if lhs.code != rhs.code {return false}
     if lhs.state != rhs.state {return false}
+    if lhs._inviteCode != rhs._inviteCode {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -486,6 +522,7 @@ extension Loci_CustomAuth_SignInWithIDTokenRequest: SwiftProtobuf.Message, Swift
     2: .standard(proto: "id_token"),
     3: .same(proto: "nonce"),
     4: .standard(proto: "full_name"),
+    5: .standard(proto: "invite_code"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -498,12 +535,17 @@ extension Loci_CustomAuth_SignInWithIDTokenRequest: SwiftProtobuf.Message, Swift
       case 2: try { try decoder.decodeSingularStringField(value: &self.idToken) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.nonce) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.fullName) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self._inviteCode) }()
       default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if self.provider != .unspecified {
       try visitor.visitSingularEnumField(value: self.provider, fieldNumber: 1)
     }
@@ -516,6 +558,9 @@ extension Loci_CustomAuth_SignInWithIDTokenRequest: SwiftProtobuf.Message, Swift
     if !self.fullName.isEmpty {
       try visitor.visitSingularStringField(value: self.fullName, fieldNumber: 4)
     }
+    try { if let v = self._inviteCode {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 5)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -524,6 +569,7 @@ extension Loci_CustomAuth_SignInWithIDTokenRequest: SwiftProtobuf.Message, Swift
     if lhs.idToken != rhs.idToken {return false}
     if lhs.nonce != rhs.nonce {return false}
     if lhs.fullName != rhs.fullName {return false}
+    if lhs._inviteCode != rhs._inviteCode {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

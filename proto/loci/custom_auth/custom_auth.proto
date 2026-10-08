@@ -47,6 +47,9 @@ message OAuthCallbackRequest {
   }];
   string code = 2 [(buf.validate.field).string = {min_len: 1}];
   string state = 3 [(buf.validate.field).string = {min_len: 1}];
+  // Invite code from the link that brought this person here. Used only when
+  // the sign-in creates the account; a bad code is ignored, never an error.
+  optional string invite_code = 4;
 }
 
 // OAuthCallbackResponse returns tokens after OAuth authentication
@@ -81,6 +84,9 @@ message SignInWithIDTokenRequest {
   // Apple hands over the person's name once, on first consent, and never puts
   // it in the token. Empty otherwise.
   string full_name = 4 [(buf.validate.field).string.max_len = 200];
+  // Invite code from the link that brought this person here. Used only when
+  // the sign-in creates the account; a bad code is ignored, never an error.
+  optional string invite_code = 5;
 }
 
 // =====================

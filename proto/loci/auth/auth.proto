@@ -223,6 +223,9 @@ message RegisterRequest {
       max_len: 100
     }
   }];
+  // Invite code from the link that brought this person here. Unvalidated on
+  // purpose: a bad code is ignored and never fails the signup.
+  optional string invite_code = 5;
 }
 
 // RefreshTokenRequest for refreshing tokens

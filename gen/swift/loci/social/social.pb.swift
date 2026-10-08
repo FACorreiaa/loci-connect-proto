@@ -223,6 +223,7 @@ public struct Loci_Social_Invite: Sendable {
 
   public var url: String = String()
 
+  /// Unset: the code does not expire.
   public var expiresAt: SwiftProtobuf.Google_Protobuf_Timestamp {
     get {return _expiresAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_expiresAt = newValue}
@@ -240,6 +241,11 @@ public struct Loci_Social_Invite: Sendable {
   public var hasInviter: Bool {return self._inviter != nil}
   /// Clears the value of `inviter`. Subsequent reads from it will return its default value.
   public mutating func clearInviter() {self._inviter = nil}
+
+  /// Message to send with the link, without the url. Share sheets take the url
+  /// as its own item; append it only where a channel takes one string (SMS,
+  /// a copied message).
+  public var shareText: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -993,6 +999,7 @@ extension Loci_Social_Invite: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     2: .same(proto: "url"),
     3: .standard(proto: "expires_at"),
     4: .same(proto: "inviter"),
+    5: .standard(proto: "share_text"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1005,6 +1012,7 @@ extension Loci_Social_Invite: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       case 2: try { try decoder.decodeSingularStringField(value: &self.url) }()
       case 3: try { try decoder.decodeSingularMessageField(value: &self._expiresAt) }()
       case 4: try { try decoder.decodeSingularMessageField(value: &self._inviter) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.shareText) }()
       default: break
       }
     }
@@ -1027,6 +1035,9 @@ extension Loci_Social_Invite: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     try { if let v = self._inviter {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     } }()
+    if !self.shareText.isEmpty {
+      try visitor.visitSingularStringField(value: self.shareText, fieldNumber: 5)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1035,6 +1046,7 @@ extension Loci_Social_Invite: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     if lhs.url != rhs.url {return false}
     if lhs._expiresAt != rhs._expiresAt {return false}
     if lhs._inviter != rhs._inviter {return false}
+    if lhs.shareText != rhs.shareText {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
