@@ -115,6 +115,18 @@ message TripStop {
   // has no picture yet; render the usual placeholder then. Filled on City Pack
   // stops (BundleDay.stops).
   optional loci.poi.POIImage image = 11;
+  // Whether the traveller walked or skipped the stop (read side only; set with
+  // GamificationService.MarkStop, ignored by SaveTrip).
+  TripStopStatus status = 12;
+  // When status last changed; absent while the stop is open.
+  google.protobuf.Timestamp status_at = 13;
+}
+
+enum TripStopStatus {
+  TRIP_STOP_STATUS_UNSPECIFIED = 0;
+  TRIP_STOP_STATUS_OPEN = 1;
+  TRIP_STOP_STATUS_DONE = 2;
+  TRIP_STOP_STATUS_SKIPPED = 3;
 }
 
 // TripDay is one day of a trip.
@@ -150,6 +162,9 @@ message TripDay {
   // True when the day includes a move between cities, so the UI can show that
   // sightseeing time is reduced.
   bool travel_day = 9;
+  // When the traveller finished the day (read side only; ignored by
+  // SaveTrip). Absent while unfinished.
+  google.protobuf.Timestamp completed_at = 10;
 }
 
 // TripLeg is travel between two consecutive places in a multi-city trip.

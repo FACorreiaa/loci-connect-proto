@@ -682,6 +682,10 @@ public struct Loci_User_NotificationSettings: Sendable {
   /// Badges earned and a friend passing the caller on the week's leaderboard.
   public var progressUpdates: Bool = false
 
+  /// Whether people who are not friends see the caller's display name and
+  /// weekly field score on city boards. On unless turned off.
+  public var cityBoardVisible: Bool = false
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -768,6 +772,15 @@ public struct Loci_User_UpdateNotificationSettingsRequest: Sendable {
   /// Clears the value of `progressUpdates`. Subsequent reads from it will return its default value.
   public mutating func clearProgressUpdates() {self._progressUpdates = nil}
 
+  public var cityBoardVisible: Bool {
+    get {return _cityBoardVisible ?? false}
+    set {_cityBoardVisible = newValue}
+  }
+  /// Returns true if `cityBoardVisible` has been explicitly set.
+  public var hasCityBoardVisible: Bool {return self._cityBoardVisible != nil}
+  /// Clears the value of `cityBoardVisible`. Subsequent reads from it will return its default value.
+  public mutating func clearCityBoardVisible() {self._cityBoardVisible = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -779,6 +792,7 @@ public struct Loci_User_UpdateNotificationSettingsRequest: Sendable {
   fileprivate var _leaderboardVisible: Bool? = nil
   fileprivate var _streakReminders: Bool? = nil
   fileprivate var _progressUpdates: Bool? = nil
+  fileprivate var _cityBoardVisible: Bool? = nil
 }
 
 public struct Loci_User_RegisterPushDeviceRequest: Sendable {
@@ -1664,6 +1678,7 @@ extension Loci_User_NotificationSettings: SwiftProtobuf.Message, SwiftProtobuf._
     6: .standard(proto: "leaderboard_visible"),
     7: .standard(proto: "streak_reminders"),
     8: .standard(proto: "progress_updates"),
+    9: .standard(proto: "city_board_visible"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1680,6 +1695,7 @@ extension Loci_User_NotificationSettings: SwiftProtobuf.Message, SwiftProtobuf._
       case 6: try { try decoder.decodeSingularBoolField(value: &self.leaderboardVisible) }()
       case 7: try { try decoder.decodeSingularBoolField(value: &self.streakReminders) }()
       case 8: try { try decoder.decodeSingularBoolField(value: &self.progressUpdates) }()
+      case 9: try { try decoder.decodeSingularBoolField(value: &self.cityBoardVisible) }()
       default: break
       }
     }
@@ -1714,6 +1730,9 @@ extension Loci_User_NotificationSettings: SwiftProtobuf.Message, SwiftProtobuf._
     if self.progressUpdates != false {
       try visitor.visitSingularBoolField(value: self.progressUpdates, fieldNumber: 8)
     }
+    if self.cityBoardVisible != false {
+      try visitor.visitSingularBoolField(value: self.cityBoardVisible, fieldNumber: 9)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1726,6 +1745,7 @@ extension Loci_User_NotificationSettings: SwiftProtobuf.Message, SwiftProtobuf._
     if lhs.leaderboardVisible != rhs.leaderboardVisible {return false}
     if lhs.streakReminders != rhs.streakReminders {return false}
     if lhs.progressUpdates != rhs.progressUpdates {return false}
+    if lhs.cityBoardVisible != rhs.cityBoardVisible {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1760,6 +1780,7 @@ extension Loci_User_UpdateNotificationSettingsRequest: SwiftProtobuf.Message, Sw
     5: .standard(proto: "leaderboard_visible"),
     6: .standard(proto: "streak_reminders"),
     7: .standard(proto: "progress_updates"),
+    8: .standard(proto: "city_board_visible"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1775,6 +1796,7 @@ extension Loci_User_UpdateNotificationSettingsRequest: SwiftProtobuf.Message, Sw
       case 5: try { try decoder.decodeSingularBoolField(value: &self._leaderboardVisible) }()
       case 6: try { try decoder.decodeSingularBoolField(value: &self._streakReminders) }()
       case 7: try { try decoder.decodeSingularBoolField(value: &self._progressUpdates) }()
+      case 8: try { try decoder.decodeSingularBoolField(value: &self._cityBoardVisible) }()
       default: break
       }
     }
@@ -1806,6 +1828,9 @@ extension Loci_User_UpdateNotificationSettingsRequest: SwiftProtobuf.Message, Sw
     try { if let v = self._progressUpdates {
       try visitor.visitSingularBoolField(value: v, fieldNumber: 7)
     } }()
+    try { if let v = self._cityBoardVisible {
+      try visitor.visitSingularBoolField(value: v, fieldNumber: 8)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1817,6 +1842,7 @@ extension Loci_User_UpdateNotificationSettingsRequest: SwiftProtobuf.Message, Sw
     if lhs._leaderboardVisible != rhs._leaderboardVisible {return false}
     if lhs._streakReminders != rhs._streakReminders {return false}
     if lhs._progressUpdates != rhs._progressUpdates {return false}
+    if lhs._cityBoardVisible != rhs._cityBoardVisible {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -3798,6 +3798,45 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.favorites.v1.RemoveFromFavoritesResponse'
+  /loci.favorites.v1.FavoritesService/UpdateFavoriteNote:
+    post:
+      tags:
+        - loci.favorites.v1.FavoritesService
+      summary: UpdateFavoriteNote
+      description: |-
+        UpdateFavoriteNote sets the caller's note on one of their saved items
+         without changing when it was saved. A note of 40 or more characters in the
+         caller's own words counts once toward their field score.
+      operationId: loci.favorites.v1.FavoritesService.UpdateFavoriteNote
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.favorites.v1.UpdateFavoriteNoteRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.favorites.v1.UpdateFavoriteNoteResponse'
   /loci.gamification.GamificationService/CompleteTripDay:
     post:
       tags:
@@ -3805,7 +3844,9 @@ paths:
       summary: CompleteTripDay
       description: |-
         CompleteTripDay records that the caller walked a day of their own trip.
-         Completing every day of a trip also completes the trip.
+         Completing every day of a trip also completes the trip. When any stop of
+         the day has been marked with MarkStop, the day is judged from those marks
+         and stops_done is ignored.
       operationId: loci.gamification.GamificationService.CompleteTripDay
       parameters:
         - name: Connect-Protocol-Version
@@ -3842,9 +3883,8 @@ paths:
         - loci.gamification.GamificationService
       summary: DailyCheckIn
       description: |-
-        DailyCheckIn marks the caller active on their local date. It is idempotent
-         per local date: the first call of the day awards points and extends the
-         streak, later calls only return progress.
+        DailyCheckIn records the device timezone. It no longer awards points or
+         extends a streak; points_awarded is always 0.
       operationId: loci.gamification.GamificationService.DailyCheckIn
       parameters:
         - name: Connect-Protocol-Version
@@ -3875,6 +3915,82 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.gamification.DailyCheckInResponse'
+  /loci.gamification.GamificationService/GetFieldBoard:
+    post:
+      tags:
+        - loci.gamification.GamificationService
+      summary: GetFieldBoard
+      description: |-
+        GetFieldBoard is one weekly board: the top ten, the caller's own row and
+         the row just above it. Never a rank among everyone.
+      operationId: loci.gamification.GamificationService.GetFieldBoard
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.gamification.GetFieldBoardRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.gamification.GetFieldBoardResponse'
+  /loci.gamification.GamificationService/GetFieldProfile:
+    post:
+      tags:
+        - loci.gamification.GamificationService
+      summary: GetFieldProfile
+      description: |-
+        GetFieldProfile is the caller's lifetime field score, rank overall and per
+         city, and this week against last week.
+      operationId: loci.gamification.GamificationService.GetFieldProfile
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.gamification.GetFieldProfileRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.gamification.GetFieldProfileResponse'
   /loci.gamification.GamificationService/GetLeaderboard:
     post:
       tags:
@@ -3920,8 +4036,8 @@ paths:
         - loci.gamification.GamificationService
       summary: GetMyProgress
       description: |-
-        GetMyProgress is the caller's total, level, streak, badges and today's
-         checklist.
+        GetMyProgress is the caller's lifetime field score with the older level,
+         streak and badge fields kept for clients that still render them.
       operationId: loci.gamification.GamificationService.GetMyProgress
       parameters:
         - name: Connect-Protocol-Version
@@ -3988,6 +4104,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.gamification.ListPointsHistoryResponse'
+  /loci.gamification.GamificationService/MarkStop:
+    post:
+      tags:
+        - loci.gamification.GamificationService
+      summary: MarkStop
+      description: |-
+        MarkStop marks a stop of the caller's own trip done, skipped, or open
+         again. A day is finished when every stop is done or skipped and at least
+         one is done; finishing every day finishes the trip. Reopening a stop never
+         takes back points already awarded, and marking it again never repays them.
+      operationId: loci.gamification.GamificationService.MarkStop
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.gamification.MarkStopRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.gamification.MarkStopResponse'
   /loci.gastronomy.GastronomyService/GetCityGastronomy:
     post:
       tags:
@@ -17895,6 +18051,48 @@ components:
           title: desserts
       title: RestaurantMenu
       additionalProperties: false
+    loci.favorites.v1.UpdateFavoriteNoteRequest:
+      type: object
+      properties:
+        itemId:
+          type: string
+          title: item_id
+          maxLength: 200
+          minLength: 1
+        contentType:
+          not:
+            enum:
+              - CONTENT_TYPE_UNSPECIFIED
+          title: content_type
+          $ref: '#/components/schemas/loci.favorites.v1.ContentType'
+        notes:
+          type: string
+          title: notes
+          maxLength: 2000
+          description: Empty clears the note.
+      title: UpdateFavoriteNoteRequest
+      additionalProperties: false
+      description: UpdateFavoriteNote. The caller comes from the session.
+    loci.favorites.v1.UpdateFavoriteNoteResponse:
+      type: object
+      properties:
+        favorite:
+          title: favorite
+          $ref: '#/components/schemas/loci.favorites.v1.FavoriteItem'
+        pointsAwarded:
+          type: integer
+          title: points_awarded
+          minimum: 0
+          format: int32
+          description: Field points this call awarded.
+        noteCounts:
+          type: boolean
+          title: note_counts
+          description: |-
+            True when the note counts as the caller's own words. False for short
+             notes and ones that repeat the place's description.
+      title: UpdateFavoriteNoteResponse
+      additionalProperties: false
     loci.gamification.Badge:
       type: object
       properties:
@@ -17915,6 +18113,38 @@ components:
           description: Absent while the badge is still locked.
           $ref: '#/components/schemas/google.protobuf.Timestamp'
       title: Badge
+      additionalProperties: false
+    loci.gamification.CityRank:
+      type: object
+      properties:
+        cityId:
+          type: string
+          title: city_id
+          maxLength: 100
+        cityName:
+          type: string
+          title: city_name
+          maxLength: 200
+        rank:
+          title: rank
+          $ref: '#/components/schemas/loci.gamification.FieldRank'
+        score:
+          type:
+            - integer
+            - string
+          title: score
+          minimum: 0
+          format: int64
+          description: Lifetime field score in this city.
+        nextThreshold:
+          type:
+            - integer
+            - string
+          title: next_threshold
+          minimum: 0
+          format: int64
+          description: Lifetime score that reaches the next rank; 0 at the top rank.
+      title: CityRank
       additionalProperties: false
     loci.gamification.CompleteTripDayRequest:
       type: object
@@ -17997,6 +18227,239 @@ components:
           title: new_badges
           description: Badges this call earned.
       title: DailyCheckInResponse
+      additionalProperties: false
+    loci.gamification.FieldBoardMetric:
+      type: string
+      title: FieldBoardMetric
+      enum:
+        - FIELD_BOARD_METRIC_UNSPECIFIED
+        - FIELD_BOARD_METRIC_OVERALL
+        - FIELD_BOARD_METRIC_PLACES_KEPT
+        - FIELD_BOARD_METRIC_DAYS_FINISHED
+    loci.gamification.FieldBoardRow:
+      type: object
+      properties:
+        position:
+          type: integer
+          title: position
+          minimum: 1
+          format: int32
+          description: 1-based place on the board; equal values share it.
+        displayName:
+          type: string
+          title: display_name
+          maxLength: 200
+          description: |-
+            Always set. For people who are not the caller's friends this is all that
+             is shown.
+        user:
+          title: user
+          description: Set only for the caller and their friends.
+          $ref: '#/components/schemas/loci.social.PublicUser'
+        value:
+          type:
+            - integer
+            - string
+          title: value
+          minimum: 0
+          format: int64
+        isMe:
+          type: boolean
+          title: is_me
+        rank:
+          title: rank
+          description: Lifetime rank in the board's city (overall rank on other boards).
+          $ref: '#/components/schemas/loci.gamification.FieldRank'
+      title: FieldBoardRow
+      additionalProperties: false
+    loci.gamification.FieldBoardScope:
+      type: string
+      title: FieldBoardScope
+      enum:
+        - FIELD_BOARD_SCOPE_UNSPECIFIED
+        - FIELD_BOARD_SCOPE_CITY_WEEK
+        - FIELD_BOARD_SCOPE_FRIENDS_WEEK
+        - FIELD_BOARD_SCOPE_PERSONAL
+    loci.gamification.FieldProfile:
+      type: object
+      properties:
+        lifetimeScore:
+          type:
+            - integer
+            - string
+          title: lifetime_score
+          minimum: 0
+          format: int64
+        overallRank:
+          title: overall_rank
+          $ref: '#/components/schemas/loci.gamification.FieldRank'
+        overallNextThreshold:
+          type:
+            - integer
+            - string
+          title: overall_next_threshold
+          minimum: 0
+          format: int64
+          description: Lifetime score that reaches the next overall rank; 0 at the top rank.
+        weekScore:
+          type:
+            - integer
+            - string
+          title: week_score
+          minimum: 0
+          format: int64
+        lastWeekScore:
+          type:
+            - integer
+            - string
+          title: last_week_score
+          minimum: 0
+          format: int64
+        cities:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.gamification.CityRank'
+          title: cities
+          description: Cities the caller has scored in, highest score first.
+        seasonId:
+          type: integer
+          title: season_id
+          minimum: 0
+          format: int32
+          description: The current season, as PointsEvent.season_id.
+        placesKept:
+          type: integer
+          title: places_kept
+          minimum: 0
+          format: int32
+          description: Lifetime counts.
+        daysFinished:
+          type: integer
+          title: days_finished
+          minimum: 0
+          format: int32
+      title: FieldProfile
+      additionalProperties: false
+    loci.gamification.FieldRank:
+      type: string
+      title: FieldRank
+      enum:
+        - FIELD_RANK_UNSPECIFIED
+        - FIELD_RANK_SCOUT
+        - FIELD_RANK_WALKER
+        - FIELD_RANK_GUIDE
+        - FIELD_RANK_LOCAL
+        - FIELD_RANK_KEEPER
+      description: |-
+        FieldRank is permanent: it follows the lifetime score and is never lost.
+         Thresholds live in server configuration.
+    loci.gamification.GetFieldBoardRequest:
+      type: object
+      properties:
+        scope:
+          title: scope
+          description: Unspecified means FIELD_BOARD_SCOPE_CITY_WEEK.
+          $ref: '#/components/schemas/loci.gamification.FieldBoardScope'
+        cityId:
+          type: string
+          title: city_id
+          maxLength: 100
+          description: |-
+            City for FIELD_BOARD_SCOPE_CITY_WEEK. Empty means the city of the
+             caller's current trip, else of their latest trip or search.
+        metric:
+          title: metric
+          description: Unspecified means FIELD_BOARD_METRIC_OVERALL.
+          $ref: '#/components/schemas/loci.gamification.FieldBoardMetric'
+        seasonOffset:
+          type: integer
+          title: season_offset
+          maximum: 0
+          minimum: -52
+          format: int32
+          description: 0 is this week, -1 last week and so on. Past weeks may need a plan.
+      title: GetFieldBoardRequest
+      additionalProperties: false
+    loci.gamification.GetFieldBoardResponse:
+      type: object
+      properties:
+        scope:
+          title: scope
+          $ref: '#/components/schemas/loci.gamification.FieldBoardScope'
+        cityId:
+          type: string
+          title: city_id
+          maxLength: 100
+        cityName:
+          type: string
+          title: city_name
+          maxLength: 200
+        seasonId:
+          type: integer
+          title: season_id
+          minimum: 0
+          format: int32
+        seasonStart:
+          title: season_start
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        seasonEnd:
+          title: season_end
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        top:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.gamification.FieldBoardRow'
+          title: top
+          description: At most ten rows, best first.
+        me:
+          title: me
+          description: The caller, when they have scored and are not already in top.
+          $ref: '#/components/schemas/loci.gamification.FieldBoardRow'
+        above:
+          title: above
+          description: The row just above the caller, when it is not already in top.
+          $ref: '#/components/schemas/loci.gamification.FieldBoardRow'
+        scoredUsers:
+          type: integer
+          title: scored_users
+          minimum: 0
+          format: int32
+          description: People scored on this board.
+        tooFew:
+          type: boolean
+          title: too_few
+          description: True when fewer than eight people are on the board.
+        friendsAvailable:
+          type: boolean
+          title: friends_available
+          description: False when the caller has no friends yet; hide the friends board then.
+        personal:
+          title: personal
+          description: Set for FIELD_BOARD_SCOPE_PERSONAL.
+          $ref: '#/components/schemas/loci.gamification.PersonalWeek'
+        historyLocked:
+          type: boolean
+          title: history_locked
+          description: |-
+            True when a past week was asked for and the caller's plan does not
+             include it; the rows are empty then.
+        meHidden:
+          type: boolean
+          title: me_hidden
+          description: True when the caller opted out of city boards, so others do not see them.
+      title: GetFieldBoardResponse
+      additionalProperties: false
+    loci.gamification.GetFieldProfileRequest:
+      type: object
+      title: GetFieldProfileRequest
+      additionalProperties: false
+    loci.gamification.GetFieldProfileResponse:
+      type: object
+      properties:
+        profile:
+          title: profile
+          $ref: '#/components/schemas/loci.gamification.FieldProfile'
+      title: GetFieldProfileResponse
       additionalProperties: false
     loci.gamification.GetLeaderboardRequest:
       type: object
@@ -18106,6 +18569,10 @@ components:
           type: string
           title: page_token
           maxLength: 200
+        fieldOnly:
+          type: boolean
+          title: field_only
+          description: Leave out events that count nothing toward the field score.
       title: ListPointsHistoryRequest
       additionalProperties: false
     loci.gamification.ListPointsHistoryResponse:
@@ -18120,6 +18587,106 @@ components:
           type: string
           title: next_page_token
       title: ListPointsHistoryResponse
+      additionalProperties: false
+    loci.gamification.MarkStopRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+        dayId:
+          type: string
+          title: day_id
+          maxLength: 100
+          minLength: 1
+        stopId:
+          type: string
+          title: stop_id
+          maxLength: 100
+          minLength: 1
+        status:
+          not:
+            enum:
+              - TRIP_STOP_STATUS_UNSPECIFIED
+          title: status
+          $ref: '#/components/schemas/loci.trip.TripStopStatus'
+        timezone:
+          type: string
+          title: timezone
+          maxLength: 64
+          minLength: 1
+          description: IANA zone of the device, as in DailyCheckInRequest.
+      title: MarkStopRequest
+      additionalProperties: false
+    loci.gamification.MarkStopResponse:
+      type: object
+      properties:
+        status:
+          title: status
+          $ref: '#/components/schemas/loci.trip.TripStopStatus'
+        pointsAwarded:
+          type: integer
+          title: points_awarded
+          minimum: 0
+          format: int32
+        dayFinished:
+          type: boolean
+          title: day_finished
+          description: True when this call finished the stop's day.
+        tripFinished:
+          type: boolean
+          title: trip_finished
+          description: True when this call finished the whole trip.
+        weekScore:
+          type:
+            - integer
+            - string
+          title: week_score
+          minimum: 0
+          format: int64
+          description: The caller's field score this week after the call.
+      title: MarkStopResponse
+      additionalProperties: false
+    loci.gamification.PersonalWeek:
+      type: object
+      properties:
+        thisWeek:
+          type:
+            - integer
+            - string
+          title: this_week
+          minimum: 0
+          format: int64
+        lastWeek:
+          type:
+            - integer
+            - string
+          title: last_week
+          minimum: 0
+          format: int64
+        placesKept:
+          type: integer
+          title: places_kept
+          minimum: 0
+          format: int32
+        placesKeptLastWeek:
+          type: integer
+          title: places_kept_last_week
+          minimum: 0
+          format: int32
+        daysFinished:
+          type: integer
+          title: days_finished
+          minimum: 0
+          format: int32
+        daysFinishedLastWeek:
+          type: integer
+          title: days_finished_last_week
+          minimum: 0
+          format: int32
+      title: PersonalWeek
       additionalProperties: false
     loci.gamification.PointsEvent:
       type: object
@@ -18144,6 +18711,29 @@ components:
         createdAt:
           title: created_at
           $ref: '#/components/schemas/google.protobuf.Timestamp'
+        cityId:
+          type: string
+          title: city_id
+          maxLength: 100
+          description: The city the event happened in; empty when it has none.
+        cityName:
+          type: string
+          title: city_name
+          maxLength: 200
+        fieldPoints:
+          type: integer
+          title: field_points
+          minimum: 0
+          format: int32
+          description: |-
+            What the event counts toward the field score. points keeps the value it
+             was awarded with; retired kinds have 0 here.
+        seasonId:
+          type: integer
+          title: season_id
+          minimum: 0
+          format: int32
+          description: ISO week of the caller's local date as year*100+week (202641).
       title: PointsEvent
       additionalProperties: false
     loci.gamification.PointsKind:
@@ -18159,6 +18749,11 @@ components:
         - POINTS_KIND_PLACE_SUBMISSION
         - POINTS_KIND_TRIP_DAY_COMPLETED
         - POINTS_KIND_TRIP_COMPLETED
+        - POINTS_KIND_PLACE_SAVED
+        - POINTS_KIND_PLACE_KEPT
+        - POINTS_KIND_STOP_DONE
+        - POINTS_KIND_FIRST_NEIGHBORHOOD
+        - POINTS_KIND_PLACE_NOTE
     loci.gamification.Progress:
       type: object
       properties:
@@ -18169,6 +18764,7 @@ components:
           title: total_points
           minimum: 0
           format: int64
+          description: Lifetime field score.
         level:
           type: integer
           title: level
@@ -18203,6 +18799,11 @@ components:
           $ref: '#/components/schemas/loci.gamification.TodayChecklist'
       title: Progress
       additionalProperties: false
+      description: |-
+        Progress predates the field score. total_points is now the lifetime field
+         score; level, points_to_next_level, the streaks, badges and today are no
+         longer advanced and are kept only for clients that still render them. Use
+         GetFieldProfile instead.
     loci.gamification.TodayChecklist:
       type: object
       properties:
@@ -30242,6 +30843,12 @@ components:
           description: |-
             True when the day includes a move between cities, so the UI can show that
              sightseeing time is reduced.
+        completedAt:
+          title: completed_at
+          description: |-
+            When the traveller finished the day (read side only; ignored by
+             SaveTrip). Absent while unfinished.
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
       title: TripDay
       additionalProperties: false
       description: TripDay is one day of a trip.
@@ -30697,9 +31304,27 @@ components:
              of the linked POI, so it is absent when the stop has no poi_id or that POI
              has no picture yet; render the usual placeholder then. Filled on City Pack
              stops (BundleDay.stops).
+        status:
+          title: status
+          description: |-
+            Whether the traveller walked or skipped the stop (read side only; set with
+             GamificationService.MarkStop, ignored by SaveTrip).
+          $ref: '#/components/schemas/loci.trip.TripStopStatus'
+        statusAt:
+          title: status_at
+          description: When status last changed; absent while the stop is open.
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
       title: TripStop
       additionalProperties: false
       description: TripStop is a single place on a day's timeline.
+    loci.trip.TripStopStatus:
+      type: string
+      title: TripStopStatus
+      enum:
+        - TRIP_STOP_STATUS_UNSPECIFIED
+        - TRIP_STOP_STATUS_OPEN
+        - TRIP_STOP_STATUS_DONE
+        - TRIP_STOP_STATUS_SKIPPED
     loci.trip.TripVisibility:
       type: string
       title: TripVisibility
@@ -30832,6 +31457,12 @@ components:
           type: boolean
           title: progress_updates
           description: Badges earned and a friend passing the caller on the week's leaderboard.
+        cityBoardVisible:
+          type: boolean
+          title: city_board_visible
+          description: |-
+            Whether people who are not friends see the caller's display name and
+             weekly field score on city boards. On unless turned off.
       title: NotificationSettings
       additionalProperties: false
       description: |-
@@ -30956,6 +31587,11 @@ components:
             - boolean
             - "null"
           title: progress_updates
+        cityBoardVisible:
+          type:
+            - boolean
+            - "null"
+          title: city_board_visible
       title: UpdateNotificationSettingsRequest
       additionalProperties: false
     loci.user.UpdateProfileParams:
@@ -31458,14 +32094,16 @@ tags:
     description: FavoritesService provides favorites management functionality
   - name: loci.gamification.GamificationService
     description: |-
-      GamificationService is Loci's points layer: a ledger of things a traveller
-       actually did (checked in, searched, visited a place on the spot, saw a new
-       city, scouted, walked a trip day), the streak and badges it earns, and
-       leaderboards shared only with friends.
+      GamificationService is Loci's field score: a ledger of exploration a
+       traveller can show they did (kept a place, walked a stop, finished a day or a
+       trip, reached a new neighborhood or city, visited a place on the spot,
+       scouted), the permanent rank it earns per city, and weekly boards scoped to a
+       city or to friends.
 
-       Points are awarded by the server in the code paths that already record those
-       actions; the client never names a point value. Every award is idempotent, so
-       a retried request cannot count twice. Every RPC needs a session.
+       Opening the app and generating recommendations earn nothing. Points are
+       awarded by the server in the code paths that already record those actions;
+       the client never names a point value. Every award is idempotent, so a
+       retried request cannot count twice. Every RPC needs a session.
   - name: loci.integrations.IntegrationService
     description: |-
       IntegrationService registers external MCP servers that Loci may call on the
