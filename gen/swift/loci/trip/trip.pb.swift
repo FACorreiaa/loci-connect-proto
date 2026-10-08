@@ -120,6 +120,48 @@ public enum Loci_Trip_TripPace: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
+public enum Loci_Trip_TripStopStatus: SwiftProtobuf.Enum, Swift.CaseIterable {
+  public typealias RawValue = Int
+  case unspecified // = 0
+  case `open` // = 1
+  case done // = 2
+  case skipped // = 3
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .unspecified
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unspecified
+    case 1: self = .open
+    case 2: self = .done
+    case 3: self = .skipped
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .unspecified: return 0
+    case .open: return 1
+    case .done: return 2
+    case .skipped: return 3
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static let allCases: [Loci_Trip_TripStopStatus] = [
+    .unspecified,
+    .open,
+    .done,
+    .skipped,
+  ]
+
+}
+
 public enum Loci_Trip_FlightCabin: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
@@ -465,6 +507,23 @@ public struct Loci_Trip_TripStop: @unchecked Sendable {
   /// Clears the value of `image`. Subsequent reads from it will return its default value.
   public mutating func clearImage() {_uniqueStorage()._image = nil}
 
+  /// Whether the traveller walked or skipped the stop (read side only; set with
+  /// GamificationService.MarkStop, ignored by SaveTrip).
+  public var status: Loci_Trip_TripStopStatus {
+    get {return _storage._status}
+    set {_uniqueStorage()._status = newValue}
+  }
+
+  /// When status last changed; absent while the stop is open.
+  public var statusAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _storage._statusAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_uniqueStorage()._statusAt = newValue}
+  }
+  /// Returns true if `statusAt` has been explicitly set.
+  public var hasStatusAt: Bool {return _storage._statusAt != nil}
+  /// Clears the value of `statusAt`. Subsequent reads from it will return its default value.
+  public mutating func clearStatusAt() {_uniqueStorage()._statusAt = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -530,6 +589,17 @@ public struct Loci_Trip_TripDay: Sendable {
   /// sightseeing time is reduced.
   public var travelDay: Bool = false
 
+  /// When the traveller finished the day (read side only; ignored by
+  /// SaveTrip). Absent while unfinished.
+  public var completedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _completedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_completedAt = newValue}
+  }
+  /// Returns true if `completedAt` has been explicitly set.
+  public var hasCompletedAt: Bool {return self._completedAt != nil}
+  /// Clears the value of `completedAt`. Subsequent reads from it will return its default value.
+  public mutating func clearCompletedAt() {self._completedAt = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -538,6 +608,7 @@ public struct Loci_Trip_TripDay: Sendable {
   fileprivate var _cityID: String? = nil
   fileprivate var _cityLat: Double? = nil
   fileprivate var _cityLon: Double? = nil
+  fileprivate var _completedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
 /// TripLeg is travel between two consecutive places in a multi-city trip.
@@ -1855,6 +1926,15 @@ extension Loci_Trip_TripPace: SwiftProtobuf._ProtoNameProviding {
   ]
 }
 
+extension Loci_Trip_TripStopStatus: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "TRIP_STOP_STATUS_UNSPECIFIED"),
+    1: .same(proto: "TRIP_STOP_STATUS_OPEN"),
+    2: .same(proto: "TRIP_STOP_STATUS_DONE"),
+    3: .same(proto: "TRIP_STOP_STATUS_SKIPPED"),
+  ]
+}
+
 extension Loci_Trip_FlightCabin: SwiftProtobuf._ProtoNameProviding {
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "FLIGHT_CABIN_UNSPECIFIED"),
@@ -1975,6 +2055,8 @@ extension Loci_Trip_TripStop: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     9: .same(proto: "poi"),
     10: .standard(proto: "recommendation_trace"),
     11: .same(proto: "image"),
+    12: .same(proto: "status"),
+    13: .standard(proto: "status_at"),
   ]
 
   fileprivate class _StorageClass {
@@ -1989,6 +2071,8 @@ extension Loci_Trip_TripStop: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _poi: Loci_Poi_POIDetailedInfo? = nil
     var _recommendationTrace: Loci_Recommendation_RecommendationTrace? = nil
     var _image: Loci_Poi_POIImage? = nil
+    var _status: Loci_Trip_TripStopStatus = .unspecified
+    var _statusAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -2014,6 +2098,8 @@ extension Loci_Trip_TripStop: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       _poi = source._poi
       _recommendationTrace = source._recommendationTrace
       _image = source._image
+      _status = source._status
+      _statusAt = source._statusAt
     }
   }
 
@@ -2043,6 +2129,8 @@ extension Loci_Trip_TripStop: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         case 9: try { try decoder.decodeSingularMessageField(value: &_storage._poi) }()
         case 10: try { try decoder.decodeSingularMessageField(value: &_storage._recommendationTrace) }()
         case 11: try { try decoder.decodeSingularMessageField(value: &_storage._image) }()
+        case 12: try { try decoder.decodeSingularEnumField(value: &_storage._status) }()
+        case 13: try { try decoder.decodeSingularMessageField(value: &_storage._statusAt) }()
         default: break
         }
       }
@@ -2088,6 +2176,12 @@ extension Loci_Trip_TripStop: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       try { if let v = _storage._image {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
       } }()
+      if _storage._status != .unspecified {
+        try visitor.visitSingularEnumField(value: _storage._status, fieldNumber: 12)
+      }
+      try { if let v = _storage._statusAt {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2108,6 +2202,8 @@ extension Loci_Trip_TripStop: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         if _storage._poi != rhs_storage._poi {return false}
         if _storage._recommendationTrace != rhs_storage._recommendationTrace {return false}
         if _storage._image != rhs_storage._image {return false}
+        if _storage._status != rhs_storage._status {return false}
+        if _storage._statusAt != rhs_storage._statusAt {return false}
         return true
       }
       if !storagesAreEqual {return false}
@@ -2129,6 +2225,7 @@ extension Loci_Trip_TripDay: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
     7: .standard(proto: "city_lat"),
     8: .standard(proto: "city_lon"),
     9: .standard(proto: "travel_day"),
+    10: .standard(proto: "completed_at"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2146,6 +2243,7 @@ extension Loci_Trip_TripDay: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
       case 7: try { try decoder.decodeSingularDoubleField(value: &self._cityLat) }()
       case 8: try { try decoder.decodeSingularDoubleField(value: &self._cityLon) }()
       case 9: try { try decoder.decodeSingularBoolField(value: &self.travelDay) }()
+      case 10: try { try decoder.decodeSingularMessageField(value: &self._completedAt) }()
       default: break
       }
     }
@@ -2183,6 +2281,9 @@ extension Loci_Trip_TripDay: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
     if self.travelDay != false {
       try visitor.visitSingularBoolField(value: self.travelDay, fieldNumber: 9)
     }
+    try { if let v = self._completedAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2196,6 +2297,7 @@ extension Loci_Trip_TripDay: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
     if lhs._cityLat != rhs._cityLat {return false}
     if lhs._cityLon != rhs._cityLon {return false}
     if lhs.travelDay != rhs.travelDay {return false}
+    if lhs._completedAt != rhs._completedAt {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

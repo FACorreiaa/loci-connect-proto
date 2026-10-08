@@ -63,6 +63,11 @@ service FavoritesService {
 
   // Get nearby restaurants
   rpc GetNearbyRestaurants(GetNearbyRestaurantsRequest) returns (GetNearbyRestaurantsResponse);
+
+  // UpdateFavoriteNote sets the caller's note on one of their saved items
+  // without changing when it was saved. A note of 40 or more characters in the
+  // caller's own words counts once toward their field score.
+  rpc UpdateFavoriteNote(UpdateFavoriteNoteRequest) returns (UpdateFavoriteNoteResponse);
 }
 
 // AddToFavorites
@@ -93,6 +98,29 @@ message RemoveFromFavoritesRequest {
   string user_id = 1 [(buf.validate.field).string.min_len = 1];
   string item_id = 2 [(buf.validate.field).string.min_len = 1];
   ContentType content_type = 3;
+}
+
+// UpdateFavoriteNote. The caller comes from the session.
+message UpdateFavoriteNoteRequest {
+  string item_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
+  ContentType content_type = 2 [(buf.validate.field).enum = {
+    defined_only: true
+    not_in: [0]
+  }];
+  // Empty clears the note.
+  string notes = 3 [(buf.validate.field).string.max_len = 2000];
+}
+
+message UpdateFavoriteNoteResponse {
+  FavoriteItem favorite = 1;
+  // Field points this call awarded.
+  int32 points_awarded = 2 [(buf.validate.field).int32.gte = 0];
+  // True when the note counts as the caller's own words. False for short
+  // notes and ones that repeat the place's description.
+  bool note_counts = 3;
 }
 
 message RemoveFromFavoritesResponse {

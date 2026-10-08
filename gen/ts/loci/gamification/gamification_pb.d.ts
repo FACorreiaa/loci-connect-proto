@@ -6,6 +6,7 @@ import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobu
 import type { Message } from "@bufbuild/protobuf";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
 import type { PublicUser } from "../social/social_pb";
+import type { TripStopStatus } from "../trip/trip_pb";
 
 /**
  * Describes the file loci/gamification/gamification.proto.
@@ -74,10 +75,17 @@ export declare type TodayChecklist = Message<"loci.gamification.TodayChecklist">
 export declare const TodayChecklistSchema: GenMessage<TodayChecklist>;
 
 /**
+ * Progress predates the field score. total_points is now the lifetime field
+ * score; level, points_to_next_level, the streaks, badges and today are no
+ * longer advanced and are kept only for clients that still render them. Use
+ * GetFieldProfile instead.
+ *
  * @generated from message loci.gamification.Progress
  */
 export declare type Progress = Message<"loci.gamification.Progress"> & {
   /**
+   * Lifetime field score.
+   *
    * @generated from field: int64 total_points = 1;
    */
   totalPoints: bigint;
@@ -320,6 +328,33 @@ export declare type PointsEvent = Message<"loci.gamification.PointsEvent"> & {
    * @generated from field: google.protobuf.Timestamp created_at = 5;
    */
   createdAt?: Timestamp;
+
+  /**
+   * The city the event happened in; empty when it has none.
+   *
+   * @generated from field: string city_id = 6;
+   */
+  cityId: string;
+
+  /**
+   * @generated from field: string city_name = 7;
+   */
+  cityName: string;
+
+  /**
+   * What the event counts toward the field score. points keeps the value it
+   * was awarded with; retired kinds have 0 here.
+   *
+   * @generated from field: int32 field_points = 8;
+   */
+  fieldPoints: number;
+
+  /**
+   * ISO week of the caller's local date as year*100+week (202641).
+   *
+   * @generated from field: int32 season_id = 9;
+   */
+  seasonId: number;
 };
 
 /**
@@ -341,6 +376,13 @@ export declare type ListPointsHistoryRequest = Message<"loci.gamification.ListPo
    * @generated from field: string page_token = 2;
    */
   pageToken: string;
+
+  /**
+   * Leave out events that count nothing toward the field score.
+   *
+   * @generated from field: bool field_only = 3;
+   */
+  fieldOnly: boolean;
 };
 
 /**
@@ -437,6 +479,454 @@ export declare type CompleteTripDayResponse = Message<"loci.gamification.Complet
 export declare const CompleteTripDayResponseSchema: GenMessage<CompleteTripDayResponse>;
 
 /**
+ * @generated from message loci.gamification.CityRank
+ */
+export declare type CityRank = Message<"loci.gamification.CityRank"> & {
+  /**
+   * @generated from field: string city_id = 1;
+   */
+  cityId: string;
+
+  /**
+   * @generated from field: string city_name = 2;
+   */
+  cityName: string;
+
+  /**
+   * @generated from field: loci.gamification.FieldRank rank = 3;
+   */
+  rank: FieldRank;
+
+  /**
+   * Lifetime field score in this city.
+   *
+   * @generated from field: int64 score = 4;
+   */
+  score: bigint;
+
+  /**
+   * Lifetime score that reaches the next rank; 0 at the top rank.
+   *
+   * @generated from field: int64 next_threshold = 5;
+   */
+  nextThreshold: bigint;
+};
+
+/**
+ * Describes the message loci.gamification.CityRank.
+ * Use `create(CityRankSchema)` to create a new message.
+ */
+export declare const CityRankSchema: GenMessage<CityRank>;
+
+/**
+ * @generated from message loci.gamification.FieldProfile
+ */
+export declare type FieldProfile = Message<"loci.gamification.FieldProfile"> & {
+  /**
+   * @generated from field: int64 lifetime_score = 1;
+   */
+  lifetimeScore: bigint;
+
+  /**
+   * @generated from field: loci.gamification.FieldRank overall_rank = 2;
+   */
+  overallRank: FieldRank;
+
+  /**
+   * Lifetime score that reaches the next overall rank; 0 at the top rank.
+   *
+   * @generated from field: int64 overall_next_threshold = 3;
+   */
+  overallNextThreshold: bigint;
+
+  /**
+   * @generated from field: int64 week_score = 4;
+   */
+  weekScore: bigint;
+
+  /**
+   * @generated from field: int64 last_week_score = 5;
+   */
+  lastWeekScore: bigint;
+
+  /**
+   * Cities the caller has scored in, highest score first.
+   *
+   * @generated from field: repeated loci.gamification.CityRank cities = 6;
+   */
+  cities: CityRank[];
+
+  /**
+   * The current season, as PointsEvent.season_id.
+   *
+   * @generated from field: int32 season_id = 7;
+   */
+  seasonId: number;
+
+  /**
+   * Lifetime counts.
+   *
+   * @generated from field: int32 places_kept = 8;
+   */
+  placesKept: number;
+
+  /**
+   * @generated from field: int32 days_finished = 9;
+   */
+  daysFinished: number;
+};
+
+/**
+ * Describes the message loci.gamification.FieldProfile.
+ * Use `create(FieldProfileSchema)` to create a new message.
+ */
+export declare const FieldProfileSchema: GenMessage<FieldProfile>;
+
+/**
+ * @generated from message loci.gamification.GetFieldProfileRequest
+ */
+export declare type GetFieldProfileRequest = Message<"loci.gamification.GetFieldProfileRequest"> & {
+};
+
+/**
+ * Describes the message loci.gamification.GetFieldProfileRequest.
+ * Use `create(GetFieldProfileRequestSchema)` to create a new message.
+ */
+export declare const GetFieldProfileRequestSchema: GenMessage<GetFieldProfileRequest>;
+
+/**
+ * @generated from message loci.gamification.GetFieldProfileResponse
+ */
+export declare type GetFieldProfileResponse = Message<"loci.gamification.GetFieldProfileResponse"> & {
+  /**
+   * @generated from field: loci.gamification.FieldProfile profile = 1;
+   */
+  profile?: FieldProfile;
+};
+
+/**
+ * Describes the message loci.gamification.GetFieldProfileResponse.
+ * Use `create(GetFieldProfileResponseSchema)` to create a new message.
+ */
+export declare const GetFieldProfileResponseSchema: GenMessage<GetFieldProfileResponse>;
+
+/**
+ * @generated from message loci.gamification.GetFieldBoardRequest
+ */
+export declare type GetFieldBoardRequest = Message<"loci.gamification.GetFieldBoardRequest"> & {
+  /**
+   * Unspecified means FIELD_BOARD_SCOPE_CITY_WEEK.
+   *
+   * @generated from field: loci.gamification.FieldBoardScope scope = 1;
+   */
+  scope: FieldBoardScope;
+
+  /**
+   * City for FIELD_BOARD_SCOPE_CITY_WEEK. Empty means the city of the
+   * caller's current trip, else of their latest trip or search.
+   *
+   * @generated from field: string city_id = 2;
+   */
+  cityId: string;
+
+  /**
+   * Unspecified means FIELD_BOARD_METRIC_OVERALL.
+   *
+   * @generated from field: loci.gamification.FieldBoardMetric metric = 3;
+   */
+  metric: FieldBoardMetric;
+
+  /**
+   * 0 is this week, -1 last week and so on. Past weeks may need a plan.
+   *
+   * @generated from field: int32 season_offset = 4;
+   */
+  seasonOffset: number;
+};
+
+/**
+ * Describes the message loci.gamification.GetFieldBoardRequest.
+ * Use `create(GetFieldBoardRequestSchema)` to create a new message.
+ */
+export declare const GetFieldBoardRequestSchema: GenMessage<GetFieldBoardRequest>;
+
+/**
+ * @generated from message loci.gamification.FieldBoardRow
+ */
+export declare type FieldBoardRow = Message<"loci.gamification.FieldBoardRow"> & {
+  /**
+   * 1-based place on the board; equal values share it.
+   *
+   * @generated from field: int32 position = 1;
+   */
+  position: number;
+
+  /**
+   * Always set. For people who are not the caller's friends this is all that
+   * is shown.
+   *
+   * @generated from field: string display_name = 2;
+   */
+  displayName: string;
+
+  /**
+   * Set only for the caller and their friends.
+   *
+   * @generated from field: loci.social.PublicUser user = 3;
+   */
+  user?: PublicUser;
+
+  /**
+   * @generated from field: int64 value = 4;
+   */
+  value: bigint;
+
+  /**
+   * @generated from field: bool is_me = 5;
+   */
+  isMe: boolean;
+
+  /**
+   * Lifetime rank in the board's city (overall rank on other boards).
+   *
+   * @generated from field: loci.gamification.FieldRank rank = 6;
+   */
+  rank: FieldRank;
+};
+
+/**
+ * Describes the message loci.gamification.FieldBoardRow.
+ * Use `create(FieldBoardRowSchema)` to create a new message.
+ */
+export declare const FieldBoardRowSchema: GenMessage<FieldBoardRow>;
+
+/**
+ * @generated from message loci.gamification.PersonalWeek
+ */
+export declare type PersonalWeek = Message<"loci.gamification.PersonalWeek"> & {
+  /**
+   * @generated from field: int64 this_week = 1;
+   */
+  thisWeek: bigint;
+
+  /**
+   * @generated from field: int64 last_week = 2;
+   */
+  lastWeek: bigint;
+
+  /**
+   * @generated from field: int32 places_kept = 3;
+   */
+  placesKept: number;
+
+  /**
+   * @generated from field: int32 places_kept_last_week = 4;
+   */
+  placesKeptLastWeek: number;
+
+  /**
+   * @generated from field: int32 days_finished = 5;
+   */
+  daysFinished: number;
+
+  /**
+   * @generated from field: int32 days_finished_last_week = 6;
+   */
+  daysFinishedLastWeek: number;
+};
+
+/**
+ * Describes the message loci.gamification.PersonalWeek.
+ * Use `create(PersonalWeekSchema)` to create a new message.
+ */
+export declare const PersonalWeekSchema: GenMessage<PersonalWeek>;
+
+/**
+ * @generated from message loci.gamification.GetFieldBoardResponse
+ */
+export declare type GetFieldBoardResponse = Message<"loci.gamification.GetFieldBoardResponse"> & {
+  /**
+   * @generated from field: loci.gamification.FieldBoardScope scope = 1;
+   */
+  scope: FieldBoardScope;
+
+  /**
+   * @generated from field: string city_id = 2;
+   */
+  cityId: string;
+
+  /**
+   * @generated from field: string city_name = 3;
+   */
+  cityName: string;
+
+  /**
+   * @generated from field: int32 season_id = 4;
+   */
+  seasonId: number;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp season_start = 5;
+   */
+  seasonStart?: Timestamp;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp season_end = 6;
+   */
+  seasonEnd?: Timestamp;
+
+  /**
+   * At most ten rows, best first.
+   *
+   * @generated from field: repeated loci.gamification.FieldBoardRow top = 7;
+   */
+  top: FieldBoardRow[];
+
+  /**
+   * The caller, when they have scored and are not already in top.
+   *
+   * @generated from field: loci.gamification.FieldBoardRow me = 8;
+   */
+  me?: FieldBoardRow;
+
+  /**
+   * The row just above the caller, when it is not already in top.
+   *
+   * @generated from field: loci.gamification.FieldBoardRow above = 9;
+   */
+  above?: FieldBoardRow;
+
+  /**
+   * People scored on this board.
+   *
+   * @generated from field: int32 scored_users = 10;
+   */
+  scoredUsers: number;
+
+  /**
+   * True when fewer than eight people are on the board.
+   *
+   * @generated from field: bool too_few = 11;
+   */
+  tooFew: boolean;
+
+  /**
+   * False when the caller has no friends yet; hide the friends board then.
+   *
+   * @generated from field: bool friends_available = 12;
+   */
+  friendsAvailable: boolean;
+
+  /**
+   * Set for FIELD_BOARD_SCOPE_PERSONAL.
+   *
+   * @generated from field: loci.gamification.PersonalWeek personal = 13;
+   */
+  personal?: PersonalWeek;
+
+  /**
+   * True when a past week was asked for and the caller's plan does not
+   * include it; the rows are empty then.
+   *
+   * @generated from field: bool history_locked = 14;
+   */
+  historyLocked: boolean;
+
+  /**
+   * True when the caller opted out of city boards, so others do not see them.
+   *
+   * @generated from field: bool me_hidden = 15;
+   */
+  meHidden: boolean;
+};
+
+/**
+ * Describes the message loci.gamification.GetFieldBoardResponse.
+ * Use `create(GetFieldBoardResponseSchema)` to create a new message.
+ */
+export declare const GetFieldBoardResponseSchema: GenMessage<GetFieldBoardResponse>;
+
+/**
+ * @generated from message loci.gamification.MarkStopRequest
+ */
+export declare type MarkStopRequest = Message<"loci.gamification.MarkStopRequest"> & {
+  /**
+   * @generated from field: string trip_id = 1;
+   */
+  tripId: string;
+
+  /**
+   * @generated from field: string day_id = 2;
+   */
+  dayId: string;
+
+  /**
+   * @generated from field: string stop_id = 3;
+   */
+  stopId: string;
+
+  /**
+   * @generated from field: loci.trip.TripStopStatus status = 4;
+   */
+  status: TripStopStatus;
+
+  /**
+   * IANA zone of the device, as in DailyCheckInRequest.
+   *
+   * @generated from field: string timezone = 5;
+   */
+  timezone: string;
+};
+
+/**
+ * Describes the message loci.gamification.MarkStopRequest.
+ * Use `create(MarkStopRequestSchema)` to create a new message.
+ */
+export declare const MarkStopRequestSchema: GenMessage<MarkStopRequest>;
+
+/**
+ * @generated from message loci.gamification.MarkStopResponse
+ */
+export declare type MarkStopResponse = Message<"loci.gamification.MarkStopResponse"> & {
+  /**
+   * @generated from field: loci.trip.TripStopStatus status = 1;
+   */
+  status: TripStopStatus;
+
+  /**
+   * @generated from field: int32 points_awarded = 2;
+   */
+  pointsAwarded: number;
+
+  /**
+   * True when this call finished the stop's day.
+   *
+   * @generated from field: bool day_finished = 3;
+   */
+  dayFinished: boolean;
+
+  /**
+   * True when this call finished the whole trip.
+   *
+   * @generated from field: bool trip_finished = 4;
+   */
+  tripFinished: boolean;
+
+  /**
+   * The caller's field score this week after the call.
+   *
+   * @generated from field: int64 week_score = 5;
+   */
+  weekScore: bigint;
+};
+
+/**
+ * Describes the message loci.gamification.MarkStopResponse.
+ * Use `create(MarkStopResponseSchema)` to create a new message.
+ */
+export declare const MarkStopResponseSchema: GenMessage<MarkStopResponse>;
+
+/**
  * @generated from enum loci.gamification.PointsKind
  */
 export enum PointsKind {
@@ -446,14 +936,19 @@ export enum PointsKind {
   UNSPECIFIED = 0,
 
   /**
-   * @generated from enum value: POINTS_KIND_DAILY_CHECK_IN = 1;
+   * Retired: no longer awarded. Older rows keep their history but count 0
+   * toward the field score.
+   *
+   * @generated from enum value: POINTS_KIND_DAILY_CHECK_IN = 1 [deprecated = true];
+   * @deprecated
    */
   DAILY_CHECK_IN = 1,
 
   /**
-   * The first search or chat turn of a local day.
+   * Retired, as POINTS_KIND_DAILY_CHECK_IN.
    *
-   * @generated from enum value: POINTS_KIND_DAILY_SEARCH = 2;
+   * @generated from enum value: POINTS_KIND_DAILY_SEARCH = 2 [deprecated = true];
+   * @deprecated
    */
   DAILY_SEARCH = 2,
 
@@ -494,6 +989,41 @@ export enum PointsKind {
    * @generated from enum value: POINTS_KIND_TRIP_COMPLETED = 8;
    */
   TRIP_COMPLETED = 8,
+
+  /**
+   * A place saved for the first time. Saving it again never pays again.
+   *
+   * @generated from enum value: POINTS_KIND_PLACE_SAVED = 9;
+   */
+  PLACE_SAVED = 9,
+
+  /**
+   * A saved place still kept seven days later.
+   *
+   * @generated from enum value: POINTS_KIND_PLACE_KEPT = 10;
+   */
+  PLACE_KEPT = 10,
+
+  /**
+   * A stop of the caller's trip marked done.
+   *
+   * @generated from enum value: POINTS_KIND_STOP_DONE = 11;
+   */
+  STOP_DONE = 11,
+
+  /**
+   * The first place in a neighborhood of a city.
+   *
+   * @generated from enum value: POINTS_KIND_FIRST_NEIGHBORHOOD = 12;
+   */
+  FIRST_NEIGHBORHOOD = 12,
+
+  /**
+   * A note of the caller's own words on a saved place.
+   *
+   * @generated from enum value: POINTS_KIND_PLACE_NOTE = 13;
+   */
+  PLACE_NOTE = 13,
 }
 
 /**
@@ -568,21 +1098,132 @@ export enum LeaderboardMetric {
 export declare const LeaderboardMetricSchema: GenEnum<LeaderboardMetric>;
 
 /**
- * GamificationService is Loci's points layer: a ledger of things a traveller
- * actually did (checked in, searched, visited a place on the spot, saw a new
- * city, scouted, walked a trip day), the streak and badges it earns, and
- * leaderboards shared only with friends.
+ * FieldRank is permanent: it follows the lifetime score and is never lost.
+ * Thresholds live in server configuration.
  *
- * Points are awarded by the server in the code paths that already record those
- * actions; the client never names a point value. Every award is idempotent, so
- * a retried request cannot count twice. Every RPC needs a session.
+ * @generated from enum loci.gamification.FieldRank
+ */
+export enum FieldRank {
+  /**
+   * @generated from enum value: FIELD_RANK_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: FIELD_RANK_SCOUT = 1;
+   */
+  SCOUT = 1,
+
+  /**
+   * @generated from enum value: FIELD_RANK_WALKER = 2;
+   */
+  WALKER = 2,
+
+  /**
+   * @generated from enum value: FIELD_RANK_GUIDE = 3;
+   */
+  GUIDE = 3,
+
+  /**
+   * @generated from enum value: FIELD_RANK_LOCAL = 4;
+   */
+  LOCAL = 4,
+
+  /**
+   * @generated from enum value: FIELD_RANK_KEEPER = 5;
+   */
+  KEEPER = 5,
+}
+
+/**
+ * Describes the enum loci.gamification.FieldRank.
+ */
+export declare const FieldRankSchema: GenEnum<FieldRank>;
+
+/**
+ * @generated from enum loci.gamification.FieldBoardScope
+ */
+export enum FieldBoardScope {
+  /**
+   * @generated from enum value: FIELD_BOARD_SCOPE_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * Everyone scored in one city this week who has not opted out.
+   *
+   * @generated from enum value: FIELD_BOARD_SCOPE_CITY_WEEK = 1;
+   */
+  CITY_WEEK = 1,
+
+  /**
+   * The caller and their friends, across all cities, this week.
+   *
+   * @generated from enum value: FIELD_BOARD_SCOPE_FRIENDS_WEEK = 2;
+   */
+  FRIENDS_WEEK = 2,
+
+  /**
+   * The caller alone: this week against last week.
+   *
+   * @generated from enum value: FIELD_BOARD_SCOPE_PERSONAL = 3;
+   */
+  PERSONAL = 3,
+}
+
+/**
+ * Describes the enum loci.gamification.FieldBoardScope.
+ */
+export declare const FieldBoardScopeSchema: GenEnum<FieldBoardScope>;
+
+/**
+ * @generated from enum loci.gamification.FieldBoardMetric
+ */
+export enum FieldBoardMetric {
+  /**
+   * @generated from enum value: FIELD_BOARD_METRIC_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: FIELD_BOARD_METRIC_OVERALL = 1;
+   */
+  OVERALL = 1,
+
+  /**
+   * @generated from enum value: FIELD_BOARD_METRIC_PLACES_KEPT = 2;
+   */
+  PLACES_KEPT = 2,
+
+  /**
+   * @generated from enum value: FIELD_BOARD_METRIC_DAYS_FINISHED = 3;
+   */
+  DAYS_FINISHED = 3,
+}
+
+/**
+ * Describes the enum loci.gamification.FieldBoardMetric.
+ */
+export declare const FieldBoardMetricSchema: GenEnum<FieldBoardMetric>;
+
+/**
+ * GamificationService is Loci's field score: a ledger of exploration a
+ * traveller can show they did (kept a place, walked a stop, finished a day or a
+ * trip, reached a new neighborhood or city, visited a place on the spot,
+ * scouted), the permanent rank it earns per city, and weekly boards scoped to a
+ * city or to friends.
+ *
+ * Opening the app and generating recommendations earn nothing. Points are
+ * awarded by the server in the code paths that already record those actions;
+ * the client never names a point value. Every award is idempotent, so a
+ * retried request cannot count twice. Every RPC needs a session.
  *
  * @generated from service loci.gamification.GamificationService
  */
 export declare const GamificationService: GenService<{
   /**
-   * GetMyProgress is the caller's total, level, streak, badges and today's
-   * checklist.
+   * GetMyProgress is the caller's lifetime field score with the older level,
+   * streak and badge fields kept for clients that still render them.
    *
    * @generated from rpc loci.gamification.GamificationService.GetMyProgress
    */
@@ -592,9 +1233,8 @@ export declare const GamificationService: GenService<{
     output: typeof GetMyProgressResponseSchema;
   },
   /**
-   * DailyCheckIn marks the caller active on their local date. It is idempotent
-   * per local date: the first call of the day awards points and extends the
-   * streak, later calls only return progress.
+   * DailyCheckIn records the device timezone. It no longer awards points or
+   * extends a streak; points_awarded is always 0.
    *
    * @generated from rpc loci.gamification.GamificationService.DailyCheckIn
    */
@@ -627,7 +1267,9 @@ export declare const GamificationService: GenService<{
   },
   /**
    * CompleteTripDay records that the caller walked a day of their own trip.
-   * Completing every day of a trip also completes the trip.
+   * Completing every day of a trip also completes the trip. When any stop of
+   * the day has been marked with MarkStop, the day is judged from those marks
+   * and stops_done is ignored.
    *
    * @generated from rpc loci.gamification.GamificationService.CompleteTripDay
    */
@@ -635,6 +1277,41 @@ export declare const GamificationService: GenService<{
     methodKind: "unary";
     input: typeof CompleteTripDayRequestSchema;
     output: typeof CompleteTripDayResponseSchema;
+  },
+  /**
+   * GetFieldProfile is the caller's lifetime field score, rank overall and per
+   * city, and this week against last week.
+   *
+   * @generated from rpc loci.gamification.GamificationService.GetFieldProfile
+   */
+  getFieldProfile: {
+    methodKind: "unary";
+    input: typeof GetFieldProfileRequestSchema;
+    output: typeof GetFieldProfileResponseSchema;
+  },
+  /**
+   * GetFieldBoard is one weekly board: the top ten, the caller's own row and
+   * the row just above it. Never a rank among everyone.
+   *
+   * @generated from rpc loci.gamification.GamificationService.GetFieldBoard
+   */
+  getFieldBoard: {
+    methodKind: "unary";
+    input: typeof GetFieldBoardRequestSchema;
+    output: typeof GetFieldBoardResponseSchema;
+  },
+  /**
+   * MarkStop marks a stop of the caller's own trip done, skipped, or open
+   * again. A day is finished when every stop is done or skipped and at least
+   * one is done; finishing every day finishes the trip. Reopening a stop never
+   * takes back points already awarded, and marking it again never repays them.
+   *
+   * @generated from rpc loci.gamification.GamificationService.MarkStop
+   */
+  markStop: {
+    methodKind: "unary";
+    input: typeof MarkStopRequestSchema;
+    output: typeof MarkStopResponseSchema;
   },
 }>;
 

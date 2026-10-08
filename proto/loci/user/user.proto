@@ -364,6 +364,9 @@ message NotificationSettings {
   bool streak_reminders = 7;
   // Badges earned and a friend passing the caller on the week's leaderboard.
   bool progress_updates = 8;
+  // Whether people who are not friends see the caller's display name and
+  // weekly field score on city boards. On unless turned off.
+  bool city_board_visible = 9;
 }
 
 message GetNotificationSettingsRequest {}
@@ -377,6 +380,7 @@ message UpdateNotificationSettingsRequest {
   optional bool leaderboard_visible = 5;
   optional bool streak_reminders = 6;
   optional bool progress_updates = 7;
+  optional bool city_board_visible = 8;
 }
 
 enum PushPlatform {
