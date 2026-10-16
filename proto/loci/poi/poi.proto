@@ -198,6 +198,11 @@ message POIDetailedInfo {
     lte: 60
   }];
 
+  // How well this place fits the signed-in traveller's learned taste. Set only
+  // when Loci has enough signal to say so honestly; absent for anonymous users,
+  // users with personalization off, and cold-start profiles.
+  optional TasteMatch taste_match = 36;
+
   // Pictures with the credit they cannot be shown without.
   //
   // Wikimedia Commons content is CC BY-SA and similar: displaying the image
@@ -205,6 +210,26 @@ message POIDetailedInfo {
   // under. The URL and its credit therefore travel together — a client that
   // renders one renders the other.
   repeated POIImage image_credits = 34 [(buf.validate.field).repeated = {max_items: 20}];
+}
+
+// TasteMatch explains why a place fits the traveller, not whether it is good.
+message TasteMatch {
+  // 0..1 relative to the traveller's own range: 1 is among the best fits Loci
+  // has seen for them, 0 among the worst.
+  float score = 1 [(buf.validate.field).float = {
+    gte: 0
+    lte: 1
+  }];
+  // Short, human reasons ("You like quiet cafés"), strongest first.
+  repeated string reasons = 2 [(buf.validate.field).repeated = {
+    max_items: 3
+    items: {
+      string: {
+        min_len: 1
+        max_len: 120
+      }
+    }
+  }];
 }
 
 // HotelDetailedInfo represents hotel-specific information

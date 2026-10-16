@@ -26,6 +26,7 @@ public enum Loci_Recommendation_RecommendationChannel: SwiftProtobuf.Enum, Swift
   case unspecified // = 0
   case web // = 1
   case mcp // = 2
+  case ios // = 3
   case UNRECOGNIZED(Int)
 
   public init() {
@@ -37,6 +38,7 @@ public enum Loci_Recommendation_RecommendationChannel: SwiftProtobuf.Enum, Swift
     case 0: self = .unspecified
     case 1: self = .web
     case 2: self = .mcp
+    case 3: self = .ios
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -46,6 +48,7 @@ public enum Loci_Recommendation_RecommendationChannel: SwiftProtobuf.Enum, Swift
     case .unspecified: return 0
     case .web: return 1
     case .mcp: return 2
+    case .ios: return 3
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -55,6 +58,7 @@ public enum Loci_Recommendation_RecommendationChannel: SwiftProtobuf.Enum, Swift
     .unspecified,
     .web,
     .mcp,
+    .ios,
   ]
 
 }
@@ -465,6 +469,7 @@ extension Loci_Recommendation_RecommendationChannel: SwiftProtobuf._ProtoNamePro
     0: .same(proto: "RECOMMENDATION_CHANNEL_UNSPECIFIED"),
     1: .same(proto: "RECOMMENDATION_CHANNEL_WEB"),
     2: .same(proto: "RECOMMENDATION_CHANNEL_MCP"),
+    3: .same(proto: "RECOMMENDATION_CHANNEL_IOS"),
   ]
 }
 
