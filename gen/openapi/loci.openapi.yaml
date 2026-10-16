@@ -9200,6 +9200,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.travelhistory.DeleteVisitResponse'
+  /loci.travelhistory.TravelHistoryService/DeleteVisitedPOI:
+    post:
+      tags:
+        - loci.travelhistory.TravelHistoryService
+      summary: DeleteVisitedPOI
+      operationId: loci.travelhistory.TravelHistoryService.DeleteVisitedPOI
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.travelhistory.DeleteVisitedPOIRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.travelhistory.DeleteVisitedPOIResponse'
   /loci.travelhistory.TravelHistoryService/GetGlobeData:
     post:
       tags:
@@ -23460,6 +23495,15 @@ components:
 
              Absent for POIs that are not part of a plan (a search result, a nearby
              lookup), in which case clients fall back to chunking by index.
+        tasteMatch:
+          oneOf:
+            - $ref: '#/components/schemas/loci.poi.TasteMatch'
+            - type: "null"
+          title: taste_match
+          description: |-
+            How well this place fits the signed-in traveller's learned taste. Set only
+             when Loci has enough signal to say so honestly; absent for anonymous users,
+             users with personalization off, and cold-start profiles.
         imageCredits:
           type: array
           items:
@@ -23794,6 +23838,28 @@ components:
       title: SearchPOIResponse
       additionalProperties: false
       description: SearchPOIResponse for POI search results
+    loci.poi.TasteMatch:
+      type: object
+      properties:
+        score:
+          type: number
+          title: score
+          format: float
+          description: |-
+            0..1 relative to the traveller's own range: 1 is among the best fits Loci
+             has seen for them, 0 among the worst.
+        reasons:
+          type: array
+          items:
+            type: string
+            maxLength: 120
+            minLength: 1
+          title: reasons
+          maxItems: 3
+          description: Short, human reasons ("You like quiet cafés"), strongest first.
+      title: TasteMatch
+      additionalProperties: false
+      description: TasteMatch explains why a place fits the traveller, not whether it is good.
     loci.profile.AccommodationPreferences:
       type: object
       properties:
@@ -25597,6 +25663,7 @@ components:
         - RECOMMENDATION_CHANNEL_UNSPECIFIED
         - RECOMMENDATION_CHANNEL_WEB
         - RECOMMENDATION_CHANNEL_MCP
+        - RECOMMENDATION_CHANNEL_IOS
       description: RecommendationChannel identifies where a recommendation was delivered.
     loci.recommendation.RecommendationEvent:
       type: object
@@ -29374,6 +29441,27 @@ components:
           title: deleted
       title: DeleteVisitResponse
       additionalProperties: false
+    loci.travelhistory.DeleteVisitedPOIRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          format: uuid
+      title: DeleteVisitedPOIRequest
+      additionalProperties: false
+      description: |-
+        DeleteVisitedPOIRequest removes one place visit (VisitedPOI.id) and the taste
+         signal it produced. Unlike DeleteVisit it never touches the city row.
+    loci.travelhistory.DeleteVisitedPOIResponse:
+      type: object
+      properties:
+        deleted:
+          type: boolean
+          title: deleted
+          description: False when the id does not exist or belongs to another user.
+      title: DeleteVisitedPOIResponse
+      additionalProperties: false
     loci.travelhistory.DeviceFix:
       type: object
       properties:
@@ -29659,6 +29747,19 @@ components:
             Where the device was when the visit was recorded (an arrival detected on
              the spot). A visit earns points only when this fix is recent and close to
              the place's own coordinates; without it the visit is recorded, unscored.
+        source:
+          oneOf:
+            - $ref: '#/components/schemas/loci.travelhistory.VisitSource'
+            - type: "null"
+          title: source
+          enum:
+            - VISIT_SOURCE_VISIT_EVENT
+            - VISIT_SOURCE_MANUAL
+          description: |-
+            How the client knew about this visit. Unset means MANUAL, which is what
+             every caller sent before this field existed. Walk and trip-day arrivals send
+             VISIT_EVENT; a traveller's "I've been here" sends MANUAL. TRIP and BACKFILL
+             are server-derived and rejected here.
       title: RecordVisitRequest
       additionalProperties: false
     loci.travelhistory.RecordVisitResponse:

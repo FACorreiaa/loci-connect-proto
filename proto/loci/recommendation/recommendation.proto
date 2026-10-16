@@ -12,6 +12,7 @@ enum RecommendationChannel {
   RECOMMENDATION_CHANNEL_UNSPECIFIED = 0;
   RECOMMENDATION_CHANNEL_WEB = 1;
   RECOMMENDATION_CHANNEL_MCP = 2;
+  RECOMMENDATION_CHANNEL_IOS = 3;
 }
 
 // RecommendationSurface identifies the product experience that ranked an item.

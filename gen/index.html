@@ -1145,6 +1145,10 @@
                   <a href="#loci.poi.SearchPOIResponse"><span class="badge">M</span>SearchPOIResponse</a>
                 </li>
               
+                <li>
+                  <a href="#loci.poi.TasteMatch"><span class="badge">M</span>TasteMatch</a>
+                </li>
+              
               
               
               
@@ -4098,6 +4102,14 @@
               
                 <li>
                   <a href="#loci.travelhistory.DeleteVisitResponse"><span class="badge">M</span>DeleteVisitResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.travelhistory.DeleteVisitedPOIRequest"><span class="badge">M</span>DeleteVisitedPOIRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.travelhistory.DeleteVisitedPOIResponse"><span class="badge">M</span>DeleteVisitedPOIResponse</a>
                 </li>
               
                 <li>
@@ -11580,6 +11592,12 @@ the same badges, in the same order, with display copy. </p></td>
                 <td><p></p></td>
               </tr>
             
+              <tr>
+                <td>RECOMMENDATION_CHANNEL_IOS</td>
+                <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
           </tbody>
         </table>
       
@@ -12278,6 +12296,15 @@ lookup), in which case clients fall back to chunking by index. </p></td>
                 </tr>
               
                 <tr>
+                  <td>taste_match</td>
+                  <td><a href="#loci.poi.TasteMatch">TasteMatch</a></td>
+                  <td>optional</td>
+                  <td><p>How well this place fits the signed-in traveller&#39;s learned taste. Set only
+when Loci has enough signal to say so honestly; absent for anonymous users,
+users with personalization off, and cold-start profiles. </p></td>
+                </tr>
+              
+                <tr>
                   <td>image_credits</td>
                   <td><a href="#loci.poi.POIImage">POIImage</a></td>
                   <td>repeated</td>
@@ -12702,6 +12729,38 @@ latitude/longitude when they are set, otherwise across every city.
                   <td><a href="#loci.common.PaginationMetadata">loci.common.PaginationMetadata</a></td>
                   <td></td>
                   <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.poi.TasteMatch">TasteMatch</h3>
+        <p>TasteMatch explains why a place fits the traveller, not whether it is good.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>score</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>0..1 relative to the traveller&#39;s own range: 1 is among the best fits Loci
+has seen for them, 0 among the worst. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>reasons</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>Short, human reasons (&#34;You like quiet cafés&#34;), strongest first. </p></td>
                 </tr>
               
             </tbody>
@@ -44200,6 +44259,54 @@ Note: Renamed from &#34;Update&#34; to &#34;UpdateTag&#34; for RPC clarity</p></
 
         
       
+        <h3 id="loci.travelhistory.DeleteVisitedPOIRequest">DeleteVisitedPOIRequest</h3>
+        <p>DeleteVisitedPOIRequest removes one place visit (VisitedPOI.id) and the taste</p><p>signal it produced. Unlike DeleteVisit it never touches the city row.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.travelhistory.DeleteVisitedPOIResponse">DeleteVisitedPOIResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>deleted</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>False when the id does not exist or belongs to another user. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.travelhistory.DeviceFix">DeviceFix</h3>
         <p></p>
 
@@ -44682,6 +44789,16 @@ the spot). A visit earns points only when this fix is recent and close to
 the place&#39;s own coordinates; without it the visit is recorded, unscored. </p></td>
                 </tr>
               
+                <tr>
+                  <td>source</td>
+                  <td><a href="#loci.travelhistory.VisitSource">VisitSource</a></td>
+                  <td>optional</td>
+                  <td><p>How the client knew about this visit. Unset means MANUAL, which is what
+every caller sent before this field existed. Walk and trip-day arrivals send
+VISIT_EVENT; a traveller&#39;s &#34;I&#39;ve been here&#34; sends MANUAL. TRIP and BACKFILL
+are server-derived and rejected here. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -45127,6 +45244,13 @@ reverse geocode we do not have, and a guessed country is a fabricated one. </p><
                 <td>DeleteVisit</td>
                 <td><a href="#loci.travelhistory.DeleteVisitRequest">DeleteVisitRequest</a></td>
                 <td><a href="#loci.travelhistory.DeleteVisitResponse">DeleteVisitResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>DeleteVisitedPOI</td>
+                <td><a href="#loci.travelhistory.DeleteVisitedPOIRequest">DeleteVisitedPOIRequest</a></td>
+                <td><a href="#loci.travelhistory.DeleteVisitedPOIResponse">DeleteVisitedPOIResponse</a></td>
                 <td><p></p></td>
               </tr>
             

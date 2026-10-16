@@ -30,6 +30,9 @@ public protocol Loci_Travelhistory_TravelHistoryServiceClientInterface: Sendable
     @available(iOS 13, *)
     func `deleteVisit`(request: Loci_Travelhistory_DeleteVisitRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Travelhistory_DeleteVisitResponse>
 
+    @available(iOS 13, *)
+    func `deleteVisitedPoi`(request: Loci_Travelhistory_DeleteVisitedPOIRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Travelhistory_DeleteVisitedPOIResponse>
+
     /// GetGlobeData fills the entire globe dashboard in one call.
     @available(iOS 13, *)
     func `getGlobeData`(request: Loci_Travelhistory_GetGlobeDataRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Travelhistory_GetGlobeDataResponse>
@@ -69,6 +72,11 @@ public final class Loci_Travelhistory_TravelHistoryServiceClient: Loci_Travelhis
     }
 
     @available(iOS 13, *)
+    public func `deleteVisitedPoi`(request: Loci_Travelhistory_DeleteVisitedPOIRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Travelhistory_DeleteVisitedPOIResponse> {
+        return await self.client.unary(path: "/loci.travelhistory.TravelHistoryService/DeleteVisitedPOI", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
     public func `getGlobeData`(request: Loci_Travelhistory_GetGlobeDataRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Travelhistory_GetGlobeDataResponse> {
         return await self.client.unary(path: "/loci.travelhistory.TravelHistoryService/GetGlobeData", idempotencyLevel: .unknown, request: request, headers: headers)
     }
@@ -80,6 +88,7 @@ public final class Loci_Travelhistory_TravelHistoryServiceClient: Loci_Travelhis
             public static let getTravelSummary = Connect.MethodSpec(name: "GetTravelSummary", service: "loci.travelhistory.TravelHistoryService", type: .unary)
             public static let recordVisit = Connect.MethodSpec(name: "RecordVisit", service: "loci.travelhistory.TravelHistoryService", type: .unary)
             public static let deleteVisit = Connect.MethodSpec(name: "DeleteVisit", service: "loci.travelhistory.TravelHistoryService", type: .unary)
+            public static let deleteVisitedPoi = Connect.MethodSpec(name: "DeleteVisitedPOI", service: "loci.travelhistory.TravelHistoryService", type: .unary)
             public static let getGlobeData = Connect.MethodSpec(name: "GetGlobeData", service: "loci.travelhistory.TravelHistoryService", type: .unary)
         }
     }

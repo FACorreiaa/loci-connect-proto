@@ -353,6 +353,11 @@ export enum RecommendationChannel {
    * @generated from enum value: RECOMMENDATION_CHANNEL_MCP = 2;
    */
   MCP = 2,
+
+  /**
+   * @generated from enum value: RECOMMENDATION_CHANNEL_IOS = 3;
+   */
+  IOS = 3,
 }
 
 /**
