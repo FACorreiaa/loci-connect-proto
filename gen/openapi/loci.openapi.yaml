@@ -7202,6 +7202,345 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.common.Response'
+  /loci.recap.RecapService/GetRecap:
+    post:
+      tags:
+        - loci.recap.RecapService
+      summary: GetRecap
+      description: GetRecap opens a recap by id, as push notifications and lists link to it.
+      operationId: loci.recap.RecapService.GetRecap
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.recap.GetRecapRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.recap.GetRecapResponse'
+  /loci.recap.RecapService/GetSharedRecap:
+    post:
+      tags:
+        - loci.recap.RecapService
+      summary: GetSharedRecap
+      description: |-
+        GetSharedRecap opens a recap by share code. Accepts anonymous callers.
+         The response is the public view: no place names, no exact dates, no friend
+         identities, no stays or flights. An unknown or revoked code is NotFound.
+      operationId: loci.recap.RecapService.GetSharedRecap
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.recap.GetSharedRecapRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.recap.GetRecapResponse'
+  /loci.recap.RecapService/GetTripRecap:
+    post:
+      tags:
+        - loci.recap.RecapService
+      summary: GetTripRecap
+      description: |-
+        GetTripRecap returns the recap for one of the caller's trips. If none
+         exists and the trip has ended, it is built synchronously. A trip that has
+         not ended, or has too little activity, comes back with status INELIGIBLE
+         and ineligible_reason set, not as an error.
+      operationId: loci.recap.RecapService.GetTripRecap
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.recap.GetTripRecapRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.recap.GetRecapResponse'
+  /loci.recap.RecapService/GetYearInReview:
+    post:
+      tags:
+        - loci.recap.RecapService
+      summary: GetYearInReview
+      description: |-
+        GetYearInReview returns the caller's recap for a calendar year. Before the
+         year's recap unlocks it comes back INELIGIBLE with a reason.
+      operationId: loci.recap.RecapService.GetYearInReview
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.recap.GetYearInReviewRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.recap.GetRecapResponse'
+  /loci.recap.RecapService/ListRecaps:
+    post:
+      tags:
+        - loci.recap.RecapService
+      summary: ListRecaps
+      description: ListRecaps lists the caller's ready recaps, newest first.
+      operationId: loci.recap.RecapService.ListRecaps
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.recap.ListRecapsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.recap.ListRecapsResponse'
+  /loci.recap.RecapService/MarkRecapViewed:
+    post:
+      tags:
+        - loci.recap.RecapService
+      summary: MarkRecapViewed
+      description: MarkRecapViewed records that the owner opened the recap.
+      operationId: loci.recap.RecapService.MarkRecapViewed
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.recap.MarkRecapViewedRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.recap.MarkRecapViewedResponse'
+  /loci.recap.RecapService/RenderRecapCardImage:
+    post:
+      tags:
+        - loci.recap.RecapService
+      summary: RenderRecapCardImage
+      description: |-
+        RenderRecapCardImage renders one card as a PNG, for the owner to save or
+         share before (or without) making a public link.
+      operationId: loci.recap.RecapService.RenderRecapCardImage
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.recap.RenderRecapCardImageRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.recap.RenderRecapCardImageResponse'
+  /loci.recap.RecapService/ShareRecap:
+    post:
+      tags:
+        - loci.recap.RecapService
+      summary: ShareRecap
+      description: |-
+        ShareRecap mints (or returns the existing) public share code. Sharing
+         freezes the recap: it is never rebuilt afterwards.
+      operationId: loci.recap.RecapService.ShareRecap
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.recap.ShareRecapRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.recap.ShareRecapResponse'
+  /loci.recap.RecapService/UnshareRecap:
+    post:
+      tags:
+        - loci.recap.RecapService
+      summary: UnshareRecap
+      description: |-
+        UnshareRecap revokes the share code. The public page and its images stop
+         resolving; a later ShareRecap mints a new code.
+      operationId: loci.recap.RecapService.UnshareRecap
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.recap.UnshareRecapRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.recap.UnshareRecapResponse'
   /loci.recents.RecentsService/GetCityInteractions:
     post:
       tags:
@@ -24722,6 +25061,848 @@ components:
         - updatedAt
       additionalProperties: false
       description: UserPreferenceProfile represents a user's preference profile
+    loci.recap.DayStub:
+      type: object
+      properties:
+        dayNumber:
+          type: integer
+          title: day_number
+          format: int32
+        date:
+          type: string
+          title: date
+          description: YYYY-MM-DD. Empty in the public view.
+        cityName:
+          type: string
+          title: city_name
+        stopsDone:
+          type: integer
+          title: stops_done
+          format: int32
+        stopsTotal:
+          type: integer
+          title: stops_total
+          format: int32
+        completed:
+          type: boolean
+          title: completed
+      title: DayStub
+      additionalProperties: false
+    loci.recap.DaysCard:
+      type: object
+      properties:
+        daysTotal:
+          type: integer
+          title: days_total
+          format: int32
+        daysCompleted:
+          type: integer
+          title: days_completed
+          format: int32
+        days:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.recap.DayStub'
+          title: days
+        busiestDayNumber:
+          type: integer
+          title: busiest_day_number
+          format: int32
+          description: Day number with the most stops done; 0 when none.
+        headline:
+          type: string
+          title: headline
+      title: DaysCard
+      additionalProperties: false
+      description: DaysCard shows the days walked (ticket stubs).
+    loci.recap.EarnedBadge:
+      type: object
+      properties:
+        badgeId:
+          type: string
+          title: badge_id
+        label:
+          type: string
+          title: label
+      title: EarnedBadge
+      additionalProperties: false
+    loci.recap.FieldCard:
+      type: object
+      properties:
+        cityId:
+          type: string
+          title: city_id
+        cityName:
+          type: string
+          title: city_name
+        score:
+          type:
+            - integer
+            - string
+          title: score
+          format: int64
+        rankLabel:
+          type: string
+          title: rank_label
+        placesKept:
+          type: integer
+          title: places_kept
+          format: int32
+        daysFinished:
+          type: integer
+          title: days_finished
+          format: int32
+        headline:
+          type: string
+          title: headline
+      title: FieldCard
+      additionalProperties: false
+      description: FieldCard shows the traveller's field rank in the trip's main city.
+    loci.recap.FriendRef:
+      type: object
+      properties:
+        userId:
+          type: string
+          title: user_id
+        displayName:
+          type: string
+          title: display_name
+        avatarUrl:
+          type: string
+          title: avatar_url
+      title: FriendRef
+      additionalProperties: false
+    loci.recap.FriendsCard:
+      type: object
+      properties:
+        friendsBeenCount:
+          type: integer
+          title: friends_been_count
+          format: int32
+          description: Friends who have also been to the trip's city.
+        friends:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.recap.FriendRef'
+          title: friends
+        headline:
+          type: string
+          title: headline
+      title: FriendsCard
+      additionalProperties: false
+      description: |-
+        FriendsCard shows friends connected to the trip. Names only in the owner
+         view; the public view keeps the count.
+    loci.recap.GetRecapRequest:
+      type: object
+      properties:
+        recapId:
+          type: string
+          title: recap_id
+          format: uuid
+      title: GetRecapRequest
+      additionalProperties: false
+    loci.recap.GetRecapResponse:
+      type: object
+      properties:
+        recap:
+          title: recap
+          $ref: '#/components/schemas/loci.recap.Recap'
+      title: GetRecapResponse
+      additionalProperties: false
+    loci.recap.GetSharedRecapRequest:
+      type: object
+      properties:
+        shareCode:
+          type: string
+          title: share_code
+          maxLength: 50
+          minLength: 1
+      title: GetSharedRecapRequest
+      additionalProperties: false
+    loci.recap.GetTripRecapRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          format: uuid
+        refresh:
+          type: boolean
+          title: refresh
+          description: Rebuild even if a snapshot exists. Ignored once the recap is frozen.
+      title: GetTripRecapRequest
+      additionalProperties: false
+    loci.recap.GetYearInReviewRequest:
+      type: object
+      properties:
+        year:
+          type: integer
+          title: year
+          maximum: 2100
+          minimum: 2024
+          format: int32
+      title: GetYearInReviewRequest
+      additionalProperties: false
+    loci.recap.Highlight:
+      type: object
+      properties:
+        poiId:
+          type: string
+          title: poi_id
+        name:
+          type: string
+          title: name
+        category:
+          type: string
+          title: category
+        rating:
+          type: integer
+          title: rating
+          format: int32
+          description: 1..5 when the traveller rated it, else 0.
+        reason:
+          title: reason
+          $ref: '#/components/schemas/loci.recap.HighlightReason'
+        imageUrl:
+          type: string
+          title: image_url
+      title: Highlight
+      additionalProperties: false
+    loci.recap.HighlightReason:
+      type: string
+      title: HighlightReason
+      enum:
+        - HIGHLIGHT_REASON_UNSPECIFIED
+        - HIGHLIGHT_REASON_FAVORITED
+        - HIGHLIGHT_REASON_REVIEWED
+        - HIGHLIGHT_REASON_FIRST_VISIT
+    loci.recap.HighlightsCard:
+      type: object
+      properties:
+        highlights:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.recap.Highlight'
+          title: highlights
+        headline:
+          type: string
+          title: headline
+      title: HighlightsCard
+      additionalProperties: false
+      description: HighlightsCard pins the top places. Owner view only; dropped publicly.
+    loci.recap.IntroCard:
+      type: object
+      properties:
+        lede:
+          type: string
+          title: lede
+          description: One line above the tag, e.g. "Five days, one city, and the shoes to prove it."
+        shortCode:
+          type: string
+          title: short_code
+          description: |-
+            Three letters for the tag: the arrival airport when a flight is known,
+             otherwise derived from the city name.
+        primaryCity:
+          type: string
+          title: primary_city
+        country:
+          type: string
+          title: country
+        countryCode:
+          type: string
+          title: country_code
+        cityNames:
+          type: array
+          items:
+            type: string
+          title: city_names
+          description: Every city on the trip, in order.
+        dayCount:
+          type: integer
+          title: day_count
+          format: int32
+      title: IntroCard
+      additionalProperties: false
+      description: IntroCard opens the story (the luggage tag).
+    loci.recap.ListRecapsRequest:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+          title: page_size
+          maximum: 100
+          minimum: 0
+          format: int32
+          description: Defaults to 20 when zero.
+        pageToken:
+          type: string
+          title: page_token
+          maxLength: 200
+      title: ListRecapsRequest
+      additionalProperties: false
+    loci.recap.ListRecapsResponse:
+      type: object
+      properties:
+        recaps:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.recap.RecapSummary'
+          title: recaps
+        nextPageToken:
+          type: string
+          title: next_page_token
+      title: ListRecapsResponse
+      additionalProperties: false
+    loci.recap.MarkRecapViewedRequest:
+      type: object
+      properties:
+        recapId:
+          type: string
+          title: recap_id
+          format: uuid
+      title: MarkRecapViewedRequest
+      additionalProperties: false
+    loci.recap.MarkRecapViewedResponse:
+      type: object
+      title: MarkRecapViewedResponse
+      additionalProperties: false
+    loci.recap.OutroCard:
+      type: object
+      properties:
+        headline:
+          type: string
+          title: headline
+        summaryLine:
+          type: string
+          title: summary_line
+          description: One-line summary, e.g. "23 places · 41 km · 5 days".
+      title: OutroCard
+      additionalProperties: false
+      description: OutroCard closes the story with the share prompt.
+    loci.recap.PlaceGroup:
+      type: object
+      properties:
+        label:
+          type: string
+          title: label
+        placesCount:
+          type: integer
+          title: places_count
+          format: int32
+        firstDate:
+          type: string
+          title: first_date
+          description: YYYY-MM-DD of the first visit in the group. Empty in the public view.
+      title: PlaceGroup
+      additionalProperties: false
+    loci.recap.PlacesCard:
+      type: object
+      properties:
+        placesCount:
+          type: integer
+          title: places_count
+          format: int32
+          description: Distinct places visited or marked done.
+        citiesCount:
+          type: integer
+          title: cities_count
+          format: int32
+        stopsPlanned:
+          type: integer
+          title: stops_planned
+          format: int32
+          description: |-
+            Stops on the plan, and how many were marked done. Used when there are
+             stop marks but no confirmed visits.
+        stopsDone:
+          type: integer
+          title: stops_done
+          format: int32
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.recap.PlaceGroup'
+          title: groups
+          description: |-
+            One stamp per group (a neighbourhood, or a city on a multi-city trip),
+             largest first, at most 6.
+        headline:
+          type: string
+          title: headline
+      title: PlacesCard
+      additionalProperties: false
+      description: PlacesCard counts the places kept (the passport page).
+    loci.recap.ProgressCard:
+      type: object
+      properties:
+        points:
+          type:
+            - integer
+            - string
+          title: points
+          format: int64
+        badges:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.recap.EarnedBadge'
+          title: badges
+        streakDays:
+          type: integer
+          title: streak_days
+          format: int32
+          description: Longest run of active days inside the period.
+        headline:
+          type: string
+          title: headline
+      title: ProgressCard
+      additionalProperties: false
+      description: ProgressCard sums up points, badges and streaks earned in the period.
+    loci.recap.Recap:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+        kind:
+          title: kind
+          $ref: '#/components/schemas/loci.recap.RecapKind'
+        status:
+          title: status
+          $ref: '#/components/schemas/loci.recap.RecapStatus'
+        tripId:
+          type: string
+          title: trip_id
+          description: Set for RECAP_KIND_TRIP.
+        year:
+          type: integer
+          title: year
+          format: int32
+          description: Set for RECAP_KIND_YEAR.
+        title:
+          type: string
+          title: title
+        subtitle:
+          type: string
+          title: subtitle
+        periodStart:
+          type: string
+          title: period_start
+          description: Local dates, YYYY-MM-DD. Empty in the public view.
+        periodEnd:
+          type: string
+          title: period_end
+        periodLabel:
+          type: string
+          title: period_label
+          description: Human period, e.g. "Oct 2026" or "2026". Always set, including publicly.
+        cards:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.recap.RecapCard'
+          title: cards
+          description: |-
+            In play order. A client that does not recognise a card (its oneof is
+             empty) skips it, so new card types never break older clients.
+        theme:
+          title: theme
+          $ref: '#/components/schemas/loci.recap.RecapTheme'
+        owner:
+          title: owner
+          $ref: '#/components/schemas/loci.recap.RecapOwner'
+        isOwner:
+          type: boolean
+          title: is_owner
+          description: True when the caller owns this recap.
+        shareUrl:
+          type: string
+          title: share_url
+          description: Set once shared.
+        readyAt:
+          title: ready_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        viewedAt:
+          title: viewed_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        builderVersion:
+          type: integer
+          title: builder_version
+          format: int32
+          description: Which builder produced the snapshot; image caches key on it.
+        ineligibleReason:
+          type: string
+          title: ineligible_reason
+          description: |-
+            Why the recap is INELIGIBLE, written for the traveller
+             (e.g. "Mark stops as visited to unlock your recap").
+        refreshable:
+          type: boolean
+          title: refreshable
+          description: True when the owner may still ask for a rebuild (unshared, recent).
+      title: Recap
+      additionalProperties: false
+      description: 'Recap is one built recap: a title and an ordered list of cards.'
+    loci.recap.RecapCard:
+      type: object
+      allOf:
+        - properties:
+            id:
+              type: string
+              title: id
+              description: Stable within a recap; used to render and share a single card.
+        - oneOf:
+            - properties:
+                days:
+                  title: days
+                  $ref: '#/components/schemas/loci.recap.DaysCard'
+              title: days
+              required:
+                - days
+            - properties:
+                field:
+                  title: field
+                  $ref: '#/components/schemas/loci.recap.FieldCard'
+              title: field
+              required:
+                - field
+            - properties:
+                friends:
+                  title: friends
+                  $ref: '#/components/schemas/loci.recap.FriendsCard'
+              title: friends
+              required:
+                - friends
+            - properties:
+                highlights:
+                  title: highlights
+                  $ref: '#/components/schemas/loci.recap.HighlightsCard'
+              title: highlights
+              required:
+                - highlights
+            - properties:
+                intro:
+                  title: intro
+                  $ref: '#/components/schemas/loci.recap.IntroCard'
+              title: intro
+              required:
+                - intro
+            - properties:
+                outro:
+                  title: outro
+                  description: 30 and up are kept for year-in-review cards.
+                  $ref: '#/components/schemas/loci.recap.OutroCard'
+              title: outro
+              required:
+                - outro
+            - properties:
+                places:
+                  title: places
+                  $ref: '#/components/schemas/loci.recap.PlacesCard'
+              title: places
+              required:
+                - places
+            - properties:
+                progress:
+                  title: progress
+                  $ref: '#/components/schemas/loci.recap.ProgressCard'
+              title: progress
+              required:
+                - progress
+            - properties:
+                route:
+                  title: route
+                  $ref: '#/components/schemas/loci.recap.RouteCard'
+              title: route
+              required:
+                - route
+            - properties:
+                taste:
+                  title: taste
+                  $ref: '#/components/schemas/loci.recap.TasteCard'
+              title: taste
+              required:
+                - taste
+      title: RecapCard
+      additionalProperties: false
+      description: RecapCard is one screen of the story.
+    loci.recap.RecapImageFormat:
+      type: string
+      title: RecapImageFormat
+      enum:
+        - RECAP_IMAGE_FORMAT_UNSPECIFIED
+        - RECAP_IMAGE_FORMAT_STORY
+        - RECAP_IMAGE_FORMAT_OG
+    loci.recap.RecapKind:
+      type: string
+      title: RecapKind
+      enum:
+        - RECAP_KIND_UNSPECIFIED
+        - RECAP_KIND_TRIP
+        - RECAP_KIND_YEAR
+    loci.recap.RecapOwner:
+      type: object
+      properties:
+        userId:
+          type: string
+          title: user_id
+          description: Empty in the public view unless the owner's profile is public.
+        displayName:
+          type: string
+          title: display_name
+          description: '"A Loci traveller" in the public view when the profile is not public.'
+        avatarUrl:
+          type: string
+          title: avatar_url
+      title: RecapOwner
+      additionalProperties: false
+    loci.recap.RecapStatus:
+      type: string
+      title: RecapStatus
+      enum:
+        - RECAP_STATUS_UNSPECIFIED
+        - RECAP_STATUS_PENDING
+        - RECAP_STATUS_READY
+        - RECAP_STATUS_INELIGIBLE
+        - RECAP_STATUS_FAILED
+    loci.recap.RecapSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+        kind:
+          title: kind
+          $ref: '#/components/schemas/loci.recap.RecapKind'
+        tripId:
+          type: string
+          title: trip_id
+        year:
+          type: integer
+          title: year
+          format: int32
+        title:
+          type: string
+          title: title
+        subtitle:
+          type: string
+          title: subtitle
+        periodLabel:
+          type: string
+          title: period_label
+        readyAt:
+          title: ready_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        viewed:
+          type: boolean
+          title: viewed
+        shared:
+          type: boolean
+          title: shared
+      title: RecapSummary
+      additionalProperties: false
+      description: RecapSummary is a list row.
+    loci.recap.RecapTheme:
+      type: object
+      properties:
+        accentHex:
+          type: string
+          title: accent_hex
+          description: '#RRGGBB. Empty means the client''s default accent.'
+        heroImageUrl:
+          type: string
+          title: hero_image_url
+          description: A hero image for the main city, when one is known.
+      title: RecapTheme
+      additionalProperties: false
+      description: RecapTheme lets a recap carry a little of its city.
+    loci.recap.RenderRecapCardImageRequest:
+      type: object
+      properties:
+        recapId:
+          type: string
+          title: recap_id
+          format: uuid
+        cardId:
+          type: string
+          title: card_id
+          maxLength: 64
+          minLength: 1
+        format:
+          not:
+            enum:
+              - RECAP_IMAGE_FORMAT_UNSPECIFIED
+          title: format
+          $ref: '#/components/schemas/loci.recap.RecapImageFormat'
+      title: RenderRecapCardImageRequest
+      additionalProperties: false
+    loci.recap.RenderRecapCardImageResponse:
+      type: object
+      properties:
+        png:
+          type: string
+          title: png
+          format: byte
+        width:
+          type: integer
+          title: width
+          format: int32
+        height:
+          type: integer
+          title: height
+          format: int32
+      title: RenderRecapCardImageResponse
+      additionalProperties: false
+    loci.recap.RouteBasis:
+      type: string
+      title: RouteBasis
+      enum:
+        - ROUTE_BASIS_UNSPECIFIED
+        - ROUTE_BASIS_LEGS
+        - ROUTE_BASIS_CITIES
+        - ROUTE_BASIS_VISITS
+      description: |-
+        RouteBasis says what a distance was measured over, so clients label it
+         honestly.
+    loci.recap.RouteCard:
+      type: object
+      properties:
+        distanceKm:
+          type: number
+          title: distance_km
+          format: double
+        basis:
+          title: basis
+          $ref: '#/components/schemas/loci.recap.RouteBasis'
+        points:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.recap.RoutePoint'
+          title: points
+          description: In travel order. City centroids only in the public view.
+        headline:
+          type: string
+          title: headline
+      title: RouteCard
+      additionalProperties: false
+      description: RouteCard shows the distance and a sketch of the route (the boarding pass).
+    loci.recap.RoutePoint:
+      type: object
+      properties:
+        latitude:
+          type: number
+          title: latitude
+          format: double
+        longitude:
+          type: number
+          title: longitude
+          format: double
+        label:
+          type: string
+          title: label
+          description: Empty in the public view unless the point is a city.
+      title: RoutePoint
+      additionalProperties: false
+    loci.recap.ShareRecapRequest:
+      type: object
+      properties:
+        recapId:
+          type: string
+          title: recap_id
+          format: uuid
+      title: ShareRecapRequest
+      additionalProperties: false
+    loci.recap.ShareRecapResponse:
+      type: object
+      properties:
+        shareCode:
+          type: string
+          title: share_code
+        shareUrl:
+          type: string
+          title: share_url
+          description: The public page, e.g. https://lociai.fyi/r/<code>.
+      title: ShareRecapResponse
+      additionalProperties: false
+    loci.recap.TasteCard:
+      type: object
+      properties:
+        headline:
+          type: string
+          title: headline
+          description: E.g. "You went looking for natural wine every single night."
+        traits:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.recap.TasteTrait'
+          title: traits
+          description: Strongest first, at most 3. Positive traits only.
+        fromPeriod:
+          type: boolean
+          title: from_period
+          description: |-
+            True when the traits come from this period's own evidence; false when the
+             card fell back to the traveller's overall taste.
+      title: TasteCard
+      additionalProperties: false
+      description: TasteCard shows what Loci noticed about the traveller's taste (the postcard).
+    loci.recap.TasteEvidenceKind:
+      type: string
+      title: TasteEvidenceKind
+      enum:
+        - TASTE_EVIDENCE_KIND_UNSPECIFIED
+        - TASTE_EVIDENCE_KIND_SAVES
+        - TASTE_EVIDENCE_KIND_VISITS
+        - TASTE_EVIDENCE_KIND_REVIEWS
+        - TASTE_EVIDENCE_KIND_MIXED
+    loci.recap.TasteTrait:
+      type: object
+      properties:
+        traitKey:
+          type: string
+          title: trait_key
+        label:
+          type: string
+          title: label
+        strength:
+          type: number
+          title: strength
+          format: double
+          description: 0..1, for the bar.
+        evidenceCount:
+          type: integer
+          title: evidence_count
+          format: int32
+          description: Omitted (zero) in the public view.
+        evidenceKind:
+          title: evidence_kind
+          $ref: '#/components/schemas/loci.recap.TasteEvidenceKind'
+        trend:
+          title: trend
+          $ref: '#/components/schemas/loci.recap.TasteTrend'
+      title: TasteTrait
+      additionalProperties: false
+    loci.recap.TasteTrend:
+      type: string
+      title: TasteTrend
+      enum:
+        - TASTE_TREND_UNSPECIFIED
+        - TASTE_TREND_NEW
+        - TASTE_TREND_GROWING
+        - TASTE_TREND_STRONG
+    loci.recap.UnshareRecapRequest:
+      type: object
+      properties:
+        recapId:
+          type: string
+          title: recap_id
+          format: uuid
+      title: UnshareRecapRequest
+      additionalProperties: false
+    loci.recap.UnshareRecapResponse:
+      type: object
+      title: UnshareRecapResponse
+      additionalProperties: false
     loci.recents.CityInsights:
       type: object
       properties:
@@ -32171,6 +33352,19 @@ tags:
        Only the linking half lives here. Inbound messages arrive from the platform,
        not from this API, and the bot answers them there.
   - name: loci.payment.v1.PaymentService
+  - name: loci.recap.RecapService
+    description: |-
+      RecapService serves story-style recaps of what a traveller did: one per
+       finished trip, and one per calendar year.
+
+       A recap is built once and stored as a frozen snapshot. The data underneath
+       keeps moving (taste traits are rewritten nightly, seasons close, friends
+       change), and a shared link must keep saying what it said when it was posted.
+       The owner can rebuild an unshared recap for a short while after it is ready,
+       so visits that sync late still count; after that it does not change.
+
+       Every method except GetSharedRecap requires a signed-in caller and only
+       returns that caller's own recaps.
   - name: loci.recents.RecentsService
     description: RecentsService provides recent user interactions and activity tracking
   - name: loci.review.ReviewService
