@@ -219,6 +219,15 @@ export declare type POIDetailedInfo = Message<"loci.poi.POIDetailedInfo"> & {
   day?: number;
 
   /**
+   * How well this place fits the signed-in traveller's learned taste. Set only
+   * when Loci has enough signal to say so honestly; absent for anonymous users,
+   * users with personalization off, and cold-start profiles.
+   *
+   * @generated from field: optional loci.poi.TasteMatch taste_match = 36;
+   */
+  tasteMatch?: TasteMatch;
+
+  /**
    * Pictures with the credit they cannot be shown without.
    *
    * Wikimedia Commons content is CC BY-SA and similar: displaying the image
@@ -236,6 +245,34 @@ export declare type POIDetailedInfo = Message<"loci.poi.POIDetailedInfo"> & {
  * Use `create(POIDetailedInfoSchema)` to create a new message.
  */
 export declare const POIDetailedInfoSchema: GenMessage<POIDetailedInfo>;
+
+/**
+ * TasteMatch explains why a place fits the traveller, not whether it is good.
+ *
+ * @generated from message loci.poi.TasteMatch
+ */
+export declare type TasteMatch = Message<"loci.poi.TasteMatch"> & {
+  /**
+   * 0..1 relative to the traveller's own range: 1 is among the best fits Loci
+   * has seen for them, 0 among the worst.
+   *
+   * @generated from field: float score = 1;
+   */
+  score: number;
+
+  /**
+   * Short, human reasons ("You like quiet cafés"), strongest first.
+   *
+   * @generated from field: repeated string reasons = 2;
+   */
+  reasons: string[];
+};
+
+/**
+ * Describes the message loci.poi.TasteMatch.
+ * Use `create(TasteMatchSchema)` to create a new message.
+ */
+export declare const TasteMatchSchema: GenMessage<TasteMatch>;
 
 /**
  * HotelDetailedInfo represents hotel-specific information

@@ -513,6 +513,19 @@ public struct Loci_Travelhistory_RecordVisitRequest: Sendable {
   /// Clears the value of `deviceLocation`. Subsequent reads from it will return its default value.
   public mutating func clearDeviceLocation() {self._deviceLocation = nil}
 
+  /// How the client knew about this visit. Unset means MANUAL, which is what
+  /// every caller sent before this field existed. Walk and trip-day arrivals send
+  /// VISIT_EVENT; a traveller's "I've been here" sends MANUAL. TRIP and BACKFILL
+  /// are server-derived and rejected here.
+  public var source: Loci_Travelhistory_VisitSource {
+    get {return _source ?? .unspecified}
+    set {_source = newValue}
+  }
+  /// Returns true if `source` has been explicitly set.
+  public var hasSource: Bool {return self._source != nil}
+  /// Clears the value of `source`. Subsequent reads from it will return its default value.
+  public mutating func clearSource() {self._source = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -521,6 +534,7 @@ public struct Loci_Travelhistory_RecordVisitRequest: Sendable {
   fileprivate var _poiName: String? = nil
   fileprivate var _visitedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
   fileprivate var _deviceLocation: Loci_Travelhistory_DeviceFix? = nil
+  fileprivate var _source: Loci_Travelhistory_VisitSource? = nil
 }
 
 public struct Loci_Travelhistory_DeviceFix: Sendable {
@@ -592,6 +606,33 @@ public struct Loci_Travelhistory_DeleteVisitResponse: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  public var deleted: Bool = false
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// DeleteVisitedPOIRequest removes one place visit (VisitedPOI.id) and the taste
+/// signal it produced. Unlike DeleteVisit it never touches the city row.
+public struct Loci_Travelhistory_DeleteVisitedPOIRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var id: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Travelhistory_DeleteVisitedPOIResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// False when the id does not exist or belongs to another user.
   public var deleted: Bool = false
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -1375,6 +1416,7 @@ extension Loci_Travelhistory_RecordVisitRequest: SwiftProtobuf.Message, SwiftPro
     7: .standard(proto: "poi_name"),
     8: .standard(proto: "visited_at"),
     9: .standard(proto: "device_location"),
+    10: .same(proto: "source"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1392,6 +1434,7 @@ extension Loci_Travelhistory_RecordVisitRequest: SwiftProtobuf.Message, SwiftPro
       case 7: try { try decoder.decodeSingularStringField(value: &self._poiName) }()
       case 8: try { try decoder.decodeSingularMessageField(value: &self._visitedAt) }()
       case 9: try { try decoder.decodeSingularMessageField(value: &self._deviceLocation) }()
+      case 10: try { try decoder.decodeSingularEnumField(value: &self._source) }()
       default: break
       }
     }
@@ -1429,6 +1472,9 @@ extension Loci_Travelhistory_RecordVisitRequest: SwiftProtobuf.Message, SwiftPro
     try { if let v = self._deviceLocation {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
     } }()
+    try { if let v = self._source {
+      try visitor.visitSingularEnumField(value: v, fieldNumber: 10)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1442,6 +1488,7 @@ extension Loci_Travelhistory_RecordVisitRequest: SwiftProtobuf.Message, SwiftPro
     if lhs._poiName != rhs._poiName {return false}
     if lhs._visitedAt != rhs._visitedAt {return false}
     if lhs._deviceLocation != rhs._deviceLocation {return false}
+    if lhs._source != rhs._source {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1601,6 +1648,70 @@ extension Loci_Travelhistory_DeleteVisitResponse: SwiftProtobuf.Message, SwiftPr
   }
 
   public static func ==(lhs: Loci_Travelhistory_DeleteVisitResponse, rhs: Loci_Travelhistory_DeleteVisitResponse) -> Bool {
+    if lhs.deleted != rhs.deleted {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Travelhistory_DeleteVisitedPOIRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".DeleteVisitedPOIRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.id) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.id.isEmpty {
+      try visitor.visitSingularStringField(value: self.id, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Travelhistory_DeleteVisitedPOIRequest, rhs: Loci_Travelhistory_DeleteVisitedPOIRequest) -> Bool {
+    if lhs.id != rhs.id {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Travelhistory_DeleteVisitedPOIResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".DeleteVisitedPOIResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "deleted"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularBoolField(value: &self.deleted) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.deleted != false {
+      try visitor.visitSingularBoolField(value: self.deleted, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Travelhistory_DeleteVisitedPOIResponse, rhs: Loci_Travelhistory_DeleteVisitedPOIResponse) -> Bool {
     if lhs.deleted != rhs.deleted {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
