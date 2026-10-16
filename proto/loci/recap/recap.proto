@@ -1,0 +1,435 @@
+syntax = "proto3";
+
+package loci.recap;
+
+import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/recap;recap";
+
+// RecapService serves story-style recaps of what a traveller did: one per
+// finished trip, and one per calendar year.
+//
+// A recap is built once and stored as a frozen snapshot. The data underneath
+// keeps moving (taste traits are rewritten nightly, seasons close, friends
+// change), and a shared link must keep saying what it said when it was posted.
+// The owner can rebuild an unshared recap for a short while after it is ready,
+// so visits that sync late still count; after that it does not change.
+//
+// Every method except GetSharedRecap requires a signed-in caller and only
+// returns that caller's own recaps.
+service RecapService {
+  // GetTripRecap returns the recap for one of the caller's trips. If none
+  // exists and the trip has ended, it is built synchronously. A trip that has
+  // not ended, or has too little activity, comes back with status INELIGIBLE
+  // and ineligible_reason set, not as an error.
+  rpc GetTripRecap(GetTripRecapRequest) returns (GetRecapResponse);
+  // GetYearInReview returns the caller's recap for a calendar year. Before the
+  // year's recap unlocks it comes back INELIGIBLE with a reason.
+  rpc GetYearInReview(GetYearInReviewRequest) returns (GetRecapResponse);
+  // GetRecap opens a recap by id, as push notifications and lists link to it.
+  rpc GetRecap(GetRecapRequest) returns (GetRecapResponse);
+  // ListRecaps lists the caller's ready recaps, newest first.
+  rpc ListRecaps(ListRecapsRequest) returns (ListRecapsResponse);
+  // ShareRecap mints (or returns the existing) public share code. Sharing
+  // freezes the recap: it is never rebuilt afterwards.
+  rpc ShareRecap(ShareRecapRequest) returns (ShareRecapResponse);
+  // UnshareRecap revokes the share code. The public page and its images stop
+  // resolving; a later ShareRecap mints a new code.
+  rpc UnshareRecap(UnshareRecapRequest) returns (UnshareRecapResponse);
+  // MarkRecapViewed records that the owner opened the recap.
+  rpc MarkRecapViewed(MarkRecapViewedRequest) returns (MarkRecapViewedResponse);
+  // RenderRecapCardImage renders one card as a PNG, for the owner to save or
+  // share before (or without) making a public link.
+  rpc RenderRecapCardImage(RenderRecapCardImageRequest) returns (RenderRecapCardImageResponse);
+  // GetSharedRecap opens a recap by share code. Accepts anonymous callers.
+  // The response is the public view: no place names, no exact dates, no friend
+  // identities, no stays or flights. An unknown or revoked code is NotFound.
+  rpc GetSharedRecap(GetSharedRecapRequest) returns (GetRecapResponse);
+}
+
+enum RecapKind {
+  RECAP_KIND_UNSPECIFIED = 0;
+  RECAP_KIND_TRIP = 1;
+  RECAP_KIND_YEAR = 2;
+}
+
+enum RecapStatus {
+  RECAP_STATUS_UNSPECIFIED = 0;
+  // Queued; the background builder has not run yet.
+  RECAP_STATUS_PENDING = 1;
+  RECAP_STATUS_READY = 2;
+  // Not enough activity, or the period has not ended. See ineligible_reason.
+  RECAP_STATUS_INELIGIBLE = 3;
+  // The builder gave up after retries.
+  RECAP_STATUS_FAILED = 4;
+}
+
+enum RecapImageFormat {
+  RECAP_IMAGE_FORMAT_UNSPECIFIED = 0;
+  // 1080x1920, for stories.
+  RECAP_IMAGE_FORMAT_STORY = 1;
+  // 1200x630, the link preview.
+  RECAP_IMAGE_FORMAT_OG = 2;
+}
+
+// Recap is one built recap: a title and an ordered list of cards.
+message Recap {
+  string id = 1;
+  RecapKind kind = 2;
+  RecapStatus status = 3;
+  // Set for RECAP_KIND_TRIP.
+  string trip_id = 4;
+  // Set for RECAP_KIND_YEAR.
+  int32 year = 5;
+  string title = 6;
+  string subtitle = 7;
+  // Local dates, YYYY-MM-DD. Empty in the public view.
+  string period_start = 8;
+  string period_end = 9;
+  // Human period, e.g. "Oct 2026" or "2026". Always set, including publicly.
+  string period_label = 10;
+  // In play order. A client that does not recognise a card (its oneof is
+  // empty) skips it, so new card types never break older clients.
+  repeated RecapCard cards = 11;
+  RecapTheme theme = 12;
+  RecapOwner owner = 13;
+  // True when the caller owns this recap.
+  bool is_owner = 14;
+  // Set once shared.
+  string share_url = 15;
+  google.protobuf.Timestamp ready_at = 16;
+  google.protobuf.Timestamp viewed_at = 17;
+  // Which builder produced the snapshot; image caches key on it.
+  int32 builder_version = 18;
+  // Why the recap is INELIGIBLE, written for the traveller
+  // (e.g. "Mark stops as visited to unlock your recap").
+  string ineligible_reason = 19;
+  // True when the owner may still ask for a rebuild (unshared, recent).
+  bool refreshable = 20;
+}
+
+// RecapTheme lets a recap carry a little of its city.
+message RecapTheme {
+  // #RRGGBB. Empty means the client's default accent.
+  string accent_hex = 1;
+  // A hero image for the main city, when one is known.
+  string hero_image_url = 2;
+}
+
+message RecapOwner {
+  // Empty in the public view unless the owner's profile is public.
+  string user_id = 1;
+  // "A Loci traveller" in the public view when the profile is not public.
+  string display_name = 2;
+  string avatar_url = 3;
+}
+
+// RecapCard is one screen of the story.
+message RecapCard {
+  // Stable within a recap; used to render and share a single card.
+  string id = 1;
+
+  oneof card {
+    IntroCard intro = 10;
+    PlacesCard places = 11;
+    RouteCard route = 12;
+    DaysCard days = 13;
+    TasteCard taste = 14;
+    HighlightsCard highlights = 15;
+    ProgressCard progress = 16;
+    FieldCard field = 17;
+    FriendsCard friends = 18;
+    OutroCard outro = 19;
+    // 30 and up are kept for year-in-review cards.
+  }
+}
+
+// IntroCard opens the story (the luggage tag).
+message IntroCard {
+  // One line above the tag, e.g. "Five days, one city, and the shoes to prove it."
+  string lede = 1;
+  // Three letters for the tag: the arrival airport when a flight is known,
+  // otherwise derived from the city name.
+  string short_code = 2;
+  string primary_city = 3;
+  string country = 4;
+  string country_code = 5;
+  // Every city on the trip, in order.
+  repeated string city_names = 6;
+  int32 day_count = 7;
+}
+
+// PlacesCard counts the places kept (the passport page).
+message PlacesCard {
+  // Distinct places visited or marked done.
+  int32 places_count = 1;
+  int32 cities_count = 2;
+  // Stops on the plan, and how many were marked done. Used when there are
+  // stop marks but no confirmed visits.
+  int32 stops_planned = 3;
+  int32 stops_done = 4;
+  // One stamp per group (a neighbourhood, or a city on a multi-city trip),
+  // largest first, at most 6.
+  repeated PlaceGroup groups = 5;
+  string headline = 6;
+}
+
+message PlaceGroup {
+  string label = 1;
+  int32 places_count = 2;
+  // YYYY-MM-DD of the first visit in the group. Empty in the public view.
+  string first_date = 3;
+}
+
+// RouteBasis says what a distance was measured over, so clients label it
+// honestly.
+enum RouteBasis {
+  ROUTE_BASIS_UNSPECIFIED = 0;
+  // The trip's own legs.
+  ROUTE_BASIS_LEGS = 1;
+  // Straight lines between the trip's cities.
+  ROUTE_BASIS_CITIES = 2;
+  // Straight lines between visited places, in visit order.
+  ROUTE_BASIS_VISITS = 3;
+}
+
+// RouteCard shows the distance and a sketch of the route (the boarding pass).
+message RouteCard {
+  double distance_km = 1;
+  RouteBasis basis = 2;
+  // In travel order. City centroids only in the public view.
+  repeated RoutePoint points = 3;
+  string headline = 4;
+}
+
+message RoutePoint {
+  double latitude = 1;
+  double longitude = 2;
+  // Empty in the public view unless the point is a city.
+  string label = 3;
+}
+
+// DaysCard shows the days walked (ticket stubs).
+message DaysCard {
+  int32 days_total = 1;
+  int32 days_completed = 2;
+  repeated DayStub days = 3;
+  // Day number with the most stops done; 0 when none.
+  int32 busiest_day_number = 4;
+  string headline = 5;
+}
+
+message DayStub {
+  int32 day_number = 1;
+  // YYYY-MM-DD. Empty in the public view.
+  string date = 2;
+  string city_name = 3;
+  int32 stops_done = 4;
+  int32 stops_total = 5;
+  bool completed = 6;
+}
+
+enum TasteEvidenceKind {
+  TASTE_EVIDENCE_KIND_UNSPECIFIED = 0;
+  TASTE_EVIDENCE_KIND_SAVES = 1;
+  TASTE_EVIDENCE_KIND_VISITS = 2;
+  TASTE_EVIDENCE_KIND_REVIEWS = 3;
+  TASTE_EVIDENCE_KIND_MIXED = 4;
+}
+
+enum TasteTrend {
+  TASTE_TREND_UNSPECIFIED = 0;
+  // First seen in this period.
+  TASTE_TREND_NEW = 1;
+  TASTE_TREND_GROWING = 2;
+  TASTE_TREND_STRONG = 3;
+}
+
+// TasteCard shows what Loci noticed about the traveller's taste (the postcard).
+message TasteCard {
+  // E.g. "You went looking for natural wine every single night."
+  string headline = 1;
+  // Strongest first, at most 3. Positive traits only.
+  repeated TasteTrait traits = 2;
+  // True when the traits come from this period's own evidence; false when the
+  // card fell back to the traveller's overall taste.
+  bool from_period = 3;
+}
+
+message TasteTrait {
+  string trait_key = 1;
+  string label = 2;
+  // 0..1, for the bar.
+  double strength = 3;
+  // Omitted (zero) in the public view.
+  int32 evidence_count = 4;
+  TasteEvidenceKind evidence_kind = 5;
+  TasteTrend trend = 6;
+}
+
+enum HighlightReason {
+  HIGHLIGHT_REASON_UNSPECIFIED = 0;
+  HIGHLIGHT_REASON_FAVORITED = 1;
+  HIGHLIGHT_REASON_REVIEWED = 2;
+  HIGHLIGHT_REASON_FIRST_VISIT = 3;
+}
+
+// HighlightsCard pins the top places. Owner view only; dropped publicly.
+message HighlightsCard {
+  repeated Highlight highlights = 1;
+  string headline = 2;
+}
+
+message Highlight {
+  string poi_id = 1;
+  string name = 2;
+  string category = 3;
+  // 1..5 when the traveller rated it, else 0.
+  int32 rating = 4;
+  HighlightReason reason = 5;
+  string image_url = 6;
+}
+
+// ProgressCard sums up points, badges and streaks earned in the period.
+message ProgressCard {
+  int64 points = 1;
+  repeated EarnedBadge badges = 2;
+  // Longest run of active days inside the period.
+  int32 streak_days = 3;
+  string headline = 4;
+}
+
+message EarnedBadge {
+  string badge_id = 1;
+  string label = 2;
+}
+
+// FieldCard shows the traveller's field rank in the trip's main city.
+message FieldCard {
+  string city_id = 1;
+  string city_name = 2;
+  int64 score = 3;
+  string rank_label = 4;
+  int32 places_kept = 5;
+  int32 days_finished = 6;
+  string headline = 7;
+}
+
+// FriendsCard shows friends connected to the trip. Names only in the owner
+// view; the public view keeps the count.
+message FriendsCard {
+  // Friends who have also been to the trip's city.
+  int32 friends_been_count = 1;
+  repeated FriendRef friends = 2;
+  string headline = 3;
+}
+
+message FriendRef {
+  string user_id = 1;
+  string display_name = 2;
+  string avatar_url = 3;
+}
+
+// OutroCard closes the story with the share prompt.
+message OutroCard {
+  string headline = 1;
+  // One-line summary, e.g. "23 places · 41 km · 5 days".
+  string summary_line = 2;
+}
+
+// RecapSummary is a list row.
+message RecapSummary {
+  string id = 1;
+  RecapKind kind = 2;
+  string trip_id = 3;
+  int32 year = 4;
+  string title = 5;
+  string subtitle = 6;
+  string period_label = 7;
+  google.protobuf.Timestamp ready_at = 8;
+  bool viewed = 9;
+  bool shared = 10;
+}
+
+message GetTripRecapRequest {
+  string trip_id = 1 [(buf.validate.field).string.uuid = true];
+  // Rebuild even if a snapshot exists. Ignored once the recap is frozen.
+  bool refresh = 2;
+}
+
+message GetYearInReviewRequest {
+  int32 year = 1 [(buf.validate.field).int32 = {
+    gte: 2024
+    lte: 2100
+  }];
+}
+
+message GetRecapRequest {
+  string recap_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+message GetRecapResponse {
+  Recap recap = 1;
+}
+
+message ListRecapsRequest {
+  // Defaults to 20 when zero.
+  int32 page_size = 1 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 100
+  }];
+  string page_token = 2 [(buf.validate.field).string = {max_len: 200}];
+}
+
+message ListRecapsResponse {
+  repeated RecapSummary recaps = 1;
+  string next_page_token = 2;
+}
+
+message ShareRecapRequest {
+  string recap_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+message ShareRecapResponse {
+  string share_code = 1;
+  // The public page, e.g. https://lociai.fyi/r/<code>.
+  string share_url = 2;
+}
+
+message UnshareRecapRequest {
+  string recap_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+message UnshareRecapResponse {}
+
+message MarkRecapViewedRequest {
+  string recap_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+message MarkRecapViewedResponse {}
+
+message RenderRecapCardImageRequest {
+  string recap_id = 1 [(buf.validate.field).string.uuid = true];
+  string card_id = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 64
+  }];
+  RecapImageFormat format = 3 [(buf.validate.field).enum = {
+    defined_only: true
+    not_in: [0]
+  }];
+}
+
+message RenderRecapCardImageResponse {
+  bytes png = 1;
+  int32 width = 2;
+  int32 height = 3;
+}
+
+message GetSharedRecapRequest {
+  string share_code = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 50
+  }];
+}
