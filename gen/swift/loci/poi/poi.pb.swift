@@ -274,6 +274,18 @@ public struct Loci_Poi_POIDetailedInfo: @unchecked Sendable {
   /// Clears the value of `day`. Subsequent reads from it will return its default value.
   public mutating func clearDay() {_uniqueStorage()._day = nil}
 
+  /// How well this place fits the signed-in traveller's learned taste. Set only
+  /// when Loci has enough signal to say so honestly; absent for anonymous users,
+  /// users with personalization off, and cold-start profiles.
+  public var tasteMatch: Loci_Poi_TasteMatch {
+    get {return _storage._tasteMatch ?? Loci_Poi_TasteMatch()}
+    set {_uniqueStorage()._tasteMatch = newValue}
+  }
+  /// Returns true if `tasteMatch` has been explicitly set.
+  public var hasTasteMatch: Bool {return _storage._tasteMatch != nil}
+  /// Clears the value of `tasteMatch`. Subsequent reads from it will return its default value.
+  public mutating func clearTasteMatch() {_uniqueStorage()._tasteMatch = nil}
+
   /// Pictures with the credit they cannot be shown without.
   ///
   /// Wikimedia Commons content is CC BY-SA and similar: displaying the image
@@ -290,6 +302,24 @@ public struct Loci_Poi_POIDetailedInfo: @unchecked Sendable {
   public init() {}
 
   fileprivate var _storage = _StorageClass.defaultInstance
+}
+
+/// TasteMatch explains why a place fits the traveller, not whether it is good.
+public struct Loci_Poi_TasteMatch: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// 0..1 relative to the traveller's own range: 1 is among the best fits Loci
+  /// has seen for them, 0 among the worst.
+  public var score: Float = 0
+
+  /// Short, human reasons ("You like quiet cafés"), strongest first.
+  public var reasons: [String] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
 }
 
 /// HotelDetailedInfo represents hotel-specific information
@@ -862,6 +892,7 @@ extension Loci_Poi_POIDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._Messag
     32: .standard(proto: "verified_facts"),
     33: .same(proto: "grounded"),
     35: .same(proto: "day"),
+    36: .standard(proto: "taste_match"),
     34: .standard(proto: "image_credits"),
   ]
 
@@ -900,6 +931,7 @@ extension Loci_Poi_POIDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._Messag
     var _verifiedFacts: Loci_Place_PlaceFacts? = nil
     var _grounded: Bool? = nil
     var _day: Int32? = nil
+    var _tasteMatch: Loci_Poi_TasteMatch? = nil
     var _imageCredits: [Loci_Poi_POIImage] = []
 
     #if swift(>=5.10)
@@ -949,6 +981,7 @@ extension Loci_Poi_POIDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._Messag
       _verifiedFacts = source._verifiedFacts
       _grounded = source._grounded
       _day = source._day
+      _tasteMatch = source._tasteMatch
       _imageCredits = source._imageCredits
     }
   }
@@ -1003,6 +1036,7 @@ extension Loci_Poi_POIDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._Messag
         case 33: try { try decoder.decodeSingularBoolField(value: &_storage._grounded) }()
         case 34: try { try decoder.decodeRepeatedMessageField(value: &_storage._imageCredits) }()
         case 35: try { try decoder.decodeSingularInt32Field(value: &_storage._day) }()
+        case 36: try { try decoder.decodeSingularMessageField(value: &_storage._tasteMatch) }()
         default: break
         }
       }
@@ -1120,6 +1154,9 @@ extension Loci_Poi_POIDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._Messag
       try { if let v = _storage._day {
         try visitor.visitSingularInt32Field(value: v, fieldNumber: 35)
       } }()
+      try { if let v = _storage._tasteMatch {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 36)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1163,11 +1200,50 @@ extension Loci_Poi_POIDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._Messag
         if _storage._verifiedFacts != rhs_storage._verifiedFacts {return false}
         if _storage._grounded != rhs_storage._grounded {return false}
         if _storage._day != rhs_storage._day {return false}
+        if _storage._tasteMatch != rhs_storage._tasteMatch {return false}
         if _storage._imageCredits != rhs_storage._imageCredits {return false}
         return true
       }
       if !storagesAreEqual {return false}
     }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Poi_TasteMatch: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".TasteMatch"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "score"),
+    2: .same(proto: "reasons"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularFloatField(value: &self.score) }()
+      case 2: try { try decoder.decodeRepeatedStringField(value: &self.reasons) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.score.bitPattern != 0 {
+      try visitor.visitSingularFloatField(value: self.score, fieldNumber: 1)
+    }
+    if !self.reasons.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.reasons, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Poi_TasteMatch, rhs: Loci_Poi_TasteMatch) -> Bool {
+    if lhs.score != rhs.score {return false}
+    if lhs.reasons != rhs.reasons {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

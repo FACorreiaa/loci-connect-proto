@@ -535,6 +535,16 @@ export declare type RecordVisitRequest = Message<"loci.travelhistory.RecordVisit
    * @generated from field: optional loci.travelhistory.DeviceFix device_location = 9;
    */
   deviceLocation?: DeviceFix;
+
+  /**
+   * How the client knew about this visit. Unset means MANUAL, which is what
+   * every caller sent before this field existed. Walk and trip-day arrivals send
+   * VISIT_EVENT; a traveller's "I've been here" sends MANUAL. TRIP and BACKFILL
+   * are server-derived and rejected here.
+   *
+   * @generated from field: optional loci.travelhistory.VisitSource source = 10;
+   */
+  source?: VisitSource;
 };
 
 /**
@@ -630,6 +640,43 @@ export declare type DeleteVisitResponse = Message<"loci.travelhistory.DeleteVisi
  * Use `create(DeleteVisitResponseSchema)` to create a new message.
  */
 export declare const DeleteVisitResponseSchema: GenMessage<DeleteVisitResponse>;
+
+/**
+ * DeleteVisitedPOIRequest removes one place visit (VisitedPOI.id) and the taste
+ * signal it produced. Unlike DeleteVisit it never touches the city row.
+ *
+ * @generated from message loci.travelhistory.DeleteVisitedPOIRequest
+ */
+export declare type DeleteVisitedPOIRequest = Message<"loci.travelhistory.DeleteVisitedPOIRequest"> & {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
+};
+
+/**
+ * Describes the message loci.travelhistory.DeleteVisitedPOIRequest.
+ * Use `create(DeleteVisitedPOIRequestSchema)` to create a new message.
+ */
+export declare const DeleteVisitedPOIRequestSchema: GenMessage<DeleteVisitedPOIRequest>;
+
+/**
+ * @generated from message loci.travelhistory.DeleteVisitedPOIResponse
+ */
+export declare type DeleteVisitedPOIResponse = Message<"loci.travelhistory.DeleteVisitedPOIResponse"> & {
+  /**
+   * False when the id does not exist or belongs to another user.
+   *
+   * @generated from field: bool deleted = 1;
+   */
+  deleted: boolean;
+};
+
+/**
+ * Describes the message loci.travelhistory.DeleteVisitedPOIResponse.
+ * Use `create(DeleteVisitedPOIResponseSchema)` to create a new message.
+ */
+export declare const DeleteVisitedPOIResponseSchema: GenMessage<DeleteVisitedPOIResponse>;
 
 /**
  * GetGlobeDataRequest asks for everything the globe dashboard renders in ONE
@@ -789,6 +836,14 @@ export declare const TravelHistoryService: GenService<{
     methodKind: "unary";
     input: typeof DeleteVisitRequestSchema;
     output: typeof DeleteVisitResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.travelhistory.TravelHistoryService.DeleteVisitedPOI
+   */
+  deleteVisitedPOI: {
+    methodKind: "unary";
+    input: typeof DeleteVisitedPOIRequestSchema;
+    output: typeof DeleteVisitedPOIResponseSchema;
   },
   /**
    * GetGlobeData fills the entire globe dashboard in one call.

@@ -221,6 +221,16 @@ message RecordVisitRequest {
   // the spot). A visit earns points only when this fix is recent and close to
   // the place's own coordinates; without it the visit is recorded, unscored.
   optional DeviceFix device_location = 9;
+  // How the client knew about this visit. Unset means MANUAL, which is what
+  // every caller sent before this field existed. Walk and trip-day arrivals send
+  // VISIT_EVENT; a traveller's "I've been here" sends MANUAL. TRIP and BACKFILL
+  // are server-derived and rejected here.
+  optional VisitSource source = 10 [(buf.validate.field).enum = {
+    in: [
+      2,
+      3
+    ]
+  }];
 }
 
 message DeviceFix {
@@ -254,6 +264,17 @@ message DeleteVisitRequest {
 }
 
 message DeleteVisitResponse {
+  bool deleted = 1;
+}
+
+// DeleteVisitedPOIRequest removes one place visit (VisitedPOI.id) and the taste
+// signal it produced. Unlike DeleteVisit it never touches the city row.
+message DeleteVisitedPOIRequest {
+  string id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+message DeleteVisitedPOIResponse {
+  // False when the id does not exist or belongs to another user.
   bool deleted = 1;
 }
 
@@ -292,6 +313,7 @@ service TravelHistoryService {
   rpc GetTravelSummary(GetTravelSummaryRequest) returns (GetTravelSummaryResponse);
   rpc RecordVisit(RecordVisitRequest) returns (RecordVisitResponse);
   rpc DeleteVisit(DeleteVisitRequest) returns (DeleteVisitResponse);
+  rpc DeleteVisitedPOI(DeleteVisitedPOIRequest) returns (DeleteVisitedPOIResponse);
   // GetGlobeData fills the entire globe dashboard in one call.
   rpc GetGlobeData(GetGlobeDataRequest) returns (GetGlobeDataResponse);
 }
