@@ -13200,6 +13200,12 @@ components:
         createdAt:
           title: created_at
           $ref: '#/components/schemas/google.protobuf.Timestamp'
+        isAiGenerated:
+          type: boolean
+          title: is_ai_generated
+          description: |-
+            True when this is a server-published editorial post rather than a user
+             contribution.
       title: Post
       additionalProperties: false
     loci.boards.v1.PostSort:

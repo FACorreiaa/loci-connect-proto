@@ -199,6 +199,14 @@ export declare type Post = Message<"loci.boards.v1.Post"> & {
    * @generated from field: google.protobuf.Timestamp created_at = 12;
    */
   createdAt?: Timestamp;
+
+  /**
+   * True when this is a server-published editorial post rather than a user
+   * contribution.
+   *
+   * @generated from field: bool is_ai_generated = 13;
+   */
+  isAiGenerated: boolean;
 };
 
 /**
