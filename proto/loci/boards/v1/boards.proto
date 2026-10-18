@@ -96,6 +96,9 @@ message Post {
     lte: 1
   }];
   google.protobuf.Timestamp created_at = 12;
+  // True when this is a server-published editorial post rather than a user
+  // contribution.
+  bool is_ai_generated = 13;
 }
 
 message Comment {

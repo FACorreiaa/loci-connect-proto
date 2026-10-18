@@ -358,6 +358,13 @@ public struct Loci_Boards_V1_Post: @unchecked Sendable {
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {_uniqueStorage()._createdAt = nil}
 
+  /// True when this is a server-published editorial post rather than a user
+  /// contribution.
+  public var isAiGenerated: Bool {
+    get {return _storage._isAiGenerated}
+    set {_uniqueStorage()._isAiGenerated = newValue}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -1198,6 +1205,7 @@ extension Loci_Boards_V1_Post: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     10: .standard(proto: "comment_count"),
     11: .standard(proto: "my_vote"),
     12: .standard(proto: "created_at"),
+    13: .standard(proto: "is_ai_generated"),
   ]
 
   fileprivate class _StorageClass {
@@ -1213,6 +1221,7 @@ extension Loci_Boards_V1_Post: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     var _commentCount: Int32 = 0
     var _myVote: Int32 = 0
     var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+    var _isAiGenerated: Bool = false
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -1239,6 +1248,7 @@ extension Loci_Boards_V1_Post: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       _commentCount = source._commentCount
       _myVote = source._myVote
       _createdAt = source._createdAt
+      _isAiGenerated = source._isAiGenerated
     }
   }
 
@@ -1269,6 +1279,7 @@ extension Loci_Boards_V1_Post: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
         case 10: try { try decoder.decodeSingularInt32Field(value: &_storage._commentCount) }()
         case 11: try { try decoder.decodeSingularInt32Field(value: &_storage._myVote) }()
         case 12: try { try decoder.decodeSingularMessageField(value: &_storage._createdAt) }()
+        case 13: try { try decoder.decodeSingularBoolField(value: &_storage._isAiGenerated) }()
         default: break
         }
       }
@@ -1317,6 +1328,9 @@ extension Loci_Boards_V1_Post: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       try { if let v = _storage._createdAt {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
       } }()
+      if _storage._isAiGenerated != false {
+        try visitor.visitSingularBoolField(value: _storage._isAiGenerated, fieldNumber: 13)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1338,6 +1352,7 @@ extension Loci_Boards_V1_Post: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
         if _storage._commentCount != rhs_storage._commentCount {return false}
         if _storage._myVote != rhs_storage._myVote {return false}
         if _storage._createdAt != rhs_storage._createdAt {return false}
+        if _storage._isAiGenerated != rhs_storage._isAiGenerated {return false}
         return true
       }
       if !storagesAreEqual {return false}
