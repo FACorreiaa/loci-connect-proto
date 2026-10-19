@@ -1,0 +1,138 @@
+syntax = "proto3";
+
+package loci.ranking;
+
+import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/ranking;ranking";
+
+// RankingService keeps each traveller's personal ranking of places they have
+// been, one list per city.
+//
+// Ranking works the way Beli does: the traveller first gives a verdict (Loved,
+// Fine, Not for me), which drops the place into that bucket, and then answers
+// "better or worse than Y?" against places already in the same bucket. Each
+// answer halves the range the place can sit in, so a bucket of n places takes
+// at most ceil(log2(n+1)) answers. The traveller may stop at any point; the
+// place then stays at the bottom of its bucket.
+//
+// Verdicts also teach taste: they are recorded as preference feedback, so a
+// place someone did not enjoy pushes their taste away from it.
+//
+// Every method requires a signed-in caller. ListUserRankings is friends-only.
+service RankingService {
+  // RatePlace gives a place a verdict, or moves it to a new one. When the
+  // bucket already holds other places, `next` is the first place to compare
+  // against.
+  rpc RatePlace(RatePlaceRequest) returns (RatePlaceResponse);
+  // ComparePlaces answers one comparison for a place still being ranked.
+  // `next` is the following comparison, or unset once the place is placed.
+  rpc ComparePlaces(ComparePlacesRequest) returns (ComparePlacesResponse);
+  // DeleteRanking removes the caller's ranking of a place, and the taste
+  // signal it produced.
+  rpc DeleteRanking(DeleteRankingRequest) returns (DeleteRankingResponse);
+  // ListMyRankings lists the caller's ranked places, ordered by city and then
+  // rank.
+  rpc ListMyRankings(ListMyRankingsRequest) returns (ListRankingsResponse);
+  // ListUserRankings lists another traveller's ranked places. Only their
+  // friends may read it; anyone else gets PERMISSION_DENIED.
+  rpc ListUserRankings(ListUserRankingsRequest) returns (ListRankingsResponse);
+}
+
+enum Verdict {
+  VERDICT_UNSPECIFIED = 0;
+  VERDICT_LOVED = 1;
+  VERDICT_FINE = 2;
+  VERDICT_NOT_FOR_ME = 3;
+}
+
+message RankedPlace {
+  string poi_id = 1;
+  string name = 2;
+  string category = 3;
+  string city_name = 4;
+  Verdict verdict = 5;
+  // 1-based position in this city's list: every Loved place ranks above every
+  // Fine one, and every Fine one above every Not for me.
+  int32 rank = 6;
+  // 0–10 with one decimal, derived from the verdict and the position inside
+  // it: Loved spans 6.7–10, Fine 3.4–6.6, Not for me 0–3.3.
+  float score = 7;
+  google.protobuf.Timestamp updated_at = 8;
+  // True while the comparisons for this place are unfinished.
+  bool pending = 9;
+}
+
+// Comparison is the place to compare against next.
+message Comparison {
+  string poi_id = 1;
+  string name = 2;
+}
+
+message RatePlaceRequest {
+  string poi_id = 1 [(buf.validate.field).string.uuid = true];
+  Verdict verdict = 2 [(buf.validate.field).enum = {
+    defined_only: true
+    not_in: [0]
+  }];
+  string city_name = 3 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 120
+  }];
+  string poi_name = 4 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
+  string category = 5 [(buf.validate.field).string.max_len = 80];
+}
+
+message RatePlaceResponse {
+  RankedPlace place = 1;
+  optional Comparison next = 2;
+}
+
+message ComparePlacesRequest {
+  string poi_id = 1 [(buf.validate.field).string.uuid = true];
+  string other_poi_id = 2 [(buf.validate.field).string.uuid = true];
+  // True when poi_id is better than other_poi_id.
+  bool better = 3;
+}
+
+message ComparePlacesResponse {
+  RankedPlace place = 1;
+  optional Comparison next = 2;
+}
+
+message DeleteRankingRequest {
+  string poi_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+message DeleteRankingResponse {
+  bool deleted = 1;
+}
+
+message ListMyRankingsRequest {
+  // Empty lists every city.
+  string city_name = 1 [(buf.validate.field).string.max_len = 120];
+  // 0 means 100.
+  int32 limit = 2 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 200
+  }];
+}
+
+message ListUserRankingsRequest {
+  string user_id = 1 [(buf.validate.field).string.uuid = true];
+  // Empty lists every city.
+  string city_name = 2 [(buf.validate.field).string.max_len = 120];
+  // 0 means 100.
+  int32 limit = 3 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 200
+  }];
+}
+
+message ListRankingsResponse {
+  repeated RankedPlace places = 1;
+}
