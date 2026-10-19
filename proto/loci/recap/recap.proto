@@ -141,7 +141,15 @@ message RecapCard {
     FieldCard field = 17;
     FriendsCard friends = 18;
     OutroCard outro = 19;
-    // 30 and up are kept for year-in-review cards.
+
+    // Year in review only.
+    YearMapCard year_map = 30;
+    TripsTimelineCard trips_timeline = 31;
+    TopCityCard top_city = 32;
+    TasteShiftCard taste_shift = 33;
+    StreakCard streak = 34;
+    ContributionsCard contributions = 35;
+    PercentileCard percentile = 36;
   }
 }
 
@@ -336,6 +344,131 @@ message OutroCard {
   string headline = 1;
   // One-line summary, e.g. "23 places · 41 km · 5 days".
   string summary_line = 2;
+}
+
+// YearMapCard shows where the year went: countries and cities, with the
+// countries visited for the first time called out.
+message YearMapCard {
+  int32 countries_count = 1;
+  int32 cities_count = 2;
+  // Countries the traveller had never been to before this year.
+  int32 new_countries_count = 3;
+  // Most days first, at most 12.
+  repeated YearCountry countries = 4;
+  // City centroids, for dots on the map. Cities only, so kept publicly.
+  repeated RoutePoint cities = 5;
+  string headline = 6;
+}
+
+message YearCountry {
+  string country = 1;
+  string country_code = 2;
+  int32 cities_count = 3;
+  int32 days = 4;
+  // True when this year was the traveller's first time in the country.
+  bool first_time = 5;
+}
+
+// TripsTimelineCard lays the year's trips out by month.
+message TripsTimelineCard {
+  int32 trips_count = 1;
+  // Days spent on trips across the year.
+  int32 days_away = 2;
+  // Always 12 entries, January first.
+  repeated TimelineMonth months = 3;
+  // In date order, at most 12.
+  repeated TimelineTrip trips = 4;
+  // 1..12, the month with the most days away; 0 when none.
+  int32 busiest_month = 5;
+  string headline = 6;
+}
+
+message TimelineMonth {
+  // 1..12.
+  int32 month = 1;
+  int32 trips_count = 2;
+  int32 days = 3;
+}
+
+message TimelineTrip {
+  // Empty in the public view.
+  string trip_id = 1;
+  // 1..12, the month the trip started.
+  int32 month = 2;
+  string city_name = 3;
+  string country_code = 4;
+  int32 day_count = 5;
+}
+
+// TopCityCard names the city the traveller spent the most of the year in.
+message TopCityCard {
+  string city_id = 1;
+  string city_name = 2;
+  string country = 3;
+  string country_code = 4;
+  int32 days = 5;
+  int32 places_count = 6;
+  // Trips that included the city.
+  int32 trips_count = 7;
+  string image_url = 8;
+  string headline = 9;
+}
+
+// TasteShiftCard shows the taste trait that grew most over the year.
+message TasteShiftCard {
+  string headline = 1;
+  // The trait that gained most between the start and the end of the year.
+  TasteTrait trait = 2;
+  // 0..1, the trait's strength at the start and at the end of the year.
+  double strength_start = 3;
+  double strength_end = 4;
+  // Next biggest gainers, at most 2.
+  repeated TasteTrait runners_up = 5;
+}
+
+// StreakCard shows the longest run of active days and how many days counted.
+message StreakCard {
+  int32 longest_streak_days = 1;
+  // YYYY-MM-DD. Empty in the public view.
+  string longest_streak_start = 2;
+  string longest_streak_end = 3;
+  // Days with any activity across the year.
+  int32 active_days = 4;
+  // 1..12, the month with the most active days; 0 when none.
+  int32 best_month = 5;
+  string headline = 6;
+}
+
+// ContributionsCard counts what the traveller gave back to other travellers.
+message ContributionsCard {
+  int32 reviews_count = 1;
+  // Public lists created.
+  int32 lists_count = 2;
+  // Community board posts.
+  int32 posts_count = 3;
+  // Places submitted and facts confirmed.
+  int32 submissions_count = 4;
+  string headline = 5;
+}
+
+// PercentileMetric is what a PercentileCard ranks the traveller on.
+enum PercentileMetric {
+  PERCENTILE_METRIC_UNSPECIFIED = 0;
+  PERCENTILE_METRIC_PLACES = 1;
+  PERCENTILE_METRIC_CITIES = 2;
+  PERCENTILE_METRIC_DAYS_WALKED = 3;
+  PERCENTILE_METRIC_CONTRIBUTIONS = 4;
+}
+
+// PercentileCard ranks the traveller against everyone active that year. Only
+// built when enough travellers were active for the number to mean something.
+message PercentileCard {
+  // 1..100: "top 5%" is 5.
+  int32 top_percent = 1;
+  PercentileMetric metric = 2;
+  // The traveller's own value for the metric.
+  int32 value = 3;
+  string headline = 4;
 }
 
 // RecapSummary is a list row.

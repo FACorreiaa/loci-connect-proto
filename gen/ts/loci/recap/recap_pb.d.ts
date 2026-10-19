@@ -275,12 +275,54 @@ export declare type RecapCard = Message<"loci.recap.RecapCard"> & {
     case: "friends";
   } | {
     /**
-     * 30 and up are kept for year-in-review cards.
-     *
      * @generated from field: loci.recap.OutroCard outro = 19;
      */
     value: OutroCard;
     case: "outro";
+  } | {
+    /**
+     * Year in review only.
+     *
+     * @generated from field: loci.recap.YearMapCard year_map = 30;
+     */
+    value: YearMapCard;
+    case: "yearMap";
+  } | {
+    /**
+     * @generated from field: loci.recap.TripsTimelineCard trips_timeline = 31;
+     */
+    value: TripsTimelineCard;
+    case: "tripsTimeline";
+  } | {
+    /**
+     * @generated from field: loci.recap.TopCityCard top_city = 32;
+     */
+    value: TopCityCard;
+    case: "topCity";
+  } | {
+    /**
+     * @generated from field: loci.recap.TasteShiftCard taste_shift = 33;
+     */
+    value: TasteShiftCard;
+    case: "tasteShift";
+  } | {
+    /**
+     * @generated from field: loci.recap.StreakCard streak = 34;
+     */
+    value: StreakCard;
+    case: "streak";
+  } | {
+    /**
+     * @generated from field: loci.recap.ContributionsCard contributions = 35;
+     */
+    value: ContributionsCard;
+    case: "contributions";
+  } | {
+    /**
+     * @generated from field: loci.recap.PercentileCard percentile = 36;
+     */
+    value: PercentileCard;
+    case: "percentile";
   } | { case: undefined; value?: undefined };
 };
 
@@ -903,6 +945,448 @@ export declare type OutroCard = Message<"loci.recap.OutroCard"> & {
 export declare const OutroCardSchema: GenMessage<OutroCard>;
 
 /**
+ * YearMapCard shows where the year went: countries and cities, with the
+ * countries visited for the first time called out.
+ *
+ * @generated from message loci.recap.YearMapCard
+ */
+export declare type YearMapCard = Message<"loci.recap.YearMapCard"> & {
+  /**
+   * @generated from field: int32 countries_count = 1;
+   */
+  countriesCount: number;
+
+  /**
+   * @generated from field: int32 cities_count = 2;
+   */
+  citiesCount: number;
+
+  /**
+   * Countries the traveller had never been to before this year.
+   *
+   * @generated from field: int32 new_countries_count = 3;
+   */
+  newCountriesCount: number;
+
+  /**
+   * Most days first, at most 12.
+   *
+   * @generated from field: repeated loci.recap.YearCountry countries = 4;
+   */
+  countries: YearCountry[];
+
+  /**
+   * City centroids, for dots on the map. Cities only, so kept publicly.
+   *
+   * @generated from field: repeated loci.recap.RoutePoint cities = 5;
+   */
+  cities: RoutePoint[];
+
+  /**
+   * @generated from field: string headline = 6;
+   */
+  headline: string;
+};
+
+/**
+ * Describes the message loci.recap.YearMapCard.
+ * Use `create(YearMapCardSchema)` to create a new message.
+ */
+export declare const YearMapCardSchema: GenMessage<YearMapCard>;
+
+/**
+ * @generated from message loci.recap.YearCountry
+ */
+export declare type YearCountry = Message<"loci.recap.YearCountry"> & {
+  /**
+   * @generated from field: string country = 1;
+   */
+  country: string;
+
+  /**
+   * @generated from field: string country_code = 2;
+   */
+  countryCode: string;
+
+  /**
+   * @generated from field: int32 cities_count = 3;
+   */
+  citiesCount: number;
+
+  /**
+   * @generated from field: int32 days = 4;
+   */
+  days: number;
+
+  /**
+   * True when this year was the traveller's first time in the country.
+   *
+   * @generated from field: bool first_time = 5;
+   */
+  firstTime: boolean;
+};
+
+/**
+ * Describes the message loci.recap.YearCountry.
+ * Use `create(YearCountrySchema)` to create a new message.
+ */
+export declare const YearCountrySchema: GenMessage<YearCountry>;
+
+/**
+ * TripsTimelineCard lays the year's trips out by month.
+ *
+ * @generated from message loci.recap.TripsTimelineCard
+ */
+export declare type TripsTimelineCard = Message<"loci.recap.TripsTimelineCard"> & {
+  /**
+   * @generated from field: int32 trips_count = 1;
+   */
+  tripsCount: number;
+
+  /**
+   * Days spent on trips across the year.
+   *
+   * @generated from field: int32 days_away = 2;
+   */
+  daysAway: number;
+
+  /**
+   * Always 12 entries, January first.
+   *
+   * @generated from field: repeated loci.recap.TimelineMonth months = 3;
+   */
+  months: TimelineMonth[];
+
+  /**
+   * In date order, at most 12.
+   *
+   * @generated from field: repeated loci.recap.TimelineTrip trips = 4;
+   */
+  trips: TimelineTrip[];
+
+  /**
+   * 1..12, the month with the most days away; 0 when none.
+   *
+   * @generated from field: int32 busiest_month = 5;
+   */
+  busiestMonth: number;
+
+  /**
+   * @generated from field: string headline = 6;
+   */
+  headline: string;
+};
+
+/**
+ * Describes the message loci.recap.TripsTimelineCard.
+ * Use `create(TripsTimelineCardSchema)` to create a new message.
+ */
+export declare const TripsTimelineCardSchema: GenMessage<TripsTimelineCard>;
+
+/**
+ * @generated from message loci.recap.TimelineMonth
+ */
+export declare type TimelineMonth = Message<"loci.recap.TimelineMonth"> & {
+  /**
+   * 1..12.
+   *
+   * @generated from field: int32 month = 1;
+   */
+  month: number;
+
+  /**
+   * @generated from field: int32 trips_count = 2;
+   */
+  tripsCount: number;
+
+  /**
+   * @generated from field: int32 days = 3;
+   */
+  days: number;
+};
+
+/**
+ * Describes the message loci.recap.TimelineMonth.
+ * Use `create(TimelineMonthSchema)` to create a new message.
+ */
+export declare const TimelineMonthSchema: GenMessage<TimelineMonth>;
+
+/**
+ * @generated from message loci.recap.TimelineTrip
+ */
+export declare type TimelineTrip = Message<"loci.recap.TimelineTrip"> & {
+  /**
+   * Empty in the public view.
+   *
+   * @generated from field: string trip_id = 1;
+   */
+  tripId: string;
+
+  /**
+   * 1..12, the month the trip started.
+   *
+   * @generated from field: int32 month = 2;
+   */
+  month: number;
+
+  /**
+   * @generated from field: string city_name = 3;
+   */
+  cityName: string;
+
+  /**
+   * @generated from field: string country_code = 4;
+   */
+  countryCode: string;
+
+  /**
+   * @generated from field: int32 day_count = 5;
+   */
+  dayCount: number;
+};
+
+/**
+ * Describes the message loci.recap.TimelineTrip.
+ * Use `create(TimelineTripSchema)` to create a new message.
+ */
+export declare const TimelineTripSchema: GenMessage<TimelineTrip>;
+
+/**
+ * TopCityCard names the city the traveller spent the most of the year in.
+ *
+ * @generated from message loci.recap.TopCityCard
+ */
+export declare type TopCityCard = Message<"loci.recap.TopCityCard"> & {
+  /**
+   * @generated from field: string city_id = 1;
+   */
+  cityId: string;
+
+  /**
+   * @generated from field: string city_name = 2;
+   */
+  cityName: string;
+
+  /**
+   * @generated from field: string country = 3;
+   */
+  country: string;
+
+  /**
+   * @generated from field: string country_code = 4;
+   */
+  countryCode: string;
+
+  /**
+   * @generated from field: int32 days = 5;
+   */
+  days: number;
+
+  /**
+   * @generated from field: int32 places_count = 6;
+   */
+  placesCount: number;
+
+  /**
+   * Trips that included the city.
+   *
+   * @generated from field: int32 trips_count = 7;
+   */
+  tripsCount: number;
+
+  /**
+   * @generated from field: string image_url = 8;
+   */
+  imageUrl: string;
+
+  /**
+   * @generated from field: string headline = 9;
+   */
+  headline: string;
+};
+
+/**
+ * Describes the message loci.recap.TopCityCard.
+ * Use `create(TopCityCardSchema)` to create a new message.
+ */
+export declare const TopCityCardSchema: GenMessage<TopCityCard>;
+
+/**
+ * TasteShiftCard shows the taste trait that grew most over the year.
+ *
+ * @generated from message loci.recap.TasteShiftCard
+ */
+export declare type TasteShiftCard = Message<"loci.recap.TasteShiftCard"> & {
+  /**
+   * @generated from field: string headline = 1;
+   */
+  headline: string;
+
+  /**
+   * The trait that gained most between the start and the end of the year.
+   *
+   * @generated from field: loci.recap.TasteTrait trait = 2;
+   */
+  trait?: TasteTrait;
+
+  /**
+   * 0..1, the trait's strength at the start and at the end of the year.
+   *
+   * @generated from field: double strength_start = 3;
+   */
+  strengthStart: number;
+
+  /**
+   * @generated from field: double strength_end = 4;
+   */
+  strengthEnd: number;
+
+  /**
+   * Next biggest gainers, at most 2.
+   *
+   * @generated from field: repeated loci.recap.TasteTrait runners_up = 5;
+   */
+  runnersUp: TasteTrait[];
+};
+
+/**
+ * Describes the message loci.recap.TasteShiftCard.
+ * Use `create(TasteShiftCardSchema)` to create a new message.
+ */
+export declare const TasteShiftCardSchema: GenMessage<TasteShiftCard>;
+
+/**
+ * StreakCard shows the longest run of active days and how many days counted.
+ *
+ * @generated from message loci.recap.StreakCard
+ */
+export declare type StreakCard = Message<"loci.recap.StreakCard"> & {
+  /**
+   * @generated from field: int32 longest_streak_days = 1;
+   */
+  longestStreakDays: number;
+
+  /**
+   * YYYY-MM-DD. Empty in the public view.
+   *
+   * @generated from field: string longest_streak_start = 2;
+   */
+  longestStreakStart: string;
+
+  /**
+   * @generated from field: string longest_streak_end = 3;
+   */
+  longestStreakEnd: string;
+
+  /**
+   * Days with any activity across the year.
+   *
+   * @generated from field: int32 active_days = 4;
+   */
+  activeDays: number;
+
+  /**
+   * 1..12, the month with the most active days; 0 when none.
+   *
+   * @generated from field: int32 best_month = 5;
+   */
+  bestMonth: number;
+
+  /**
+   * @generated from field: string headline = 6;
+   */
+  headline: string;
+};
+
+/**
+ * Describes the message loci.recap.StreakCard.
+ * Use `create(StreakCardSchema)` to create a new message.
+ */
+export declare const StreakCardSchema: GenMessage<StreakCard>;
+
+/**
+ * ContributionsCard counts what the traveller gave back to other travellers.
+ *
+ * @generated from message loci.recap.ContributionsCard
+ */
+export declare type ContributionsCard = Message<"loci.recap.ContributionsCard"> & {
+  /**
+   * @generated from field: int32 reviews_count = 1;
+   */
+  reviewsCount: number;
+
+  /**
+   * Public lists created.
+   *
+   * @generated from field: int32 lists_count = 2;
+   */
+  listsCount: number;
+
+  /**
+   * Community board posts.
+   *
+   * @generated from field: int32 posts_count = 3;
+   */
+  postsCount: number;
+
+  /**
+   * Places submitted and facts confirmed.
+   *
+   * @generated from field: int32 submissions_count = 4;
+   */
+  submissionsCount: number;
+
+  /**
+   * @generated from field: string headline = 5;
+   */
+  headline: string;
+};
+
+/**
+ * Describes the message loci.recap.ContributionsCard.
+ * Use `create(ContributionsCardSchema)` to create a new message.
+ */
+export declare const ContributionsCardSchema: GenMessage<ContributionsCard>;
+
+/**
+ * PercentileCard ranks the traveller against everyone active that year. Only
+ * built when enough travellers were active for the number to mean something.
+ *
+ * @generated from message loci.recap.PercentileCard
+ */
+export declare type PercentileCard = Message<"loci.recap.PercentileCard"> & {
+  /**
+   * 1..100: "top 5%" is 5.
+   *
+   * @generated from field: int32 top_percent = 1;
+   */
+  topPercent: number;
+
+  /**
+   * @generated from field: loci.recap.PercentileMetric metric = 2;
+   */
+  metric: PercentileMetric;
+
+  /**
+   * The traveller's own value for the metric.
+   *
+   * @generated from field: int32 value = 3;
+   */
+  value: number;
+
+  /**
+   * @generated from field: string headline = 4;
+   */
+  headline: string;
+};
+
+/**
+ * Describes the message loci.recap.PercentileCard.
+ * Use `create(PercentileCardSchema)` to create a new message.
+ */
+export declare const PercentileCardSchema: GenMessage<PercentileCard>;
+
+/**
  * RecapSummary is a list row.
  *
  * @generated from message loci.recap.RecapSummary
@@ -1473,6 +1957,43 @@ export enum HighlightReason {
  * Describes the enum loci.recap.HighlightReason.
  */
 export declare const HighlightReasonSchema: GenEnum<HighlightReason>;
+
+/**
+ * PercentileMetric is what a PercentileCard ranks the traveller on.
+ *
+ * @generated from enum loci.recap.PercentileMetric
+ */
+export enum PercentileMetric {
+  /**
+   * @generated from enum value: PERCENTILE_METRIC_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: PERCENTILE_METRIC_PLACES = 1;
+   */
+  PLACES = 1,
+
+  /**
+   * @generated from enum value: PERCENTILE_METRIC_CITIES = 2;
+   */
+  CITIES = 2,
+
+  /**
+   * @generated from enum value: PERCENTILE_METRIC_DAYS_WALKED = 3;
+   */
+  DAYS_WALKED = 3,
+
+  /**
+   * @generated from enum value: PERCENTILE_METRIC_CONTRIBUTIONS = 4;
+   */
+  CONTRIBUTIONS = 4,
+}
+
+/**
+ * Describes the enum loci.recap.PercentileMetric.
+ */
+export declare const PercentileMetricSchema: GenEnum<PercentileMetric>;
 
 /**
  * RecapService serves story-style recaps of what a traveller did: one per

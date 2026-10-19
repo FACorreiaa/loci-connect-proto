@@ -25133,6 +25133,34 @@ components:
         - updatedAt
       additionalProperties: false
       description: UserPreferenceProfile represents a user's preference profile
+    loci.recap.ContributionsCard:
+      type: object
+      properties:
+        reviewsCount:
+          type: integer
+          title: reviews_count
+          format: int32
+        listsCount:
+          type: integer
+          title: lists_count
+          format: int32
+          description: Public lists created.
+        postsCount:
+          type: integer
+          title: posts_count
+          format: int32
+          description: Community board posts.
+        submissionsCount:
+          type: integer
+          title: submissions_count
+          format: int32
+          description: Places submitted and facts confirmed.
+        headline:
+          type: string
+          title: headline
+      title: ContributionsCard
+      additionalProperties: false
+      description: ContributionsCard counts what the traveller gave back to other travellers.
     loci.recap.DayStub:
       type: object
       properties:
@@ -25453,6 +25481,40 @@ components:
       title: OutroCard
       additionalProperties: false
       description: OutroCard closes the story with the share prompt.
+    loci.recap.PercentileCard:
+      type: object
+      properties:
+        topPercent:
+          type: integer
+          title: top_percent
+          format: int32
+          description: '1..100: "top 5%" is 5.'
+        metric:
+          title: metric
+          $ref: '#/components/schemas/loci.recap.PercentileMetric'
+        value:
+          type: integer
+          title: value
+          format: int32
+          description: The traveller's own value for the metric.
+        headline:
+          type: string
+          title: headline
+      title: PercentileCard
+      additionalProperties: false
+      description: |-
+        PercentileCard ranks the traveller against everyone active that year. Only
+         built when enough travellers were active for the number to mean something.
+    loci.recap.PercentileMetric:
+      type: string
+      title: PercentileMetric
+      enum:
+        - PERCENTILE_METRIC_UNSPECIFIED
+        - PERCENTILE_METRIC_PLACES
+        - PERCENTILE_METRIC_CITIES
+        - PERCENTILE_METRIC_DAYS_WALKED
+        - PERCENTILE_METRIC_CONTRIBUTIONS
+      description: PercentileMetric is what a PercentileCard ranks the traveller on.
     loci.recap.PlaceGroup:
       type: object
       properties:
@@ -25625,6 +25687,13 @@ components:
               description: Stable within a recap; used to render and share a single card.
         - oneOf:
             - properties:
+                contributions:
+                  title: contributions
+                  $ref: '#/components/schemas/loci.recap.ContributionsCard'
+              title: contributions
+              required:
+                - contributions
+            - properties:
                 days:
                   title: days
                   $ref: '#/components/schemas/loci.recap.DaysCard'
@@ -25662,11 +25731,17 @@ components:
             - properties:
                 outro:
                   title: outro
-                  description: 30 and up are kept for year-in-review cards.
                   $ref: '#/components/schemas/loci.recap.OutroCard'
               title: outro
               required:
                 - outro
+            - properties:
+                percentile:
+                  title: percentile
+                  $ref: '#/components/schemas/loci.recap.PercentileCard'
+              title: percentile
+              required:
+                - percentile
             - properties:
                 places:
                   title: places
@@ -25689,12 +25764,48 @@ components:
               required:
                 - route
             - properties:
+                streak:
+                  title: streak
+                  $ref: '#/components/schemas/loci.recap.StreakCard'
+              title: streak
+              required:
+                - streak
+            - properties:
                 taste:
                   title: taste
                   $ref: '#/components/schemas/loci.recap.TasteCard'
               title: taste
               required:
                 - taste
+            - properties:
+                tasteShift:
+                  title: taste_shift
+                  $ref: '#/components/schemas/loci.recap.TasteShiftCard'
+              title: taste_shift
+              required:
+                - tasteShift
+            - properties:
+                topCity:
+                  title: top_city
+                  $ref: '#/components/schemas/loci.recap.TopCityCard'
+              title: top_city
+              required:
+                - topCity
+            - properties:
+                tripsTimeline:
+                  title: trips_timeline
+                  $ref: '#/components/schemas/loci.recap.TripsTimelineCard'
+              title: trips_timeline
+              required:
+                - tripsTimeline
+            - properties:
+                yearMap:
+                  title: year_map
+                  description: Year in review only.
+                  $ref: '#/components/schemas/loci.recap.YearMapCard'
+              title: year_map
+              required:
+                - yearMap
       title: RecapCard
       additionalProperties: false
       description: RecapCard is one screen of the story.
@@ -25896,6 +26007,36 @@ components:
           description: The public page, e.g. https://lociai.fyi/r/<code>.
       title: ShareRecapResponse
       additionalProperties: false
+    loci.recap.StreakCard:
+      type: object
+      properties:
+        longestStreakDays:
+          type: integer
+          title: longest_streak_days
+          format: int32
+        longestStreakStart:
+          type: string
+          title: longest_streak_start
+          description: YYYY-MM-DD. Empty in the public view.
+        longestStreakEnd:
+          type: string
+          title: longest_streak_end
+        activeDays:
+          type: integer
+          title: active_days
+          format: int32
+          description: Days with any activity across the year.
+        bestMonth:
+          type: integer
+          title: best_month
+          format: int32
+          description: 1..12, the month with the most active days; 0 when none.
+        headline:
+          type: string
+          title: headline
+      title: StreakCard
+      additionalProperties: false
+      description: StreakCard shows the longest run of active days and how many days counted.
     loci.recap.TasteCard:
       type: object
       properties:
@@ -25927,6 +26068,34 @@ components:
         - TASTE_EVIDENCE_KIND_VISITS
         - TASTE_EVIDENCE_KIND_REVIEWS
         - TASTE_EVIDENCE_KIND_MIXED
+    loci.recap.TasteShiftCard:
+      type: object
+      properties:
+        headline:
+          type: string
+          title: headline
+        trait:
+          title: trait
+          description: The trait that gained most between the start and the end of the year.
+          $ref: '#/components/schemas/loci.recap.TasteTrait'
+        strengthStart:
+          type: number
+          title: strength_start
+          format: double
+          description: 0..1, the trait's strength at the start and at the end of the year.
+        strengthEnd:
+          type: number
+          title: strength_end
+          format: double
+        runnersUp:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.recap.TasteTrait'
+          title: runners_up
+          description: Next biggest gainers, at most 2.
+      title: TasteShiftCard
+      additionalProperties: false
+      description: TasteShiftCard shows the taste trait that grew most over the year.
     loci.recap.TasteTrait:
       type: object
       properties:
@@ -25962,6 +26131,120 @@ components:
         - TASTE_TREND_NEW
         - TASTE_TREND_GROWING
         - TASTE_TREND_STRONG
+    loci.recap.TimelineMonth:
+      type: object
+      properties:
+        month:
+          type: integer
+          title: month
+          format: int32
+          description: 1..12.
+        tripsCount:
+          type: integer
+          title: trips_count
+          format: int32
+        days:
+          type: integer
+          title: days
+          format: int32
+      title: TimelineMonth
+      additionalProperties: false
+    loci.recap.TimelineTrip:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          description: Empty in the public view.
+        month:
+          type: integer
+          title: month
+          format: int32
+          description: 1..12, the month the trip started.
+        cityName:
+          type: string
+          title: city_name
+        countryCode:
+          type: string
+          title: country_code
+        dayCount:
+          type: integer
+          title: day_count
+          format: int32
+      title: TimelineTrip
+      additionalProperties: false
+    loci.recap.TopCityCard:
+      type: object
+      properties:
+        cityId:
+          type: string
+          title: city_id
+        cityName:
+          type: string
+          title: city_name
+        country:
+          type: string
+          title: country
+        countryCode:
+          type: string
+          title: country_code
+        days:
+          type: integer
+          title: days
+          format: int32
+        placesCount:
+          type: integer
+          title: places_count
+          format: int32
+        tripsCount:
+          type: integer
+          title: trips_count
+          format: int32
+          description: Trips that included the city.
+        imageUrl:
+          type: string
+          title: image_url
+        headline:
+          type: string
+          title: headline
+      title: TopCityCard
+      additionalProperties: false
+      description: TopCityCard names the city the traveller spent the most of the year in.
+    loci.recap.TripsTimelineCard:
+      type: object
+      properties:
+        tripsCount:
+          type: integer
+          title: trips_count
+          format: int32
+        daysAway:
+          type: integer
+          title: days_away
+          format: int32
+          description: Days spent on trips across the year.
+        months:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.recap.TimelineMonth'
+          title: months
+          description: Always 12 entries, January first.
+        trips:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.recap.TimelineTrip'
+          title: trips
+          description: In date order, at most 12.
+        busiestMonth:
+          type: integer
+          title: busiest_month
+          format: int32
+          description: 1..12, the month with the most days away; 0 when none.
+        headline:
+          type: string
+          title: headline
+      title: TripsTimelineCard
+      additionalProperties: false
+      description: TripsTimelineCard lays the year's trips out by month.
     loci.recap.UnshareRecapRequest:
       type: object
       properties:
@@ -25975,6 +26258,65 @@ components:
       type: object
       title: UnshareRecapResponse
       additionalProperties: false
+    loci.recap.YearCountry:
+      type: object
+      properties:
+        country:
+          type: string
+          title: country
+        countryCode:
+          type: string
+          title: country_code
+        citiesCount:
+          type: integer
+          title: cities_count
+          format: int32
+        days:
+          type: integer
+          title: days
+          format: int32
+        firstTime:
+          type: boolean
+          title: first_time
+          description: True when this year was the traveller's first time in the country.
+      title: YearCountry
+      additionalProperties: false
+    loci.recap.YearMapCard:
+      type: object
+      properties:
+        countriesCount:
+          type: integer
+          title: countries_count
+          format: int32
+        citiesCount:
+          type: integer
+          title: cities_count
+          format: int32
+        newCountriesCount:
+          type: integer
+          title: new_countries_count
+          format: int32
+          description: Countries the traveller had never been to before this year.
+        countries:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.recap.YearCountry'
+          title: countries
+          description: Most days first, at most 12.
+        cities:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.recap.RoutePoint'
+          title: cities
+          description: City centroids, for dots on the map. Cities only, so kept publicly.
+        headline:
+          type: string
+          title: headline
+      title: YearMapCard
+      additionalProperties: false
+      description: |-
+        YearMapCard shows where the year went: countries and cities, with the
+         countries visited for the first time called out.
     loci.recents.CityInsights:
       type: object
       properties:
