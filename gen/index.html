@@ -3403,6 +3403,10 @@
             <ul>
               
                 <li>
+                  <a href="#loci.recap.ContributionsCard"><span class="badge">M</span>ContributionsCard</a>
+                </li>
+              
+                <li>
                   <a href="#loci.recap.DayStub"><span class="badge">M</span>DayStub</a>
                 </li>
               
@@ -3479,6 +3483,10 @@
                 </li>
               
                 <li>
+                  <a href="#loci.recap.PercentileCard"><span class="badge">M</span>PercentileCard</a>
+                </li>
+              
+                <li>
                   <a href="#loci.recap.PlaceGroup"><span class="badge">M</span>PlaceGroup</a>
                 </li>
               
@@ -3535,11 +3543,35 @@
                 </li>
               
                 <li>
+                  <a href="#loci.recap.StreakCard"><span class="badge">M</span>StreakCard</a>
+                </li>
+              
+                <li>
                   <a href="#loci.recap.TasteCard"><span class="badge">M</span>TasteCard</a>
                 </li>
               
                 <li>
+                  <a href="#loci.recap.TasteShiftCard"><span class="badge">M</span>TasteShiftCard</a>
+                </li>
+              
+                <li>
                   <a href="#loci.recap.TasteTrait"><span class="badge">M</span>TasteTrait</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.recap.TimelineMonth"><span class="badge">M</span>TimelineMonth</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.recap.TimelineTrip"><span class="badge">M</span>TimelineTrip</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.recap.TopCityCard"><span class="badge">M</span>TopCityCard</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.recap.TripsTimelineCard"><span class="badge">M</span>TripsTimelineCard</a>
                 </li>
               
                 <li>
@@ -3550,9 +3582,21 @@
                   <a href="#loci.recap.UnshareRecapResponse"><span class="badge">M</span>UnshareRecapResponse</a>
                 </li>
               
+                <li>
+                  <a href="#loci.recap.YearCountry"><span class="badge">M</span>YearCountry</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.recap.YearMapCard"><span class="badge">M</span>YearMapCard</a>
+                </li>
+              
               
                 <li>
                   <a href="#loci.recap.HighlightReason"><span class="badge">E</span>HighlightReason</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.recap.PercentileMetric"><span class="badge">E</span>PercentileMetric</a>
                 </li>
               
                 <li>
@@ -36734,6 +36778,58 @@ account; only the route to it is removed.</p></td>
       <p></p>
 
       
+        <h3 id="loci.recap.ContributionsCard">ContributionsCard</h3>
+        <p>ContributionsCard counts what the traveller gave back to other travellers.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>reviews_count</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>lists_count</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Public lists created. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>posts_count</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Community board posts. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>submissions_count</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Places submitted and facts confirmed. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>headline</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.recap.DayStub">DayStub</h3>
         <p></p>
 
@@ -37426,6 +37522,51 @@ otherwise derived from the city name. </p></td>
 
         
       
+        <h3 id="loci.recap.PercentileCard">PercentileCard</h3>
+        <p>PercentileCard ranks the traveller against everyone active that year. Only</p><p>built when enough travellers were active for the number to mean something.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>top_percent</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>1..100: &#34;top 5%&#34; is 5. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>metric</td>
+                  <td><a href="#loci.recap.PercentileMetric">PercentileMetric</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>The traveller&#39;s own value for the metric. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>headline</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.recap.PlaceGroup">PlaceGroup</h3>
         <p></p>
 
@@ -37813,7 +37954,56 @@ empty) skips it, so new card types never break older clients. </p></td>
                   <td>outro</td>
                   <td><a href="#loci.recap.OutroCard">OutroCard</a></td>
                   <td></td>
-                  <td><p>30 and up are kept for year-in-review cards. </p></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>year_map</td>
+                  <td><a href="#loci.recap.YearMapCard">YearMapCard</a></td>
+                  <td></td>
+                  <td><p>Year in review only. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>trips_timeline</td>
+                  <td><a href="#loci.recap.TripsTimelineCard">TripsTimelineCard</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>top_city</td>
+                  <td><a href="#loci.recap.TopCityCard">TopCityCard</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>taste_shift</td>
+                  <td><a href="#loci.recap.TasteShiftCard">TasteShiftCard</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>streak</td>
+                  <td><a href="#loci.recap.StreakCard">StreakCard</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>contributions</td>
+                  <td><a href="#loci.recap.ContributionsCard">ContributionsCard</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>percentile</td>
+                  <td><a href="#loci.recap.PercentileCard">PercentileCard</a></td>
+                  <td></td>
+                  <td><p> </p></td>
                 </tr>
               
             </tbody>
@@ -38193,6 +38383,65 @@ empty) skips it, so new card types never break older clients. </p></td>
 
         
       
+        <h3 id="loci.recap.StreakCard">StreakCard</h3>
+        <p>StreakCard shows the longest run of active days and how many days counted.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>longest_streak_days</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>longest_streak_start</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>YYYY-MM-DD. Empty in the public view. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>longest_streak_end</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>active_days</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Days with any activity across the year. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>best_month</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>1..12, the month with the most active days; 0 when none. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>headline</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.recap.TasteCard">TasteCard</h3>
         <p>TasteCard shows what Loci noticed about the traveller's taste (the postcard).</p>
 
@@ -38223,6 +38472,58 @@ empty) skips it, so new card types never break older clients. </p></td>
                   <td></td>
                   <td><p>True when the traits come from this period&#39;s own evidence; false when the
 card fell back to the traveller&#39;s overall taste. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.recap.TasteShiftCard">TasteShiftCard</h3>
+        <p>TasteShiftCard shows the taste trait that grew most over the year.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>headline</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>trait</td>
+                  <td><a href="#loci.recap.TasteTrait">TasteTrait</a></td>
+                  <td></td>
+                  <td><p>The trait that gained most between the start and the end of the year. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>strength_start</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p>0..1, the trait&#39;s strength at the start and at the end of the year. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>strength_end</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>runners_up</td>
+                  <td><a href="#loci.recap.TasteTrait">TasteTrait</a></td>
+                  <td>repeated</td>
+                  <td><p>Next biggest gainers, at most 2. </p></td>
                 </tr>
               
             </tbody>
@@ -38291,6 +38592,235 @@ card fell back to the traveller&#39;s overall taste. </p></td>
 
         
       
+        <h3 id="loci.recap.TimelineMonth">TimelineMonth</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>month</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>1..12. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>trips_count</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>days</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.recap.TimelineTrip">TimelineTrip</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Empty in the public view. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>month</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>1..12, the month the trip started. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>country_code</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>day_count</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.recap.TopCityCard">TopCityCard</h3>
+        <p>TopCityCard names the city the traveller spent the most of the year in.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>city_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>country</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>country_code</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>days</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>places_count</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>trips_count</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Trips that included the city. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>image_url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>headline</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.recap.TripsTimelineCard">TripsTimelineCard</h3>
+        <p>TripsTimelineCard lays the year's trips out by month.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trips_count</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>days_away</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Days spent on trips across the year. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>months</td>
+                  <td><a href="#loci.recap.TimelineMonth">TimelineMonth</a></td>
+                  <td>repeated</td>
+                  <td><p>Always 12 entries, January first. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>trips</td>
+                  <td><a href="#loci.recap.TimelineTrip">TimelineTrip</a></td>
+                  <td>repeated</td>
+                  <td><p>In date order, at most 12. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>busiest_month</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>1..12, the month with the most days away; 0 when none. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>headline</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.recap.UnshareRecapRequest">UnshareRecapRequest</h3>
         <p></p>
 
@@ -38319,6 +38849,117 @@ card fell back to the traveller&#39;s overall taste. </p></td>
         <p></p>
 
         
+
+        
+      
+        <h3 id="loci.recap.YearCountry">YearCountry</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>country</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>country_code</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>cities_count</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>days</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>first_time</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>True when this year was the traveller&#39;s first time in the country. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.recap.YearMapCard">YearMapCard</h3>
+        <p>YearMapCard shows where the year went: countries and cities, with the</p><p>countries visited for the first time called out.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>countries_count</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>cities_count</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>new_countries_count</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Countries the traveller had never been to before this year. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>countries</td>
+                  <td><a href="#loci.recap.YearCountry">YearCountry</a></td>
+                  <td>repeated</td>
+                  <td><p>Most days first, at most 12. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>cities</td>
+                  <td><a href="#loci.recap.RoutePoint">RoutePoint</a></td>
+                  <td>repeated</td>
+                  <td><p>City centroids, for dots on the map. Cities only, so kept publicly. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>headline</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
 
         
       
@@ -38353,6 +38994,47 @@ card fell back to the traveller&#39;s overall taste. </p></td>
               <tr>
                 <td>HIGHLIGHT_REASON_FIRST_VISIT</td>
                 <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="loci.recap.PercentileMetric">PercentileMetric</h3>
+        <p>PercentileMetric is what a PercentileCard ranks the traveller on.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>PERCENTILE_METRIC_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>PERCENTILE_METRIC_PLACES</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>PERCENTILE_METRIC_CITIES</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>PERCENTILE_METRIC_DAYS_WALKED</td>
+                <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>PERCENTILE_METRIC_CONTRIBUTIONS</td>
+                <td>4</td>
                 <td><p></p></td>
               </tr>
             
