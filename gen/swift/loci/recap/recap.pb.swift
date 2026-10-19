@@ -335,6 +335,53 @@ public enum Loci_Recap_HighlightReason: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
+/// PercentileMetric is what a PercentileCard ranks the traveller on.
+public enum Loci_Recap_PercentileMetric: SwiftProtobuf.Enum, Swift.CaseIterable {
+  public typealias RawValue = Int
+  case unspecified // = 0
+  case places // = 1
+  case cities // = 2
+  case daysWalked // = 3
+  case contributions // = 4
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .unspecified
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unspecified
+    case 1: self = .places
+    case 2: self = .cities
+    case 3: self = .daysWalked
+    case 4: self = .contributions
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .unspecified: return 0
+    case .places: return 1
+    case .cities: return 2
+    case .daysWalked: return 3
+    case .contributions: return 4
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static let allCases: [Loci_Recap_PercentileMetric] = [
+    .unspecified,
+    .places,
+    .cities,
+    .daysWalked,
+    .contributions,
+  ]
+
+}
+
 /// Recap is one built recap: a title and an ordered list of cards.
 public struct Loci_Recap_Recap: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
@@ -594,13 +641,69 @@ public struct Loci_Recap_RecapCard: Sendable {
     set {card = .friends(newValue)}
   }
 
-  /// 30 and up are kept for year-in-review cards.
   public var outro: Loci_Recap_OutroCard {
     get {
       if case .outro(let v)? = card {return v}
       return Loci_Recap_OutroCard()
     }
     set {card = .outro(newValue)}
+  }
+
+  /// Year in review only.
+  public var yearMap: Loci_Recap_YearMapCard {
+    get {
+      if case .yearMap(let v)? = card {return v}
+      return Loci_Recap_YearMapCard()
+    }
+    set {card = .yearMap(newValue)}
+  }
+
+  public var tripsTimeline: Loci_Recap_TripsTimelineCard {
+    get {
+      if case .tripsTimeline(let v)? = card {return v}
+      return Loci_Recap_TripsTimelineCard()
+    }
+    set {card = .tripsTimeline(newValue)}
+  }
+
+  public var topCity: Loci_Recap_TopCityCard {
+    get {
+      if case .topCity(let v)? = card {return v}
+      return Loci_Recap_TopCityCard()
+    }
+    set {card = .topCity(newValue)}
+  }
+
+  public var tasteShift: Loci_Recap_TasteShiftCard {
+    get {
+      if case .tasteShift(let v)? = card {return v}
+      return Loci_Recap_TasteShiftCard()
+    }
+    set {card = .tasteShift(newValue)}
+  }
+
+  public var streak: Loci_Recap_StreakCard {
+    get {
+      if case .streak(let v)? = card {return v}
+      return Loci_Recap_StreakCard()
+    }
+    set {card = .streak(newValue)}
+  }
+
+  public var contributions: Loci_Recap_ContributionsCard {
+    get {
+      if case .contributions(let v)? = card {return v}
+      return Loci_Recap_ContributionsCard()
+    }
+    set {card = .contributions(newValue)}
+  }
+
+  public var percentile: Loci_Recap_PercentileCard {
+    get {
+      if case .percentile(let v)? = card {return v}
+      return Loci_Recap_PercentileCard()
+    }
+    set {card = .percentile(newValue)}
   }
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -615,8 +718,15 @@ public struct Loci_Recap_RecapCard: Sendable {
     case progress(Loci_Recap_ProgressCard)
     case field(Loci_Recap_FieldCard)
     case friends(Loci_Recap_FriendsCard)
-    /// 30 and up are kept for year-in-review cards.
     case outro(Loci_Recap_OutroCard)
+    /// Year in review only.
+    case yearMap(Loci_Recap_YearMapCard)
+    case tripsTimeline(Loci_Recap_TripsTimelineCard)
+    case topCity(Loci_Recap_TopCityCard)
+    case tasteShift(Loci_Recap_TasteShiftCard)
+    case streak(Loci_Recap_StreakCard)
+    case contributions(Loci_Recap_ContributionsCard)
+    case percentile(Loci_Recap_PercentileCard)
 
   }
 
@@ -972,6 +1082,255 @@ public struct Loci_Recap_OutroCard: Sendable {
   public init() {}
 }
 
+/// YearMapCard shows where the year went: countries and cities, with the
+/// countries visited for the first time called out.
+public struct Loci_Recap_YearMapCard: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var countriesCount: Int32 = 0
+
+  public var citiesCount: Int32 = 0
+
+  /// Countries the traveller had never been to before this year.
+  public var newCountriesCount: Int32 = 0
+
+  /// Most days first, at most 12.
+  public var countries: [Loci_Recap_YearCountry] = []
+
+  /// City centroids, for dots on the map. Cities only, so kept publicly.
+  public var cities: [Loci_Recap_RoutePoint] = []
+
+  public var headline: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Recap_YearCountry: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var country: String = String()
+
+  public var countryCode: String = String()
+
+  public var citiesCount: Int32 = 0
+
+  public var days: Int32 = 0
+
+  /// True when this year was the traveller's first time in the country.
+  public var firstTime: Bool = false
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// TripsTimelineCard lays the year's trips out by month.
+public struct Loci_Recap_TripsTimelineCard: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var tripsCount: Int32 = 0
+
+  /// Days spent on trips across the year.
+  public var daysAway: Int32 = 0
+
+  /// Always 12 entries, January first.
+  public var months: [Loci_Recap_TimelineMonth] = []
+
+  /// In date order, at most 12.
+  public var trips: [Loci_Recap_TimelineTrip] = []
+
+  /// 1..12, the month with the most days away; 0 when none.
+  public var busiestMonth: Int32 = 0
+
+  public var headline: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Recap_TimelineMonth: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// 1..12.
+  public var month: Int32 = 0
+
+  public var tripsCount: Int32 = 0
+
+  public var days: Int32 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Recap_TimelineTrip: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// Empty in the public view.
+  public var tripID: String = String()
+
+  /// 1..12, the month the trip started.
+  public var month: Int32 = 0
+
+  public var cityName: String = String()
+
+  public var countryCode: String = String()
+
+  public var dayCount: Int32 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// TopCityCard names the city the traveller spent the most of the year in.
+public struct Loci_Recap_TopCityCard: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var cityID: String = String()
+
+  public var cityName: String = String()
+
+  public var country: String = String()
+
+  public var countryCode: String = String()
+
+  public var days: Int32 = 0
+
+  public var placesCount: Int32 = 0
+
+  /// Trips that included the city.
+  public var tripsCount: Int32 = 0
+
+  public var imageURL: String = String()
+
+  public var headline: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// TasteShiftCard shows the taste trait that grew most over the year.
+public struct Loci_Recap_TasteShiftCard: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var headline: String = String()
+
+  /// The trait that gained most between the start and the end of the year.
+  public var trait: Loci_Recap_TasteTrait {
+    get {return _trait ?? Loci_Recap_TasteTrait()}
+    set {_trait = newValue}
+  }
+  /// Returns true if `trait` has been explicitly set.
+  public var hasTrait: Bool {return self._trait != nil}
+  /// Clears the value of `trait`. Subsequent reads from it will return its default value.
+  public mutating func clearTrait() {self._trait = nil}
+
+  /// 0..1, the trait's strength at the start and at the end of the year.
+  public var strengthStart: Double = 0
+
+  public var strengthEnd: Double = 0
+
+  /// Next biggest gainers, at most 2.
+  public var runnersUp: [Loci_Recap_TasteTrait] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _trait: Loci_Recap_TasteTrait? = nil
+}
+
+/// StreakCard shows the longest run of active days and how many days counted.
+public struct Loci_Recap_StreakCard: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var longestStreakDays: Int32 = 0
+
+  /// YYYY-MM-DD. Empty in the public view.
+  public var longestStreakStart: String = String()
+
+  public var longestStreakEnd: String = String()
+
+  /// Days with any activity across the year.
+  public var activeDays: Int32 = 0
+
+  /// 1..12, the month with the most active days; 0 when none.
+  public var bestMonth: Int32 = 0
+
+  public var headline: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// ContributionsCard counts what the traveller gave back to other travellers.
+public struct Loci_Recap_ContributionsCard: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var reviewsCount: Int32 = 0
+
+  /// Public lists created.
+  public var listsCount: Int32 = 0
+
+  /// Community board posts.
+  public var postsCount: Int32 = 0
+
+  /// Places submitted and facts confirmed.
+  public var submissionsCount: Int32 = 0
+
+  public var headline: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// PercentileCard ranks the traveller against everyone active that year. Only
+/// built when enough travellers were active for the number to mean something.
+public struct Loci_Recap_PercentileCard: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// 1..100: "top 5%" is 5.
+  public var topPercent: Int32 = 0
+
+  public var metric: Loci_Recap_PercentileMetric = .unspecified
+
+  /// The traveller's own value for the metric.
+  public var value: Int32 = 0
+
+  public var headline: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 /// RecapSummary is a list row.
 public struct Loci_Recap_RecapSummary: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
@@ -1280,6 +1639,16 @@ extension Loci_Recap_HighlightReason: SwiftProtobuf._ProtoNameProviding {
     1: .same(proto: "HIGHLIGHT_REASON_FAVORITED"),
     2: .same(proto: "HIGHLIGHT_REASON_REVIEWED"),
     3: .same(proto: "HIGHLIGHT_REASON_FIRST_VISIT"),
+  ]
+}
+
+extension Loci_Recap_PercentileMetric: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "PERCENTILE_METRIC_UNSPECIFIED"),
+    1: .same(proto: "PERCENTILE_METRIC_PLACES"),
+    2: .same(proto: "PERCENTILE_METRIC_CITIES"),
+    3: .same(proto: "PERCENTILE_METRIC_DAYS_WALKED"),
+    4: .same(proto: "PERCENTILE_METRIC_CONTRIBUTIONS"),
   ]
 }
 
@@ -1607,6 +1976,13 @@ extension Loci_Recap_RecapCard: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     17: .same(proto: "field"),
     18: .same(proto: "friends"),
     19: .same(proto: "outro"),
+    30: .standard(proto: "year_map"),
+    31: .standard(proto: "trips_timeline"),
+    32: .standard(proto: "top_city"),
+    33: .standard(proto: "taste_shift"),
+    34: .same(proto: "streak"),
+    35: .same(proto: "contributions"),
+    36: .same(proto: "percentile"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1746,6 +2122,97 @@ extension Loci_Recap_RecapCard: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
           self.card = .outro(v)
         }
       }()
+      case 30: try {
+        var v: Loci_Recap_YearMapCard?
+        var hadOneofValue = false
+        if let current = self.card {
+          hadOneofValue = true
+          if case .yearMap(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.card = .yearMap(v)
+        }
+      }()
+      case 31: try {
+        var v: Loci_Recap_TripsTimelineCard?
+        var hadOneofValue = false
+        if let current = self.card {
+          hadOneofValue = true
+          if case .tripsTimeline(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.card = .tripsTimeline(v)
+        }
+      }()
+      case 32: try {
+        var v: Loci_Recap_TopCityCard?
+        var hadOneofValue = false
+        if let current = self.card {
+          hadOneofValue = true
+          if case .topCity(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.card = .topCity(v)
+        }
+      }()
+      case 33: try {
+        var v: Loci_Recap_TasteShiftCard?
+        var hadOneofValue = false
+        if let current = self.card {
+          hadOneofValue = true
+          if case .tasteShift(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.card = .tasteShift(v)
+        }
+      }()
+      case 34: try {
+        var v: Loci_Recap_StreakCard?
+        var hadOneofValue = false
+        if let current = self.card {
+          hadOneofValue = true
+          if case .streak(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.card = .streak(v)
+        }
+      }()
+      case 35: try {
+        var v: Loci_Recap_ContributionsCard?
+        var hadOneofValue = false
+        if let current = self.card {
+          hadOneofValue = true
+          if case .contributions(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.card = .contributions(v)
+        }
+      }()
+      case 36: try {
+        var v: Loci_Recap_PercentileCard?
+        var hadOneofValue = false
+        if let current = self.card {
+          hadOneofValue = true
+          if case .percentile(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.card = .percentile(v)
+        }
+      }()
       default: break
       }
     }
@@ -1799,6 +2266,34 @@ extension Loci_Recap_RecapCard: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     case .outro?: try {
       guard case .outro(let v)? = self.card else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 19)
+    }()
+    case .yearMap?: try {
+      guard case .yearMap(let v)? = self.card else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 30)
+    }()
+    case .tripsTimeline?: try {
+      guard case .tripsTimeline(let v)? = self.card else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 31)
+    }()
+    case .topCity?: try {
+      guard case .topCity(let v)? = self.card else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 32)
+    }()
+    case .tasteShift?: try {
+      guard case .tasteShift(let v)? = self.card else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 33)
+    }()
+    case .streak?: try {
+      guard case .streak(let v)? = self.card else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 34)
+    }()
+    case .contributions?: try {
+      guard case .contributions(let v)? = self.card else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 35)
+    }()
+    case .percentile?: try {
+      guard case .percentile(let v)? = self.card else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 36)
     }()
     case nil: break
     }
@@ -2682,6 +3177,594 @@ extension Loci_Recap_OutroCard: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   public static func ==(lhs: Loci_Recap_OutroCard, rhs: Loci_Recap_OutroCard) -> Bool {
     if lhs.headline != rhs.headline {return false}
     if lhs.summaryLine != rhs.summaryLine {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Recap_YearMapCard: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".YearMapCard"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "countries_count"),
+    2: .standard(proto: "cities_count"),
+    3: .standard(proto: "new_countries_count"),
+    4: .same(proto: "countries"),
+    5: .same(proto: "cities"),
+    6: .same(proto: "headline"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularInt32Field(value: &self.countriesCount) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.citiesCount) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self.newCountriesCount) }()
+      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.countries) }()
+      case 5: try { try decoder.decodeRepeatedMessageField(value: &self.cities) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.headline) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.countriesCount != 0 {
+      try visitor.visitSingularInt32Field(value: self.countriesCount, fieldNumber: 1)
+    }
+    if self.citiesCount != 0 {
+      try visitor.visitSingularInt32Field(value: self.citiesCount, fieldNumber: 2)
+    }
+    if self.newCountriesCount != 0 {
+      try visitor.visitSingularInt32Field(value: self.newCountriesCount, fieldNumber: 3)
+    }
+    if !self.countries.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.countries, fieldNumber: 4)
+    }
+    if !self.cities.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.cities, fieldNumber: 5)
+    }
+    if !self.headline.isEmpty {
+      try visitor.visitSingularStringField(value: self.headline, fieldNumber: 6)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Recap_YearMapCard, rhs: Loci_Recap_YearMapCard) -> Bool {
+    if lhs.countriesCount != rhs.countriesCount {return false}
+    if lhs.citiesCount != rhs.citiesCount {return false}
+    if lhs.newCountriesCount != rhs.newCountriesCount {return false}
+    if lhs.countries != rhs.countries {return false}
+    if lhs.cities != rhs.cities {return false}
+    if lhs.headline != rhs.headline {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Recap_YearCountry: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".YearCountry"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "country"),
+    2: .standard(proto: "country_code"),
+    3: .standard(proto: "cities_count"),
+    4: .same(proto: "days"),
+    5: .standard(proto: "first_time"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.country) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.countryCode) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self.citiesCount) }()
+      case 4: try { try decoder.decodeSingularInt32Field(value: &self.days) }()
+      case 5: try { try decoder.decodeSingularBoolField(value: &self.firstTime) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.country.isEmpty {
+      try visitor.visitSingularStringField(value: self.country, fieldNumber: 1)
+    }
+    if !self.countryCode.isEmpty {
+      try visitor.visitSingularStringField(value: self.countryCode, fieldNumber: 2)
+    }
+    if self.citiesCount != 0 {
+      try visitor.visitSingularInt32Field(value: self.citiesCount, fieldNumber: 3)
+    }
+    if self.days != 0 {
+      try visitor.visitSingularInt32Field(value: self.days, fieldNumber: 4)
+    }
+    if self.firstTime != false {
+      try visitor.visitSingularBoolField(value: self.firstTime, fieldNumber: 5)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Recap_YearCountry, rhs: Loci_Recap_YearCountry) -> Bool {
+    if lhs.country != rhs.country {return false}
+    if lhs.countryCode != rhs.countryCode {return false}
+    if lhs.citiesCount != rhs.citiesCount {return false}
+    if lhs.days != rhs.days {return false}
+    if lhs.firstTime != rhs.firstTime {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Recap_TripsTimelineCard: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".TripsTimelineCard"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trips_count"),
+    2: .standard(proto: "days_away"),
+    3: .same(proto: "months"),
+    4: .same(proto: "trips"),
+    5: .standard(proto: "busiest_month"),
+    6: .same(proto: "headline"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularInt32Field(value: &self.tripsCount) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.daysAway) }()
+      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.months) }()
+      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.trips) }()
+      case 5: try { try decoder.decodeSingularInt32Field(value: &self.busiestMonth) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.headline) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.tripsCount != 0 {
+      try visitor.visitSingularInt32Field(value: self.tripsCount, fieldNumber: 1)
+    }
+    if self.daysAway != 0 {
+      try visitor.visitSingularInt32Field(value: self.daysAway, fieldNumber: 2)
+    }
+    if !self.months.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.months, fieldNumber: 3)
+    }
+    if !self.trips.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.trips, fieldNumber: 4)
+    }
+    if self.busiestMonth != 0 {
+      try visitor.visitSingularInt32Field(value: self.busiestMonth, fieldNumber: 5)
+    }
+    if !self.headline.isEmpty {
+      try visitor.visitSingularStringField(value: self.headline, fieldNumber: 6)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Recap_TripsTimelineCard, rhs: Loci_Recap_TripsTimelineCard) -> Bool {
+    if lhs.tripsCount != rhs.tripsCount {return false}
+    if lhs.daysAway != rhs.daysAway {return false}
+    if lhs.months != rhs.months {return false}
+    if lhs.trips != rhs.trips {return false}
+    if lhs.busiestMonth != rhs.busiestMonth {return false}
+    if lhs.headline != rhs.headline {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Recap_TimelineMonth: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".TimelineMonth"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "month"),
+    2: .standard(proto: "trips_count"),
+    3: .same(proto: "days"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularInt32Field(value: &self.month) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.tripsCount) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self.days) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.month != 0 {
+      try visitor.visitSingularInt32Field(value: self.month, fieldNumber: 1)
+    }
+    if self.tripsCount != 0 {
+      try visitor.visitSingularInt32Field(value: self.tripsCount, fieldNumber: 2)
+    }
+    if self.days != 0 {
+      try visitor.visitSingularInt32Field(value: self.days, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Recap_TimelineMonth, rhs: Loci_Recap_TimelineMonth) -> Bool {
+    if lhs.month != rhs.month {return false}
+    if lhs.tripsCount != rhs.tripsCount {return false}
+    if lhs.days != rhs.days {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Recap_TimelineTrip: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".TimelineTrip"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+    2: .same(proto: "month"),
+    3: .standard(proto: "city_name"),
+    4: .standard(proto: "country_code"),
+    5: .standard(proto: "day_count"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.tripID) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.month) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.cityName) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.countryCode) }()
+      case 5: try { try decoder.decodeSingularInt32Field(value: &self.dayCount) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.tripID.isEmpty {
+      try visitor.visitSingularStringField(value: self.tripID, fieldNumber: 1)
+    }
+    if self.month != 0 {
+      try visitor.visitSingularInt32Field(value: self.month, fieldNumber: 2)
+    }
+    if !self.cityName.isEmpty {
+      try visitor.visitSingularStringField(value: self.cityName, fieldNumber: 3)
+    }
+    if !self.countryCode.isEmpty {
+      try visitor.visitSingularStringField(value: self.countryCode, fieldNumber: 4)
+    }
+    if self.dayCount != 0 {
+      try visitor.visitSingularInt32Field(value: self.dayCount, fieldNumber: 5)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Recap_TimelineTrip, rhs: Loci_Recap_TimelineTrip) -> Bool {
+    if lhs.tripID != rhs.tripID {return false}
+    if lhs.month != rhs.month {return false}
+    if lhs.cityName != rhs.cityName {return false}
+    if lhs.countryCode != rhs.countryCode {return false}
+    if lhs.dayCount != rhs.dayCount {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Recap_TopCityCard: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".TopCityCard"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "city_id"),
+    2: .standard(proto: "city_name"),
+    3: .same(proto: "country"),
+    4: .standard(proto: "country_code"),
+    5: .same(proto: "days"),
+    6: .standard(proto: "places_count"),
+    7: .standard(proto: "trips_count"),
+    8: .standard(proto: "image_url"),
+    9: .same(proto: "headline"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.cityID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.cityName) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.country) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.countryCode) }()
+      case 5: try { try decoder.decodeSingularInt32Field(value: &self.days) }()
+      case 6: try { try decoder.decodeSingularInt32Field(value: &self.placesCount) }()
+      case 7: try { try decoder.decodeSingularInt32Field(value: &self.tripsCount) }()
+      case 8: try { try decoder.decodeSingularStringField(value: &self.imageURL) }()
+      case 9: try { try decoder.decodeSingularStringField(value: &self.headline) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.cityID.isEmpty {
+      try visitor.visitSingularStringField(value: self.cityID, fieldNumber: 1)
+    }
+    if !self.cityName.isEmpty {
+      try visitor.visitSingularStringField(value: self.cityName, fieldNumber: 2)
+    }
+    if !self.country.isEmpty {
+      try visitor.visitSingularStringField(value: self.country, fieldNumber: 3)
+    }
+    if !self.countryCode.isEmpty {
+      try visitor.visitSingularStringField(value: self.countryCode, fieldNumber: 4)
+    }
+    if self.days != 0 {
+      try visitor.visitSingularInt32Field(value: self.days, fieldNumber: 5)
+    }
+    if self.placesCount != 0 {
+      try visitor.visitSingularInt32Field(value: self.placesCount, fieldNumber: 6)
+    }
+    if self.tripsCount != 0 {
+      try visitor.visitSingularInt32Field(value: self.tripsCount, fieldNumber: 7)
+    }
+    if !self.imageURL.isEmpty {
+      try visitor.visitSingularStringField(value: self.imageURL, fieldNumber: 8)
+    }
+    if !self.headline.isEmpty {
+      try visitor.visitSingularStringField(value: self.headline, fieldNumber: 9)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Recap_TopCityCard, rhs: Loci_Recap_TopCityCard) -> Bool {
+    if lhs.cityID != rhs.cityID {return false}
+    if lhs.cityName != rhs.cityName {return false}
+    if lhs.country != rhs.country {return false}
+    if lhs.countryCode != rhs.countryCode {return false}
+    if lhs.days != rhs.days {return false}
+    if lhs.placesCount != rhs.placesCount {return false}
+    if lhs.tripsCount != rhs.tripsCount {return false}
+    if lhs.imageURL != rhs.imageURL {return false}
+    if lhs.headline != rhs.headline {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Recap_TasteShiftCard: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".TasteShiftCard"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "headline"),
+    2: .same(proto: "trait"),
+    3: .standard(proto: "strength_start"),
+    4: .standard(proto: "strength_end"),
+    5: .standard(proto: "runners_up"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.headline) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._trait) }()
+      case 3: try { try decoder.decodeSingularDoubleField(value: &self.strengthStart) }()
+      case 4: try { try decoder.decodeSingularDoubleField(value: &self.strengthEnd) }()
+      case 5: try { try decoder.decodeRepeatedMessageField(value: &self.runnersUp) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.headline.isEmpty {
+      try visitor.visitSingularStringField(value: self.headline, fieldNumber: 1)
+    }
+    try { if let v = self._trait {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    if self.strengthStart.bitPattern != 0 {
+      try visitor.visitSingularDoubleField(value: self.strengthStart, fieldNumber: 3)
+    }
+    if self.strengthEnd.bitPattern != 0 {
+      try visitor.visitSingularDoubleField(value: self.strengthEnd, fieldNumber: 4)
+    }
+    if !self.runnersUp.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.runnersUp, fieldNumber: 5)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Recap_TasteShiftCard, rhs: Loci_Recap_TasteShiftCard) -> Bool {
+    if lhs.headline != rhs.headline {return false}
+    if lhs._trait != rhs._trait {return false}
+    if lhs.strengthStart != rhs.strengthStart {return false}
+    if lhs.strengthEnd != rhs.strengthEnd {return false}
+    if lhs.runnersUp != rhs.runnersUp {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Recap_StreakCard: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".StreakCard"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "longest_streak_days"),
+    2: .standard(proto: "longest_streak_start"),
+    3: .standard(proto: "longest_streak_end"),
+    4: .standard(proto: "active_days"),
+    5: .standard(proto: "best_month"),
+    6: .same(proto: "headline"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularInt32Field(value: &self.longestStreakDays) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.longestStreakStart) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.longestStreakEnd) }()
+      case 4: try { try decoder.decodeSingularInt32Field(value: &self.activeDays) }()
+      case 5: try { try decoder.decodeSingularInt32Field(value: &self.bestMonth) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.headline) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.longestStreakDays != 0 {
+      try visitor.visitSingularInt32Field(value: self.longestStreakDays, fieldNumber: 1)
+    }
+    if !self.longestStreakStart.isEmpty {
+      try visitor.visitSingularStringField(value: self.longestStreakStart, fieldNumber: 2)
+    }
+    if !self.longestStreakEnd.isEmpty {
+      try visitor.visitSingularStringField(value: self.longestStreakEnd, fieldNumber: 3)
+    }
+    if self.activeDays != 0 {
+      try visitor.visitSingularInt32Field(value: self.activeDays, fieldNumber: 4)
+    }
+    if self.bestMonth != 0 {
+      try visitor.visitSingularInt32Field(value: self.bestMonth, fieldNumber: 5)
+    }
+    if !self.headline.isEmpty {
+      try visitor.visitSingularStringField(value: self.headline, fieldNumber: 6)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Recap_StreakCard, rhs: Loci_Recap_StreakCard) -> Bool {
+    if lhs.longestStreakDays != rhs.longestStreakDays {return false}
+    if lhs.longestStreakStart != rhs.longestStreakStart {return false}
+    if lhs.longestStreakEnd != rhs.longestStreakEnd {return false}
+    if lhs.activeDays != rhs.activeDays {return false}
+    if lhs.bestMonth != rhs.bestMonth {return false}
+    if lhs.headline != rhs.headline {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Recap_ContributionsCard: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ContributionsCard"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "reviews_count"),
+    2: .standard(proto: "lists_count"),
+    3: .standard(proto: "posts_count"),
+    4: .standard(proto: "submissions_count"),
+    5: .same(proto: "headline"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularInt32Field(value: &self.reviewsCount) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.listsCount) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self.postsCount) }()
+      case 4: try { try decoder.decodeSingularInt32Field(value: &self.submissionsCount) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.headline) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.reviewsCount != 0 {
+      try visitor.visitSingularInt32Field(value: self.reviewsCount, fieldNumber: 1)
+    }
+    if self.listsCount != 0 {
+      try visitor.visitSingularInt32Field(value: self.listsCount, fieldNumber: 2)
+    }
+    if self.postsCount != 0 {
+      try visitor.visitSingularInt32Field(value: self.postsCount, fieldNumber: 3)
+    }
+    if self.submissionsCount != 0 {
+      try visitor.visitSingularInt32Field(value: self.submissionsCount, fieldNumber: 4)
+    }
+    if !self.headline.isEmpty {
+      try visitor.visitSingularStringField(value: self.headline, fieldNumber: 5)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Recap_ContributionsCard, rhs: Loci_Recap_ContributionsCard) -> Bool {
+    if lhs.reviewsCount != rhs.reviewsCount {return false}
+    if lhs.listsCount != rhs.listsCount {return false}
+    if lhs.postsCount != rhs.postsCount {return false}
+    if lhs.submissionsCount != rhs.submissionsCount {return false}
+    if lhs.headline != rhs.headline {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Recap_PercentileCard: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".PercentileCard"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "top_percent"),
+    2: .same(proto: "metric"),
+    3: .same(proto: "value"),
+    4: .same(proto: "headline"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularInt32Field(value: &self.topPercent) }()
+      case 2: try { try decoder.decodeSingularEnumField(value: &self.metric) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self.value) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.headline) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.topPercent != 0 {
+      try visitor.visitSingularInt32Field(value: self.topPercent, fieldNumber: 1)
+    }
+    if self.metric != .unspecified {
+      try visitor.visitSingularEnumField(value: self.metric, fieldNumber: 2)
+    }
+    if self.value != 0 {
+      try visitor.visitSingularInt32Field(value: self.value, fieldNumber: 3)
+    }
+    if !self.headline.isEmpty {
+      try visitor.visitSingularStringField(value: self.headline, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Recap_PercentileCard, rhs: Loci_Recap_PercentileCard) -> Bool {
+    if lhs.topPercent != rhs.topPercent {return false}
+    if lhs.metric != rhs.metric {return false}
+    if lhs.value != rhs.value {return false}
+    if lhs.headline != rhs.headline {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
