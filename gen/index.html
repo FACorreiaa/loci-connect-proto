@@ -3399,6 +3399,69 @@
         
           
           <li>
+            <a href="#loci%2franking%2franking.proto">loci/ranking/ranking.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#loci.ranking.ComparePlacesRequest"><span class="badge">M</span>ComparePlacesRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.ranking.ComparePlacesResponse"><span class="badge">M</span>ComparePlacesResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.ranking.Comparison"><span class="badge">M</span>Comparison</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.ranking.DeleteRankingRequest"><span class="badge">M</span>DeleteRankingRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.ranking.DeleteRankingResponse"><span class="badge">M</span>DeleteRankingResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.ranking.ListMyRankingsRequest"><span class="badge">M</span>ListMyRankingsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.ranking.ListRankingsResponse"><span class="badge">M</span>ListRankingsResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.ranking.ListUserRankingsRequest"><span class="badge">M</span>ListUserRankingsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.ranking.RankedPlace"><span class="badge">M</span>RankedPlace</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.ranking.RatePlaceRequest"><span class="badge">M</span>RatePlaceRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.ranking.RatePlaceResponse"><span class="badge">M</span>RatePlaceResponse</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#loci.ranking.Verdict"><span class="badge">E</span>Verdict</a>
+                </li>
+              
+              
+              
+                <li>
+                  <a href="#loci.ranking.RankingService"><span class="badge">S</span>RankingService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#loci%2frecap%2frecap.proto">loci/recap/recap.proto</a>
             <ul>
               
@@ -36764,6 +36827,514 @@ account; only the route to it is removed.</p></td>
                 <td><a href="#loci.payment.v1.CreateCustomerPortalSessionRequest">CreateCustomerPortalSessionRequest</a></td>
                 <td><a href="#loci.payment.v1.CreateCustomerPortalSessionResponse">CreateCustomerPortalSessionResponse</a></td>
                 <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="loci/ranking/ranking.proto">loci/ranking/ranking.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="loci.ranking.ComparePlacesRequest">ComparePlacesRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>poi_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>other_poi_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>better</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>True when poi_id is better than other_poi_id. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.ranking.ComparePlacesResponse">ComparePlacesResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>place</td>
+                  <td><a href="#loci.ranking.RankedPlace">RankedPlace</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>next</td>
+                  <td><a href="#loci.ranking.Comparison">Comparison</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.ranking.Comparison">Comparison</h3>
+        <p>Comparison is the place to compare against next.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>poi_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.ranking.DeleteRankingRequest">DeleteRankingRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>poi_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.ranking.DeleteRankingResponse">DeleteRankingResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>deleted</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.ranking.ListMyRankingsRequest">ListMyRankingsRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Empty lists every city. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>limit</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>0 means 100. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.ranking.ListRankingsResponse">ListRankingsResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>places</td>
+                  <td><a href="#loci.ranking.RankedPlace">RankedPlace</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.ranking.ListUserRankingsRequest">ListUserRankingsRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>user_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Empty lists every city. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>limit</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>0 means 100. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.ranking.RankedPlace">RankedPlace</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>poi_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>category</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>verdict</td>
+                  <td><a href="#loci.ranking.Verdict">Verdict</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>rank</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>1-based position in this city&#39;s list: every Loved place ranks above every
+Fine one, and every Fine one above every Not for me. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>score</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>0–10 with one decimal, derived from the verdict and the position inside
+it: Loved spans 6.7–10, Fine 3.4–6.6, Not for me 0–3.3. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>updated_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>pending</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>True while the comparisons for this place are unfinished. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.ranking.RatePlaceRequest">RatePlaceRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>poi_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>verdict</td>
+                  <td><a href="#loci.ranking.Verdict">Verdict</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>poi_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>category</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.ranking.RatePlaceResponse">RatePlaceResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>place</td>
+                  <td><a href="#loci.ranking.RankedPlace">RankedPlace</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>next</td>
+                  <td><a href="#loci.ranking.Comparison">Comparison</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+        <h3 id="loci.ranking.Verdict">Verdict</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>VERDICT_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>VERDICT_LOVED</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>VERDICT_FINE</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>VERDICT_NOT_FOR_ME</td>
+                <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+
+      
+
+      
+        <h3 id="loci.ranking.RankingService">RankingService</h3>
+        <p>RankingService keeps each traveller's personal ranking of places they have</p><p>been, one list per city.</p><p>Ranking works the way Beli does: the traveller first gives a verdict (Loved,</p><p>Fine, Not for me), which drops the place into that bucket, and then answers</p><p>"better or worse than Y?" against places already in the same bucket. Each</p><p>answer halves the range the place can sit in, so a bucket of n places takes</p><p>at most ceil(log2(n+1)) answers. The traveller may stop at any point; the</p><p>place then stays at the bottom of its bucket.</p><p>Verdicts also teach taste: they are recorded as preference feedback, so a</p><p>place someone did not enjoy pushes their taste away from it.</p><p>Every method requires a signed-in caller. ListUserRankings is friends-only.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>RatePlace</td>
+                <td><a href="#loci.ranking.RatePlaceRequest">RatePlaceRequest</a></td>
+                <td><a href="#loci.ranking.RatePlaceResponse">RatePlaceResponse</a></td>
+                <td><p>RatePlace gives a place a verdict, or moves it to a new one. When the
+bucket already holds other places, `next` is the first place to compare
+against.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ComparePlaces</td>
+                <td><a href="#loci.ranking.ComparePlacesRequest">ComparePlacesRequest</a></td>
+                <td><a href="#loci.ranking.ComparePlacesResponse">ComparePlacesResponse</a></td>
+                <td><p>ComparePlaces answers one comparison for a place still being ranked.
+`next` is the following comparison, or unset once the place is placed.</p></td>
+              </tr>
+            
+              <tr>
+                <td>DeleteRanking</td>
+                <td><a href="#loci.ranking.DeleteRankingRequest">DeleteRankingRequest</a></td>
+                <td><a href="#loci.ranking.DeleteRankingResponse">DeleteRankingResponse</a></td>
+                <td><p>DeleteRanking removes the caller&#39;s ranking of a place, and the taste
+signal it produced.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListMyRankings</td>
+                <td><a href="#loci.ranking.ListMyRankingsRequest">ListMyRankingsRequest</a></td>
+                <td><a href="#loci.ranking.ListRankingsResponse">ListRankingsResponse</a></td>
+                <td><p>ListMyRankings lists the caller&#39;s ranked places, ordered by city and then
+rank.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListUserRankings</td>
+                <td><a href="#loci.ranking.ListUserRankingsRequest">ListUserRankingsRequest</a></td>
+                <td><a href="#loci.ranking.ListRankingsResponse">ListRankingsResponse</a></td>
+                <td><p>ListUserRankings lists another traveller&#39;s ranked places. Only their
+friends may read it; anyone else gets PERMISSION_DENIED.</p></td>
               </tr>
             
           </tbody>

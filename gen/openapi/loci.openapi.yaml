@@ -7202,6 +7202,197 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.common.Response'
+  /loci.ranking.RankingService/ComparePlaces:
+    post:
+      tags:
+        - loci.ranking.RankingService
+      summary: ComparePlaces
+      description: |-
+        ComparePlaces answers one comparison for a place still being ranked.
+         `next` is the following comparison, or unset once the place is placed.
+      operationId: loci.ranking.RankingService.ComparePlaces
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.ranking.ComparePlacesRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.ranking.ComparePlacesResponse'
+  /loci.ranking.RankingService/DeleteRanking:
+    post:
+      tags:
+        - loci.ranking.RankingService
+      summary: DeleteRanking
+      description: |-
+        DeleteRanking removes the caller's ranking of a place, and the taste
+         signal it produced.
+      operationId: loci.ranking.RankingService.DeleteRanking
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.ranking.DeleteRankingRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.ranking.DeleteRankingResponse'
+  /loci.ranking.RankingService/ListMyRankings:
+    post:
+      tags:
+        - loci.ranking.RankingService
+      summary: ListMyRankings
+      description: |-
+        ListMyRankings lists the caller's ranked places, ordered by city and then
+         rank.
+      operationId: loci.ranking.RankingService.ListMyRankings
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.ranking.ListMyRankingsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.ranking.ListRankingsResponse'
+  /loci.ranking.RankingService/ListUserRankings:
+    post:
+      tags:
+        - loci.ranking.RankingService
+      summary: ListUserRankings
+      description: |-
+        ListUserRankings lists another traveller's ranked places. Only their
+         friends may read it; anyone else gets PERMISSION_DENIED.
+      operationId: loci.ranking.RankingService.ListUserRankings
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.ranking.ListUserRankingsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.ranking.ListRankingsResponse'
+  /loci.ranking.RankingService/RatePlace:
+    post:
+      tags:
+        - loci.ranking.RankingService
+      summary: RatePlace
+      description: |-
+        RatePlace gives a place a verdict, or moves it to a new one. When the
+         bucket already holds other places, `next` is the first place to compare
+         against.
+      operationId: loci.ranking.RankingService.RatePlace
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.ranking.RatePlaceRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.ranking.RatePlaceResponse'
   /loci.recap.RecapService/GetRecap:
     post:
       tags:
@@ -25133,6 +25324,204 @@ components:
         - updatedAt
       additionalProperties: false
       description: UserPreferenceProfile represents a user's preference profile
+    loci.ranking.ComparePlacesRequest:
+      type: object
+      properties:
+        poiId:
+          type: string
+          title: poi_id
+          format: uuid
+        otherPoiId:
+          type: string
+          title: other_poi_id
+          format: uuid
+        better:
+          type: boolean
+          title: better
+          description: True when poi_id is better than other_poi_id.
+      title: ComparePlacesRequest
+      additionalProperties: false
+    loci.ranking.ComparePlacesResponse:
+      type: object
+      properties:
+        place:
+          title: place
+          $ref: '#/components/schemas/loci.ranking.RankedPlace'
+        next:
+          oneOf:
+            - $ref: '#/components/schemas/loci.ranking.Comparison'
+            - type: "null"
+          title: next
+      title: ComparePlacesResponse
+      additionalProperties: false
+    loci.ranking.Comparison:
+      type: object
+      properties:
+        poiId:
+          type: string
+          title: poi_id
+        name:
+          type: string
+          title: name
+      title: Comparison
+      additionalProperties: false
+      description: Comparison is the place to compare against next.
+    loci.ranking.DeleteRankingRequest:
+      type: object
+      properties:
+        poiId:
+          type: string
+          title: poi_id
+          format: uuid
+      title: DeleteRankingRequest
+      additionalProperties: false
+    loci.ranking.DeleteRankingResponse:
+      type: object
+      properties:
+        deleted:
+          type: boolean
+          title: deleted
+      title: DeleteRankingResponse
+      additionalProperties: false
+    loci.ranking.ListMyRankingsRequest:
+      type: object
+      properties:
+        cityName:
+          type: string
+          title: city_name
+          maxLength: 120
+          description: Empty lists every city.
+        limit:
+          type: integer
+          title: limit
+          maximum: 200
+          minimum: 0
+          format: int32
+          description: 0 means 100.
+      title: ListMyRankingsRequest
+      additionalProperties: false
+    loci.ranking.ListRankingsResponse:
+      type: object
+      properties:
+        places:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.ranking.RankedPlace'
+          title: places
+      title: ListRankingsResponse
+      additionalProperties: false
+    loci.ranking.ListUserRankingsRequest:
+      type: object
+      properties:
+        userId:
+          type: string
+          title: user_id
+          format: uuid
+        cityName:
+          type: string
+          title: city_name
+          maxLength: 120
+          description: Empty lists every city.
+        limit:
+          type: integer
+          title: limit
+          maximum: 200
+          minimum: 0
+          format: int32
+          description: 0 means 100.
+      title: ListUserRankingsRequest
+      additionalProperties: false
+    loci.ranking.RankedPlace:
+      type: object
+      properties:
+        poiId:
+          type: string
+          title: poi_id
+        name:
+          type: string
+          title: name
+        category:
+          type: string
+          title: category
+        cityName:
+          type: string
+          title: city_name
+        verdict:
+          title: verdict
+          $ref: '#/components/schemas/loci.ranking.Verdict'
+        rank:
+          type: integer
+          title: rank
+          format: int32
+          description: |-
+            1-based position in this city's list: every Loved place ranks above every
+             Fine one, and every Fine one above every Not for me.
+        score:
+          type: number
+          title: score
+          format: float
+          description: |-
+            0–10 with one decimal, derived from the verdict and the position inside
+             it: Loved spans 6.7–10, Fine 3.4–6.6, Not for me 0–3.3.
+        updatedAt:
+          title: updated_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        pending:
+          type: boolean
+          title: pending
+          description: True while the comparisons for this place are unfinished.
+      title: RankedPlace
+      additionalProperties: false
+    loci.ranking.RatePlaceRequest:
+      type: object
+      properties:
+        poiId:
+          type: string
+          title: poi_id
+          format: uuid
+        verdict:
+          not:
+            enum:
+              - VERDICT_UNSPECIFIED
+          title: verdict
+          $ref: '#/components/schemas/loci.ranking.Verdict'
+        cityName:
+          type: string
+          title: city_name
+          maxLength: 120
+          minLength: 1
+        poiName:
+          type: string
+          title: poi_name
+          maxLength: 200
+          minLength: 1
+        category:
+          type: string
+          title: category
+          maxLength: 80
+      title: RatePlaceRequest
+      additionalProperties: false
+    loci.ranking.RatePlaceResponse:
+      type: object
+      properties:
+        place:
+          title: place
+          $ref: '#/components/schemas/loci.ranking.RankedPlace'
+        next:
+          oneOf:
+            - $ref: '#/components/schemas/loci.ranking.Comparison'
+            - type: "null"
+          title: next
+      title: RatePlaceResponse
+      additionalProperties: false
+    loci.ranking.Verdict:
+      type: string
+      title: Verdict
+      enum:
+        - VERDICT_UNSPECIFIED
+        - VERDICT_LOVED
+        - VERDICT_FINE
+        - VERDICT_NOT_FOR_ME
     loci.recap.ContributionsCard:
       type: object
       properties:
@@ -33801,6 +34190,22 @@ tags:
        Only the linking half lives here. Inbound messages arrive from the platform,
        not from this API, and the bot answers them there.
   - name: loci.payment.v1.PaymentService
+  - name: loci.ranking.RankingService
+    description: |-
+      RankingService keeps each traveller's personal ranking of places they have
+       been, one list per city.
+
+       Ranking works the way Beli does: the traveller first gives a verdict (Loved,
+       Fine, Not for me), which drops the place into that bucket, and then answers
+       "better or worse than Y?" against places already in the same bucket. Each
+       answer halves the range the place can sit in, so a bucket of n places takes
+       at most ceil(log2(n+1)) answers. The traveller may stop at any point; the
+       place then stays at the bottom of its bucket.
+
+       Verdicts also teach taste: they are recorded as preference feedback, so a
+       place someone did not enjoy pushes their taste away from it.
+
+       Every method requires a signed-in caller. ListUserRankings is friends-only.
   - name: loci.recap.RecapService
     description: |-
       RecapService serves story-style recaps of what a traveller did: one per
