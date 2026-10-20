@@ -249,6 +249,49 @@ message ListPendingPlacesResponse {
   repeated PendingPlace places = 1;
 }
 
+// Where an imported link came from; decides how the server reads it.
+enum ImportSource {
+  IMPORT_SOURCE_UNSPECIFIED = 0;
+  IMPORT_SOURCE_GOOGLE_MAPS = 1;
+  IMPORT_SOURCE_TIKTOK = 2;
+  IMPORT_SOURCE_INSTAGRAM = 3;
+  IMPORT_SOURCE_YOUTUBE = 4;
+  IMPORT_SOURCE_WEB = 5;
+}
+
+message ImportPlacesRequest {
+  // A public https link: a video, a post, a Maps share link or a blog.
+  string url = 1 [(buf.validate.field).string = {
+    min_len: 8
+    max_len: 2048
+    uri: true
+  }];
+  // Used when the page never names its city.
+  optional string city_hint = 2 [(buf.validate.field).string.max_len = 120];
+}
+
+// One place the link mentions. poi_id is set when it was matched to (or
+// created as) a Loci place; without it the place is shown but cannot be saved.
+message ImportedPlace {
+  string name = 1;
+  string city_name = 2;
+  // What the page said about it, if anything ("best pastel de nata").
+  string note = 3;
+  optional string poi_id = 4;
+  optional double latitude = 5;
+  optional double longitude = 6;
+  optional string address = 7;
+  optional string category = 8;
+}
+
+message ImportPlacesResponse {
+  ImportSource source = 1;
+  // The page or video title, offered as the name of a new list.
+  string source_title = 2;
+  string city_name = 3;
+  repeated ImportedPlace places = 4;
+}
+
 service PlaceIntelligenceService {
   rpc GetPlaceFacts(GetPlaceFactsRequest) returns (PlaceFacts);
   rpc ListVerificationTasks(ListVerificationTasksRequest) returns (ListVerificationTasksResponse);
@@ -259,4 +302,7 @@ service PlaceIntelligenceService {
   rpc ListPendingPlaces(ListPendingPlacesRequest) returns (ListPendingPlacesResponse);
   // ListMyClaims lists the caller's own claims, newest first.
   rpc ListMyClaims(ListMyClaimsRequest) returns (ListMyClaimsResponse);
+  // ImportPlaces reads a shared link and returns the places it mentions,
+  // matched to Loci places where possible. Saving them is up to the client.
+  rpc ImportPlaces(ImportPlacesRequest) returns (ImportPlacesResponse);
 }

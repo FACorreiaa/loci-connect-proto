@@ -6749,6 +6749,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.place.PlaceFacts'
+  /loci.place.PlaceIntelligenceService/ImportPlaces:
+    post:
+      tags:
+        - loci.place.PlaceIntelligenceService
+      summary: ImportPlaces
+      description: |-
+        ImportPlaces reads a shared link and returns the places it mentions,
+         matched to Loci places where possible. Saving them is up to the client.
+      operationId: loci.place.PlaceIntelligenceService.ImportPlaces
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.place.ImportPlacesRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.place.ImportPlacesResponse'
   /loci.place.PlaceIntelligenceService/ListMyClaims:
     post:
       tags:
@@ -23779,6 +23817,101 @@ components:
           minLength: 1
       title: GetPlaceFactsRequest
       additionalProperties: false
+    loci.place.ImportPlacesRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          title: url
+          maxLength: 2048
+          minLength: 8
+          format: uri
+          description: 'A public https link: a video, a post, a Maps share link or a blog.'
+        cityHint:
+          type:
+            - string
+            - "null"
+          title: city_hint
+          maxLength: 120
+          description: Used when the page never names its city.
+      title: ImportPlacesRequest
+      additionalProperties: false
+    loci.place.ImportPlacesResponse:
+      type: object
+      properties:
+        source:
+          title: source
+          $ref: '#/components/schemas/loci.place.ImportSource'
+        sourceTitle:
+          type: string
+          title: source_title
+          description: The page or video title, offered as the name of a new list.
+        cityName:
+          type: string
+          title: city_name
+        places:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.place.ImportedPlace'
+          title: places
+      title: ImportPlacesResponse
+      additionalProperties: false
+    loci.place.ImportSource:
+      type: string
+      title: ImportSource
+      enum:
+        - IMPORT_SOURCE_UNSPECIFIED
+        - IMPORT_SOURCE_GOOGLE_MAPS
+        - IMPORT_SOURCE_TIKTOK
+        - IMPORT_SOURCE_INSTAGRAM
+        - IMPORT_SOURCE_YOUTUBE
+        - IMPORT_SOURCE_WEB
+      description: Where an imported link came from; decides how the server reads it.
+    loci.place.ImportedPlace:
+      type: object
+      properties:
+        name:
+          type: string
+          title: name
+        cityName:
+          type: string
+          title: city_name
+        note:
+          type: string
+          title: note
+          description: What the page said about it, if anything ("best pastel de nata").
+        poiId:
+          type:
+            - string
+            - "null"
+          title: poi_id
+        latitude:
+          type:
+            - number
+            - "null"
+          title: latitude
+          format: double
+        longitude:
+          type:
+            - number
+            - "null"
+          title: longitude
+          format: double
+        address:
+          type:
+            - string
+            - "null"
+          title: address
+        category:
+          type:
+            - string
+            - "null"
+          title: category
+      title: ImportedPlace
+      additionalProperties: false
+      description: |-
+        One place the link mentions. poi_id is set when it was matched to (or
+         created as) a Loci place; without it the place is shown but cannot be saved.
     loci.place.ListMyClaimsRequest:
       type: object
       properties:
