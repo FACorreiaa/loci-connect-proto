@@ -6,6 +6,7 @@ import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobu
 import type { Message } from "@bufbuild/protobuf";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
 import type { RecommendationTrace } from "../../recommendation/recommendation_pb";
+import type { TasteMatch } from "../../poi/poi_pb";
 
 /**
  * Describes the file loci/favorites/v1/favorites.proto.
@@ -89,6 +90,14 @@ export declare type FavoriteItem = Message<"loci.favorites.v1.FavoriteItem"> & {
    * @generated from field: optional loci.recommendation.RecommendationTrace recommendation_trace = 14;
    */
   recommendationTrace?: RecommendationTrace;
+
+  /**
+   * How well the place fits the caller's taste, when the server could score
+   * it (same rules as POIDetailedInfo.taste_match). Unset otherwise.
+   *
+   * @generated from field: optional loci.poi.TasteMatch taste_match = 15;
+   */
+  tasteMatch?: TasteMatch;
 };
 
 /**
