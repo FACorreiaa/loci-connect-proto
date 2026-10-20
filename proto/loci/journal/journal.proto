@@ -1,0 +1,155 @@
+syntax = "proto3";
+
+package loci.journal;
+
+import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+import "loci/ranking/ranking.proto";
+import "loci/travelhistory/travelhistory.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/journal;journal";
+
+// JournalService turns a trip into a diary: the plan, the places actually
+// visited, how they were rated, a written note per day and photos.
+//
+// Every method requires a signed-in caller and only touches that caller's own
+// trips. Another traveller's trip, day or photo is NotFound.
+//
+// Photos are uploaded straight to object storage: CreatePhotoUpload signs a
+// short-lived PUT (size and content type are part of the signature), the
+// client PUTs the bytes, then ConfirmPhoto checks the object and makes the
+// photo visible. An upload that is never confirmed is removed after a day.
+// With no storage configured the photo methods return FailedPrecondition and
+// the rest of the journal still works.
+service JournalService {
+  // The whole journal of one trip, day by day.
+  rpc GetTripJournal(GetTripJournalRequest) returns (GetTripJournalResponse);
+  // Writes (or clears, with empty text) a day's note.
+  rpc SetDayDiary(SetDayDiaryRequest) returns (SetDayDiaryResponse);
+  // Signs an upload for one photo on a trip, optionally pinned to a day or stop.
+  rpc CreatePhotoUpload(CreatePhotoUploadRequest) returns (CreatePhotoUploadResponse);
+  // Checks the uploaded object and makes the photo visible.
+  rpc ConfirmPhoto(ConfirmPhotoRequest) returns (ConfirmPhotoResponse);
+  // Removes a photo and its object.
+  rpc DeletePhoto(DeletePhotoRequest) returns (DeletePhotoResponse);
+}
+
+// A confirmed photo. url is a signed GET that expires after about an hour;
+// fetch the journal again for fresh ones.
+message TripPhoto {
+  string id = 1;
+  optional string day_id = 2;
+  optional string stop_id = 3;
+  string url = 4;
+  string caption = 5;
+  google.protobuf.Timestamp created_at = 6;
+}
+
+// A planned stop, with what happened to it.
+message JournalStop {
+  string stop_id = 1;
+  string poi_id = 2;
+  string name = 3;
+  optional int32 start_minute = 4;
+  string notes = 5;
+  // When the traveller was there, if a visit to this place was logged on the
+  // trip.
+  google.protobuf.Timestamp visited_at = 6;
+  // The traveller's verdict on the place, if they rated it.
+  loci.ranking.Verdict verdict = 7;
+  repeated TripPhoto photos = 8;
+}
+
+// A place visited on the day that was not on the plan.
+message JournalVisit {
+  string poi_id = 1;
+  string name = 2;
+  google.protobuf.Timestamp visited_at = 3;
+  loci.travelhistory.VisitSource source = 4;
+  loci.ranking.Verdict verdict = 5;
+}
+
+message JournalDay {
+  string day_id = 1;
+  int32 day_number = 2;
+  // The day's date, when the trip is dated.
+  google.protobuf.Timestamp date = 3;
+  string city_name = 4;
+  string diary = 5;
+  repeated JournalStop stops = 6;
+  repeated JournalVisit extra_visits = 7;
+  // Photos of the day that are not pinned to a stop.
+  repeated TripPhoto photos = 8;
+}
+
+message TripJournal {
+  string trip_id = 1;
+  string title = 2;
+  string city_name = 3;
+  repeated JournalDay days = 4;
+  // Photos on the trip with no day.
+  repeated TripPhoto photos = 5;
+  // False when photo storage is not configured; clients hide "Add photos".
+  bool photos_enabled = 6;
+}
+
+message GetTripJournalRequest {
+  string trip_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+message GetTripJournalResponse {
+  TripJournal journal = 1;
+}
+
+message SetDayDiaryRequest {
+  string day_id = 1 [(buf.validate.field).string.uuid = true];
+  string text = 2 [(buf.validate.field).string.max_len = 4000];
+}
+
+message SetDayDiaryResponse {
+  string day_id = 1;
+  string diary = 2;
+}
+
+message CreatePhotoUploadRequest {
+  string trip_id = 1 [(buf.validate.field).string.uuid = true];
+  optional string day_id = 2 [(buf.validate.field).string.uuid = true];
+  optional string stop_id = 3 [(buf.validate.field).string.uuid = true];
+  string content_type = 4 [(buf.validate.field).string = {
+    in: [
+      "image/jpeg",
+      "image/png",
+      "image/heic"
+    ]
+  }];
+  // 8 MiB at most; clients downscale before upload.
+  int64 size_bytes = 5 [(buf.validate.field).int64 = {
+    gte: 1
+    lte: 8388608
+  }];
+}
+
+message CreatePhotoUploadResponse {
+  string photo_id = 1;
+  // PUT the bytes here with exactly these headers.
+  string upload_url = 2;
+  map<string, string> headers = 3;
+  google.protobuf.Timestamp expires_at = 4;
+}
+
+message ConfirmPhotoRequest {
+  string photo_id = 1 [(buf.validate.field).string.uuid = true];
+  string caption = 2 [(buf.validate.field).string.max_len = 280];
+}
+
+message ConfirmPhotoResponse {
+  TripPhoto photo = 1;
+}
+
+message DeletePhotoRequest {
+  string photo_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+message DeletePhotoResponse {
+  bool deleted = 1;
+}
