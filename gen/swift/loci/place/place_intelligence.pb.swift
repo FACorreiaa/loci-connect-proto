@@ -781,6 +781,18 @@ public struct Loci_Place_ImportedPlace: Sendable {
   /// Clears the value of `category`. Subsequent reads from it will return its default value.
   public mutating func clearCategory() {self._category = nil}
 
+  /// The Loci place's own name, set with poi_id. It can differ from name
+  /// ("Manteigaria" → "Manteigaria - Fábrica de Pastéis de Nata"); clients
+  /// show it so the traveller sees what will be saved.
+  public var poiName: String {
+    get {return _poiName ?? String()}
+    set {_poiName = newValue}
+  }
+  /// Returns true if `poiName` has been explicitly set.
+  public var hasPoiName: Bool {return self._poiName != nil}
+  /// Clears the value of `poiName`. Subsequent reads from it will return its default value.
+  public mutating func clearPoiName() {self._poiName = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -790,6 +802,7 @@ public struct Loci_Place_ImportedPlace: Sendable {
   fileprivate var _longitude: Double? = nil
   fileprivate var _address: String? = nil
   fileprivate var _category: String? = nil
+  fileprivate var _poiName: String? = nil
 }
 
 public struct Loci_Place_ImportPlacesResponse: Sendable {
@@ -1870,6 +1883,7 @@ extension Loci_Place_ImportedPlace: SwiftProtobuf.Message, SwiftProtobuf._Messag
     6: .same(proto: "longitude"),
     7: .same(proto: "address"),
     8: .same(proto: "category"),
+    9: .standard(proto: "poi_name"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1886,6 +1900,7 @@ extension Loci_Place_ImportedPlace: SwiftProtobuf.Message, SwiftProtobuf._Messag
       case 6: try { try decoder.decodeSingularDoubleField(value: &self._longitude) }()
       case 7: try { try decoder.decodeSingularStringField(value: &self._address) }()
       case 8: try { try decoder.decodeSingularStringField(value: &self._category) }()
+      case 9: try { try decoder.decodeSingularStringField(value: &self._poiName) }()
       default: break
       }
     }
@@ -1920,6 +1935,9 @@ extension Loci_Place_ImportedPlace: SwiftProtobuf.Message, SwiftProtobuf._Messag
     try { if let v = self._category {
       try visitor.visitSingularStringField(value: v, fieldNumber: 8)
     } }()
+    try { if let v = self._poiName {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 9)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1932,6 +1950,7 @@ extension Loci_Place_ImportedPlace: SwiftProtobuf.Message, SwiftProtobuf._Messag
     if lhs._longitude != rhs._longitude {return false}
     if lhs._address != rhs._address {return false}
     if lhs._category != rhs._category {return false}
+    if lhs._poiName != rhs._poiName {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

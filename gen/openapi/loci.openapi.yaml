@@ -23907,6 +23907,15 @@ components:
             - string
             - "null"
           title: category
+        poiName:
+          type:
+            - string
+            - "null"
+          title: poi_name
+          description: |-
+            The Loci place's own name, set with poi_id. It can differ from name
+             ("Manteigaria" → "Manteigaria - Fábrica de Pastéis de Nata"); clients
+             show it so the traveller sees what will be saved.
       title: ImportedPlace
       additionalProperties: false
       description: |-

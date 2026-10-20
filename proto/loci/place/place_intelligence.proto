@@ -282,6 +282,10 @@ message ImportedPlace {
   optional double longitude = 6;
   optional string address = 7;
   optional string category = 8;
+  // The Loci place's own name, set with poi_id. It can differ from name
+  // ("Manteigaria" → "Manteigaria - Fábrica de Pastéis de Nata"); clients
+  // show it so the traveller sees what will be saved.
+  optional string poi_name = 9;
 }
 
 message ImportPlacesResponse {
