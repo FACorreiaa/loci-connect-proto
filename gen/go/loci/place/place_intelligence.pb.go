@@ -1609,12 +1609,16 @@ type ImportedPlace struct {
 	Name     string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	CityName string                 `protobuf:"bytes,2,opt,name=city_name,json=cityName,proto3" json:"city_name,omitempty"`
 	// What the page said about it, if anything ("best pastel de nata").
-	Note          string   `protobuf:"bytes,3,opt,name=note,proto3" json:"note,omitempty"`
-	PoiId         *string  `protobuf:"bytes,4,opt,name=poi_id,json=poiId,proto3,oneof" json:"poi_id,omitempty"`
-	Latitude      *float64 `protobuf:"fixed64,5,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
-	Longitude     *float64 `protobuf:"fixed64,6,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
-	Address       *string  `protobuf:"bytes,7,opt,name=address,proto3,oneof" json:"address,omitempty"`
-	Category      *string  `protobuf:"bytes,8,opt,name=category,proto3,oneof" json:"category,omitempty"`
+	Note      string   `protobuf:"bytes,3,opt,name=note,proto3" json:"note,omitempty"`
+	PoiId     *string  `protobuf:"bytes,4,opt,name=poi_id,json=poiId,proto3,oneof" json:"poi_id,omitempty"`
+	Latitude  *float64 `protobuf:"fixed64,5,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
+	Longitude *float64 `protobuf:"fixed64,6,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
+	Address   *string  `protobuf:"bytes,7,opt,name=address,proto3,oneof" json:"address,omitempty"`
+	Category  *string  `protobuf:"bytes,8,opt,name=category,proto3,oneof" json:"category,omitempty"`
+	// The Loci place's own name, set with poi_id. It can differ from name
+	// ("Manteigaria" → "Manteigaria - Fábrica de Pastéis de Nata"); clients
+	// show it so the traveller sees what will be saved.
+	PoiName       *string `protobuf:"bytes,9,opt,name=poi_name,json=poiName,proto3,oneof" json:"poi_name,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1701,6 +1705,13 @@ func (x *ImportedPlace) GetAddress() string {
 func (x *ImportedPlace) GetCategory() string {
 	if x != nil && x.Category != nil {
 		return *x.Category
+	}
+	return ""
+}
+
+func (x *ImportedPlace) GetPoiName() string {
+	if x != nil && x.PoiName != nil {
+		return *x.PoiName
 	}
 	return ""
 }
@@ -1901,7 +1912,7 @@ const file_loci_place_place_intelligence_proto_rawDesc = "" +
 	"r\b\x10\b\x18\x80\x10\x88\x01\x01R\x03url\x12)\n" +
 	"\tcity_hint\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x18xH\x00R\bcityHint\x88\x01\x01B\f\n" +
 	"\n" +
-	"_city_hint\"\xb3\x02\n" +
+	"_city_hint\"\xe0\x02\n" +
 	"\rImportedPlace\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1b\n" +
 	"\tcity_name\x18\x02 \x01(\tR\bcityName\x12\x12\n" +
@@ -1910,14 +1921,16 @@ const file_loci_place_place_intelligence_proto_rawDesc = "" +
 	"\blatitude\x18\x05 \x01(\x01H\x01R\blatitude\x88\x01\x01\x12!\n" +
 	"\tlongitude\x18\x06 \x01(\x01H\x02R\tlongitude\x88\x01\x01\x12\x1d\n" +
 	"\aaddress\x18\a \x01(\tH\x03R\aaddress\x88\x01\x01\x12\x1f\n" +
-	"\bcategory\x18\b \x01(\tH\x04R\bcategory\x88\x01\x01B\t\n" +
+	"\bcategory\x18\b \x01(\tH\x04R\bcategory\x88\x01\x01\x12\x1e\n" +
+	"\bpoi_name\x18\t \x01(\tH\x05R\apoiName\x88\x01\x01B\t\n" +
 	"\a_poi_idB\v\n" +
 	"\t_latitudeB\f\n" +
 	"\n" +
 	"_longitudeB\n" +
 	"\n" +
 	"\b_addressB\v\n" +
-	"\t_category\"\xbb\x01\n" +
+	"\t_categoryB\v\n" +
+	"\t_poi_name\"\xbb\x01\n" +
 	"\x14ImportPlacesResponse\x120\n" +
 	"\x06source\x18\x01 \x01(\x0e2\x18.loci.place.ImportSourceR\x06source\x12!\n" +
 	"\fsource_title\x18\x02 \x01(\tR\vsourceTitle\x12\x1b\n" +

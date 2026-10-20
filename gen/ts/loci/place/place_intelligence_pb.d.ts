@@ -665,6 +665,15 @@ export declare type ImportedPlace = Message<"loci.place.ImportedPlace"> & {
    * @generated from field: optional string category = 8;
    */
   category?: string;
+
+  /**
+   * The Loci place's own name, set with poi_id. It can differ from name
+   * ("Manteigaria" → "Manteigaria - Fábrica de Pastéis de Nata"); clients
+   * show it so the traveller sees what will be saved.
+   *
+   * @generated from field: optional string poi_name = 9;
+   */
+  poiName?: string;
 };
 
 /**
