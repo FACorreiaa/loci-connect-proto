@@ -936,6 +936,18 @@
                 </li>
               
                 <li>
+                  <a href="#loci.place.ImportPlacesRequest"><span class="badge">M</span>ImportPlacesRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.place.ImportPlacesResponse"><span class="badge">M</span>ImportPlacesResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.place.ImportedPlace"><span class="badge">M</span>ImportedPlace</a>
+                </li>
+              
+                <li>
                   <a href="#loci.place.ListMyClaimsRequest"><span class="badge">M</span>ListMyClaimsRequest</a>
                 </li>
               
@@ -995,6 +1007,10 @@
                   <a href="#loci.place.VerificationTask"><span class="badge">M</span>VerificationTask</a>
                 </li>
               
+              
+                <li>
+                  <a href="#loci.place.ImportSource"><span class="badge">E</span>ImportSource</a>
+                </li>
               
                 <li>
                   <a href="#loci.place.PlaceClaimStatus"><span class="badge">E</span>PlaceClaimStatus</a>
@@ -10627,6 +10643,155 @@ the same badges, in the same order, with display copy. </p></td>
 
         
       
+        <h3 id="loci.place.ImportPlacesRequest">ImportPlacesRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>A public https link: a video, a post, a Maps share link or a blog. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_hint</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>Used when the page never names its city. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.place.ImportPlacesResponse">ImportPlacesResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>source</td>
+                  <td><a href="#loci.place.ImportSource">ImportSource</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>source_title</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The page or video title, offered as the name of a new list. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>places</td>
+                  <td><a href="#loci.place.ImportedPlace">ImportedPlace</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.place.ImportedPlace">ImportedPlace</h3>
+        <p>One place the link mentions. poi_id is set when it was matched to (or</p><p>created as) a Loci place; without it the place is shown but cannot be saved.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>note</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>What the page said about it, if anything (&#34;best pastel de nata&#34;). </p></td>
+                </tr>
+              
+                <tr>
+                  <td>poi_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>latitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>longitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>address</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>category</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.place.ListMyClaimsRequest">ListMyClaimsRequest</h3>
         <p></p>
 
@@ -11248,6 +11413,53 @@ the same badges, in the same order, with display copy. </p></td>
       
 
       
+        <h3 id="loci.place.ImportSource">ImportSource</h3>
+        <p>Where an imported link came from; decides how the server reads it.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>IMPORT_SOURCE_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>IMPORT_SOURCE_GOOGLE_MAPS</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>IMPORT_SOURCE_TIKTOK</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>IMPORT_SOURCE_INSTAGRAM</td>
+                <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>IMPORT_SOURCE_YOUTUBE</td>
+                <td>4</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>IMPORT_SOURCE_WEB</td>
+                <td>5</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
         <h3 id="loci.place.PlaceClaimStatus">PlaceClaimStatus</h3>
         <p></p>
         <table class="enum-table">
@@ -11461,6 +11673,14 @@ the same badges, in the same order, with display copy. </p></td>
                 <td><a href="#loci.place.ListMyClaimsRequest">ListMyClaimsRequest</a></td>
                 <td><a href="#loci.place.ListMyClaimsResponse">ListMyClaimsResponse</a></td>
                 <td><p>ListMyClaims lists the caller&#39;s own claims, newest first.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ImportPlaces</td>
+                <td><a href="#loci.place.ImportPlacesRequest">ImportPlacesRequest</a></td>
+                <td><a href="#loci.place.ImportPlacesResponse">ImportPlacesResponse</a></td>
+                <td><p>ImportPlaces reads a shared link and returns the places it mentions,
+matched to Loci places where possible. Saving them is up to the client.</p></td>
               </tr>
             
           </tbody>

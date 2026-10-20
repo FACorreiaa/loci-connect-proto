@@ -593,6 +593,120 @@ export declare type ListPendingPlacesResponse = Message<"loci.place.ListPendingP
 export declare const ListPendingPlacesResponseSchema: GenMessage<ListPendingPlacesResponse>;
 
 /**
+ * @generated from message loci.place.ImportPlacesRequest
+ */
+export declare type ImportPlacesRequest = Message<"loci.place.ImportPlacesRequest"> & {
+  /**
+   * A public https link: a video, a post, a Maps share link or a blog.
+   *
+   * @generated from field: string url = 1;
+   */
+  url: string;
+
+  /**
+   * Used when the page never names its city.
+   *
+   * @generated from field: optional string city_hint = 2;
+   */
+  cityHint?: string;
+};
+
+/**
+ * Describes the message loci.place.ImportPlacesRequest.
+ * Use `create(ImportPlacesRequestSchema)` to create a new message.
+ */
+export declare const ImportPlacesRequestSchema: GenMessage<ImportPlacesRequest>;
+
+/**
+ * One place the link mentions. poi_id is set when it was matched to (or
+ * created as) a Loci place; without it the place is shown but cannot be saved.
+ *
+ * @generated from message loci.place.ImportedPlace
+ */
+export declare type ImportedPlace = Message<"loci.place.ImportedPlace"> & {
+  /**
+   * @generated from field: string name = 1;
+   */
+  name: string;
+
+  /**
+   * @generated from field: string city_name = 2;
+   */
+  cityName: string;
+
+  /**
+   * What the page said about it, if anything ("best pastel de nata").
+   *
+   * @generated from field: string note = 3;
+   */
+  note: string;
+
+  /**
+   * @generated from field: optional string poi_id = 4;
+   */
+  poiId?: string;
+
+  /**
+   * @generated from field: optional double latitude = 5;
+   */
+  latitude?: number;
+
+  /**
+   * @generated from field: optional double longitude = 6;
+   */
+  longitude?: number;
+
+  /**
+   * @generated from field: optional string address = 7;
+   */
+  address?: string;
+
+  /**
+   * @generated from field: optional string category = 8;
+   */
+  category?: string;
+};
+
+/**
+ * Describes the message loci.place.ImportedPlace.
+ * Use `create(ImportedPlaceSchema)` to create a new message.
+ */
+export declare const ImportedPlaceSchema: GenMessage<ImportedPlace>;
+
+/**
+ * @generated from message loci.place.ImportPlacesResponse
+ */
+export declare type ImportPlacesResponse = Message<"loci.place.ImportPlacesResponse"> & {
+  /**
+   * @generated from field: loci.place.ImportSource source = 1;
+   */
+  source: ImportSource;
+
+  /**
+   * The page or video title, offered as the name of a new list.
+   *
+   * @generated from field: string source_title = 2;
+   */
+  sourceTitle: string;
+
+  /**
+   * @generated from field: string city_name = 3;
+   */
+  cityName: string;
+
+  /**
+   * @generated from field: repeated loci.place.ImportedPlace places = 4;
+   */
+  places: ImportedPlace[];
+};
+
+/**
+ * Describes the message loci.place.ImportPlacesResponse.
+ * Use `create(ImportPlacesResponseSchema)` to create a new message.
+ */
+export declare const ImportPlacesResponseSchema: GenMessage<ImportPlacesResponse>;
+
+/**
  * @generated from enum loci.place.PlaceFactField
  */
 export enum PlaceFactField {
@@ -718,6 +832,48 @@ export enum PlaceSubmissionStatus {
 export declare const PlaceSubmissionStatusSchema: GenEnum<PlaceSubmissionStatus>;
 
 /**
+ * Where an imported link came from; decides how the server reads it.
+ *
+ * @generated from enum loci.place.ImportSource
+ */
+export enum ImportSource {
+  /**
+   * @generated from enum value: IMPORT_SOURCE_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: IMPORT_SOURCE_GOOGLE_MAPS = 1;
+   */
+  GOOGLE_MAPS = 1,
+
+  /**
+   * @generated from enum value: IMPORT_SOURCE_TIKTOK = 2;
+   */
+  TIKTOK = 2,
+
+  /**
+   * @generated from enum value: IMPORT_SOURCE_INSTAGRAM = 3;
+   */
+  INSTAGRAM = 3,
+
+  /**
+   * @generated from enum value: IMPORT_SOURCE_YOUTUBE = 4;
+   */
+  YOUTUBE = 4,
+
+  /**
+   * @generated from enum value: IMPORT_SOURCE_WEB = 5;
+   */
+  WEB = 5,
+}
+
+/**
+ * Describes the enum loci.place.ImportSource.
+ */
+export declare const ImportSourceSchema: GenEnum<ImportSource>;
+
+/**
  * @generated from service loci.place.PlaceIntelligenceService
  */
 export declare const PlaceIntelligenceService: GenService<{
@@ -786,6 +942,17 @@ export declare const PlaceIntelligenceService: GenService<{
     methodKind: "unary";
     input: typeof ListMyClaimsRequestSchema;
     output: typeof ListMyClaimsResponseSchema;
+  },
+  /**
+   * ImportPlaces reads a shared link and returns the places it mentions,
+   * matched to Loci places where possible. Saving them is up to the client.
+   *
+   * @generated from rpc loci.place.PlaceIntelligenceService.ImportPlaces
+   */
+  importPlaces: {
+    methodKind: "unary";
+    input: typeof ImportPlacesRequestSchema;
+    output: typeof ImportPlacesResponseSchema;
   },
 }>;
 
