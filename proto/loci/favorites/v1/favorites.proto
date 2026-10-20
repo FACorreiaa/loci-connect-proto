@@ -4,6 +4,7 @@ package loci.favorites.v1;
 
 import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
+import "loci/poi/poi.proto";
 import "loci/recommendation/recommendation.proto";
 
 option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/favorites/v1;favoritesv1";
@@ -33,6 +34,9 @@ message FavoriteItem {
   string category = 12;
   google.protobuf.Timestamp added_at = 13;
   optional loci.recommendation.RecommendationTrace recommendation_trace = 14;
+  // How well the place fits the caller's taste, when the server could score
+  // it (same rules as POIDetailedInfo.taste_match). Unset otherwise.
+  optional loci.poi.TasteMatch taste_match = 15;
 }
 
 // FavoritesService provides favorites management functionality

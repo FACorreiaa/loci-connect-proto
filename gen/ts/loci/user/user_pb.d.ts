@@ -529,6 +529,15 @@ export declare type NotificationSettings = Message<"loci.user.NotificationSettin
    * @generated from field: bool city_board_visible = 9;
    */
   cityBoardVisible: boolean;
+
+  /**
+   * Alerts near saved places that fit the caller's taste, raised by the
+   * device on trip days (the server only stores the choice). Off unless
+   * turned on.
+   *
+   * @generated from field: bool nearby_fits = 10;
+   */
+  nearbyFits: boolean;
 };
 
 /**
@@ -594,6 +603,11 @@ export declare type UpdateNotificationSettingsRequest = Message<"loci.user.Updat
    * @generated from field: optional bool city_board_visible = 8;
    */
   cityBoardVisible?: boolean;
+
+  /**
+   * @generated from field: optional bool nearby_fits = 9;
+   */
+  nearbyFits?: boolean;
 };
 
 /**
