@@ -4956,6 +4956,186 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.common.Response'
+  /loci.journal.JournalService/ConfirmPhoto:
+    post:
+      tags:
+        - loci.journal.JournalService
+      summary: ConfirmPhoto
+      description: Checks the uploaded object and makes the photo visible.
+      operationId: loci.journal.JournalService.ConfirmPhoto
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.journal.ConfirmPhotoRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.journal.ConfirmPhotoResponse'
+  /loci.journal.JournalService/CreatePhotoUpload:
+    post:
+      tags:
+        - loci.journal.JournalService
+      summary: CreatePhotoUpload
+      description: Signs an upload for one photo on a trip, optionally pinned to a day or stop.
+      operationId: loci.journal.JournalService.CreatePhotoUpload
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.journal.CreatePhotoUploadRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.journal.CreatePhotoUploadResponse'
+  /loci.journal.JournalService/DeletePhoto:
+    post:
+      tags:
+        - loci.journal.JournalService
+      summary: DeletePhoto
+      description: Removes a photo and its object.
+      operationId: loci.journal.JournalService.DeletePhoto
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.journal.DeletePhotoRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.journal.DeletePhotoResponse'
+  /loci.journal.JournalService/GetTripJournal:
+    post:
+      tags:
+        - loci.journal.JournalService
+      summary: GetTripJournal
+      description: The whole journal of one trip, day by day.
+      operationId: loci.journal.JournalService.GetTripJournal
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.journal.GetTripJournalRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.journal.GetTripJournalResponse'
+  /loci.journal.JournalService/SetDayDiary:
+    post:
+      tags:
+        - loci.journal.JournalService
+      summary: SetDayDiary
+      description: Writes (or clears, with empty text) a day's note.
+      operationId: loci.journal.JournalService.SetDayDiary
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.journal.SetDayDiaryRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.journal.SetDayDiaryResponse'
   /loci.list.ListService/AddListItem:
     post:
       tags:
@@ -20691,6 +20871,311 @@ components:
         - updatedAt
       additionalProperties: false
       description: UserSavedItinerary represents a saved itinerary
+    loci.journal.ConfirmPhotoRequest:
+      type: object
+      properties:
+        photoId:
+          type: string
+          title: photo_id
+          format: uuid
+        caption:
+          type: string
+          title: caption
+          maxLength: 280
+      title: ConfirmPhotoRequest
+      additionalProperties: false
+    loci.journal.ConfirmPhotoResponse:
+      type: object
+      properties:
+        photo:
+          title: photo
+          $ref: '#/components/schemas/loci.journal.TripPhoto'
+      title: ConfirmPhotoResponse
+      additionalProperties: false
+    loci.journal.CreatePhotoUploadRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          format: uuid
+        dayId:
+          type:
+            - string
+            - "null"
+          title: day_id
+          format: uuid
+        stopId:
+          type:
+            - string
+            - "null"
+          title: stop_id
+          format: uuid
+        contentType:
+          type: string
+          title: content_type
+          enum:
+            - image/jpeg
+            - image/png
+            - image/heic
+        sizeBytes:
+          type:
+            - integer
+            - string
+          title: size_bytes
+          maximum: 8388608
+          minimum: 1
+          format: int64
+          description: 8 MiB at most; clients downscale before upload.
+      title: CreatePhotoUploadRequest
+      additionalProperties: false
+    loci.journal.CreatePhotoUploadResponse:
+      type: object
+      properties:
+        photoId:
+          type: string
+          title: photo_id
+        uploadUrl:
+          type: string
+          title: upload_url
+          description: PUT the bytes here with exactly these headers.
+        headers:
+          type: object
+          title: headers
+          additionalProperties:
+            type: string
+            title: value
+        expiresAt:
+          title: expires_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: CreatePhotoUploadResponse
+      additionalProperties: false
+    loci.journal.CreatePhotoUploadResponse.HeadersEntry:
+      type: object
+      properties:
+        key:
+          type: string
+          title: key
+        value:
+          type: string
+          title: value
+      title: HeadersEntry
+      additionalProperties: false
+    loci.journal.DeletePhotoRequest:
+      type: object
+      properties:
+        photoId:
+          type: string
+          title: photo_id
+          format: uuid
+      title: DeletePhotoRequest
+      additionalProperties: false
+    loci.journal.DeletePhotoResponse:
+      type: object
+      properties:
+        deleted:
+          type: boolean
+          title: deleted
+      title: DeletePhotoResponse
+      additionalProperties: false
+    loci.journal.GetTripJournalRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          format: uuid
+      title: GetTripJournalRequest
+      additionalProperties: false
+    loci.journal.GetTripJournalResponse:
+      type: object
+      properties:
+        journal:
+          title: journal
+          $ref: '#/components/schemas/loci.journal.TripJournal'
+      title: GetTripJournalResponse
+      additionalProperties: false
+    loci.journal.JournalDay:
+      type: object
+      properties:
+        dayId:
+          type: string
+          title: day_id
+        dayNumber:
+          type: integer
+          title: day_number
+          format: int32
+        date:
+          title: date
+          description: The day's date, when the trip is dated.
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        cityName:
+          type: string
+          title: city_name
+        diary:
+          type: string
+          title: diary
+        stops:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.journal.JournalStop'
+          title: stops
+        extraVisits:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.journal.JournalVisit'
+          title: extra_visits
+        photos:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.journal.TripPhoto'
+          title: photos
+          description: Photos of the day that are not pinned to a stop.
+      title: JournalDay
+      additionalProperties: false
+    loci.journal.JournalStop:
+      type: object
+      properties:
+        stopId:
+          type: string
+          title: stop_id
+        poiId:
+          type: string
+          title: poi_id
+        name:
+          type: string
+          title: name
+        startMinute:
+          type:
+            - integer
+            - "null"
+          title: start_minute
+          format: int32
+        notes:
+          type: string
+          title: notes
+        visitedAt:
+          title: visited_at
+          description: |-
+            When the traveller was there, if a visit to this place was logged on the
+             trip.
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        verdict:
+          title: verdict
+          description: The traveller's verdict on the place, if they rated it.
+          $ref: '#/components/schemas/loci.ranking.Verdict'
+        photos:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.journal.TripPhoto'
+          title: photos
+      title: JournalStop
+      additionalProperties: false
+      description: A planned stop, with what happened to it.
+    loci.journal.JournalVisit:
+      type: object
+      properties:
+        poiId:
+          type: string
+          title: poi_id
+        name:
+          type: string
+          title: name
+        visitedAt:
+          title: visited_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        source:
+          title: source
+          $ref: '#/components/schemas/loci.travelhistory.VisitSource'
+        verdict:
+          title: verdict
+          $ref: '#/components/schemas/loci.ranking.Verdict'
+      title: JournalVisit
+      additionalProperties: false
+      description: A place visited on the day that was not on the plan.
+    loci.journal.SetDayDiaryRequest:
+      type: object
+      properties:
+        dayId:
+          type: string
+          title: day_id
+          format: uuid
+        text:
+          type: string
+          title: text
+          maxLength: 4000
+      title: SetDayDiaryRequest
+      additionalProperties: false
+    loci.journal.SetDayDiaryResponse:
+      type: object
+      properties:
+        dayId:
+          type: string
+          title: day_id
+        diary:
+          type: string
+          title: diary
+      title: SetDayDiaryResponse
+      additionalProperties: false
+    loci.journal.TripJournal:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+        title:
+          type: string
+          title: title
+        cityName:
+          type: string
+          title: city_name
+        days:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.journal.JournalDay'
+          title: days
+        photos:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.journal.TripPhoto'
+          title: photos
+          description: Photos on the trip with no day.
+        photosEnabled:
+          type: boolean
+          title: photos_enabled
+          description: False when photo storage is not configured; clients hide "Add photos".
+      title: TripJournal
+      additionalProperties: false
+    loci.journal.TripPhoto:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+        dayId:
+          type:
+            - string
+            - "null"
+          title: day_id
+        stopId:
+          type:
+            - string
+            - "null"
+          title: stop_id
+        url:
+          type: string
+          title: url
+        caption:
+          type: string
+          title: caption
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: TripPhoto
+      additionalProperties: false
+      description: |-
+        A confirmed photo. url is a signed GET that expires after about an hour;
+         fetch the journal again for fresh ones.
     loci.list.AddListItemRequest:
       type: object
       properties:
@@ -34187,6 +34672,42 @@ tags:
        again before it is used, and why the token is write-only.
   - name: loci.itinerary.ItineraryService
     description: ItineraryService defines itinerary-related RPCs
+  - name: loci.ranking.RankingService
+    description: |-
+      RankingService keeps each traveller's personal ranking of places they have
+       been, one list per city.
+
+       Ranking works the way Beli does: the traveller first gives a verdict (Loved,
+       Fine, Not for me), which drops the place into that bucket, and then answers
+       "better or worse than Y?" against places already in the same bucket. Each
+       answer halves the range the place can sit in, so a bucket of n places takes
+       at most ceil(log2(n+1)) answers. The traveller may stop at any point; the
+       place then stays at the bottom of its bucket.
+
+       Verdicts also teach taste: they are recorded as preference feedback, so a
+       place someone did not enjoy pushes their taste away from it.
+
+       Every method requires a signed-in caller. ListUserRankings is friends-only.
+  - name: loci.travelhistory.TravelHistoryService
+    description: |-
+      TravelHistoryService is the source of truth for where a traveller has
+       actually been. It replaces two fabrications: statistics'
+       visited_cities_count (a hard-coded hotels+restaurants sum) and
+       users.places_visited (a counter with no backing rows).
+  - name: loci.journal.JournalService
+    description: |-
+      JournalService turns a trip into a diary: the plan, the places actually
+       visited, how they were rated, a written note per day and photos.
+
+       Every method requires a signed-in caller and only touches that caller's own
+       trips. Another traveller's trip, day or photo is NotFound.
+
+       Photos are uploaded straight to object storage: CreatePhotoUpload signs a
+       short-lived PUT (size and content type are part of the signature), the
+       client PUTs the bytes, then ConfirmPhoto checks the object and makes the
+       photo visible. An upload that is never confirmed is removed after a day.
+       With no storage configured the photo methods return FailedPrecondition and
+       the rest of the journal still works.
   - name: loci.list.ListService
     description: ListService provides list and itinerary management functionality
   - name: loci.memory.MemoryService
@@ -34210,22 +34731,6 @@ tags:
        Only the linking half lives here. Inbound messages arrive from the platform,
        not from this API, and the bot answers them there.
   - name: loci.payment.v1.PaymentService
-  - name: loci.ranking.RankingService
-    description: |-
-      RankingService keeps each traveller's personal ranking of places they have
-       been, one list per city.
-
-       Ranking works the way Beli does: the traveller first gives a verdict (Loved,
-       Fine, Not for me), which drops the place into that bucket, and then answers
-       "better or worse than Y?" against places already in the same bucket. Each
-       answer halves the range the place can sit in, so a bucket of n places takes
-       at most ceil(log2(n+1)) answers. The traveller may stop at any point; the
-       place then stays at the bottom of its bucket.
-
-       Verdicts also teach taste: they are recorded as preference feedback, so a
-       place someone did not enjoy pushes their taste away from it.
-
-       Every method requires a signed-in caller. ListUserRankings is friends-only.
   - name: loci.recap.RecapService
     description: |-
       RecapService serves story-style recaps of what a traveller did: one per
@@ -34262,11 +34767,5 @@ tags:
     description: StatisticsService provides analytics and statistics functionality
   - name: loci.tags.TagsService
     description: Service definition matching your tagsService interface
-  - name: loci.travelhistory.TravelHistoryService
-    description: |-
-      TravelHistoryService is the source of truth for where a traveller has
-       actually been. It replaces two fabrications: statistics'
-       visited_cities_count (a hard-coded hotels+restaurants sum) and
-       users.places_visited (a counter with no backing rows).
   - name: loci.user.UserService
     description: UserService defines user-related RPCs
