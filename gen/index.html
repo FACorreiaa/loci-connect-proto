@@ -28168,6 +28168,14 @@ account is AlreadyExists.</p></td>
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>taste_match</td>
+                  <td><a href="#loci.poi.TasteMatch">loci.poi.TasteMatch</a></td>
+                  <td>optional</td>
+                  <td><p>How well the place fits the caller&#39;s taste, when the server could score
+it (same rules as POIDetailedInfo.taste_match). Unset otherwise. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -48862,6 +48870,15 @@ the device; the server only stores the choice). </p></td>
 weekly field score on city boards. On unless turned off. </p></td>
                 </tr>
               
+                <tr>
+                  <td>nearby_fits</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Alerts near saved places that fit the caller&#39;s taste, raised by the
+device on trip days (the server only stores the choice). Off unless
+turned on. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -49041,6 +49058,13 @@ by Apple, so the client says which it has. </p></td>
               
                 <tr>
                   <td>city_board_visible</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>nearby_fits</td>
                   <td><a href="#bool">bool</a></td>
                   <td>optional</td>
                   <td><p> </p></td>

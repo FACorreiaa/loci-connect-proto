@@ -367,6 +367,10 @@ message NotificationSettings {
   // Whether people who are not friends see the caller's display name and
   // weekly field score on city boards. On unless turned off.
   bool city_board_visible = 9;
+  // Alerts near saved places that fit the caller's taste, raised by the
+  // device on trip days (the server only stores the choice). Off unless
+  // turned on.
+  bool nearby_fits = 10;
 }
 
 message GetNotificationSettingsRequest {}
@@ -381,6 +385,7 @@ message UpdateNotificationSettingsRequest {
   optional bool streak_reminders = 6;
   optional bool progress_updates = 7;
   optional bool city_board_visible = 8;
+  optional bool nearby_fits = 9;
 }
 
 enum PushPlatform {

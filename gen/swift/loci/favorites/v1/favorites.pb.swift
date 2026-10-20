@@ -152,6 +152,17 @@ public struct Loci_Favorites_V1_FavoriteItem: @unchecked Sendable {
   /// Clears the value of `recommendationTrace`. Subsequent reads from it will return its default value.
   public mutating func clearRecommendationTrace() {_uniqueStorage()._recommendationTrace = nil}
 
+  /// How well the place fits the caller's taste, when the server could score
+  /// it (same rules as POIDetailedInfo.taste_match). Unset otherwise.
+  public var tasteMatch: Loci_Poi_TasteMatch {
+    get {return _storage._tasteMatch ?? Loci_Poi_TasteMatch()}
+    set {_uniqueStorage()._tasteMatch = newValue}
+  }
+  /// Returns true if `tasteMatch` has been explicitly set.
+  public var hasTasteMatch: Bool {return _storage._tasteMatch != nil}
+  /// Clears the value of `tasteMatch`. Subsequent reads from it will return its default value.
+  public mutating func clearTasteMatch() {_uniqueStorage()._tasteMatch = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -1021,6 +1032,7 @@ extension Loci_Favorites_V1_FavoriteItem: SwiftProtobuf.Message, SwiftProtobuf._
     12: .same(proto: "category"),
     13: .standard(proto: "added_at"),
     14: .standard(proto: "recommendation_trace"),
+    15: .standard(proto: "taste_match"),
   ]
 
   fileprivate class _StorageClass {
@@ -1038,6 +1050,7 @@ extension Loci_Favorites_V1_FavoriteItem: SwiftProtobuf.Message, SwiftProtobuf._
     var _category: String = String()
     var _addedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _recommendationTrace: Loci_Recommendation_RecommendationTrace? = nil
+    var _tasteMatch: Loci_Poi_TasteMatch? = nil
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -1066,6 +1079,7 @@ extension Loci_Favorites_V1_FavoriteItem: SwiftProtobuf.Message, SwiftProtobuf._
       _category = source._category
       _addedAt = source._addedAt
       _recommendationTrace = source._recommendationTrace
+      _tasteMatch = source._tasteMatch
     }
   }
 
@@ -1098,6 +1112,7 @@ extension Loci_Favorites_V1_FavoriteItem: SwiftProtobuf.Message, SwiftProtobuf._
         case 12: try { try decoder.decodeSingularStringField(value: &_storage._category) }()
         case 13: try { try decoder.decodeSingularMessageField(value: &_storage._addedAt) }()
         case 14: try { try decoder.decodeSingularMessageField(value: &_storage._recommendationTrace) }()
+        case 15: try { try decoder.decodeSingularMessageField(value: &_storage._tasteMatch) }()
         default: break
         }
       }
@@ -1152,6 +1167,9 @@ extension Loci_Favorites_V1_FavoriteItem: SwiftProtobuf.Message, SwiftProtobuf._
       try { if let v = _storage._recommendationTrace {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
       } }()
+      try { if let v = _storage._tasteMatch {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1175,6 +1193,7 @@ extension Loci_Favorites_V1_FavoriteItem: SwiftProtobuf.Message, SwiftProtobuf._
         if _storage._category != rhs_storage._category {return false}
         if _storage._addedAt != rhs_storage._addedAt {return false}
         if _storage._recommendationTrace != rhs_storage._recommendationTrace {return false}
+        if _storage._tasteMatch != rhs_storage._tasteMatch {return false}
         return true
       }
       if !storagesAreEqual {return false}
