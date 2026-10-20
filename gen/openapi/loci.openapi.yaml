@@ -18097,6 +18097,14 @@ components:
             - $ref: '#/components/schemas/loci.recommendation.RecommendationTrace'
             - type: "null"
           title: recommendation_trace
+        tasteMatch:
+          oneOf:
+            - $ref: '#/components/schemas/loci.poi.TasteMatch'
+            - type: "null"
+          title: taste_match
+          description: |-
+            How well the place fits the caller's taste, when the server could score
+             it (same rules as POIDetailedInfo.taste_match). Unset otherwise.
       title: FavoriteItem
       additionalProperties: false
       description: Favorite item representation
@@ -33515,6 +33523,13 @@ components:
           description: |-
             Whether people who are not friends see the caller's display name and
              weekly field score on city boards. On unless turned off.
+        nearbyFits:
+          type: boolean
+          title: nearby_fits
+          description: |-
+            Alerts near saved places that fit the caller's taste, raised by the
+             device on trip days (the server only stores the choice). Off unless
+             turned on.
       title: NotificationSettings
       additionalProperties: false
       description: |-
@@ -33644,6 +33659,11 @@ components:
             - boolean
             - "null"
           title: city_board_visible
+        nearbyFits:
+          type:
+            - boolean
+            - "null"
+          title: nearby_fits
       title: UpdateNotificationSettingsRequest
       additionalProperties: false
     loci.user.UpdateProfileParams:
