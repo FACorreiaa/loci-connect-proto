@@ -448,7 +448,10 @@ public struct Loci_Statistics_PersonalizedRecommendations: Sendable {
   public init() {}
 }
 
-/// Achievement badges
+/// Achievement badges. Never served; achievements live in
+/// GamificationService.ListAchievements.
+///
+/// NOTE: This message was marked as deprecated in the .proto file.
 public struct Loci_Statistics_AchievementBadges: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for

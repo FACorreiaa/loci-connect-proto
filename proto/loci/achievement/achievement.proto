@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+package loci.achievement;
+
+import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/achievement;achievement";
+
+// Achievements are what a traveller has done in Loci, counted by the server
+// from what it already records: cities and places visited, days and trips
+// walked, notes, photos, reviews, scouting. They carry no service of their
+// own; GamificationService lists them and SocialService shows them on
+// profiles and in the following feed.
+
+enum AchievementKind {
+  ACHIEVEMENT_KIND_UNSPECIFIED = 0;
+  // A count that climbs through bronze, silver, gold and platinum.
+  ACHIEVEMENT_KIND_TRACK = 1;
+  // A single thing done once.
+  ACHIEVEMENT_KIND_MOMENT = 2;
+  // A moment whose title and description stay hidden until earned.
+  ACHIEVEMENT_KIND_SECRET = 3;
+}
+
+enum AchievementTier {
+  // Not earned yet, or a moment or secret (which have no tiers).
+  ACHIEVEMENT_TIER_UNSPECIFIED = 0;
+  ACHIEVEMENT_TIER_BRONZE = 1;
+  ACHIEVEMENT_TIER_SILVER = 2;
+  ACHIEVEMENT_TIER_GOLD = 3;
+  ACHIEVEMENT_TIER_PLATINUM = 4;
+}
+
+// TierStep is one rung of a track.
+message TierStep {
+  AchievementTier tier = 1 [(buf.validate.field).enum.defined_only = true];
+  int64 threshold = 2 [(buf.validate.field).int64.gte = 1];
+  // Absent while this rung is not reached.
+  google.protobuf.Timestamp earned_at = 3;
+}
+
+// Achievement is one entry of the catalogue as it stands for one user.
+message Achievement {
+  // Stable slug ("cartographer", "night-owl").
+  string id = 1 [(buf.validate.field).string.max_len = 64];
+  // Empty for a secret not yet earned.
+  string title = 2 [(buf.validate.field).string.max_len = 100];
+  // Empty for a secret not yet earned.
+  string description = 3 [(buf.validate.field).string.max_len = 300];
+  // Semantic icon key ("map-pin", "footprints"); clients map it to their own
+  // symbol set, so art can change without a contract change.
+  string icon = 4 [(buf.validate.field).string.max_len = 64];
+  // Grouping for display: "explore", "walk", "record", "community", "social".
+  string category = 5 [(buf.validate.field).string.max_len = 32];
+  AchievementKind kind = 6 [(buf.validate.field).enum.defined_only = true];
+  // Highest tier reached on a track; UNSPECIFIED for moments, secrets and unearned
+  // tracks.
+  AchievementTier tier = 7 [(buf.validate.field).enum.defined_only = true];
+  // Every rung of a track; empty for moments and secrets.
+  repeated TierStep steps = 8 [(buf.validate.field).repeated.max_items = 8];
+  // The counter now, and the value that earns the next rung (or the moment).
+  // next_target is 0 once nothing is left to earn.
+  int64 progress = 9 [(buf.validate.field).int64.gte = 0];
+  int64 next_target = 10 [(buf.validate.field).int64.gte = 0];
+  // Share of active explorers holding the reached tier (or, unearned, the
+  // first one), 0–100. Absent while too few people use Loci to say.
+  optional float rarity_pct = 11 [(buf.validate.field).float = {
+    gte: 0
+    lte: 100
+  }];
+  // True for a secret not yet earned.
+  bool hidden = 12;
+  // When the moment, the secret, or the reached tier was earned.
+  google.protobuf.Timestamp earned_at = 13;
+  // Earned but not yet seen by its owner. Always false on someone else's.
+  bool is_new = 14;
+}
+
+// AchievementSummary is an earned achievement as others see it: on a
+// profile's showcase and in the following feed.
+message AchievementSummary {
+  string id = 1 [(buf.validate.field).string.max_len = 64];
+  string title = 2 [(buf.validate.field).string.max_len = 100];
+  string description = 3 [(buf.validate.field).string.max_len = 300];
+  string icon = 4 [(buf.validate.field).string.max_len = 64];
+  AchievementKind kind = 5 [(buf.validate.field).enum.defined_only = true];
+  AchievementTier tier = 6 [(buf.validate.field).enum.defined_only = true];
+  google.protobuf.Timestamp earned_at = 7;
+}

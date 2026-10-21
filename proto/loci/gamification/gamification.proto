@@ -4,6 +4,7 @@ package loci.gamification;
 
 import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
+import "loci/achievement/achievement.proto";
 import "loci/social/social.proto";
 import "loci/trip/trip.proto";
 
@@ -26,7 +27,7 @@ service GamificationService {
   // DailyCheckIn records the device timezone. It no longer awards points or
   // extends a streak; points_awarded is always 0.
   rpc DailyCheckIn(DailyCheckInRequest) returns (DailyCheckInResponse);
-  // GetLeaderboard ranks the caller and their friends. Friends who turned off
+  // GetLeaderboard ranks the caller and the people they follow. People who turned off
   // leaderboard visibility, and blocked users, are left out. The caller's own
   // entry is always present.
   rpc GetLeaderboard(GetLeaderboardRequest) returns (GetLeaderboardResponse);
@@ -48,6 +49,13 @@ service GamificationService {
   // one is done; finishing every day finishes the trip. Reopening a stop never
   // takes back points already awarded, and marking it again never repays them.
   rpc MarkStop(MarkStopRequest) returns (MarkStopResponse);
+  // ListAchievements is the whole catalogue as it stands for a user: earned
+  // and locked, with progress. Empty user_id means the caller. Someone else's
+  // private account is PermissionDenied unless the caller is an approved
+  // follower; a user who blocked the caller is NotFound.
+  rpc ListAchievements(ListAchievementsRequest) returns (ListAchievementsResponse);
+  // MarkAchievementsSeen clears is_new on the caller's achievements.
+  rpc MarkAchievementsSeen(MarkAchievementsSeenRequest) returns (MarkAchievementsSeenResponse);
 }
 
 enum PointsKind {
@@ -79,6 +87,8 @@ enum PointsKind {
   POINTS_KIND_PLACE_NOTE = 13;
 }
 
+// Badge predates achievements. GetMyProgress fills badges from earned
+// achievements for clients that still render them.
 message Badge {
   string id = 1 [(buf.validate.field).string.max_len = 50];
   string title = 2 [(buf.validate.field).string.max_len = 100];
@@ -236,6 +246,8 @@ message CompleteTripDayResponse {
   int32 points_awarded = 2 [(buf.validate.field).int32.gte = 0];
   bool trip_completed = 3;
   repeated Badge new_badges = 4;
+  // Achievements (and track tiers) this call earned.
+  repeated loci.achievement.Achievement unlocked = 5;
 }
 
 // FieldRank is permanent: it follows the lifetime score and is never lost.
@@ -253,7 +265,7 @@ enum FieldBoardScope {
   FIELD_BOARD_SCOPE_UNSPECIFIED = 0;
   // Everyone scored in one city this week who has not opted out.
   FIELD_BOARD_SCOPE_CITY_WEEK = 1;
-  // The caller and their friends, across all cities, this week.
+  // The caller and the people they follow, across all cities, this week.
   FIELD_BOARD_SCOPE_FRIENDS_WEEK = 2;
   // The caller alone: this week against last week.
   FIELD_BOARD_SCOPE_PERSONAL = 3;
@@ -290,6 +302,19 @@ message FieldProfile {
   // Lifetime counts.
   int32 places_kept = 8 [(buf.validate.field).int32.gte = 0];
   int32 days_finished = 9 [(buf.validate.field).int32.gte = 0];
+  WeekStreak week_streak = 10;
+}
+
+// WeekStreak counts weeks in a row with some exploration: a place visited on
+// the spot, a stop or day or trip finished, a new city or neighborhood. Weeks
+// run Monday to Sunday in the caller's timezone, and this week keeps the
+// streak alive until it ends.
+message WeekStreak {
+  int32 current = 1 [(buf.validate.field).int32.gte = 0];
+  int32 longest = 2 [(buf.validate.field).int32.gte = 0];
+  bool explored_this_week = 3;
+  // Monday of the current week, as a calendar date in the caller's timezone.
+  string week_start = 4 [(buf.validate.field).string.max_len = 10];
 }
 
 message GetFieldProfileRequest {}
@@ -397,4 +422,42 @@ message MarkStopResponse {
   bool trip_finished = 4;
   // The caller's field score this week after the call.
   int64 week_score = 5 [(buf.validate.field).int64.gte = 0];
+  // Achievements (and track tiers) this call earned.
+  repeated loci.achievement.Achievement unlocked = 6;
 }
+
+message ListAchievementsRequest {
+  // Empty means the caller.
+  string user_id = 1 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string.uuid = true
+  ];
+}
+
+message ListAchievementsResponse {
+  // The whole catalogue: tracks, then moments, then secrets.
+  repeated loci.achievement.Achievement achievements = 1;
+  // Earned achievements, each reached track tier counted once.
+  int32 earned_count = 2 [(buf.validate.field).int32.gte = 0];
+  // Everything that can be earned, each track tier counted once.
+  int32 total = 3 [(buf.validate.field).int32.gte = 0];
+  // Achievements counted from what the caller did before achievements
+  // existed and not yet seen: show them once, then MarkAchievementsSeen.
+  // Always 0 on someone else's.
+  int32 unseen_backfill_count = 4 [(buf.validate.field).int32.gte = 0];
+}
+
+message MarkAchievementsSeenRequest {
+  // Empty marks every achievement seen.
+  repeated string ids = 1 [(buf.validate.field).repeated = {
+    max_items: 200
+    items: {
+      string: {
+        min_len: 1
+        max_len: 64
+      }
+    }
+  }];
+}
+
+message MarkAchievementsSeenResponse {}

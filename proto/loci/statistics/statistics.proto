@@ -225,8 +225,11 @@ message PersonalizedRecommendations {
   }];
 }
 
-// Achievement badges
+// Achievement badges. Never served; achievements live in
+// GamificationService.ListAchievements.
 message AchievementBadges {
+  option deprecated = true;
+
   repeated Badge earned_badges = 1;
   repeated Badge available_badges = 2;
 }

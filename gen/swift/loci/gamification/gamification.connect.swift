@@ -31,7 +31,7 @@ public protocol Loci_Gamification_GamificationServiceClientInterface: Sendable {
     @available(iOS 13, *)
     func `dailyCheckIn`(request: Loci_Gamification_DailyCheckInRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Gamification_DailyCheckInResponse>
 
-    /// GetLeaderboard ranks the caller and their friends. Friends who turned off
+    /// GetLeaderboard ranks the caller and the people they follow. People who turned off
     /// leaderboard visibility, and blocked users, are left out. The caller's own
     /// entry is always present.
     @available(iOS 13, *)
@@ -64,6 +64,17 @@ public protocol Loci_Gamification_GamificationServiceClientInterface: Sendable {
     /// takes back points already awarded, and marking it again never repays them.
     @available(iOS 13, *)
     func `markStop`(request: Loci_Gamification_MarkStopRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Gamification_MarkStopResponse>
+
+    /// ListAchievements is the whole catalogue as it stands for a user: earned
+    /// and locked, with progress. Empty user_id means the caller. Someone else's
+    /// private account is PermissionDenied unless the caller is an approved
+    /// follower; a user who blocked the caller is NotFound.
+    @available(iOS 13, *)
+    func `listAchievements`(request: Loci_Gamification_ListAchievementsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Gamification_ListAchievementsResponse>
+
+    /// MarkAchievementsSeen clears is_new on the caller's achievements.
+    @available(iOS 13, *)
+    func `markAchievementsSeen`(request: Loci_Gamification_MarkAchievementsSeenRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Gamification_MarkAchievementsSeenResponse>
 }
 
 /// Concrete implementation of `Loci_Gamification_GamificationServiceClientInterface`.
@@ -114,6 +125,16 @@ public final class Loci_Gamification_GamificationServiceClient: Loci_Gamificatio
         return await self.client.unary(path: "/loci.gamification.GamificationService/MarkStop", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
+    @available(iOS 13, *)
+    public func `listAchievements`(request: Loci_Gamification_ListAchievementsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Gamification_ListAchievementsResponse> {
+        return await self.client.unary(path: "/loci.gamification.GamificationService/ListAchievements", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `markAchievementsSeen`(request: Loci_Gamification_MarkAchievementsSeenRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Gamification_MarkAchievementsSeenResponse> {
+        return await self.client.unary(path: "/loci.gamification.GamificationService/MarkAchievementsSeen", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
     public enum Metadata {
         public enum Methods {
             public static let getMyProgress = Connect.MethodSpec(name: "GetMyProgress", service: "loci.gamification.GamificationService", type: .unary)
@@ -124,6 +145,8 @@ public final class Loci_Gamification_GamificationServiceClient: Loci_Gamificatio
             public static let getFieldProfile = Connect.MethodSpec(name: "GetFieldProfile", service: "loci.gamification.GamificationService", type: .unary)
             public static let getFieldBoard = Connect.MethodSpec(name: "GetFieldBoard", service: "loci.gamification.GamificationService", type: .unary)
             public static let markStop = Connect.MethodSpec(name: "MarkStop", service: "loci.gamification.GamificationService", type: .unary)
+            public static let listAchievements = Connect.MethodSpec(name: "ListAchievements", service: "loci.gamification.GamificationService", type: .unary)
+            public static let markAchievementsSeen = Connect.MethodSpec(name: "MarkAchievementsSeen", service: "loci.gamification.GamificationService", type: .unary)
         }
     }
 }
