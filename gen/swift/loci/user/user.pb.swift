@@ -669,17 +669,18 @@ public struct Loci_User_NotificationSettings: Sendable {
 
   public var searchFinished: Bool = false
 
-  /// Friend requests and accepted friendships.
+  /// New followers, follow requests, and approved requests.
   public var friendActivity: Bool = false
 
-  /// Whether friends see the caller on their leaderboards.
+  /// Whether followers see the caller on their leaderboards.
   public var leaderboardVisible: Bool = false
 
   /// Evening reminder when the day's check-in would break a streak (sent by
   /// the device; the server only stores the choice).
   public var streakReminders: Bool = false
 
-  /// Badges earned and a friend passing the caller on the week's leaderboard.
+  /// Achievements earned and someone the caller follows passing them on the
+  /// week's leaderboard.
   public var progressUpdates: Bool = false
 
   /// Whether people who are not friends see the caller's display name and
@@ -690,6 +691,10 @@ public struct Loci_User_NotificationSettings: Sendable {
   /// device on trip days (the server only stores the choice). Off unless
   /// turned on.
   public var nearbyFits: Bool = false
+
+  /// Someone cheered the caller's achievement, city or trip in the feed. On
+  /// unless turned off.
+  public var cheers: Bool = false
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -795,6 +800,15 @@ public struct Loci_User_UpdateNotificationSettingsRequest: Sendable {
   /// Clears the value of `nearbyFits`. Subsequent reads from it will return its default value.
   public mutating func clearNearbyFits() {self._nearbyFits = nil}
 
+  public var cheers: Bool {
+    get {return _cheers ?? false}
+    set {_cheers = newValue}
+  }
+  /// Returns true if `cheers` has been explicitly set.
+  public var hasCheers: Bool {return self._cheers != nil}
+  /// Clears the value of `cheers`. Subsequent reads from it will return its default value.
+  public mutating func clearCheers() {self._cheers = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -808,6 +822,7 @@ public struct Loci_User_UpdateNotificationSettingsRequest: Sendable {
   fileprivate var _progressUpdates: Bool? = nil
   fileprivate var _cityBoardVisible: Bool? = nil
   fileprivate var _nearbyFits: Bool? = nil
+  fileprivate var _cheers: Bool? = nil
 }
 
 public struct Loci_User_RegisterPushDeviceRequest: Sendable {
@@ -1695,6 +1710,7 @@ extension Loci_User_NotificationSettings: SwiftProtobuf.Message, SwiftProtobuf._
     8: .standard(proto: "progress_updates"),
     9: .standard(proto: "city_board_visible"),
     10: .standard(proto: "nearby_fits"),
+    11: .same(proto: "cheers"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1713,6 +1729,7 @@ extension Loci_User_NotificationSettings: SwiftProtobuf.Message, SwiftProtobuf._
       case 8: try { try decoder.decodeSingularBoolField(value: &self.progressUpdates) }()
       case 9: try { try decoder.decodeSingularBoolField(value: &self.cityBoardVisible) }()
       case 10: try { try decoder.decodeSingularBoolField(value: &self.nearbyFits) }()
+      case 11: try { try decoder.decodeSingularBoolField(value: &self.cheers) }()
       default: break
       }
     }
@@ -1753,6 +1770,9 @@ extension Loci_User_NotificationSettings: SwiftProtobuf.Message, SwiftProtobuf._
     if self.nearbyFits != false {
       try visitor.visitSingularBoolField(value: self.nearbyFits, fieldNumber: 10)
     }
+    if self.cheers != false {
+      try visitor.visitSingularBoolField(value: self.cheers, fieldNumber: 11)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1767,6 +1787,7 @@ extension Loci_User_NotificationSettings: SwiftProtobuf.Message, SwiftProtobuf._
     if lhs.progressUpdates != rhs.progressUpdates {return false}
     if lhs.cityBoardVisible != rhs.cityBoardVisible {return false}
     if lhs.nearbyFits != rhs.nearbyFits {return false}
+    if lhs.cheers != rhs.cheers {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1803,6 +1824,7 @@ extension Loci_User_UpdateNotificationSettingsRequest: SwiftProtobuf.Message, Sw
     7: .standard(proto: "progress_updates"),
     8: .standard(proto: "city_board_visible"),
     9: .standard(proto: "nearby_fits"),
+    10: .same(proto: "cheers"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1820,6 +1842,7 @@ extension Loci_User_UpdateNotificationSettingsRequest: SwiftProtobuf.Message, Sw
       case 7: try { try decoder.decodeSingularBoolField(value: &self._progressUpdates) }()
       case 8: try { try decoder.decodeSingularBoolField(value: &self._cityBoardVisible) }()
       case 9: try { try decoder.decodeSingularBoolField(value: &self._nearbyFits) }()
+      case 10: try { try decoder.decodeSingularBoolField(value: &self._cheers) }()
       default: break
       }
     }
@@ -1857,6 +1880,9 @@ extension Loci_User_UpdateNotificationSettingsRequest: SwiftProtobuf.Message, Sw
     try { if let v = self._nearbyFits {
       try visitor.visitSingularBoolField(value: v, fieldNumber: 9)
     } }()
+    try { if let v = self._cheers {
+      try visitor.visitSingularBoolField(value: v, fieldNumber: 10)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1870,6 +1896,7 @@ extension Loci_User_UpdateNotificationSettingsRequest: SwiftProtobuf.Message, Sw
     if lhs._progressUpdates != rhs._progressUpdates {return false}
     if lhs._cityBoardVisible != rhs._cityBoardVisible {return false}
     if lhs._nearbyFits != rhs._nearbyFits {return false}
+    if lhs._cheers != rhs._cheers {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

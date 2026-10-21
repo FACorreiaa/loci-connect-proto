@@ -278,7 +278,7 @@ public enum Loci_Gamification_FieldBoardScope: SwiftProtobuf.Enum, Swift.CaseIte
   /// Everyone scored in one city this week who has not opted out.
   case cityWeek // = 1
 
-  /// The caller and their friends, across all cities, this week.
+  /// The caller and the people they follow, across all cities, this week.
   case friendsWeek // = 2
 
   /// The caller alone: this week against last week.
@@ -361,6 +361,8 @@ public enum Loci_Gamification_FieldBoardMetric: SwiftProtobuf.Enum, Swift.CaseIt
 
 }
 
+/// Badge predates achievements. GetMyProgress fills badges from earned
+/// achievements for clients that still render them.
 public struct Loci_Gamification_Badge: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -710,6 +712,9 @@ public struct Loci_Gamification_CompleteTripDayResponse: Sendable {
 
   public var newBadges: [Loci_Gamification_Badge] = []
 
+  /// Achievements (and track tiers) this call earned.
+  public var unlocked: [Loci_Achievement_Achievement] = []
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -765,6 +770,40 @@ public struct Loci_Gamification_FieldProfile: Sendable {
   public var placesKept: Int32 = 0
 
   public var daysFinished: Int32 = 0
+
+  public var weekStreak: Loci_Gamification_WeekStreak {
+    get {return _weekStreak ?? Loci_Gamification_WeekStreak()}
+    set {_weekStreak = newValue}
+  }
+  /// Returns true if `weekStreak` has been explicitly set.
+  public var hasWeekStreak: Bool {return self._weekStreak != nil}
+  /// Clears the value of `weekStreak`. Subsequent reads from it will return its default value.
+  public mutating func clearWeekStreak() {self._weekStreak = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _weekStreak: Loci_Gamification_WeekStreak? = nil
+}
+
+/// WeekStreak counts weeks in a row with some exploration: a place visited on
+/// the spot, a stop or day or trip finished, a new city or neighborhood. Weeks
+/// run Monday to Sunday in the caller's timezone, and this week keeps the
+/// streak alive until it ends.
+public struct Loci_Gamification_WeekStreak: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var current: Int32 = 0
+
+  public var longest: Int32 = 0
+
+  public var exploredThisWeek: Bool = false
+
+  /// Monday of the current week, as a calendar date in the caller's timezone.
+  public var weekStart: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1038,6 +1077,69 @@ public struct Loci_Gamification_MarkStopResponse: Sendable {
 
   /// The caller's field score this week after the call.
   public var weekScore: Int64 = 0
+
+  /// Achievements (and track tiers) this call earned.
+  public var unlocked: [Loci_Achievement_Achievement] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Gamification_ListAchievementsRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// Empty means the caller.
+  public var userID: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Gamification_ListAchievementsResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// The whole catalogue: tracks, then moments, then secrets.
+  public var achievements: [Loci_Achievement_Achievement] = []
+
+  /// Earned achievements, each reached track tier counted once.
+  public var earnedCount: Int32 = 0
+
+  /// Everything that can be earned, each track tier counted once.
+  public var total: Int32 = 0
+
+  /// Achievements counted from what the caller did before achievements
+  /// existed and not yet seen: show them once, then MarkAchievementsSeen.
+  /// Always 0 on someone else's.
+  public var unseenBackfillCount: Int32 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Gamification_MarkAchievementsSeenRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// Empty marks every achievement seen.
+  public var ids: [String] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Gamification_MarkAchievementsSeenResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1794,6 +1896,7 @@ extension Loci_Gamification_CompleteTripDayResponse: SwiftProtobuf.Message, Swif
     2: .standard(proto: "points_awarded"),
     3: .standard(proto: "trip_completed"),
     4: .standard(proto: "new_badges"),
+    5: .same(proto: "unlocked"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1806,6 +1909,7 @@ extension Loci_Gamification_CompleteTripDayResponse: SwiftProtobuf.Message, Swif
       case 2: try { try decoder.decodeSingularInt32Field(value: &self.pointsAwarded) }()
       case 3: try { try decoder.decodeSingularBoolField(value: &self.tripCompleted) }()
       case 4: try { try decoder.decodeRepeatedMessageField(value: &self.newBadges) }()
+      case 5: try { try decoder.decodeRepeatedMessageField(value: &self.unlocked) }()
       default: break
       }
     }
@@ -1828,6 +1932,9 @@ extension Loci_Gamification_CompleteTripDayResponse: SwiftProtobuf.Message, Swif
     if !self.newBadges.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.newBadges, fieldNumber: 4)
     }
+    if !self.unlocked.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.unlocked, fieldNumber: 5)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1836,6 +1943,7 @@ extension Loci_Gamification_CompleteTripDayResponse: SwiftProtobuf.Message, Swif
     if lhs.pointsAwarded != rhs.pointsAwarded {return false}
     if lhs.tripCompleted != rhs.tripCompleted {return false}
     if lhs.newBadges != rhs.newBadges {return false}
+    if lhs.unlocked != rhs.unlocked {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1909,6 +2017,7 @@ extension Loci_Gamification_FieldProfile: SwiftProtobuf.Message, SwiftProtobuf._
     7: .standard(proto: "season_id"),
     8: .standard(proto: "places_kept"),
     9: .standard(proto: "days_finished"),
+    10: .standard(proto: "week_streak"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1926,12 +2035,17 @@ extension Loci_Gamification_FieldProfile: SwiftProtobuf.Message, SwiftProtobuf._
       case 7: try { try decoder.decodeSingularInt32Field(value: &self.seasonID) }()
       case 8: try { try decoder.decodeSingularInt32Field(value: &self.placesKept) }()
       case 9: try { try decoder.decodeSingularInt32Field(value: &self.daysFinished) }()
+      case 10: try { try decoder.decodeSingularMessageField(value: &self._weekStreak) }()
       default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if self.lifetimeScore != 0 {
       try visitor.visitSingularInt64Field(value: self.lifetimeScore, fieldNumber: 1)
     }
@@ -1959,6 +2073,9 @@ extension Loci_Gamification_FieldProfile: SwiftProtobuf.Message, SwiftProtobuf._
     if self.daysFinished != 0 {
       try visitor.visitSingularInt32Field(value: self.daysFinished, fieldNumber: 9)
     }
+    try { if let v = self._weekStreak {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1972,6 +2089,57 @@ extension Loci_Gamification_FieldProfile: SwiftProtobuf.Message, SwiftProtobuf._
     if lhs.seasonID != rhs.seasonID {return false}
     if lhs.placesKept != rhs.placesKept {return false}
     if lhs.daysFinished != rhs.daysFinished {return false}
+    if lhs._weekStreak != rhs._weekStreak {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Gamification_WeekStreak: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".WeekStreak"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "current"),
+    2: .same(proto: "longest"),
+    3: .standard(proto: "explored_this_week"),
+    4: .standard(proto: "week_start"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularInt32Field(value: &self.current) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.longest) }()
+      case 3: try { try decoder.decodeSingularBoolField(value: &self.exploredThisWeek) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.weekStart) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.current != 0 {
+      try visitor.visitSingularInt32Field(value: self.current, fieldNumber: 1)
+    }
+    if self.longest != 0 {
+      try visitor.visitSingularInt32Field(value: self.longest, fieldNumber: 2)
+    }
+    if self.exploredThisWeek != false {
+      try visitor.visitSingularBoolField(value: self.exploredThisWeek, fieldNumber: 3)
+    }
+    if !self.weekStart.isEmpty {
+      try visitor.visitSingularStringField(value: self.weekStart, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Gamification_WeekStreak, rhs: Loci_Gamification_WeekStreak) -> Bool {
+    if lhs.current != rhs.current {return false}
+    if lhs.longest != rhs.longest {return false}
+    if lhs.exploredThisWeek != rhs.exploredThisWeek {return false}
+    if lhs.weekStart != rhs.weekStart {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -2462,6 +2630,7 @@ extension Loci_Gamification_MarkStopResponse: SwiftProtobuf.Message, SwiftProtob
     3: .standard(proto: "day_finished"),
     4: .standard(proto: "trip_finished"),
     5: .standard(proto: "week_score"),
+    6: .same(proto: "unlocked"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2475,6 +2644,7 @@ extension Loci_Gamification_MarkStopResponse: SwiftProtobuf.Message, SwiftProtob
       case 3: try { try decoder.decodeSingularBoolField(value: &self.dayFinished) }()
       case 4: try { try decoder.decodeSingularBoolField(value: &self.tripFinished) }()
       case 5: try { try decoder.decodeSingularInt64Field(value: &self.weekScore) }()
+      case 6: try { try decoder.decodeRepeatedMessageField(value: &self.unlocked) }()
       default: break
       }
     }
@@ -2496,6 +2666,9 @@ extension Loci_Gamification_MarkStopResponse: SwiftProtobuf.Message, SwiftProtob
     if self.weekScore != 0 {
       try visitor.visitSingularInt64Field(value: self.weekScore, fieldNumber: 5)
     }
+    if !self.unlocked.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.unlocked, fieldNumber: 6)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2505,6 +2678,140 @@ extension Loci_Gamification_MarkStopResponse: SwiftProtobuf.Message, SwiftProtob
     if lhs.dayFinished != rhs.dayFinished {return false}
     if lhs.tripFinished != rhs.tripFinished {return false}
     if lhs.weekScore != rhs.weekScore {return false}
+    if lhs.unlocked != rhs.unlocked {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Gamification_ListAchievementsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ListAchievementsRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.userID) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.userID.isEmpty {
+      try visitor.visitSingularStringField(value: self.userID, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Gamification_ListAchievementsRequest, rhs: Loci_Gamification_ListAchievementsRequest) -> Bool {
+    if lhs.userID != rhs.userID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Gamification_ListAchievementsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ListAchievementsResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "achievements"),
+    2: .standard(proto: "earned_count"),
+    3: .same(proto: "total"),
+    4: .standard(proto: "unseen_backfill_count"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.achievements) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.earnedCount) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self.total) }()
+      case 4: try { try decoder.decodeSingularInt32Field(value: &self.unseenBackfillCount) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.achievements.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.achievements, fieldNumber: 1)
+    }
+    if self.earnedCount != 0 {
+      try visitor.visitSingularInt32Field(value: self.earnedCount, fieldNumber: 2)
+    }
+    if self.total != 0 {
+      try visitor.visitSingularInt32Field(value: self.total, fieldNumber: 3)
+    }
+    if self.unseenBackfillCount != 0 {
+      try visitor.visitSingularInt32Field(value: self.unseenBackfillCount, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Gamification_ListAchievementsResponse, rhs: Loci_Gamification_ListAchievementsResponse) -> Bool {
+    if lhs.achievements != rhs.achievements {return false}
+    if lhs.earnedCount != rhs.earnedCount {return false}
+    if lhs.total != rhs.total {return false}
+    if lhs.unseenBackfillCount != rhs.unseenBackfillCount {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Gamification_MarkAchievementsSeenRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".MarkAchievementsSeenRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "ids"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedStringField(value: &self.ids) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.ids.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.ids, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Gamification_MarkAchievementsSeenRequest, rhs: Loci_Gamification_MarkAchievementsSeenRequest) -> Bool {
+    if lhs.ids != rhs.ids {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Gamification_MarkAchievementsSeenResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".MarkAchievementsSeenResponse"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    // Load everything into unknown fields
+    while try decoder.nextFieldNumber() != nil {}
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Gamification_MarkAchievementsSeenResponse, rhs: Loci_Gamification_MarkAchievementsSeenResponse) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

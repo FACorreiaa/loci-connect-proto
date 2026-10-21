@@ -6,6 +6,7 @@ import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobu
 import type { Message } from "@bufbuild/protobuf";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
 import type { PublicUser } from "../social/social_pb";
+import type { Achievement } from "../achievement/achievement_pb";
 import type { TripStopStatus } from "../trip/trip_pb";
 
 /**
@@ -14,6 +15,9 @@ import type { TripStopStatus } from "../trip/trip_pb";
 export declare const file_loci_gamification_gamification: GenFile;
 
 /**
+ * Badge predates achievements. GetMyProgress fills badges from earned
+ * achievements for clients that still render them.
+ *
  * @generated from message loci.gamification.Badge
  */
 export declare type Badge = Message<"loci.gamification.Badge"> & {
@@ -470,6 +474,13 @@ export declare type CompleteTripDayResponse = Message<"loci.gamification.Complet
    * @generated from field: repeated loci.gamification.Badge new_badges = 4;
    */
   newBadges: Badge[];
+
+  /**
+   * Achievements (and track tiers) this call earned.
+   *
+   * @generated from field: repeated loci.achievement.Achievement unlocked = 5;
+   */
+  unlocked: Achievement[];
 };
 
 /**
@@ -574,6 +585,11 @@ export declare type FieldProfile = Message<"loci.gamification.FieldProfile"> & {
    * @generated from field: int32 days_finished = 9;
    */
   daysFinished: number;
+
+  /**
+   * @generated from field: loci.gamification.WeekStreak week_streak = 10;
+   */
+  weekStreak?: WeekStreak;
 };
 
 /**
@@ -581,6 +597,44 @@ export declare type FieldProfile = Message<"loci.gamification.FieldProfile"> & {
  * Use `create(FieldProfileSchema)` to create a new message.
  */
 export declare const FieldProfileSchema: GenMessage<FieldProfile>;
+
+/**
+ * WeekStreak counts weeks in a row with some exploration: a place visited on
+ * the spot, a stop or day or trip finished, a new city or neighborhood. Weeks
+ * run Monday to Sunday in the caller's timezone, and this week keeps the
+ * streak alive until it ends.
+ *
+ * @generated from message loci.gamification.WeekStreak
+ */
+export declare type WeekStreak = Message<"loci.gamification.WeekStreak"> & {
+  /**
+   * @generated from field: int32 current = 1;
+   */
+  current: number;
+
+  /**
+   * @generated from field: int32 longest = 2;
+   */
+  longest: number;
+
+  /**
+   * @generated from field: bool explored_this_week = 3;
+   */
+  exploredThisWeek: boolean;
+
+  /**
+   * Monday of the current week, as a calendar date in the caller's timezone.
+   *
+   * @generated from field: string week_start = 4;
+   */
+  weekStart: string;
+};
+
+/**
+ * Describes the message loci.gamification.WeekStreak.
+ * Use `create(WeekStreakSchema)` to create a new message.
+ */
+export declare const WeekStreakSchema: GenMessage<WeekStreak>;
 
 /**
  * @generated from message loci.gamification.GetFieldProfileRequest
@@ -918,6 +972,13 @@ export declare type MarkStopResponse = Message<"loci.gamification.MarkStopRespon
    * @generated from field: int64 week_score = 5;
    */
   weekScore: bigint;
+
+  /**
+   * Achievements (and track tiers) this call earned.
+   *
+   * @generated from field: repeated loci.achievement.Achievement unlocked = 6;
+   */
+  unlocked: Achievement[];
 };
 
 /**
@@ -925,6 +986,95 @@ export declare type MarkStopResponse = Message<"loci.gamification.MarkStopRespon
  * Use `create(MarkStopResponseSchema)` to create a new message.
  */
 export declare const MarkStopResponseSchema: GenMessage<MarkStopResponse>;
+
+/**
+ * @generated from message loci.gamification.ListAchievementsRequest
+ */
+export declare type ListAchievementsRequest = Message<"loci.gamification.ListAchievementsRequest"> & {
+  /**
+   * Empty means the caller.
+   *
+   * @generated from field: string user_id = 1;
+   */
+  userId: string;
+};
+
+/**
+ * Describes the message loci.gamification.ListAchievementsRequest.
+ * Use `create(ListAchievementsRequestSchema)` to create a new message.
+ */
+export declare const ListAchievementsRequestSchema: GenMessage<ListAchievementsRequest>;
+
+/**
+ * @generated from message loci.gamification.ListAchievementsResponse
+ */
+export declare type ListAchievementsResponse = Message<"loci.gamification.ListAchievementsResponse"> & {
+  /**
+   * The whole catalogue: tracks, then moments, then secrets.
+   *
+   * @generated from field: repeated loci.achievement.Achievement achievements = 1;
+   */
+  achievements: Achievement[];
+
+  /**
+   * Earned achievements, each reached track tier counted once.
+   *
+   * @generated from field: int32 earned_count = 2;
+   */
+  earnedCount: number;
+
+  /**
+   * Everything that can be earned, each track tier counted once.
+   *
+   * @generated from field: int32 total = 3;
+   */
+  total: number;
+
+  /**
+   * Achievements counted from what the caller did before achievements
+   * existed and not yet seen: show them once, then MarkAchievementsSeen.
+   * Always 0 on someone else's.
+   *
+   * @generated from field: int32 unseen_backfill_count = 4;
+   */
+  unseenBackfillCount: number;
+};
+
+/**
+ * Describes the message loci.gamification.ListAchievementsResponse.
+ * Use `create(ListAchievementsResponseSchema)` to create a new message.
+ */
+export declare const ListAchievementsResponseSchema: GenMessage<ListAchievementsResponse>;
+
+/**
+ * @generated from message loci.gamification.MarkAchievementsSeenRequest
+ */
+export declare type MarkAchievementsSeenRequest = Message<"loci.gamification.MarkAchievementsSeenRequest"> & {
+  /**
+   * Empty marks every achievement seen.
+   *
+   * @generated from field: repeated string ids = 1;
+   */
+  ids: string[];
+};
+
+/**
+ * Describes the message loci.gamification.MarkAchievementsSeenRequest.
+ * Use `create(MarkAchievementsSeenRequestSchema)` to create a new message.
+ */
+export declare const MarkAchievementsSeenRequestSchema: GenMessage<MarkAchievementsSeenRequest>;
+
+/**
+ * @generated from message loci.gamification.MarkAchievementsSeenResponse
+ */
+export declare type MarkAchievementsSeenResponse = Message<"loci.gamification.MarkAchievementsSeenResponse"> & {
+};
+
+/**
+ * Describes the message loci.gamification.MarkAchievementsSeenResponse.
+ * Use `create(MarkAchievementsSeenResponseSchema)` to create a new message.
+ */
+export declare const MarkAchievementsSeenResponseSchema: GenMessage<MarkAchievementsSeenResponse>;
 
 /**
  * @generated from enum loci.gamification.PointsKind
@@ -1157,7 +1307,7 @@ export enum FieldBoardScope {
   CITY_WEEK = 1,
 
   /**
-   * The caller and their friends, across all cities, this week.
+   * The caller and the people they follow, across all cities, this week.
    *
    * @generated from enum value: FIELD_BOARD_SCOPE_FRIENDS_WEEK = 2;
    */
@@ -1244,7 +1394,7 @@ export declare const GamificationService: GenService<{
     output: typeof DailyCheckInResponseSchema;
   },
   /**
-   * GetLeaderboard ranks the caller and their friends. Friends who turned off
+   * GetLeaderboard ranks the caller and the people they follow. People who turned off
    * leaderboard visibility, and blocked users, are left out. The caller's own
    * entry is always present.
    *
@@ -1312,6 +1462,29 @@ export declare const GamificationService: GenService<{
     methodKind: "unary";
     input: typeof MarkStopRequestSchema;
     output: typeof MarkStopResponseSchema;
+  },
+  /**
+   * ListAchievements is the whole catalogue as it stands for a user: earned
+   * and locked, with progress. Empty user_id means the caller. Someone else's
+   * private account is PermissionDenied unless the caller is an approved
+   * follower; a user who blocked the caller is NotFound.
+   *
+   * @generated from rpc loci.gamification.GamificationService.ListAchievements
+   */
+  listAchievements: {
+    methodKind: "unary";
+    input: typeof ListAchievementsRequestSchema;
+    output: typeof ListAchievementsResponseSchema;
+  },
+  /**
+   * MarkAchievementsSeen clears is_new on the caller's achievements.
+   *
+   * @generated from rpc loci.gamification.GamificationService.MarkAchievementsSeen
+   */
+  markAchievementsSeen: {
+    methodKind: "unary";
+    input: typeof MarkAchievementsSeenRequestSchema;
+    output: typeof MarkAchievementsSeenResponseSchema;
   },
 }>;
 

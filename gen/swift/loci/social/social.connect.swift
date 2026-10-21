@@ -9,12 +9,18 @@ import Connect
 import Foundation
 import SwiftProtobuf
 
-/// SocialService is Loci's friends layer: mutual friendships (a request one
-/// side sends and the other accepts), invite links, blocking, and finding
-/// friends by username or by phone contacts.
+/// SocialService is Loci's people layer: following, invite links, blocking,
+/// finding people by username, contacts or Facebook, and the following feed.
 ///
-/// Friendship is mutual on purpose. "Friends" trip visibility, and later
-/// location sharing, are seen only by people both sides approved.
+/// Following is one-way. Two people who follow each other are friends, and
+/// "Friends" trip visibility is seen only by friends: both sides chose it.
+/// Accounts are public unless their owner makes them private; following a
+/// private account sends a follow request its owner approves.
+///
+/// The friend RPCs (SendFriendRequest .. RemoveFriend) predate following and
+/// are kept for older clients. They are served from the follow graph:
+/// a friend request is a follow, accepting one follows back, and a follower
+/// the caller does not follow back is listed as an incoming request.
 ///
 /// GetInvite and GetPublicProfile accept anonymous callers (an invite link or
 /// a profile opened signed out); every other RPC needs a session.
@@ -33,11 +39,69 @@ public protocol Loci_Social_SocialServiceClientInterface: Sendable {
     @available(iOS 13, *)
     func `getInvite`(request: Loci_Social_GetInviteRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Social_GetInviteResponse>
 
-    /// AcceptInvite makes the caller and the inviter friends at once: opening a
-    /// friend's link is the consent on both sides.
+    /// AcceptInvite makes the caller and the inviter friends at once (each
+    /// follows the other, whatever their privacy): opening a friend's link is
+    /// the consent on both sides.
     @available(iOS 13, *)
     func `acceptInvite`(request: Loci_Social_AcceptInviteRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Social_AcceptInviteResponse>
 
+    /// Follow follows a user. Following a private account sends a follow request
+    /// instead (state REQUESTED); following again is a no-op.
+    @available(iOS 13, *)
+    func `follow`(request: Loci_Social_FollowUserRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Social_FollowUserResponse>
+
+    /// Unfollow stops following a user, or withdraws a pending follow request.
+    @available(iOS 13, *)
+    func `unfollow`(request: Loci_Social_UnfollowRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Social_UnfollowResponse>
+
+    /// RemoveFollower makes a user stop following the caller.
+    @available(iOS 13, *)
+    func `removeFollower`(request: Loci_Social_RemoveFollowerRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Social_RemoveFollowerResponse>
+
+    /// ListFollowers and ListFollowing list a user's followers and the people
+    /// they follow, newest first. Empty user_id means the caller. A private
+    /// account's lists are PermissionDenied to anyone it has not approved.
+    @available(iOS 13, *)
+    func `listFollowers`(request: Loci_Social_ListFollowersRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Social_ListFollowsResponse>
+
+    @available(iOS 13, *)
+    func `listFollowing`(request: Loci_Social_ListFollowingRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Social_ListFollowsResponse>
+
+    /// ListFollowRequests lists pending follow requests to or from the caller.
+    @available(iOS 13, *)
+    func `listFollowRequests`(request: Loci_Social_ListFollowRequestsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Social_ListFollowRequestsResponse>
+
+    /// RespondFollowRequest approves or declines a request to follow the caller.
+    @available(iOS 13, *)
+    func `respondFollowRequest`(request: Loci_Social_RespondFollowRequestRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Social_RespondFollowRequestResponse>
+
+    /// CancelFollowRequest withdraws a follow request the caller sent.
+    @available(iOS 13, *)
+    func `cancelFollowRequest`(request: Loci_Social_CancelFollowRequestRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Social_CancelFollowRequestResponse>
+
+    /// GetSocialSettings and SetAccountPrivacy read and set whether the caller's
+    /// account is private. Making it public approves every pending request.
+    @available(iOS 13, *)
+    func `getSocialSettings`(request: Loci_Social_GetSocialSettingsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Social_GetSocialSettingsResponse>
+
+    @available(iOS 13, *)
+    func `setAccountPrivacy`(request: Loci_Social_SetAccountPrivacyRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Social_GetSocialSettingsResponse>
+
+    /// ListFeed is what the people the caller follows did lately: achievements
+    /// earned, new cities, trips finished and trips shared, newest first. Trips
+    /// appear only while the caller may still see them.
+    @available(iOS 13, *)
+    func `listFeed`(request: Loci_Social_ListFeedRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Social_ListFeedResponse>
+
+    /// Cheer and Uncheer add and take back the caller's cheer on a feed item.
+    /// Both are idempotent.
+    @available(iOS 13, *)
+    func `cheer`(request: Loci_Social_CheerRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Social_CheerResponse>
+
+    @available(iOS 13, *)
+    func `uncheer`(request: Loci_Social_UncheerRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Social_CheerResponse>
+
+    /// SendFriendRequest follows the user (kept for older clients; use Follow).
     @available(iOS 13, *)
     func `sendFriendRequest`(request: Loci_Social_SendFriendRequestRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Social_SendFriendRequestResponse>
 
@@ -52,14 +116,17 @@ public protocol Loci_Social_SocialServiceClientInterface: Sendable {
     @available(iOS 13, *)
     func `listFriendRequests`(request: Loci_Social_ListFriendRequestsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Social_ListFriendRequestsResponse>
 
+    /// ListFriends lists mutual follows.
     @available(iOS 13, *)
     func `listFriends`(request: Loci_Social_ListFriendsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Social_ListFriendsResponse>
 
+    /// RemoveFriend ends following in both directions.
     @available(iOS 13, *)
     func `removeFriend`(request: Loci_Social_RemoveFriendRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Social_RemoveFriendResponse>
 
-    /// BlockUser ends any friendship and pending request between the two, and
-    /// hides each side's content and profile from the other.
+    /// BlockUser ends following in both directions and any pending request
+    /// between the two, and hides each side's content and profile from the
+    /// other.
     @available(iOS 13, *)
     func `blockUser`(request: Loci_Social_BlockUserRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Social_BlockUserResponse>
 
@@ -85,7 +152,8 @@ public protocol Loci_Social_SocialServiceClientInterface: Sendable {
     func `searchUsers`(request: Loci_Social_SearchUsersRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Social_SearchUsersResponse>
 
     /// GetPublicProfile is a user's profile as the caller may see it. A user who
-    /// blocked the caller is NotFound.
+    /// blocked the caller is NotFound. A private account the caller may not see
+    /// still returns the card and counts, with can_view false.
     @available(iOS 13, *)
     func `getPublicProfile`(request: Loci_Social_GetPublicProfileRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Social_GetPublicProfileResponse>
 }
@@ -116,6 +184,71 @@ public final class Loci_Social_SocialServiceClient: Loci_Social_SocialServiceCli
     @available(iOS 13, *)
     public func `acceptInvite`(request: Loci_Social_AcceptInviteRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Social_AcceptInviteResponse> {
         return await self.client.unary(path: "/loci.social.SocialService/AcceptInvite", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `follow`(request: Loci_Social_FollowUserRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Social_FollowUserResponse> {
+        return await self.client.unary(path: "/loci.social.SocialService/Follow", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `unfollow`(request: Loci_Social_UnfollowRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Social_UnfollowResponse> {
+        return await self.client.unary(path: "/loci.social.SocialService/Unfollow", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `removeFollower`(request: Loci_Social_RemoveFollowerRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Social_RemoveFollowerResponse> {
+        return await self.client.unary(path: "/loci.social.SocialService/RemoveFollower", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `listFollowers`(request: Loci_Social_ListFollowersRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Social_ListFollowsResponse> {
+        return await self.client.unary(path: "/loci.social.SocialService/ListFollowers", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `listFollowing`(request: Loci_Social_ListFollowingRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Social_ListFollowsResponse> {
+        return await self.client.unary(path: "/loci.social.SocialService/ListFollowing", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `listFollowRequests`(request: Loci_Social_ListFollowRequestsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Social_ListFollowRequestsResponse> {
+        return await self.client.unary(path: "/loci.social.SocialService/ListFollowRequests", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `respondFollowRequest`(request: Loci_Social_RespondFollowRequestRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Social_RespondFollowRequestResponse> {
+        return await self.client.unary(path: "/loci.social.SocialService/RespondFollowRequest", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `cancelFollowRequest`(request: Loci_Social_CancelFollowRequestRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Social_CancelFollowRequestResponse> {
+        return await self.client.unary(path: "/loci.social.SocialService/CancelFollowRequest", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `getSocialSettings`(request: Loci_Social_GetSocialSettingsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Social_GetSocialSettingsResponse> {
+        return await self.client.unary(path: "/loci.social.SocialService/GetSocialSettings", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `setAccountPrivacy`(request: Loci_Social_SetAccountPrivacyRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Social_GetSocialSettingsResponse> {
+        return await self.client.unary(path: "/loci.social.SocialService/SetAccountPrivacy", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `listFeed`(request: Loci_Social_ListFeedRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Social_ListFeedResponse> {
+        return await self.client.unary(path: "/loci.social.SocialService/ListFeed", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `cheer`(request: Loci_Social_CheerRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Social_CheerResponse> {
+        return await self.client.unary(path: "/loci.social.SocialService/Cheer", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `uncheer`(request: Loci_Social_UncheerRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Social_CheerResponse> {
+        return await self.client.unary(path: "/loci.social.SocialService/Uncheer", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @available(iOS 13, *)
@@ -184,6 +317,19 @@ public final class Loci_Social_SocialServiceClient: Loci_Social_SocialServiceCli
             public static let rotateInvite = Connect.MethodSpec(name: "RotateInvite", service: "loci.social.SocialService", type: .unary)
             public static let getInvite = Connect.MethodSpec(name: "GetInvite", service: "loci.social.SocialService", type: .unary)
             public static let acceptInvite = Connect.MethodSpec(name: "AcceptInvite", service: "loci.social.SocialService", type: .unary)
+            public static let follow = Connect.MethodSpec(name: "Follow", service: "loci.social.SocialService", type: .unary)
+            public static let unfollow = Connect.MethodSpec(name: "Unfollow", service: "loci.social.SocialService", type: .unary)
+            public static let removeFollower = Connect.MethodSpec(name: "RemoveFollower", service: "loci.social.SocialService", type: .unary)
+            public static let listFollowers = Connect.MethodSpec(name: "ListFollowers", service: "loci.social.SocialService", type: .unary)
+            public static let listFollowing = Connect.MethodSpec(name: "ListFollowing", service: "loci.social.SocialService", type: .unary)
+            public static let listFollowRequests = Connect.MethodSpec(name: "ListFollowRequests", service: "loci.social.SocialService", type: .unary)
+            public static let respondFollowRequest = Connect.MethodSpec(name: "RespondFollowRequest", service: "loci.social.SocialService", type: .unary)
+            public static let cancelFollowRequest = Connect.MethodSpec(name: "CancelFollowRequest", service: "loci.social.SocialService", type: .unary)
+            public static let getSocialSettings = Connect.MethodSpec(name: "GetSocialSettings", service: "loci.social.SocialService", type: .unary)
+            public static let setAccountPrivacy = Connect.MethodSpec(name: "SetAccountPrivacy", service: "loci.social.SocialService", type: .unary)
+            public static let listFeed = Connect.MethodSpec(name: "ListFeed", service: "loci.social.SocialService", type: .unary)
+            public static let cheer = Connect.MethodSpec(name: "Cheer", service: "loci.social.SocialService", type: .unary)
+            public static let uncheer = Connect.MethodSpec(name: "Uncheer", service: "loci.social.SocialService", type: .unary)
             public static let sendFriendRequest = Connect.MethodSpec(name: "SendFriendRequest", service: "loci.social.SocialService", type: .unary)
             public static let respondFriendRequest = Connect.MethodSpec(name: "RespondFriendRequest", service: "loci.social.SocialService", type: .unary)
             public static let cancelFriendRequest = Connect.MethodSpec(name: "CancelFriendRequest", service: "loci.social.SocialService", type: .unary)

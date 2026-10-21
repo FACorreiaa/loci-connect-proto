@@ -3997,7 +3997,7 @@ paths:
         - loci.gamification.GamificationService
       summary: GetLeaderboard
       description: |-
-        GetLeaderboard ranks the caller and their friends. Friends who turned off
+        GetLeaderboard ranks the caller and the people they follow. People who turned off
          leaderboard visibility, and blocked users, are left out. The caller's own
          entry is always present.
       operationId: loci.gamification.GamificationService.GetLeaderboard
@@ -4068,6 +4068,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.gamification.GetMyProgressResponse'
+  /loci.gamification.GamificationService/ListAchievements:
+    post:
+      tags:
+        - loci.gamification.GamificationService
+      summary: ListAchievements
+      description: |-
+        ListAchievements is the whole catalogue as it stands for a user: earned
+         and locked, with progress. Empty user_id means the caller. Someone else's
+         private account is PermissionDenied unless the caller is an approved
+         follower; a user who blocked the caller is NotFound.
+      operationId: loci.gamification.GamificationService.ListAchievements
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.gamification.ListAchievementsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.gamification.ListAchievementsResponse'
   /loci.gamification.GamificationService/ListPointsHistory:
     post:
       tags:
@@ -4104,6 +4144,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.gamification.ListPointsHistoryResponse'
+  /loci.gamification.GamificationService/MarkAchievementsSeen:
+    post:
+      tags:
+        - loci.gamification.GamificationService
+      summary: MarkAchievementsSeen
+      description: MarkAchievementsSeen clears is_new on the caller's achievements.
+      operationId: loci.gamification.GamificationService.MarkAchievementsSeen
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.gamification.MarkAchievementsSeenRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.gamification.MarkAchievementsSeenResponse'
   /loci.gamification.GamificationService/MarkStop:
     post:
       tags:
@@ -8933,8 +9009,9 @@ paths:
         - loci.social.SocialService
       summary: AcceptInvite
       description: |-
-        AcceptInvite makes the caller and the inviter friends at once: opening a
-         friend's link is the consent on both sides.
+        AcceptInvite makes the caller and the inviter friends at once (each
+         follows the other, whatever their privacy): opening a friend's link is
+         the consent on both sides.
       operationId: loci.social.SocialService.AcceptInvite
       parameters:
         - name: Connect-Protocol-Version
@@ -8971,8 +9048,9 @@ paths:
         - loci.social.SocialService
       summary: BlockUser
       description: |-
-        BlockUser ends any friendship and pending request between the two, and
-         hides each side's content and profile from the other.
+        BlockUser ends following in both directions and any pending request
+         between the two, and hides each side's content and profile from the
+         other.
       operationId: loci.social.SocialService.BlockUser
       parameters:
         - name: Connect-Protocol-Version
@@ -9003,6 +9081,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.social.BlockUserResponse'
+  /loci.social.SocialService/CancelFollowRequest:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: CancelFollowRequest
+      description: CancelFollowRequest withdraws a follow request the caller sent.
+      operationId: loci.social.SocialService.CancelFollowRequest
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.CancelFollowRequestRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.CancelFollowRequestResponse'
   /loci.social.SocialService/CancelFriendRequest:
     post:
       tags:
@@ -9039,6 +9153,82 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.social.CancelFriendRequestResponse'
+  /loci.social.SocialService/Cheer:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: Cheer
+      description: |-
+        Cheer and Uncheer add and take back the caller's cheer on a feed item.
+         Both are idempotent.
+      operationId: loci.social.SocialService.Cheer
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.CheerRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.CheerResponse'
+  /loci.social.SocialService/Follow:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: Follow
+      description: |-
+        Follow follows a user. Following a private account sends a follow request
+         instead (state REQUESTED); following again is a no-op.
+      operationId: loci.social.SocialService.Follow
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.FollowUserRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.FollowUserResponse'
   /loci.social.SocialService/GetInvite:
     post:
       tags:
@@ -9120,7 +9310,8 @@ paths:
       summary: GetPublicProfile
       description: |-
         GetPublicProfile is a user's profile as the caller may see it. A user who
-         blocked the caller is NotFound.
+         blocked the caller is NotFound. A private account the caller may not see
+         still returns the card and counts, with can_view false.
       operationId: loci.social.SocialService.GetPublicProfile
       parameters:
         - name: Connect-Protocol-Version
@@ -9151,6 +9342,193 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.social.GetPublicProfileResponse'
+  /loci.social.SocialService/GetSocialSettings:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: GetSocialSettings
+      description: |-
+        GetSocialSettings and SetAccountPrivacy read and set whether the caller's
+         account is private. Making it public approves every pending request.
+      operationId: loci.social.SocialService.GetSocialSettings
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.GetSocialSettingsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.GetSocialSettingsResponse'
+  /loci.social.SocialService/ListFeed:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: ListFeed
+      description: |-
+        ListFeed is what the people the caller follows did lately: achievements
+         earned, new cities, trips finished and trips shared, newest first. Trips
+         appear only while the caller may still see them.
+      operationId: loci.social.SocialService.ListFeed
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.ListFeedRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.ListFeedResponse'
+  /loci.social.SocialService/ListFollowRequests:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: ListFollowRequests
+      description: ListFollowRequests lists pending follow requests to or from the caller.
+      operationId: loci.social.SocialService.ListFollowRequests
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.ListFollowRequestsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.ListFollowRequestsResponse'
+  /loci.social.SocialService/ListFollowers:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: ListFollowers
+      description: |-
+        ListFollowers and ListFollowing list a user's followers and the people
+         they follow, newest first. Empty user_id means the caller. A private
+         account's lists are PermissionDenied to anyone it has not approved.
+      operationId: loci.social.SocialService.ListFollowers
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.ListFollowersRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.ListFollowsResponse'
+  /loci.social.SocialService/ListFollowing:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: ListFollowing
+      operationId: loci.social.SocialService.ListFollowing
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.ListFollowingRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.ListFollowsResponse'
   /loci.social.SocialService/ListFriendRequests:
     post:
       tags:
@@ -9191,6 +9569,7 @@ paths:
       tags:
         - loci.social.SocialService
       summary: ListFriends
+      description: ListFriends lists mutual follows.
       operationId: loci.social.SocialService.ListFriends
       parameters:
         - name: Connect-Protocol-Version
@@ -9301,11 +9680,48 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.social.MatchFacebookFriendsResponse'
+  /loci.social.SocialService/RemoveFollower:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: RemoveFollower
+      description: RemoveFollower makes a user stop following the caller.
+      operationId: loci.social.SocialService.RemoveFollower
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.RemoveFollowerRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.RemoveFollowerResponse'
   /loci.social.SocialService/RemoveFriend:
     post:
       tags:
         - loci.social.SocialService
       summary: RemoveFriend
+      description: RemoveFriend ends following in both directions.
       operationId: loci.social.SocialService.RemoveFriend
       parameters:
         - name: Connect-Protocol-Version
@@ -9336,6 +9752,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.social.RemoveFriendResponse'
+  /loci.social.SocialService/RespondFollowRequest:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: RespondFollowRequest
+      description: RespondFollowRequest approves or declines a request to follow the caller.
+      operationId: loci.social.SocialService.RespondFollowRequest
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.RespondFollowRequestRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.RespondFollowRequestResponse'
   /loci.social.SocialService/RespondFriendRequest:
     post:
       tags:
@@ -9449,6 +9901,7 @@ paths:
       tags:
         - loci.social.SocialService
       summary: SendFriendRequest
+      description: SendFriendRequest follows the user (kept for older clients; use Follow).
       operationId: loci.social.SocialService.SendFriendRequest
       parameters:
         - name: Connect-Protocol-Version
@@ -9479,6 +9932,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.social.SendFriendRequestResponse'
+  /loci.social.SocialService/SetAccountPrivacy:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: SetAccountPrivacy
+      operationId: loci.social.SocialService.SetAccountPrivacy
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.SetAccountPrivacyRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.GetSocialSettingsResponse'
   /loci.social.SocialService/UnblockUser:
     post:
       tags:
@@ -9514,6 +10002,77 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.social.UnblockUserResponse'
+  /loci.social.SocialService/Uncheer:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: Uncheer
+      operationId: loci.social.SocialService.Uncheer
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.UncheerRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.CheerResponse'
+  /loci.social.SocialService/Unfollow:
+    post:
+      tags:
+        - loci.social.SocialService
+      summary: Unfollow
+      description: Unfollow stops following a user, or withdraws a pending follow request.
+      operationId: loci.social.SocialService.Unfollow
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.social.UnfollowRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.social.UnfollowResponse'
   /loci.speech.SpeechService/Transcribe:
     post:
       tags:
@@ -12018,6 +12577,163 @@ components:
          the Joda Time's [`ISODateTimeFormat.dateTime()`](
          http://www.joda.org/joda-time/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime%2D%2D
          ) to obtain a formatter capable of generating timestamps in this format.
+    loci.achievement.Achievement:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          maxLength: 64
+          description: Stable slug ("cartographer", "night-owl").
+        title:
+          type: string
+          title: title
+          maxLength: 100
+          description: Empty for a secret not yet earned.
+        description:
+          type: string
+          title: description
+          maxLength: 300
+          description: Empty for a secret not yet earned.
+        icon:
+          type: string
+          title: icon
+          maxLength: 64
+          description: |-
+            Semantic icon key ("map-pin", "footprints"); clients map it to their own
+             symbol set, so art can change without a contract change.
+        category:
+          type: string
+          title: category
+          maxLength: 32
+          description: 'Grouping for display: "explore", "walk", "record", "community", "social".'
+        kind:
+          title: kind
+          $ref: '#/components/schemas/loci.achievement.AchievementKind'
+        tier:
+          title: tier
+          description: |-
+            Highest tier reached on a track; UNSPECIFIED for moments, secrets and unearned
+             tracks.
+          $ref: '#/components/schemas/loci.achievement.AchievementTier'
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.achievement.TierStep'
+          title: steps
+          maxItems: 8
+          description: Every rung of a track; empty for moments and secrets.
+        progress:
+          type:
+            - integer
+            - string
+          title: progress
+          minimum: 0
+          format: int64
+          description: |-
+            The counter now, and the value that earns the next rung (or the moment).
+             next_target is 0 once nothing is left to earn.
+        nextTarget:
+          type:
+            - integer
+            - string
+          title: next_target
+          minimum: 0
+          format: int64
+        rarityPct:
+          type:
+            - number
+            - "null"
+          title: rarity_pct
+          format: float
+          description: |-
+            Share of active explorers holding the reached tier (or, unearned, the
+             first one), 0–100. Absent while too few people use Loci to say.
+        hidden:
+          type: boolean
+          title: hidden
+          description: True for a secret not yet earned.
+        earnedAt:
+          title: earned_at
+          description: When the moment, the secret, or the reached tier was earned.
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        isNew:
+          type: boolean
+          title: is_new
+          description: Earned but not yet seen by its owner. Always false on someone else's.
+      title: Achievement
+      additionalProperties: false
+      description: Achievement is one entry of the catalogue as it stands for one user.
+    loci.achievement.AchievementKind:
+      type: string
+      title: AchievementKind
+      enum:
+        - ACHIEVEMENT_KIND_UNSPECIFIED
+        - ACHIEVEMENT_KIND_TRACK
+        - ACHIEVEMENT_KIND_MOMENT
+        - ACHIEVEMENT_KIND_SECRET
+    loci.achievement.AchievementSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          maxLength: 64
+        title:
+          type: string
+          title: title
+          maxLength: 100
+        description:
+          type: string
+          title: description
+          maxLength: 300
+        icon:
+          type: string
+          title: icon
+          maxLength: 64
+        kind:
+          title: kind
+          $ref: '#/components/schemas/loci.achievement.AchievementKind'
+        tier:
+          title: tier
+          $ref: '#/components/schemas/loci.achievement.AchievementTier'
+        earnedAt:
+          title: earned_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: AchievementSummary
+      additionalProperties: false
+      description: |-
+        AchievementSummary is an earned achievement as others see it: on a
+         profile's showcase and in the following feed.
+    loci.achievement.AchievementTier:
+      type: string
+      title: AchievementTier
+      enum:
+        - ACHIEVEMENT_TIER_UNSPECIFIED
+        - ACHIEVEMENT_TIER_BRONZE
+        - ACHIEVEMENT_TIER_SILVER
+        - ACHIEVEMENT_TIER_GOLD
+        - ACHIEVEMENT_TIER_PLATINUM
+    loci.achievement.TierStep:
+      type: object
+      properties:
+        tier:
+          title: tier
+          $ref: '#/components/schemas/loci.achievement.AchievementTier'
+        threshold:
+          type:
+            - integer
+            - string
+          title: threshold
+          minimum: 1
+          format: int64
+        earnedAt:
+          title: earned_at
+          description: Absent while this rung is not reached.
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: TierStep
+      additionalProperties: false
+      description: TierStep is one rung of a track.
     loci.aicreds.Credential:
       type: object
       properties:
@@ -18935,6 +19651,9 @@ components:
           $ref: '#/components/schemas/google.protobuf.Timestamp'
       title: Badge
       additionalProperties: false
+      description: |-
+        Badge predates achievements. GetMyProgress fills badges from earned
+         achievements for clients that still render them.
     loci.gamification.CityRank:
       type: object
       properties:
@@ -19014,6 +19733,12 @@ components:
           items:
             $ref: '#/components/schemas/loci.gamification.Badge'
           title: new_badges
+        unlocked:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.achievement.Achievement'
+          title: unlocked
+          description: Achievements (and track tiers) this call earned.
       title: CompleteTripDayResponse
       additionalProperties: false
     loci.gamification.DailyCheckInRequest:
@@ -19159,6 +19884,9 @@ components:
           title: days_finished
           minimum: 0
           format: int32
+        weekStreak:
+          title: week_streak
+          $ref: '#/components/schemas/loci.gamification.WeekStreak'
       title: FieldProfile
       additionalProperties: false
     loci.gamification.FieldRank:
@@ -19377,6 +20105,48 @@ components:
         - LEADERBOARD_PERIOD_WEEK
         - LEADERBOARD_PERIOD_MONTH
         - LEADERBOARD_PERIOD_ALL_TIME
+    loci.gamification.ListAchievementsRequest:
+      type: object
+      properties:
+        userId:
+          type: string
+          title: user_id
+          format: uuid
+          description: Empty means the caller.
+      title: ListAchievementsRequest
+      additionalProperties: false
+    loci.gamification.ListAchievementsResponse:
+      type: object
+      properties:
+        achievements:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.achievement.Achievement'
+          title: achievements
+          description: 'The whole catalogue: tracks, then moments, then secrets.'
+        earnedCount:
+          type: integer
+          title: earned_count
+          minimum: 0
+          format: int32
+          description: Earned achievements, each reached track tier counted once.
+        total:
+          type: integer
+          title: total
+          minimum: 0
+          format: int32
+          description: Everything that can be earned, each track tier counted once.
+        unseenBackfillCount:
+          type: integer
+          title: unseen_backfill_count
+          minimum: 0
+          format: int32
+          description: |-
+            Achievements counted from what the caller did before achievements
+             existed and not yet seen: show them once, then MarkAchievementsSeen.
+             Always 0 on someone else's.
+      title: ListAchievementsResponse
+      additionalProperties: false
     loci.gamification.ListPointsHistoryRequest:
       type: object
       properties:
@@ -19408,6 +20178,24 @@ components:
           type: string
           title: next_page_token
       title: ListPointsHistoryResponse
+      additionalProperties: false
+    loci.gamification.MarkAchievementsSeenRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+            maxLength: 64
+            minLength: 1
+          title: ids
+          maxItems: 200
+          description: Empty marks every achievement seen.
+      title: MarkAchievementsSeenRequest
+      additionalProperties: false
+    loci.gamification.MarkAchievementsSeenResponse:
+      type: object
+      title: MarkAchievementsSeenResponse
       additionalProperties: false
     loci.gamification.MarkStopRequest:
       type: object
@@ -19468,6 +20256,12 @@ components:
           minimum: 0
           format: int64
           description: The caller's field score this week after the call.
+        unlocked:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.achievement.Achievement'
+          title: unlocked
+          description: Achievements (and track tiers) this call earned.
       title: MarkStopResponse
       additionalProperties: false
     loci.gamification.PersonalWeek:
@@ -19642,6 +20436,34 @@ components:
       title: TodayChecklist
       additionalProperties: false
       description: TodayChecklist is what still earns points today.
+    loci.gamification.WeekStreak:
+      type: object
+      properties:
+        current:
+          type: integer
+          title: current
+          minimum: 0
+          format: int32
+        longest:
+          type: integer
+          title: longest
+          minimum: 0
+          format: int32
+        exploredThisWeek:
+          type: boolean
+          title: explored_this_week
+        weekStart:
+          type: string
+          title: week_start
+          maxLength: 10
+          description: Monday of the current week, as a calendar date in the caller's timezone.
+      title: WeekStreak
+      additionalProperties: false
+      description: |-
+        WeekStreak counts weeks in a row with some exploration: a place visited on
+         the spot, a stop or day or trip finished, a new city or neighborhood. Weeks
+         run Monday to Sunday in the caller's timezone, and this week keeps the
+         streak alive until it ends.
     loci.gastronomy.CityGastronomy:
       type: object
       properties:
@@ -30042,6 +30864,19 @@ components:
       type: object
       title: BlockUserResponse
       additionalProperties: false
+    loci.social.CancelFollowRequestRequest:
+      type: object
+      properties:
+        requestId:
+          type: string
+          title: request_id
+          format: uuid
+      title: CancelFollowRequestRequest
+      additionalProperties: false
+    loci.social.CancelFollowRequestResponse:
+      type: object
+      title: CancelFollowRequestResponse
+      additionalProperties: false
     loci.social.CancelFriendRequestRequest:
       type: object
       properties:
@@ -30054,6 +30889,28 @@ components:
     loci.social.CancelFriendRequestResponse:
       type: object
       title: CancelFriendRequestResponse
+      additionalProperties: false
+    loci.social.CheerRequest:
+      type: object
+      properties:
+        itemId:
+          type: string
+          title: item_id
+          format: uuid
+      title: CheerRequest
+      additionalProperties: false
+    loci.social.CheerResponse:
+      type: object
+      properties:
+        cheerCount:
+          type: integer
+          title: cheer_count
+          minimum: 0
+          format: int32
+        cheeredByMe:
+          type: boolean
+          title: cheered_by_me
+      title: CheerResponse
       additionalProperties: false
     loci.social.ContactMatch:
       type: object
@@ -30070,7 +30927,208 @@ components:
         relationship:
           title: relationship
           $ref: '#/components/schemas/loci.social.Relationship'
+        followState:
+          title: follow_state
+          $ref: '#/components/schemas/loci.social.FollowState'
+        followsYou:
+          type: boolean
+          title: follows_you
       title: ContactMatch
+      additionalProperties: false
+    loci.social.FeedCity:
+      type: object
+      properties:
+        cityId:
+          type: string
+          title: city_id
+          maxLength: 100
+        cityName:
+          type: string
+          title: city_name
+          maxLength: 200
+        country:
+          type: string
+          title: country
+          maxLength: 200
+      title: FeedCity
+      additionalProperties: false
+    loci.social.FeedItem:
+      type: object
+      allOf:
+        - properties:
+            id:
+              type: string
+              title: id
+              maxLength: 100
+            kind:
+              title: kind
+              $ref: '#/components/schemas/loci.social.FeedItemKind'
+            actor:
+              title: actor
+              $ref: '#/components/schemas/loci.social.PublicUser'
+            createdAt:
+              title: created_at
+              $ref: '#/components/schemas/google.protobuf.Timestamp'
+            cheerCount:
+              type: integer
+              title: cheer_count
+              minimum: 0
+              format: int32
+            cheeredByMe:
+              type: boolean
+              title: cheered_by_me
+            recentCheerers:
+              type: array
+              items:
+                $ref: '#/components/schemas/loci.social.PublicUser'
+              title: recent_cheerers
+              maxItems: 3
+              description: Up to three of the latest people who cheered.
+        - oneOf:
+            - properties:
+                achievement:
+                  title: achievement
+                  $ref: '#/components/schemas/loci.achievement.AchievementSummary'
+              title: achievement
+              required:
+                - achievement
+            - properties:
+                city:
+                  title: city
+                  $ref: '#/components/schemas/loci.social.FeedCity'
+              title: city
+              required:
+                - city
+            - properties:
+                trip:
+                  title: trip
+                  $ref: '#/components/schemas/loci.social.FeedTrip'
+              title: trip
+              required:
+                - trip
+      title: FeedItem
+      additionalProperties: false
+    loci.social.FeedItemKind:
+      type: string
+      title: FeedItemKind
+      enum:
+        - FEED_ITEM_KIND_UNSPECIFIED
+        - FEED_ITEM_KIND_ACHIEVEMENT_UNLOCKED
+        - FEED_ITEM_KIND_NEW_CITY
+        - FEED_ITEM_KIND_TRIP_FINISHED
+        - FEED_ITEM_KIND_TRIP_SHARED
+    loci.social.FeedTrip:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+        title:
+          type: string
+          title: title
+          maxLength: 300
+        cityName:
+          type: string
+          title: city_name
+          maxLength: 200
+        days:
+          type: integer
+          title: days
+          minimum: 0
+          format: int32
+        coverImageUrl:
+          type: string
+          title: cover_image_url
+          maxLength: 2048
+      title: FeedTrip
+      additionalProperties: false
+    loci.social.FollowEntry:
+      type: object
+      properties:
+        user:
+          title: user
+          $ref: '#/components/schemas/loci.social.PublicUser'
+        since:
+          title: since
+          description: When the follow began.
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        followState:
+          title: follow_state
+          description: Whether the caller follows this person.
+          $ref: '#/components/schemas/loci.social.FollowState'
+        followsYou:
+          type: boolean
+          title: follows_you
+          description: Whether this person follows the caller.
+      title: FollowEntry
+      additionalProperties: false
+      description: FollowEntry is one person in a followers or following list.
+    loci.social.FollowRequestEntry:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          maxLength: 100
+        from:
+          title: from
+          $ref: '#/components/schemas/loci.social.PublicUser'
+        to:
+          title: to
+          $ref: '#/components/schemas/loci.social.PublicUser'
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: FollowRequestEntry
+      additionalProperties: false
+    loci.social.FollowState:
+      type: string
+      title: FollowState
+      enum:
+        - FOLLOW_STATE_UNSPECIFIED
+        - FOLLOW_STATE_NONE
+        - FOLLOW_STATE_REQUESTED
+        - FOLLOW_STATE_FOLLOWING
+        - FOLLOW_STATE_BLOCKED
+        - FOLLOW_STATE_SELF
+      description: FollowState is whether the caller follows another user.
+    loci.social.FollowUserRequest:
+      type: object
+      oneOf:
+        - properties:
+            userId:
+              type: string
+              title: user_id
+              format: uuid
+          title: user_id
+          required:
+            - userId
+        - properties:
+            username:
+              type: string
+              title: username
+              maxLength: 100
+              minLength: 1
+          title: username
+          required:
+            - username
+      title: FollowUserRequest
+      additionalProperties: false
+    loci.social.FollowUserResponse:
+      type: object
+      properties:
+        followState:
+          title: follow_state
+          description: FOLLOWING, or REQUESTED for a private account.
+          $ref: '#/components/schemas/loci.social.FollowState'
+        followsYou:
+          type: boolean
+          title: follows_you
+        user:
+          title: user
+          $ref: '#/components/schemas/loci.social.PublicUser'
+      title: FollowUserResponse
       additionalProperties: false
     loci.social.Friend:
       type: object
@@ -30121,6 +31179,10 @@ components:
           title: relationship
           description: The caller's relation to the inviter; UNSPECIFIED when signed out.
           $ref: '#/components/schemas/loci.social.Relationship'
+        followState:
+          title: follow_state
+          description: UNSPECIFIED when signed out.
+          $ref: '#/components/schemas/loci.social.FollowState'
       title: GetInviteResponse
       required:
         - invite
@@ -30177,9 +31239,45 @@ components:
         memberSince:
           title: member_since
           $ref: '#/components/schemas/google.protobuf.Timestamp'
+        followState:
+          title: follow_state
+          description: UNSPECIFIED when signed out.
+          $ref: '#/components/schemas/loci.social.FollowState'
+        followsYou:
+          type: boolean
+          title: follows_you
+          description: Whether this user follows the caller.
+        isPrivate:
+          type: boolean
+          title: is_private
+        canView:
+          type: boolean
+          title: can_view
+          description: |-
+            False when the account is private and the caller is not an approved
+             follower: trips, achievements and follow lists are left out.
+        showcase:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.achievement.AchievementSummary'
+          title: showcase
+          maxItems: 12
+          description: 'Achievements to show off: the newest and rarest earned, at most twelve.'
       title: GetPublicProfileResponse
       required:
         - user
+      additionalProperties: false
+    loci.social.GetSocialSettingsRequest:
+      type: object
+      title: GetSocialSettingsRequest
+      additionalProperties: false
+    loci.social.GetSocialSettingsResponse:
+      type: object
+      properties:
+        settings:
+          title: settings
+          $ref: '#/components/schemas/loci.social.SocialSettings'
+      title: GetSocialSettingsResponse
       additionalProperties: false
     loci.social.Invite:
       type: object
@@ -30208,6 +31306,113 @@ components:
              as its own item; append it only where a channel takes one string (SMS,
              a copied message).
       title: Invite
+      additionalProperties: false
+    loci.social.ListFeedRequest:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+          title: page_size
+          maximum: 50
+          minimum: 0
+          format: int32
+        pageToken:
+          type: string
+          title: page_token
+          maxLength: 200
+      title: ListFeedRequest
+      additionalProperties: false
+    loci.social.ListFeedResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.social.FeedItem'
+          title: items
+        nextPageToken:
+          type: string
+          title: next_page_token
+      title: ListFeedResponse
+      additionalProperties: false
+    loci.social.ListFollowRequestsRequest:
+      type: object
+      properties:
+        direction:
+          not:
+            enum:
+              - REQUEST_DIRECTION_UNSPECIFIED
+          title: direction
+          $ref: '#/components/schemas/loci.social.RequestDirection'
+      title: ListFollowRequestsRequest
+      additionalProperties: false
+    loci.social.ListFollowRequestsResponse:
+      type: object
+      properties:
+        requests:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.social.FollowRequestEntry'
+          title: requests
+      title: ListFollowRequestsResponse
+      additionalProperties: false
+    loci.social.ListFollowersRequest:
+      type: object
+      properties:
+        userId:
+          type: string
+          title: user_id
+          format: uuid
+          description: Empty means the caller.
+        pageSize:
+          type: integer
+          title: page_size
+          maximum: 100
+          minimum: 0
+          format: int32
+        pageToken:
+          type: string
+          title: page_token
+          maxLength: 200
+      title: ListFollowersRequest
+      additionalProperties: false
+    loci.social.ListFollowingRequest:
+      type: object
+      properties:
+        userId:
+          type: string
+          title: user_id
+          format: uuid
+          description: Empty means the caller.
+        pageSize:
+          type: integer
+          title: page_size
+          maximum: 100
+          minimum: 0
+          format: int32
+        pageToken:
+          type: string
+          title: page_token
+          maxLength: 200
+      title: ListFollowingRequest
+      additionalProperties: false
+    loci.social.ListFollowsResponse:
+      type: object
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.social.FollowEntry'
+          title: entries
+        nextPageToken:
+          type: string
+          title: next_page_token
+        total:
+          type: integer
+          title: total
+          minimum: 0
+          format: int32
+      title: ListFollowsResponse
       additionalProperties: false
     loci.social.ListFriendRequestsRequest:
       type: object
@@ -30310,6 +31515,23 @@ components:
           title: friends
           minimum: 0
           format: int32
+          description: People who follow this user and whom this user follows back.
+        followers:
+          type: integer
+          title: followers
+          minimum: 0
+          format: int32
+        following:
+          type: integer
+          title: following
+          minimum: 0
+          format: int32
+        achievements:
+          type: integer
+          title: achievements
+          minimum: 0
+          format: int32
+          description: Achievements earned (each reached track tier counts once).
       title: ProfileStats
       additionalProperties: false
       description: |-
@@ -30352,7 +31574,24 @@ components:
         - RELATIONSHIP_FRIENDS
         - RELATIONSHIP_BLOCKED
         - RELATIONSHIP_SELF
-      description: Relationship is the caller's relation to another user.
+      description: |-
+        Relationship is the caller's relation to another user in the older friend
+         model, derived from the follow graph: FRIENDS when each follows the other,
+         REQUESTED when only the caller follows (or asked to), INCOMING when only the
+         other user does. New clients read FollowState and follows_you instead.
+    loci.social.RemoveFollowerRequest:
+      type: object
+      properties:
+        userId:
+          type: string
+          title: user_id
+          format: uuid
+      title: RemoveFollowerRequest
+      additionalProperties: false
+    loci.social.RemoveFollowerResponse:
+      type: object
+      title: RemoveFollowerResponse
+      additionalProperties: false
     loci.social.RemoveFriendRequest:
       type: object
       properties:
@@ -30373,6 +31612,22 @@ components:
         - REQUEST_DIRECTION_UNSPECIFIED
         - REQUEST_DIRECTION_INCOMING
         - REQUEST_DIRECTION_OUTGOING
+    loci.social.RespondFollowRequestRequest:
+      type: object
+      properties:
+        requestId:
+          type: string
+          title: request_id
+          format: uuid
+        approve:
+          type: boolean
+          title: approve
+      title: RespondFollowRequestRequest
+      additionalProperties: false
+    loci.social.RespondFollowRequestResponse:
+      type: object
+      title: RespondFollowRequestResponse
+      additionalProperties: false
     loci.social.RespondFriendRequestRequest:
       type: object
       properties:
@@ -30460,6 +31715,28 @@ components:
           $ref: '#/components/schemas/loci.social.FriendRequest'
       title: SendFriendRequestResponse
       additionalProperties: false
+    loci.social.SetAccountPrivacyRequest:
+      type: object
+      properties:
+        isPrivate:
+          type: boolean
+          title: is_private
+      title: SetAccountPrivacyRequest
+      additionalProperties: false
+    loci.social.SocialSettings:
+      type: object
+      properties:
+        isPrivate:
+          type: boolean
+          title: is_private
+        pendingRequests:
+          type: integer
+          title: pending_requests
+          minimum: 0
+          format: int32
+          description: Pending requests to follow the caller.
+      title: SocialSettings
+      additionalProperties: false
     loci.social.UnblockUserRequest:
       type: object
       properties:
@@ -30473,6 +31750,28 @@ components:
       type: object
       title: UnblockUserResponse
       additionalProperties: false
+    loci.social.UncheerRequest:
+      type: object
+      properties:
+        itemId:
+          type: string
+          title: item_id
+          format: uuid
+      title: UncheerRequest
+      additionalProperties: false
+    loci.social.UnfollowRequest:
+      type: object
+      properties:
+        userId:
+          type: string
+          title: user_id
+          format: uuid
+      title: UnfollowRequest
+      additionalProperties: false
+    loci.social.UnfollowResponse:
+      type: object
+      title: UnfollowResponse
+      additionalProperties: false
     loci.social.UserResult:
       type: object
       properties:
@@ -30482,6 +31781,12 @@ components:
         relationship:
           title: relationship
           $ref: '#/components/schemas/loci.social.Relationship'
+        followState:
+          title: follow_state
+          $ref: '#/components/schemas/loci.social.FollowState'
+        followsYou:
+          type: boolean
+          title: follows_you
       title: UserResult
       additionalProperties: false
     loci.speech.TranscribeRequest:
@@ -30535,7 +31840,9 @@ components:
           title: available_badges
       title: AchievementBadges
       additionalProperties: false
-      description: Achievement badges
+      description: |-
+        Achievement badges. Never served; achievements live in
+         GamificationService.ListAchievements.
     loci.statistics.ActivityDataPoint:
       type: object
       properties:
@@ -34129,11 +35436,11 @@ components:
         friendActivity:
           type: boolean
           title: friend_activity
-          description: Friend requests and accepted friendships.
+          description: New followers, follow requests, and approved requests.
         leaderboardVisible:
           type: boolean
           title: leaderboard_visible
-          description: Whether friends see the caller on their leaderboards.
+          description: Whether followers see the caller on their leaderboards.
         streakReminders:
           type: boolean
           title: streak_reminders
@@ -34143,7 +35450,9 @@ components:
         progressUpdates:
           type: boolean
           title: progress_updates
-          description: Badges earned and a friend passing the caller on the week's leaderboard.
+          description: |-
+            Achievements earned and someone the caller follows passing them on the
+             week's leaderboard.
         cityBoardVisible:
           type: boolean
           title: city_board_visible
@@ -34157,6 +35466,12 @@ components:
             Alerts near saved places that fit the caller's taste, raised by the
              device on trip days (the server only stores the choice). Off unless
              turned on.
+        cheers:
+          type: boolean
+          title: cheers
+          description: |-
+            Someone cheered the caller's achievement, city or trip in the feed. On
+             unless turned off.
       title: NotificationSettings
       additionalProperties: false
       description: |-
@@ -34291,6 +35606,11 @@ components:
             - boolean
             - "null"
           title: nearby_fits
+        cheers:
+          type:
+            - boolean
+            - "null"
+          title: cheers
       title: UpdateNotificationSettingsRequest
       additionalProperties: false
     loci.user.UpdateProfileParams:
@@ -34721,12 +36041,18 @@ tags:
     description: AuthService defines authentication-related RPCs
   - name: loci.social.SocialService
     description: |-
-      SocialService is Loci's friends layer: mutual friendships (a request one
-       side sends and the other accepts), invite links, blocking, and finding
-       friends by username or by phone contacts.
+      SocialService is Loci's people layer: following, invite links, blocking,
+       finding people by username, contacts or Facebook, and the following feed.
 
-       Friendship is mutual on purpose. "Friends" trip visibility, and later
-       location sharing, are seen only by people both sides approved.
+       Following is one-way. Two people who follow each other are friends, and
+       "Friends" trip visibility is seen only by friends: both sides chose it.
+       Accounts are public unless their owner makes them private; following a
+       private account sends a follow request its owner approves.
+
+       The friend RPCs (SendFriendRequest .. RemoveFriend) predate following and
+       are kept for older clients. They are served from the follow graph:
+       a friend request is a follow, accepting one follows back, and a follower
+       the caller does not follow back is listed as an incoming request.
 
        GetInvite and GetPublicProfile accept anonymous callers (an invite link or
        a profile opened signed out); every other RPC needs a session.

@@ -355,14 +355,15 @@ message NotificationSettings {
   bool trip_reminders = 2;
   google.protobuf.Timestamp updated_at = 3;
   bool search_finished = 4;
-  // Friend requests and accepted friendships.
+  // New followers, follow requests, and approved requests.
   bool friend_activity = 5;
-  // Whether friends see the caller on their leaderboards.
+  // Whether followers see the caller on their leaderboards.
   bool leaderboard_visible = 6;
   // Evening reminder when the day's check-in would break a streak (sent by
   // the device; the server only stores the choice).
   bool streak_reminders = 7;
-  // Badges earned and a friend passing the caller on the week's leaderboard.
+  // Achievements earned and someone the caller follows passing them on the
+  // week's leaderboard.
   bool progress_updates = 8;
   // Whether people who are not friends see the caller's display name and
   // weekly field score on city boards. On unless turned off.
@@ -371,6 +372,9 @@ message NotificationSettings {
   // device on trip days (the server only stores the choice). Off unless
   // turned on.
   bool nearby_fits = 10;
+  // Someone cheered the caller's achievement, city or trip in the feed. On
+  // unless turned off.
+  bool cheers = 11;
 }
 
 message GetNotificationSettingsRequest {}
@@ -386,6 +390,7 @@ message UpdateNotificationSettingsRequest {
   optional bool progress_updates = 7;
   optional bool city_board_visible = 8;
   optional bool nearby_fits = 9;
+  optional bool cheers = 10;
 }
 
 enum PushPlatform {
