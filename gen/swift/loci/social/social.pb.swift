@@ -20,7 +20,10 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
-/// Relationship is the caller's relation to another user.
+/// Relationship is the caller's relation to another user in the older friend
+/// model, derived from the follow graph: FRIENDS when each follows the other,
+/// REQUESTED when only the caller follows (or asked to), INCOMING when only the
+/// other user does. New clients read FollowState and follows_you instead.
 public enum Loci_Social_Relationship: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
@@ -81,6 +84,61 @@ public enum Loci_Social_Relationship: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
+/// FollowState is whether the caller follows another user.
+public enum Loci_Social_FollowState: SwiftProtobuf.Enum, Swift.CaseIterable {
+  public typealias RawValue = Int
+  case unspecified // = 0
+  case none // = 1
+
+  /// The caller asked to follow a private account; not yet approved.
+  case requested // = 2
+  case following // = 3
+
+  /// The caller blocked this user.
+  case blocked // = 4
+  case self_ // = 5
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .unspecified
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unspecified
+    case 1: self = .none
+    case 2: self = .requested
+    case 3: self = .following
+    case 4: self = .blocked
+    case 5: self = .self_
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .unspecified: return 0
+    case .none: return 1
+    case .requested: return 2
+    case .following: return 3
+    case .blocked: return 4
+    case .self_: return 5
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static let allCases: [Loci_Social_FollowState] = [
+    .unspecified,
+    .none,
+    .requested,
+    .following,
+    .blocked,
+    .self_,
+  ]
+
+}
+
 public enum Loci_Social_RequestDirection: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
@@ -115,6 +173,56 @@ public enum Loci_Social_RequestDirection: SwiftProtobuf.Enum, Swift.CaseIterable
     .unspecified,
     .incoming,
     .outgoing,
+  ]
+
+}
+
+public enum Loci_Social_FeedItemKind: SwiftProtobuf.Enum, Swift.CaseIterable {
+  public typealias RawValue = Int
+  case unspecified // = 0
+  case achievementUnlocked // = 1
+
+  /// The first place visited in a city.
+  case newCity // = 2
+  case tripFinished // = 3
+
+  /// A trip made visible to friends or to everyone.
+  case tripShared // = 4
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .unspecified
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unspecified
+    case 1: self = .achievementUnlocked
+    case 2: self = .newCity
+    case 3: self = .tripFinished
+    case 4: self = .tripShared
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .unspecified: return 0
+    case .achievementUnlocked: return 1
+    case .newCity: return 2
+    case .tripFinished: return 3
+    case .tripShared: return 4
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static let allCases: [Loci_Social_FeedItemKind] = [
+    .unspecified,
+    .achievementUnlocked,
+    .newCity,
+    .tripFinished,
+    .tripShared,
   ]
 
 }
@@ -269,7 +377,15 @@ public struct Loci_Social_ProfileStats: Sendable {
   /// Trips the caller may see on this profile.
   public var visibleTrips: Int32 = 0
 
+  /// People who follow this user and whom this user follows back.
   public var friends: Int32 = 0
+
+  public var followers: Int32 = 0
+
+  public var following: Int32 = 0
+
+  /// Achievements earned (each reached track tier counts once).
+  public var achievements: Int32 = 0
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -345,6 +461,9 @@ public struct Loci_Social_GetInviteResponse: Sendable {
 
   /// The caller's relation to the inviter; UNSPECIFIED when signed out.
   public var relationship: Loci_Social_Relationship = .unspecified
+
+  /// UNSPECIFIED when signed out.
+  public var followState: Loci_Social_FollowState = .unspecified
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -648,6 +767,10 @@ public struct Loci_Social_ContactMatch: Sendable {
 
   public var relationship: Loci_Social_Relationship = .unspecified
 
+  public var followState: Loci_Social_FollowState = .unspecified
+
+  public var followsYou: Bool = false
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -719,6 +842,10 @@ public struct Loci_Social_UserResult: Sendable {
 
   public var relationship: Loci_Social_Relationship = .unspecified
 
+  public var followState: Loci_Social_FollowState = .unspecified
+
+  public var followsYou: Bool = false
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -772,7 +899,221 @@ public struct Loci_Social_GetPublicProfileRequest: Sendable {
   public init() {}
 }
 
-public struct Loci_Social_GetPublicProfileResponse: Sendable {
+public struct Loci_Social_GetPublicProfileResponse: @unchecked Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var user: Loci_Social_PublicUser {
+    get {return _storage._user ?? Loci_Social_PublicUser()}
+    set {_uniqueStorage()._user = newValue}
+  }
+  /// Returns true if `user` has been explicitly set.
+  public var hasUser: Bool {return _storage._user != nil}
+  /// Clears the value of `user`. Subsequent reads from it will return its default value.
+  public mutating func clearUser() {_uniqueStorage()._user = nil}
+
+  public var stats: Loci_Social_ProfileStats {
+    get {return _storage._stats ?? Loci_Social_ProfileStats()}
+    set {_uniqueStorage()._stats = newValue}
+  }
+  /// Returns true if `stats` has been explicitly set.
+  public var hasStats: Bool {return _storage._stats != nil}
+  /// Clears the value of `stats`. Subsequent reads from it will return its default value.
+  public mutating func clearStats() {_uniqueStorage()._stats = nil}
+
+  /// UNSPECIFIED when signed out.
+  public var relationship: Loci_Social_Relationship {
+    get {return _storage._relationship}
+    set {_uniqueStorage()._relationship = newValue}
+  }
+
+  public var memberSince: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _storage._memberSince ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_uniqueStorage()._memberSince = newValue}
+  }
+  /// Returns true if `memberSince` has been explicitly set.
+  public var hasMemberSince: Bool {return _storage._memberSince != nil}
+  /// Clears the value of `memberSince`. Subsequent reads from it will return its default value.
+  public mutating func clearMemberSince() {_uniqueStorage()._memberSince = nil}
+
+  /// UNSPECIFIED when signed out.
+  public var followState: Loci_Social_FollowState {
+    get {return _storage._followState}
+    set {_uniqueStorage()._followState = newValue}
+  }
+
+  /// Whether this user follows the caller.
+  public var followsYou: Bool {
+    get {return _storage._followsYou}
+    set {_uniqueStorage()._followsYou = newValue}
+  }
+
+  public var isPrivate: Bool {
+    get {return _storage._isPrivate}
+    set {_uniqueStorage()._isPrivate = newValue}
+  }
+
+  /// False when the account is private and the caller is not an approved
+  /// follower: trips, achievements and follow lists are left out.
+  public var canView: Bool {
+    get {return _storage._canView}
+    set {_uniqueStorage()._canView = newValue}
+  }
+
+  /// Achievements to show off: the newest and rarest earned, at most twelve.
+  public var showcase: [Loci_Achievement_AchievementSummary] {
+    get {return _storage._showcase}
+    set {_uniqueStorage()._showcase = newValue}
+  }
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _storage = _StorageClass.defaultInstance
+}
+
+public struct Loci_Social_FollowUserRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var target: Loci_Social_FollowUserRequest.OneOf_Target? = nil
+
+  public var userID: String {
+    get {
+      if case .userID(let v)? = target {return v}
+      return String()
+    }
+    set {target = .userID(newValue)}
+  }
+
+  public var username: String {
+    get {
+      if case .username(let v)? = target {return v}
+      return String()
+    }
+    set {target = .username(newValue)}
+  }
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public enum OneOf_Target: Equatable, Sendable {
+    case userID(String)
+    case username(String)
+
+  }
+
+  public init() {}
+}
+
+public struct Loci_Social_FollowUserResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// FOLLOWING, or REQUESTED for a private account.
+  public var followState: Loci_Social_FollowState = .unspecified
+
+  public var followsYou: Bool = false
+
+  public var user: Loci_Social_PublicUser {
+    get {return _user ?? Loci_Social_PublicUser()}
+    set {_user = newValue}
+  }
+  /// Returns true if `user` has been explicitly set.
+  public var hasUser: Bool {return self._user != nil}
+  /// Clears the value of `user`. Subsequent reads from it will return its default value.
+  public mutating func clearUser() {self._user = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _user: Loci_Social_PublicUser? = nil
+}
+
+public struct Loci_Social_UnfollowRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var userID: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Social_UnfollowResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Social_RemoveFollowerRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var userID: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Social_RemoveFollowerResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Social_ListFollowersRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// Empty means the caller.
+  public var userID: String = String()
+
+  public var pageSize: Int32 = 0
+
+  public var pageToken: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Social_ListFollowingRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// Empty means the caller.
+  public var userID: String = String()
+
+  public var pageSize: Int32 = 0
+
+  public var pageToken: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// FollowEntry is one person in a followers or following list.
+public struct Loci_Social_FollowEntry: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -786,34 +1127,409 @@ public struct Loci_Social_GetPublicProfileResponse: Sendable {
   /// Clears the value of `user`. Subsequent reads from it will return its default value.
   public mutating func clearUser() {self._user = nil}
 
-  public var stats: Loci_Social_ProfileStats {
-    get {return _stats ?? Loci_Social_ProfileStats()}
-    set {_stats = newValue}
+  /// When the follow began.
+  public var since: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _since ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_since = newValue}
   }
-  /// Returns true if `stats` has been explicitly set.
-  public var hasStats: Bool {return self._stats != nil}
-  /// Clears the value of `stats`. Subsequent reads from it will return its default value.
-  public mutating func clearStats() {self._stats = nil}
+  /// Returns true if `since` has been explicitly set.
+  public var hasSince: Bool {return self._since != nil}
+  /// Clears the value of `since`. Subsequent reads from it will return its default value.
+  public mutating func clearSince() {self._since = nil}
 
-  /// UNSPECIFIED when signed out.
-  public var relationship: Loci_Social_Relationship = .unspecified
+  /// Whether the caller follows this person.
+  public var followState: Loci_Social_FollowState = .unspecified
 
-  public var memberSince: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _memberSince ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
-    set {_memberSince = newValue}
-  }
-  /// Returns true if `memberSince` has been explicitly set.
-  public var hasMemberSince: Bool {return self._memberSince != nil}
-  /// Clears the value of `memberSince`. Subsequent reads from it will return its default value.
-  public mutating func clearMemberSince() {self._memberSince = nil}
+  /// Whether this person follows the caller.
+  public var followsYou: Bool = false
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
   fileprivate var _user: Loci_Social_PublicUser? = nil
-  fileprivate var _stats: Loci_Social_ProfileStats? = nil
-  fileprivate var _memberSince: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _since: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+}
+
+public struct Loci_Social_ListFollowsResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var entries: [Loci_Social_FollowEntry] = []
+
+  public var nextPageToken: String = String()
+
+  public var total: Int32 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Social_FollowRequestEntry: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var id: String = String()
+
+  public var from: Loci_Social_PublicUser {
+    get {return _from ?? Loci_Social_PublicUser()}
+    set {_from = newValue}
+  }
+  /// Returns true if `from` has been explicitly set.
+  public var hasFrom: Bool {return self._from != nil}
+  /// Clears the value of `from`. Subsequent reads from it will return its default value.
+  public mutating func clearFrom() {self._from = nil}
+
+  public var to: Loci_Social_PublicUser {
+    get {return _to ?? Loci_Social_PublicUser()}
+    set {_to = newValue}
+  }
+  /// Returns true if `to` has been explicitly set.
+  public var hasTo: Bool {return self._to != nil}
+  /// Clears the value of `to`. Subsequent reads from it will return its default value.
+  public mutating func clearTo() {self._to = nil}
+
+  public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_createdAt = newValue}
+  }
+  /// Returns true if `createdAt` has been explicitly set.
+  public var hasCreatedAt: Bool {return self._createdAt != nil}
+  /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
+  public mutating func clearCreatedAt() {self._createdAt = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _from: Loci_Social_PublicUser? = nil
+  fileprivate var _to: Loci_Social_PublicUser? = nil
+  fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+}
+
+public struct Loci_Social_ListFollowRequestsRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var direction: Loci_Social_RequestDirection = .unspecified
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Social_ListFollowRequestsResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var requests: [Loci_Social_FollowRequestEntry] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Social_RespondFollowRequestRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var requestID: String = String()
+
+  public var approve: Bool = false
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Social_RespondFollowRequestResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Social_CancelFollowRequestRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var requestID: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Social_CancelFollowRequestResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Social_SocialSettings: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var isPrivate: Bool = false
+
+  /// Pending requests to follow the caller.
+  public var pendingRequests: Int32 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Social_GetSocialSettingsRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Social_SetAccountPrivacyRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var isPrivate: Bool = false
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Social_GetSocialSettingsResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var settings: Loci_Social_SocialSettings {
+    get {return _settings ?? Loci_Social_SocialSettings()}
+    set {_settings = newValue}
+  }
+  /// Returns true if `settings` has been explicitly set.
+  public var hasSettings: Bool {return self._settings != nil}
+  /// Clears the value of `settings`. Subsequent reads from it will return its default value.
+  public mutating func clearSettings() {self._settings = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _settings: Loci_Social_SocialSettings? = nil
+}
+
+public struct Loci_Social_FeedCity: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var cityID: String = String()
+
+  public var cityName: String = String()
+
+  public var country: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Social_FeedTrip: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var tripID: String = String()
+
+  public var title: String = String()
+
+  public var cityName: String = String()
+
+  public var days: Int32 = 0
+
+  public var coverImageURL: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Social_FeedItem: @unchecked Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var id: String {
+    get {return _storage._id}
+    set {_uniqueStorage()._id = newValue}
+  }
+
+  public var kind: Loci_Social_FeedItemKind {
+    get {return _storage._kind}
+    set {_uniqueStorage()._kind = newValue}
+  }
+
+  public var actor: Loci_Social_PublicUser {
+    get {return _storage._actor ?? Loci_Social_PublicUser()}
+    set {_uniqueStorage()._actor = newValue}
+  }
+  /// Returns true if `actor` has been explicitly set.
+  public var hasActor: Bool {return _storage._actor != nil}
+  /// Clears the value of `actor`. Subsequent reads from it will return its default value.
+  public mutating func clearActor() {_uniqueStorage()._actor = nil}
+
+  public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _storage._createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_uniqueStorage()._createdAt = newValue}
+  }
+  /// Returns true if `createdAt` has been explicitly set.
+  public var hasCreatedAt: Bool {return _storage._createdAt != nil}
+  /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
+  public mutating func clearCreatedAt() {_uniqueStorage()._createdAt = nil}
+
+  public var detail: OneOf_Detail? {
+    get {return _storage._detail}
+    set {_uniqueStorage()._detail = newValue}
+  }
+
+  public var achievement: Loci_Achievement_AchievementSummary {
+    get {
+      if case .achievement(let v)? = _storage._detail {return v}
+      return Loci_Achievement_AchievementSummary()
+    }
+    set {_uniqueStorage()._detail = .achievement(newValue)}
+  }
+
+  public var city: Loci_Social_FeedCity {
+    get {
+      if case .city(let v)? = _storage._detail {return v}
+      return Loci_Social_FeedCity()
+    }
+    set {_uniqueStorage()._detail = .city(newValue)}
+  }
+
+  public var trip: Loci_Social_FeedTrip {
+    get {
+      if case .trip(let v)? = _storage._detail {return v}
+      return Loci_Social_FeedTrip()
+    }
+    set {_uniqueStorage()._detail = .trip(newValue)}
+  }
+
+  public var cheerCount: Int32 {
+    get {return _storage._cheerCount}
+    set {_uniqueStorage()._cheerCount = newValue}
+  }
+
+  public var cheeredByMe: Bool {
+    get {return _storage._cheeredByMe}
+    set {_uniqueStorage()._cheeredByMe = newValue}
+  }
+
+  /// Up to three of the latest people who cheered.
+  public var recentCheerers: [Loci_Social_PublicUser] {
+    get {return _storage._recentCheerers}
+    set {_uniqueStorage()._recentCheerers = newValue}
+  }
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public enum OneOf_Detail: Equatable, Sendable {
+    case achievement(Loci_Achievement_AchievementSummary)
+    case city(Loci_Social_FeedCity)
+    case trip(Loci_Social_FeedTrip)
+
+  }
+
+  public init() {}
+
+  fileprivate var _storage = _StorageClass.defaultInstance
+}
+
+public struct Loci_Social_ListFeedRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var pageSize: Int32 = 0
+
+  public var pageToken: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Social_ListFeedResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var items: [Loci_Social_FeedItem] = []
+
+  public var nextPageToken: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Social_CheerRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var itemID: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Social_UncheerRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var itemID: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Social_CheerResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var cheerCount: Int32 = 0
+
+  public var cheeredByMe: Bool = false
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
 }
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -832,11 +1548,32 @@ extension Loci_Social_Relationship: SwiftProtobuf._ProtoNameProviding {
   ]
 }
 
+extension Loci_Social_FollowState: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "FOLLOW_STATE_UNSPECIFIED"),
+    1: .same(proto: "FOLLOW_STATE_NONE"),
+    2: .same(proto: "FOLLOW_STATE_REQUESTED"),
+    3: .same(proto: "FOLLOW_STATE_FOLLOWING"),
+    4: .same(proto: "FOLLOW_STATE_BLOCKED"),
+    5: .same(proto: "FOLLOW_STATE_SELF"),
+  ]
+}
+
 extension Loci_Social_RequestDirection: SwiftProtobuf._ProtoNameProviding {
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "REQUEST_DIRECTION_UNSPECIFIED"),
     1: .same(proto: "REQUEST_DIRECTION_INCOMING"),
     2: .same(proto: "REQUEST_DIRECTION_OUTGOING"),
+  ]
+}
+
+extension Loci_Social_FeedItemKind: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "FEED_ITEM_KIND_UNSPECIFIED"),
+    1: .same(proto: "FEED_ITEM_KIND_ACHIEVEMENT_UNLOCKED"),
+    2: .same(proto: "FEED_ITEM_KIND_NEW_CITY"),
+    3: .same(proto: "FEED_ITEM_KIND_TRIP_FINISHED"),
+    4: .same(proto: "FEED_ITEM_KIND_TRIP_SHARED"),
   ]
 }
 
@@ -1059,6 +1796,9 @@ extension Loci_Social_ProfileStats: SwiftProtobuf.Message, SwiftProtobuf._Messag
     2: .same(proto: "countries"),
     3: .standard(proto: "visible_trips"),
     4: .same(proto: "friends"),
+    5: .same(proto: "followers"),
+    6: .same(proto: "following"),
+    7: .same(proto: "achievements"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1071,6 +1811,9 @@ extension Loci_Social_ProfileStats: SwiftProtobuf.Message, SwiftProtobuf._Messag
       case 2: try { try decoder.decodeSingularInt32Field(value: &self.countries) }()
       case 3: try { try decoder.decodeSingularInt32Field(value: &self.visibleTrips) }()
       case 4: try { try decoder.decodeSingularInt32Field(value: &self.friends) }()
+      case 5: try { try decoder.decodeSingularInt32Field(value: &self.followers) }()
+      case 6: try { try decoder.decodeSingularInt32Field(value: &self.following) }()
+      case 7: try { try decoder.decodeSingularInt32Field(value: &self.achievements) }()
       default: break
       }
     }
@@ -1089,6 +1832,15 @@ extension Loci_Social_ProfileStats: SwiftProtobuf.Message, SwiftProtobuf._Messag
     if self.friends != 0 {
       try visitor.visitSingularInt32Field(value: self.friends, fieldNumber: 4)
     }
+    if self.followers != 0 {
+      try visitor.visitSingularInt32Field(value: self.followers, fieldNumber: 5)
+    }
+    if self.following != 0 {
+      try visitor.visitSingularInt32Field(value: self.following, fieldNumber: 6)
+    }
+    if self.achievements != 0 {
+      try visitor.visitSingularInt32Field(value: self.achievements, fieldNumber: 7)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1097,6 +1849,9 @@ extension Loci_Social_ProfileStats: SwiftProtobuf.Message, SwiftProtobuf._Messag
     if lhs.countries != rhs.countries {return false}
     if lhs.visibleTrips != rhs.visibleTrips {return false}
     if lhs.friends != rhs.friends {return false}
+    if lhs.followers != rhs.followers {return false}
+    if lhs.following != rhs.following {return false}
+    if lhs.achievements != rhs.achievements {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1213,6 +1968,7 @@ extension Loci_Social_GetInviteResponse: SwiftProtobuf.Message, SwiftProtobuf._M
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "invite"),
     2: .same(proto: "relationship"),
+    3: .standard(proto: "follow_state"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1223,6 +1979,7 @@ extension Loci_Social_GetInviteResponse: SwiftProtobuf.Message, SwiftProtobuf._M
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularMessageField(value: &self._invite) }()
       case 2: try { try decoder.decodeSingularEnumField(value: &self.relationship) }()
+      case 3: try { try decoder.decodeSingularEnumField(value: &self.followState) }()
       default: break
       }
     }
@@ -1239,12 +1996,16 @@ extension Loci_Social_GetInviteResponse: SwiftProtobuf.Message, SwiftProtobuf._M
     if self.relationship != .unspecified {
       try visitor.visitSingularEnumField(value: self.relationship, fieldNumber: 2)
     }
+    if self.followState != .unspecified {
+      try visitor.visitSingularEnumField(value: self.followState, fieldNumber: 3)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Loci_Social_GetInviteResponse, rhs: Loci_Social_GetInviteResponse) -> Bool {
     if lhs._invite != rhs._invite {return false}
     if lhs.relationship != rhs.relationship {return false}
+    if lhs.followState != rhs.followState {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1851,6 +2612,8 @@ extension Loci_Social_ContactMatch: SwiftProtobuf.Message, SwiftProtobuf._Messag
     1: .same(proto: "hash"),
     2: .same(proto: "user"),
     3: .same(proto: "relationship"),
+    4: .standard(proto: "follow_state"),
+    5: .standard(proto: "follows_you"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1862,6 +2625,8 @@ extension Loci_Social_ContactMatch: SwiftProtobuf.Message, SwiftProtobuf._Messag
       case 1: try { try decoder.decodeSingularStringField(value: &self.hash) }()
       case 2: try { try decoder.decodeSingularMessageField(value: &self._user) }()
       case 3: try { try decoder.decodeSingularEnumField(value: &self.relationship) }()
+      case 4: try { try decoder.decodeSingularEnumField(value: &self.followState) }()
+      case 5: try { try decoder.decodeSingularBoolField(value: &self.followsYou) }()
       default: break
       }
     }
@@ -1881,6 +2646,12 @@ extension Loci_Social_ContactMatch: SwiftProtobuf.Message, SwiftProtobuf._Messag
     if self.relationship != .unspecified {
       try visitor.visitSingularEnumField(value: self.relationship, fieldNumber: 3)
     }
+    if self.followState != .unspecified {
+      try visitor.visitSingularEnumField(value: self.followState, fieldNumber: 4)
+    }
+    if self.followsYou != false {
+      try visitor.visitSingularBoolField(value: self.followsYou, fieldNumber: 5)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1888,6 +2659,8 @@ extension Loci_Social_ContactMatch: SwiftProtobuf.Message, SwiftProtobuf._Messag
     if lhs.hash != rhs.hash {return false}
     if lhs._user != rhs._user {return false}
     if lhs.relationship != rhs.relationship {return false}
+    if lhs.followState != rhs.followState {return false}
+    if lhs.followsYou != rhs.followsYou {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -2019,6 +2792,8 @@ extension Loci_Social_UserResult: SwiftProtobuf.Message, SwiftProtobuf._MessageI
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "user"),
     2: .same(proto: "relationship"),
+    3: .standard(proto: "follow_state"),
+    4: .standard(proto: "follows_you"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2029,6 +2804,8 @@ extension Loci_Social_UserResult: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularMessageField(value: &self._user) }()
       case 2: try { try decoder.decodeSingularEnumField(value: &self.relationship) }()
+      case 3: try { try decoder.decodeSingularEnumField(value: &self.followState) }()
+      case 4: try { try decoder.decodeSingularBoolField(value: &self.followsYou) }()
       default: break
       }
     }
@@ -2045,12 +2822,20 @@ extension Loci_Social_UserResult: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     if self.relationship != .unspecified {
       try visitor.visitSingularEnumField(value: self.relationship, fieldNumber: 2)
     }
+    if self.followState != .unspecified {
+      try visitor.visitSingularEnumField(value: self.followState, fieldNumber: 3)
+    }
+    if self.followsYou != false {
+      try visitor.visitSingularBoolField(value: self.followsYou, fieldNumber: 4)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Loci_Social_UserResult, rhs: Loci_Social_UserResult) -> Bool {
     if lhs._user != rhs._user {return false}
     if lhs.relationship != rhs.relationship {return false}
+    if lhs.followState != rhs.followState {return false}
+    if lhs.followsYou != rhs.followsYou {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -2155,6 +2940,444 @@ extension Loci_Social_GetPublicProfileResponse: SwiftProtobuf.Message, SwiftProt
     2: .same(proto: "stats"),
     3: .same(proto: "relationship"),
     4: .standard(proto: "member_since"),
+    5: .standard(proto: "follow_state"),
+    6: .standard(proto: "follows_you"),
+    7: .standard(proto: "is_private"),
+    8: .standard(proto: "can_view"),
+    9: .same(proto: "showcase"),
+  ]
+
+  fileprivate class _StorageClass {
+    var _user: Loci_Social_PublicUser? = nil
+    var _stats: Loci_Social_ProfileStats? = nil
+    var _relationship: Loci_Social_Relationship = .unspecified
+    var _memberSince: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+    var _followState: Loci_Social_FollowState = .unspecified
+    var _followsYou: Bool = false
+    var _isPrivate: Bool = false
+    var _canView: Bool = false
+    var _showcase: [Loci_Achievement_AchievementSummary] = []
+
+    #if swift(>=5.10)
+      // This property is used as the initial default value for new instances of the type.
+      // The type itself is protecting the reference to its storage via CoW semantics.
+      // This will force a copy to be made of this reference when the first mutation occurs;
+      // hence, it is safe to mark this as `nonisolated(unsafe)`.
+      static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _user = source._user
+      _stats = source._stats
+      _relationship = source._relationship
+      _memberSince = source._memberSince
+      _followState = source._followState
+      _followsYou = source._followsYou
+      _isPrivate = source._isPrivate
+      _canView = source._canView
+      _showcase = source._showcase
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularMessageField(value: &_storage._user) }()
+        case 2: try { try decoder.decodeSingularMessageField(value: &_storage._stats) }()
+        case 3: try { try decoder.decodeSingularEnumField(value: &_storage._relationship) }()
+        case 4: try { try decoder.decodeSingularMessageField(value: &_storage._memberSince) }()
+        case 5: try { try decoder.decodeSingularEnumField(value: &_storage._followState) }()
+        case 6: try { try decoder.decodeSingularBoolField(value: &_storage._followsYou) }()
+        case 7: try { try decoder.decodeSingularBoolField(value: &_storage._isPrivate) }()
+        case 8: try { try decoder.decodeSingularBoolField(value: &_storage._canView) }()
+        case 9: try { try decoder.decodeRepeatedMessageField(value: &_storage._showcase) }()
+        default: break
+        }
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      try { if let v = _storage._user {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+      } }()
+      try { if let v = _storage._stats {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+      } }()
+      if _storage._relationship != .unspecified {
+        try visitor.visitSingularEnumField(value: _storage._relationship, fieldNumber: 3)
+      }
+      try { if let v = _storage._memberSince {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+      } }()
+      if _storage._followState != .unspecified {
+        try visitor.visitSingularEnumField(value: _storage._followState, fieldNumber: 5)
+      }
+      if _storage._followsYou != false {
+        try visitor.visitSingularBoolField(value: _storage._followsYou, fieldNumber: 6)
+      }
+      if _storage._isPrivate != false {
+        try visitor.visitSingularBoolField(value: _storage._isPrivate, fieldNumber: 7)
+      }
+      if _storage._canView != false {
+        try visitor.visitSingularBoolField(value: _storage._canView, fieldNumber: 8)
+      }
+      if !_storage._showcase.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._showcase, fieldNumber: 9)
+      }
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_GetPublicProfileResponse, rhs: Loci_Social_GetPublicProfileResponse) -> Bool {
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._user != rhs_storage._user {return false}
+        if _storage._stats != rhs_storage._stats {return false}
+        if _storage._relationship != rhs_storage._relationship {return false}
+        if _storage._memberSince != rhs_storage._memberSince {return false}
+        if _storage._followState != rhs_storage._followState {return false}
+        if _storage._followsYou != rhs_storage._followsYou {return false}
+        if _storage._isPrivate != rhs_storage._isPrivate {return false}
+        if _storage._canView != rhs_storage._canView {return false}
+        if _storage._showcase != rhs_storage._showcase {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_FollowUserRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".FollowUserRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .same(proto: "username"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try {
+        var v: String?
+        try decoder.decodeSingularStringField(value: &v)
+        if let v = v {
+          if self.target != nil {try decoder.handleConflictingOneOf()}
+          self.target = .userID(v)
+        }
+      }()
+      case 2: try {
+        var v: String?
+        try decoder.decodeSingularStringField(value: &v)
+        if let v = v {
+          if self.target != nil {try decoder.handleConflictingOneOf()}
+          self.target = .username(v)
+        }
+      }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    switch self.target {
+    case .userID?: try {
+      guard case .userID(let v)? = self.target else { preconditionFailure() }
+      try visitor.visitSingularStringField(value: v, fieldNumber: 1)
+    }()
+    case .username?: try {
+      guard case .username(let v)? = self.target else { preconditionFailure() }
+      try visitor.visitSingularStringField(value: v, fieldNumber: 2)
+    }()
+    case nil: break
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_FollowUserRequest, rhs: Loci_Social_FollowUserRequest) -> Bool {
+    if lhs.target != rhs.target {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_FollowUserResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".FollowUserResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "follow_state"),
+    2: .standard(proto: "follows_you"),
+    3: .same(proto: "user"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.followState) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self.followsYou) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._user) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if self.followState != .unspecified {
+      try visitor.visitSingularEnumField(value: self.followState, fieldNumber: 1)
+    }
+    if self.followsYou != false {
+      try visitor.visitSingularBoolField(value: self.followsYou, fieldNumber: 2)
+    }
+    try { if let v = self._user {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_FollowUserResponse, rhs: Loci_Social_FollowUserResponse) -> Bool {
+    if lhs.followState != rhs.followState {return false}
+    if lhs.followsYou != rhs.followsYou {return false}
+    if lhs._user != rhs._user {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_UnfollowRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".UnfollowRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.userID) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.userID.isEmpty {
+      try visitor.visitSingularStringField(value: self.userID, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_UnfollowRequest, rhs: Loci_Social_UnfollowRequest) -> Bool {
+    if lhs.userID != rhs.userID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_UnfollowResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".UnfollowResponse"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    // Load everything into unknown fields
+    while try decoder.nextFieldNumber() != nil {}
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_UnfollowResponse, rhs: Loci_Social_UnfollowResponse) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_RemoveFollowerRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".RemoveFollowerRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.userID) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.userID.isEmpty {
+      try visitor.visitSingularStringField(value: self.userID, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_RemoveFollowerRequest, rhs: Loci_Social_RemoveFollowerRequest) -> Bool {
+    if lhs.userID != rhs.userID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_RemoveFollowerResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".RemoveFollowerResponse"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    // Load everything into unknown fields
+    while try decoder.nextFieldNumber() != nil {}
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_RemoveFollowerResponse, rhs: Loci_Social_RemoveFollowerResponse) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_ListFollowersRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ListFollowersRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "page_size"),
+    3: .standard(proto: "page_token"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.userID) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.pageSize) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.pageToken) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.userID.isEmpty {
+      try visitor.visitSingularStringField(value: self.userID, fieldNumber: 1)
+    }
+    if self.pageSize != 0 {
+      try visitor.visitSingularInt32Field(value: self.pageSize, fieldNumber: 2)
+    }
+    if !self.pageToken.isEmpty {
+      try visitor.visitSingularStringField(value: self.pageToken, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_ListFollowersRequest, rhs: Loci_Social_ListFollowersRequest) -> Bool {
+    if lhs.userID != rhs.userID {return false}
+    if lhs.pageSize != rhs.pageSize {return false}
+    if lhs.pageToken != rhs.pageToken {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_ListFollowingRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ListFollowingRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "page_size"),
+    3: .standard(proto: "page_token"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.userID) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.pageSize) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.pageToken) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.userID.isEmpty {
+      try visitor.visitSingularStringField(value: self.userID, fieldNumber: 1)
+    }
+    if self.pageSize != 0 {
+      try visitor.visitSingularInt32Field(value: self.pageSize, fieldNumber: 2)
+    }
+    if !self.pageToken.isEmpty {
+      try visitor.visitSingularStringField(value: self.pageToken, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_ListFollowingRequest, rhs: Loci_Social_ListFollowingRequest) -> Bool {
+    if lhs.userID != rhs.userID {return false}
+    if lhs.pageSize != rhs.pageSize {return false}
+    if lhs.pageToken != rhs.pageToken {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_FollowEntry: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".FollowEntry"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "user"),
+    2: .same(proto: "since"),
+    3: .standard(proto: "follow_state"),
+    4: .standard(proto: "follows_you"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2164,9 +3387,9 @@ extension Loci_Social_GetPublicProfileResponse: SwiftProtobuf.Message, SwiftProt
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularMessageField(value: &self._user) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._stats) }()
-      case 3: try { try decoder.decodeSingularEnumField(value: &self.relationship) }()
-      case 4: try { try decoder.decodeSingularMessageField(value: &self._memberSince) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._since) }()
+      case 3: try { try decoder.decodeSingularEnumField(value: &self.followState) }()
+      case 4: try { try decoder.decodeSingularBoolField(value: &self.followsYou) }()
       default: break
       }
     }
@@ -2180,23 +3403,880 @@ extension Loci_Social_GetPublicProfileResponse: SwiftProtobuf.Message, SwiftProt
     try { if let v = self._user {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     } }()
-    try { if let v = self._stats {
+    try { if let v = self._since {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
-    if self.relationship != .unspecified {
-      try visitor.visitSingularEnumField(value: self.relationship, fieldNumber: 3)
+    if self.followState != .unspecified {
+      try visitor.visitSingularEnumField(value: self.followState, fieldNumber: 3)
     }
-    try { if let v = self._memberSince {
+    if self.followsYou != false {
+      try visitor.visitSingularBoolField(value: self.followsYou, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_FollowEntry, rhs: Loci_Social_FollowEntry) -> Bool {
+    if lhs._user != rhs._user {return false}
+    if lhs._since != rhs._since {return false}
+    if lhs.followState != rhs.followState {return false}
+    if lhs.followsYou != rhs.followsYou {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_ListFollowsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ListFollowsResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "entries"),
+    2: .standard(proto: "next_page_token"),
+    3: .same(proto: "total"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.entries) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.nextPageToken) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self.total) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.entries.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.entries, fieldNumber: 1)
+    }
+    if !self.nextPageToken.isEmpty {
+      try visitor.visitSingularStringField(value: self.nextPageToken, fieldNumber: 2)
+    }
+    if self.total != 0 {
+      try visitor.visitSingularInt32Field(value: self.total, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_ListFollowsResponse, rhs: Loci_Social_ListFollowsResponse) -> Bool {
+    if lhs.entries != rhs.entries {return false}
+    if lhs.nextPageToken != rhs.nextPageToken {return false}
+    if lhs.total != rhs.total {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_FollowRequestEntry: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".FollowRequestEntry"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "from"),
+    3: .same(proto: "to"),
+    4: .standard(proto: "created_at"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.id) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._from) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._to) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.id.isEmpty {
+      try visitor.visitSingularStringField(value: self.id, fieldNumber: 1)
+    }
+    try { if let v = self._from {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    try { if let v = self._to {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
+    try { if let v = self._createdAt {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  public static func ==(lhs: Loci_Social_GetPublicProfileResponse, rhs: Loci_Social_GetPublicProfileResponse) -> Bool {
-    if lhs._user != rhs._user {return false}
-    if lhs._stats != rhs._stats {return false}
-    if lhs.relationship != rhs.relationship {return false}
-    if lhs._memberSince != rhs._memberSince {return false}
+  public static func ==(lhs: Loci_Social_FollowRequestEntry, rhs: Loci_Social_FollowRequestEntry) -> Bool {
+    if lhs.id != rhs.id {return false}
+    if lhs._from != rhs._from {return false}
+    if lhs._to != rhs._to {return false}
+    if lhs._createdAt != rhs._createdAt {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_ListFollowRequestsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ListFollowRequestsRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "direction"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.direction) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.direction != .unspecified {
+      try visitor.visitSingularEnumField(value: self.direction, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_ListFollowRequestsRequest, rhs: Loci_Social_ListFollowRequestsRequest) -> Bool {
+    if lhs.direction != rhs.direction {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_ListFollowRequestsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ListFollowRequestsResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "requests"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.requests) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.requests.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.requests, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_ListFollowRequestsResponse, rhs: Loci_Social_ListFollowRequestsResponse) -> Bool {
+    if lhs.requests != rhs.requests {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_RespondFollowRequestRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".RespondFollowRequestRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "request_id"),
+    2: .same(proto: "approve"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.requestID) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self.approve) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.requestID.isEmpty {
+      try visitor.visitSingularStringField(value: self.requestID, fieldNumber: 1)
+    }
+    if self.approve != false {
+      try visitor.visitSingularBoolField(value: self.approve, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_RespondFollowRequestRequest, rhs: Loci_Social_RespondFollowRequestRequest) -> Bool {
+    if lhs.requestID != rhs.requestID {return false}
+    if lhs.approve != rhs.approve {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_RespondFollowRequestResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".RespondFollowRequestResponse"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    // Load everything into unknown fields
+    while try decoder.nextFieldNumber() != nil {}
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_RespondFollowRequestResponse, rhs: Loci_Social_RespondFollowRequestResponse) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_CancelFollowRequestRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".CancelFollowRequestRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "request_id"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.requestID) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.requestID.isEmpty {
+      try visitor.visitSingularStringField(value: self.requestID, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_CancelFollowRequestRequest, rhs: Loci_Social_CancelFollowRequestRequest) -> Bool {
+    if lhs.requestID != rhs.requestID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_CancelFollowRequestResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".CancelFollowRequestResponse"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    // Load everything into unknown fields
+    while try decoder.nextFieldNumber() != nil {}
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_CancelFollowRequestResponse, rhs: Loci_Social_CancelFollowRequestResponse) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_SocialSettings: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".SocialSettings"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "is_private"),
+    2: .standard(proto: "pending_requests"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularBoolField(value: &self.isPrivate) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.pendingRequests) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.isPrivate != false {
+      try visitor.visitSingularBoolField(value: self.isPrivate, fieldNumber: 1)
+    }
+    if self.pendingRequests != 0 {
+      try visitor.visitSingularInt32Field(value: self.pendingRequests, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_SocialSettings, rhs: Loci_Social_SocialSettings) -> Bool {
+    if lhs.isPrivate != rhs.isPrivate {return false}
+    if lhs.pendingRequests != rhs.pendingRequests {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_GetSocialSettingsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".GetSocialSettingsRequest"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    // Load everything into unknown fields
+    while try decoder.nextFieldNumber() != nil {}
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_GetSocialSettingsRequest, rhs: Loci_Social_GetSocialSettingsRequest) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_SetAccountPrivacyRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".SetAccountPrivacyRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "is_private"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularBoolField(value: &self.isPrivate) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.isPrivate != false {
+      try visitor.visitSingularBoolField(value: self.isPrivate, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_SetAccountPrivacyRequest, rhs: Loci_Social_SetAccountPrivacyRequest) -> Bool {
+    if lhs.isPrivate != rhs.isPrivate {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_GetSocialSettingsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".GetSocialSettingsResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "settings"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._settings) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._settings {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_GetSocialSettingsResponse, rhs: Loci_Social_GetSocialSettingsResponse) -> Bool {
+    if lhs._settings != rhs._settings {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_FeedCity: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".FeedCity"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "city_id"),
+    2: .standard(proto: "city_name"),
+    3: .same(proto: "country"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.cityID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.cityName) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.country) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.cityID.isEmpty {
+      try visitor.visitSingularStringField(value: self.cityID, fieldNumber: 1)
+    }
+    if !self.cityName.isEmpty {
+      try visitor.visitSingularStringField(value: self.cityName, fieldNumber: 2)
+    }
+    if !self.country.isEmpty {
+      try visitor.visitSingularStringField(value: self.country, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_FeedCity, rhs: Loci_Social_FeedCity) -> Bool {
+    if lhs.cityID != rhs.cityID {return false}
+    if lhs.cityName != rhs.cityName {return false}
+    if lhs.country != rhs.country {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_FeedTrip: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".FeedTrip"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+    2: .same(proto: "title"),
+    3: .standard(proto: "city_name"),
+    4: .same(proto: "days"),
+    5: .standard(proto: "cover_image_url"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.tripID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.cityName) }()
+      case 4: try { try decoder.decodeSingularInt32Field(value: &self.days) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.coverImageURL) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.tripID.isEmpty {
+      try visitor.visitSingularStringField(value: self.tripID, fieldNumber: 1)
+    }
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 2)
+    }
+    if !self.cityName.isEmpty {
+      try visitor.visitSingularStringField(value: self.cityName, fieldNumber: 3)
+    }
+    if self.days != 0 {
+      try visitor.visitSingularInt32Field(value: self.days, fieldNumber: 4)
+    }
+    if !self.coverImageURL.isEmpty {
+      try visitor.visitSingularStringField(value: self.coverImageURL, fieldNumber: 5)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_FeedTrip, rhs: Loci_Social_FeedTrip) -> Bool {
+    if lhs.tripID != rhs.tripID {return false}
+    if lhs.title != rhs.title {return false}
+    if lhs.cityName != rhs.cityName {return false}
+    if lhs.days != rhs.days {return false}
+    if lhs.coverImageURL != rhs.coverImageURL {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_FeedItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".FeedItem"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "kind"),
+    3: .same(proto: "actor"),
+    4: .standard(proto: "created_at"),
+    5: .same(proto: "achievement"),
+    6: .same(proto: "city"),
+    7: .same(proto: "trip"),
+    8: .standard(proto: "cheer_count"),
+    9: .standard(proto: "cheered_by_me"),
+    10: .standard(proto: "recent_cheerers"),
+  ]
+
+  fileprivate class _StorageClass {
+    var _id: String = String()
+    var _kind: Loci_Social_FeedItemKind = .unspecified
+    var _actor: Loci_Social_PublicUser? = nil
+    var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+    var _detail: Loci_Social_FeedItem.OneOf_Detail?
+    var _cheerCount: Int32 = 0
+    var _cheeredByMe: Bool = false
+    var _recentCheerers: [Loci_Social_PublicUser] = []
+
+    #if swift(>=5.10)
+      // This property is used as the initial default value for new instances of the type.
+      // The type itself is protecting the reference to its storage via CoW semantics.
+      // This will force a copy to be made of this reference when the first mutation occurs;
+      // hence, it is safe to mark this as `nonisolated(unsafe)`.
+      static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _id = source._id
+      _kind = source._kind
+      _actor = source._actor
+      _createdAt = source._createdAt
+      _detail = source._detail
+      _cheerCount = source._cheerCount
+      _cheeredByMe = source._cheeredByMe
+      _recentCheerers = source._recentCheerers
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularStringField(value: &_storage._id) }()
+        case 2: try { try decoder.decodeSingularEnumField(value: &_storage._kind) }()
+        case 3: try { try decoder.decodeSingularMessageField(value: &_storage._actor) }()
+        case 4: try { try decoder.decodeSingularMessageField(value: &_storage._createdAt) }()
+        case 5: try {
+          var v: Loci_Achievement_AchievementSummary?
+          var hadOneofValue = false
+          if let current = _storage._detail {
+            hadOneofValue = true
+            if case .achievement(let m) = current {v = m}
+          }
+          try decoder.decodeSingularMessageField(value: &v)
+          if let v = v {
+            if hadOneofValue {try decoder.handleConflictingOneOf()}
+            _storage._detail = .achievement(v)
+          }
+        }()
+        case 6: try {
+          var v: Loci_Social_FeedCity?
+          var hadOneofValue = false
+          if let current = _storage._detail {
+            hadOneofValue = true
+            if case .city(let m) = current {v = m}
+          }
+          try decoder.decodeSingularMessageField(value: &v)
+          if let v = v {
+            if hadOneofValue {try decoder.handleConflictingOneOf()}
+            _storage._detail = .city(v)
+          }
+        }()
+        case 7: try {
+          var v: Loci_Social_FeedTrip?
+          var hadOneofValue = false
+          if let current = _storage._detail {
+            hadOneofValue = true
+            if case .trip(let m) = current {v = m}
+          }
+          try decoder.decodeSingularMessageField(value: &v)
+          if let v = v {
+            if hadOneofValue {try decoder.handleConflictingOneOf()}
+            _storage._detail = .trip(v)
+          }
+        }()
+        case 8: try { try decoder.decodeSingularInt32Field(value: &_storage._cheerCount) }()
+        case 9: try { try decoder.decodeSingularBoolField(value: &_storage._cheeredByMe) }()
+        case 10: try { try decoder.decodeRepeatedMessageField(value: &_storage._recentCheerers) }()
+        default: break
+        }
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      if !_storage._id.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._id, fieldNumber: 1)
+      }
+      if _storage._kind != .unspecified {
+        try visitor.visitSingularEnumField(value: _storage._kind, fieldNumber: 2)
+      }
+      try { if let v = _storage._actor {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+      } }()
+      try { if let v = _storage._createdAt {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+      } }()
+      switch _storage._detail {
+      case .achievement?: try {
+        guard case .achievement(let v)? = _storage._detail else { preconditionFailure() }
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+      }()
+      case .city?: try {
+        guard case .city(let v)? = _storage._detail else { preconditionFailure() }
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+      }()
+      case .trip?: try {
+        guard case .trip(let v)? = _storage._detail else { preconditionFailure() }
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+      }()
+      case nil: break
+      }
+      if _storage._cheerCount != 0 {
+        try visitor.visitSingularInt32Field(value: _storage._cheerCount, fieldNumber: 8)
+      }
+      if _storage._cheeredByMe != false {
+        try visitor.visitSingularBoolField(value: _storage._cheeredByMe, fieldNumber: 9)
+      }
+      if !_storage._recentCheerers.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._recentCheerers, fieldNumber: 10)
+      }
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_FeedItem, rhs: Loci_Social_FeedItem) -> Bool {
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._id != rhs_storage._id {return false}
+        if _storage._kind != rhs_storage._kind {return false}
+        if _storage._actor != rhs_storage._actor {return false}
+        if _storage._createdAt != rhs_storage._createdAt {return false}
+        if _storage._detail != rhs_storage._detail {return false}
+        if _storage._cheerCount != rhs_storage._cheerCount {return false}
+        if _storage._cheeredByMe != rhs_storage._cheeredByMe {return false}
+        if _storage._recentCheerers != rhs_storage._recentCheerers {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_ListFeedRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ListFeedRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "page_size"),
+    2: .standard(proto: "page_token"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularInt32Field(value: &self.pageSize) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.pageToken) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.pageSize != 0 {
+      try visitor.visitSingularInt32Field(value: self.pageSize, fieldNumber: 1)
+    }
+    if !self.pageToken.isEmpty {
+      try visitor.visitSingularStringField(value: self.pageToken, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_ListFeedRequest, rhs: Loci_Social_ListFeedRequest) -> Bool {
+    if lhs.pageSize != rhs.pageSize {return false}
+    if lhs.pageToken != rhs.pageToken {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_ListFeedResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ListFeedResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "items"),
+    2: .standard(proto: "next_page_token"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.items) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.nextPageToken) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.items.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.items, fieldNumber: 1)
+    }
+    if !self.nextPageToken.isEmpty {
+      try visitor.visitSingularStringField(value: self.nextPageToken, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_ListFeedResponse, rhs: Loci_Social_ListFeedResponse) -> Bool {
+    if lhs.items != rhs.items {return false}
+    if lhs.nextPageToken != rhs.nextPageToken {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_CheerRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".CheerRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "item_id"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.itemID) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.itemID.isEmpty {
+      try visitor.visitSingularStringField(value: self.itemID, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_CheerRequest, rhs: Loci_Social_CheerRequest) -> Bool {
+    if lhs.itemID != rhs.itemID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_UncheerRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".UncheerRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "item_id"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.itemID) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.itemID.isEmpty {
+      try visitor.visitSingularStringField(value: self.itemID, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_UncheerRequest, rhs: Loci_Social_UncheerRequest) -> Bool {
+    if lhs.itemID != rhs.itemID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Social_CheerResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".CheerResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "cheer_count"),
+    2: .standard(proto: "cheered_by_me"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularInt32Field(value: &self.cheerCount) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self.cheeredByMe) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.cheerCount != 0 {
+      try visitor.visitSingularInt32Field(value: self.cheerCount, fieldNumber: 1)
+    }
+    if self.cheeredByMe != false {
+      try visitor.visitSingularBoolField(value: self.cheeredByMe, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Social_CheerResponse, rhs: Loci_Social_CheerResponse) -> Bool {
+    if lhs.cheerCount != rhs.cheerCount {return false}
+    if lhs.cheeredByMe != rhs.cheeredByMe {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

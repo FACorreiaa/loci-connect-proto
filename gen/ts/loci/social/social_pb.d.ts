@@ -5,6 +5,7 @@
 import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv2";
 import type { Message } from "@bufbuild/protobuf";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
+import type { AchievementSummary } from "../achievement/achievement_pb";
 
 /**
  * Describes the file loci/social/social.proto.
@@ -168,9 +169,28 @@ export declare type ProfileStats = Message<"loci.social.ProfileStats"> & {
   visibleTrips: number;
 
   /**
+   * People who follow this user and whom this user follows back.
+   *
    * @generated from field: int32 friends = 4;
    */
   friends: number;
+
+  /**
+   * @generated from field: int32 followers = 5;
+   */
+  followers: number;
+
+  /**
+   * @generated from field: int32 following = 6;
+   */
+  following: number;
+
+  /**
+   * Achievements earned (each reached track tier counts once).
+   *
+   * @generated from field: int32 achievements = 7;
+   */
+  achievements: number;
 };
 
 /**
@@ -250,6 +270,13 @@ export declare type GetInviteResponse = Message<"loci.social.GetInviteResponse">
    * @generated from field: loci.social.Relationship relationship = 2;
    */
   relationship: Relationship;
+
+  /**
+   * UNSPECIFIED when signed out.
+   *
+   * @generated from field: loci.social.FollowState follow_state = 3;
+   */
+  followState: FollowState;
 };
 
 /**
@@ -592,6 +619,16 @@ export declare type ContactMatch = Message<"loci.social.ContactMatch"> & {
    * @generated from field: loci.social.Relationship relationship = 3;
    */
   relationship: Relationship;
+
+  /**
+   * @generated from field: loci.social.FollowState follow_state = 4;
+   */
+  followState: FollowState;
+
+  /**
+   * @generated from field: bool follows_you = 5;
+   */
+  followsYou: boolean;
 };
 
 /**
@@ -678,6 +715,16 @@ export declare type UserResult = Message<"loci.social.UserResult"> & {
    * @generated from field: loci.social.Relationship relationship = 2;
    */
   relationship: Relationship;
+
+  /**
+   * @generated from field: loci.social.FollowState follow_state = 3;
+   */
+  followState: FollowState;
+
+  /**
+   * @generated from field: bool follows_you = 4;
+   */
+  followsYou: boolean;
 };
 
 /**
@@ -755,6 +802,40 @@ export declare type GetPublicProfileResponse = Message<"loci.social.GetPublicPro
    * @generated from field: google.protobuf.Timestamp member_since = 4;
    */
   memberSince?: Timestamp;
+
+  /**
+   * UNSPECIFIED when signed out.
+   *
+   * @generated from field: loci.social.FollowState follow_state = 5;
+   */
+  followState: FollowState;
+
+  /**
+   * Whether this user follows the caller.
+   *
+   * @generated from field: bool follows_you = 6;
+   */
+  followsYou: boolean;
+
+  /**
+   * @generated from field: bool is_private = 7;
+   */
+  isPrivate: boolean;
+
+  /**
+   * False when the account is private and the caller is not an approved
+   * follower: trips, achievements and follow lists are left out.
+   *
+   * @generated from field: bool can_view = 8;
+   */
+  canView: boolean;
+
+  /**
+   * Achievements to show off: the newest and rarest earned, at most twelve.
+   *
+   * @generated from field: repeated loci.achievement.AchievementSummary showcase = 9;
+   */
+  showcase: AchievementSummary[];
 };
 
 /**
@@ -764,7 +845,662 @@ export declare type GetPublicProfileResponse = Message<"loci.social.GetPublicPro
 export declare const GetPublicProfileResponseSchema: GenMessage<GetPublicProfileResponse>;
 
 /**
- * Relationship is the caller's relation to another user.
+ * @generated from message loci.social.FollowUserRequest
+ */
+export declare type FollowUserRequest = Message<"loci.social.FollowUserRequest"> & {
+  /**
+   * @generated from oneof loci.social.FollowUserRequest.target
+   */
+  target: {
+    /**
+     * @generated from field: string user_id = 1;
+     */
+    value: string;
+    case: "userId";
+  } | {
+    /**
+     * @generated from field: string username = 2;
+     */
+    value: string;
+    case: "username";
+  } | { case: undefined; value?: undefined };
+};
+
+/**
+ * Describes the message loci.social.FollowUserRequest.
+ * Use `create(FollowUserRequestSchema)` to create a new message.
+ */
+export declare const FollowUserRequestSchema: GenMessage<FollowUserRequest>;
+
+/**
+ * @generated from message loci.social.FollowUserResponse
+ */
+export declare type FollowUserResponse = Message<"loci.social.FollowUserResponse"> & {
+  /**
+   * FOLLOWING, or REQUESTED for a private account.
+   *
+   * @generated from field: loci.social.FollowState follow_state = 1;
+   */
+  followState: FollowState;
+
+  /**
+   * @generated from field: bool follows_you = 2;
+   */
+  followsYou: boolean;
+
+  /**
+   * @generated from field: loci.social.PublicUser user = 3;
+   */
+  user?: PublicUser;
+};
+
+/**
+ * Describes the message loci.social.FollowUserResponse.
+ * Use `create(FollowUserResponseSchema)` to create a new message.
+ */
+export declare const FollowUserResponseSchema: GenMessage<FollowUserResponse>;
+
+/**
+ * @generated from message loci.social.UnfollowRequest
+ */
+export declare type UnfollowRequest = Message<"loci.social.UnfollowRequest"> & {
+  /**
+   * @generated from field: string user_id = 1;
+   */
+  userId: string;
+};
+
+/**
+ * Describes the message loci.social.UnfollowRequest.
+ * Use `create(UnfollowRequestSchema)` to create a new message.
+ */
+export declare const UnfollowRequestSchema: GenMessage<UnfollowRequest>;
+
+/**
+ * @generated from message loci.social.UnfollowResponse
+ */
+export declare type UnfollowResponse = Message<"loci.social.UnfollowResponse"> & {
+};
+
+/**
+ * Describes the message loci.social.UnfollowResponse.
+ * Use `create(UnfollowResponseSchema)` to create a new message.
+ */
+export declare const UnfollowResponseSchema: GenMessage<UnfollowResponse>;
+
+/**
+ * @generated from message loci.social.RemoveFollowerRequest
+ */
+export declare type RemoveFollowerRequest = Message<"loci.social.RemoveFollowerRequest"> & {
+  /**
+   * @generated from field: string user_id = 1;
+   */
+  userId: string;
+};
+
+/**
+ * Describes the message loci.social.RemoveFollowerRequest.
+ * Use `create(RemoveFollowerRequestSchema)` to create a new message.
+ */
+export declare const RemoveFollowerRequestSchema: GenMessage<RemoveFollowerRequest>;
+
+/**
+ * @generated from message loci.social.RemoveFollowerResponse
+ */
+export declare type RemoveFollowerResponse = Message<"loci.social.RemoveFollowerResponse"> & {
+};
+
+/**
+ * Describes the message loci.social.RemoveFollowerResponse.
+ * Use `create(RemoveFollowerResponseSchema)` to create a new message.
+ */
+export declare const RemoveFollowerResponseSchema: GenMessage<RemoveFollowerResponse>;
+
+/**
+ * @generated from message loci.social.ListFollowersRequest
+ */
+export declare type ListFollowersRequest = Message<"loci.social.ListFollowersRequest"> & {
+  /**
+   * Empty means the caller.
+   *
+   * @generated from field: string user_id = 1;
+   */
+  userId: string;
+
+  /**
+   * @generated from field: int32 page_size = 2;
+   */
+  pageSize: number;
+
+  /**
+   * @generated from field: string page_token = 3;
+   */
+  pageToken: string;
+};
+
+/**
+ * Describes the message loci.social.ListFollowersRequest.
+ * Use `create(ListFollowersRequestSchema)` to create a new message.
+ */
+export declare const ListFollowersRequestSchema: GenMessage<ListFollowersRequest>;
+
+/**
+ * @generated from message loci.social.ListFollowingRequest
+ */
+export declare type ListFollowingRequest = Message<"loci.social.ListFollowingRequest"> & {
+  /**
+   * Empty means the caller.
+   *
+   * @generated from field: string user_id = 1;
+   */
+  userId: string;
+
+  /**
+   * @generated from field: int32 page_size = 2;
+   */
+  pageSize: number;
+
+  /**
+   * @generated from field: string page_token = 3;
+   */
+  pageToken: string;
+};
+
+/**
+ * Describes the message loci.social.ListFollowingRequest.
+ * Use `create(ListFollowingRequestSchema)` to create a new message.
+ */
+export declare const ListFollowingRequestSchema: GenMessage<ListFollowingRequest>;
+
+/**
+ * FollowEntry is one person in a followers or following list.
+ *
+ * @generated from message loci.social.FollowEntry
+ */
+export declare type FollowEntry = Message<"loci.social.FollowEntry"> & {
+  /**
+   * @generated from field: loci.social.PublicUser user = 1;
+   */
+  user?: PublicUser;
+
+  /**
+   * When the follow began.
+   *
+   * @generated from field: google.protobuf.Timestamp since = 2;
+   */
+  since?: Timestamp;
+
+  /**
+   * Whether the caller follows this person.
+   *
+   * @generated from field: loci.social.FollowState follow_state = 3;
+   */
+  followState: FollowState;
+
+  /**
+   * Whether this person follows the caller.
+   *
+   * @generated from field: bool follows_you = 4;
+   */
+  followsYou: boolean;
+};
+
+/**
+ * Describes the message loci.social.FollowEntry.
+ * Use `create(FollowEntrySchema)` to create a new message.
+ */
+export declare const FollowEntrySchema: GenMessage<FollowEntry>;
+
+/**
+ * @generated from message loci.social.ListFollowsResponse
+ */
+export declare type ListFollowsResponse = Message<"loci.social.ListFollowsResponse"> & {
+  /**
+   * @generated from field: repeated loci.social.FollowEntry entries = 1;
+   */
+  entries: FollowEntry[];
+
+  /**
+   * @generated from field: string next_page_token = 2;
+   */
+  nextPageToken: string;
+
+  /**
+   * @generated from field: int32 total = 3;
+   */
+  total: number;
+};
+
+/**
+ * Describes the message loci.social.ListFollowsResponse.
+ * Use `create(ListFollowsResponseSchema)` to create a new message.
+ */
+export declare const ListFollowsResponseSchema: GenMessage<ListFollowsResponse>;
+
+/**
+ * @generated from message loci.social.FollowRequestEntry
+ */
+export declare type FollowRequestEntry = Message<"loci.social.FollowRequestEntry"> & {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * @generated from field: loci.social.PublicUser from = 2;
+   */
+  from?: PublicUser;
+
+  /**
+   * @generated from field: loci.social.PublicUser to = 3;
+   */
+  to?: PublicUser;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp created_at = 4;
+   */
+  createdAt?: Timestamp;
+};
+
+/**
+ * Describes the message loci.social.FollowRequestEntry.
+ * Use `create(FollowRequestEntrySchema)` to create a new message.
+ */
+export declare const FollowRequestEntrySchema: GenMessage<FollowRequestEntry>;
+
+/**
+ * @generated from message loci.social.ListFollowRequestsRequest
+ */
+export declare type ListFollowRequestsRequest = Message<"loci.social.ListFollowRequestsRequest"> & {
+  /**
+   * @generated from field: loci.social.RequestDirection direction = 1;
+   */
+  direction: RequestDirection;
+};
+
+/**
+ * Describes the message loci.social.ListFollowRequestsRequest.
+ * Use `create(ListFollowRequestsRequestSchema)` to create a new message.
+ */
+export declare const ListFollowRequestsRequestSchema: GenMessage<ListFollowRequestsRequest>;
+
+/**
+ * @generated from message loci.social.ListFollowRequestsResponse
+ */
+export declare type ListFollowRequestsResponse = Message<"loci.social.ListFollowRequestsResponse"> & {
+  /**
+   * @generated from field: repeated loci.social.FollowRequestEntry requests = 1;
+   */
+  requests: FollowRequestEntry[];
+};
+
+/**
+ * Describes the message loci.social.ListFollowRequestsResponse.
+ * Use `create(ListFollowRequestsResponseSchema)` to create a new message.
+ */
+export declare const ListFollowRequestsResponseSchema: GenMessage<ListFollowRequestsResponse>;
+
+/**
+ * @generated from message loci.social.RespondFollowRequestRequest
+ */
+export declare type RespondFollowRequestRequest = Message<"loci.social.RespondFollowRequestRequest"> & {
+  /**
+   * @generated from field: string request_id = 1;
+   */
+  requestId: string;
+
+  /**
+   * @generated from field: bool approve = 2;
+   */
+  approve: boolean;
+};
+
+/**
+ * Describes the message loci.social.RespondFollowRequestRequest.
+ * Use `create(RespondFollowRequestRequestSchema)` to create a new message.
+ */
+export declare const RespondFollowRequestRequestSchema: GenMessage<RespondFollowRequestRequest>;
+
+/**
+ * @generated from message loci.social.RespondFollowRequestResponse
+ */
+export declare type RespondFollowRequestResponse = Message<"loci.social.RespondFollowRequestResponse"> & {
+};
+
+/**
+ * Describes the message loci.social.RespondFollowRequestResponse.
+ * Use `create(RespondFollowRequestResponseSchema)` to create a new message.
+ */
+export declare const RespondFollowRequestResponseSchema: GenMessage<RespondFollowRequestResponse>;
+
+/**
+ * @generated from message loci.social.CancelFollowRequestRequest
+ */
+export declare type CancelFollowRequestRequest = Message<"loci.social.CancelFollowRequestRequest"> & {
+  /**
+   * @generated from field: string request_id = 1;
+   */
+  requestId: string;
+};
+
+/**
+ * Describes the message loci.social.CancelFollowRequestRequest.
+ * Use `create(CancelFollowRequestRequestSchema)` to create a new message.
+ */
+export declare const CancelFollowRequestRequestSchema: GenMessage<CancelFollowRequestRequest>;
+
+/**
+ * @generated from message loci.social.CancelFollowRequestResponse
+ */
+export declare type CancelFollowRequestResponse = Message<"loci.social.CancelFollowRequestResponse"> & {
+};
+
+/**
+ * Describes the message loci.social.CancelFollowRequestResponse.
+ * Use `create(CancelFollowRequestResponseSchema)` to create a new message.
+ */
+export declare const CancelFollowRequestResponseSchema: GenMessage<CancelFollowRequestResponse>;
+
+/**
+ * @generated from message loci.social.SocialSettings
+ */
+export declare type SocialSettings = Message<"loci.social.SocialSettings"> & {
+  /**
+   * @generated from field: bool is_private = 1;
+   */
+  isPrivate: boolean;
+
+  /**
+   * Pending requests to follow the caller.
+   *
+   * @generated from field: int32 pending_requests = 2;
+   */
+  pendingRequests: number;
+};
+
+/**
+ * Describes the message loci.social.SocialSettings.
+ * Use `create(SocialSettingsSchema)` to create a new message.
+ */
+export declare const SocialSettingsSchema: GenMessage<SocialSettings>;
+
+/**
+ * @generated from message loci.social.GetSocialSettingsRequest
+ */
+export declare type GetSocialSettingsRequest = Message<"loci.social.GetSocialSettingsRequest"> & {
+};
+
+/**
+ * Describes the message loci.social.GetSocialSettingsRequest.
+ * Use `create(GetSocialSettingsRequestSchema)` to create a new message.
+ */
+export declare const GetSocialSettingsRequestSchema: GenMessage<GetSocialSettingsRequest>;
+
+/**
+ * @generated from message loci.social.SetAccountPrivacyRequest
+ */
+export declare type SetAccountPrivacyRequest = Message<"loci.social.SetAccountPrivacyRequest"> & {
+  /**
+   * @generated from field: bool is_private = 1;
+   */
+  isPrivate: boolean;
+};
+
+/**
+ * Describes the message loci.social.SetAccountPrivacyRequest.
+ * Use `create(SetAccountPrivacyRequestSchema)` to create a new message.
+ */
+export declare const SetAccountPrivacyRequestSchema: GenMessage<SetAccountPrivacyRequest>;
+
+/**
+ * @generated from message loci.social.GetSocialSettingsResponse
+ */
+export declare type GetSocialSettingsResponse = Message<"loci.social.GetSocialSettingsResponse"> & {
+  /**
+   * @generated from field: loci.social.SocialSettings settings = 1;
+   */
+  settings?: SocialSettings;
+};
+
+/**
+ * Describes the message loci.social.GetSocialSettingsResponse.
+ * Use `create(GetSocialSettingsResponseSchema)` to create a new message.
+ */
+export declare const GetSocialSettingsResponseSchema: GenMessage<GetSocialSettingsResponse>;
+
+/**
+ * @generated from message loci.social.FeedCity
+ */
+export declare type FeedCity = Message<"loci.social.FeedCity"> & {
+  /**
+   * @generated from field: string city_id = 1;
+   */
+  cityId: string;
+
+  /**
+   * @generated from field: string city_name = 2;
+   */
+  cityName: string;
+
+  /**
+   * @generated from field: string country = 3;
+   */
+  country: string;
+};
+
+/**
+ * Describes the message loci.social.FeedCity.
+ * Use `create(FeedCitySchema)` to create a new message.
+ */
+export declare const FeedCitySchema: GenMessage<FeedCity>;
+
+/**
+ * @generated from message loci.social.FeedTrip
+ */
+export declare type FeedTrip = Message<"loci.social.FeedTrip"> & {
+  /**
+   * @generated from field: string trip_id = 1;
+   */
+  tripId: string;
+
+  /**
+   * @generated from field: string title = 2;
+   */
+  title: string;
+
+  /**
+   * @generated from field: string city_name = 3;
+   */
+  cityName: string;
+
+  /**
+   * @generated from field: int32 days = 4;
+   */
+  days: number;
+
+  /**
+   * @generated from field: string cover_image_url = 5;
+   */
+  coverImageUrl: string;
+};
+
+/**
+ * Describes the message loci.social.FeedTrip.
+ * Use `create(FeedTripSchema)` to create a new message.
+ */
+export declare const FeedTripSchema: GenMessage<FeedTrip>;
+
+/**
+ * @generated from message loci.social.FeedItem
+ */
+export declare type FeedItem = Message<"loci.social.FeedItem"> & {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * @generated from field: loci.social.FeedItemKind kind = 2;
+   */
+  kind: FeedItemKind;
+
+  /**
+   * @generated from field: loci.social.PublicUser actor = 3;
+   */
+  actor?: PublicUser;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp created_at = 4;
+   */
+  createdAt?: Timestamp;
+
+  /**
+   * @generated from oneof loci.social.FeedItem.detail
+   */
+  detail: {
+    /**
+     * @generated from field: loci.achievement.AchievementSummary achievement = 5;
+     */
+    value: AchievementSummary;
+    case: "achievement";
+  } | {
+    /**
+     * @generated from field: loci.social.FeedCity city = 6;
+     */
+    value: FeedCity;
+    case: "city";
+  } | {
+    /**
+     * @generated from field: loci.social.FeedTrip trip = 7;
+     */
+    value: FeedTrip;
+    case: "trip";
+  } | { case: undefined; value?: undefined };
+
+  /**
+   * @generated from field: int32 cheer_count = 8;
+   */
+  cheerCount: number;
+
+  /**
+   * @generated from field: bool cheered_by_me = 9;
+   */
+  cheeredByMe: boolean;
+
+  /**
+   * Up to three of the latest people who cheered.
+   *
+   * @generated from field: repeated loci.social.PublicUser recent_cheerers = 10;
+   */
+  recentCheerers: PublicUser[];
+};
+
+/**
+ * Describes the message loci.social.FeedItem.
+ * Use `create(FeedItemSchema)` to create a new message.
+ */
+export declare const FeedItemSchema: GenMessage<FeedItem>;
+
+/**
+ * @generated from message loci.social.ListFeedRequest
+ */
+export declare type ListFeedRequest = Message<"loci.social.ListFeedRequest"> & {
+  /**
+   * @generated from field: int32 page_size = 1;
+   */
+  pageSize: number;
+
+  /**
+   * @generated from field: string page_token = 2;
+   */
+  pageToken: string;
+};
+
+/**
+ * Describes the message loci.social.ListFeedRequest.
+ * Use `create(ListFeedRequestSchema)` to create a new message.
+ */
+export declare const ListFeedRequestSchema: GenMessage<ListFeedRequest>;
+
+/**
+ * @generated from message loci.social.ListFeedResponse
+ */
+export declare type ListFeedResponse = Message<"loci.social.ListFeedResponse"> & {
+  /**
+   * @generated from field: repeated loci.social.FeedItem items = 1;
+   */
+  items: FeedItem[];
+
+  /**
+   * @generated from field: string next_page_token = 2;
+   */
+  nextPageToken: string;
+};
+
+/**
+ * Describes the message loci.social.ListFeedResponse.
+ * Use `create(ListFeedResponseSchema)` to create a new message.
+ */
+export declare const ListFeedResponseSchema: GenMessage<ListFeedResponse>;
+
+/**
+ * @generated from message loci.social.CheerRequest
+ */
+export declare type CheerRequest = Message<"loci.social.CheerRequest"> & {
+  /**
+   * @generated from field: string item_id = 1;
+   */
+  itemId: string;
+};
+
+/**
+ * Describes the message loci.social.CheerRequest.
+ * Use `create(CheerRequestSchema)` to create a new message.
+ */
+export declare const CheerRequestSchema: GenMessage<CheerRequest>;
+
+/**
+ * @generated from message loci.social.UncheerRequest
+ */
+export declare type UncheerRequest = Message<"loci.social.UncheerRequest"> & {
+  /**
+   * @generated from field: string item_id = 1;
+   */
+  itemId: string;
+};
+
+/**
+ * Describes the message loci.social.UncheerRequest.
+ * Use `create(UncheerRequestSchema)` to create a new message.
+ */
+export declare const UncheerRequestSchema: GenMessage<UncheerRequest>;
+
+/**
+ * @generated from message loci.social.CheerResponse
+ */
+export declare type CheerResponse = Message<"loci.social.CheerResponse"> & {
+  /**
+   * @generated from field: int32 cheer_count = 1;
+   */
+  cheerCount: number;
+
+  /**
+   * @generated from field: bool cheered_by_me = 2;
+   */
+  cheeredByMe: boolean;
+};
+
+/**
+ * Describes the message loci.social.CheerResponse.
+ * Use `create(CheerResponseSchema)` to create a new message.
+ */
+export declare const CheerResponseSchema: GenMessage<CheerResponse>;
+
+/**
+ * Relationship is the caller's relation to another user in the older friend
+ * model, derived from the follow graph: FRIENDS when each follows the other,
+ * REQUESTED when only the caller follows (or asked to), INCOMING when only the
+ * other user does. New clients read FollowState and follows_you instead.
  *
  * @generated from enum loci.social.Relationship
  */
@@ -817,6 +1553,52 @@ export enum Relationship {
 export declare const RelationshipSchema: GenEnum<Relationship>;
 
 /**
+ * FollowState is whether the caller follows another user.
+ *
+ * @generated from enum loci.social.FollowState
+ */
+export enum FollowState {
+  /**
+   * @generated from enum value: FOLLOW_STATE_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: FOLLOW_STATE_NONE = 1;
+   */
+  NONE = 1,
+
+  /**
+   * The caller asked to follow a private account; not yet approved.
+   *
+   * @generated from enum value: FOLLOW_STATE_REQUESTED = 2;
+   */
+  REQUESTED = 2,
+
+  /**
+   * @generated from enum value: FOLLOW_STATE_FOLLOWING = 3;
+   */
+  FOLLOWING = 3,
+
+  /**
+   * The caller blocked this user.
+   *
+   * @generated from enum value: FOLLOW_STATE_BLOCKED = 4;
+   */
+  BLOCKED = 4,
+
+  /**
+   * @generated from enum value: FOLLOW_STATE_SELF = 5;
+   */
+  SELF = 5,
+}
+
+/**
+ * Describes the enum loci.social.FollowState.
+ */
+export declare const FollowStateSchema: GenEnum<FollowState>;
+
+/**
  * @generated from enum loci.social.RequestDirection
  */
 export enum RequestDirection {
@@ -842,12 +1624,57 @@ export enum RequestDirection {
 export declare const RequestDirectionSchema: GenEnum<RequestDirection>;
 
 /**
- * SocialService is Loci's friends layer: mutual friendships (a request one
- * side sends and the other accepts), invite links, blocking, and finding
- * friends by username or by phone contacts.
+ * @generated from enum loci.social.FeedItemKind
+ */
+export enum FeedItemKind {
+  /**
+   * @generated from enum value: FEED_ITEM_KIND_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: FEED_ITEM_KIND_ACHIEVEMENT_UNLOCKED = 1;
+   */
+  ACHIEVEMENT_UNLOCKED = 1,
+
+  /**
+   * The first place visited in a city.
+   *
+   * @generated from enum value: FEED_ITEM_KIND_NEW_CITY = 2;
+   */
+  NEW_CITY = 2,
+
+  /**
+   * @generated from enum value: FEED_ITEM_KIND_TRIP_FINISHED = 3;
+   */
+  TRIP_FINISHED = 3,
+
+  /**
+   * A trip made visible to friends or to everyone.
+   *
+   * @generated from enum value: FEED_ITEM_KIND_TRIP_SHARED = 4;
+   */
+  TRIP_SHARED = 4,
+}
+
+/**
+ * Describes the enum loci.social.FeedItemKind.
+ */
+export declare const FeedItemKindSchema: GenEnum<FeedItemKind>;
+
+/**
+ * SocialService is Loci's people layer: following, invite links, blocking,
+ * finding people by username, contacts or Facebook, and the following feed.
  *
- * Friendship is mutual on purpose. "Friends" trip visibility, and later
- * location sharing, are seen only by people both sides approved.
+ * Following is one-way. Two people who follow each other are friends, and
+ * "Friends" trip visibility is seen only by friends: both sides chose it.
+ * Accounts are public unless their owner makes them private; following a
+ * private account sends a follow request its owner approves.
+ *
+ * The friend RPCs (SendFriendRequest .. RemoveFriend) predate following and
+ * are kept for older clients. They are served from the follow graph:
+ * a friend request is a follow, accepting one follows back, and a follower
+ * the caller does not follow back is listed as an incoming request.
  *
  * GetInvite and GetPublicProfile accept anonymous callers (an invite link or
  * a profile opened signed out); every other RPC needs a session.
@@ -887,8 +1714,9 @@ export declare const SocialService: GenService<{
     output: typeof GetInviteResponseSchema;
   },
   /**
-   * AcceptInvite makes the caller and the inviter friends at once: opening a
-   * friend's link is the consent on both sides.
+   * AcceptInvite makes the caller and the inviter friends at once (each
+   * follows the other, whatever their privacy): opening a friend's link is
+   * the consent on both sides.
    *
    * @generated from rpc loci.social.SocialService.AcceptInvite
    */
@@ -898,6 +1726,139 @@ export declare const SocialService: GenService<{
     output: typeof AcceptInviteResponseSchema;
   },
   /**
+   * Follow follows a user. Following a private account sends a follow request
+   * instead (state REQUESTED); following again is a no-op.
+   *
+   * @generated from rpc loci.social.SocialService.Follow
+   */
+  follow: {
+    methodKind: "unary";
+    input: typeof FollowUserRequestSchema;
+    output: typeof FollowUserResponseSchema;
+  },
+  /**
+   * Unfollow stops following a user, or withdraws a pending follow request.
+   *
+   * @generated from rpc loci.social.SocialService.Unfollow
+   */
+  unfollow: {
+    methodKind: "unary";
+    input: typeof UnfollowRequestSchema;
+    output: typeof UnfollowResponseSchema;
+  },
+  /**
+   * RemoveFollower makes a user stop following the caller.
+   *
+   * @generated from rpc loci.social.SocialService.RemoveFollower
+   */
+  removeFollower: {
+    methodKind: "unary";
+    input: typeof RemoveFollowerRequestSchema;
+    output: typeof RemoveFollowerResponseSchema;
+  },
+  /**
+   * ListFollowers and ListFollowing list a user's followers and the people
+   * they follow, newest first. Empty user_id means the caller. A private
+   * account's lists are PermissionDenied to anyone it has not approved.
+   *
+   * @generated from rpc loci.social.SocialService.ListFollowers
+   */
+  listFollowers: {
+    methodKind: "unary";
+    input: typeof ListFollowersRequestSchema;
+    output: typeof ListFollowsResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.social.SocialService.ListFollowing
+   */
+  listFollowing: {
+    methodKind: "unary";
+    input: typeof ListFollowingRequestSchema;
+    output: typeof ListFollowsResponseSchema;
+  },
+  /**
+   * ListFollowRequests lists pending follow requests to or from the caller.
+   *
+   * @generated from rpc loci.social.SocialService.ListFollowRequests
+   */
+  listFollowRequests: {
+    methodKind: "unary";
+    input: typeof ListFollowRequestsRequestSchema;
+    output: typeof ListFollowRequestsResponseSchema;
+  },
+  /**
+   * RespondFollowRequest approves or declines a request to follow the caller.
+   *
+   * @generated from rpc loci.social.SocialService.RespondFollowRequest
+   */
+  respondFollowRequest: {
+    methodKind: "unary";
+    input: typeof RespondFollowRequestRequestSchema;
+    output: typeof RespondFollowRequestResponseSchema;
+  },
+  /**
+   * CancelFollowRequest withdraws a follow request the caller sent.
+   *
+   * @generated from rpc loci.social.SocialService.CancelFollowRequest
+   */
+  cancelFollowRequest: {
+    methodKind: "unary";
+    input: typeof CancelFollowRequestRequestSchema;
+    output: typeof CancelFollowRequestResponseSchema;
+  },
+  /**
+   * GetSocialSettings and SetAccountPrivacy read and set whether the caller's
+   * account is private. Making it public approves every pending request.
+   *
+   * @generated from rpc loci.social.SocialService.GetSocialSettings
+   */
+  getSocialSettings: {
+    methodKind: "unary";
+    input: typeof GetSocialSettingsRequestSchema;
+    output: typeof GetSocialSettingsResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.social.SocialService.SetAccountPrivacy
+   */
+  setAccountPrivacy: {
+    methodKind: "unary";
+    input: typeof SetAccountPrivacyRequestSchema;
+    output: typeof GetSocialSettingsResponseSchema;
+  },
+  /**
+   * ListFeed is what the people the caller follows did lately: achievements
+   * earned, new cities, trips finished and trips shared, newest first. Trips
+   * appear only while the caller may still see them.
+   *
+   * @generated from rpc loci.social.SocialService.ListFeed
+   */
+  listFeed: {
+    methodKind: "unary";
+    input: typeof ListFeedRequestSchema;
+    output: typeof ListFeedResponseSchema;
+  },
+  /**
+   * Cheer and Uncheer add and take back the caller's cheer on a feed item.
+   * Both are idempotent.
+   *
+   * @generated from rpc loci.social.SocialService.Cheer
+   */
+  cheer: {
+    methodKind: "unary";
+    input: typeof CheerRequestSchema;
+    output: typeof CheerResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.social.SocialService.Uncheer
+   */
+  uncheer: {
+    methodKind: "unary";
+    input: typeof UncheerRequestSchema;
+    output: typeof CheerResponseSchema;
+  },
+  /**
+   * SendFriendRequest follows the user (kept for older clients; use Follow).
+   *
    * @generated from rpc loci.social.SocialService.SendFriendRequest
    */
   sendFriendRequest: {
@@ -934,6 +1895,8 @@ export declare const SocialService: GenService<{
     output: typeof ListFriendRequestsResponseSchema;
   },
   /**
+   * ListFriends lists mutual follows.
+   *
    * @generated from rpc loci.social.SocialService.ListFriends
    */
   listFriends: {
@@ -942,6 +1905,8 @@ export declare const SocialService: GenService<{
     output: typeof ListFriendsResponseSchema;
   },
   /**
+   * RemoveFriend ends following in both directions.
+   *
    * @generated from rpc loci.social.SocialService.RemoveFriend
    */
   removeFriend: {
@@ -950,8 +1915,9 @@ export declare const SocialService: GenService<{
     output: typeof RemoveFriendResponseSchema;
   },
   /**
-   * BlockUser ends any friendship and pending request between the two, and
-   * hides each side's content and profile from the other.
+   * BlockUser ends following in both directions and any pending request
+   * between the two, and hides each side's content and profile from the
+   * other.
    *
    * @generated from rpc loci.social.SocialService.BlockUser
    */
@@ -1006,7 +1972,8 @@ export declare const SocialService: GenService<{
   },
   /**
    * GetPublicProfile is a user's profile as the caller may see it. A user who
-   * blocked the caller is NotFound.
+   * blocked the caller is NotFound. A private account the caller may not see
+   * still returns the card and counts, with can_view false.
    *
    * @generated from rpc loci.social.SocialService.GetPublicProfile
    */

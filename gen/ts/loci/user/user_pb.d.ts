@@ -494,14 +494,14 @@ export declare type NotificationSettings = Message<"loci.user.NotificationSettin
   searchFinished: boolean;
 
   /**
-   * Friend requests and accepted friendships.
+   * New followers, follow requests, and approved requests.
    *
    * @generated from field: bool friend_activity = 5;
    */
   friendActivity: boolean;
 
   /**
-   * Whether friends see the caller on their leaderboards.
+   * Whether followers see the caller on their leaderboards.
    *
    * @generated from field: bool leaderboard_visible = 6;
    */
@@ -516,7 +516,8 @@ export declare type NotificationSettings = Message<"loci.user.NotificationSettin
   streakReminders: boolean;
 
   /**
-   * Badges earned and a friend passing the caller on the week's leaderboard.
+   * Achievements earned and someone the caller follows passing them on the
+   * week's leaderboard.
    *
    * @generated from field: bool progress_updates = 8;
    */
@@ -538,6 +539,14 @@ export declare type NotificationSettings = Message<"loci.user.NotificationSettin
    * @generated from field: bool nearby_fits = 10;
    */
   nearbyFits: boolean;
+
+  /**
+   * Someone cheered the caller's achievement, city or trip in the feed. On
+   * unless turned off.
+   *
+   * @generated from field: bool cheers = 11;
+   */
+  cheers: boolean;
 };
 
 /**
@@ -608,6 +617,11 @@ export declare type UpdateNotificationSettingsRequest = Message<"loci.user.Updat
    * @generated from field: optional bool nearby_fits = 9;
    */
   nearbyFits?: boolean;
+
+  /**
+   * @generated from field: optional bool cheers = 10;
+   */
+  cheers?: boolean;
 };
 
 /**
