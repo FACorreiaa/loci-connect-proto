@@ -590,9 +590,11 @@ export declare type PersonalizedRecommendations = Message<"loci.statistics.Perso
 export declare const PersonalizedRecommendationsSchema: GenMessage<PersonalizedRecommendations>;
 
 /**
- * Achievement badges
+ * Achievement badges. Never served; achievements live in
+ * GamificationService.ListAchievements.
  *
  * @generated from message loci.statistics.AchievementBadges
+ * @deprecated
  */
 export declare type AchievementBadges = Message<"loci.statistics.AchievementBadges"> & {
   /**
@@ -609,6 +611,7 @@ export declare type AchievementBadges = Message<"loci.statistics.AchievementBadg
 /**
  * Describes the message loci.statistics.AchievementBadges.
  * Use `create(AchievementBadgesSchema)` to create a new message.
+ * @deprecated
  */
 export declare const AchievementBadgesSchema: GenMessage<AchievementBadges>;
 
