@@ -1044,6 +1044,19 @@ public struct Loci_Trip_TripDraft: @unchecked Sendable {
     set {_uniqueStorage()._flights = newValue}
   }
 
+  /// The caller's role on the trip. OWNER on the owner's own reads; set for
+  /// members on GetTrip. UNSPECIFIED on shared and friend reads.
+  public var viewerRole: Loci_Trip_TripRole {
+    get {return _storage._viewerRole}
+    set {_uniqueStorage()._viewerRole = newValue}
+  }
+
+  /// The owner and the trip's members, on GetTrip when the trip has members.
+  public var members: [Loci_Trip_TripMember] {
+    get {return _storage._members}
+    set {_uniqueStorage()._members = newValue}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -1340,6 +1353,9 @@ public struct Loci_Trip_ListTripsRequest: Sendable {
   public var hasPagination: Bool {return self._pagination != nil}
   /// Clears the value of `pagination`. Subsequent reads from it will return its default value.
   public mutating func clearPagination() {self._pagination = nil}
+
+  /// Also list trips the caller is a member of, each with viewer_role set.
+  public var includeMember: Bool = false
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -2745,6 +2761,8 @@ extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     19: .standard(proto: "end_date"),
     20: .same(proto: "stays"),
     21: .same(proto: "flights"),
+    22: .standard(proto: "viewer_role"),
+    23: .same(proto: "members"),
   ]
 
   fileprivate class _StorageClass {
@@ -2769,6 +2787,8 @@ extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     var _endDate: String? = nil
     var _stays: [Loci_Trip_TripStay] = []
     var _flights: [Loci_Trip_TripFlight] = []
+    var _viewerRole: Loci_Trip_TripRole = .unspecified
+    var _members: [Loci_Trip_TripMember] = []
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -2804,6 +2824,8 @@ extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       _endDate = source._endDate
       _stays = source._stays
       _flights = source._flights
+      _viewerRole = source._viewerRole
+      _members = source._members
     }
   }
 
@@ -2843,6 +2865,8 @@ extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
         case 19: try { try decoder.decodeSingularStringField(value: &_storage._endDate) }()
         case 20: try { try decoder.decodeRepeatedMessageField(value: &_storage._stays) }()
         case 21: try { try decoder.decodeRepeatedMessageField(value: &_storage._flights) }()
+        case 22: try { try decoder.decodeSingularEnumField(value: &_storage._viewerRole) }()
+        case 23: try { try decoder.decodeRepeatedMessageField(value: &_storage._members) }()
         default: break
         }
       }
@@ -2918,6 +2942,12 @@ extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       if !_storage._flights.isEmpty {
         try visitor.visitRepeatedMessageField(value: _storage._flights, fieldNumber: 21)
       }
+      if _storage._viewerRole != .unspecified {
+        try visitor.visitSingularEnumField(value: _storage._viewerRole, fieldNumber: 22)
+      }
+      if !_storage._members.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._members, fieldNumber: 23)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2948,6 +2978,8 @@ extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
         if _storage._endDate != rhs_storage._endDate {return false}
         if _storage._stays != rhs_storage._stays {return false}
         if _storage._flights != rhs_storage._flights {return false}
+        if _storage._viewerRole != rhs_storage._viewerRole {return false}
+        if _storage._members != rhs_storage._members {return false}
         return true
       }
       if !storagesAreEqual {return false}
@@ -3525,6 +3557,7 @@ extension Loci_Trip_ListTripsRequest: SwiftProtobuf.Message, SwiftProtobuf._Mess
   public static let protoMessageName: String = _protobuf_package + ".ListTripsRequest"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "pagination"),
+    2: .standard(proto: "include_member"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3534,6 +3567,7 @@ extension Loci_Trip_ListTripsRequest: SwiftProtobuf.Message, SwiftProtobuf._Mess
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularMessageField(value: &self._pagination) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self.includeMember) }()
       default: break
       }
     }
@@ -3547,11 +3581,15 @@ extension Loci_Trip_ListTripsRequest: SwiftProtobuf.Message, SwiftProtobuf._Mess
     try { if let v = self._pagination {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     } }()
+    if self.includeMember != false {
+      try visitor.visitSingularBoolField(value: self.includeMember, fieldNumber: 2)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Loci_Trip_ListTripsRequest, rhs: Loci_Trip_ListTripsRequest) -> Bool {
     if lhs._pagination != rhs._pagination {return false}
+    if lhs.includeMember != rhs.includeMember {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

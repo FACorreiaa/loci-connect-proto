@@ -8,6 +8,7 @@ import type { POIDetailedInfo, POIImage } from "../poi/poi_pb";
 import type { RecommendationTrace } from "../recommendation/recommendation_pb";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
 import type { PublicUser } from "../social/social_pb";
+import type { AcceptTripInviteRequestSchema, AcceptTripInviteResponseSchema, CreateTripInviteRequestSchema, GetTripInviteRequestSchema, ListTripMembersRequestSchema, ListTripMembersResponseSchema, RemoveTripMemberRequestSchema, RemoveTripMemberResponseSchema, RevokeTripInviteRequestSchema, RevokeTripInviteResponseSchema, TripInvitePreviewSchema, TripInviteSchema, TripMember, TripRole } from "./members_pb";
 import type { PaginationMetadata, PaginationRequest } from "../common/common_pb";
 
 /**
@@ -690,6 +691,21 @@ export declare type TripDraft = Message<"loci.trip.TripDraft"> & {
    * @generated from field: repeated loci.trip.TripFlight flights = 21;
    */
   flights: TripFlight[];
+
+  /**
+   * The caller's role on the trip. OWNER on the owner's own reads; set for
+   * members on GetTrip. UNSPECIFIED on shared and friend reads.
+   *
+   * @generated from field: loci.trip.TripRole viewer_role = 22;
+   */
+  viewerRole: TripRole;
+
+  /**
+   * The owner and the trip's members, on GetTrip when the trip has members.
+   *
+   * @generated from field: repeated loci.trip.TripMember members = 23;
+   */
+  members: TripMember[];
 };
 
 /**
@@ -1071,6 +1087,13 @@ export declare type ListTripsRequest = Message<"loci.trip.ListTripsRequest"> & {
    * @generated from field: loci.common.PaginationRequest pagination = 1;
    */
   pagination?: PaginationRequest;
+
+  /**
+   * Also list trips the caller is a member of, each with viewer_role set.
+   *
+   * @generated from field: bool include_member = 2;
+   */
+  includeMember: boolean;
 };
 
 /**
@@ -2046,6 +2069,9 @@ export declare const TripService: GenService<{
     output: typeof TripDraftSchema;
   },
   /**
+   * GetTrip opens one of the caller's trips, or a trip the caller is a
+   * member of (with viewer_role and members set). Anything else is NotFound.
+   *
    * @generated from rpc loci.trip.TripService.GetTrip
    */
   getTrip: {
@@ -2307,6 +2333,72 @@ export declare const TripService: GenService<{
     methodKind: "unary";
     input: typeof DismissPackingSuggestionRequestSchema;
     output: typeof DismissPackingSuggestionResponseSchema;
+  },
+  /**
+   * Planning together. CreateTripInvite (owner only) returns the trip's live
+   * invite for that role, minting one when there is none.
+   *
+   * @generated from rpc loci.trip.TripService.CreateTripInvite
+   */
+  createTripInvite: {
+    methodKind: "unary";
+    input: typeof CreateTripInviteRequestSchema;
+    output: typeof TripInviteSchema;
+  },
+  /**
+   * GetTripInvite previews an invite. Accepts anonymous callers. An unknown
+   * code is NotFound; an expired, revoked or used-up one has joinable false.
+   *
+   * @generated from rpc loci.trip.TripService.GetTripInvite
+   */
+  getTripInvite: {
+    methodKind: "unary";
+    input: typeof GetTripInviteRequestSchema;
+    output: typeof TripInvitePreviewSchema;
+  },
+  /**
+   * AcceptTripInvite joins the trip with the invite's role and makes the
+   * caller and the owner friends. Joining again is a no-op that keeps the
+   * existing role. A dead invite is FailedPrecondition; too many accepts in
+   * an hour is ResourceExhausted.
+   *
+   * @generated from rpc loci.trip.TripService.AcceptTripInvite
+   */
+  acceptTripInvite: {
+    methodKind: "unary";
+    input: typeof AcceptTripInviteRequestSchema;
+    output: typeof AcceptTripInviteResponseSchema;
+  },
+  /**
+   * RevokeTripInvite stops an invite from working (owner only).
+   *
+   * @generated from rpc loci.trip.TripService.RevokeTripInvite
+   */
+  revokeTripInvite: {
+    methodKind: "unary";
+    input: typeof RevokeTripInviteRequestSchema;
+    output: typeof RevokeTripInviteResponseSchema;
+  },
+  /**
+   * ListTripMembers lists the owner and members, for anyone on the trip.
+   *
+   * @generated from rpc loci.trip.TripService.ListTripMembers
+   */
+  listTripMembers: {
+    methodKind: "unary";
+    input: typeof ListTripMembersRequestSchema;
+    output: typeof ListTripMembersResponseSchema;
+  },
+  /**
+   * RemoveTripMember takes someone off the trip: the owner removes anyone,
+   * a member removes only themselves.
+   *
+   * @generated from rpc loci.trip.TripService.RemoveTripMember
+   */
+  removeTripMember: {
+    methodKind: "unary";
+    input: typeof RemoveTripMemberRequestSchema;
+    output: typeof RemoveTripMemberResponseSchema;
   },
 }>;
 

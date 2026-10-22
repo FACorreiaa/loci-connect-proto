@@ -8,6 +8,7 @@ import "loci/common/common.proto";
 import "loci/poi/poi.proto";
 import "loci/recommendation/recommendation.proto";
 import "loci/social/social.proto";
+import "loci/trip/members.proto";
 
 option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/trip;trip";
 
@@ -368,6 +369,11 @@ message TripDraft {
   optional string end_date = 19 [(buf.validate.field).string.pattern = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"];
   repeated TripStay stays = 20;
   repeated TripFlight flights = 21;
+  // The caller's role on the trip. OWNER on the owner's own reads; set for
+  // members on GetTrip. UNSPECIFIED on shared and friend reads.
+  TripRole viewer_role = 22;
+  // The owner and the trip's members, on GetTrip when the trip has members.
+  repeated TripMember members = 23;
 }
 
 // TripSnapshot is an immutable point-in-time copy of a trip, written on each
@@ -536,6 +542,8 @@ message GetTripRequest {
 
 message ListTripsRequest {
   loci.common.PaginationRequest pagination = 1 [(buf.validate.field).required = true];
+  // Also list trips the caller is a member of, each with viewer_role set.
+  bool include_member = 2;
 }
 
 message ListTripsResponse {
@@ -843,6 +851,8 @@ message ExportTripResponse {
 // TripDraft (or affected sub-entity) with the bumped version.
 service TripService {
   rpc SaveTrip(SaveTripRequest) returns (TripDraft);
+  // GetTrip opens one of the caller's trips, or a trip the caller is a
+  // member of (with viewer_role and members set). Anything else is NotFound.
   rpc GetTrip(GetTripRequest) returns (TripDraft);
   rpc ListTrips(ListTripsRequest) returns (ListTripsResponse);
   // ShareTrip is the old sharing call: is_public = true sets LINK visibility,
@@ -898,4 +908,23 @@ service TripService {
   rpc DeleteChecklistItem(DeleteChecklistItemRequest) returns (DeleteChecklistItemResponse);
   // DismissPackingSuggestion hides a suggestion from this trip's checklist.
   rpc DismissPackingSuggestion(DismissPackingSuggestionRequest) returns (DismissPackingSuggestionResponse);
+
+  // Planning together. CreateTripInvite (owner only) returns the trip's live
+  // invite for that role, minting one when there is none.
+  rpc CreateTripInvite(CreateTripInviteRequest) returns (TripInvite);
+  // GetTripInvite previews an invite. Accepts anonymous callers. An unknown
+  // code is NotFound; an expired, revoked or used-up one has joinable false.
+  rpc GetTripInvite(GetTripInviteRequest) returns (TripInvitePreview);
+  // AcceptTripInvite joins the trip with the invite's role and makes the
+  // caller and the owner friends. Joining again is a no-op that keeps the
+  // existing role. A dead invite is FailedPrecondition; too many accepts in
+  // an hour is ResourceExhausted.
+  rpc AcceptTripInvite(AcceptTripInviteRequest) returns (AcceptTripInviteResponse);
+  // RevokeTripInvite stops an invite from working (owner only).
+  rpc RevokeTripInvite(RevokeTripInviteRequest) returns (RevokeTripInviteResponse);
+  // ListTripMembers lists the owner and members, for anyone on the trip.
+  rpc ListTripMembers(ListTripMembersRequest) returns (ListTripMembersResponse);
+  // RemoveTripMember takes someone off the trip: the owner removes anyone,
+  // a member removes only themselves.
+  rpc RemoveTripMember(RemoveTripMemberRequest) returns (RemoveTripMemberResponse);
 }

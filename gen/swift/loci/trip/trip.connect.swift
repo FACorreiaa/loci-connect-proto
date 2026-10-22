@@ -17,6 +17,8 @@ public protocol Loci_Trip_TripServiceClientInterface: Sendable {
     @available(iOS 13, *)
     func `saveTrip`(request: Loci_Trip_SaveTripRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripDraft>
 
+    /// GetTrip opens one of the caller's trips, or a trip the caller is a
+    /// member of (with viewer_role and members set). Anything else is NotFound.
     @available(iOS 13, *)
     func `getTrip`(request: Loci_Trip_GetTripRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripDraft>
 
@@ -125,6 +127,36 @@ public protocol Loci_Trip_TripServiceClientInterface: Sendable {
     /// DismissPackingSuggestion hides a suggestion from this trip's checklist.
     @available(iOS 13, *)
     func `dismissPackingSuggestion`(request: Loci_Trip_DismissPackingSuggestionRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_DismissPackingSuggestionResponse>
+
+    /// Planning together. CreateTripInvite (owner only) returns the trip's live
+    /// invite for that role, minting one when there is none.
+    @available(iOS 13, *)
+    func `createTripInvite`(request: Loci_Trip_CreateTripInviteRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripInvite>
+
+    /// GetTripInvite previews an invite. Accepts anonymous callers. An unknown
+    /// code is NotFound; an expired, revoked or used-up one has joinable false.
+    @available(iOS 13, *)
+    func `getTripInvite`(request: Loci_Trip_GetTripInviteRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripInvitePreview>
+
+    /// AcceptTripInvite joins the trip with the invite's role and makes the
+    /// caller and the owner friends. Joining again is a no-op that keeps the
+    /// existing role. A dead invite is FailedPrecondition; too many accepts in
+    /// an hour is ResourceExhausted.
+    @available(iOS 13, *)
+    func `acceptTripInvite`(request: Loci_Trip_AcceptTripInviteRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_AcceptTripInviteResponse>
+
+    /// RevokeTripInvite stops an invite from working (owner only).
+    @available(iOS 13, *)
+    func `revokeTripInvite`(request: Loci_Trip_RevokeTripInviteRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_RevokeTripInviteResponse>
+
+    /// ListTripMembers lists the owner and members, for anyone on the trip.
+    @available(iOS 13, *)
+    func `listTripMembers`(request: Loci_Trip_ListTripMembersRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_ListTripMembersResponse>
+
+    /// RemoveTripMember takes someone off the trip: the owner removes anyone,
+    /// a member removes only themselves.
+    @available(iOS 13, *)
+    func `removeTripMember`(request: Loci_Trip_RemoveTripMemberRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_RemoveTripMemberResponse>
 }
 
 /// Concrete implementation of `Loci_Trip_TripServiceClientInterface`.
@@ -280,6 +312,36 @@ public final class Loci_Trip_TripServiceClient: Loci_Trip_TripServiceClientInter
         return await self.client.unary(path: "/loci.trip.TripService/DismissPackingSuggestion", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
+    @available(iOS 13, *)
+    public func `createTripInvite`(request: Loci_Trip_CreateTripInviteRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_TripInvite> {
+        return await self.client.unary(path: "/loci.trip.TripService/CreateTripInvite", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `getTripInvite`(request: Loci_Trip_GetTripInviteRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_TripInvitePreview> {
+        return await self.client.unary(path: "/loci.trip.TripService/GetTripInvite", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `acceptTripInvite`(request: Loci_Trip_AcceptTripInviteRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_AcceptTripInviteResponse> {
+        return await self.client.unary(path: "/loci.trip.TripService/AcceptTripInvite", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `revokeTripInvite`(request: Loci_Trip_RevokeTripInviteRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_RevokeTripInviteResponse> {
+        return await self.client.unary(path: "/loci.trip.TripService/RevokeTripInvite", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `listTripMembers`(request: Loci_Trip_ListTripMembersRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_ListTripMembersResponse> {
+        return await self.client.unary(path: "/loci.trip.TripService/ListTripMembers", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `removeTripMember`(request: Loci_Trip_RemoveTripMemberRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_RemoveTripMemberResponse> {
+        return await self.client.unary(path: "/loci.trip.TripService/RemoveTripMember", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
     public enum Metadata {
         public enum Methods {
             public static let saveTrip = Connect.MethodSpec(name: "SaveTrip", service: "loci.trip.TripService", type: .unary)
@@ -311,6 +373,12 @@ public final class Loci_Trip_TripServiceClient: Loci_Trip_TripServiceClientInter
             public static let upsertChecklistItem = Connect.MethodSpec(name: "UpsertChecklistItem", service: "loci.trip.TripService", type: .unary)
             public static let deleteChecklistItem = Connect.MethodSpec(name: "DeleteChecklistItem", service: "loci.trip.TripService", type: .unary)
             public static let dismissPackingSuggestion = Connect.MethodSpec(name: "DismissPackingSuggestion", service: "loci.trip.TripService", type: .unary)
+            public static let createTripInvite = Connect.MethodSpec(name: "CreateTripInvite", service: "loci.trip.TripService", type: .unary)
+            public static let getTripInvite = Connect.MethodSpec(name: "GetTripInvite", service: "loci.trip.TripService", type: .unary)
+            public static let acceptTripInvite = Connect.MethodSpec(name: "AcceptTripInvite", service: "loci.trip.TripService", type: .unary)
+            public static let revokeTripInvite = Connect.MethodSpec(name: "RevokeTripInvite", service: "loci.trip.TripService", type: .unary)
+            public static let listTripMembers = Connect.MethodSpec(name: "ListTripMembers", service: "loci.trip.TripService", type: .unary)
+            public static let removeTripMember = Connect.MethodSpec(name: "RemoveTripMember", service: "loci.trip.TripService", type: .unary)
         }
     }
 }

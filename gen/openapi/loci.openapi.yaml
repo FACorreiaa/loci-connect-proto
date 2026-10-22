@@ -10718,6 +10718,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.travelhistory.RecordVisitResponse'
+  /loci.trip.TripService/AcceptTripInvite:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: AcceptTripInvite
+      description: |-
+        AcceptTripInvite joins the trip with the invite's role and makes the
+         caller and the owner friends. Joining again is a no-op that keeps the
+         existing role. A dead invite is FailedPrecondition; too many accepts in
+         an hour is ResourceExhausted.
+      operationId: loci.trip.TripService.AcceptTripInvite
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.AcceptTripInviteRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.AcceptTripInviteResponse'
   /loci.trip.TripService/AddFlight:
     post:
       tags:
@@ -10897,6 +10937,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.trip.CopyTripResponse'
+  /loci.trip.TripService/CreateTripInvite:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: CreateTripInvite
+      description: |-
+        Planning together. CreateTripInvite (owner only) returns the trip's live
+         invite for that role, minting one when there is none.
+      operationId: loci.trip.TripService.CreateTripInvite
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.CreateTripInviteRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.TripInvite'
   /loci.trip.TripService/DeleteChecklistItem:
     post:
       tags:
@@ -11121,6 +11199,9 @@ paths:
       tags:
         - loci.trip.TripService
       summary: GetTrip
+      description: |-
+        GetTrip opens one of the caller's trips, or a trip the caller is a
+         member of (with viewer_role and members set). Anything else is NotFound.
       operationId: loci.trip.TripService.GetTrip
       parameters:
         - name: Connect-Protocol-Version
@@ -11189,6 +11270,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.trip.GetTripChecklistResponse'
+  /loci.trip.TripService/GetTripInvite:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: GetTripInvite
+      description: |-
+        GetTripInvite previews an invite. Accepts anonymous callers. An unknown
+         code is NotFound; an expired, revoked or used-up one has joinable false.
+      operationId: loci.trip.TripService.GetTripInvite
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.GetTripInviteRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.TripInvitePreview'
   /loci.trip.TripService/ListFriendTrips:
     post:
       tags:
@@ -11227,6 +11346,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.trip.ListTripsResponse'
+  /loci.trip.TripService/ListTripMembers:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: ListTripMembers
+      description: ListTripMembers lists the owner and members, for anyone on the trip.
+      operationId: loci.trip.TripService.ListTripMembers
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.ListTripMembersRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.ListTripMembersResponse'
   /loci.trip.TripService/ListTrips:
     post:
       tags:
@@ -11368,6 +11523,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.trip.TripDraft'
+  /loci.trip.TripService/RemoveTripMember:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: RemoveTripMember
+      description: |-
+        RemoveTripMember takes someone off the trip: the owner removes anyone,
+         a member removes only themselves.
+      operationId: loci.trip.TripService.RemoveTripMember
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.RemoveTripMemberRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.RemoveTripMemberResponse'
   /loci.trip.TripService/RenameStop:
     post:
       tags:
@@ -11473,6 +11666,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.trip.TripDraft'
+  /loci.trip.TripService/RevokeTripInvite:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: RevokeTripInvite
+      description: RevokeTripInvite stops an invite from working (owner only).
+      operationId: loci.trip.TripService.RevokeTripInvite
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.RevokeTripInviteRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.RevokeTripInviteResponse'
   /loci.trip.TripService/SaveTrip:
     post:
       tags:
@@ -33852,6 +34081,28 @@ components:
       description: |-
         VisitedPOI is a single confirmed stop. Kept per-visit (not rolled up) so the
          city totals can be RECOMPUTED from evidence rather than trusted.
+    loci.trip.AcceptTripInviteRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          title: code
+          maxLength: 50
+          minLength: 1
+      title: AcceptTripInviteRequest
+      additionalProperties: false
+    loci.trip.AcceptTripInviteResponse:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+        role:
+          title: role
+          $ref: '#/components/schemas/loci.trip.TripRole'
+      title: AcceptTripInviteResponse
+      additionalProperties: false
     loci.trip.AddFlightRequest:
       type: object
       properties:
@@ -34059,6 +34310,22 @@ components:
           maxLength: 100
           minLength: 1
       title: CopyTripResponse
+      additionalProperties: false
+    loci.trip.CreateTripInviteRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          format: uuid
+        role:
+          title: role
+          enum:
+            - TRIP_ROLE_CO_PLANNER
+            - TRIP_ROLE_VIEWER
+          description: CO_PLANNER or VIEWER.
+          $ref: '#/components/schemas/loci.trip.TripRole'
+      title: CreateTripInviteRequest
       additionalProperties: false
     loci.trip.DeleteChecklistItemRequest:
       type: object
@@ -34270,6 +34537,16 @@ components:
              can hide them from SuggestPacking's output.
       title: GetTripChecklistResponse
       additionalProperties: false
+    loci.trip.GetTripInviteRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          title: code
+          maxLength: 50
+          minLength: 1
+      title: GetTripInviteRequest
+      additionalProperties: false
     loci.trip.GetTripRequest:
       type: object
       properties:
@@ -34290,12 +34567,36 @@ components:
       required:
         - pagination
       additionalProperties: false
+    loci.trip.ListTripMembersRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          format: uuid
+      title: ListTripMembersRequest
+      additionalProperties: false
+    loci.trip.ListTripMembersResponse:
+      type: object
+      properties:
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.trip.TripMember'
+          title: members
+          description: The owner first, then members by joining order.
+      title: ListTripMembersResponse
+      additionalProperties: false
     loci.trip.ListTripsRequest:
       type: object
       properties:
         pagination:
           title: pagination
           $ref: '#/components/schemas/loci.common.PaginationRequest'
+        includeMember:
+          type: boolean
+          title: include_member
+          description: Also list trips the caller is a member of, each with viewer_role set.
       title: ListTripsRequest
       required:
         - pagination
@@ -34410,6 +34711,24 @@ components:
           format: int64
       title: RemoveStopRequest
       additionalProperties: false
+    loci.trip.RemoveTripMemberRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          format: uuid
+        userId:
+          type: string
+          title: user_id
+          format: uuid
+          description: The caller's own id leaves the trip.
+      title: RemoveTripMemberRequest
+      additionalProperties: false
+    loci.trip.RemoveTripMemberResponse:
+      type: object
+      title: RemoveTripMemberResponse
+      additionalProperties: false
     loci.trip.RenameStopRequest:
       type: object
       properties:
@@ -34495,6 +34814,24 @@ components:
       title: ReplaceStopRequest
       required:
         - replacement
+      additionalProperties: false
+    loci.trip.RevokeTripInviteRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          format: uuid
+        code:
+          type: string
+          title: code
+          maxLength: 50
+          minLength: 1
+      title: RevokeTripInviteRequest
+      additionalProperties: false
+    loci.trip.RevokeTripInviteResponse:
+      type: object
+      title: RevokeTripInviteResponse
       additionalProperties: false
     loci.trip.SaveTripRequest:
       type: object
@@ -34979,6 +35316,18 @@ components:
           items:
             $ref: '#/components/schemas/loci.trip.TripFlight'
           title: flights
+        viewerRole:
+          title: viewer_role
+          description: |-
+            The caller's role on the trip. OWNER on the owner's own reads; set for
+             members on GetTrip. UNSPECIFIED on shared and friend reads.
+          $ref: '#/components/schemas/loci.trip.TripRole'
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.trip.TripMember'
+          title: members
+          description: The owner and the trip's members, on GetTrip when the trip has members.
       title: TripDraft
       additionalProperties: false
       description: |-
@@ -35057,6 +35406,94 @@ components:
         TripFlight is a flight the traveller chose. Loci never quotes a fare:
          price_text is whatever the traveller typed, shown back to them as-is.
         trip_flight.return_after_depart // return_date must not be before depart_date
+    loci.trip.TripInvite:
+      type: object
+      properties:
+        code:
+          type: string
+          title: code
+          maxLength: 50
+        url:
+          type: string
+          title: url
+          maxLength: 2048
+        role:
+          title: role
+          $ref: '#/components/schemas/loci.trip.TripRole'
+        expiresAt:
+          title: expires_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        maxUses:
+          type: integer
+          title: max_uses
+          format: int32
+        uses:
+          type: integer
+          title: uses
+          format: int32
+      title: TripInvite
+      additionalProperties: false
+      description: |-
+        TripInvite is a link that adds whoever opens it to a trip. It expires, can
+         be used a limited number of times, and the owner can revoke it.
+    loci.trip.TripInvitePreview:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+        title:
+          type: string
+          title: title
+          maxLength: 300
+        cityName:
+          type: string
+          title: city_name
+          maxLength: 200
+        startDate:
+          type:
+            - string
+            - "null"
+          title: start_date
+          maxLength: 10
+        endDate:
+          type:
+            - string
+            - "null"
+          title: end_date
+          maxLength: 10
+        dayCount:
+          type: integer
+          title: day_count
+          format: int32
+        owner:
+          title: owner
+          $ref: '#/components/schemas/loci.social.PublicUser'
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.trip.TripMember'
+          title: members
+          description: The owner first, then members by joining order.
+        role:
+          title: role
+          description: What joining makes the caller.
+          $ref: '#/components/schemas/loci.trip.TripRole'
+        joinable:
+          type: boolean
+          title: joinable
+          description: False once the invite expired, was revoked or ran out of uses.
+        alreadyMember:
+          type: boolean
+          title: already_member
+          description: The caller already belongs to the trip (owner or member). False signed out.
+      title: TripInvitePreview
+      additionalProperties: false
+      description: |-
+        TripInvitePreview is what an invite link shows before joining. It is
+         readable signed out, so it carries nothing the owner did not mean to send:
+         no stops, no notes.
     loci.trip.TripLeg:
       type: object
       properties:
@@ -35130,6 +35567,21 @@ components:
       title: TripLeg
       additionalProperties: false
       description: TripLeg is travel between two consecutive places in a multi-city trip.
+    loci.trip.TripMember:
+      type: object
+      properties:
+        user:
+          title: user
+          $ref: '#/components/schemas/loci.social.PublicUser'
+        role:
+          title: role
+          $ref: '#/components/schemas/loci.trip.TripRole'
+        joinedAt:
+          title: joined_at
+          description: Unset for the owner.
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: TripMember
+      additionalProperties: false
     loci.trip.TripPace:
       type: string
       title: TripPace
@@ -35139,6 +35591,15 @@ components:
         - TRIP_PACE_MODERATE
         - TRIP_PACE_PACKED
       description: TripPace is how densely a day is packed.
+    loci.trip.TripRole:
+      type: string
+      title: TripRole
+      enum:
+        - TRIP_ROLE_UNSPECIFIED
+        - TRIP_ROLE_OWNER
+        - TRIP_ROLE_CO_PLANNER
+        - TRIP_ROLE_VIEWER
+      description: TripRole is what a person may do on a trip.
     loci.trip.TripSnapshot:
       type: object
       properties:
