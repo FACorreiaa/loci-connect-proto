@@ -2072,6 +2072,10 @@
                 </li>
               
                 <li>
+                  <a href="#loci.chat.AddStopAction"><span class="badge">M</span>AddStopAction</a>
+                </li>
+              
+                <li>
                   <a href="#loci.chat.AiCityResponse"><span class="badge">M</span>AiCityResponse</a>
                 </li>
               
@@ -2212,6 +2216,14 @@
                 </li>
               
                 <li>
+                  <a href="#loci.chat.ListTripProposalsRequest"><span class="badge">M</span>ListTripProposalsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.ListTripProposalsResponse"><span class="badge">M</span>ListTripProposalsResponse</a>
+                </li>
+              
+                <li>
                   <a href="#loci.chat.ListWatchesRequest"><span class="badge">M</span>ListWatchesRequest</a>
                 </li>
               
@@ -2232,6 +2244,10 @@
                 </li>
               
                 <li>
+                  <a href="#loci.chat.MoveStopAction"><span class="badge">M</span>MoveStopAction</a>
+                </li>
+              
+                <li>
                   <a href="#loci.chat.NavigationData"><span class="badge">M</span>NavigationData</a>
                 </li>
               
@@ -2244,6 +2260,10 @@
                 </li>
               
                 <li>
+                  <a href="#loci.chat.ProposeTripChangeRequest"><span class="badge">M</span>ProposeTripChangeRequest</a>
+                </li>
+              
+                <li>
                   <a href="#loci.chat.ProposeWatchRequest"><span class="badge">M</span>ProposeWatchRequest</a>
                 </li>
               
@@ -2252,11 +2272,23 @@
                 </li>
               
                 <li>
+                  <a href="#loci.chat.ReactToTripProposalRequest"><span class="badge">M</span>ReactToTripProposalRequest</a>
+                </li>
+              
+                <li>
                   <a href="#loci.chat.RecentInteraction"><span class="badge">M</span>RecentInteraction</a>
                 </li>
               
                 <li>
                   <a href="#loci.chat.RegenerateDaysAction"><span class="badge">M</span>RegenerateDaysAction</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.RemoveStopAction"><span class="badge">M</span>RemoveStopAction</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.ReplaceStopAction"><span class="badge">M</span>ReplaceStopAction</a>
                 </li>
               
                 <li>
@@ -2362,6 +2394,14 @@
               
                 <li>
                   <a href="#loci.chat.MessageType"><span class="badge">E</span>MessageType</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.ProposalSource"><span class="badge">E</span>ProposalSource</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.ProposalStatus"><span class="badge">E</span>ProposalStatus</a>
                 </li>
               
                 <li>
@@ -22547,6 +22587,64 @@ answers to requests that are not trips. </p></td>
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>proposer</td>
+                  <td><a href="#loci.social.PublicUser">loci.social.PublicUser</a></td>
+                  <td></td>
+                  <td><p>Planning together: who suggested it and how the trip&#39;s members feel.
+Set on ListTripProposals, ProposeTripChange and ReactToTripProposal. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>source</td>
+                  <td><a href="#loci.chat.ProposalSource">ProposalSource</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base_version</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>The trip version it was suggested against. Applying does not require it
+to be current; a newer trip only means the owner should look again. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>up_votes</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>down_votes</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>my_reaction</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>The caller&#39;s own reaction: 1, -1, or 0 for none. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#loci.chat.ProposalStatus">ProposalStatus</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -22605,6 +22703,37 @@ answers to requests that are not trips. </p></td>
                 <tr>
                   <td>session_id</td>
                   <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.AddStopAction">AddStopAction</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>day_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>stop</td>
+                  <td><a href="#loci.trip.TripStop">loci.trip.TripStop</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -24045,6 +24174,61 @@ and source_label &#34;Standing task&#34;. Clients can append it without refetchi
 
         
       
+        <h3 id="loci.chat.ListTripProposalsRequest">ListTripProposalsRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>include_closed</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Also list applied and dismissed proposals from the last 30 days. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.ListTripProposalsResponse">ListTripProposalsResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>proposals</td>
+                  <td><a href="#loci.chat.ActionProposal">ActionProposal</a></td>
+                  <td>repeated</td>
+                  <td><p>Newest first. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.chat.ListWatchesRequest">ListWatchesRequest</h3>
         <p></p>
 
@@ -24319,6 +24503,44 @@ and source_label &#34;Standing task&#34;. Clients can append it without refetchi
 
         
       
+        <h3 id="loci.chat.MoveStopAction">MoveStopAction</h3>
+        <p>Moves a stop to another day (or within its own), at to_index in that</p><p>day's order; an index past the end appends.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>stop_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>to_day_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>to_index</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.chat.NavigationData">NavigationData</h3>
         <p>NavigationData contains navigation information</p>
 
@@ -24419,6 +24641,44 @@ and source_label &#34;Standing task&#34;. Clients can append it without refetchi
 
         
       
+        <h3 id="loci.chat.ProposeTripChangeRequest">ProposeTripChangeRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>action</td>
+                  <td><a href="#loci.chat.TripAction">TripAction</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base_version</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>The trip version the member was looking at. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.chat.ProposeWatchRequest">ProposeWatchRequest</h3>
         <p></p>
 
@@ -24465,6 +24725,37 @@ and source_label &#34;Standing task&#34;. Clients can append it without refetchi
                   <td><a href="#loci.chat.WatchProposal">WatchProposal</a></td>
                   <td></td>
                   <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.ReactToTripProposalRequest">ReactToTripProposalRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>proposal_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>1 for 👍, -1 for 👎, 0 to take the reaction back. </p></td>
                 </tr>
               
             </tbody>
@@ -24588,6 +24879,61 @@ and source_label &#34;Standing task&#34;. Clients can append it without refetchi
                 <tr>
                   <td>days</td>
                   <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.RemoveStopAction">RemoveStopAction</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>stop_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.ReplaceStopAction">ReplaceStopAction</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>stop_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>replacement</td>
+                  <td><a href="#loci.trip.TripStop">loci.trip.TripStop</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -25590,6 +25936,36 @@ belongs to. An ERROR carrying it failed that city only, not the stream. </p></td
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>add_stop</td>
+                  <td><a href="#loci.chat.AddStopAction">AddStopAction</a></td>
+                  <td></td>
+                  <td><p>Stop edits, suggested by a trip member (or the owner) from the trip
+page. Each targets ids on the trip; one that no longer exists when the
+owner applies is FailedPrecondition. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>remove_stop</td>
+                  <td><a href="#loci.chat.RemoveStopAction">RemoveStopAction</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>replace_stop</td>
+                  <td><a href="#loci.chat.ReplaceStopAction">ReplaceStopAction</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>move_stop</td>
+                  <td><a href="#loci.chat.MoveStopAction">MoveStopAction</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -26097,6 +26473,70 @@ stream carries a GASTRONOMY event rather than a place list.</p></td>
           </tbody>
         </table>
       
+        <h3 id="loci.chat.ProposalSource">ProposalSource</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>PROPOSAL_SOURCE_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>PROPOSAL_SOURCE_CHAT</td>
+                <td>1</td>
+                <td><p>The planner, from a chat turn on the trip.</p></td>
+              </tr>
+            
+              <tr>
+                <td>PROPOSAL_SOURCE_EDITOR</td>
+                <td>2</td>
+                <td><p>A member&#39;s Suggest change on the trip page.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="loci.chat.ProposalStatus">ProposalStatus</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>PROPOSAL_STATUS_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>PROPOSAL_STATUS_PENDING</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>PROPOSAL_STATUS_APPLIED</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>PROPOSAL_STATUS_DISMISSED</td>
+                <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
         <h3 id="loci.chat.RunStatus">RunStatus</h3>
         <p>RunStatus is where one generation is. A run that has been RUNNING for more</p><p>than 10 minutes is reported as FAILED (deadline_exceeded).</p>
         <table class="enum-table">
@@ -26426,14 +26866,38 @@ reload or on returning to the app to settle runs nobody was listening to.</p></t
                 <td><a href="#loci.chat.ApplyTripActionResponse">ApplyTripActionResponse</a></td>
                 <td><p>Applies a proposal the agent streamed (action_proposal) to its trip.
 FailedPrecondition when it was already applied or dismissed, has
-expired, or base_version is stale.</p></td>
+expired, or base_version is stale.
+On a trip with members, only the owner applies, any member&#39;s proposal.</p></td>
               </tr>
             
               <tr>
                 <td>DismissTripAction</td>
                 <td><a href="#loci.chat.DismissTripActionRequest">DismissTripActionRequest</a></td>
                 <td><a href="#loci.chat.DismissTripActionResponse">DismissTripActionResponse</a></td>
-                <td><p></p></td>
+                <td><p>The owner dismisses any proposal; a member only their own.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ProposeTripChange</td>
+                <td><a href="#loci.chat.ProposeTripChangeRequest">ProposeTripChangeRequest</a></td>
+                <td><a href="#loci.chat.ActionProposal">ActionProposal</a></td>
+                <td><p>Planning together. ProposeTripChange stores a co-planner&#39;s (or the
+owner&#39;s) suggested edit for the owner to apply; viewers and strangers
+are NotFound.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListTripProposals</td>
+                <td><a href="#loci.chat.ListTripProposalsRequest">ListTripProposalsRequest</a></td>
+                <td><a href="#loci.chat.ListTripProposalsResponse">ListTripProposalsResponse</a></td>
+                <td><p>ListTripProposals lists a trip&#39;s proposals for anyone on the trip.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ReactToTripProposal</td>
+                <td><a href="#loci.chat.ReactToTripProposalRequest">ReactToTripProposalRequest</a></td>
+                <td><a href="#loci.chat.ActionProposal">ActionProposal</a></td>
+                <td><p>ReactToTripProposal sets the caller&#39;s 👍/👎 on a pending proposal.</p></td>
               </tr>
             
           </tbody>

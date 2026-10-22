@@ -56,11 +56,27 @@ public protocol Loci_Chat_ChatServiceClientInterface: Sendable {
     /// Applies a proposal the agent streamed (action_proposal) to its trip.
     /// FailedPrecondition when it was already applied or dismissed, has
     /// expired, or base_version is stale.
+    /// On a trip with members, only the owner applies, any member's proposal.
     @available(iOS 13, *)
     func `applyTripAction`(request: Loci_Chat_ApplyTripActionRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Chat_ApplyTripActionResponse>
 
+    /// The owner dismisses any proposal; a member only their own.
     @available(iOS 13, *)
     func `dismissTripAction`(request: Loci_Chat_DismissTripActionRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Chat_DismissTripActionResponse>
+
+    /// Planning together. ProposeTripChange stores a co-planner's (or the
+    /// owner's) suggested edit for the owner to apply; viewers and strangers
+    /// are NotFound.
+    @available(iOS 13, *)
+    func `proposeTripChange`(request: Loci_Chat_ProposeTripChangeRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Chat_ActionProposal>
+
+    /// ListTripProposals lists a trip's proposals for anyone on the trip.
+    @available(iOS 13, *)
+    func `listTripProposals`(request: Loci_Chat_ListTripProposalsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Chat_ListTripProposalsResponse>
+
+    /// ReactToTripProposal sets the caller's 👍/👎 on a pending proposal.
+    @available(iOS 13, *)
+    func `reactToTripProposal`(request: Loci_Chat_ReactToTripProposalRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Chat_ActionProposal>
 }
 
 /// Concrete implementation of `Loci_Chat_ChatServiceClientInterface`.
@@ -141,6 +157,21 @@ public final class Loci_Chat_ChatServiceClient: Loci_Chat_ChatServiceClientInter
         return await self.client.unary(path: "/loci.chat.ChatService/DismissTripAction", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
+    @available(iOS 13, *)
+    public func `proposeTripChange`(request: Loci_Chat_ProposeTripChangeRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Chat_ActionProposal> {
+        return await self.client.unary(path: "/loci.chat.ChatService/ProposeTripChange", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `listTripProposals`(request: Loci_Chat_ListTripProposalsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Chat_ListTripProposalsResponse> {
+        return await self.client.unary(path: "/loci.chat.ChatService/ListTripProposals", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `reactToTripProposal`(request: Loci_Chat_ReactToTripProposalRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Chat_ActionProposal> {
+        return await self.client.unary(path: "/loci.chat.ChatService/ReactToTripProposal", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
     public enum Metadata {
         public enum Methods {
             public static let startChat = Connect.MethodSpec(name: "StartChat", service: "loci.chat.ChatService", type: .unary)
@@ -157,6 +188,9 @@ public final class Loci_Chat_ChatServiceClient: Loci_Chat_ChatServiceClientInter
             public static let getRunStatus = Connect.MethodSpec(name: "GetRunStatus", service: "loci.chat.ChatService", type: .unary)
             public static let applyTripAction = Connect.MethodSpec(name: "ApplyTripAction", service: "loci.chat.ChatService", type: .unary)
             public static let dismissTripAction = Connect.MethodSpec(name: "DismissTripAction", service: "loci.chat.ChatService", type: .unary)
+            public static let proposeTripChange = Connect.MethodSpec(name: "ProposeTripChange", service: "loci.chat.ChatService", type: .unary)
+            public static let listTripProposals = Connect.MethodSpec(name: "ListTripProposals", service: "loci.chat.ChatService", type: .unary)
+            public static let reactToTripProposal = Connect.MethodSpec(name: "ReactToTripProposal", service: "loci.chat.ChatService", type: .unary)
         }
     }
 }
