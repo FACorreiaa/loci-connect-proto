@@ -554,6 +554,90 @@ public enum Loci_Chat_RunStatus: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
+public enum Loci_Chat_ProposalSource: SwiftProtobuf.Enum, Swift.CaseIterable {
+  public typealias RawValue = Int
+  case unspecified // = 0
+
+  /// The planner, from a chat turn on the trip.
+  case chat // = 1
+
+  /// A member's Suggest change on the trip page.
+  case editor // = 2
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .unspecified
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unspecified
+    case 1: self = .chat
+    case 2: self = .editor
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .unspecified: return 0
+    case .chat: return 1
+    case .editor: return 2
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static let allCases: [Loci_Chat_ProposalSource] = [
+    .unspecified,
+    .chat,
+    .editor,
+  ]
+
+}
+
+public enum Loci_Chat_ProposalStatus: SwiftProtobuf.Enum, Swift.CaseIterable {
+  public typealias RawValue = Int
+  case unspecified // = 0
+  case pending // = 1
+  case applied // = 2
+  case dismissed // = 3
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .unspecified
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unspecified
+    case 1: self = .pending
+    case 2: self = .applied
+    case 3: self = .dismissed
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .unspecified: return 0
+    case .pending: return 1
+    case .applied: return 2
+    case .dismissed: return 3
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static let allCases: [Loci_Chat_ProposalStatus] = [
+    .unspecified,
+    .pending,
+    .applied,
+    .dismissed,
+  ]
+
+}
+
 /// LlmInteraction represents an interaction with the LLM
 public struct Loci_Chat_LlmInteraction: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
@@ -2567,6 +2651,41 @@ public struct Loci_Chat_TripAction: Sendable {
     set {kind = .searchFlights(newValue)}
   }
 
+  /// Stop edits, suggested by a trip member (or the owner) from the trip
+  /// page. Each targets ids on the trip; one that no longer exists when the
+  /// owner applies is FailedPrecondition.
+  public var addStop: Loci_Chat_AddStopAction {
+    get {
+      if case .addStop(let v)? = kind {return v}
+      return Loci_Chat_AddStopAction()
+    }
+    set {kind = .addStop(newValue)}
+  }
+
+  public var removeStop: Loci_Chat_RemoveStopAction {
+    get {
+      if case .removeStop(let v)? = kind {return v}
+      return Loci_Chat_RemoveStopAction()
+    }
+    set {kind = .removeStop(newValue)}
+  }
+
+  public var replaceStop: Loci_Chat_ReplaceStopAction {
+    get {
+      if case .replaceStop(let v)? = kind {return v}
+      return Loci_Chat_ReplaceStopAction()
+    }
+    set {kind = .replaceStop(newValue)}
+  }
+
+  public var moveStop: Loci_Chat_MoveStopAction {
+    get {
+      if case .moveStop(let v)? = kind {return v}
+      return Loci_Chat_MoveStopAction()
+    }
+    set {kind = .moveStop(newValue)}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public enum OneOf_Kind: Equatable, Sendable {
@@ -2574,8 +2693,91 @@ public struct Loci_Chat_TripAction: Sendable {
     case searchHotels(Loci_Chat_SearchHotelsAction)
     case regenerateDays(Loci_Chat_RegenerateDaysAction)
     case searchFlights(Loci_Chat_SearchFlightsAction)
+    /// Stop edits, suggested by a trip member (or the owner) from the trip
+    /// page. Each targets ids on the trip; one that no longer exists when the
+    /// owner applies is FailedPrecondition.
+    case addStop(Loci_Chat_AddStopAction)
+    case removeStop(Loci_Chat_RemoveStopAction)
+    case replaceStop(Loci_Chat_ReplaceStopAction)
+    case moveStop(Loci_Chat_MoveStopAction)
 
   }
+
+  public init() {}
+}
+
+public struct Loci_Chat_AddStopAction: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var dayID: String = String()
+
+  public var stop: Loci_Trip_TripStop {
+    get {return _stop ?? Loci_Trip_TripStop()}
+    set {_stop = newValue}
+  }
+  /// Returns true if `stop` has been explicitly set.
+  public var hasStop: Bool {return self._stop != nil}
+  /// Clears the value of `stop`. Subsequent reads from it will return its default value.
+  public mutating func clearStop() {self._stop = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _stop: Loci_Trip_TripStop? = nil
+}
+
+public struct Loci_Chat_RemoveStopAction: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var stopID: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Chat_ReplaceStopAction: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var stopID: String = String()
+
+  public var replacement: Loci_Trip_TripStop {
+    get {return _replacement ?? Loci_Trip_TripStop()}
+    set {_replacement = newValue}
+  }
+  /// Returns true if `replacement` has been explicitly set.
+  public var hasReplacement: Bool {return self._replacement != nil}
+  /// Clears the value of `replacement`. Subsequent reads from it will return its default value.
+  public mutating func clearReplacement() {self._replacement = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _replacement: Loci_Trip_TripStop? = nil
+}
+
+/// Moves a stop to another day (or within its own), at to_index in that
+/// day's order; an index past the end appends.
+public struct Loci_Chat_MoveStopAction: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var stopID: String = String()
+
+  public var toDayID: String = String()
+
+  public var toIndex: Int32 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 }
@@ -2712,12 +2914,114 @@ public struct Loci_Chat_ActionOption: Sendable {
   public init() {}
 }
 
-public struct Loci_Chat_ActionProposal: Sendable {
+public struct Loci_Chat_ActionProposal: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var id: String = String()
+  public var id: String {
+    get {return _storage._id}
+    set {_uniqueStorage()._id = newValue}
+  }
+
+  public var tripID: String {
+    get {return _storage._tripID}
+    set {_uniqueStorage()._tripID = newValue}
+  }
+
+  public var action: Loci_Chat_TripAction {
+    get {return _storage._action ?? Loci_Chat_TripAction()}
+    set {_uniqueStorage()._action = newValue}
+  }
+  /// Returns true if `action` has been explicitly set.
+  public var hasAction: Bool {return _storage._action != nil}
+  /// Clears the value of `action`. Subsequent reads from it will return its default value.
+  public mutating func clearAction() {_uniqueStorage()._action = nil}
+
+  /// One line the card shows, e.g. "4★ hotels in Lisbon: pick one to stay at".
+  public var summary: String {
+    get {return _storage._summary}
+    set {_uniqueStorage()._summary = newValue}
+  }
+
+  public var options: [Loci_Chat_ActionOption] {
+    get {return _storage._options}
+    set {_uniqueStorage()._options = newValue}
+  }
+
+  public var expiresAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _storage._expiresAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_uniqueStorage()._expiresAt = newValue}
+  }
+  /// Returns true if `expiresAt` has been explicitly set.
+  public var hasExpiresAt: Bool {return _storage._expiresAt != nil}
+  /// Clears the value of `expiresAt`. Subsequent reads from it will return its default value.
+  public mutating func clearExpiresAt() {_uniqueStorage()._expiresAt = nil}
+
+  /// Planning together: who suggested it and how the trip's members feel.
+  /// Set on ListTripProposals, ProposeTripChange and ReactToTripProposal.
+  public var proposer: Loci_Social_PublicUser {
+    get {return _storage._proposer ?? Loci_Social_PublicUser()}
+    set {_uniqueStorage()._proposer = newValue}
+  }
+  /// Returns true if `proposer` has been explicitly set.
+  public var hasProposer: Bool {return _storage._proposer != nil}
+  /// Clears the value of `proposer`. Subsequent reads from it will return its default value.
+  public mutating func clearProposer() {_uniqueStorage()._proposer = nil}
+
+  public var source: Loci_Chat_ProposalSource {
+    get {return _storage._source}
+    set {_uniqueStorage()._source = newValue}
+  }
+
+  /// The trip version it was suggested against. Applying does not require it
+  /// to be current; a newer trip only means the owner should look again.
+  public var baseVersion: Int64 {
+    get {return _storage._baseVersion}
+    set {_uniqueStorage()._baseVersion = newValue}
+  }
+
+  public var upVotes: Int32 {
+    get {return _storage._upVotes}
+    set {_uniqueStorage()._upVotes = newValue}
+  }
+
+  public var downVotes: Int32 {
+    get {return _storage._downVotes}
+    set {_uniqueStorage()._downVotes = newValue}
+  }
+
+  /// The caller's own reaction: 1, -1, or 0 for none.
+  public var myReaction: Int32 {
+    get {return _storage._myReaction}
+    set {_uniqueStorage()._myReaction = newValue}
+  }
+
+  public var status: Loci_Chat_ProposalStatus {
+    get {return _storage._status}
+    set {_uniqueStorage()._status = newValue}
+  }
+
+  public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _storage._createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_uniqueStorage()._createdAt = newValue}
+  }
+  /// Returns true if `createdAt` has been explicitly set.
+  public var hasCreatedAt: Bool {return _storage._createdAt != nil}
+  /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
+  public mutating func clearCreatedAt() {_uniqueStorage()._createdAt = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _storage = _StorageClass.defaultInstance
+}
+
+public struct Loci_Chat_ProposeTripChangeRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
 
   public var tripID: String = String()
 
@@ -2730,26 +3034,57 @@ public struct Loci_Chat_ActionProposal: Sendable {
   /// Clears the value of `action`. Subsequent reads from it will return its default value.
   public mutating func clearAction() {self._action = nil}
 
-  /// One line the card shows, e.g. "4★ hotels in Lisbon: pick one to stay at".
-  public var summary: String = String()
-
-  public var options: [Loci_Chat_ActionOption] = []
-
-  public var expiresAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _expiresAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
-    set {_expiresAt = newValue}
-  }
-  /// Returns true if `expiresAt` has been explicitly set.
-  public var hasExpiresAt: Bool {return self._expiresAt != nil}
-  /// Clears the value of `expiresAt`. Subsequent reads from it will return its default value.
-  public mutating func clearExpiresAt() {self._expiresAt = nil}
+  /// The trip version the member was looking at.
+  public var baseVersion: Int64 = 0
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
   fileprivate var _action: Loci_Chat_TripAction? = nil
-  fileprivate var _expiresAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+}
+
+public struct Loci_Chat_ListTripProposalsRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var tripID: String = String()
+
+  /// Also list applied and dismissed proposals from the last 30 days.
+  public var includeClosed: Bool = false
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Chat_ListTripProposalsResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// Newest first.
+  public var proposals: [Loci_Chat_ActionProposal] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Chat_ReactToTripProposalRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var proposalID: String = String()
+
+  /// 1 for 👍, -1 for 👎, 0 to take the reaction back.
+  public var value: Int32 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
 }
 
 public struct Loci_Chat_ActionProposalPayload: Sendable {
@@ -3201,6 +3536,23 @@ extension Loci_Chat_RunStatus: SwiftProtobuf._ProtoNameProviding {
     1: .same(proto: "RUN_STATUS_RUNNING"),
     2: .same(proto: "RUN_STATUS_DONE"),
     3: .same(proto: "RUN_STATUS_FAILED"),
+  ]
+}
+
+extension Loci_Chat_ProposalSource: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "PROPOSAL_SOURCE_UNSPECIFIED"),
+    1: .same(proto: "PROPOSAL_SOURCE_CHAT"),
+    2: .same(proto: "PROPOSAL_SOURCE_EDITOR"),
+  ]
+}
+
+extension Loci_Chat_ProposalStatus: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "PROPOSAL_STATUS_UNSPECIFIED"),
+    1: .same(proto: "PROPOSAL_STATUS_PENDING"),
+    2: .same(proto: "PROPOSAL_STATUS_APPLIED"),
+    3: .same(proto: "PROPOSAL_STATUS_DISMISSED"),
   ]
 }
 
@@ -6611,6 +6963,10 @@ extension Loci_Chat_TripAction: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     2: .standard(proto: "search_hotels"),
     3: .standard(proto: "regenerate_days"),
     4: .standard(proto: "search_flights"),
+    5: .standard(proto: "add_stop"),
+    6: .standard(proto: "remove_stop"),
+    7: .standard(proto: "replace_stop"),
+    8: .standard(proto: "move_stop"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -6671,6 +7027,58 @@ extension Loci_Chat_TripAction: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
           self.kind = .searchFlights(v)
         }
       }()
+      case 5: try {
+        var v: Loci_Chat_AddStopAction?
+        var hadOneofValue = false
+        if let current = self.kind {
+          hadOneofValue = true
+          if case .addStop(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.kind = .addStop(v)
+        }
+      }()
+      case 6: try {
+        var v: Loci_Chat_RemoveStopAction?
+        var hadOneofValue = false
+        if let current = self.kind {
+          hadOneofValue = true
+          if case .removeStop(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.kind = .removeStop(v)
+        }
+      }()
+      case 7: try {
+        var v: Loci_Chat_ReplaceStopAction?
+        var hadOneofValue = false
+        if let current = self.kind {
+          hadOneofValue = true
+          if case .replaceStop(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.kind = .replaceStop(v)
+        }
+      }()
+      case 8: try {
+        var v: Loci_Chat_MoveStopAction?
+        var hadOneofValue = false
+        if let current = self.kind {
+          hadOneofValue = true
+          if case .moveStop(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.kind = .moveStop(v)
+        }
+      }()
       default: break
       }
     }
@@ -6698,6 +7106,22 @@ extension Loci_Chat_TripAction: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       guard case .searchFlights(let v)? = self.kind else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     }()
+    case .addStop?: try {
+      guard case .addStop(let v)? = self.kind else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+    }()
+    case .removeStop?: try {
+      guard case .removeStop(let v)? = self.kind else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+    }()
+    case .replaceStop?: try {
+      guard case .replaceStop(let v)? = self.kind else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+    }()
+    case .moveStop?: try {
+      guard case .moveStop(let v)? = self.kind else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
+    }()
     case nil: break
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -6705,6 +7129,166 @@ extension Loci_Chat_TripAction: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
 
   public static func ==(lhs: Loci_Chat_TripAction, rhs: Loci_Chat_TripAction) -> Bool {
     if lhs.kind != rhs.kind {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Chat_AddStopAction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".AddStopAction"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "day_id"),
+    2: .same(proto: "stop"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.dayID) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._stop) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.dayID.isEmpty {
+      try visitor.visitSingularStringField(value: self.dayID, fieldNumber: 1)
+    }
+    try { if let v = self._stop {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_AddStopAction, rhs: Loci_Chat_AddStopAction) -> Bool {
+    if lhs.dayID != rhs.dayID {return false}
+    if lhs._stop != rhs._stop {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Chat_RemoveStopAction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".RemoveStopAction"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "stop_id"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.stopID) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.stopID.isEmpty {
+      try visitor.visitSingularStringField(value: self.stopID, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_RemoveStopAction, rhs: Loci_Chat_RemoveStopAction) -> Bool {
+    if lhs.stopID != rhs.stopID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Chat_ReplaceStopAction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ReplaceStopAction"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "stop_id"),
+    2: .same(proto: "replacement"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.stopID) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._replacement) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.stopID.isEmpty {
+      try visitor.visitSingularStringField(value: self.stopID, fieldNumber: 1)
+    }
+    try { if let v = self._replacement {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_ReplaceStopAction, rhs: Loci_Chat_ReplaceStopAction) -> Bool {
+    if lhs.stopID != rhs.stopID {return false}
+    if lhs._replacement != rhs._replacement {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Chat_MoveStopAction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".MoveStopAction"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "stop_id"),
+    2: .standard(proto: "to_day_id"),
+    3: .standard(proto: "to_index"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.stopID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.toDayID) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self.toIndex) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.stopID.isEmpty {
+      try visitor.visitSingularStringField(value: self.stopID, fieldNumber: 1)
+    }
+    if !self.toDayID.isEmpty {
+      try visitor.visitSingularStringField(value: self.toDayID, fieldNumber: 2)
+    }
+    if self.toIndex != 0 {
+      try visitor.visitSingularInt32Field(value: self.toIndex, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_MoveStopAction, rhs: Loci_Chat_MoveStopAction) -> Bool {
+    if lhs.stopID != rhs.stopID {return false}
+    if lhs.toDayID != rhs.toDayID {return false}
+    if lhs.toIndex != rhs.toIndex {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -6981,6 +7565,183 @@ extension Loci_Chat_ActionProposal: SwiftProtobuf.Message, SwiftProtobuf._Messag
     4: .same(proto: "summary"),
     5: .same(proto: "options"),
     6: .standard(proto: "expires_at"),
+    7: .same(proto: "proposer"),
+    8: .same(proto: "source"),
+    9: .standard(proto: "base_version"),
+    10: .standard(proto: "up_votes"),
+    11: .standard(proto: "down_votes"),
+    12: .standard(proto: "my_reaction"),
+    13: .same(proto: "status"),
+    14: .standard(proto: "created_at"),
+  ]
+
+  fileprivate class _StorageClass {
+    var _id: String = String()
+    var _tripID: String = String()
+    var _action: Loci_Chat_TripAction? = nil
+    var _summary: String = String()
+    var _options: [Loci_Chat_ActionOption] = []
+    var _expiresAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+    var _proposer: Loci_Social_PublicUser? = nil
+    var _source: Loci_Chat_ProposalSource = .unspecified
+    var _baseVersion: Int64 = 0
+    var _upVotes: Int32 = 0
+    var _downVotes: Int32 = 0
+    var _myReaction: Int32 = 0
+    var _status: Loci_Chat_ProposalStatus = .unspecified
+    var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+
+    #if swift(>=5.10)
+      // This property is used as the initial default value for new instances of the type.
+      // The type itself is protecting the reference to its storage via CoW semantics.
+      // This will force a copy to be made of this reference when the first mutation occurs;
+      // hence, it is safe to mark this as `nonisolated(unsafe)`.
+      static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _id = source._id
+      _tripID = source._tripID
+      _action = source._action
+      _summary = source._summary
+      _options = source._options
+      _expiresAt = source._expiresAt
+      _proposer = source._proposer
+      _source = source._source
+      _baseVersion = source._baseVersion
+      _upVotes = source._upVotes
+      _downVotes = source._downVotes
+      _myReaction = source._myReaction
+      _status = source._status
+      _createdAt = source._createdAt
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularStringField(value: &_storage._id) }()
+        case 2: try { try decoder.decodeSingularStringField(value: &_storage._tripID) }()
+        case 3: try { try decoder.decodeSingularMessageField(value: &_storage._action) }()
+        case 4: try { try decoder.decodeSingularStringField(value: &_storage._summary) }()
+        case 5: try { try decoder.decodeRepeatedMessageField(value: &_storage._options) }()
+        case 6: try { try decoder.decodeSingularMessageField(value: &_storage._expiresAt) }()
+        case 7: try { try decoder.decodeSingularMessageField(value: &_storage._proposer) }()
+        case 8: try { try decoder.decodeSingularEnumField(value: &_storage._source) }()
+        case 9: try { try decoder.decodeSingularInt64Field(value: &_storage._baseVersion) }()
+        case 10: try { try decoder.decodeSingularInt32Field(value: &_storage._upVotes) }()
+        case 11: try { try decoder.decodeSingularInt32Field(value: &_storage._downVotes) }()
+        case 12: try { try decoder.decodeSingularInt32Field(value: &_storage._myReaction) }()
+        case 13: try { try decoder.decodeSingularEnumField(value: &_storage._status) }()
+        case 14: try { try decoder.decodeSingularMessageField(value: &_storage._createdAt) }()
+        default: break
+        }
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      if !_storage._id.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._id, fieldNumber: 1)
+      }
+      if !_storage._tripID.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._tripID, fieldNumber: 2)
+      }
+      try { if let v = _storage._action {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+      } }()
+      if !_storage._summary.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._summary, fieldNumber: 4)
+      }
+      if !_storage._options.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._options, fieldNumber: 5)
+      }
+      try { if let v = _storage._expiresAt {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+      } }()
+      try { if let v = _storage._proposer {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+      } }()
+      if _storage._source != .unspecified {
+        try visitor.visitSingularEnumField(value: _storage._source, fieldNumber: 8)
+      }
+      if _storage._baseVersion != 0 {
+        try visitor.visitSingularInt64Field(value: _storage._baseVersion, fieldNumber: 9)
+      }
+      if _storage._upVotes != 0 {
+        try visitor.visitSingularInt32Field(value: _storage._upVotes, fieldNumber: 10)
+      }
+      if _storage._downVotes != 0 {
+        try visitor.visitSingularInt32Field(value: _storage._downVotes, fieldNumber: 11)
+      }
+      if _storage._myReaction != 0 {
+        try visitor.visitSingularInt32Field(value: _storage._myReaction, fieldNumber: 12)
+      }
+      if _storage._status != .unspecified {
+        try visitor.visitSingularEnumField(value: _storage._status, fieldNumber: 13)
+      }
+      try { if let v = _storage._createdAt {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
+      } }()
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_ActionProposal, rhs: Loci_Chat_ActionProposal) -> Bool {
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._id != rhs_storage._id {return false}
+        if _storage._tripID != rhs_storage._tripID {return false}
+        if _storage._action != rhs_storage._action {return false}
+        if _storage._summary != rhs_storage._summary {return false}
+        if _storage._options != rhs_storage._options {return false}
+        if _storage._expiresAt != rhs_storage._expiresAt {return false}
+        if _storage._proposer != rhs_storage._proposer {return false}
+        if _storage._source != rhs_storage._source {return false}
+        if _storage._baseVersion != rhs_storage._baseVersion {return false}
+        if _storage._upVotes != rhs_storage._upVotes {return false}
+        if _storage._downVotes != rhs_storage._downVotes {return false}
+        if _storage._myReaction != rhs_storage._myReaction {return false}
+        if _storage._status != rhs_storage._status {return false}
+        if _storage._createdAt != rhs_storage._createdAt {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Chat_ProposeTripChangeRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ProposeTripChangeRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+    2: .same(proto: "action"),
+    3: .standard(proto: "base_version"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -6989,12 +7750,9 @@ extension Loci_Chat_ActionProposal: SwiftProtobuf.Message, SwiftProtobuf._Messag
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.id) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.tripID) }()
-      case 3: try { try decoder.decodeSingularMessageField(value: &self._action) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.summary) }()
-      case 5: try { try decoder.decodeRepeatedMessageField(value: &self.options) }()
-      case 6: try { try decoder.decodeSingularMessageField(value: &self._expiresAt) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.tripID) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._action) }()
+      case 3: try { try decoder.decodeSingularInt64Field(value: &self.baseVersion) }()
       default: break
       }
     }
@@ -7005,34 +7763,130 @@ extension Loci_Chat_ActionProposal: SwiftProtobuf.Message, SwiftProtobuf._Messag
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    if !self.id.isEmpty {
-      try visitor.visitSingularStringField(value: self.id, fieldNumber: 1)
-    }
     if !self.tripID.isEmpty {
-      try visitor.visitSingularStringField(value: self.tripID, fieldNumber: 2)
+      try visitor.visitSingularStringField(value: self.tripID, fieldNumber: 1)
     }
     try { if let v = self._action {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
-    if !self.summary.isEmpty {
-      try visitor.visitSingularStringField(value: self.summary, fieldNumber: 4)
+    if self.baseVersion != 0 {
+      try visitor.visitSingularInt64Field(value: self.baseVersion, fieldNumber: 3)
     }
-    if !self.options.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.options, fieldNumber: 5)
-    }
-    try { if let v = self._expiresAt {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
-    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  public static func ==(lhs: Loci_Chat_ActionProposal, rhs: Loci_Chat_ActionProposal) -> Bool {
-    if lhs.id != rhs.id {return false}
+  public static func ==(lhs: Loci_Chat_ProposeTripChangeRequest, rhs: Loci_Chat_ProposeTripChangeRequest) -> Bool {
     if lhs.tripID != rhs.tripID {return false}
     if lhs._action != rhs._action {return false}
-    if lhs.summary != rhs.summary {return false}
-    if lhs.options != rhs.options {return false}
-    if lhs._expiresAt != rhs._expiresAt {return false}
+    if lhs.baseVersion != rhs.baseVersion {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Chat_ListTripProposalsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ListTripProposalsRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+    2: .standard(proto: "include_closed"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.tripID) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self.includeClosed) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.tripID.isEmpty {
+      try visitor.visitSingularStringField(value: self.tripID, fieldNumber: 1)
+    }
+    if self.includeClosed != false {
+      try visitor.visitSingularBoolField(value: self.includeClosed, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_ListTripProposalsRequest, rhs: Loci_Chat_ListTripProposalsRequest) -> Bool {
+    if lhs.tripID != rhs.tripID {return false}
+    if lhs.includeClosed != rhs.includeClosed {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Chat_ListTripProposalsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ListTripProposalsResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "proposals"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.proposals) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.proposals.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.proposals, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_ListTripProposalsResponse, rhs: Loci_Chat_ListTripProposalsResponse) -> Bool {
+    if lhs.proposals != rhs.proposals {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Chat_ReactToTripProposalRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ReactToTripProposalRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "proposal_id"),
+    2: .same(proto: "value"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.proposalID) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.value) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.proposalID.isEmpty {
+      try visitor.visitSingularStringField(value: self.proposalID, fieldNumber: 1)
+    }
+    if self.value != 0 {
+      try visitor.visitSingularInt32Field(value: self.value, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_ReactToTripProposalRequest, rhs: Loci_Chat_ReactToTripProposalRequest) -> Bool {
+    if lhs.proposalID != rhs.proposalID {return false}
+    if lhs.value != rhs.value {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
