@@ -1,0 +1,121 @@
+syntax = "proto3";
+
+package loci.trip;
+
+import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+import "loci/social/social.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/trip;trip";
+
+// Planning a trip together: the owner invites people by link, and they join
+// the trip as members. Membership is the trip's own list; it does not follow
+// from the follow graph, and leaving a trip does not unfollow anyone.
+
+// TripRole is what a person may do on a trip.
+enum TripRole {
+  TRIP_ROLE_UNSPECIFIED = 0;
+  // Made the trip. Never stored as a member; the trip's user_id.
+  TRIP_ROLE_OWNER = 1;
+  // Sees the trip and suggests changes for the owner to apply.
+  TRIP_ROLE_CO_PLANNER = 2;
+  // Sees the trip.
+  TRIP_ROLE_VIEWER = 3;
+}
+
+message TripMember {
+  loci.social.PublicUser user = 1;
+  TripRole role = 2;
+  // Unset for the owner.
+  google.protobuf.Timestamp joined_at = 3;
+}
+
+// TripInvite is a link that adds whoever opens it to a trip. It expires, can
+// be used a limited number of times, and the owner can revoke it.
+message TripInvite {
+  string code = 1 [(buf.validate.field).string.max_len = 50];
+  string url = 2 [(buf.validate.field).string.max_len = 2048];
+  TripRole role = 3;
+  google.protobuf.Timestamp expires_at = 4;
+  int32 max_uses = 5;
+  int32 uses = 6;
+}
+
+// TripInvitePreview is what an invite link shows before joining. It is
+// readable signed out, so it carries nothing the owner did not mean to send:
+// no stops, no notes.
+message TripInvitePreview {
+  string trip_id = 1 [(buf.validate.field).string.max_len = 100];
+  string title = 2 [(buf.validate.field).string.max_len = 300];
+  string city_name = 3 [(buf.validate.field).string.max_len = 200];
+  optional string start_date = 4 [(buf.validate.field).string.max_len = 10];
+  optional string end_date = 5 [(buf.validate.field).string.max_len = 10];
+  int32 day_count = 6;
+  loci.social.PublicUser owner = 7;
+  // The owner first, then members by joining order.
+  repeated TripMember members = 8;
+  // What joining makes the caller.
+  TripRole role = 9;
+  // False once the invite expired, was revoked or ran out of uses.
+  bool joinable = 10;
+  // The caller already belongs to the trip (owner or member). False signed out.
+  bool already_member = 11;
+}
+
+message CreateTripInviteRequest {
+  string trip_id = 1 [(buf.validate.field).string.uuid = true];
+  // CO_PLANNER or VIEWER.
+  TripRole role = 2 [(buf.validate.field).enum = {
+    defined_only: true
+    in: [
+      2,
+      3
+    ]
+  }];
+}
+
+message GetTripInviteRequest {
+  string code = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 50
+  }];
+}
+
+message AcceptTripInviteRequest {
+  string code = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 50
+  }];
+}
+
+message AcceptTripInviteResponse {
+  string trip_id = 1 [(buf.validate.field).string.max_len = 100];
+  TripRole role = 2;
+}
+
+message RevokeTripInviteRequest {
+  string trip_id = 1 [(buf.validate.field).string.uuid = true];
+  string code = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 50
+  }];
+}
+
+message RevokeTripInviteResponse {}
+
+message ListTripMembersRequest {
+  string trip_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+message ListTripMembersResponse {
+  // The owner first, then members by joining order.
+  repeated TripMember members = 1;
+}
+
+message RemoveTripMemberRequest {
+  string trip_id = 1 [(buf.validate.field).string.uuid = true];
+  // The caller's own id leaves the trip.
+  string user_id = 2 [(buf.validate.field).string.uuid = true];
+}
+
+message RemoveTripMemberResponse {}
