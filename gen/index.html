@@ -1332,6 +1332,73 @@
         
           
           <li>
+            <a href="#loci%2ftrip%2fmembers.proto">loci/trip/members.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#loci.trip.AcceptTripInviteRequest"><span class="badge">M</span>AcceptTripInviteRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.AcceptTripInviteResponse"><span class="badge">M</span>AcceptTripInviteResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.CreateTripInviteRequest"><span class="badge">M</span>CreateTripInviteRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.GetTripInviteRequest"><span class="badge">M</span>GetTripInviteRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.ListTripMembersRequest"><span class="badge">M</span>ListTripMembersRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.ListTripMembersResponse"><span class="badge">M</span>ListTripMembersResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.RemoveTripMemberRequest"><span class="badge">M</span>RemoveTripMemberRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.RemoveTripMemberResponse"><span class="badge">M</span>RemoveTripMemberResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.RevokeTripInviteRequest"><span class="badge">M</span>RevokeTripInviteRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.RevokeTripInviteResponse"><span class="badge">M</span>RevokeTripInviteResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.TripInvite"><span class="badge">M</span>TripInvite</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.TripInvitePreview"><span class="badge">M</span>TripInvitePreview</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.TripMember"><span class="badge">M</span>TripMember</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#loci.trip.TripRole"><span class="badge">E</span>TripRole</a>
+                </li>
+              
+              
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#loci%2ftrip%2ftrip.proto">loci/trip/trip.proto</a>
             <ul>
               
@@ -15044,6 +15111,480 @@ has seen for them, 0 among the worst. </p></td>
     
       
       <div class="file-heading">
+        <h2 id="loci/trip/members.proto">loci/trip/members.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="loci.trip.AcceptTripInviteRequest">AcceptTripInviteRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>code</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.AcceptTripInviteResponse">AcceptTripInviteResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>role</td>
+                  <td><a href="#loci.trip.TripRole">TripRole</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.CreateTripInviteRequest">CreateTripInviteRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>role</td>
+                  <td><a href="#loci.trip.TripRole">TripRole</a></td>
+                  <td></td>
+                  <td><p>CO_PLANNER or VIEWER. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.GetTripInviteRequest">GetTripInviteRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>code</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.ListTripMembersRequest">ListTripMembersRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.ListTripMembersResponse">ListTripMembersResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>members</td>
+                  <td><a href="#loci.trip.TripMember">TripMember</a></td>
+                  <td>repeated</td>
+                  <td><p>The owner first, then members by joining order. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.RemoveTripMemberRequest">RemoveTripMemberRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>user_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The caller&#39;s own id leaves the trip. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.RemoveTripMemberResponse">RemoveTripMemberResponse</h3>
+        <p></p>
+
+        
+
+        
+      
+        <h3 id="loci.trip.RevokeTripInviteRequest">RevokeTripInviteRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>code</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.RevokeTripInviteResponse">RevokeTripInviteResponse</h3>
+        <p></p>
+
+        
+
+        
+      
+        <h3 id="loci.trip.TripInvite">TripInvite</h3>
+        <p>TripInvite is a link that adds whoever opens it to a trip. It expires, can</p><p>be used a limited number of times, and the owner can revoke it.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>code</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>role</td>
+                  <td><a href="#loci.trip.TripRole">TripRole</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>expires_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>max_uses</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>uses</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.TripInvitePreview">TripInvitePreview</h3>
+        <p>TripInvitePreview is what an invite link shows before joining. It is</p><p>readable signed out, so it carries nothing the owner did not mean to send:</p><p>no stops, no notes.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>title</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>start_date</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>end_date</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>day_count</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>owner</td>
+                  <td><a href="#loci.social.PublicUser">loci.social.PublicUser</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>members</td>
+                  <td><a href="#loci.trip.TripMember">TripMember</a></td>
+                  <td>repeated</td>
+                  <td><p>The owner first, then members by joining order. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>role</td>
+                  <td><a href="#loci.trip.TripRole">TripRole</a></td>
+                  <td></td>
+                  <td><p>What joining makes the caller. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>joinable</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>False once the invite expired, was revoked or ran out of uses. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>already_member</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>The caller already belongs to the trip (owner or member). False signed out. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.TripMember">TripMember</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>user</td>
+                  <td><a href="#loci.social.PublicUser">loci.social.PublicUser</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>role</td>
+                  <td><a href="#loci.trip.TripRole">TripRole</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>joined_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Unset for the owner. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+        <h3 id="loci.trip.TripRole">TripRole</h3>
+        <p>TripRole is what a person may do on a trip.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>TRIP_ROLE_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>TRIP_ROLE_OWNER</td>
+                <td>1</td>
+                <td><p>Made the trip. Never stored as a member; the trip&#39;s user_id.</p></td>
+              </tr>
+            
+              <tr>
+                <td>TRIP_ROLE_CO_PLANNER</td>
+                <td>2</td>
+                <td><p>Sees the trip and suggests changes for the owner to apply.</p></td>
+              </tr>
+            
+              <tr>
+                <td>TRIP_ROLE_VIEWER</td>
+                <td>3</td>
+                <td><p>Sees the trip.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+
+      
+
+      
+    
+      
+      <div class="file-heading">
         <h2 id="loci/trip/trip.proto">loci/trip/trip.proto</h2><a href="#title">Top</a>
       </div>
       <p></p>
@@ -15815,6 +16356,13 @@ can hide them from SuggestPacking&#39;s output. </p></td>
                   <td><a href="#loci.common.PaginationRequest">loci.common.PaginationRequest</a></td>
                   <td></td>
                   <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>include_member</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Also list trips the caller is a member of, each with viewer_role set. </p></td>
                 </tr>
               
             </tbody>
@@ -16867,6 +17415,21 @@ wipe them by saving. </p></td>
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>viewer_role</td>
+                  <td><a href="#loci.trip.TripRole">TripRole</a></td>
+                  <td></td>
+                  <td><p>The caller&#39;s role on the trip. OWNER on the owner&#39;s own reads; set for
+members on GetTrip. UNSPECIFIED on shared and friend reads. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>members</td>
+                  <td><a href="#loci.trip.TripMember">TripMember</a></td>
+                  <td>repeated</td>
+                  <td><p>The owner and the trip&#39;s members, on GetTrip when the trip has members. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -17640,7 +18203,8 @@ for them.</p></td>
                 <td>GetTrip</td>
                 <td><a href="#loci.trip.GetTripRequest">GetTripRequest</a></td>
                 <td><a href="#loci.trip.TripDraft">TripDraft</a></td>
-                <td><p></p></td>
+                <td><p>GetTrip opens one of the caller&#39;s trips, or a trip the caller is a
+member of (with viewer_role and members set). Anything else is NotFound.</p></td>
               </tr>
             
               <tr>
@@ -17842,6 +18406,54 @@ Adding a 501st item is ResourceExhausted.</p></td>
                 <td><a href="#loci.trip.DismissPackingSuggestionRequest">DismissPackingSuggestionRequest</a></td>
                 <td><a href="#loci.trip.DismissPackingSuggestionResponse">DismissPackingSuggestionResponse</a></td>
                 <td><p>DismissPackingSuggestion hides a suggestion from this trip&#39;s checklist.</p></td>
+              </tr>
+            
+              <tr>
+                <td>CreateTripInvite</td>
+                <td><a href="#loci.trip.CreateTripInviteRequest">CreateTripInviteRequest</a></td>
+                <td><a href="#loci.trip.TripInvite">TripInvite</a></td>
+                <td><p>Planning together. CreateTripInvite (owner only) returns the trip&#39;s live
+invite for that role, minting one when there is none.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetTripInvite</td>
+                <td><a href="#loci.trip.GetTripInviteRequest">GetTripInviteRequest</a></td>
+                <td><a href="#loci.trip.TripInvitePreview">TripInvitePreview</a></td>
+                <td><p>GetTripInvite previews an invite. Accepts anonymous callers. An unknown
+code is NotFound; an expired, revoked or used-up one has joinable false.</p></td>
+              </tr>
+            
+              <tr>
+                <td>AcceptTripInvite</td>
+                <td><a href="#loci.trip.AcceptTripInviteRequest">AcceptTripInviteRequest</a></td>
+                <td><a href="#loci.trip.AcceptTripInviteResponse">AcceptTripInviteResponse</a></td>
+                <td><p>AcceptTripInvite joins the trip with the invite&#39;s role and makes the
+caller and the owner friends. Joining again is a no-op that keeps the
+existing role. A dead invite is FailedPrecondition; too many accepts in
+an hour is ResourceExhausted.</p></td>
+              </tr>
+            
+              <tr>
+                <td>RevokeTripInvite</td>
+                <td><a href="#loci.trip.RevokeTripInviteRequest">RevokeTripInviteRequest</a></td>
+                <td><a href="#loci.trip.RevokeTripInviteResponse">RevokeTripInviteResponse</a></td>
+                <td><p>RevokeTripInvite stops an invite from working (owner only).</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListTripMembers</td>
+                <td><a href="#loci.trip.ListTripMembersRequest">ListTripMembersRequest</a></td>
+                <td><a href="#loci.trip.ListTripMembersResponse">ListTripMembersResponse</a></td>
+                <td><p>ListTripMembers lists the owner and members, for anyone on the trip.</p></td>
+              </tr>
+            
+              <tr>
+                <td>RemoveTripMember</td>
+                <td><a href="#loci.trip.RemoveTripMemberRequest">RemoveTripMemberRequest</a></td>
+                <td><a href="#loci.trip.RemoveTripMemberResponse">RemoveTripMemberResponse</a></td>
+                <td><p>RemoveTripMember takes someone off the trip: the owner removes anyone,
+a member removes only themselves.</p></td>
               </tr>
             
           </tbody>
