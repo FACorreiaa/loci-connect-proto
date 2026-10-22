@@ -2088,6 +2088,7 @@ paths:
         Applies a proposal the agent streamed (action_proposal) to its trip.
          FailedPrecondition when it was already applied or dismissed, has
          expired, or base_version is stale.
+         On a trip with members, only the owner applies, any member's proposal.
       operationId: loci.chat.ChatService.ApplyTripAction
       parameters:
         - name: Connect-Protocol-Version
@@ -2229,6 +2230,7 @@ paths:
       tags:
         - loci.chat.ChatService
       summary: DismissTripAction
+      description: The owner dismisses any proposal; a member only their own.
       operationId: loci.chat.ChatService.DismissTripAction
       parameters:
         - name: Connect-Protocol-Version
@@ -2475,6 +2477,117 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.chat.GetSessionPOIsResponse'
+  /loci.chat.ChatService/ListTripProposals:
+    post:
+      tags:
+        - loci.chat.ChatService
+      summary: ListTripProposals
+      description: ListTripProposals lists a trip's proposals for anyone on the trip.
+      operationId: loci.chat.ChatService.ListTripProposals
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.chat.ListTripProposalsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.chat.ListTripProposalsResponse'
+  /loci.chat.ChatService/ProposeTripChange:
+    post:
+      tags:
+        - loci.chat.ChatService
+      summary: ProposeTripChange
+      description: |-
+        Planning together. ProposeTripChange stores a co-planner's (or the
+         owner's) suggested edit for the owner to apply; viewers and strangers
+         are NotFound.
+      operationId: loci.chat.ChatService.ProposeTripChange
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.chat.ProposeTripChangeRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.chat.ActionProposal'
+  /loci.chat.ChatService/ReactToTripProposal:
+    post:
+      tags:
+        - loci.chat.ChatService
+      summary: ReactToTripProposal
+      description: "ReactToTripProposal sets the caller's \U0001F44D/\U0001F44E on a pending proposal."
+      operationId: loci.chat.ChatService.ReactToTripProposal
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.chat.ReactToTripProposalRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.chat.ActionProposal'
   /loci.chat.ChatService/RemoveBookmark:
     post:
       tags:
@@ -15308,6 +15421,43 @@ components:
         expiresAt:
           title: expires_at
           $ref: '#/components/schemas/google.protobuf.Timestamp'
+        proposer:
+          title: proposer
+          description: |-
+            Planning together: who suggested it and how the trip's members feel.
+             Set on ListTripProposals, ProposeTripChange and ReactToTripProposal.
+          $ref: '#/components/schemas/loci.social.PublicUser'
+        source:
+          title: source
+          $ref: '#/components/schemas/loci.chat.ProposalSource'
+        baseVersion:
+          type:
+            - integer
+            - string
+          title: base_version
+          format: int64
+          description: |-
+            The trip version it was suggested against. Applying does not require it
+             to be current; a newer trip only means the owner should look again.
+        upVotes:
+          type: integer
+          title: up_votes
+          format: int32
+        downVotes:
+          type: integer
+          title: down_votes
+          format: int32
+        myReaction:
+          type: integer
+          title: my_reaction
+          format: int32
+          description: 'The caller''s own reaction: 1, -1, or 0 for none.'
+        status:
+          title: status
+          $ref: '#/components/schemas/loci.chat.ProposalStatus'
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
       title: ActionProposal
       additionalProperties: false
     loci.chat.ActionProposalPayload:
@@ -15337,6 +15487,20 @@ components:
           maxLength: 200
           minLength: 1
       title: ActivitiesPayload
+      additionalProperties: false
+    loci.chat.AddStopAction:
+      type: object
+      properties:
+        dayId:
+          type: string
+          title: day_id
+          format: uuid
+        stop:
+          title: stop
+          $ref: '#/components/schemas/loci.trip.TripStop'
+      title: AddStopAction
+      required:
+        - stop
       additionalProperties: false
     loci.chat.AiCityResponse:
       type: object
@@ -16200,6 +16364,30 @@ components:
       description: |-
         ItineraryPayload carries the full aggregate city response the itinerary view
          consumes (general_city_data + points_of_interest + itinerary_response).
+    loci.chat.ListTripProposalsRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          format: uuid
+        includeClosed:
+          type: boolean
+          title: include_closed
+          description: Also list applied and dismissed proposals from the last 30 days.
+      title: ListTripProposalsRequest
+      additionalProperties: false
+    loci.chat.ListTripProposalsResponse:
+      type: object
+      properties:
+        proposals:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.chat.ActionProposal'
+          title: proposals
+          description: Newest first.
+      title: ListTripProposalsResponse
+      additionalProperties: false
     loci.chat.ListWatchesRequest:
       type: object
       properties:
@@ -16411,6 +16599,27 @@ components:
         - timestamp
       additionalProperties: false
       description: ModificationRecord represents a modification in the session
+    loci.chat.MoveStopAction:
+      type: object
+      properties:
+        stopId:
+          type: string
+          title: stop_id
+          format: uuid
+        toDayId:
+          type: string
+          title: to_day_id
+          format: uuid
+        toIndex:
+          type: integer
+          title: to_index
+          minimum: 0
+          format: int32
+      title: MoveStopAction
+      additionalProperties: false
+      description: |-
+        Moves a stop to another day (or within its own), at to_index in that
+         day's order; an index past the end appends.
     loci.chat.NavigationData:
       type: object
       properties:
@@ -16465,6 +16674,43 @@ components:
       title: ProgressPayload
       additionalProperties: false
       description: ProgressPayload reports pipeline progress for STREAM_EVENT_TYPE_PROGRESS.
+    loci.chat.ProposalSource:
+      type: string
+      title: ProposalSource
+      enum:
+        - PROPOSAL_SOURCE_UNSPECIFIED
+        - PROPOSAL_SOURCE_CHAT
+        - PROPOSAL_SOURCE_EDITOR
+    loci.chat.ProposalStatus:
+      type: string
+      title: ProposalStatus
+      enum:
+        - PROPOSAL_STATUS_UNSPECIFIED
+        - PROPOSAL_STATUS_PENDING
+        - PROPOSAL_STATUS_APPLIED
+        - PROPOSAL_STATUS_DISMISSED
+    loci.chat.ProposeTripChangeRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          format: uuid
+        action:
+          title: action
+          $ref: '#/components/schemas/loci.chat.TripAction'
+        baseVersion:
+          type:
+            - integer
+            - string
+          title: base_version
+          minimum: 0
+          format: int64
+          description: The trip version the member was looking at.
+      title: ProposeTripChangeRequest
+      required:
+        - action
+      additionalProperties: false
     loci.chat.ProposeWatchRequest:
       type: object
       properties:
@@ -16488,6 +16734,22 @@ components:
           title: proposal
           $ref: '#/components/schemas/loci.chat.WatchProposal'
       title: ProposeWatchResponse
+      additionalProperties: false
+    loci.chat.ReactToTripProposalRequest:
+      type: object
+      properties:
+        proposalId:
+          type: string
+          title: proposal_id
+          format: uuid
+        value:
+          type: integer
+          title: value
+          maximum: 1
+          minimum: -1
+          format: int32
+          description: "1 for \U0001F44D, -1 for \U0001F44E, 0 to take the reaction back."
+      title: ReactToTripProposalRequest
       additionalProperties: false
     loci.chat.RecentInteraction:
       type: object
@@ -16571,6 +16833,29 @@ components:
       description: |-
         Re-plans the trip's itinerary as this many days, keeping its dates, stays
          and flights.
+    loci.chat.RemoveStopAction:
+      type: object
+      properties:
+        stopId:
+          type: string
+          title: stop_id
+          format: uuid
+      title: RemoveStopAction
+      additionalProperties: false
+    loci.chat.ReplaceStopAction:
+      type: object
+      properties:
+        stopId:
+          type: string
+          title: stop_id
+          format: uuid
+        replacement:
+          title: replacement
+          $ref: '#/components/schemas/loci.trip.TripStop'
+      title: ReplaceStopAction
+      required:
+        - replacement
+      additionalProperties: false
     loci.chat.RestaurantsPayload:
       type: object
       properties:
@@ -17248,12 +17533,44 @@ components:
       type: object
       oneOf:
         - properties:
+            addStop:
+              title: add_stop
+              description: |-
+                Stop edits, suggested by a trip member (or the owner) from the trip
+                 page. Each targets ids on the trip; one that no longer exists when the
+                 owner applies is FailedPrecondition.
+              $ref: '#/components/schemas/loci.chat.AddStopAction'
+          title: add_stop
+          required:
+            - addStop
+        - properties:
+            moveStop:
+              title: move_stop
+              $ref: '#/components/schemas/loci.chat.MoveStopAction'
+          title: move_stop
+          required:
+            - moveStop
+        - properties:
             regenerateDays:
               title: regenerate_days
               $ref: '#/components/schemas/loci.chat.RegenerateDaysAction'
           title: regenerate_days
           required:
             - regenerateDays
+        - properties:
+            removeStop:
+              title: remove_stop
+              $ref: '#/components/schemas/loci.chat.RemoveStopAction'
+          title: remove_stop
+          required:
+            - removeStop
+        - properties:
+            replaceStop:
+              title: replace_stop
+              $ref: '#/components/schemas/loci.chat.ReplaceStopAction'
+          title: replace_stop
+          required:
+            - replaceStop
         - properties:
             searchFlights:
               title: search_flights

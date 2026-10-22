@@ -9,6 +9,7 @@ import "loci/common/common.proto";
 import "loci/gastronomy/gastronomy.proto";
 import "loci/poi/poi.proto";
 import "loci/profile/profile.proto";
+import "loci/social/social.proto";
 import "loci/trip/trip.proto";
 
 option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/chat;chat";
@@ -1039,7 +1040,36 @@ message TripAction {
     SearchHotelsAction search_hotels = 2;
     RegenerateDaysAction regenerate_days = 3;
     SearchFlightsAction search_flights = 4;
+    // Stop edits, suggested by a trip member (or the owner) from the trip
+    // page. Each targets ids on the trip; one that no longer exists when the
+    // owner applies is FailedPrecondition.
+    AddStopAction add_stop = 5;
+    RemoveStopAction remove_stop = 6;
+    ReplaceStopAction replace_stop = 7;
+    MoveStopAction move_stop = 8;
   }
+}
+
+message AddStopAction {
+  string day_id = 1 [(buf.validate.field).string.uuid = true];
+  loci.trip.TripStop stop = 2 [(buf.validate.field).required = true];
+}
+
+message RemoveStopAction {
+  string stop_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+message ReplaceStopAction {
+  string stop_id = 1 [(buf.validate.field).string.uuid = true];
+  loci.trip.TripStop replacement = 2 [(buf.validate.field).required = true];
+}
+
+// Moves a stop to another day (or within its own), at to_index in that
+// day's order; an index past the end appends.
+message MoveStopAction {
+  string stop_id = 1 [(buf.validate.field).string.uuid = true];
+  string to_day_id = 2 [(buf.validate.field).string.uuid = true];
+  int32 to_index = 3 [(buf.validate.field).int32.gte = 0];
 }
 
 message SetDatesAction {
@@ -1088,6 +1118,61 @@ message ActionProposal {
   string summary = 4;
   repeated ActionOption options = 5;
   google.protobuf.Timestamp expires_at = 6;
+  // Planning together: who suggested it and how the trip's members feel.
+  // Set on ListTripProposals, ProposeTripChange and ReactToTripProposal.
+  loci.social.PublicUser proposer = 7;
+  ProposalSource source = 8;
+  // The trip version it was suggested against. Applying does not require it
+  // to be current; a newer trip only means the owner should look again.
+  int64 base_version = 9;
+  int32 up_votes = 10;
+  int32 down_votes = 11;
+  // The caller's own reaction: 1, -1, or 0 for none.
+  int32 my_reaction = 12;
+  ProposalStatus status = 13;
+  google.protobuf.Timestamp created_at = 14;
+}
+
+enum ProposalSource {
+  PROPOSAL_SOURCE_UNSPECIFIED = 0;
+  // The planner, from a chat turn on the trip.
+  PROPOSAL_SOURCE_CHAT = 1;
+  // A member's Suggest change on the trip page.
+  PROPOSAL_SOURCE_EDITOR = 2;
+}
+
+enum ProposalStatus {
+  PROPOSAL_STATUS_UNSPECIFIED = 0;
+  PROPOSAL_STATUS_PENDING = 1;
+  PROPOSAL_STATUS_APPLIED = 2;
+  PROPOSAL_STATUS_DISMISSED = 3;
+}
+
+message ProposeTripChangeRequest {
+  string trip_id = 1 [(buf.validate.field).string.uuid = true];
+  TripAction action = 2 [(buf.validate.field).required = true];
+  // The trip version the member was looking at.
+  int64 base_version = 3 [(buf.validate.field).int64.gte = 0];
+}
+
+message ListTripProposalsRequest {
+  string trip_id = 1 [(buf.validate.field).string.uuid = true];
+  // Also list applied and dismissed proposals from the last 30 days.
+  bool include_closed = 2;
+}
+
+message ListTripProposalsResponse {
+  // Newest first.
+  repeated ActionProposal proposals = 1;
+}
+
+message ReactToTripProposalRequest {
+  string proposal_id = 1 [(buf.validate.field).string.uuid = true];
+  // 1 for 👍, -1 for 👎, 0 to take the reaction back.
+  int32 value = 2 [(buf.validate.field).int32 = {
+    gte: -1
+    lte: 1
+  }];
 }
 
 message ActionProposalPayload {
@@ -1139,8 +1224,18 @@ service ChatService {
   // Applies a proposal the agent streamed (action_proposal) to its trip.
   // FailedPrecondition when it was already applied or dismissed, has
   // expired, or base_version is stale.
+  // On a trip with members, only the owner applies, any member's proposal.
   rpc ApplyTripAction(ApplyTripActionRequest) returns (ApplyTripActionResponse);
+  // The owner dismisses any proposal; a member only their own.
   rpc DismissTripAction(DismissTripActionRequest) returns (DismissTripActionResponse);
+  // Planning together. ProposeTripChange stores a co-planner's (or the
+  // owner's) suggested edit for the owner to apply; viewers and strangers
+  // are NotFound.
+  rpc ProposeTripChange(ProposeTripChangeRequest) returns (ActionProposal);
+  // ListTripProposals lists a trip's proposals for anyone on the trip.
+  rpc ListTripProposals(ListTripProposalsRequest) returns (ListTripProposalsResponse);
+  // ReactToTripProposal sets the caller's 👍/👎 on a pending proposal.
+  rpc ReactToTripProposal(ReactToTripProposalRequest) returns (ActionProposal);
 }
 
 // ---------------------------------------------------------------------------

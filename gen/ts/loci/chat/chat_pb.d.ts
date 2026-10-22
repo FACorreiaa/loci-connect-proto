@@ -9,8 +9,9 @@ import type { UserPreferenceProfile } from "../profile/profile_pb";
 import type { HotelDetailedInfo, POIDetailedInfo, RestaurantDetailedInfo } from "../poi/poi_pb";
 import type { GeneralCityData } from "../city/city_pb";
 import type { CityGastronomy } from "../gastronomy/gastronomy_pb";
-import type { FlightCabin, FlightPlace, TripDraft, TripFlight, TripLeg, TripStay } from "../trip/trip_pb";
+import type { FlightCabin, FlightPlace, TripDraft, TripFlight, TripLeg, TripStay, TripStop } from "../trip/trip_pb";
 import type { PaginationMetadata, PaginationRequest, ResponseSchema } from "../common/common_pb";
+import type { PublicUser } from "../social/social_pb";
 
 /**
  * Describes the file loci/chat/chat.proto.
@@ -2035,6 +2036,34 @@ export declare type TripAction = Message<"loci.chat.TripAction"> & {
      */
     value: SearchFlightsAction;
     case: "searchFlights";
+  } | {
+    /**
+     * Stop edits, suggested by a trip member (or the owner) from the trip
+     * page. Each targets ids on the trip; one that no longer exists when the
+     * owner applies is FailedPrecondition.
+     *
+     * @generated from field: loci.chat.AddStopAction add_stop = 5;
+     */
+    value: AddStopAction;
+    case: "addStop";
+  } | {
+    /**
+     * @generated from field: loci.chat.RemoveStopAction remove_stop = 6;
+     */
+    value: RemoveStopAction;
+    case: "removeStop";
+  } | {
+    /**
+     * @generated from field: loci.chat.ReplaceStopAction replace_stop = 7;
+     */
+    value: ReplaceStopAction;
+    case: "replaceStop";
+  } | {
+    /**
+     * @generated from field: loci.chat.MoveStopAction move_stop = 8;
+     */
+    value: MoveStopAction;
+    case: "moveStop";
   } | { case: undefined; value?: undefined };
 };
 
@@ -2043,6 +2072,93 @@ export declare type TripAction = Message<"loci.chat.TripAction"> & {
  * Use `create(TripActionSchema)` to create a new message.
  */
 export declare const TripActionSchema: GenMessage<TripAction>;
+
+/**
+ * @generated from message loci.chat.AddStopAction
+ */
+export declare type AddStopAction = Message<"loci.chat.AddStopAction"> & {
+  /**
+   * @generated from field: string day_id = 1;
+   */
+  dayId: string;
+
+  /**
+   * @generated from field: loci.trip.TripStop stop = 2;
+   */
+  stop?: TripStop;
+};
+
+/**
+ * Describes the message loci.chat.AddStopAction.
+ * Use `create(AddStopActionSchema)` to create a new message.
+ */
+export declare const AddStopActionSchema: GenMessage<AddStopAction>;
+
+/**
+ * @generated from message loci.chat.RemoveStopAction
+ */
+export declare type RemoveStopAction = Message<"loci.chat.RemoveStopAction"> & {
+  /**
+   * @generated from field: string stop_id = 1;
+   */
+  stopId: string;
+};
+
+/**
+ * Describes the message loci.chat.RemoveStopAction.
+ * Use `create(RemoveStopActionSchema)` to create a new message.
+ */
+export declare const RemoveStopActionSchema: GenMessage<RemoveStopAction>;
+
+/**
+ * @generated from message loci.chat.ReplaceStopAction
+ */
+export declare type ReplaceStopAction = Message<"loci.chat.ReplaceStopAction"> & {
+  /**
+   * @generated from field: string stop_id = 1;
+   */
+  stopId: string;
+
+  /**
+   * @generated from field: loci.trip.TripStop replacement = 2;
+   */
+  replacement?: TripStop;
+};
+
+/**
+ * Describes the message loci.chat.ReplaceStopAction.
+ * Use `create(ReplaceStopActionSchema)` to create a new message.
+ */
+export declare const ReplaceStopActionSchema: GenMessage<ReplaceStopAction>;
+
+/**
+ * Moves a stop to another day (or within its own), at to_index in that
+ * day's order; an index past the end appends.
+ *
+ * @generated from message loci.chat.MoveStopAction
+ */
+export declare type MoveStopAction = Message<"loci.chat.MoveStopAction"> & {
+  /**
+   * @generated from field: string stop_id = 1;
+   */
+  stopId: string;
+
+  /**
+   * @generated from field: string to_day_id = 2;
+   */
+  toDayId: string;
+
+  /**
+   * @generated from field: int32 to_index = 3;
+   */
+  toIndex: number;
+};
+
+/**
+ * Describes the message loci.chat.MoveStopAction.
+ * Use `create(MoveStopActionSchema)` to create a new message.
+ */
+export declare const MoveStopActionSchema: GenMessage<MoveStopAction>;
 
 /**
  * @generated from message loci.chat.SetDatesAction
@@ -2229,6 +2345,54 @@ export declare type ActionProposal = Message<"loci.chat.ActionProposal"> & {
    * @generated from field: google.protobuf.Timestamp expires_at = 6;
    */
   expiresAt?: Timestamp;
+
+  /**
+   * Planning together: who suggested it and how the trip's members feel.
+   * Set on ListTripProposals, ProposeTripChange and ReactToTripProposal.
+   *
+   * @generated from field: loci.social.PublicUser proposer = 7;
+   */
+  proposer?: PublicUser;
+
+  /**
+   * @generated from field: loci.chat.ProposalSource source = 8;
+   */
+  source: ProposalSource;
+
+  /**
+   * The trip version it was suggested against. Applying does not require it
+   * to be current; a newer trip only means the owner should look again.
+   *
+   * @generated from field: int64 base_version = 9;
+   */
+  baseVersion: bigint;
+
+  /**
+   * @generated from field: int32 up_votes = 10;
+   */
+  upVotes: number;
+
+  /**
+   * @generated from field: int32 down_votes = 11;
+   */
+  downVotes: number;
+
+  /**
+   * The caller's own reaction: 1, -1, or 0 for none.
+   *
+   * @generated from field: int32 my_reaction = 12;
+   */
+  myReaction: number;
+
+  /**
+   * @generated from field: loci.chat.ProposalStatus status = 13;
+   */
+  status: ProposalStatus;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp created_at = 14;
+   */
+  createdAt?: Timestamp;
 };
 
 /**
@@ -2236,6 +2400,98 @@ export declare type ActionProposal = Message<"loci.chat.ActionProposal"> & {
  * Use `create(ActionProposalSchema)` to create a new message.
  */
 export declare const ActionProposalSchema: GenMessage<ActionProposal>;
+
+/**
+ * @generated from message loci.chat.ProposeTripChangeRequest
+ */
+export declare type ProposeTripChangeRequest = Message<"loci.chat.ProposeTripChangeRequest"> & {
+  /**
+   * @generated from field: string trip_id = 1;
+   */
+  tripId: string;
+
+  /**
+   * @generated from field: loci.chat.TripAction action = 2;
+   */
+  action?: TripAction;
+
+  /**
+   * The trip version the member was looking at.
+   *
+   * @generated from field: int64 base_version = 3;
+   */
+  baseVersion: bigint;
+};
+
+/**
+ * Describes the message loci.chat.ProposeTripChangeRequest.
+ * Use `create(ProposeTripChangeRequestSchema)` to create a new message.
+ */
+export declare const ProposeTripChangeRequestSchema: GenMessage<ProposeTripChangeRequest>;
+
+/**
+ * @generated from message loci.chat.ListTripProposalsRequest
+ */
+export declare type ListTripProposalsRequest = Message<"loci.chat.ListTripProposalsRequest"> & {
+  /**
+   * @generated from field: string trip_id = 1;
+   */
+  tripId: string;
+
+  /**
+   * Also list applied and dismissed proposals from the last 30 days.
+   *
+   * @generated from field: bool include_closed = 2;
+   */
+  includeClosed: boolean;
+};
+
+/**
+ * Describes the message loci.chat.ListTripProposalsRequest.
+ * Use `create(ListTripProposalsRequestSchema)` to create a new message.
+ */
+export declare const ListTripProposalsRequestSchema: GenMessage<ListTripProposalsRequest>;
+
+/**
+ * @generated from message loci.chat.ListTripProposalsResponse
+ */
+export declare type ListTripProposalsResponse = Message<"loci.chat.ListTripProposalsResponse"> & {
+  /**
+   * Newest first.
+   *
+   * @generated from field: repeated loci.chat.ActionProposal proposals = 1;
+   */
+  proposals: ActionProposal[];
+};
+
+/**
+ * Describes the message loci.chat.ListTripProposalsResponse.
+ * Use `create(ListTripProposalsResponseSchema)` to create a new message.
+ */
+export declare const ListTripProposalsResponseSchema: GenMessage<ListTripProposalsResponse>;
+
+/**
+ * @generated from message loci.chat.ReactToTripProposalRequest
+ */
+export declare type ReactToTripProposalRequest = Message<"loci.chat.ReactToTripProposalRequest"> & {
+  /**
+   * @generated from field: string proposal_id = 1;
+   */
+  proposalId: string;
+
+  /**
+   * 1 for 👍, -1 for 👎, 0 to take the reaction back.
+   *
+   * @generated from field: int32 value = 2;
+   */
+  value: number;
+};
+
+/**
+ * Describes the message loci.chat.ReactToTripProposalRequest.
+ * Use `create(ReactToTripProposalRequestSchema)` to create a new message.
+ */
+export declare const ReactToTripProposalRequestSchema: GenMessage<ReactToTripProposalRequest>;
 
 /**
  * @generated from message loci.chat.ActionProposalPayload
@@ -3060,6 +3316,65 @@ export enum RunStatus {
 export declare const RunStatusSchema: GenEnum<RunStatus>;
 
 /**
+ * @generated from enum loci.chat.ProposalSource
+ */
+export enum ProposalSource {
+  /**
+   * @generated from enum value: PROPOSAL_SOURCE_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * The planner, from a chat turn on the trip.
+   *
+   * @generated from enum value: PROPOSAL_SOURCE_CHAT = 1;
+   */
+  CHAT = 1,
+
+  /**
+   * A member's Suggest change on the trip page.
+   *
+   * @generated from enum value: PROPOSAL_SOURCE_EDITOR = 2;
+   */
+  EDITOR = 2,
+}
+
+/**
+ * Describes the enum loci.chat.ProposalSource.
+ */
+export declare const ProposalSourceSchema: GenEnum<ProposalSource>;
+
+/**
+ * @generated from enum loci.chat.ProposalStatus
+ */
+export enum ProposalStatus {
+  /**
+   * @generated from enum value: PROPOSAL_STATUS_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: PROPOSAL_STATUS_PENDING = 1;
+   */
+  PENDING = 1,
+
+  /**
+   * @generated from enum value: PROPOSAL_STATUS_APPLIED = 2;
+   */
+  APPLIED = 2,
+
+  /**
+   * @generated from enum value: PROPOSAL_STATUS_DISMISSED = 3;
+   */
+  DISMISSED = 3,
+}
+
+/**
+ * Describes the enum loci.chat.ProposalStatus.
+ */
+export declare const ProposalStatusSchema: GenEnum<ProposalStatus>;
+
+/**
  * @generated from service loci.chat.ChatService
  */
 export declare const ChatService: GenService<{
@@ -3173,6 +3488,7 @@ export declare const ChatService: GenService<{
    * Applies a proposal the agent streamed (action_proposal) to its trip.
    * FailedPrecondition when it was already applied or dismissed, has
    * expired, or base_version is stale.
+   * On a trip with members, only the owner applies, any member's proposal.
    *
    * @generated from rpc loci.chat.ChatService.ApplyTripAction
    */
@@ -3182,12 +3498,46 @@ export declare const ChatService: GenService<{
     output: typeof ApplyTripActionResponseSchema;
   },
   /**
+   * The owner dismisses any proposal; a member only their own.
+   *
    * @generated from rpc loci.chat.ChatService.DismissTripAction
    */
   dismissTripAction: {
     methodKind: "unary";
     input: typeof DismissTripActionRequestSchema;
     output: typeof DismissTripActionResponseSchema;
+  },
+  /**
+   * Planning together. ProposeTripChange stores a co-planner's (or the
+   * owner's) suggested edit for the owner to apply; viewers and strangers
+   * are NotFound.
+   *
+   * @generated from rpc loci.chat.ChatService.ProposeTripChange
+   */
+  proposeTripChange: {
+    methodKind: "unary";
+    input: typeof ProposeTripChangeRequestSchema;
+    output: typeof ActionProposalSchema;
+  },
+  /**
+   * ListTripProposals lists a trip's proposals for anyone on the trip.
+   *
+   * @generated from rpc loci.chat.ChatService.ListTripProposals
+   */
+  listTripProposals: {
+    methodKind: "unary";
+    input: typeof ListTripProposalsRequestSchema;
+    output: typeof ListTripProposalsResponseSchema;
+  },
+  /**
+   * ReactToTripProposal sets the caller's 👍/👎 on a pending proposal.
+   *
+   * @generated from rpc loci.chat.ChatService.ReactToTripProposal
+   */
+  reactToTripProposal: {
+    methodKind: "unary";
+    input: typeof ReactToTripProposalRequestSchema;
+    output: typeof ActionProposalSchema;
   },
 }>;
 
