@@ -119,3 +119,128 @@ message RemoveTripMemberRequest {
 }
 
 message RemoveTripMemberResponse {}
+
+// TripComment is a note someone on the trip left, about the trip or one of
+// its stops. Only the owner and members read and write them.
+message TripComment {
+  string id = 1 [(buf.validate.field).string.max_len = 100];
+  string trip_id = 2 [(buf.validate.field).string.max_len = 100];
+  // Empty for a comment about the whole trip. A stop that has since left the
+  // trip keeps its id here; clients show such comments with the trip's.
+  string stop_id = 3 [(buf.validate.field).string.max_len = 100];
+  // Unset when the author's account is gone.
+  loci.social.PublicUser author = 4;
+  string body = 5 [(buf.validate.field).string.max_len = 2000];
+  google.protobuf.Timestamp created_at = 6;
+  // The caller wrote it.
+  bool mine = 7;
+  // The caller may delete it: its author, or the trip's owner.
+  bool can_delete = 8;
+}
+
+message AddTripCommentRequest {
+  string trip_id = 1 [(buf.validate.field).string.uuid = true];
+  // Empty for a comment about the whole trip.
+  string stop_id = 2 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string.uuid = true
+  ];
+  string body = 3 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 2000
+  }];
+}
+
+message ListTripCommentsRequest {
+  string trip_id = 1 [(buf.validate.field).string.uuid = true];
+  // How many; 0 means the server default (100).
+  int32 limit = 2 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 200
+  }];
+  // Only comments older than this; unset for the newest.
+  google.protobuf.Timestamp before = 3;
+}
+
+message ListTripCommentsResponse {
+  // Oldest first: the newest `limit` comments before `before`, in reading
+  // order. Deleted, removed, hidden and blocked-author comments are left out.
+  repeated TripComment comments = 1;
+  // There are older comments: ask again with `before` set to the first
+  // comment's created_at.
+  bool has_more = 2;
+}
+
+message DeleteTripCommentRequest {
+  string comment_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+message DeleteTripCommentResponse {}
+
+message ReportTripCommentRequest {
+  string comment_id = 1 [(buf.validate.field).string.uuid = true];
+  // One of "spam", "inappropriate", "offensive", "other". The server rejects
+  // anything else with InvalidArgument.
+  string reason = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 50
+  }];
+  string details = 3 [
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+    (buf.validate.field).string.max_len = 1000
+  ];
+}
+
+message ReportTripCommentResponse {}
+
+// What a moderator decides about a reported trip comment.
+enum TripCommentModerationAction {
+  TRIP_COMMENT_MODERATION_ACTION_UNSPECIFIED = 0;
+  // The comment stays; its open reports are closed.
+  TRIP_COMMENT_MODERATION_ACTION_KEEP = 1;
+  // The comment leaves the trip for everyone.
+  TRIP_COMMENT_MODERATION_ACTION_REMOVE = 2;
+}
+
+message ListReportedTripCommentsRequest {
+  // Page size; 0 means the server default (20).
+  int32 limit = 1 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 100
+  }];
+  // 1-based; 0 means the first page.
+  int32 page = 2 [(buf.validate.field).int32 = {gte: 0}];
+}
+
+// How many open reports gave one reason.
+message TripCommentReportReason {
+  string reason = 1;
+  int32 count = 2;
+}
+
+message ReportedTripComment {
+  TripComment comment = 1;
+  // Distinct people with an open report on the comment.
+  int32 report_count = 2;
+  repeated TripCommentReportReason reasons = 3;
+  // The free-text details reporters gave, newest first; empty ones omitted.
+  repeated string details = 4;
+  google.protobuf.Timestamp last_reported_at = 5;
+  // True when the comment is out of the trip because of its reports.
+  bool hidden = 6;
+}
+
+message ListReportedTripCommentsResponse {
+  repeated ReportedTripComment comments = 1;
+  bool has_more = 2;
+}
+
+message ResolveTripCommentReportRequest {
+  string comment_id = 1 [(buf.validate.field).string.uuid = true];
+  TripCommentModerationAction action = 2 [(buf.validate.field).enum = {
+    defined_only: true
+    not_in: [0]
+  }];
+}
+
+message ResolveTripCommentReportResponse {}
