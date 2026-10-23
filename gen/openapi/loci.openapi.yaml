@@ -10941,6 +10941,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.trip.TripDraft'
+  /loci.trip.TripService/AddTripComment:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: AddTripComment
+      description: |-
+        Trip comments, for the owner and members. AddTripComment is
+         ResourceExhausted past 60 an hour; a viewer may comment too.
+      operationId: loci.trip.TripService.AddTripComment
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.AddTripCommentRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.TripComment'
   /loci.trip.TripService/BuildFlightLinks:
     post:
       tags:
@@ -11124,6 +11162,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.trip.DeleteChecklistItemResponse'
+  /loci.trip.TripService/DeleteTripComment:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: DeleteTripComment
+      description: |-
+        DeleteTripComment: the author, or the trip's owner. Deleting a missing
+         comment is NotFound.
+      operationId: loci.trip.TripService.DeleteTripComment
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.DeleteTripCommentRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.DeleteTripCommentResponse'
   /loci.trip.TripService/DismissPackingSuggestion:
     post:
       tags:
@@ -11459,6 +11535,77 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.trip.ListTripsResponse'
+  /loci.trip.TripService/ListReportedTripComments:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: ListReportedTripComments
+      description: Moderation (admins only; PermissionDenied otherwise).
+      operationId: loci.trip.TripService.ListReportedTripComments
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.ListReportedTripCommentsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.ListReportedTripCommentsResponse'
+  /loci.trip.TripService/ListTripComments:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: ListTripComments
+      operationId: loci.trip.TripService.ListTripComments
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.ListTripCommentsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.ListTripCommentsResponse'
   /loci.trip.TripService/ListTripMembers:
     post:
       tags:
@@ -11779,6 +11926,80 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.trip.TripDraft'
+  /loci.trip.TripService/ReportTripComment:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: ReportTripComment
+      description: |-
+        ReportTripComment flags a comment for moderation and hides it from the
+         reporter at once; three reporters hide it from everyone. Reporting again
+         replaces the reason. Reporting your own comment is InvalidArgument.
+      operationId: loci.trip.TripService.ReportTripComment
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.ReportTripCommentRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.ReportTripCommentResponse'
+  /loci.trip.TripService/ResolveTripCommentReport:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: ResolveTripCommentReport
+      operationId: loci.trip.TripService.ResolveTripCommentReport
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.ResolveTripCommentReportRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.ResolveTripCommentReportResponse'
   /loci.trip.TripService/RevokeTripInvite:
     post:
       tags:
@@ -34469,6 +34690,25 @@ components:
       required:
         - stop
       additionalProperties: false
+    loci.trip.AddTripCommentRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          format: uuid
+        stopId:
+          type: string
+          title: stop_id
+          format: uuid
+          description: Empty for a comment about the whole trip.
+        body:
+          type: string
+          title: body
+          maxLength: 2000
+          minLength: 1
+      title: AddTripCommentRequest
+      additionalProperties: false
     loci.trip.BuildFlightLinksRequest:
       type: object
       properties:
@@ -34661,6 +34901,19 @@ components:
     loci.trip.DeleteChecklistItemResponse:
       type: object
       title: DeleteChecklistItemResponse
+      additionalProperties: false
+    loci.trip.DeleteTripCommentRequest:
+      type: object
+      properties:
+        commentId:
+          type: string
+          title: comment_id
+          format: uuid
+      title: DeleteTripCommentRequest
+      additionalProperties: false
+    loci.trip.DeleteTripCommentResponse:
+      type: object
+      title: DeleteTripCommentResponse
       additionalProperties: false
     loci.trip.DismissPackingSuggestionRequest:
       type: object
@@ -34883,6 +35136,76 @@ components:
       title: ListFriendTripsRequest
       required:
         - pagination
+      additionalProperties: false
+    loci.trip.ListReportedTripCommentsRequest:
+      type: object
+      properties:
+        limit:
+          type: integer
+          title: limit
+          maximum: 100
+          minimum: 0
+          format: int32
+          description: Page size; 0 means the server default (20).
+        page:
+          type: integer
+          title: page
+          minimum: 0
+          format: int32
+          description: 1-based; 0 means the first page.
+      title: ListReportedTripCommentsRequest
+      additionalProperties: false
+    loci.trip.ListReportedTripCommentsResponse:
+      type: object
+      properties:
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.trip.ReportedTripComment'
+          title: comments
+        hasMore:
+          type: boolean
+          title: has_more
+      title: ListReportedTripCommentsResponse
+      additionalProperties: false
+    loci.trip.ListTripCommentsRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          format: uuid
+        limit:
+          type: integer
+          title: limit
+          maximum: 200
+          minimum: 0
+          format: int32
+          description: How many; 0 means the server default (100).
+        before:
+          title: before
+          description: Only comments older than this; unset for the newest.
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: ListTripCommentsRequest
+      additionalProperties: false
+    loci.trip.ListTripCommentsResponse:
+      type: object
+      properties:
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.trip.TripComment'
+          title: comments
+          description: |-
+            Oldest first: the newest `limit` comments before `before`, in reading
+             order. Deleted, removed, hidden and blocked-author comments are left out.
+        hasMore:
+          type: boolean
+          title: has_more
+          description: |-
+            There are older comments: ask again with `before` set to the first
+             comment's created_at.
+      title: ListTripCommentsResponse
       additionalProperties: false
     loci.trip.ListTripMembersRequest:
       type: object
@@ -35132,6 +35455,81 @@ components:
       required:
         - replacement
       additionalProperties: false
+    loci.trip.ReportTripCommentRequest:
+      type: object
+      properties:
+        commentId:
+          type: string
+          title: comment_id
+          format: uuid
+        reason:
+          type: string
+          title: reason
+          maxLength: 50
+          minLength: 1
+          description: |-
+            One of "spam", "inappropriate", "offensive", "other". The server rejects
+             anything else with InvalidArgument.
+        details:
+          type: string
+          title: details
+          maxLength: 1000
+      title: ReportTripCommentRequest
+      additionalProperties: false
+    loci.trip.ReportTripCommentResponse:
+      type: object
+      title: ReportTripCommentResponse
+      additionalProperties: false
+    loci.trip.ReportedTripComment:
+      type: object
+      properties:
+        comment:
+          title: comment
+          $ref: '#/components/schemas/loci.trip.TripComment'
+        reportCount:
+          type: integer
+          title: report_count
+          format: int32
+          description: Distinct people with an open report on the comment.
+        reasons:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.trip.TripCommentReportReason'
+          title: reasons
+        details:
+          type: array
+          items:
+            type: string
+          title: details
+          description: The free-text details reporters gave, newest first; empty ones omitted.
+        lastReportedAt:
+          title: last_reported_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        hidden:
+          type: boolean
+          title: hidden
+          description: True when the comment is out of the trip because of its reports.
+      title: ReportedTripComment
+      additionalProperties: false
+    loci.trip.ResolveTripCommentReportRequest:
+      type: object
+      properties:
+        commentId:
+          type: string
+          title: comment_id
+          format: uuid
+        action:
+          not:
+            enum:
+              - TRIP_COMMENT_MODERATION_ACTION_UNSPECIFIED
+          title: action
+          $ref: '#/components/schemas/loci.trip.TripCommentModerationAction'
+      title: ResolveTripCommentReportRequest
+      additionalProperties: false
+    loci.trip.ResolveTripCommentReportResponse:
+      type: object
+      title: ResolveTripCommentReportResponse
+      additionalProperties: false
     loci.trip.RevokeTripInviteRequest:
       type: object
       properties:
@@ -35379,6 +35777,69 @@ components:
       description: |-
         TripCity is one city of a multi-city trip, in visiting order, with the chat
          session its places were generated in. Empty for a single-city trip.
+    loci.trip.TripComment:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          maxLength: 100
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+        stopId:
+          type: string
+          title: stop_id
+          maxLength: 100
+          description: |-
+            Empty for a comment about the whole trip. A stop that has since left the
+             trip keeps its id here; clients show such comments with the trip's.
+        author:
+          title: author
+          description: Unset when the author's account is gone.
+          $ref: '#/components/schemas/loci.social.PublicUser'
+        body:
+          type: string
+          title: body
+          maxLength: 2000
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        mine:
+          type: boolean
+          title: mine
+          description: The caller wrote it.
+        canDelete:
+          type: boolean
+          title: can_delete
+          description: 'The caller may delete it: its author, or the trip''s owner.'
+      title: TripComment
+      additionalProperties: false
+      description: |-
+        TripComment is a note someone on the trip left, about the trip or one of
+         its stops. Only the owner and members read and write them.
+    loci.trip.TripCommentModerationAction:
+      type: string
+      title: TripCommentModerationAction
+      enum:
+        - TRIP_COMMENT_MODERATION_ACTION_UNSPECIFIED
+        - TRIP_COMMENT_MODERATION_ACTION_KEEP
+        - TRIP_COMMENT_MODERATION_ACTION_REMOVE
+      description: What a moderator decides about a reported trip comment.
+    loci.trip.TripCommentReportReason:
+      type: object
+      properties:
+        reason:
+          type: string
+          title: reason
+        count:
+          type: integer
+          title: count
+          format: int32
+      title: TripCommentReportReason
+      additionalProperties: false
+      description: How many open reports gave one reason.
     loci.trip.TripConstraint:
       type: object
       properties:

@@ -927,4 +927,19 @@ service TripService {
   // RemoveTripMember takes someone off the trip: the owner removes anyone,
   // a member removes only themselves.
   rpc RemoveTripMember(RemoveTripMemberRequest) returns (RemoveTripMemberResponse);
+
+  // Trip comments, for the owner and members. AddTripComment is
+  // ResourceExhausted past 60 an hour; a viewer may comment too.
+  rpc AddTripComment(AddTripCommentRequest) returns (TripComment);
+  rpc ListTripComments(ListTripCommentsRequest) returns (ListTripCommentsResponse);
+  // DeleteTripComment: the author, or the trip's owner. Deleting a missing
+  // comment is NotFound.
+  rpc DeleteTripComment(DeleteTripCommentRequest) returns (DeleteTripCommentResponse);
+  // ReportTripComment flags a comment for moderation and hides it from the
+  // reporter at once; three reporters hide it from everyone. Reporting again
+  // replaces the reason. Reporting your own comment is InvalidArgument.
+  rpc ReportTripComment(ReportTripCommentRequest) returns (ReportTripCommentResponse);
+  // Moderation (admins only; PermissionDenied otherwise).
+  rpc ListReportedTripComments(ListReportedTripCommentsRequest) returns (ListReportedTripCommentsResponse);
+  rpc ResolveTripCommentReport(ResolveTripCommentReportRequest) returns (ResolveTripCommentReportResponse);
 }

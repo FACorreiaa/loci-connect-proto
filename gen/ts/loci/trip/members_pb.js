@@ -11,7 +11,7 @@ import { file_loci_social_social } from "../social/social_pb";
  * Describes the file loci/trip/members.proto.
  */
 export const file_loci_trip_members = /*@__PURE__*/
-  fileDesc("Chdsb2NpL3RyaXAvbWVtYmVycy5wcm90bxIJbG9jaS50cmlwIoUBCgpUcmlwTWVtYmVyEiUKBHVzZXIYASABKAsyFy5sb2NpLnNvY2lhbC5QdWJsaWNVc2VyEiEKBHJvbGUYAiABKA4yEy5sb2NpLnRyaXAuVHJpcFJvbGUSLQoJam9pbmVkX2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCKtAQoKVHJpcEludml0ZRIVCgRjb2RlGAEgASgJQge6SARyAhgyEhUKA3VybBgCIAEoCUIIukgFcgMYgBASIQoEcm9sZRgDIAEoDjITLmxvY2kudHJpcC5UcmlwUm9sZRIuCgpleHBpcmVzX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIQCghtYXhfdXNlcxgFIAEoBRIMCgR1c2VzGAYgASgFIvECChFUcmlwSW52aXRlUHJldmlldxIYCgd0cmlwX2lkGAEgASgJQge6SARyAhhkEhcKBXRpdGxlGAIgASgJQgi6SAVyAxisAhIbCgljaXR5X25hbWUYAyABKAlCCLpIBXIDGMgBEiAKCnN0YXJ0X2RhdGUYBCABKAlCB7pIBHICGApIAIgBARIeCghlbmRfZGF0ZRgFIAEoCUIHukgEcgIYCkgBiAEBEhEKCWRheV9jb3VudBgGIAEoBRImCgVvd25lchgHIAEoCzIXLmxvY2kuc29jaWFsLlB1YmxpY1VzZXISJgoHbWVtYmVycxgIIAMoCzIVLmxvY2kudHJpcC5UcmlwTWVtYmVyEiEKBHJvbGUYCSABKA4yEy5sb2NpLnRyaXAuVHJpcFJvbGUSEAoIam9pbmFibGUYCiABKAgSFgoOYWxyZWFkeV9tZW1iZXIYCyABKAhCDQoLX3N0YXJ0X2RhdGVCCwoJX2VuZF9kYXRlImUKF0NyZWF0ZVRyaXBJbnZpdGVSZXF1ZXN0EhkKB3RyaXBfaWQYASABKAlCCLpIBXIDsAEBEi8KBHJvbGUYAiABKA4yEy5sb2NpLnRyaXAuVHJpcFJvbGVCDLpICYIBBhABGAIYAyIvChRHZXRUcmlwSW52aXRlUmVxdWVzdBIXCgRjb2RlGAEgASgJQgm6SAZyBBABGDIiMgoXQWNjZXB0VHJpcEludml0ZVJlcXVlc3QSFwoEY29kZRgBIAEoCUIJukgGcgQQARgyIlcKGEFjY2VwdFRyaXBJbnZpdGVSZXNwb25zZRIYCgd0cmlwX2lkGAEgASgJQge6SARyAhhkEiEKBHJvbGUYAiABKA4yEy5sb2NpLnRyaXAuVHJpcFJvbGUiTQoXUmV2b2tlVHJpcEludml0ZVJlcXVlc3QSGQoHdHJpcF9pZBgBIAEoCUIIukgFcgOwAQESFwoEY29kZRgCIAEoCUIJukgGcgQQARgyIhoKGFJldm9rZVRyaXBJbnZpdGVSZXNwb25zZSIzChZMaXN0VHJpcE1lbWJlcnNSZXF1ZXN0EhkKB3RyaXBfaWQYASABKAlCCLpIBXIDsAEBIkEKF0xpc3RUcmlwTWVtYmVyc1Jlc3BvbnNlEiYKB21lbWJlcnMYASADKAsyFS5sb2NpLnRyaXAuVHJpcE1lbWJlciJPChdSZW1vdmVUcmlwTWVtYmVyUmVxdWVzdBIZCgd0cmlwX2lkGAEgASgJQgi6SAVyA7ABARIZCgd1c2VyX2lkGAIgASgJQgi6SAVyA7ABASIaChhSZW1vdmVUcmlwTWVtYmVyUmVzcG9uc2UqagoIVHJpcFJvbGUSGQoVVFJJUF9ST0xFX1VOU1BFQ0lGSUVEEAASEwoPVFJJUF9ST0xFX09XTkVSEAESGAoUVFJJUF9ST0xFX0NPX1BMQU5ORVIQAhIUChBUUklQX1JPTEVfVklFV0VSEANCQ1pBZ2l0aHViLmNvbS9GQUNvcnJlaWFhL2xvY2ktY29ubmVjdC1wcm90by92NS9nZW4vZ28vbG9jaS90cmlwO3RyaXBiBnByb3RvMw", [file_buf_validate_validate, file_google_protobuf_timestamp, file_loci_social_social]);
+  fileDesc("Chdsb2NpL3RyaXAvbWVtYmVycy5wcm90bxIJbG9jaS50cmlwIoUBCgpUcmlwTWVtYmVyEiUKBHVzZXIYASABKAsyFy5sb2NpLnNvY2lhbC5QdWJsaWNVc2VyEiEKBHJvbGUYAiABKA4yEy5sb2NpLnRyaXAuVHJpcFJvbGUSLQoJam9pbmVkX2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCKtAQoKVHJpcEludml0ZRIVCgRjb2RlGAEgASgJQge6SARyAhgyEhUKA3VybBgCIAEoCUIIukgFcgMYgBASIQoEcm9sZRgDIAEoDjITLmxvY2kudHJpcC5UcmlwUm9sZRIuCgpleHBpcmVzX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIQCghtYXhfdXNlcxgFIAEoBRIMCgR1c2VzGAYgASgFIvECChFUcmlwSW52aXRlUHJldmlldxIYCgd0cmlwX2lkGAEgASgJQge6SARyAhhkEhcKBXRpdGxlGAIgASgJQgi6SAVyAxisAhIbCgljaXR5X25hbWUYAyABKAlCCLpIBXIDGMgBEiAKCnN0YXJ0X2RhdGUYBCABKAlCB7pIBHICGApIAIgBARIeCghlbmRfZGF0ZRgFIAEoCUIHukgEcgIYCkgBiAEBEhEKCWRheV9jb3VudBgGIAEoBRImCgVvd25lchgHIAEoCzIXLmxvY2kuc29jaWFsLlB1YmxpY1VzZXISJgoHbWVtYmVycxgIIAMoCzIVLmxvY2kudHJpcC5UcmlwTWVtYmVyEiEKBHJvbGUYCSABKA4yEy5sb2NpLnRyaXAuVHJpcFJvbGUSEAoIam9pbmFibGUYCiABKAgSFgoOYWxyZWFkeV9tZW1iZXIYCyABKAhCDQoLX3N0YXJ0X2RhdGVCCwoJX2VuZF9kYXRlImUKF0NyZWF0ZVRyaXBJbnZpdGVSZXF1ZXN0EhkKB3RyaXBfaWQYASABKAlCCLpIBXIDsAEBEi8KBHJvbGUYAiABKA4yEy5sb2NpLnRyaXAuVHJpcFJvbGVCDLpICYIBBhABGAIYAyIvChRHZXRUcmlwSW52aXRlUmVxdWVzdBIXCgRjb2RlGAEgASgJQgm6SAZyBBABGDIiMgoXQWNjZXB0VHJpcEludml0ZVJlcXVlc3QSFwoEY29kZRgBIAEoCUIJukgGcgQQARgyIlcKGEFjY2VwdFRyaXBJbnZpdGVSZXNwb25zZRIYCgd0cmlwX2lkGAEgASgJQge6SARyAhhkEiEKBHJvbGUYAiABKA4yEy5sb2NpLnRyaXAuVHJpcFJvbGUiTQoXUmV2b2tlVHJpcEludml0ZVJlcXVlc3QSGQoHdHJpcF9pZBgBIAEoCUIIukgFcgOwAQESFwoEY29kZRgCIAEoCUIJukgGcgQQARgyIhoKGFJldm9rZVRyaXBJbnZpdGVSZXNwb25zZSIzChZMaXN0VHJpcE1lbWJlcnNSZXF1ZXN0EhkKB3RyaXBfaWQYASABKAlCCLpIBXIDsAEBIkEKF0xpc3RUcmlwTWVtYmVyc1Jlc3BvbnNlEiYKB21lbWJlcnMYASADKAsyFS5sb2NpLnRyaXAuVHJpcE1lbWJlciJPChdSZW1vdmVUcmlwTWVtYmVyUmVxdWVzdBIZCgd0cmlwX2lkGAEgASgJQgi6SAVyA7ABARIZCgd1c2VyX2lkGAIgASgJQgi6SAVyA7ABASIaChhSZW1vdmVUcmlwTWVtYmVyUmVzcG9uc2Ui6QEKC1RyaXBDb21tZW50EhMKAmlkGAEgASgJQge6SARyAhhkEhgKB3RyaXBfaWQYAiABKAlCB7pIBHICGGQSGAoHc3RvcF9pZBgDIAEoCUIHukgEcgIYZBInCgZhdXRob3IYBCABKAsyFy5sb2NpLnNvY2lhbC5QdWJsaWNVc2VyEhYKBGJvZHkYBSABKAlCCLpIBXIDGNAPEi4KCmNyZWF0ZWRfYXQYBiABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEgwKBG1pbmUYByABKAgSEgoKY2FuX2RlbGV0ZRgIIAEoCCJqChVBZGRUcmlwQ29tbWVudFJlcXVlc3QSGQoHdHJpcF9pZBgBIAEoCUIIukgFcgOwAQESHAoHc3RvcF9pZBgCIAEoCUILukgI2AEBcgOwAQESGAoEYm9keRgDIAEoCUIKukgHcgUQARjQDyJ7ChdMaXN0VHJpcENvbW1lbnRzUmVxdWVzdBIZCgd0cmlwX2lkGAEgASgJQgi6SAVyA7ABARIZCgVsaW1pdBgCIAEoBUIKukgHGgUYyAEoABIqCgZiZWZvcmUYAyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wIlYKGExpc3RUcmlwQ29tbWVudHNSZXNwb25zZRIoCghjb21tZW50cxgBIAMoCzIWLmxvY2kudHJpcC5UcmlwQ29tbWVudBIQCghoYXNfbW9yZRgCIAEoCCI4ChhEZWxldGVUcmlwQ29tbWVudFJlcXVlc3QSHAoKY29tbWVudF9pZBgBIAEoCUIIukgFcgOwAQEiGwoZRGVsZXRlVHJpcENvbW1lbnRSZXNwb25zZSJxChhSZXBvcnRUcmlwQ29tbWVudFJlcXVlc3QSHAoKY29tbWVudF9pZBgBIAEoCUIIukgFcgOwAQESGQoGcmVhc29uGAIgASgJQgm6SAZyBBABGDISHAoHZGV0YWlscxgDIAEoCUILukgI2AEBcgMY6AciGwoZUmVwb3J0VHJpcENvbW1lbnRSZXNwb25zZSJSCh9MaXN0UmVwb3J0ZWRUcmlwQ29tbWVudHNSZXF1ZXN0EhgKBWxpbWl0GAEgASgFQgm6SAYaBBhkKAASFQoEcGFnZRgCIAEoBUIHukgEGgIoACI4ChdUcmlwQ29tbWVudFJlcG9ydFJlYXNvbhIOCgZyZWFzb24YASABKAkSDQoFY291bnQYAiABKAUi4AEKE1JlcG9ydGVkVHJpcENvbW1lbnQSJwoHY29tbWVudBgBIAEoCzIWLmxvY2kudHJpcC5UcmlwQ29tbWVudBIUCgxyZXBvcnRfY291bnQYAiABKAUSMwoHcmVhc29ucxgDIAMoCzIiLmxvY2kudHJpcC5UcmlwQ29tbWVudFJlcG9ydFJlYXNvbhIPCgdkZXRhaWxzGAQgAygJEjQKEGxhc3RfcmVwb3J0ZWRfYXQYBSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEg4KBmhpZGRlbhgGIAEoCCJmCiBMaXN0UmVwb3J0ZWRUcmlwQ29tbWVudHNSZXNwb25zZRIwCghjb21tZW50cxgBIAMoCzIeLmxvY2kudHJpcC5SZXBvcnRlZFRyaXBDb21tZW50EhAKCGhhc19tb3JlGAIgASgIIoMBCh9SZXNvbHZlVHJpcENvbW1lbnRSZXBvcnRSZXF1ZXN0EhwKCmNvbW1lbnRfaWQYASABKAlCCLpIBXIDsAEBEkIKBmFjdGlvbhgCIAEoDjImLmxvY2kudHJpcC5UcmlwQ29tbWVudE1vZGVyYXRpb25BY3Rpb25CCrpIB4IBBBABIAAiIgogUmVzb2x2ZVRyaXBDb21tZW50UmVwb3J0UmVzcG9uc2UqagoIVHJpcFJvbGUSGQoVVFJJUF9ST0xFX1VOU1BFQ0lGSUVEEAASEwoPVFJJUF9ST0xFX09XTkVSEAESGAoUVFJJUF9ST0xFX0NPX1BMQU5ORVIQAhIUChBUUklQX1JPTEVfVklFV0VSEAMqoQEKG1RyaXBDb21tZW50TW9kZXJhdGlvbkFjdGlvbhIuCipUUklQX0NPTU1FTlRfTU9ERVJBVElPTl9BQ1RJT05fVU5TUEVDSUZJRUQQABInCiNUUklQX0NPTU1FTlRfTU9ERVJBVElPTl9BQ1RJT05fS0VFUBABEikKJVRSSVBfQ09NTUVOVF9NT0RFUkFUSU9OX0FDVElPTl9SRU1PVkUQAkJDWkFnaXRodWIuY29tL0ZBQ29ycmVpYWEvbG9jaS1jb25uZWN0LXByb3RvL3Y1L2dlbi9nby9sb2NpL3RyaXA7dHJpcGIGcHJvdG8z", [file_buf_validate_validate, file_google_protobuf_timestamp, file_loci_social_social]);
 
 /**
  * Describes the message loci.trip.TripMember.
@@ -105,6 +105,104 @@ export const RemoveTripMemberResponseSchema = /*@__PURE__*/
   messageDesc(file_loci_trip_members, 12);
 
 /**
+ * Describes the message loci.trip.TripComment.
+ * Use `create(TripCommentSchema)` to create a new message.
+ */
+export const TripCommentSchema = /*@__PURE__*/
+  messageDesc(file_loci_trip_members, 13);
+
+/**
+ * Describes the message loci.trip.AddTripCommentRequest.
+ * Use `create(AddTripCommentRequestSchema)` to create a new message.
+ */
+export const AddTripCommentRequestSchema = /*@__PURE__*/
+  messageDesc(file_loci_trip_members, 14);
+
+/**
+ * Describes the message loci.trip.ListTripCommentsRequest.
+ * Use `create(ListTripCommentsRequestSchema)` to create a new message.
+ */
+export const ListTripCommentsRequestSchema = /*@__PURE__*/
+  messageDesc(file_loci_trip_members, 15);
+
+/**
+ * Describes the message loci.trip.ListTripCommentsResponse.
+ * Use `create(ListTripCommentsResponseSchema)` to create a new message.
+ */
+export const ListTripCommentsResponseSchema = /*@__PURE__*/
+  messageDesc(file_loci_trip_members, 16);
+
+/**
+ * Describes the message loci.trip.DeleteTripCommentRequest.
+ * Use `create(DeleteTripCommentRequestSchema)` to create a new message.
+ */
+export const DeleteTripCommentRequestSchema = /*@__PURE__*/
+  messageDesc(file_loci_trip_members, 17);
+
+/**
+ * Describes the message loci.trip.DeleteTripCommentResponse.
+ * Use `create(DeleteTripCommentResponseSchema)` to create a new message.
+ */
+export const DeleteTripCommentResponseSchema = /*@__PURE__*/
+  messageDesc(file_loci_trip_members, 18);
+
+/**
+ * Describes the message loci.trip.ReportTripCommentRequest.
+ * Use `create(ReportTripCommentRequestSchema)` to create a new message.
+ */
+export const ReportTripCommentRequestSchema = /*@__PURE__*/
+  messageDesc(file_loci_trip_members, 19);
+
+/**
+ * Describes the message loci.trip.ReportTripCommentResponse.
+ * Use `create(ReportTripCommentResponseSchema)` to create a new message.
+ */
+export const ReportTripCommentResponseSchema = /*@__PURE__*/
+  messageDesc(file_loci_trip_members, 20);
+
+/**
+ * Describes the message loci.trip.ListReportedTripCommentsRequest.
+ * Use `create(ListReportedTripCommentsRequestSchema)` to create a new message.
+ */
+export const ListReportedTripCommentsRequestSchema = /*@__PURE__*/
+  messageDesc(file_loci_trip_members, 21);
+
+/**
+ * Describes the message loci.trip.TripCommentReportReason.
+ * Use `create(TripCommentReportReasonSchema)` to create a new message.
+ */
+export const TripCommentReportReasonSchema = /*@__PURE__*/
+  messageDesc(file_loci_trip_members, 22);
+
+/**
+ * Describes the message loci.trip.ReportedTripComment.
+ * Use `create(ReportedTripCommentSchema)` to create a new message.
+ */
+export const ReportedTripCommentSchema = /*@__PURE__*/
+  messageDesc(file_loci_trip_members, 23);
+
+/**
+ * Describes the message loci.trip.ListReportedTripCommentsResponse.
+ * Use `create(ListReportedTripCommentsResponseSchema)` to create a new message.
+ */
+export const ListReportedTripCommentsResponseSchema = /*@__PURE__*/
+  messageDesc(file_loci_trip_members, 24);
+
+/**
+ * Describes the message loci.trip.ResolveTripCommentReportRequest.
+ * Use `create(ResolveTripCommentReportRequestSchema)` to create a new message.
+ */
+export const ResolveTripCommentReportRequestSchema = /*@__PURE__*/
+  messageDesc(file_loci_trip_members, 25);
+
+/**
+ * Describes the message loci.trip.ResolveTripCommentReportResponse.
+ * Use `create(ResolveTripCommentReportResponseSchema)` to create a new message.
+ */
+export const ResolveTripCommentReportResponseSchema = /*@__PURE__*/
+  messageDesc(file_loci_trip_members, 26);
+
+/**
  * Describes the enum loci.trip.TripRole.
  */
 export const TripRoleSchema = /*@__PURE__*/
@@ -117,4 +215,18 @@ export const TripRoleSchema = /*@__PURE__*/
  */
 export const TripRole = /*@__PURE__*/
   tsEnum(TripRoleSchema);
+
+/**
+ * Describes the enum loci.trip.TripCommentModerationAction.
+ */
+export const TripCommentModerationActionSchema = /*@__PURE__*/
+  enumDesc(file_loci_trip_members, 1);
+
+/**
+ * What a moderator decides about a reported trip comment.
+ *
+ * @generated from enum loci.trip.TripCommentModerationAction
+ */
+export const TripCommentModerationAction = /*@__PURE__*/
+  tsEnum(TripCommentModerationActionSchema);
 
