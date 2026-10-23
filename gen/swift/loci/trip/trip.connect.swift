@@ -157,6 +157,32 @@ public protocol Loci_Trip_TripServiceClientInterface: Sendable {
     /// a member removes only themselves.
     @available(iOS 13, *)
     func `removeTripMember`(request: Loci_Trip_RemoveTripMemberRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_RemoveTripMemberResponse>
+
+    /// Trip comments, for the owner and members. AddTripComment is
+    /// ResourceExhausted past 60 an hour; a viewer may comment too.
+    @available(iOS 13, *)
+    func `addTripComment`(request: Loci_Trip_AddTripCommentRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripComment>
+
+    @available(iOS 13, *)
+    func `listTripComments`(request: Loci_Trip_ListTripCommentsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_ListTripCommentsResponse>
+
+    /// DeleteTripComment: the author, or the trip's owner. Deleting a missing
+    /// comment is NotFound.
+    @available(iOS 13, *)
+    func `deleteTripComment`(request: Loci_Trip_DeleteTripCommentRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_DeleteTripCommentResponse>
+
+    /// ReportTripComment flags a comment for moderation and hides it from the
+    /// reporter at once; three reporters hide it from everyone. Reporting again
+    /// replaces the reason. Reporting your own comment is InvalidArgument.
+    @available(iOS 13, *)
+    func `reportTripComment`(request: Loci_Trip_ReportTripCommentRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_ReportTripCommentResponse>
+
+    /// Moderation (admins only; PermissionDenied otherwise).
+    @available(iOS 13, *)
+    func `listReportedTripComments`(request: Loci_Trip_ListReportedTripCommentsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_ListReportedTripCommentsResponse>
+
+    @available(iOS 13, *)
+    func `resolveTripCommentReport`(request: Loci_Trip_ResolveTripCommentReportRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_ResolveTripCommentReportResponse>
 }
 
 /// Concrete implementation of `Loci_Trip_TripServiceClientInterface`.
@@ -342,6 +368,36 @@ public final class Loci_Trip_TripServiceClient: Loci_Trip_TripServiceClientInter
         return await self.client.unary(path: "/loci.trip.TripService/RemoveTripMember", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
+    @available(iOS 13, *)
+    public func `addTripComment`(request: Loci_Trip_AddTripCommentRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_TripComment> {
+        return await self.client.unary(path: "/loci.trip.TripService/AddTripComment", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `listTripComments`(request: Loci_Trip_ListTripCommentsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_ListTripCommentsResponse> {
+        return await self.client.unary(path: "/loci.trip.TripService/ListTripComments", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `deleteTripComment`(request: Loci_Trip_DeleteTripCommentRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_DeleteTripCommentResponse> {
+        return await self.client.unary(path: "/loci.trip.TripService/DeleteTripComment", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `reportTripComment`(request: Loci_Trip_ReportTripCommentRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_ReportTripCommentResponse> {
+        return await self.client.unary(path: "/loci.trip.TripService/ReportTripComment", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `listReportedTripComments`(request: Loci_Trip_ListReportedTripCommentsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_ListReportedTripCommentsResponse> {
+        return await self.client.unary(path: "/loci.trip.TripService/ListReportedTripComments", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `resolveTripCommentReport`(request: Loci_Trip_ResolveTripCommentReportRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_ResolveTripCommentReportResponse> {
+        return await self.client.unary(path: "/loci.trip.TripService/ResolveTripCommentReport", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
     public enum Metadata {
         public enum Methods {
             public static let saveTrip = Connect.MethodSpec(name: "SaveTrip", service: "loci.trip.TripService", type: .unary)
@@ -379,6 +435,12 @@ public final class Loci_Trip_TripServiceClient: Loci_Trip_TripServiceClientInter
             public static let revokeTripInvite = Connect.MethodSpec(name: "RevokeTripInvite", service: "loci.trip.TripService", type: .unary)
             public static let listTripMembers = Connect.MethodSpec(name: "ListTripMembers", service: "loci.trip.TripService", type: .unary)
             public static let removeTripMember = Connect.MethodSpec(name: "RemoveTripMember", service: "loci.trip.TripService", type: .unary)
+            public static let addTripComment = Connect.MethodSpec(name: "AddTripComment", service: "loci.trip.TripService", type: .unary)
+            public static let listTripComments = Connect.MethodSpec(name: "ListTripComments", service: "loci.trip.TripService", type: .unary)
+            public static let deleteTripComment = Connect.MethodSpec(name: "DeleteTripComment", service: "loci.trip.TripService", type: .unary)
+            public static let reportTripComment = Connect.MethodSpec(name: "ReportTripComment", service: "loci.trip.TripService", type: .unary)
+            public static let listReportedTripComments = Connect.MethodSpec(name: "ListReportedTripComments", service: "loci.trip.TripService", type: .unary)
+            public static let resolveTripCommentReport = Connect.MethodSpec(name: "ResolveTripCommentReport", service: "loci.trip.TripService", type: .unary)
         }
     }
 }

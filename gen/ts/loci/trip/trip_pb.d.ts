@@ -8,7 +8,7 @@ import type { POIDetailedInfo, POIImage } from "../poi/poi_pb";
 import type { RecommendationTrace } from "../recommendation/recommendation_pb";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
 import type { PublicUser } from "../social/social_pb";
-import type { AcceptTripInviteRequestSchema, AcceptTripInviteResponseSchema, CreateTripInviteRequestSchema, GetTripInviteRequestSchema, ListTripMembersRequestSchema, ListTripMembersResponseSchema, RemoveTripMemberRequestSchema, RemoveTripMemberResponseSchema, RevokeTripInviteRequestSchema, RevokeTripInviteResponseSchema, TripInvitePreviewSchema, TripInviteSchema, TripMember, TripRole } from "./members_pb";
+import type { AcceptTripInviteRequestSchema, AcceptTripInviteResponseSchema, AddTripCommentRequestSchema, CreateTripInviteRequestSchema, DeleteTripCommentRequestSchema, DeleteTripCommentResponseSchema, GetTripInviteRequestSchema, ListReportedTripCommentsRequestSchema, ListReportedTripCommentsResponseSchema, ListTripCommentsRequestSchema, ListTripCommentsResponseSchema, ListTripMembersRequestSchema, ListTripMembersResponseSchema, RemoveTripMemberRequestSchema, RemoveTripMemberResponseSchema, ReportTripCommentRequestSchema, ReportTripCommentResponseSchema, ResolveTripCommentReportRequestSchema, ResolveTripCommentReportResponseSchema, RevokeTripInviteRequestSchema, RevokeTripInviteResponseSchema, TripCommentSchema, TripInvitePreviewSchema, TripInviteSchema, TripMember, TripRole } from "./members_pb";
 import type { PaginationMetadata, PaginationRequest } from "../common/common_pb";
 
 /**
@@ -2399,6 +2399,66 @@ export declare const TripService: GenService<{
     methodKind: "unary";
     input: typeof RemoveTripMemberRequestSchema;
     output: typeof RemoveTripMemberResponseSchema;
+  },
+  /**
+   * Trip comments, for the owner and members. AddTripComment is
+   * ResourceExhausted past 60 an hour; a viewer may comment too.
+   *
+   * @generated from rpc loci.trip.TripService.AddTripComment
+   */
+  addTripComment: {
+    methodKind: "unary";
+    input: typeof AddTripCommentRequestSchema;
+    output: typeof TripCommentSchema;
+  },
+  /**
+   * @generated from rpc loci.trip.TripService.ListTripComments
+   */
+  listTripComments: {
+    methodKind: "unary";
+    input: typeof ListTripCommentsRequestSchema;
+    output: typeof ListTripCommentsResponseSchema;
+  },
+  /**
+   * DeleteTripComment: the author, or the trip's owner. Deleting a missing
+   * comment is NotFound.
+   *
+   * @generated from rpc loci.trip.TripService.DeleteTripComment
+   */
+  deleteTripComment: {
+    methodKind: "unary";
+    input: typeof DeleteTripCommentRequestSchema;
+    output: typeof DeleteTripCommentResponseSchema;
+  },
+  /**
+   * ReportTripComment flags a comment for moderation and hides it from the
+   * reporter at once; three reporters hide it from everyone. Reporting again
+   * replaces the reason. Reporting your own comment is InvalidArgument.
+   *
+   * @generated from rpc loci.trip.TripService.ReportTripComment
+   */
+  reportTripComment: {
+    methodKind: "unary";
+    input: typeof ReportTripCommentRequestSchema;
+    output: typeof ReportTripCommentResponseSchema;
+  },
+  /**
+   * Moderation (admins only; PermissionDenied otherwise).
+   *
+   * @generated from rpc loci.trip.TripService.ListReportedTripComments
+   */
+  listReportedTripComments: {
+    methodKind: "unary";
+    input: typeof ListReportedTripCommentsRequestSchema;
+    output: typeof ListReportedTripCommentsResponseSchema;
+  },
+  /**
+   * @generated from rpc loci.trip.TripService.ResolveTripCommentReport
+   */
+  resolveTripCommentReport: {
+    methodKind: "unary";
+    input: typeof ResolveTripCommentReportRequestSchema;
+    output: typeof ResolveTripCommentReportResponseSchema;
   },
 }>;
 
