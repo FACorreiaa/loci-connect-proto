@@ -341,6 +341,372 @@ export declare type RemoveTripMemberResponse = Message<"loci.trip.RemoveTripMemb
 export declare const RemoveTripMemberResponseSchema: GenMessage<RemoveTripMemberResponse>;
 
 /**
+ * TripComment is a note someone on the trip left, about the trip or one of
+ * its stops. Only the owner and members read and write them.
+ *
+ * @generated from message loci.trip.TripComment
+ */
+export declare type TripComment = Message<"loci.trip.TripComment"> & {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * @generated from field: string trip_id = 2;
+   */
+  tripId: string;
+
+  /**
+   * Empty for a comment about the whole trip. A stop that has since left the
+   * trip keeps its id here; clients show such comments with the trip's.
+   *
+   * @generated from field: string stop_id = 3;
+   */
+  stopId: string;
+
+  /**
+   * Unset when the author's account is gone.
+   *
+   * @generated from field: loci.social.PublicUser author = 4;
+   */
+  author?: PublicUser;
+
+  /**
+   * @generated from field: string body = 5;
+   */
+  body: string;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp created_at = 6;
+   */
+  createdAt?: Timestamp;
+
+  /**
+   * The caller wrote it.
+   *
+   * @generated from field: bool mine = 7;
+   */
+  mine: boolean;
+
+  /**
+   * The caller may delete it: its author, or the trip's owner.
+   *
+   * @generated from field: bool can_delete = 8;
+   */
+  canDelete: boolean;
+};
+
+/**
+ * Describes the message loci.trip.TripComment.
+ * Use `create(TripCommentSchema)` to create a new message.
+ */
+export declare const TripCommentSchema: GenMessage<TripComment>;
+
+/**
+ * @generated from message loci.trip.AddTripCommentRequest
+ */
+export declare type AddTripCommentRequest = Message<"loci.trip.AddTripCommentRequest"> & {
+  /**
+   * @generated from field: string trip_id = 1;
+   */
+  tripId: string;
+
+  /**
+   * Empty for a comment about the whole trip.
+   *
+   * @generated from field: string stop_id = 2;
+   */
+  stopId: string;
+
+  /**
+   * @generated from field: string body = 3;
+   */
+  body: string;
+};
+
+/**
+ * Describes the message loci.trip.AddTripCommentRequest.
+ * Use `create(AddTripCommentRequestSchema)` to create a new message.
+ */
+export declare const AddTripCommentRequestSchema: GenMessage<AddTripCommentRequest>;
+
+/**
+ * @generated from message loci.trip.ListTripCommentsRequest
+ */
+export declare type ListTripCommentsRequest = Message<"loci.trip.ListTripCommentsRequest"> & {
+  /**
+   * @generated from field: string trip_id = 1;
+   */
+  tripId: string;
+
+  /**
+   * How many; 0 means the server default (100).
+   *
+   * @generated from field: int32 limit = 2;
+   */
+  limit: number;
+
+  /**
+   * Only comments older than this; unset for the newest.
+   *
+   * @generated from field: google.protobuf.Timestamp before = 3;
+   */
+  before?: Timestamp;
+};
+
+/**
+ * Describes the message loci.trip.ListTripCommentsRequest.
+ * Use `create(ListTripCommentsRequestSchema)` to create a new message.
+ */
+export declare const ListTripCommentsRequestSchema: GenMessage<ListTripCommentsRequest>;
+
+/**
+ * @generated from message loci.trip.ListTripCommentsResponse
+ */
+export declare type ListTripCommentsResponse = Message<"loci.trip.ListTripCommentsResponse"> & {
+  /**
+   * Oldest first: the newest `limit` comments before `before`, in reading
+   * order. Deleted, removed, hidden and blocked-author comments are left out.
+   *
+   * @generated from field: repeated loci.trip.TripComment comments = 1;
+   */
+  comments: TripComment[];
+
+  /**
+   * There are older comments: ask again with `before` set to the first
+   * comment's created_at.
+   *
+   * @generated from field: bool has_more = 2;
+   */
+  hasMore: boolean;
+};
+
+/**
+ * Describes the message loci.trip.ListTripCommentsResponse.
+ * Use `create(ListTripCommentsResponseSchema)` to create a new message.
+ */
+export declare const ListTripCommentsResponseSchema: GenMessage<ListTripCommentsResponse>;
+
+/**
+ * @generated from message loci.trip.DeleteTripCommentRequest
+ */
+export declare type DeleteTripCommentRequest = Message<"loci.trip.DeleteTripCommentRequest"> & {
+  /**
+   * @generated from field: string comment_id = 1;
+   */
+  commentId: string;
+};
+
+/**
+ * Describes the message loci.trip.DeleteTripCommentRequest.
+ * Use `create(DeleteTripCommentRequestSchema)` to create a new message.
+ */
+export declare const DeleteTripCommentRequestSchema: GenMessage<DeleteTripCommentRequest>;
+
+/**
+ * @generated from message loci.trip.DeleteTripCommentResponse
+ */
+export declare type DeleteTripCommentResponse = Message<"loci.trip.DeleteTripCommentResponse"> & {
+};
+
+/**
+ * Describes the message loci.trip.DeleteTripCommentResponse.
+ * Use `create(DeleteTripCommentResponseSchema)` to create a new message.
+ */
+export declare const DeleteTripCommentResponseSchema: GenMessage<DeleteTripCommentResponse>;
+
+/**
+ * @generated from message loci.trip.ReportTripCommentRequest
+ */
+export declare type ReportTripCommentRequest = Message<"loci.trip.ReportTripCommentRequest"> & {
+  /**
+   * @generated from field: string comment_id = 1;
+   */
+  commentId: string;
+
+  /**
+   * One of "spam", "inappropriate", "offensive", "other". The server rejects
+   * anything else with InvalidArgument.
+   *
+   * @generated from field: string reason = 2;
+   */
+  reason: string;
+
+  /**
+   * @generated from field: string details = 3;
+   */
+  details: string;
+};
+
+/**
+ * Describes the message loci.trip.ReportTripCommentRequest.
+ * Use `create(ReportTripCommentRequestSchema)` to create a new message.
+ */
+export declare const ReportTripCommentRequestSchema: GenMessage<ReportTripCommentRequest>;
+
+/**
+ * @generated from message loci.trip.ReportTripCommentResponse
+ */
+export declare type ReportTripCommentResponse = Message<"loci.trip.ReportTripCommentResponse"> & {
+};
+
+/**
+ * Describes the message loci.trip.ReportTripCommentResponse.
+ * Use `create(ReportTripCommentResponseSchema)` to create a new message.
+ */
+export declare const ReportTripCommentResponseSchema: GenMessage<ReportTripCommentResponse>;
+
+/**
+ * @generated from message loci.trip.ListReportedTripCommentsRequest
+ */
+export declare type ListReportedTripCommentsRequest = Message<"loci.trip.ListReportedTripCommentsRequest"> & {
+  /**
+   * Page size; 0 means the server default (20).
+   *
+   * @generated from field: int32 limit = 1;
+   */
+  limit: number;
+
+  /**
+   * 1-based; 0 means the first page.
+   *
+   * @generated from field: int32 page = 2;
+   */
+  page: number;
+};
+
+/**
+ * Describes the message loci.trip.ListReportedTripCommentsRequest.
+ * Use `create(ListReportedTripCommentsRequestSchema)` to create a new message.
+ */
+export declare const ListReportedTripCommentsRequestSchema: GenMessage<ListReportedTripCommentsRequest>;
+
+/**
+ * How many open reports gave one reason.
+ *
+ * @generated from message loci.trip.TripCommentReportReason
+ */
+export declare type TripCommentReportReason = Message<"loci.trip.TripCommentReportReason"> & {
+  /**
+   * @generated from field: string reason = 1;
+   */
+  reason: string;
+
+  /**
+   * @generated from field: int32 count = 2;
+   */
+  count: number;
+};
+
+/**
+ * Describes the message loci.trip.TripCommentReportReason.
+ * Use `create(TripCommentReportReasonSchema)` to create a new message.
+ */
+export declare const TripCommentReportReasonSchema: GenMessage<TripCommentReportReason>;
+
+/**
+ * @generated from message loci.trip.ReportedTripComment
+ */
+export declare type ReportedTripComment = Message<"loci.trip.ReportedTripComment"> & {
+  /**
+   * @generated from field: loci.trip.TripComment comment = 1;
+   */
+  comment?: TripComment;
+
+  /**
+   * Distinct people with an open report on the comment.
+   *
+   * @generated from field: int32 report_count = 2;
+   */
+  reportCount: number;
+
+  /**
+   * @generated from field: repeated loci.trip.TripCommentReportReason reasons = 3;
+   */
+  reasons: TripCommentReportReason[];
+
+  /**
+   * The free-text details reporters gave, newest first; empty ones omitted.
+   *
+   * @generated from field: repeated string details = 4;
+   */
+  details: string[];
+
+  /**
+   * @generated from field: google.protobuf.Timestamp last_reported_at = 5;
+   */
+  lastReportedAt?: Timestamp;
+
+  /**
+   * True when the comment is out of the trip because of its reports.
+   *
+   * @generated from field: bool hidden = 6;
+   */
+  hidden: boolean;
+};
+
+/**
+ * Describes the message loci.trip.ReportedTripComment.
+ * Use `create(ReportedTripCommentSchema)` to create a new message.
+ */
+export declare const ReportedTripCommentSchema: GenMessage<ReportedTripComment>;
+
+/**
+ * @generated from message loci.trip.ListReportedTripCommentsResponse
+ */
+export declare type ListReportedTripCommentsResponse = Message<"loci.trip.ListReportedTripCommentsResponse"> & {
+  /**
+   * @generated from field: repeated loci.trip.ReportedTripComment comments = 1;
+   */
+  comments: ReportedTripComment[];
+
+  /**
+   * @generated from field: bool has_more = 2;
+   */
+  hasMore: boolean;
+};
+
+/**
+ * Describes the message loci.trip.ListReportedTripCommentsResponse.
+ * Use `create(ListReportedTripCommentsResponseSchema)` to create a new message.
+ */
+export declare const ListReportedTripCommentsResponseSchema: GenMessage<ListReportedTripCommentsResponse>;
+
+/**
+ * @generated from message loci.trip.ResolveTripCommentReportRequest
+ */
+export declare type ResolveTripCommentReportRequest = Message<"loci.trip.ResolveTripCommentReportRequest"> & {
+  /**
+   * @generated from field: string comment_id = 1;
+   */
+  commentId: string;
+
+  /**
+   * @generated from field: loci.trip.TripCommentModerationAction action = 2;
+   */
+  action: TripCommentModerationAction;
+};
+
+/**
+ * Describes the message loci.trip.ResolveTripCommentReportRequest.
+ * Use `create(ResolveTripCommentReportRequestSchema)` to create a new message.
+ */
+export declare const ResolveTripCommentReportRequestSchema: GenMessage<ResolveTripCommentReportRequest>;
+
+/**
+ * @generated from message loci.trip.ResolveTripCommentReportResponse
+ */
+export declare type ResolveTripCommentReportResponse = Message<"loci.trip.ResolveTripCommentReportResponse"> & {
+};
+
+/**
+ * Describes the message loci.trip.ResolveTripCommentReportResponse.
+ * Use `create(ResolveTripCommentReportResponseSchema)` to create a new message.
+ */
+export declare const ResolveTripCommentReportResponseSchema: GenMessage<ResolveTripCommentReportResponse>;
+
+/**
  * TripRole is what a person may do on a trip.
  *
  * @generated from enum loci.trip.TripRole
@@ -377,4 +743,35 @@ export enum TripRole {
  * Describes the enum loci.trip.TripRole.
  */
 export declare const TripRoleSchema: GenEnum<TripRole>;
+
+/**
+ * What a moderator decides about a reported trip comment.
+ *
+ * @generated from enum loci.trip.TripCommentModerationAction
+ */
+export enum TripCommentModerationAction {
+  /**
+   * @generated from enum value: TRIP_COMMENT_MODERATION_ACTION_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * The comment stays; its open reports are closed.
+   *
+   * @generated from enum value: TRIP_COMMENT_MODERATION_ACTION_KEEP = 1;
+   */
+  KEEP = 1,
+
+  /**
+   * The comment leaves the trip for everyone.
+   *
+   * @generated from enum value: TRIP_COMMENT_MODERATION_ACTION_REMOVE = 2;
+   */
+  REMOVE = 2,
+}
+
+/**
+ * Describes the enum loci.trip.TripCommentModerationAction.
+ */
+export declare const TripCommentModerationActionSchema: GenEnum<TripCommentModerationAction>;
 

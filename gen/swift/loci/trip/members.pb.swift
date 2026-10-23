@@ -69,6 +69,49 @@ public enum Loci_Trip_TripRole: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
+/// What a moderator decides about a reported trip comment.
+public enum Loci_Trip_TripCommentModerationAction: SwiftProtobuf.Enum, Swift.CaseIterable {
+  public typealias RawValue = Int
+  case unspecified // = 0
+
+  /// The comment stays; its open reports are closed.
+  case keep // = 1
+
+  /// The comment leaves the trip for everyone.
+  case remove // = 2
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .unspecified
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unspecified
+    case 1: self = .keep
+    case 2: self = .remove
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .unspecified: return 0
+    case .keep: return 1
+    case .remove: return 2
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static let allCases: [Loci_Trip_TripCommentModerationAction] = [
+    .unspecified,
+    .keep,
+    .remove,
+  ]
+
+}
+
 public struct Loci_Trip_TripMember: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -327,6 +370,290 @@ public struct Loci_Trip_RemoveTripMemberResponse: Sendable {
   public init() {}
 }
 
+/// TripComment is a note someone on the trip left, about the trip or one of
+/// its stops. Only the owner and members read and write them.
+public struct Loci_Trip_TripComment: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var id: String = String()
+
+  public var tripID: String = String()
+
+  /// Empty for a comment about the whole trip. A stop that has since left the
+  /// trip keeps its id here; clients show such comments with the trip's.
+  public var stopID: String = String()
+
+  /// Unset when the author's account is gone.
+  public var author: Loci_Social_PublicUser {
+    get {return _author ?? Loci_Social_PublicUser()}
+    set {_author = newValue}
+  }
+  /// Returns true if `author` has been explicitly set.
+  public var hasAuthor: Bool {return self._author != nil}
+  /// Clears the value of `author`. Subsequent reads from it will return its default value.
+  public mutating func clearAuthor() {self._author = nil}
+
+  public var body: String = String()
+
+  public var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_createdAt = newValue}
+  }
+  /// Returns true if `createdAt` has been explicitly set.
+  public var hasCreatedAt: Bool {return self._createdAt != nil}
+  /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
+  public mutating func clearCreatedAt() {self._createdAt = nil}
+
+  /// The caller wrote it.
+  public var mine: Bool = false
+
+  /// The caller may delete it: its author, or the trip's owner.
+  public var canDelete: Bool = false
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _author: Loci_Social_PublicUser? = nil
+  fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+}
+
+public struct Loci_Trip_AddTripCommentRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var tripID: String = String()
+
+  /// Empty for a comment about the whole trip.
+  public var stopID: String = String()
+
+  public var body: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Trip_ListTripCommentsRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var tripID: String = String()
+
+  /// How many; 0 means the server default (100).
+  public var limit: Int32 = 0
+
+  /// Only comments older than this; unset for the newest.
+  public var before: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _before ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_before = newValue}
+  }
+  /// Returns true if `before` has been explicitly set.
+  public var hasBefore: Bool {return self._before != nil}
+  /// Clears the value of `before`. Subsequent reads from it will return its default value.
+  public mutating func clearBefore() {self._before = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _before: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+}
+
+public struct Loci_Trip_ListTripCommentsResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// Oldest first: the newest `limit` comments before `before`, in reading
+  /// order. Deleted, removed, hidden and blocked-author comments are left out.
+  public var comments: [Loci_Trip_TripComment] = []
+
+  /// There are older comments: ask again with `before` set to the first
+  /// comment's created_at.
+  public var hasMore_p: Bool = false
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Trip_DeleteTripCommentRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var commentID: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Trip_DeleteTripCommentResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Trip_ReportTripCommentRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var commentID: String = String()
+
+  /// One of "spam", "inappropriate", "offensive", "other". The server rejects
+  /// anything else with InvalidArgument.
+  public var reason: String = String()
+
+  public var details: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Trip_ReportTripCommentResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Trip_ListReportedTripCommentsRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// Page size; 0 means the server default (20).
+  public var limit: Int32 = 0
+
+  /// 1-based; 0 means the first page.
+  public var page: Int32 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// How many open reports gave one reason.
+public struct Loci_Trip_TripCommentReportReason: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var reason: String = String()
+
+  public var count: Int32 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Trip_ReportedTripComment: @unchecked Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var comment: Loci_Trip_TripComment {
+    get {return _storage._comment ?? Loci_Trip_TripComment()}
+    set {_uniqueStorage()._comment = newValue}
+  }
+  /// Returns true if `comment` has been explicitly set.
+  public var hasComment: Bool {return _storage._comment != nil}
+  /// Clears the value of `comment`. Subsequent reads from it will return its default value.
+  public mutating func clearComment() {_uniqueStorage()._comment = nil}
+
+  /// Distinct people with an open report on the comment.
+  public var reportCount: Int32 {
+    get {return _storage._reportCount}
+    set {_uniqueStorage()._reportCount = newValue}
+  }
+
+  public var reasons: [Loci_Trip_TripCommentReportReason] {
+    get {return _storage._reasons}
+    set {_uniqueStorage()._reasons = newValue}
+  }
+
+  /// The free-text details reporters gave, newest first; empty ones omitted.
+  public var details: [String] {
+    get {return _storage._details}
+    set {_uniqueStorage()._details = newValue}
+  }
+
+  public var lastReportedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _storage._lastReportedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_uniqueStorage()._lastReportedAt = newValue}
+  }
+  /// Returns true if `lastReportedAt` has been explicitly set.
+  public var hasLastReportedAt: Bool {return _storage._lastReportedAt != nil}
+  /// Clears the value of `lastReportedAt`. Subsequent reads from it will return its default value.
+  public mutating func clearLastReportedAt() {_uniqueStorage()._lastReportedAt = nil}
+
+  /// True when the comment is out of the trip because of its reports.
+  public var hidden: Bool {
+    get {return _storage._hidden}
+    set {_uniqueStorage()._hidden = newValue}
+  }
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _storage = _StorageClass.defaultInstance
+}
+
+public struct Loci_Trip_ListReportedTripCommentsResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var comments: [Loci_Trip_ReportedTripComment] = []
+
+  public var hasMore_p: Bool = false
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Trip_ResolveTripCommentReportRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var commentID: String = String()
+
+  public var action: Loci_Trip_TripCommentModerationAction = .unspecified
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Trip_ResolveTripCommentReportResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "loci.trip"
@@ -337,6 +664,14 @@ extension Loci_Trip_TripRole: SwiftProtobuf._ProtoNameProviding {
     1: .same(proto: "TRIP_ROLE_OWNER"),
     2: .same(proto: "TRIP_ROLE_CO_PLANNER"),
     3: .same(proto: "TRIP_ROLE_VIEWER"),
+  ]
+}
+
+extension Loci_Trip_TripCommentModerationAction: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "TRIP_COMMENT_MODERATION_ACTION_UNSPECIFIED"),
+    1: .same(proto: "TRIP_COMMENT_MODERATION_ACTION_KEEP"),
+    2: .same(proto: "TRIP_COMMENT_MODERATION_ACTION_REMOVE"),
   ]
 }
 
@@ -863,6 +1198,615 @@ extension Loci_Trip_RemoveTripMemberResponse: SwiftProtobuf.Message, SwiftProtob
   }
 
   public static func ==(lhs: Loci_Trip_RemoveTripMemberResponse, rhs: Loci_Trip_RemoveTripMemberResponse) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_TripComment: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".TripComment"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "trip_id"),
+    3: .standard(proto: "stop_id"),
+    4: .same(proto: "author"),
+    5: .same(proto: "body"),
+    6: .standard(proto: "created_at"),
+    7: .same(proto: "mine"),
+    8: .standard(proto: "can_delete"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.id) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.tripID) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.stopID) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._author) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.body) }()
+      case 6: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
+      case 7: try { try decoder.decodeSingularBoolField(value: &self.mine) }()
+      case 8: try { try decoder.decodeSingularBoolField(value: &self.canDelete) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.id.isEmpty {
+      try visitor.visitSingularStringField(value: self.id, fieldNumber: 1)
+    }
+    if !self.tripID.isEmpty {
+      try visitor.visitSingularStringField(value: self.tripID, fieldNumber: 2)
+    }
+    if !self.stopID.isEmpty {
+      try visitor.visitSingularStringField(value: self.stopID, fieldNumber: 3)
+    }
+    try { if let v = self._author {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    } }()
+    if !self.body.isEmpty {
+      try visitor.visitSingularStringField(value: self.body, fieldNumber: 5)
+    }
+    try { if let v = self._createdAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+    } }()
+    if self.mine != false {
+      try visitor.visitSingularBoolField(value: self.mine, fieldNumber: 7)
+    }
+    if self.canDelete != false {
+      try visitor.visitSingularBoolField(value: self.canDelete, fieldNumber: 8)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_TripComment, rhs: Loci_Trip_TripComment) -> Bool {
+    if lhs.id != rhs.id {return false}
+    if lhs.tripID != rhs.tripID {return false}
+    if lhs.stopID != rhs.stopID {return false}
+    if lhs._author != rhs._author {return false}
+    if lhs.body != rhs.body {return false}
+    if lhs._createdAt != rhs._createdAt {return false}
+    if lhs.mine != rhs.mine {return false}
+    if lhs.canDelete != rhs.canDelete {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_AddTripCommentRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".AddTripCommentRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+    2: .standard(proto: "stop_id"),
+    3: .same(proto: "body"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.tripID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.stopID) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.body) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.tripID.isEmpty {
+      try visitor.visitSingularStringField(value: self.tripID, fieldNumber: 1)
+    }
+    if !self.stopID.isEmpty {
+      try visitor.visitSingularStringField(value: self.stopID, fieldNumber: 2)
+    }
+    if !self.body.isEmpty {
+      try visitor.visitSingularStringField(value: self.body, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_AddTripCommentRequest, rhs: Loci_Trip_AddTripCommentRequest) -> Bool {
+    if lhs.tripID != rhs.tripID {return false}
+    if lhs.stopID != rhs.stopID {return false}
+    if lhs.body != rhs.body {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_ListTripCommentsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ListTripCommentsRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+    2: .same(proto: "limit"),
+    3: .same(proto: "before"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.tripID) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.limit) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._before) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.tripID.isEmpty {
+      try visitor.visitSingularStringField(value: self.tripID, fieldNumber: 1)
+    }
+    if self.limit != 0 {
+      try visitor.visitSingularInt32Field(value: self.limit, fieldNumber: 2)
+    }
+    try { if let v = self._before {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_ListTripCommentsRequest, rhs: Loci_Trip_ListTripCommentsRequest) -> Bool {
+    if lhs.tripID != rhs.tripID {return false}
+    if lhs.limit != rhs.limit {return false}
+    if lhs._before != rhs._before {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_ListTripCommentsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ListTripCommentsResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "comments"),
+    2: .standard(proto: "has_more"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.comments) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self.hasMore_p) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.comments.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.comments, fieldNumber: 1)
+    }
+    if self.hasMore_p != false {
+      try visitor.visitSingularBoolField(value: self.hasMore_p, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_ListTripCommentsResponse, rhs: Loci_Trip_ListTripCommentsResponse) -> Bool {
+    if lhs.comments != rhs.comments {return false}
+    if lhs.hasMore_p != rhs.hasMore_p {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_DeleteTripCommentRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".DeleteTripCommentRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "comment_id"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.commentID) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.commentID.isEmpty {
+      try visitor.visitSingularStringField(value: self.commentID, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_DeleteTripCommentRequest, rhs: Loci_Trip_DeleteTripCommentRequest) -> Bool {
+    if lhs.commentID != rhs.commentID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_DeleteTripCommentResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".DeleteTripCommentResponse"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    // Load everything into unknown fields
+    while try decoder.nextFieldNumber() != nil {}
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_DeleteTripCommentResponse, rhs: Loci_Trip_DeleteTripCommentResponse) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_ReportTripCommentRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ReportTripCommentRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "comment_id"),
+    2: .same(proto: "reason"),
+    3: .same(proto: "details"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.commentID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.reason) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.details) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.commentID.isEmpty {
+      try visitor.visitSingularStringField(value: self.commentID, fieldNumber: 1)
+    }
+    if !self.reason.isEmpty {
+      try visitor.visitSingularStringField(value: self.reason, fieldNumber: 2)
+    }
+    if !self.details.isEmpty {
+      try visitor.visitSingularStringField(value: self.details, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_ReportTripCommentRequest, rhs: Loci_Trip_ReportTripCommentRequest) -> Bool {
+    if lhs.commentID != rhs.commentID {return false}
+    if lhs.reason != rhs.reason {return false}
+    if lhs.details != rhs.details {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_ReportTripCommentResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ReportTripCommentResponse"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    // Load everything into unknown fields
+    while try decoder.nextFieldNumber() != nil {}
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_ReportTripCommentResponse, rhs: Loci_Trip_ReportTripCommentResponse) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_ListReportedTripCommentsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ListReportedTripCommentsRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "limit"),
+    2: .same(proto: "page"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularInt32Field(value: &self.limit) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.page) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.limit != 0 {
+      try visitor.visitSingularInt32Field(value: self.limit, fieldNumber: 1)
+    }
+    if self.page != 0 {
+      try visitor.visitSingularInt32Field(value: self.page, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_ListReportedTripCommentsRequest, rhs: Loci_Trip_ListReportedTripCommentsRequest) -> Bool {
+    if lhs.limit != rhs.limit {return false}
+    if lhs.page != rhs.page {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_TripCommentReportReason: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".TripCommentReportReason"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "reason"),
+    2: .same(proto: "count"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.reason) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.count) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.reason.isEmpty {
+      try visitor.visitSingularStringField(value: self.reason, fieldNumber: 1)
+    }
+    if self.count != 0 {
+      try visitor.visitSingularInt32Field(value: self.count, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_TripCommentReportReason, rhs: Loci_Trip_TripCommentReportReason) -> Bool {
+    if lhs.reason != rhs.reason {return false}
+    if lhs.count != rhs.count {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_ReportedTripComment: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ReportedTripComment"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "comment"),
+    2: .standard(proto: "report_count"),
+    3: .same(proto: "reasons"),
+    4: .same(proto: "details"),
+    5: .standard(proto: "last_reported_at"),
+    6: .same(proto: "hidden"),
+  ]
+
+  fileprivate class _StorageClass {
+    var _comment: Loci_Trip_TripComment? = nil
+    var _reportCount: Int32 = 0
+    var _reasons: [Loci_Trip_TripCommentReportReason] = []
+    var _details: [String] = []
+    var _lastReportedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+    var _hidden: Bool = false
+
+    #if swift(>=5.10)
+      // This property is used as the initial default value for new instances of the type.
+      // The type itself is protecting the reference to its storage via CoW semantics.
+      // This will force a copy to be made of this reference when the first mutation occurs;
+      // hence, it is safe to mark this as `nonisolated(unsafe)`.
+      static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _comment = source._comment
+      _reportCount = source._reportCount
+      _reasons = source._reasons
+      _details = source._details
+      _lastReportedAt = source._lastReportedAt
+      _hidden = source._hidden
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularMessageField(value: &_storage._comment) }()
+        case 2: try { try decoder.decodeSingularInt32Field(value: &_storage._reportCount) }()
+        case 3: try { try decoder.decodeRepeatedMessageField(value: &_storage._reasons) }()
+        case 4: try { try decoder.decodeRepeatedStringField(value: &_storage._details) }()
+        case 5: try { try decoder.decodeSingularMessageField(value: &_storage._lastReportedAt) }()
+        case 6: try { try decoder.decodeSingularBoolField(value: &_storage._hidden) }()
+        default: break
+        }
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      try { if let v = _storage._comment {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+      } }()
+      if _storage._reportCount != 0 {
+        try visitor.visitSingularInt32Field(value: _storage._reportCount, fieldNumber: 2)
+      }
+      if !_storage._reasons.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._reasons, fieldNumber: 3)
+      }
+      if !_storage._details.isEmpty {
+        try visitor.visitRepeatedStringField(value: _storage._details, fieldNumber: 4)
+      }
+      try { if let v = _storage._lastReportedAt {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+      } }()
+      if _storage._hidden != false {
+        try visitor.visitSingularBoolField(value: _storage._hidden, fieldNumber: 6)
+      }
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_ReportedTripComment, rhs: Loci_Trip_ReportedTripComment) -> Bool {
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._comment != rhs_storage._comment {return false}
+        if _storage._reportCount != rhs_storage._reportCount {return false}
+        if _storage._reasons != rhs_storage._reasons {return false}
+        if _storage._details != rhs_storage._details {return false}
+        if _storage._lastReportedAt != rhs_storage._lastReportedAt {return false}
+        if _storage._hidden != rhs_storage._hidden {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_ListReportedTripCommentsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ListReportedTripCommentsResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "comments"),
+    2: .standard(proto: "has_more"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.comments) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self.hasMore_p) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.comments.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.comments, fieldNumber: 1)
+    }
+    if self.hasMore_p != false {
+      try visitor.visitSingularBoolField(value: self.hasMore_p, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_ListReportedTripCommentsResponse, rhs: Loci_Trip_ListReportedTripCommentsResponse) -> Bool {
+    if lhs.comments != rhs.comments {return false}
+    if lhs.hasMore_p != rhs.hasMore_p {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_ResolveTripCommentReportRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ResolveTripCommentReportRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "comment_id"),
+    2: .same(proto: "action"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.commentID) }()
+      case 2: try { try decoder.decodeSingularEnumField(value: &self.action) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.commentID.isEmpty {
+      try visitor.visitSingularStringField(value: self.commentID, fieldNumber: 1)
+    }
+    if self.action != .unspecified {
+      try visitor.visitSingularEnumField(value: self.action, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_ResolveTripCommentReportRequest, rhs: Loci_Trip_ResolveTripCommentReportRequest) -> Bool {
+    if lhs.commentID != rhs.commentID {return false}
+    if lhs.action != rhs.action {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_ResolveTripCommentReportResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ResolveTripCommentReportResponse"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    // Load everything into unknown fields
+    while try decoder.nextFieldNumber() != nil {}
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_ResolveTripCommentReportResponse, rhs: Loci_Trip_ResolveTripCommentReportResponse) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

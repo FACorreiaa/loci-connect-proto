@@ -1344,11 +1344,39 @@
                 </li>
               
                 <li>
+                  <a href="#loci.trip.AddTripCommentRequest"><span class="badge">M</span>AddTripCommentRequest</a>
+                </li>
+              
+                <li>
                   <a href="#loci.trip.CreateTripInviteRequest"><span class="badge">M</span>CreateTripInviteRequest</a>
                 </li>
               
                 <li>
+                  <a href="#loci.trip.DeleteTripCommentRequest"><span class="badge">M</span>DeleteTripCommentRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.DeleteTripCommentResponse"><span class="badge">M</span>DeleteTripCommentResponse</a>
+                </li>
+              
+                <li>
                   <a href="#loci.trip.GetTripInviteRequest"><span class="badge">M</span>GetTripInviteRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.ListReportedTripCommentsRequest"><span class="badge">M</span>ListReportedTripCommentsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.ListReportedTripCommentsResponse"><span class="badge">M</span>ListReportedTripCommentsResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.ListTripCommentsRequest"><span class="badge">M</span>ListTripCommentsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.ListTripCommentsResponse"><span class="badge">M</span>ListTripCommentsResponse</a>
                 </li>
               
                 <li>
@@ -1368,11 +1396,39 @@
                 </li>
               
                 <li>
+                  <a href="#loci.trip.ReportTripCommentRequest"><span class="badge">M</span>ReportTripCommentRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.ReportTripCommentResponse"><span class="badge">M</span>ReportTripCommentResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.ReportedTripComment"><span class="badge">M</span>ReportedTripComment</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.ResolveTripCommentReportRequest"><span class="badge">M</span>ResolveTripCommentReportRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.ResolveTripCommentReportResponse"><span class="badge">M</span>ResolveTripCommentReportResponse</a>
+                </li>
+              
+                <li>
                   <a href="#loci.trip.RevokeTripInviteRequest"><span class="badge">M</span>RevokeTripInviteRequest</a>
                 </li>
               
                 <li>
                   <a href="#loci.trip.RevokeTripInviteResponse"><span class="badge">M</span>RevokeTripInviteResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.TripComment"><span class="badge">M</span>TripComment</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.TripCommentReportReason"><span class="badge">M</span>TripCommentReportReason</a>
                 </li>
               
                 <li>
@@ -1387,6 +1443,10 @@
                   <a href="#loci.trip.TripMember"><span class="badge">M</span>TripMember</a>
                 </li>
               
+              
+                <li>
+                  <a href="#loci.trip.TripCommentModerationAction"><span class="badge">E</span>TripCommentModerationAction</a>
+                </li>
               
                 <li>
                   <a href="#loci.trip.TripRole"><span class="badge">E</span>TripRole</a>
@@ -15211,6 +15271,44 @@ has seen for them, 0 among the worst. </p></td>
 
         
       
+        <h3 id="loci.trip.AddTripCommentRequest">AddTripCommentRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>stop_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Empty for a comment about the whole trip. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>body</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.trip.CreateTripInviteRequest">CreateTripInviteRequest</h3>
         <p></p>
 
@@ -15242,6 +15340,37 @@ has seen for them, 0 among the worst. </p></td>
 
         
       
+        <h3 id="loci.trip.DeleteTripCommentRequest">DeleteTripCommentRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>comment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.DeleteTripCommentResponse">DeleteTripCommentResponse</h3>
+        <p></p>
+
+        
+
+        
+      
         <h3 id="loci.trip.GetTripInviteRequest">GetTripInviteRequest</h3>
         <p></p>
 
@@ -15257,6 +15386,139 @@ has seen for them, 0 among the worst. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.ListReportedTripCommentsRequest">ListReportedTripCommentsRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>limit</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Page size; 0 means the server default (20). </p></td>
+                </tr>
+              
+                <tr>
+                  <td>page</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>1-based; 0 means the first page. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.ListReportedTripCommentsResponse">ListReportedTripCommentsResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>comments</td>
+                  <td><a href="#loci.trip.ReportedTripComment">ReportedTripComment</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>has_more</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.ListTripCommentsRequest">ListTripCommentsRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>limit</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>How many; 0 means the server default (100). </p></td>
+                </tr>
+              
+                <tr>
+                  <td>before</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Only comments older than this; unset for the newest. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.ListTripCommentsResponse">ListTripCommentsResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>comments</td>
+                  <td><a href="#loci.trip.TripComment">TripComment</a></td>
+                  <td>repeated</td>
+                  <td><p>Oldest first: the newest `limit` comments before `before`, in reading
+order. Deleted, removed, hidden and blocked-author comments are left out. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>has_more</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>There are older comments: ask again with `before` set to the first
+comment&#39;s created_at. </p></td>
                 </tr>
               
             </tbody>
@@ -15352,6 +15614,149 @@ has seen for them, 0 among the worst. </p></td>
 
         
       
+        <h3 id="loci.trip.ReportTripCommentRequest">ReportTripCommentRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>comment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>reason</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>One of &#34;spam&#34;, &#34;inappropriate&#34;, &#34;offensive&#34;, &#34;other&#34;. The server rejects
+anything else with InvalidArgument. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>details</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.ReportTripCommentResponse">ReportTripCommentResponse</h3>
+        <p></p>
+
+        
+
+        
+      
+        <h3 id="loci.trip.ReportedTripComment">ReportedTripComment</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>comment</td>
+                  <td><a href="#loci.trip.TripComment">TripComment</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>report_count</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Distinct people with an open report on the comment. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>reasons</td>
+                  <td><a href="#loci.trip.TripCommentReportReason">TripCommentReportReason</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>details</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>The free-text details reporters gave, newest first; empty ones omitted. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_reported_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>hidden</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>True when the comment is out of the trip because of its reports. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.ResolveTripCommentReportRequest">ResolveTripCommentReportRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>comment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>action</td>
+                  <td><a href="#loci.trip.TripCommentModerationAction">TripCommentModerationAction</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.ResolveTripCommentReportResponse">ResolveTripCommentReportResponse</h3>
+        <p></p>
+
+        
+
+        
+      
         <h3 id="loci.trip.RevokeTripInviteRequest">RevokeTripInviteRequest</h3>
         <p></p>
 
@@ -15387,6 +15792,111 @@ has seen for them, 0 among the worst. </p></td>
         <p></p>
 
         
+
+        
+      
+        <h3 id="loci.trip.TripComment">TripComment</h3>
+        <p>TripComment is a note someone on the trip left, about the trip or one of</p><p>its stops. Only the owner and members read and write them.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>stop_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Empty for a comment about the whole trip. A stop that has since left the
+trip keeps its id here; clients show such comments with the trip&#39;s. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>author</td>
+                  <td><a href="#loci.social.PublicUser">loci.social.PublicUser</a></td>
+                  <td></td>
+                  <td><p>Unset when the author&#39;s account is gone. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>body</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>mine</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>The caller wrote it. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>can_delete</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>The caller may delete it: its author, or the trip&#39;s owner. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.TripCommentReportReason">TripCommentReportReason</h3>
+        <p>How many open reports gave one reason.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>reason</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>count</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
 
         
       
@@ -15582,6 +16092,35 @@ has seen for them, 0 among the worst. </p></td>
         
       
 
+      
+        <h3 id="loci.trip.TripCommentModerationAction">TripCommentModerationAction</h3>
+        <p>What a moderator decides about a reported trip comment.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>TRIP_COMMENT_MODERATION_ACTION_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>TRIP_COMMENT_MODERATION_ACTION_KEEP</td>
+                <td>1</td>
+                <td><p>The comment stays; its open reports are closed.</p></td>
+              </tr>
+            
+              <tr>
+                <td>TRIP_COMMENT_MODERATION_ACTION_REMOVE</td>
+                <td>2</td>
+                <td><p>The comment leaves the trip for everyone.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
       
         <h3 id="loci.trip.TripRole">TripRole</h3>
         <p>TripRole is what a person may do on a trip.</p>
@@ -18494,6 +19033,52 @@ an hour is ResourceExhausted.</p></td>
                 <td><a href="#loci.trip.RemoveTripMemberResponse">RemoveTripMemberResponse</a></td>
                 <td><p>RemoveTripMember takes someone off the trip: the owner removes anyone,
 a member removes only themselves.</p></td>
+              </tr>
+            
+              <tr>
+                <td>AddTripComment</td>
+                <td><a href="#loci.trip.AddTripCommentRequest">AddTripCommentRequest</a></td>
+                <td><a href="#loci.trip.TripComment">TripComment</a></td>
+                <td><p>Trip comments, for the owner and members. AddTripComment is
+ResourceExhausted past 60 an hour; a viewer may comment too.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListTripComments</td>
+                <td><a href="#loci.trip.ListTripCommentsRequest">ListTripCommentsRequest</a></td>
+                <td><a href="#loci.trip.ListTripCommentsResponse">ListTripCommentsResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>DeleteTripComment</td>
+                <td><a href="#loci.trip.DeleteTripCommentRequest">DeleteTripCommentRequest</a></td>
+                <td><a href="#loci.trip.DeleteTripCommentResponse">DeleteTripCommentResponse</a></td>
+                <td><p>DeleteTripComment: the author, or the trip&#39;s owner. Deleting a missing
+comment is NotFound.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ReportTripComment</td>
+                <td><a href="#loci.trip.ReportTripCommentRequest">ReportTripCommentRequest</a></td>
+                <td><a href="#loci.trip.ReportTripCommentResponse">ReportTripCommentResponse</a></td>
+                <td><p>ReportTripComment flags a comment for moderation and hides it from the
+reporter at once; three reporters hide it from everyone. Reporting again
+replaces the reason. Reporting your own comment is InvalidArgument.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListReportedTripComments</td>
+                <td><a href="#loci.trip.ListReportedTripCommentsRequest">ListReportedTripCommentsRequest</a></td>
+                <td><a href="#loci.trip.ListReportedTripCommentsResponse">ListReportedTripCommentsResponse</a></td>
+                <td><p>Moderation (admins only; PermissionDenied otherwise).</p></td>
+              </tr>
+            
+              <tr>
+                <td>ResolveTripCommentReport</td>
+                <td><a href="#loci.trip.ResolveTripCommentReportRequest">ResolveTripCommentReportRequest</a></td>
+                <td><a href="#loci.trip.ResolveTripCommentReportResponse">ResolveTripCommentReportResponse</a></td>
+                <td><p></p></td>
               </tr>
             
           </tbody>
