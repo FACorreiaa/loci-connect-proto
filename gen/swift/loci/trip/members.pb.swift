@@ -370,6 +370,33 @@ public struct Loci_Trip_RemoveTripMemberResponse: Sendable {
   public init() {}
 }
 
+public struct Loci_Trip_SetTripPlanningRulesRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var tripID: String = String()
+
+  /// Co-planners may apply suggestions, theirs and others', as the owner can.
+  public var coPlannersMayApply: Bool = false
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Trip_SetTripPlanningRulesResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var coPlannersMayApply: Bool = false
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 /// TripComment is a note someone on the trip left, about the trip or one of
 /// its stops. Only the owner and members read and write them.
 public struct Loci_Trip_TripComment: Sendable {
@@ -1198,6 +1225,76 @@ extension Loci_Trip_RemoveTripMemberResponse: SwiftProtobuf.Message, SwiftProtob
   }
 
   public static func ==(lhs: Loci_Trip_RemoveTripMemberResponse, rhs: Loci_Trip_RemoveTripMemberResponse) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_SetTripPlanningRulesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".SetTripPlanningRulesRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+    2: .standard(proto: "co_planners_may_apply"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.tripID) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self.coPlannersMayApply) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.tripID.isEmpty {
+      try visitor.visitSingularStringField(value: self.tripID, fieldNumber: 1)
+    }
+    if self.coPlannersMayApply != false {
+      try visitor.visitSingularBoolField(value: self.coPlannersMayApply, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_SetTripPlanningRulesRequest, rhs: Loci_Trip_SetTripPlanningRulesRequest) -> Bool {
+    if lhs.tripID != rhs.tripID {return false}
+    if lhs.coPlannersMayApply != rhs.coPlannersMayApply {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_SetTripPlanningRulesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".SetTripPlanningRulesResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "co_planners_may_apply"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularBoolField(value: &self.coPlannersMayApply) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.coPlannersMayApply != false {
+      try visitor.visitSingularBoolField(value: self.coPlannersMayApply, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_SetTripPlanningRulesResponse, rhs: Loci_Trip_SetTripPlanningRulesResponse) -> Bool {
+    if lhs.coPlannersMayApply != rhs.coPlannersMayApply {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

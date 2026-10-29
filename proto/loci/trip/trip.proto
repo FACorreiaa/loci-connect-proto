@@ -374,6 +374,9 @@ message TripDraft {
   TripRole viewer_role = 22;
   // The owner and the trip's members, on GetTrip when the trip has members.
   repeated TripMember members = 23;
+  // Whether co-planners may apply suggestions themselves, not only the
+  // owner. Set with SetTripPlanningRules; on the owner's and members' reads.
+  bool co_planners_may_apply = 24;
 }
 
 // TripSnapshot is an immutable point-in-time copy of a trip, written on each
@@ -927,6 +930,8 @@ service TripService {
   // RemoveTripMember takes someone off the trip: the owner removes anyone,
   // a member removes only themselves.
   rpc RemoveTripMember(RemoveTripMemberRequest) returns (RemoveTripMemberResponse);
+  // SetTripPlanningRules sets how members may change the trip (owner only).
+  rpc SetTripPlanningRules(SetTripPlanningRulesRequest) returns (SetTripPlanningRulesResponse);
 
   // Trip comments, for the owner and members. AddTripComment is
   // ResourceExhausted past 60 an hour; a viewer may comment too.
