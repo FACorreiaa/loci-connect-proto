@@ -2544,6 +2544,9 @@ export declare const ApplyTripActionRequestSchema: GenMessage<ApplyTripActionReq
  */
 export declare type ApplyTripActionResponse = Message<"loci.chat.ApplyTripActionResponse"> & {
   /**
+   * The trip after the change, as its owner sees it. Unset when the caller is
+   * a co-planner the owner lets apply: they read it again with GetTrip.
+   *
    * @generated from field: loci.trip.TripDraft trip = 1;
    */
   trip?: TripDraft;
