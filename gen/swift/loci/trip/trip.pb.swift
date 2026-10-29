@@ -1057,6 +1057,13 @@ public struct Loci_Trip_TripDraft: @unchecked Sendable {
     set {_uniqueStorage()._members = newValue}
   }
 
+  /// Whether co-planners may apply suggestions themselves, not only the
+  /// owner. Set with SetTripPlanningRules; on the owner's and members' reads.
+  public var coPlannersMayApply: Bool {
+    get {return _storage._coPlannersMayApply}
+    set {_uniqueStorage()._coPlannersMayApply = newValue}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -2763,6 +2770,7 @@ extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     21: .same(proto: "flights"),
     22: .standard(proto: "viewer_role"),
     23: .same(proto: "members"),
+    24: .standard(proto: "co_planners_may_apply"),
   ]
 
   fileprivate class _StorageClass {
@@ -2789,6 +2797,7 @@ extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     var _flights: [Loci_Trip_TripFlight] = []
     var _viewerRole: Loci_Trip_TripRole = .unspecified
     var _members: [Loci_Trip_TripMember] = []
+    var _coPlannersMayApply: Bool = false
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -2826,6 +2835,7 @@ extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       _flights = source._flights
       _viewerRole = source._viewerRole
       _members = source._members
+      _coPlannersMayApply = source._coPlannersMayApply
     }
   }
 
@@ -2867,6 +2877,7 @@ extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
         case 21: try { try decoder.decodeRepeatedMessageField(value: &_storage._flights) }()
         case 22: try { try decoder.decodeSingularEnumField(value: &_storage._viewerRole) }()
         case 23: try { try decoder.decodeRepeatedMessageField(value: &_storage._members) }()
+        case 24: try { try decoder.decodeSingularBoolField(value: &_storage._coPlannersMayApply) }()
         default: break
         }
       }
@@ -2948,6 +2959,9 @@ extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       if !_storage._members.isEmpty {
         try visitor.visitRepeatedMessageField(value: _storage._members, fieldNumber: 23)
       }
+      if _storage._coPlannersMayApply != false {
+        try visitor.visitSingularBoolField(value: _storage._coPlannersMayApply, fieldNumber: 24)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2980,6 +2994,7 @@ extension Loci_Trip_TripDraft: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
         if _storage._flights != rhs_storage._flights {return false}
         if _storage._viewerRole != rhs_storage._viewerRole {return false}
         if _storage._members != rhs_storage._members {return false}
+        if _storage._coPlannersMayApply != rhs_storage._coPlannersMayApply {return false}
         return true
       }
       if !storagesAreEqual {return false}

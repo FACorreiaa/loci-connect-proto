@@ -1424,6 +1424,14 @@
                 </li>
               
                 <li>
+                  <a href="#loci.trip.SetTripPlanningRulesRequest"><span class="badge">M</span>SetTripPlanningRulesRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.SetTripPlanningRulesResponse"><span class="badge">M</span>SetTripPlanningRulesResponse</a>
+                </li>
+              
+                <li>
                   <a href="#loci.trip.TripComment"><span class="badge">M</span>TripComment</a>
                 </li>
               
@@ -15795,6 +15803,61 @@ anything else with InvalidArgument. </p></td>
 
         
       
+        <h3 id="loci.trip.SetTripPlanningRulesRequest">SetTripPlanningRulesRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>co_planners_may_apply</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Co-planners may apply suggestions, theirs and others&#39;, as the owner can. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.SetTripPlanningRulesResponse">SetTripPlanningRulesResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>co_planners_may_apply</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.trip.TripComment">TripComment</h3>
         <p>TripComment is a note someone on the trip left, about the trip or one of</p><p>its stops. Only the owner and members read and write them.</p>
 
@@ -18009,6 +18072,14 @@ members on GetTrip. UNSPECIFIED on shared and friend reads. </p></td>
                   <td><p>The owner and the trip&#39;s members, on GetTrip when the trip has members. </p></td>
                 </tr>
               
+                <tr>
+                  <td>co_planners_may_apply</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Whether co-planners may apply suggestions themselves, not only the
+owner. Set with SetTripPlanningRules; on the owner&#39;s and members&#39; reads. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -19033,6 +19104,13 @@ an hour is ResourceExhausted.</p></td>
                 <td><a href="#loci.trip.RemoveTripMemberResponse">RemoveTripMemberResponse</a></td>
                 <td><p>RemoveTripMember takes someone off the trip: the owner removes anyone,
 a member removes only themselves.</p></td>
+              </tr>
+            
+              <tr>
+                <td>SetTripPlanningRules</td>
+                <td><a href="#loci.trip.SetTripPlanningRulesRequest">SetTripPlanningRulesRequest</a></td>
+                <td><a href="#loci.trip.SetTripPlanningRulesResponse">SetTripPlanningRulesResponse</a></td>
+                <td><p>SetTripPlanningRules sets how members may change the trip (owner only).</p></td>
               </tr>
             
               <tr>
