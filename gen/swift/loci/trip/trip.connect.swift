@@ -158,6 +158,10 @@ public protocol Loci_Trip_TripServiceClientInterface: Sendable {
     @available(iOS 13, *)
     func `removeTripMember`(request: Loci_Trip_RemoveTripMemberRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_RemoveTripMemberResponse>
 
+    /// SetTripPlanningRules sets how members may change the trip (owner only).
+    @available(iOS 13, *)
+    func `setTripPlanningRules`(request: Loci_Trip_SetTripPlanningRulesRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_SetTripPlanningRulesResponse>
+
     /// Trip comments, for the owner and members. AddTripComment is
     /// ResourceExhausted past 60 an hour; a viewer may comment too.
     @available(iOS 13, *)
@@ -369,6 +373,11 @@ public final class Loci_Trip_TripServiceClient: Loci_Trip_TripServiceClientInter
     }
 
     @available(iOS 13, *)
+    public func `setTripPlanningRules`(request: Loci_Trip_SetTripPlanningRulesRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_SetTripPlanningRulesResponse> {
+        return await self.client.unary(path: "/loci.trip.TripService/SetTripPlanningRules", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
     public func `addTripComment`(request: Loci_Trip_AddTripCommentRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_TripComment> {
         return await self.client.unary(path: "/loci.trip.TripService/AddTripComment", idempotencyLevel: .unknown, request: request, headers: headers)
     }
@@ -435,6 +444,7 @@ public final class Loci_Trip_TripServiceClient: Loci_Trip_TripServiceClientInter
             public static let revokeTripInvite = Connect.MethodSpec(name: "RevokeTripInvite", service: "loci.trip.TripService", type: .unary)
             public static let listTripMembers = Connect.MethodSpec(name: "ListTripMembers", service: "loci.trip.TripService", type: .unary)
             public static let removeTripMember = Connect.MethodSpec(name: "RemoveTripMember", service: "loci.trip.TripService", type: .unary)
+            public static let setTripPlanningRules = Connect.MethodSpec(name: "SetTripPlanningRules", service: "loci.trip.TripService", type: .unary)
             public static let addTripComment = Connect.MethodSpec(name: "AddTripComment", service: "loci.trip.TripService", type: .unary)
             public static let listTripComments = Connect.MethodSpec(name: "ListTripComments", service: "loci.trip.TripService", type: .unary)
             public static let deleteTripComment = Connect.MethodSpec(name: "DeleteTripComment", service: "loci.trip.TripService", type: .unary)

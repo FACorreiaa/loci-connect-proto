@@ -8,7 +8,7 @@ import type { POIDetailedInfo, POIImage } from "../poi/poi_pb";
 import type { RecommendationTrace } from "../recommendation/recommendation_pb";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
 import type { PublicUser } from "../social/social_pb";
-import type { AcceptTripInviteRequestSchema, AcceptTripInviteResponseSchema, AddTripCommentRequestSchema, CreateTripInviteRequestSchema, DeleteTripCommentRequestSchema, DeleteTripCommentResponseSchema, GetTripInviteRequestSchema, ListReportedTripCommentsRequestSchema, ListReportedTripCommentsResponseSchema, ListTripCommentsRequestSchema, ListTripCommentsResponseSchema, ListTripMembersRequestSchema, ListTripMembersResponseSchema, RemoveTripMemberRequestSchema, RemoveTripMemberResponseSchema, ReportTripCommentRequestSchema, ReportTripCommentResponseSchema, ResolveTripCommentReportRequestSchema, ResolveTripCommentReportResponseSchema, RevokeTripInviteRequestSchema, RevokeTripInviteResponseSchema, TripCommentSchema, TripInvitePreviewSchema, TripInviteSchema, TripMember, TripRole } from "./members_pb";
+import type { AcceptTripInviteRequestSchema, AcceptTripInviteResponseSchema, AddTripCommentRequestSchema, CreateTripInviteRequestSchema, DeleteTripCommentRequestSchema, DeleteTripCommentResponseSchema, GetTripInviteRequestSchema, ListReportedTripCommentsRequestSchema, ListReportedTripCommentsResponseSchema, ListTripCommentsRequestSchema, ListTripCommentsResponseSchema, ListTripMembersRequestSchema, ListTripMembersResponseSchema, RemoveTripMemberRequestSchema, RemoveTripMemberResponseSchema, ReportTripCommentRequestSchema, ReportTripCommentResponseSchema, ResolveTripCommentReportRequestSchema, ResolveTripCommentReportResponseSchema, RevokeTripInviteRequestSchema, RevokeTripInviteResponseSchema, SetTripPlanningRulesRequestSchema, SetTripPlanningRulesResponseSchema, TripCommentSchema, TripInvitePreviewSchema, TripInviteSchema, TripMember, TripRole } from "./members_pb";
 import type { PaginationMetadata, PaginationRequest } from "../common/common_pb";
 
 /**
@@ -706,6 +706,14 @@ export declare type TripDraft = Message<"loci.trip.TripDraft"> & {
    * @generated from field: repeated loci.trip.TripMember members = 23;
    */
   members: TripMember[];
+
+  /**
+   * Whether co-planners may apply suggestions themselves, not only the
+   * owner. Set with SetTripPlanningRules; on the owner's and members' reads.
+   *
+   * @generated from field: bool co_planners_may_apply = 24;
+   */
+  coPlannersMayApply: boolean;
 };
 
 /**
@@ -2399,6 +2407,16 @@ export declare const TripService: GenService<{
     methodKind: "unary";
     input: typeof RemoveTripMemberRequestSchema;
     output: typeof RemoveTripMemberResponseSchema;
+  },
+  /**
+   * SetTripPlanningRules sets how members may change the trip (owner only).
+   *
+   * @generated from rpc loci.trip.TripService.SetTripPlanningRules
+   */
+  setTripPlanningRules: {
+    methodKind: "unary";
+    input: typeof SetTripPlanningRulesRequestSchema;
+    output: typeof SetTripPlanningRulesResponseSchema;
   },
   /**
    * Trip comments, for the owner and members. AddTripComment is

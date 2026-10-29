@@ -12179,6 +12179,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.trip.TripDraft'
+  /loci.trip.TripService/SetTripPlanningRules:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: SetTripPlanningRules
+      description: SetTripPlanningRules sets how members may change the trip (owner only).
+      operationId: loci.trip.TripService.SetTripPlanningRules
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.SetTripPlanningRulesRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.SetTripPlanningRulesResponse'
   /loci.trip.TripService/SetTripVisibility:
     post:
       tags:
@@ -15807,6 +15843,9 @@ components:
       properties:
         trip:
           title: trip
+          description: |-
+            The trip after the change, as its owner sees it. Unset when the caller is
+             a co-planner the owner lets apply: they read it again with GetTrip.
           $ref: '#/components/schemas/loci.trip.TripDraft'
         confirmation:
           title: confirmation
@@ -35643,6 +35682,27 @@ components:
          start_date + N - 1. Days are never added or removed; when the day count and
          the span differ, the client offers to re-plan.
         set_trip_dates.end_after_start // end_date must not be before start_date
+    loci.trip.SetTripPlanningRulesRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          format: uuid
+        coPlannersMayApply:
+          type: boolean
+          title: co_planners_may_apply
+          description: Co-planners may apply suggestions, theirs and others', as the owner can.
+      title: SetTripPlanningRulesRequest
+      additionalProperties: false
+    loci.trip.SetTripPlanningRulesResponse:
+      type: object
+      properties:
+        coPlannersMayApply:
+          type: boolean
+          title: co_planners_may_apply
+      title: SetTripPlanningRulesResponse
+      additionalProperties: false
     loci.trip.SetTripVisibilityRequest:
       type: object
       properties:
@@ -36106,6 +36166,12 @@ components:
             $ref: '#/components/schemas/loci.trip.TripMember'
           title: members
           description: The owner and the trip's members, on GetTrip when the trip has members.
+        coPlannersMayApply:
+          type: boolean
+          title: co_planners_may_apply
+          description: |-
+            Whether co-planners may apply suggestions themselves, not only the
+             owner. Set with SetTripPlanningRules; on the owner's and members' reads.
       title: TripDraft
       additionalProperties: false
       description: |-
