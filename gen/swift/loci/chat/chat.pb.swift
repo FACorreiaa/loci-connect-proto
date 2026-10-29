@@ -3140,6 +3140,8 @@ public struct Loci_Chat_ApplyTripActionResponse: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// The trip after the change, as its owner sees it. Unset when the caller is
+  /// a co-planner the owner lets apply: they read it again with GetTrip.
   public var trip: Loci_Trip_TripDraft {
     get {return _trip ?? Loci_Trip_TripDraft()}
     set {_trip = newValue}

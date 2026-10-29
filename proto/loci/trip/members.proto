@@ -120,6 +120,16 @@ message RemoveTripMemberRequest {
 
 message RemoveTripMemberResponse {}
 
+message SetTripPlanningRulesRequest {
+  string trip_id = 1 [(buf.validate.field).string.uuid = true];
+  // Co-planners may apply suggestions, theirs and others', as the owner can.
+  bool co_planners_may_apply = 2;
+}
+
+message SetTripPlanningRulesResponse {
+  bool co_planners_may_apply = 1;
+}
+
 // TripComment is a note someone on the trip left, about the trip or one of
 // its stops. Only the owner and members read and write them.
 message TripComment {

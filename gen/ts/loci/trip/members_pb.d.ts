@@ -341,6 +341,45 @@ export declare type RemoveTripMemberResponse = Message<"loci.trip.RemoveTripMemb
 export declare const RemoveTripMemberResponseSchema: GenMessage<RemoveTripMemberResponse>;
 
 /**
+ * @generated from message loci.trip.SetTripPlanningRulesRequest
+ */
+export declare type SetTripPlanningRulesRequest = Message<"loci.trip.SetTripPlanningRulesRequest"> & {
+  /**
+   * @generated from field: string trip_id = 1;
+   */
+  tripId: string;
+
+  /**
+   * Co-planners may apply suggestions, theirs and others', as the owner can.
+   *
+   * @generated from field: bool co_planners_may_apply = 2;
+   */
+  coPlannersMayApply: boolean;
+};
+
+/**
+ * Describes the message loci.trip.SetTripPlanningRulesRequest.
+ * Use `create(SetTripPlanningRulesRequestSchema)` to create a new message.
+ */
+export declare const SetTripPlanningRulesRequestSchema: GenMessage<SetTripPlanningRulesRequest>;
+
+/**
+ * @generated from message loci.trip.SetTripPlanningRulesResponse
+ */
+export declare type SetTripPlanningRulesResponse = Message<"loci.trip.SetTripPlanningRulesResponse"> & {
+  /**
+   * @generated from field: bool co_planners_may_apply = 1;
+   */
+  coPlannersMayApply: boolean;
+};
+
+/**
+ * Describes the message loci.trip.SetTripPlanningRulesResponse.
+ * Use `create(SetTripPlanningRulesResponseSchema)` to create a new message.
+ */
+export declare const SetTripPlanningRulesResponseSchema: GenMessage<SetTripPlanningRulesResponse>;
+
+/**
  * TripComment is a note someone on the trip left, about the trip or one of
  * its stops. Only the owner and members read and write them.
  *
