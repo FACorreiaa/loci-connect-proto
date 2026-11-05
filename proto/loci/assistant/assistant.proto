@@ -1,0 +1,206 @@
+syntax = "proto3";
+
+package loci.assistant;
+
+import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+import "loci/chat/chat.proto";
+import "loci/trip/trip.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/assistant;assistant";
+
+// AssistantService is the question you can ask from anywhere in the app: press
+// and hold, say or type it, hear the answer.
+//
+// It is not ChatService. ChatService turns a message into a generated plan;
+// this answers one, looking things up on the caller's behalf along the way. A
+// request to plan a trip comes back as a Handoff for the caller to start in
+// ChatService, so a question never spends a generation.
+//
+// Nothing the assistant decides writes anything. It can only propose, and a
+// proposal changes nothing until the signed-in caller sends ConfirmAction.
+service AssistantService {
+  // AskAssistant streams the answer to one message. The stream always ends
+  // with one Done unless the connection itself is lost.
+  rpc AskAssistant(AskAssistantRequest) returns (stream AssistantEvent);
+  // ConfirmAction carries out a proposal. Confirming one twice returns the
+  // first result and does not apply it again.
+  rpc ConfirmAction(ConfirmActionRequest) returns (ConfirmActionResponse);
+  // DismissAction drops a proposal without carrying it out.
+  rpc DismissAction(DismissActionRequest) returns (DismissActionResponse);
+}
+
+message AskAssistantRequest {
+  // The conversation this continues. Unset starts a new one; the id to send
+  // next comes back in Done. Conversations last a day.
+  optional string conversation_id = 1 [(buf.validate.field).string.uuid = true];
+  string text = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 4000
+  }];
+  InputMode input_mode = 3;
+  ClientContext context = 4;
+}
+
+enum InputMode {
+  INPUT_MODE_UNSPECIFIED = 0;
+  INPUT_MODE_TYPED = 1;
+  // The text is a transcript nobody has corrected, so a place name in it may
+  // be wrong. The assistant checks before acting on one.
+  INPUT_MODE_VOICE = 2;
+}
+
+// ClientContext says where the caller is, as a hint and never as a limit: on
+// the Saved screen they may well be asking about friends. The server checks
+// the caller's access to every entity named here before reading it.
+message ClientContext {
+  Surface surface = 1;
+  // The screen in front of them, e.g. "trip_detail". An open vocabulary, so a
+  // client can name a new screen without a release of this file.
+  string screen = 2 [(buf.validate.field).string.max_len = 64];
+  // What that screen is showing.
+  repeated ContextEntity entities = 3 [(buf.validate.field).repeated.max_items = 10];
+  optional string city = 4 [(buf.validate.field).string.max_len = 200];
+  // Unset when the location is not known. There is no default location: a
+  // guessed one reads as a confident answer about the wrong city.
+  optional double latitude = 5 [(buf.validate.field).double = {
+    gte: -90
+    lte: 90
+  }];
+  optional double longitude = 6 [(buf.validate.field).double = {
+    gte: -180
+    lte: 180
+  }];
+  // BCP 47, e.g. "pt-PT".
+  string locale = 7 [(buf.validate.field).string.max_len = 35];
+  // IANA, e.g. "Europe/Lisbon". Answers "tomorrow" in the caller's time.
+  string timezone = 8 [(buf.validate.field).string.max_len = 64];
+}
+
+enum Surface {
+  SURFACE_UNSPECIFIED = 0;
+  SURFACE_IOS = 1;
+  SURFACE_WEB = 2;
+}
+
+message ContextEntity {
+  ContextEntityType type = 1 [(buf.validate.field).enum.defined_only = true];
+  string id = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+}
+
+enum ContextEntityType {
+  CONTEXT_ENTITY_TYPE_UNSPECIFIED = 0;
+  CONTEXT_ENTITY_TYPE_TRIP = 1;
+  CONTEXT_ENTITY_TYPE_POI = 2;
+  CONTEXT_ENTITY_TYPE_LIST = 3;
+  CONTEXT_ENTITY_TYPE_ITINERARY = 4;
+  CONTEXT_ENTITY_TYPE_CHAT_SESSION = 5;
+}
+
+message AssistantEvent {
+  oneof event {
+    TextDelta text_delta = 1;
+    ToolStatus tool_status = 2;
+    Proposal proposal = 3;
+    Handoff handoff = 4;
+    Done done = 5;
+  }
+}
+
+// TextDelta is the next piece of the answer. Plain text: clients render it as
+// text, with no links or images, because tool results can carry words written
+// by other people.
+message TextDelta {
+  string text = 1;
+}
+
+// ToolStatus says what the assistant is doing, e.g. "Checking your trips".
+// Written by the server, never by the model.
+message ToolStatus {
+  string label = 1;
+}
+
+// Proposal is a change waiting for the caller. The wording on it comes from
+// the server and the database, never from the model.
+message Proposal {
+  oneof kind {
+    loci.chat.ActionProposal trip = 1;
+    PlaceAction place = 2;
+  }
+  // The caller is a co-planner, so this went to the trip's owner: show it as
+  // sent, with nothing to confirm.
+  bool awaits_owner = 3;
+}
+
+// PlaceAction saves a place somewhere.
+message PlaceAction {
+  string id = 1;
+  PlaceActionKind kind = 2;
+  string poi_id = 3;
+  string poi_name = 4;
+  // Set for PLACE_ACTION_KIND_ADD_TO_LIST.
+  optional string list_id = 5;
+  optional string list_name = 6;
+  // One line the card shows, e.g. "Save Pastéis de Belém to your favourites".
+  string summary = 7;
+  google.protobuf.Timestamp expires_at = 8;
+}
+
+enum PlaceActionKind {
+  PLACE_ACTION_KIND_UNSPECIFIED = 0;
+  PLACE_ACTION_KIND_SAVE_FAVORITE = 1;
+  PLACE_ACTION_KIND_ADD_TO_LIST = 2;
+}
+
+// Handoff offers to plan something in the full planner. Nothing has started:
+// the caller taps to send query to ChatService.StreamChat.
+message Handoff {
+  string query = 1;
+  optional string city = 2;
+}
+
+message Done {
+  // Send this on the next AskAssistantRequest to carry on.
+  string conversation_id = 1;
+  // Answered without tools, from what could be gathered up front, so it can
+  // change nothing and knows less. Clients say so.
+  bool degraded = 2;
+  DoneReason reason = 3;
+}
+
+enum DoneReason {
+  DONE_REASON_UNSPECIFIED = 0;
+  DONE_REASON_COMPLETE = 1;
+  // The answer stopped part way. What arrived stays on screen.
+  DONE_REASON_INTERRUPTED = 2;
+  // The caller reached today's limit; nothing was answered.
+  DONE_REASON_DAILY_LIMIT = 3;
+  // The model declined to answer.
+  DONE_REASON_REFUSED = 4;
+  // Nothing could answer at all.
+  DONE_REASON_UNAVAILABLE = 5;
+}
+
+message ConfirmActionRequest {
+  string proposal_id = 1 [(buf.validate.field).string.uuid = true];
+  // Required for a trip action with options; ignored otherwise.
+  optional int32 option_index = 2 [(buf.validate.field).int32.gte = 0];
+}
+
+message ConfirmActionResponse {
+  // What happened, written by the server, to show and to speak.
+  string confirmation = 1;
+  // The trip after a trip action, as its owner sees it. Unset for a place
+  // action, and for a co-planner the owner lets apply, who reads it again
+  // with GetTrip.
+  optional loci.trip.TripDraft trip = 2;
+}
+
+message DismissActionRequest {
+  string proposal_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+message DismissActionResponse {}

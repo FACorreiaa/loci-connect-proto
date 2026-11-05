@@ -450,6 +450,81 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.apikey.RevokeApiKeyResponse'
+  /loci.assistant.AssistantService/AskAssistant: {}
+  /loci.assistant.AssistantService/ConfirmAction:
+    post:
+      tags:
+        - loci.assistant.AssistantService
+      summary: ConfirmAction
+      description: |-
+        ConfirmAction carries out a proposal. Confirming one twice returns the
+         first result and does not apply it again.
+      operationId: loci.assistant.AssistantService.ConfirmAction
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.assistant.ConfirmActionRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.assistant.ConfirmActionResponse'
+  /loci.assistant.AssistantService/DismissAction:
+    post:
+      tags:
+        - loci.assistant.AssistantService
+      summary: DismissAction
+      description: DismissAction drops a proposal without carrying it out.
+      operationId: loci.assistant.AssistantService.DismissAction
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.assistant.DismissActionRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.assistant.DismissActionResponse'
   /loci.auth.AuthService/BeginMFAEnrollment:
     post:
       tags:
@@ -13792,6 +13867,357 @@ components:
          environment variable and writes TOML, and a Hermes gateway is configured at a
          prompt. Flattening those into one format would mean writing instructions that
          are wrong for two of the three.
+    loci.assistant.AskAssistantRequest:
+      type: object
+      properties:
+        conversationId:
+          type:
+            - string
+            - "null"
+          title: conversation_id
+          format: uuid
+          description: |-
+            The conversation this continues. Unset starts a new one; the id to send
+             next comes back in Done. Conversations last a day.
+        text:
+          type: string
+          title: text
+          maxLength: 4000
+          minLength: 1
+        inputMode:
+          title: input_mode
+          $ref: '#/components/schemas/loci.assistant.InputMode'
+        context:
+          title: context
+          $ref: '#/components/schemas/loci.assistant.ClientContext'
+      title: AskAssistantRequest
+      additionalProperties: false
+    loci.assistant.AssistantEvent:
+      type: object
+      oneOf:
+        - properties:
+            done:
+              title: done
+              $ref: '#/components/schemas/loci.assistant.Done'
+          title: done
+          required:
+            - done
+        - properties:
+            handoff:
+              title: handoff
+              $ref: '#/components/schemas/loci.assistant.Handoff'
+          title: handoff
+          required:
+            - handoff
+        - properties:
+            proposal:
+              title: proposal
+              $ref: '#/components/schemas/loci.assistant.Proposal'
+          title: proposal
+          required:
+            - proposal
+        - properties:
+            textDelta:
+              title: text_delta
+              $ref: '#/components/schemas/loci.assistant.TextDelta'
+          title: text_delta
+          required:
+            - textDelta
+        - properties:
+            toolStatus:
+              title: tool_status
+              $ref: '#/components/schemas/loci.assistant.ToolStatus'
+          title: tool_status
+          required:
+            - toolStatus
+      title: AssistantEvent
+      additionalProperties: false
+    loci.assistant.ClientContext:
+      type: object
+      properties:
+        surface:
+          title: surface
+          $ref: '#/components/schemas/loci.assistant.Surface'
+        screen:
+          type: string
+          title: screen
+          maxLength: 64
+          description: |-
+            The screen in front of them, e.g. "trip_detail". An open vocabulary, so a
+             client can name a new screen without a release of this file.
+        entities:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.assistant.ContextEntity'
+          title: entities
+          maxItems: 10
+          description: What that screen is showing.
+        city:
+          type:
+            - string
+            - "null"
+          title: city
+          maxLength: 200
+        latitude:
+          type:
+            - number
+            - "null"
+          title: latitude
+          maximum: 90
+          minimum: -90
+          format: double
+          description: |-
+            Unset when the location is not known. There is no default location: a
+             guessed one reads as a confident answer about the wrong city.
+        longitude:
+          type:
+            - number
+            - "null"
+          title: longitude
+          maximum: 180
+          minimum: -180
+          format: double
+        locale:
+          type: string
+          title: locale
+          maxLength: 35
+          description: BCP 47, e.g. "pt-PT".
+        timezone:
+          type: string
+          title: timezone
+          maxLength: 64
+          description: IANA, e.g. "Europe/Lisbon". Answers "tomorrow" in the caller's time.
+      title: ClientContext
+      additionalProperties: false
+      description: |-
+        ClientContext says where the caller is, as a hint and never as a limit: on
+         the Saved screen they may well be asking about friends. The server checks
+         the caller's access to every entity named here before reading it.
+    loci.assistant.ConfirmActionRequest:
+      type: object
+      properties:
+        proposalId:
+          type: string
+          title: proposal_id
+          format: uuid
+        optionIndex:
+          type:
+            - integer
+            - "null"
+          title: option_index
+          minimum: 0
+          format: int32
+          description: Required for a trip action with options; ignored otherwise.
+      title: ConfirmActionRequest
+      additionalProperties: false
+    loci.assistant.ConfirmActionResponse:
+      type: object
+      properties:
+        confirmation:
+          type: string
+          title: confirmation
+          description: What happened, written by the server, to show and to speak.
+        trip:
+          oneOf:
+            - $ref: '#/components/schemas/loci.trip.TripDraft'
+            - type: "null"
+          title: trip
+          description: |-
+            The trip after a trip action, as its owner sees it. Unset for a place
+             action, and for a co-planner the owner lets apply, who reads it again
+             with GetTrip.
+      title: ConfirmActionResponse
+      additionalProperties: false
+    loci.assistant.ContextEntity:
+      type: object
+      properties:
+        type:
+          title: type
+          $ref: '#/components/schemas/loci.assistant.ContextEntityType'
+        id:
+          type: string
+          title: id
+          maxLength: 100
+          minLength: 1
+      title: ContextEntity
+      additionalProperties: false
+    loci.assistant.ContextEntityType:
+      type: string
+      title: ContextEntityType
+      enum:
+        - CONTEXT_ENTITY_TYPE_UNSPECIFIED
+        - CONTEXT_ENTITY_TYPE_TRIP
+        - CONTEXT_ENTITY_TYPE_POI
+        - CONTEXT_ENTITY_TYPE_LIST
+        - CONTEXT_ENTITY_TYPE_ITINERARY
+        - CONTEXT_ENTITY_TYPE_CHAT_SESSION
+    loci.assistant.DismissActionRequest:
+      type: object
+      properties:
+        proposalId:
+          type: string
+          title: proposal_id
+          format: uuid
+      title: DismissActionRequest
+      additionalProperties: false
+    loci.assistant.DismissActionResponse:
+      type: object
+      title: DismissActionResponse
+      additionalProperties: false
+    loci.assistant.Done:
+      type: object
+      properties:
+        conversationId:
+          type: string
+          title: conversation_id
+          description: Send this on the next AskAssistantRequest to carry on.
+        degraded:
+          type: boolean
+          title: degraded
+          description: |-
+            Answered without tools, from what could be gathered up front, so it can
+             change nothing and knows less. Clients say so.
+        reason:
+          title: reason
+          $ref: '#/components/schemas/loci.assistant.DoneReason'
+      title: Done
+      additionalProperties: false
+    loci.assistant.DoneReason:
+      type: string
+      title: DoneReason
+      enum:
+        - DONE_REASON_UNSPECIFIED
+        - DONE_REASON_COMPLETE
+        - DONE_REASON_INTERRUPTED
+        - DONE_REASON_DAILY_LIMIT
+        - DONE_REASON_REFUSED
+        - DONE_REASON_UNAVAILABLE
+    loci.assistant.Handoff:
+      type: object
+      properties:
+        query:
+          type: string
+          title: query
+        city:
+          type:
+            - string
+            - "null"
+          title: city
+      title: Handoff
+      additionalProperties: false
+      description: |-
+        Handoff offers to plan something in the full planner. Nothing has started:
+         the caller taps to send query to ChatService.StreamChat.
+    loci.assistant.InputMode:
+      type: string
+      title: InputMode
+      enum:
+        - INPUT_MODE_UNSPECIFIED
+        - INPUT_MODE_TYPED
+        - INPUT_MODE_VOICE
+    loci.assistant.PlaceAction:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+        kind:
+          title: kind
+          $ref: '#/components/schemas/loci.assistant.PlaceActionKind'
+        poiId:
+          type: string
+          title: poi_id
+        poiName:
+          type: string
+          title: poi_name
+        listId:
+          type:
+            - string
+            - "null"
+          title: list_id
+          description: Set for PLACE_ACTION_KIND_ADD_TO_LIST.
+        listName:
+          type:
+            - string
+            - "null"
+          title: list_name
+        summary:
+          type: string
+          title: summary
+          description: One line the card shows, e.g. "Save Pastéis de Belém to your favourites".
+        expiresAt:
+          title: expires_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: PlaceAction
+      additionalProperties: false
+      description: PlaceAction saves a place somewhere.
+    loci.assistant.PlaceActionKind:
+      type: string
+      title: PlaceActionKind
+      enum:
+        - PLACE_ACTION_KIND_UNSPECIFIED
+        - PLACE_ACTION_KIND_SAVE_FAVORITE
+        - PLACE_ACTION_KIND_ADD_TO_LIST
+    loci.assistant.Proposal:
+      type: object
+      allOf:
+        - properties:
+            awaitsOwner:
+              type: boolean
+              title: awaits_owner
+              description: |-
+                The caller is a co-planner, so this went to the trip's owner: show it as
+                 sent, with nothing to confirm.
+        - oneOf:
+            - properties:
+                place:
+                  title: place
+                  $ref: '#/components/schemas/loci.assistant.PlaceAction'
+              title: place
+              required:
+                - place
+            - properties:
+                trip:
+                  title: trip
+                  $ref: '#/components/schemas/loci.chat.ActionProposal'
+              title: trip
+              required:
+                - trip
+      title: Proposal
+      additionalProperties: false
+      description: |-
+        Proposal is a change waiting for the caller. The wording on it comes from
+         the server and the database, never from the model.
+    loci.assistant.Surface:
+      type: string
+      title: Surface
+      enum:
+        - SURFACE_UNSPECIFIED
+        - SURFACE_IOS
+        - SURFACE_WEB
+    loci.assistant.TextDelta:
+      type: object
+      properties:
+        text:
+          type: string
+          title: text
+      title: TextDelta
+      additionalProperties: false
+      description: |-
+        TextDelta is the next piece of the answer. Plain text: clients render it as
+         text, with no links or images, because tool results can carry words written
+         by other people.
+    loci.assistant.ToolStatus:
+      type: object
+      properties:
+        label:
+          type: string
+          title: label
+      title: ToolStatus
+      additionalProperties: false
+      description: |-
+        ToolStatus says what the assistant is doing, e.g. "Checking your trips".
+         Written by the server, never by the model.
     loci.auth.BeginMFAEnrollmentRequest:
       type: object
       title: BeginMFAEnrollmentRequest
@@ -37342,8 +37768,23 @@ tags:
     description: |-
       ApiKeyService manages long-lived API keys for programmatic access
        (MCP clients, integrations). Keys authenticate as the owning user.
-  - name: loci.auth.AuthService
-    description: AuthService defines authentication-related RPCs
+  - name: loci.city.CityService
+    description: CityService defines city-related RPCs
+  - name: loci.gastronomy.GastronomyService
+    description: |-
+      GastronomyService answers "what do people eat here, and where?" for a city.
+       The same CityGastronomy is appended to itinerary and discovery results on
+       ChatService.StreamChat; this service is the standalone lookup. Both read
+       one city-scoped cache entry, so a city is generated once for everyone.
+  - name: loci.place.PlaceIntelligenceService
+  - name: loci.recommendation.RecommendationService
+    description: RecommendationService owns private learning controls and client-side exposure events.
+  - name: loci.poi.POIService
+    description: POIService defines POI-related RPCs
+  - name: loci.interest.InterestService
+    description: InterestService defines interest-related RPCs
+  - name: loci.profile.ProfileService
+    description: ProfileService defines profile-related RPCs
   - name: loci.social.SocialService
     description: |-
       SocialService is Loci's people layer: following, invite links, blocking,
@@ -37361,6 +37802,27 @@ tags:
 
        GetInvite and GetPublicProfile accept anonymous callers (an invite link or
        a profile opened signed out); every other RPC needs a session.
+  - name: loci.trip.TripService
+    description: |-
+      TripService persists and mutates editable day-by-day trips. All mutations that
+       take base_version enforce optimistic concurrency and return the updated
+       TripDraft (or affected sub-entity) with the bumped version.
+  - name: loci.chat.ChatService
+  - name: loci.chat.WatchService
+  - name: loci.assistant.AssistantService
+    description: |-
+      AssistantService is the question you can ask from anywhere in the app: press
+       and hold, say or type it, hear the answer.
+
+       It is not ChatService. ChatService turns a message into a generated plan;
+       this answers one, looking things up on the caller's behalf along the way. A
+       request to plan a trip comes back as a Handoff for the caller to start in
+       ChatService, so a question never spends a generation.
+
+       Nothing the assistant decides writes anything. It can only propose, and a
+       proposal changes nothing until the signed-in caller sends ConfirmAction.
+  - name: loci.auth.AuthService
+    description: AuthService defines authentication-related RPCs
   - name: loci.boards.v1.BoardsService
     description: |-
       BoardsService is Loci's community: topic boards anyone signed in can open,
@@ -37370,16 +37832,6 @@ tags:
        Reads accept anonymous callers; a signed-in caller also gets my_vote.
        Every write needs a session and fails PermissionDenied while the caller is
        muted or banned. Admin RPCs fail PermissionDenied for everyone but admins.
-  - name: loci.place.PlaceIntelligenceService
-  - name: loci.recommendation.RecommendationService
-    description: RecommendationService owns private learning controls and client-side exposure events.
-  - name: loci.poi.POIService
-    description: POIService defines POI-related RPCs
-  - name: loci.trip.TripService
-    description: |-
-      TripService persists and mutates editable day-by-day trips. All mutations that
-       take base_version enforce optimistic concurrency and return the updated
-       TripDraft (or affected sub-entity) with the bumped version.
   - name: loci.bundle.v1.BundleService
     description: |-
       BundleService serves the City Packs catalog: pre-made itineraries written
@@ -37393,20 +37845,6 @@ tags:
       CalendarService connects Google Calendar and Calendly, overlays their events
        next to Loci trips, and pushes dated trips out. Apple Calendar is iOS-only
        EventKit and does not go through this service.
-  - name: loci.city.CityService
-    description: CityService defines city-related RPCs
-  - name: loci.gastronomy.GastronomyService
-    description: |-
-      GastronomyService answers "what do people eat here, and where?" for a city.
-       The same CityGastronomy is appended to itinerary and discovery results on
-       ChatService.StreamChat; this service is the standalone lookup. Both read
-       one city-scoped cache entry, so a city is generated once for everyone.
-  - name: loci.interest.InterestService
-    description: InterestService defines interest-related RPCs
-  - name: loci.profile.ProfileService
-    description: ProfileService defines profile-related RPCs
-  - name: loci.chat.ChatService
-  - name: loci.chat.WatchService
   - name: loci.localcontext.LocalContextService
   - name: loci.compare.v1.CompareService
     description: CompareService compares weekend destinations side-by-side.
