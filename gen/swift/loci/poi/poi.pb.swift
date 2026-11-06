@@ -20,6 +20,111 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
+/// AccessibilityNoteSeverity is how much a note affects the traveller's plan.
+public enum Loci_Poi_AccessibilityNoteSeverity: SwiftProtobuf.Enum, Swift.CaseIterable {
+  public typealias RawValue = Int
+  case unspecified // = 0
+
+  /// Useful to know; nothing to change.
+  case info // = 1
+
+  /// Possible difficulty; check ahead or plan around it.
+  case caution // = 2
+
+  /// Likely blocks the traveller (steps with no alternative, no lift).
+  case barrier // = 3
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .unspecified
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unspecified
+    case 1: self = .info
+    case 2: self = .caution
+    case 3: self = .barrier
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .unspecified: return 0
+    case .info: return 1
+    case .caution: return 2
+    case .barrier: return 3
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static let allCases: [Loci_Poi_AccessibilityNoteSeverity] = [
+    .unspecified,
+    .info,
+    .caution,
+    .barrier,
+  ]
+
+}
+
+/// AccessibilityNoteSource is where a note's claim comes from. Only
+/// AI_ESTIMATE notes are unverified; clients must label them as such.
+public enum Loci_Poi_AccessibilityNoteSource: SwiftProtobuf.Enum, Swift.CaseIterable {
+  public typealias RawValue = Int
+  case unspecified // = 0
+
+  /// Confirmed by Loci travellers (verified place facts).
+  case verifiedCrowd // = 1
+
+  /// Open data: OpenStreetMap / Wheelmap via accessibility.cloud.
+  case openData // = 2
+
+  /// Computed by the accessible walking router.
+  case routed // = 3
+
+  /// The model's estimate. Unverified; the traveller should call ahead.
+  case aiEstimate // = 4
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .unspecified
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unspecified
+    case 1: self = .verifiedCrowd
+    case 2: self = .openData
+    case 3: self = .routed
+    case 4: self = .aiEstimate
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .unspecified: return 0
+    case .verifiedCrowd: return 1
+    case .openData: return 2
+    case .routed: return 3
+    case .aiEstimate: return 4
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static let allCases: [Loci_Poi_AccessibilityNoteSource] = [
+    .unspecified,
+    .verifiedCrowd,
+    .openData,
+    .routed,
+    .aiEstimate,
+  ]
+
+}
+
 /// POIDetailedInfo represents a point of interest
 public struct Loci_Poi_POIDetailedInfo: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
@@ -297,11 +402,60 @@ public struct Loci_Poi_POIDetailedInfo: @unchecked Sendable {
     set {_uniqueStorage()._imageCredits = newValue}
   }
 
+  /// What a traveller with access needs should know about this place. Set only
+  /// when the request carried accessibility needs. Each note names its source,
+  /// so clients can show how far to trust it.
+  public var accessibilityNotes: [Loci_Poi_AccessibilityNote] {
+    get {return _storage._accessibilityNotes}
+    set {_uniqueStorage()._accessibilityNotes = newValue}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
   fileprivate var _storage = _StorageClass.defaultInstance
+}
+
+/// AccessibilityNote is one access fact or caveat about a place or a leg.
+public struct Loci_Poi_AccessibilityNote: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var text: String = String()
+
+  public var severity: Loci_Poi_AccessibilityNoteSeverity = .unspecified
+
+  public var source: Loci_Poi_AccessibilityNoteSource = .unspecified
+
+  /// Licence the underlying data was offered under (for example "ODbL-1.0"),
+  /// which clients must show alongside OPEN_DATA notes.
+  public var sourceLicence: String {
+    get {return _sourceLicence ?? String()}
+    set {_sourceLicence = newValue}
+  }
+  /// Returns true if `sourceLicence` has been explicitly set.
+  public var hasSourceLicence: Bool {return self._sourceLicence != nil}
+  /// Clears the value of `sourceLicence`. Subsequent reads from it will return its default value.
+  public mutating func clearSourceLicence() {self._sourceLicence = nil}
+
+  /// When the underlying fact was last observed or updated.
+  public var observedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _observedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_observedAt = newValue}
+  }
+  /// Returns true if `observedAt` has been explicitly set.
+  public var hasObservedAt: Bool {return self._observedAt != nil}
+  /// Clears the value of `observedAt`. Subsequent reads from it will return its default value.
+  public mutating func clearObservedAt() {self._observedAt = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _sourceLicence: String? = nil
+  fileprivate var _observedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
 /// TasteMatch explains why a place fits the traveller, not whether it is good.
@@ -855,6 +1009,25 @@ public struct Loci_Poi_AddPoiRequest: Sendable {
 
 fileprivate let _protobuf_package = "loci.poi"
 
+extension Loci_Poi_AccessibilityNoteSeverity: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "ACCESSIBILITY_NOTE_SEVERITY_UNSPECIFIED"),
+    1: .same(proto: "ACCESSIBILITY_NOTE_SEVERITY_INFO"),
+    2: .same(proto: "ACCESSIBILITY_NOTE_SEVERITY_CAUTION"),
+    3: .same(proto: "ACCESSIBILITY_NOTE_SEVERITY_BARRIER"),
+  ]
+}
+
+extension Loci_Poi_AccessibilityNoteSource: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "ACCESSIBILITY_NOTE_SOURCE_UNSPECIFIED"),
+    1: .same(proto: "ACCESSIBILITY_NOTE_SOURCE_VERIFIED_CROWD"),
+    2: .same(proto: "ACCESSIBILITY_NOTE_SOURCE_OPEN_DATA"),
+    3: .same(proto: "ACCESSIBILITY_NOTE_SOURCE_ROUTED"),
+    4: .same(proto: "ACCESSIBILITY_NOTE_SOURCE_AI_ESTIMATE"),
+  ]
+}
+
 extension Loci_Poi_POIDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".POIDetailedInfo"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -894,6 +1067,7 @@ extension Loci_Poi_POIDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._Messag
     35: .same(proto: "day"),
     36: .standard(proto: "taste_match"),
     34: .standard(proto: "image_credits"),
+    37: .standard(proto: "accessibility_notes"),
   ]
 
   fileprivate class _StorageClass {
@@ -933,6 +1107,7 @@ extension Loci_Poi_POIDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._Messag
     var _day: Int32? = nil
     var _tasteMatch: Loci_Poi_TasteMatch? = nil
     var _imageCredits: [Loci_Poi_POIImage] = []
+    var _accessibilityNotes: [Loci_Poi_AccessibilityNote] = []
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -983,6 +1158,7 @@ extension Loci_Poi_POIDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._Messag
       _day = source._day
       _tasteMatch = source._tasteMatch
       _imageCredits = source._imageCredits
+      _accessibilityNotes = source._accessibilityNotes
     }
   }
 
@@ -1037,6 +1213,7 @@ extension Loci_Poi_POIDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._Messag
         case 34: try { try decoder.decodeRepeatedMessageField(value: &_storage._imageCredits) }()
         case 35: try { try decoder.decodeSingularInt32Field(value: &_storage._day) }()
         case 36: try { try decoder.decodeSingularMessageField(value: &_storage._tasteMatch) }()
+        case 37: try { try decoder.decodeRepeatedMessageField(value: &_storage._accessibilityNotes) }()
         default: break
         }
       }
@@ -1157,6 +1334,9 @@ extension Loci_Poi_POIDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._Messag
       try { if let v = _storage._tasteMatch {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 36)
       } }()
+      if !_storage._accessibilityNotes.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._accessibilityNotes, fieldNumber: 37)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1202,10 +1382,71 @@ extension Loci_Poi_POIDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._Messag
         if _storage._day != rhs_storage._day {return false}
         if _storage._tasteMatch != rhs_storage._tasteMatch {return false}
         if _storage._imageCredits != rhs_storage._imageCredits {return false}
+        if _storage._accessibilityNotes != rhs_storage._accessibilityNotes {return false}
         return true
       }
       if !storagesAreEqual {return false}
     }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Poi_AccessibilityNote: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".AccessibilityNote"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "text"),
+    2: .same(proto: "severity"),
+    3: .same(proto: "source"),
+    4: .standard(proto: "source_licence"),
+    5: .standard(proto: "observed_at"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.text) }()
+      case 2: try { try decoder.decodeSingularEnumField(value: &self.severity) }()
+      case 3: try { try decoder.decodeSingularEnumField(value: &self.source) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self._sourceLicence) }()
+      case 5: try { try decoder.decodeSingularMessageField(value: &self._observedAt) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.text.isEmpty {
+      try visitor.visitSingularStringField(value: self.text, fieldNumber: 1)
+    }
+    if self.severity != .unspecified {
+      try visitor.visitSingularEnumField(value: self.severity, fieldNumber: 2)
+    }
+    if self.source != .unspecified {
+      try visitor.visitSingularEnumField(value: self.source, fieldNumber: 3)
+    }
+    try { if let v = self._sourceLicence {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 4)
+    } }()
+    try { if let v = self._observedAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Poi_AccessibilityNote, rhs: Loci_Poi_AccessibilityNote) -> Bool {
+    if lhs.text != rhs.text {return false}
+    if lhs.severity != rhs.severity {return false}
+    if lhs.source != rhs.source {return false}
+    if lhs._sourceLicence != rhs._sourceLicence {return false}
+    if lhs._observedAt != rhs._observedAt {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

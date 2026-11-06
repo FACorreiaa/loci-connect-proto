@@ -6,7 +6,7 @@ import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobu
 import type { Message } from "@bufbuild/protobuf";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
 import type { UserPreferenceProfile } from "../profile/profile_pb";
-import type { HotelDetailedInfo, POIDetailedInfo, RestaurantDetailedInfo } from "../poi/poi_pb";
+import type { AccessibilityNote, HotelDetailedInfo, POIDetailedInfo, RestaurantDetailedInfo } from "../poi/poi_pb";
 import type { GeneralCityData } from "../city/city_pb";
 import type { CityGastronomy } from "../gastronomy/gastronomy_pb";
 import type { FlightCabin, FlightPlace, TripDraft, TripFlight, TripLeg, TripStay, TripStop } from "../trip/trip_pb";
@@ -1182,6 +1182,103 @@ export declare type RoutePayload = Message<"loci.chat.RoutePayload"> & {
 export declare const RoutePayloadSchema: GenMessage<RoutePayload>;
 
 /**
+ * WalkingLeg is the walk (or roll) between two consecutive stops of a day,
+ * shaped by the traveller's access needs.
+ *
+ * @generated from message loci.chat.WalkingLeg
+ */
+export declare type WalkingLeg = Message<"loci.chat.WalkingLeg"> & {
+  /**
+   * @generated from field: string from_poi_id = 1;
+   */
+  fromPoiId: string;
+
+  /**
+   * @generated from field: string to_poi_id = 2;
+   */
+  toPoiId: string;
+
+  /**
+   * @generated from field: int32 distance_m = 3;
+   */
+  distanceM: number;
+
+  /**
+   * Adjusted for the traveller's pace, not the router's default speed.
+   *
+   * @generated from field: int32 duration_min = 4;
+   */
+  durationMin: number;
+
+  /**
+   * @generated from field: int32 ascent_m = 5;
+   */
+  ascentM: number;
+
+  /**
+   * True when an accessible router computed the leg. False means a
+   * straight-line estimate: clients must say "route not checked".
+   *
+   * @generated from field: bool routed = 6;
+   */
+  routed: boolean;
+
+  /**
+   * @generated from field: repeated loci.poi.AccessibilityNote notes = 7;
+   */
+  notes: AccessibilityNote[];
+
+  /**
+   * Set when walking this leg exceeds the traveller's limits: "taxi" or
+   * "transit".
+   *
+   * @generated from field: optional string suggest_mode = 8;
+   */
+  suggestMode?: string;
+};
+
+/**
+ * Describes the message loci.chat.WalkingLeg.
+ * Use `create(WalkingLegSchema)` to create a new message.
+ */
+export declare const WalkingLegSchema: GenMessage<WalkingLeg>;
+
+/**
+ * AccessibleRoutePayload carries STREAM_EVENT_TYPE_ACCESSIBLE_ROUTE: one day's
+ * walking legs, sent after that day's itinerary so first paint is not held
+ * back by routing. Only sent when the request carried accessibility needs.
+ *
+ * @generated from message loci.chat.AccessibleRoutePayload
+ */
+export declare type AccessibleRoutePayload = Message<"loci.chat.AccessibleRoutePayload"> & {
+  /**
+   * @generated from field: int32 day = 1;
+   */
+  day: number;
+
+  /**
+   * @generated from field: repeated loci.chat.WalkingLeg legs = 2;
+   */
+  legs: WalkingLeg[];
+
+  /**
+   * @generated from field: int32 total_walk_minutes = 3;
+   */
+  totalWalkMinutes: number;
+
+  /**
+   * @generated from field: repeated string warnings = 4;
+   */
+  warnings: string[];
+};
+
+/**
+ * Describes the message loci.chat.AccessibleRoutePayload.
+ * Use `create(AccessibleRoutePayloadSchema)` to create a new message.
+ */
+export declare const AccessibleRoutePayloadSchema: GenMessage<AccessibleRoutePayload>;
+
+/**
  * GastronomyPayload carries STREAM_EVENT_TYPE_GASTRONOMY: the city's typical
  * gastronomy, sent as soon as it is parsed so clients can render the section
  * before COMPLETE. The same value is on AiCityResponse.gastronomy.
@@ -1355,6 +1452,12 @@ export declare type StreamEvent = Message<"loci.chat.StreamEvent"> & {
      */
     value: ActionProposalPayload;
     case: "actionProposal";
+  } | {
+    /**
+     * @generated from field: loci.chat.AccessibleRoutePayload accessible_route = 35;
+     */
+    value: AccessibleRoutePayload;
+    case: "accessibleRoute";
   } | { case: undefined; value?: undefined };
 };
 
@@ -3201,6 +3304,11 @@ export enum StreamEventType {
    * @generated from enum value: STREAM_EVENT_TYPE_ACTION_PROPOSAL = 15;
    */
   ACTION_PROPOSAL = 15,
+
+  /**
+   * @generated from enum value: STREAM_EVENT_TYPE_ACCESSIBLE_ROUTE = 16;
+   */
+  ACCESSIBLE_ROUTE = 16,
 }
 
 /**

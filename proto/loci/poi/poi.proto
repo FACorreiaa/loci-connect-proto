@@ -210,6 +210,53 @@ message POIDetailedInfo {
   // under. The URL and its credit therefore travel together — a client that
   // renders one renders the other.
   repeated POIImage image_credits = 34 [(buf.validate.field).repeated = {max_items: 20}];
+
+  // What a traveller with access needs should know about this place. Set only
+  // when the request carried accessibility needs. Each note names its source,
+  // so clients can show how far to trust it.
+  repeated AccessibilityNote accessibility_notes = 37 [(buf.validate.field).repeated = {max_items: 10}];
+}
+
+// AccessibilityNoteSeverity is how much a note affects the traveller's plan.
+enum AccessibilityNoteSeverity {
+  ACCESSIBILITY_NOTE_SEVERITY_UNSPECIFIED = 0;
+  // Useful to know; nothing to change.
+  ACCESSIBILITY_NOTE_SEVERITY_INFO = 1;
+  // Possible difficulty; check ahead or plan around it.
+  ACCESSIBILITY_NOTE_SEVERITY_CAUTION = 2;
+  // Likely blocks the traveller (steps with no alternative, no lift).
+  ACCESSIBILITY_NOTE_SEVERITY_BARRIER = 3;
+}
+
+// AccessibilityNoteSource is where a note's claim comes from. Only
+// AI_ESTIMATE notes are unverified; clients must label them as such.
+enum AccessibilityNoteSource {
+  ACCESSIBILITY_NOTE_SOURCE_UNSPECIFIED = 0;
+  // Confirmed by Loci travellers (verified place facts).
+  ACCESSIBILITY_NOTE_SOURCE_VERIFIED_CROWD = 1;
+  // Open data: OpenStreetMap / Wheelmap via accessibility.cloud.
+  ACCESSIBILITY_NOTE_SOURCE_OPEN_DATA = 2;
+  // Computed by the accessible walking router.
+  ACCESSIBILITY_NOTE_SOURCE_ROUTED = 3;
+  // The model's estimate. Unverified; the traveller should call ahead.
+  ACCESSIBILITY_NOTE_SOURCE_AI_ESTIMATE = 4;
+}
+
+// AccessibilityNote is one access fact or caveat about a place or a leg.
+message AccessibilityNote {
+  string text = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 300
+  }];
+  AccessibilityNoteSeverity severity = 2 [(buf.validate.field).enum = {defined_only: true}];
+  AccessibilityNoteSource source = 3 [(buf.validate.field).enum = {defined_only: true}];
+  // Licence the underlying data was offered under (for example "ODbL-1.0"),
+  // which clients must show alongside OPEN_DATA notes.
+  optional string source_licence = 4 [(buf.validate.field) = {
+    string: {max_len: 100}
+  }];
+  // When the underlying fact was last observed or updated.
+  optional google.protobuf.Timestamp observed_at = 5;
 }
 
 // TasteMatch explains why a place fits the traveller, not whether it is good.

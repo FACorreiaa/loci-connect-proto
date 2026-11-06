@@ -333,6 +333,83 @@ message ItineraryPreferences {
   google.protobuf.Timestamp updated_at = 13;
 }
 
+// MobilityLevel is how the traveller gets around on foot. It describes a
+// functional need, not a diagnosis.
+enum MobilityLevel {
+  MOBILITY_LEVEL_UNSPECIFIED = 0;
+  // No mobility constraint.
+  MOBILITY_LEVEL_NONE = 1;
+  // Walks unaided, but only short distances or slowly.
+  MOBILITY_LEVEL_LIMITED_WALKING = 2;
+  // Walks with a cane, crutches, or a walker/rollator.
+  MOBILITY_LEVEL_WALKING_AID = 3;
+  MOBILITY_LEVEL_MANUAL_WHEELCHAIR = 4;
+  MOBILITY_LEVEL_POWER_WHEELCHAIR = 5;
+  MOBILITY_LEVEL_MOBILITY_SCOOTER = 6;
+}
+
+// MaxIncline is the steepest slope the traveller can manage. The values map
+// onto OpenRouteService's wheelchair `maximum_incline` restriction.
+enum MaxIncline {
+  MAX_INCLINE_UNSPECIFIED = 0;
+  MAX_INCLINE_ANY = 1;
+  MAX_INCLINE_PCT_3 = 2;
+  MAX_INCLINE_PCT_6 = 3;
+  MAX_INCLINE_PCT_10 = 4;
+}
+
+// AccessibilityNeeds are the traveller's self-described access needs, which
+// Loci uses to shape itineraries, walking legs and answers.
+//
+// This is special-category (health) data under GDPR Article 9. The server
+// stores it only after explicit consent (see `accessibility_consent_given` on
+// the create/update requests), never logs it, and drops it entirely on
+// `clear_accessibility_needs`.
+message AccessibilityNeeds {
+  MobilityLevel mobility = 1 [(buf.validate.field).enum = {defined_only: true}];
+  // Longest walk/roll between two stops, in minutes. 0 means no limit.
+  int32 max_walk_minutes_per_leg = 2 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 120
+  }];
+  // Total walking/rolling across a day, in minutes. 0 means no limit.
+  int32 max_walk_minutes_per_day = 3 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 600
+  }];
+  // Avoid any stairs or steps, on routes and at entrances.
+  bool step_free_only = 4;
+  MaxIncline max_incline = 5 [(buf.validate.field).enum = {defined_only: true}];
+  // Wants a seated rest at least this often, in minutes. 0 means no rule.
+  int32 rest_every_minutes = 6 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 240
+  }];
+  bool needs_seating_at_stops = 7;
+  bool needs_accessible_toilet = 8;
+  // Avoid cobblestones and rough surfaces.
+  bool avoid_cobbles = 9;
+  bool low_vision = 10;
+  bool blind = 11;
+  bool deaf_or_hard_of_hearing = 12;
+  // Noise, crowds or bright light are hard to cope with.
+  bool sensory_sensitive = 13;
+  // Prefers quiet hours and off-peak visits.
+  bool prefers_quiet_times = 14;
+  // Benefits from a predictable, detailed plan with fewer surprises.
+  bool needs_predictable_plan = 15;
+  // Tires quickly or lives with chronic pain; plan shorter, slower days.
+  bool fatigue_or_chronic_pain = 16;
+  bool service_animal = 17;
+  bool stroller = 18;
+  bool travelling_with_companion = 19;
+  // Anything else, in the traveller's own words.
+  string notes = 20 [(buf.validate.field).string = {max_len: 500}];
+  // When the traveller consented to Loci storing these needs. Set by the
+  // server; ignored on requests.
+  optional google.protobuf.Timestamp consent_at = 21;
+}
+
 // UserPreferenceProfile represents a user's preference profile
 message UserPreferenceProfile {
   string id = 1 [(buf.validate.field).string = {
@@ -397,6 +474,8 @@ message UserPreferenceProfile {
   optional ItineraryPreferences itinerary_preferences = 22;
   google.protobuf.Timestamp created_at = 23 [(buf.validate.field).required = true];
   google.protobuf.Timestamp updated_at = 24 [(buf.validate.field).required = true];
+  // Absent until the traveller has set needs and consented to storing them.
+  optional AccessibilityNeeds accessibility_needs = 25;
 }
 
 // CreateUserPreferenceProfileRequest for creating a preference profile
@@ -467,6 +546,11 @@ message CreateUserPreferenceProfileRequest {
   optional DiningPreferences dining_preferences = 16;
   optional ActivityPreferences activity_preferences = 17;
   optional ItineraryPreferences itinerary_preferences = 18;
+  // Requires accessibility_consent_given = true; rejected otherwise.
+  optional AccessibilityNeeds accessibility_needs = 19;
+  // The traveller explicitly agreed to Loci storing their accessibility
+  // needs. Must be a separate, unticked-by-default choice in the client.
+  optional bool accessibility_consent_given = 20;
 }
 
 // UpdateUserPreferenceProfileRequest for updating a preference profile
@@ -543,6 +627,13 @@ message UpdateUserPreferenceProfileRequest {
   optional DiningPreferences dining_preferences = 17;
   optional ActivityPreferences activity_preferences = 18;
   optional ItineraryPreferences itinerary_preferences = 19;
+  // Replaces the stored needs wholesale. Requires accessibility_consent_given
+  // = true unless the profile already holds consent.
+  optional AccessibilityNeeds accessibility_needs = 20;
+  // Deletes the stored needs and the consent record. Wins over
+  // accessibility_needs when both are sent.
+  optional bool clear_accessibility_needs = 21;
+  optional bool accessibility_consent_given = 22;
 }
 
 // GetUserPreferenceProfilesRequest for retrieving user preference profiles

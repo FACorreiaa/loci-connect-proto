@@ -4,6 +4,7 @@
 
 import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv2";
 import type { Message } from "@bufbuild/protobuf";
+import type { AccessibilityNeeds } from "../profile/profile_pb";
 import type { POIDetailedInfo, POIImage } from "../poi/poi_pb";
 import type { RecommendationTrace } from "../recommendation/recommendation_pb";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
@@ -56,6 +57,15 @@ export declare type TripConstraint = Message<"loci.trip.TripConstraint"> & {
    * @generated from field: optional int32 day_end_minute = 6;
    */
   dayEndMinute?: number;
+
+  /**
+   * Access needs for this trip only (for example, travelling with someone
+   * who uses a wheelchair). When set, replaces the profile's needs wholesale.
+   * Same consent rule as the profile: the server rejects it without consent.
+   *
+   * @generated from field: optional loci.profile.AccessibilityNeeds accessibility = 7;
+   */
+  accessibility?: AccessibilityNeeds;
 };
 
 /**

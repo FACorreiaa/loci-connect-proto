@@ -734,6 +734,10 @@
             <ul>
               
                 <li>
+                  <a href="#loci.poi.AccessibilityNote"><span class="badge">M</span>AccessibilityNote</a>
+                </li>
+              
+                <li>
                   <a href="#loci.poi.AddPoiRequest"><span class="badge">M</span>AddPoiRequest</a>
                 </li>
               
@@ -781,6 +785,14 @@
                   <a href="#loci.poi.TasteMatch"><span class="badge">M</span>TasteMatch</a>
                 </li>
               
+              
+                <li>
+                  <a href="#loci.poi.AccessibilityNoteSeverity"><span class="badge">E</span>AccessibilityNoteSeverity</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.poi.AccessibilityNoteSource"><span class="badge">E</span>AccessibilityNoteSource</a>
+                </li>
               
               
               
@@ -854,6 +866,10 @@
           <li>
             <a href="#loci%2fprofile%2fprofile.proto">loci/profile/profile.proto</a>
             <ul>
+              
+                <li>
+                  <a href="#loci.profile.AccessibilityNeeds"><span class="badge">M</span>AccessibilityNeeds</a>
+                </li>
               
                 <li>
                   <a href="#loci.profile.AccommodationPreferences"><span class="badge">M</span>AccommodationPreferences</a>
@@ -938,6 +954,14 @@
               
                 <li>
                   <a href="#loci.profile.DayPreference"><span class="badge">E</span>DayPreference</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.profile.MaxIncline"><span class="badge">E</span>MaxIncline</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.profile.MobilityLevel"><span class="badge">E</span>MobilityLevel</a>
                 </li>
               
                 <li>
@@ -1652,6 +1676,10 @@
                 </li>
               
                 <li>
+                  <a href="#loci.chat.AccessibleRoutePayload"><span class="badge">M</span>AccessibleRoutePayload</a>
+                </li>
+              
+                <li>
                   <a href="#loci.chat.ActionOption"><span class="badge">M</span>ActionOption</a>
                 </li>
               
@@ -1961,6 +1989,10 @@
               
                 <li>
                   <a href="#loci.chat.UserLocation"><span class="badge">M</span>UserLocation</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.chat.WalkingLeg"><span class="badge">M</span>WalkingLeg</a>
                 </li>
               
                 <li>
@@ -9928,6 +9960,59 @@ matched to Loci places where possible. Saving them is up to the client.</p></td>
       <p></p>
 
       
+        <h3 id="loci.poi.AccessibilityNote">AccessibilityNote</h3>
+        <p>AccessibilityNote is one access fact or caveat about a place or a leg.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>text</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>severity</td>
+                  <td><a href="#loci.poi.AccessibilityNoteSeverity">AccessibilityNoteSeverity</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>source</td>
+                  <td><a href="#loci.poi.AccessibilityNoteSource">AccessibilityNoteSource</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>source_licence</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>Licence the underlying data was offered under (for example &#34;ODbL-1.0&#34;),
+which clients must show alongside OPEN_DATA notes. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>observed_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td>optional</td>
+                  <td><p>When the underlying fact was last observed or updated. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.poi.AddPoiRequest">AddPoiRequest</h3>
         <p>AddPoiRequest for adding a POI to a list</p>
 
@@ -10442,6 +10527,15 @@ under. The URL and its credit therefore travel together — a client that
 renders one renders the other. </p></td>
                 </tr>
               
+                <tr>
+                  <td>accessibility_notes</td>
+                  <td><a href="#loci.poi.AccessibilityNote">AccessibilityNote</a></td>
+                  <td>repeated</td>
+                  <td><p>What a traveller with access needs should know about this place. Set only
+when the request carried accessibility needs. Each note names its source,
+so clients can show how far to trust it. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -10897,6 +10991,82 @@ has seen for them, 0 among the worst. </p></td>
         
       
 
+      
+        <h3 id="loci.poi.AccessibilityNoteSeverity">AccessibilityNoteSeverity</h3>
+        <p>AccessibilityNoteSeverity is how much a note affects the traveller's plan.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>ACCESSIBILITY_NOTE_SEVERITY_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ACCESSIBILITY_NOTE_SEVERITY_INFO</td>
+                <td>1</td>
+                <td><p>Useful to know; nothing to change.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ACCESSIBILITY_NOTE_SEVERITY_CAUTION</td>
+                <td>2</td>
+                <td><p>Possible difficulty; check ahead or plan around it.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ACCESSIBILITY_NOTE_SEVERITY_BARRIER</td>
+                <td>3</td>
+                <td><p>Likely blocks the traveller (steps with no alternative, no lift).</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="loci.poi.AccessibilityNoteSource">AccessibilityNoteSource</h3>
+        <p>AccessibilityNoteSource is where a note's claim comes from. Only</p><p>AI_ESTIMATE notes are unverified; clients must label them as such.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>ACCESSIBILITY_NOTE_SOURCE_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ACCESSIBILITY_NOTE_SOURCE_VERIFIED_CROWD</td>
+                <td>1</td>
+                <td><p>Confirmed by Loci travellers (verified place facts).</p></td>
+              </tr>
+            
+              <tr>
+                <td>ACCESSIBILITY_NOTE_SOURCE_OPEN_DATA</td>
+                <td>2</td>
+                <td><p>Open data: OpenStreetMap / Wheelmap via accessibility.cloud.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ACCESSIBILITY_NOTE_SOURCE_ROUTED</td>
+                <td>3</td>
+                <td><p>Computed by the accessible walking router.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ACCESSIBILITY_NOTE_SOURCE_AI_ESTIMATE</td>
+                <td>4</td>
+                <td><p>The model&#39;s estimate. Unverified; the traveller should call ahead.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
       
 
       
@@ -11400,6 +11570,171 @@ has seen for them, 0 among the worst. </p></td>
       </div>
       <p></p>
 
+      
+        <h3 id="loci.profile.AccessibilityNeeds">AccessibilityNeeds</h3>
+        <p>AccessibilityNeeds are the traveller's self-described access needs, which</p><p>Loci uses to shape itineraries, walking legs and answers.</p><p>This is special-category (health) data under GDPR Article 9. The server</p><p>stores it only after explicit consent (see `accessibility_consent_given` on</p><p>the create/update requests), never logs it, and drops it entirely on</p><p>`clear_accessibility_needs`.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>mobility</td>
+                  <td><a href="#loci.profile.MobilityLevel">MobilityLevel</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>max_walk_minutes_per_leg</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Longest walk/roll between two stops, in minutes. 0 means no limit. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>max_walk_minutes_per_day</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Total walking/rolling across a day, in minutes. 0 means no limit. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>step_free_only</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Avoid any stairs or steps, on routes and at entrances. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>max_incline</td>
+                  <td><a href="#loci.profile.MaxIncline">MaxIncline</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>rest_every_minutes</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Wants a seated rest at least this often, in minutes. 0 means no rule. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>needs_seating_at_stops</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>needs_accessible_toilet</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>avoid_cobbles</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Avoid cobblestones and rough surfaces. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>low_vision</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>blind</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>deaf_or_hard_of_hearing</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>sensory_sensitive</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Noise, crowds or bright light are hard to cope with. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>prefers_quiet_times</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Prefers quiet hours and off-peak visits. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>needs_predictable_plan</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Benefits from a predictable, detailed plan with fewer surprises. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>fatigue_or_chronic_pain</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Tires quickly or lives with chronic pain; plan shorter, slower days. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>service_animal</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>stroller</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>travelling_with_companion</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>notes</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Anything else, in the traveller&#39;s own words. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>consent_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td>optional</td>
+                  <td><p>When the traveller consented to Loci storing these needs. Set by the
+server; ignored on requests. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
       
         <h3 id="loci.profile.AccommodationPreferences">AccommodationPreferences</h3>
         <p>AccommodationPreferences represents accommodation-specific filters</p>
@@ -11905,6 +12240,21 @@ to send. </p></td>
                   <td><a href="#loci.profile.ItineraryPreferences">ItineraryPreferences</a></td>
                   <td>optional</td>
                   <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>accessibility_needs</td>
+                  <td><a href="#loci.profile.AccessibilityNeeds">AccessibilityNeeds</a></td>
+                  <td>optional</td>
+                  <td><p>Requires accessibility_consent_given = true; rejected otherwise. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>accessibility_consent_given</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td>optional</td>
+                  <td><p>The traveller explicitly agreed to Loci storing their accessibility
+needs. Must be a separate, unticked-by-default choice in the client. </p></td>
                 </tr>
               
             </tbody>
@@ -12574,6 +12924,29 @@ to send. </p></td>
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>accessibility_needs</td>
+                  <td><a href="#loci.profile.AccessibilityNeeds">AccessibilityNeeds</a></td>
+                  <td>optional</td>
+                  <td><p>Replaces the stored needs wholesale. Requires accessibility_consent_given
+= true unless the profile already holds consent. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>clear_accessibility_needs</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td>optional</td>
+                  <td><p>Deletes the stored needs and the consent record. Wins over
+accessibility_needs when both are sent. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>accessibility_consent_given</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -12759,6 +13132,13 @@ to send. </p></td>
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>accessibility_needs</td>
+                  <td><a href="#loci.profile.AccessibilityNeeds">AccessibilityNeeds</a></td>
+                  <td>optional</td>
+                  <td><p>Absent until the traveller has set needs and consented to storing them. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -12797,6 +13177,100 @@ to send. </p></td>
               <tr>
                 <td>DAY_PREFERENCE_NIGHT</td>
                 <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="loci.profile.MaxIncline">MaxIncline</h3>
+        <p>MaxIncline is the steepest slope the traveller can manage. The values map</p><p>onto OpenRouteService's wheelchair `maximum_incline` restriction.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>MAX_INCLINE_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>MAX_INCLINE_ANY</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>MAX_INCLINE_PCT_3</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>MAX_INCLINE_PCT_6</td>
+                <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>MAX_INCLINE_PCT_10</td>
+                <td>4</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="loci.profile.MobilityLevel">MobilityLevel</h3>
+        <p>MobilityLevel is how the traveller gets around on foot. It describes a</p><p>functional need, not a diagnosis.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>MOBILITY_LEVEL_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>MOBILITY_LEVEL_NONE</td>
+                <td>1</td>
+                <td><p>No mobility constraint.</p></td>
+              </tr>
+            
+              <tr>
+                <td>MOBILITY_LEVEL_LIMITED_WALKING</td>
+                <td>2</td>
+                <td><p>Walks unaided, but only short distances or slowly.</p></td>
+              </tr>
+            
+              <tr>
+                <td>MOBILITY_LEVEL_WALKING_AID</td>
+                <td>3</td>
+                <td><p>Walks with a cane, crutches, or a walker/rollator.</p></td>
+              </tr>
+            
+              <tr>
+                <td>MOBILITY_LEVEL_MANUAL_WHEELCHAIR</td>
+                <td>4</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>MOBILITY_LEVEL_POWER_WHEELCHAIR</td>
+                <td>5</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>MOBILITY_LEVEL_MOBILITY_SCOOTER</td>
+                <td>6</td>
                 <td><p></p></td>
               </tr>
             
@@ -17890,6 +18364,15 @@ hotels, restaurants and activities goes through it. </p></td>
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>accessibility</td>
+                  <td><a href="#loci.profile.AccessibilityNeeds">loci.profile.AccessibilityNeeds</a></td>
+                  <td>optional</td>
+                  <td><p>Access needs for this trip only (for example, travelling with someone
+who uses a wheelchair). When set, replaces the profile&#39;s needs wholesale.
+Same consent rule as the profile: the server rejects it without consent. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -19345,6 +19828,51 @@ Clients used to infer days by chunking the list four at a time, which is
 the inverse of what it should be: a four-day trip with twenty-four places
 became six days. Zero on answers produced before this existed, and on
 answers to requests that are not trips. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.AccessibleRoutePayload">AccessibleRoutePayload</h3>
+        <p>AccessibleRoutePayload carries STREAM_EVENT_TYPE_ACCESSIBLE_ROUTE: one day's</p><p>walking legs, sent after that day's itinerary so first paint is not held</p><p>back by routing. Only sent when the request carried accessibility needs.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>day</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>legs</td>
+                  <td><a href="#loci.chat.WalkingLeg">WalkingLeg</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>total_walk_minutes</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>warnings</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
                 </tr>
               
             </tbody>
@@ -22725,6 +23253,13 @@ belongs to. An ERROR carrying it failed that city only, not the stream. </p></td
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>accessible_route</td>
+                  <td><a href="#loci.chat.AccessibleRoutePayload">AccessibleRoutePayload</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -22898,6 +23433,81 @@ owner applies is FailedPrecondition. </p></td>
                   <td><a href="#double">double</a></td>
                   <td>optional</td>
                   <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.chat.WalkingLeg">WalkingLeg</h3>
+        <p>WalkingLeg is the walk (or roll) between two consecutive stops of a day,</p><p>shaped by the traveller's access needs.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>from_poi_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>to_poi_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>distance_m</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>duration_min</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Adjusted for the traveller&#39;s pace, not the router&#39;s default speed. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>ascent_m</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>routed</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>True when an accessible router computed the leg. False means a
+straight-line estimate: clients must say &#34;route not checked&#34;. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>notes</td>
+                  <td><a href="#loci.poi.AccessibilityNote">loci.poi.AccessibilityNote</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>suggest_mode</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>Set when walking this leg exceeds the traveller&#39;s limits: &#34;taxi&#34; or
+&#34;transit&#34;. </p></td>
                 </tr>
               
             </tbody>
@@ -23621,6 +24231,12 @@ itinerary — the same rule the trip builder applies.</p></td>
               <tr>
                 <td>STREAM_EVENT_TYPE_ACTION_PROPOSAL</td>
                 <td>15</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>STREAM_EVENT_TYPE_ACCESSIBLE_ROUTE</td>
+                <td>16</td>
                 <td><p></p></td>
               </tr>
             
