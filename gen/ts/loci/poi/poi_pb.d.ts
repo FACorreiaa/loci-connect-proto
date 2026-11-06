@@ -2,7 +2,7 @@
 // @generated from file loci/poi/poi.proto (package loci.poi, syntax proto3)
 /* eslint-disable */
 
-import type { GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv2";
+import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv2";
 import type { Message } from "@bufbuild/protobuf";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
 import type { RecommendationTrace } from "../recommendation/recommendation_pb";
@@ -238,6 +238,15 @@ export declare type POIDetailedInfo = Message<"loci.poi.POIDetailedInfo"> & {
    * @generated from field: repeated loci.poi.POIImage image_credits = 34;
    */
   imageCredits: POIImage[];
+
+  /**
+   * What a traveller with access needs should know about this place. Set only
+   * when the request carried accessibility needs. Each note names its source,
+   * so clients can show how far to trust it.
+   *
+   * @generated from field: repeated loci.poi.AccessibilityNote accessibility_notes = 37;
+   */
+  accessibilityNotes: AccessibilityNote[];
 };
 
 /**
@@ -245,6 +254,49 @@ export declare type POIDetailedInfo = Message<"loci.poi.POIDetailedInfo"> & {
  * Use `create(POIDetailedInfoSchema)` to create a new message.
  */
 export declare const POIDetailedInfoSchema: GenMessage<POIDetailedInfo>;
+
+/**
+ * AccessibilityNote is one access fact or caveat about a place or a leg.
+ *
+ * @generated from message loci.poi.AccessibilityNote
+ */
+export declare type AccessibilityNote = Message<"loci.poi.AccessibilityNote"> & {
+  /**
+   * @generated from field: string text = 1;
+   */
+  text: string;
+
+  /**
+   * @generated from field: loci.poi.AccessibilityNoteSeverity severity = 2;
+   */
+  severity: AccessibilityNoteSeverity;
+
+  /**
+   * @generated from field: loci.poi.AccessibilityNoteSource source = 3;
+   */
+  source: AccessibilityNoteSource;
+
+  /**
+   * Licence the underlying data was offered under (for example "ODbL-1.0"),
+   * which clients must show alongside OPEN_DATA notes.
+   *
+   * @generated from field: optional string source_licence = 4;
+   */
+  sourceLicence?: string;
+
+  /**
+   * When the underlying fact was last observed or updated.
+   *
+   * @generated from field: optional google.protobuf.Timestamp observed_at = 5;
+   */
+  observedAt?: Timestamp;
+};
+
+/**
+ * Describes the message loci.poi.AccessibilityNote.
+ * Use `create(AccessibilityNoteSchema)` to create a new message.
+ */
+export declare const AccessibilityNoteSchema: GenMessage<AccessibilityNote>;
 
 /**
  * TasteMatch explains why a place fits the traveller, not whether it is good.
@@ -733,6 +785,90 @@ export declare type AddPoiRequest = Message<"loci.poi.AddPoiRequest"> & {
  * Use `create(AddPoiRequestSchema)` to create a new message.
  */
 export declare const AddPoiRequestSchema: GenMessage<AddPoiRequest>;
+
+/**
+ * AccessibilityNoteSeverity is how much a note affects the traveller's plan.
+ *
+ * @generated from enum loci.poi.AccessibilityNoteSeverity
+ */
+export enum AccessibilityNoteSeverity {
+  /**
+   * @generated from enum value: ACCESSIBILITY_NOTE_SEVERITY_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * Useful to know; nothing to change.
+   *
+   * @generated from enum value: ACCESSIBILITY_NOTE_SEVERITY_INFO = 1;
+   */
+  INFO = 1,
+
+  /**
+   * Possible difficulty; check ahead or plan around it.
+   *
+   * @generated from enum value: ACCESSIBILITY_NOTE_SEVERITY_CAUTION = 2;
+   */
+  CAUTION = 2,
+
+  /**
+   * Likely blocks the traveller (steps with no alternative, no lift).
+   *
+   * @generated from enum value: ACCESSIBILITY_NOTE_SEVERITY_BARRIER = 3;
+   */
+  BARRIER = 3,
+}
+
+/**
+ * Describes the enum loci.poi.AccessibilityNoteSeverity.
+ */
+export declare const AccessibilityNoteSeveritySchema: GenEnum<AccessibilityNoteSeverity>;
+
+/**
+ * AccessibilityNoteSource is where a note's claim comes from. Only
+ * AI_ESTIMATE notes are unverified; clients must label them as such.
+ *
+ * @generated from enum loci.poi.AccessibilityNoteSource
+ */
+export enum AccessibilityNoteSource {
+  /**
+   * @generated from enum value: ACCESSIBILITY_NOTE_SOURCE_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * Confirmed by Loci travellers (verified place facts).
+   *
+   * @generated from enum value: ACCESSIBILITY_NOTE_SOURCE_VERIFIED_CROWD = 1;
+   */
+  VERIFIED_CROWD = 1,
+
+  /**
+   * Open data: OpenStreetMap / Wheelmap via accessibility.cloud.
+   *
+   * @generated from enum value: ACCESSIBILITY_NOTE_SOURCE_OPEN_DATA = 2;
+   */
+  OPEN_DATA = 2,
+
+  /**
+   * Computed by the accessible walking router.
+   *
+   * @generated from enum value: ACCESSIBILITY_NOTE_SOURCE_ROUTED = 3;
+   */
+  ROUTED = 3,
+
+  /**
+   * The model's estimate. Unverified; the traveller should call ahead.
+   *
+   * @generated from enum value: ACCESSIBILITY_NOTE_SOURCE_AI_ESTIMATE = 4;
+   */
+  AI_ESTIMATE = 4,
+}
+
+/**
+ * Describes the enum loci.poi.AccessibilityNoteSource.
+ */
+export declare const AccessibilityNoteSourceSchema: GenEnum<AccessibilityNoteSource>;
 
 /**
  * POIService defines POI-related RPCs

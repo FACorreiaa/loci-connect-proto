@@ -400,6 +400,18 @@ public struct Loci_Trip_TripConstraint: Sendable {
   /// Clears the value of `dayEndMinute`. Subsequent reads from it will return its default value.
   public mutating func clearDayEndMinute() {self._dayEndMinute = nil}
 
+  /// Access needs for this trip only (for example, travelling with someone
+  /// who uses a wheelchair). When set, replaces the profile's needs wholesale.
+  /// Same consent rule as the profile: the server rejects it without consent.
+  public var accessibility: Loci_Profile_AccessibilityNeeds {
+    get {return _accessibility ?? Loci_Profile_AccessibilityNeeds()}
+    set {_accessibility = newValue}
+  }
+  /// Returns true if `accessibility` has been explicitly set.
+  public var hasAccessibility: Bool {return self._accessibility != nil}
+  /// Clears the value of `accessibility`. Subsequent reads from it will return its default value.
+  public mutating func clearAccessibility() {self._accessibility = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -408,6 +420,7 @@ public struct Loci_Trip_TripConstraint: Sendable {
   fileprivate var _mobility: String? = nil
   fileprivate var _dayStartMinute: Int32? = nil
   fileprivate var _dayEndMinute: Int32? = nil
+  fileprivate var _accessibility: Loci_Profile_AccessibilityNeeds? = nil
 }
 
 /// TripStop is a single place on a day's timeline.
@@ -2007,6 +2020,7 @@ extension Loci_Trip_TripConstraint: SwiftProtobuf.Message, SwiftProtobuf._Messag
     4: .same(proto: "interests"),
     5: .standard(proto: "day_start_minute"),
     6: .standard(proto: "day_end_minute"),
+    7: .same(proto: "accessibility"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2021,6 +2035,7 @@ extension Loci_Trip_TripConstraint: SwiftProtobuf.Message, SwiftProtobuf._Messag
       case 4: try { try decoder.decodeRepeatedStringField(value: &self.interests) }()
       case 5: try { try decoder.decodeSingularInt32Field(value: &self._dayStartMinute) }()
       case 6: try { try decoder.decodeSingularInt32Field(value: &self._dayEndMinute) }()
+      case 7: try { try decoder.decodeSingularMessageField(value: &self._accessibility) }()
       default: break
       }
     }
@@ -2049,6 +2064,9 @@ extension Loci_Trip_TripConstraint: SwiftProtobuf.Message, SwiftProtobuf._Messag
     try { if let v = self._dayEndMinute {
       try visitor.visitSingularInt32Field(value: v, fieldNumber: 6)
     } }()
+    try { if let v = self._accessibility {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2059,6 +2077,7 @@ extension Loci_Trip_TripConstraint: SwiftProtobuf.Message, SwiftProtobuf._Messag
     if lhs.interests != rhs.interests {return false}
     if lhs._dayStartMinute != rhs._dayStartMinute {return false}
     if lhs._dayEndMinute != rhs._dayEndMinute {return false}
+    if lhs._accessibility != rhs._accessibility {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

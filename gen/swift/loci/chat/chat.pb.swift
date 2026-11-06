@@ -340,6 +340,7 @@ public enum Loci_Chat_StreamEventType: SwiftProtobuf.Enum, Swift.CaseIterable {
   case route // = 13
   case gastronomy // = 14
   case actionProposal // = 15
+  case accessibleRoute // = 16
   case UNRECOGNIZED(Int)
 
   public init() {
@@ -364,6 +365,7 @@ public enum Loci_Chat_StreamEventType: SwiftProtobuf.Enum, Swift.CaseIterable {
     case 13: self = .route
     case 14: self = .gastronomy
     case 15: self = .actionProposal
+    case 16: self = .accessibleRoute
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -386,6 +388,7 @@ public enum Loci_Chat_StreamEventType: SwiftProtobuf.Enum, Swift.CaseIterable {
     case .route: return 13
     case .gastronomy: return 14
     case .actionProposal: return 15
+    case .accessibleRoute: return 16
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -408,6 +411,7 @@ public enum Loci_Chat_StreamEventType: SwiftProtobuf.Enum, Swift.CaseIterable {
     .route,
     .gastronomy,
     .actionProposal,
+    .accessibleRoute,
   ]
 
 }
@@ -1726,6 +1730,69 @@ public struct Loci_Chat_RoutePayload: Sendable {
   fileprivate var _tripID: String? = nil
 }
 
+/// WalkingLeg is the walk (or roll) between two consecutive stops of a day,
+/// shaped by the traveller's access needs.
+public struct Loci_Chat_WalkingLeg: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var fromPoiID: String = String()
+
+  public var toPoiID: String = String()
+
+  public var distanceM: Int32 = 0
+
+  /// Adjusted for the traveller's pace, not the router's default speed.
+  public var durationMin: Int32 = 0
+
+  public var ascentM: Int32 = 0
+
+  /// True when an accessible router computed the leg. False means a
+  /// straight-line estimate: clients must say "route not checked".
+  public var routed: Bool = false
+
+  public var notes: [Loci_Poi_AccessibilityNote] = []
+
+  /// Set when walking this leg exceeds the traveller's limits: "taxi" or
+  /// "transit".
+  public var suggestMode: String {
+    get {return _suggestMode ?? String()}
+    set {_suggestMode = newValue}
+  }
+  /// Returns true if `suggestMode` has been explicitly set.
+  public var hasSuggestMode: Bool {return self._suggestMode != nil}
+  /// Clears the value of `suggestMode`. Subsequent reads from it will return its default value.
+  public mutating func clearSuggestMode() {self._suggestMode = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _suggestMode: String? = nil
+}
+
+/// AccessibleRoutePayload carries STREAM_EVENT_TYPE_ACCESSIBLE_ROUTE: one day's
+/// walking legs, sent after that day's itinerary so first paint is not held
+/// back by routing. Only sent when the request carried accessibility needs.
+public struct Loci_Chat_AccessibleRoutePayload: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var day: Int32 = 0
+
+  public var legs: [Loci_Chat_WalkingLeg] = []
+
+  public var totalWalkMinutes: Int32 = 0
+
+  public var warnings: [String] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 /// GastronomyPayload carries STREAM_EVENT_TYPE_GASTRONOMY: the city's typical
 /// gastronomy, sent as soon as it is parsed so clients can render the section
 /// before COMPLETE. The same value is on AiCityResponse.gastronomy.
@@ -1946,6 +2013,14 @@ public struct Loci_Chat_StreamEvent: @unchecked Sendable {
     set {_uniqueStorage()._payload = .actionProposal(newValue)}
   }
 
+  public var accessibleRoute: Loci_Chat_AccessibleRoutePayload {
+    get {
+      if case .accessibleRoute(let v)? = _storage._payload {return v}
+      return Loci_Chat_AccessibleRoutePayload()
+    }
+    set {_uniqueStorage()._payload = .accessibleRoute(newValue)}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   /// payload is the typed body; its oneof case matches event_type. Absent for
@@ -1966,6 +2041,7 @@ public struct Loci_Chat_StreamEvent: @unchecked Sendable {
     case route(Loci_Chat_RoutePayload)
     case gastronomy(Loci_Chat_GastronomyPayload)
     case actionProposal(Loci_Chat_ActionProposalPayload)
+    case accessibleRoute(Loci_Chat_AccessibleRoutePayload)
 
   }
 
@@ -3510,6 +3586,7 @@ extension Loci_Chat_StreamEventType: SwiftProtobuf._ProtoNameProviding {
     13: .same(proto: "STREAM_EVENT_TYPE_ROUTE"),
     14: .same(proto: "STREAM_EVENT_TYPE_GASTRONOMY"),
     15: .same(proto: "STREAM_EVENT_TYPE_ACTION_PROPOSAL"),
+    16: .same(proto: "STREAM_EVENT_TYPE_ACCESSIBLE_ROUTE"),
   ]
 }
 
@@ -5472,6 +5549,134 @@ extension Loci_Chat_RoutePayload: SwiftProtobuf.Message, SwiftProtobuf._MessageI
   }
 }
 
+extension Loci_Chat_WalkingLeg: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".WalkingLeg"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "from_poi_id"),
+    2: .standard(proto: "to_poi_id"),
+    3: .standard(proto: "distance_m"),
+    4: .standard(proto: "duration_min"),
+    5: .standard(proto: "ascent_m"),
+    6: .same(proto: "routed"),
+    7: .same(proto: "notes"),
+    8: .standard(proto: "suggest_mode"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.fromPoiID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.toPoiID) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self.distanceM) }()
+      case 4: try { try decoder.decodeSingularInt32Field(value: &self.durationMin) }()
+      case 5: try { try decoder.decodeSingularInt32Field(value: &self.ascentM) }()
+      case 6: try { try decoder.decodeSingularBoolField(value: &self.routed) }()
+      case 7: try { try decoder.decodeRepeatedMessageField(value: &self.notes) }()
+      case 8: try { try decoder.decodeSingularStringField(value: &self._suggestMode) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.fromPoiID.isEmpty {
+      try visitor.visitSingularStringField(value: self.fromPoiID, fieldNumber: 1)
+    }
+    if !self.toPoiID.isEmpty {
+      try visitor.visitSingularStringField(value: self.toPoiID, fieldNumber: 2)
+    }
+    if self.distanceM != 0 {
+      try visitor.visitSingularInt32Field(value: self.distanceM, fieldNumber: 3)
+    }
+    if self.durationMin != 0 {
+      try visitor.visitSingularInt32Field(value: self.durationMin, fieldNumber: 4)
+    }
+    if self.ascentM != 0 {
+      try visitor.visitSingularInt32Field(value: self.ascentM, fieldNumber: 5)
+    }
+    if self.routed != false {
+      try visitor.visitSingularBoolField(value: self.routed, fieldNumber: 6)
+    }
+    if !self.notes.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.notes, fieldNumber: 7)
+    }
+    try { if let v = self._suggestMode {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 8)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_WalkingLeg, rhs: Loci_Chat_WalkingLeg) -> Bool {
+    if lhs.fromPoiID != rhs.fromPoiID {return false}
+    if lhs.toPoiID != rhs.toPoiID {return false}
+    if lhs.distanceM != rhs.distanceM {return false}
+    if lhs.durationMin != rhs.durationMin {return false}
+    if lhs.ascentM != rhs.ascentM {return false}
+    if lhs.routed != rhs.routed {return false}
+    if lhs.notes != rhs.notes {return false}
+    if lhs._suggestMode != rhs._suggestMode {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Chat_AccessibleRoutePayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".AccessibleRoutePayload"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "day"),
+    2: .same(proto: "legs"),
+    3: .standard(proto: "total_walk_minutes"),
+    4: .same(proto: "warnings"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularInt32Field(value: &self.day) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.legs) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self.totalWalkMinutes) }()
+      case 4: try { try decoder.decodeRepeatedStringField(value: &self.warnings) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.day != 0 {
+      try visitor.visitSingularInt32Field(value: self.day, fieldNumber: 1)
+    }
+    if !self.legs.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.legs, fieldNumber: 2)
+    }
+    if self.totalWalkMinutes != 0 {
+      try visitor.visitSingularInt32Field(value: self.totalWalkMinutes, fieldNumber: 3)
+    }
+    if !self.warnings.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.warnings, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_AccessibleRoutePayload, rhs: Loci_Chat_AccessibleRoutePayload) -> Bool {
+    if lhs.day != rhs.day {return false}
+    if lhs.legs != rhs.legs {return false}
+    if lhs.totalWalkMinutes != rhs.totalWalkMinutes {return false}
+    if lhs.warnings != rhs.warnings {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension Loci_Chat_GastronomyPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GastronomyPayload"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -5540,6 +5745,7 @@ extension Loci_Chat_StreamEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     32: .same(proto: "route"),
     33: .same(proto: "gastronomy"),
     34: .standard(proto: "action_proposal"),
+    35: .standard(proto: "accessible_route"),
   ]
 
   fileprivate class _StorageClass {
@@ -5796,6 +6002,19 @@ extension Loci_Chat_StreamEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
             _storage._payload = .actionProposal(v)
           }
         }()
+        case 35: try {
+          var v: Loci_Chat_AccessibleRoutePayload?
+          var hadOneofValue = false
+          if let current = _storage._payload {
+            hadOneofValue = true
+            if case .accessibleRoute(let m) = current {v = m}
+          }
+          try decoder.decodeSingularMessageField(value: &v)
+          if let v = v {
+            if hadOneofValue {try decoder.handleConflictingOneOf()}
+            _storage._payload = .accessibleRoute(v)
+          }
+        }()
         default: break
         }
       }
@@ -5892,6 +6111,10 @@ extension Loci_Chat_StreamEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       case .actionProposal?: try {
         guard case .actionProposal(let v)? = _storage._payload else { preconditionFailure() }
         try visitor.visitSingularMessageField(value: v, fieldNumber: 34)
+      }()
+      case .accessibleRoute?: try {
+        guard case .accessibleRoute(let v)? = _storage._payload else { preconditionFailure() }
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 35)
       }()
       case nil: break
       }

@@ -6,6 +6,7 @@ import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
 import "loci/common/common.proto";
 import "loci/poi/poi.proto";
+import "loci/profile/profile.proto";
 import "loci/recommendation/recommendation.proto";
 import "loci/social/social.proto";
 import "loci/trip/members.proto";
@@ -73,6 +74,10 @@ message TripConstraint {
       lte: 1440
     }
   }];
+  // Access needs for this trip only (for example, travelling with someone
+  // who uses a wheelchair). When set, replaces the profile's needs wholesale.
+  // Same consent rule as the profile: the server rejects it without consent.
+  optional loci.profile.AccessibilityNeeds accessibility = 7;
 }
 
 // TripStop is a single place on a day's timeline.

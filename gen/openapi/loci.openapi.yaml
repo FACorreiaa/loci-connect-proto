@@ -16050,6 +16050,39 @@ components:
       title: AIItineraryResponse
       additionalProperties: false
       description: AIItineraryResponse represents an AI-generated itinerary response
+    loci.chat.AccessibleRoutePayload:
+      type: object
+      properties:
+        day:
+          type: integer
+          title: day
+          maximum: 60
+          minimum: 1
+          format: int32
+        legs:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.chat.WalkingLeg'
+          title: legs
+          maxItems: 50
+        totalWalkMinutes:
+          type: integer
+          title: total_walk_minutes
+          minimum: 0
+          format: int32
+        warnings:
+          type: array
+          items:
+            type: string
+            maxLength: 300
+          title: warnings
+          maxItems: 10
+      title: AccessibleRoutePayload
+      additionalProperties: false
+      description: |-
+        AccessibleRoutePayload carries STREAM_EVENT_TYPE_ACCESSIBLE_ROUTE: one day's
+         walking legs, sent after that day's itinerary so first paint is not held
+         back by routing. Only sent when the request carried accessibility needs.
     loci.chat.ActionOption:
       type: object
       allOf:
@@ -18059,6 +18092,13 @@ components:
                  belongs to. An ERROR carrying it failed that city only, not the stream.
         - oneOf:
             - properties:
+                accessibleRoute:
+                  title: accessible_route
+                  $ref: '#/components/schemas/loci.chat.AccessibleRoutePayload'
+              title: accessible_route
+              required:
+                - accessibleRoute
+            - properties:
                 actionProposal:
                   title: action_proposal
                   $ref: '#/components/schemas/loci.chat.ActionProposalPayload'
@@ -18191,6 +18231,7 @@ components:
         - STREAM_EVENT_TYPE_ROUTE
         - STREAM_EVENT_TYPE_GASTRONOMY
         - STREAM_EVENT_TYPE_ACTION_PROPOSAL
+        - STREAM_EVENT_TYPE_ACCESSIBLE_ROUTE
       description: |-
         StreamEventType is the typed discriminator for a StreamEvent. It replaces the
          old free-form string `type` field. The concrete payload (when present) is
@@ -18335,6 +18376,61 @@ components:
           format: double
       title: UserLocation
       additionalProperties: false
+    loci.chat.WalkingLeg:
+      type: object
+      properties:
+        fromPoiId:
+          type: string
+          title: from_poi_id
+          maxLength: 100
+        toPoiId:
+          type: string
+          title: to_poi_id
+          maxLength: 100
+        distanceM:
+          type: integer
+          title: distance_m
+          minimum: 0
+          format: int32
+        durationMin:
+          type: integer
+          title: duration_min
+          minimum: 0
+          format: int32
+          description: Adjusted for the traveller's pace, not the router's default speed.
+        ascentM:
+          type: integer
+          title: ascent_m
+          minimum: 0
+          format: int32
+        routed:
+          type: boolean
+          title: routed
+          description: |-
+            True when an accessible router computed the leg. False means a
+             straight-line estimate: clients must say "route not checked".
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.poi.AccessibilityNote'
+          title: notes
+          maxItems: 10
+        suggestMode:
+          type:
+            - string
+            - "null"
+          title: suggest_mode
+          enum:
+            - taxi
+            - transit
+          description: |-
+            Set when walking this leg exceeds the traveller's limits: "taxi" or
+             "transit".
+      title: WalkingLeg
+      additionalProperties: false
+      description: |-
+        WalkingLeg is the walk (or roll) between two consecutive stops of a day,
+         shaped by the traveller's access needs.
     loci.chat.Watch:
       type: object
       properties:
@@ -26326,6 +26422,59 @@ components:
           title: oldest_fact_at
       title: VerificationTask
       additionalProperties: false
+    loci.poi.AccessibilityNote:
+      type: object
+      properties:
+        text:
+          type: string
+          title: text
+          maxLength: 300
+          minLength: 1
+        severity:
+          title: severity
+          $ref: '#/components/schemas/loci.poi.AccessibilityNoteSeverity'
+        source:
+          title: source
+          $ref: '#/components/schemas/loci.poi.AccessibilityNoteSource'
+        sourceLicence:
+          type:
+            - string
+            - "null"
+          title: source_licence
+          maxLength: 100
+          description: |-
+            Licence the underlying data was offered under (for example "ODbL-1.0"),
+             which clients must show alongside OPEN_DATA notes.
+        observedAt:
+          oneOf:
+            - $ref: '#/components/schemas/google.protobuf.Timestamp'
+            - type: "null"
+          title: observed_at
+          description: When the underlying fact was last observed or updated.
+      title: AccessibilityNote
+      additionalProperties: false
+      description: AccessibilityNote is one access fact or caveat about a place or a leg.
+    loci.poi.AccessibilityNoteSeverity:
+      type: string
+      title: AccessibilityNoteSeverity
+      enum:
+        - ACCESSIBILITY_NOTE_SEVERITY_UNSPECIFIED
+        - ACCESSIBILITY_NOTE_SEVERITY_INFO
+        - ACCESSIBILITY_NOTE_SEVERITY_CAUTION
+        - ACCESSIBILITY_NOTE_SEVERITY_BARRIER
+      description: AccessibilityNoteSeverity is how much a note affects the traveller's plan.
+    loci.poi.AccessibilityNoteSource:
+      type: string
+      title: AccessibilityNoteSource
+      enum:
+        - ACCESSIBILITY_NOTE_SOURCE_UNSPECIFIED
+        - ACCESSIBILITY_NOTE_SOURCE_VERIFIED_CROWD
+        - ACCESSIBILITY_NOTE_SOURCE_OPEN_DATA
+        - ACCESSIBILITY_NOTE_SOURCE_ROUTED
+        - ACCESSIBILITY_NOTE_SOURCE_AI_ESTIMATE
+      description: |-
+        AccessibilityNoteSource is where a note's claim comes from. Only
+         AI_ESTIMATE notes are unverified; clients must label them as such.
     loci.poi.AddPoiRequest:
       type: object
       properties:
@@ -26742,6 +26891,16 @@ components:
              without naming its author and licence breaches the terms it was offered
              under. The URL and its credit therefore travel together — a client that
              renders one renders the other.
+        accessibilityNotes:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.poi.AccessibilityNote'
+          title: accessibility_notes
+          maxItems: 10
+          description: |-
+            What a traveller with access needs should know about this place. Set only
+             when the request carried accessibility needs. Each note names its source,
+             so clients can show how far to trust it.
       title: POIDetailedInfo
       required:
         - createdAt
@@ -27085,6 +27244,107 @@ components:
       title: TasteMatch
       additionalProperties: false
       description: TasteMatch explains why a place fits the traveller, not whether it is good.
+    loci.profile.AccessibilityNeeds:
+      type: object
+      properties:
+        mobility:
+          title: mobility
+          $ref: '#/components/schemas/loci.profile.MobilityLevel'
+        maxWalkMinutesPerLeg:
+          type: integer
+          title: max_walk_minutes_per_leg
+          maximum: 120
+          minimum: 0
+          format: int32
+          description: Longest walk/roll between two stops, in minutes. 0 means no limit.
+        maxWalkMinutesPerDay:
+          type: integer
+          title: max_walk_minutes_per_day
+          maximum: 600
+          minimum: 0
+          format: int32
+          description: Total walking/rolling across a day, in minutes. 0 means no limit.
+        stepFreeOnly:
+          type: boolean
+          title: step_free_only
+          description: Avoid any stairs or steps, on routes and at entrances.
+        maxIncline:
+          title: max_incline
+          $ref: '#/components/schemas/loci.profile.MaxIncline'
+        restEveryMinutes:
+          type: integer
+          title: rest_every_minutes
+          maximum: 240
+          minimum: 0
+          format: int32
+          description: Wants a seated rest at least this often, in minutes. 0 means no rule.
+        needsSeatingAtStops:
+          type: boolean
+          title: needs_seating_at_stops
+        needsAccessibleToilet:
+          type: boolean
+          title: needs_accessible_toilet
+        avoidCobbles:
+          type: boolean
+          title: avoid_cobbles
+          description: Avoid cobblestones and rough surfaces.
+        lowVision:
+          type: boolean
+          title: low_vision
+        blind:
+          type: boolean
+          title: blind
+        deafOrHardOfHearing:
+          type: boolean
+          title: deaf_or_hard_of_hearing
+        sensorySensitive:
+          type: boolean
+          title: sensory_sensitive
+          description: Noise, crowds or bright light are hard to cope with.
+        prefersQuietTimes:
+          type: boolean
+          title: prefers_quiet_times
+          description: Prefers quiet hours and off-peak visits.
+        needsPredictablePlan:
+          type: boolean
+          title: needs_predictable_plan
+          description: Benefits from a predictable, detailed plan with fewer surprises.
+        fatigueOrChronicPain:
+          type: boolean
+          title: fatigue_or_chronic_pain
+          description: Tires quickly or lives with chronic pain; plan shorter, slower days.
+        serviceAnimal:
+          type: boolean
+          title: service_animal
+        stroller:
+          type: boolean
+          title: stroller
+        travellingWithCompanion:
+          type: boolean
+          title: travelling_with_companion
+        notes:
+          type: string
+          title: notes
+          maxLength: 500
+          description: Anything else, in the traveller's own words.
+        consentAt:
+          oneOf:
+            - $ref: '#/components/schemas/google.protobuf.Timestamp'
+            - type: "null"
+          title: consent_at
+          description: |-
+            When the traveller consented to Loci storing these needs. Set by the
+             server; ignored on requests.
+      title: AccessibilityNeeds
+      additionalProperties: false
+      description: |-
+        AccessibilityNeeds are the traveller's self-described access needs, which
+         Loci uses to shape itineraries, walking legs and answers.
+
+         This is special-category (health) data under GDPR Article 9. The server
+         stores it only after explicit consent (see `accessibility_consent_given` on
+         the create/update requests), never logs it, and drops it entirely on
+         `clear_accessibility_needs`.
     loci.profile.AccommodationPreferences:
       type: object
       properties:
@@ -27434,6 +27694,20 @@ components:
             - $ref: '#/components/schemas/loci.profile.ItineraryPreferences'
             - type: "null"
           title: itinerary_preferences
+        accessibilityNeeds:
+          oneOf:
+            - $ref: '#/components/schemas/loci.profile.AccessibilityNeeds'
+            - type: "null"
+          title: accessibility_needs
+          description: Requires accessibility_consent_given = true; rejected otherwise.
+        accessibilityConsentGiven:
+          type:
+            - boolean
+            - "null"
+          title: accessibility_consent_given
+          description: |-
+            The traveller explicitly agreed to Loci storing their accessibility
+             needs. Must be a separate, unticked-by-default choice in the client.
       title: CreateUserPreferenceProfileRequest
       additionalProperties: false
       description: CreateUserPreferenceProfileRequest for creating a preference profile
@@ -27740,6 +28014,32 @@ components:
           $ref: '#/components/schemas/loci.profile.ItineraryPreferences'
       title: ItineraryPreferencesResponse
       additionalProperties: false
+    loci.profile.MaxIncline:
+      type: string
+      title: MaxIncline
+      enum:
+        - MAX_INCLINE_UNSPECIFIED
+        - MAX_INCLINE_ANY
+        - MAX_INCLINE_PCT_3
+        - MAX_INCLINE_PCT_6
+        - MAX_INCLINE_PCT_10
+      description: |-
+        MaxIncline is the steepest slope the traveller can manage. The values map
+         onto OpenRouteService's wheelchair `maximum_incline` restriction.
+    loci.profile.MobilityLevel:
+      type: string
+      title: MobilityLevel
+      enum:
+        - MOBILITY_LEVEL_UNSPECIFIED
+        - MOBILITY_LEVEL_NONE
+        - MOBILITY_LEVEL_LIMITED_WALKING
+        - MOBILITY_LEVEL_WALKING_AID
+        - MOBILITY_LEVEL_MANUAL_WHEELCHAIR
+        - MOBILITY_LEVEL_POWER_WHEELCHAIR
+        - MOBILITY_LEVEL_MOBILITY_SCOOTER
+      description: |-
+        MobilityLevel is how the traveller gets around on foot. It describes a
+         functional need, not a diagnosis.
     loci.profile.SearchPace:
       type: string
       title: SearchPace
@@ -27886,6 +28186,27 @@ components:
             - $ref: '#/components/schemas/loci.profile.ItineraryPreferences'
             - type: "null"
           title: itinerary_preferences
+        accessibilityNeeds:
+          oneOf:
+            - $ref: '#/components/schemas/loci.profile.AccessibilityNeeds'
+            - type: "null"
+          title: accessibility_needs
+          description: |-
+            Replaces the stored needs wholesale. Requires accessibility_consent_given
+             = true unless the profile already holds consent.
+        clearAccessibilityNeeds:
+          type:
+            - boolean
+            - "null"
+          title: clear_accessibility_needs
+          description: |-
+            Deletes the stored needs and the consent record. Wins over
+             accessibility_needs when both are sent.
+        accessibilityConsentGiven:
+          type:
+            - boolean
+            - "null"
+          title: accessibility_consent_given
       title: UpdateUserPreferenceProfileRequest
       additionalProperties: false
       description: UpdateUserPreferenceProfileRequest for updating a preference profile
@@ -28007,6 +28328,12 @@ components:
         updatedAt:
           title: updated_at
           $ref: '#/components/schemas/google.protobuf.Timestamp'
+        accessibilityNeeds:
+          oneOf:
+            - $ref: '#/components/schemas/loci.profile.AccessibilityNeeds'
+            - type: "null"
+          title: accessibility_needs
+          description: Absent until the traveller has set needs and consented to storing them.
       title: UserPreferenceProfile
       required:
         - createdAt
@@ -36373,6 +36700,15 @@ components:
           maximum: 1440
           minimum: 0
           format: int32
+        accessibility:
+          oneOf:
+            - $ref: '#/components/schemas/loci.profile.AccessibilityNeeds'
+            - type: "null"
+          title: accessibility
+          description: |-
+            Access needs for this trip only (for example, travelling with someone
+             who uses a wheelchair). When set, replaces the profile's needs wholesale.
+             Same consent rule as the profile: the server rejects it without consent.
       title: TripConstraint
       additionalProperties: false
       description: |-

@@ -155,6 +155,116 @@ public enum Loci_Profile_TransportPreference: SwiftProtobuf.Enum, Swift.CaseIter
 
 }
 
+/// MobilityLevel is how the traveller gets around on foot. It describes a
+/// functional need, not a diagnosis.
+public enum Loci_Profile_MobilityLevel: SwiftProtobuf.Enum, Swift.CaseIterable {
+  public typealias RawValue = Int
+  case unspecified // = 0
+
+  /// No mobility constraint.
+  case none // = 1
+
+  /// Walks unaided, but only short distances or slowly.
+  case limitedWalking // = 2
+
+  /// Walks with a cane, crutches, or a walker/rollator.
+  case walkingAid // = 3
+  case manualWheelchair // = 4
+  case powerWheelchair // = 5
+  case mobilityScooter // = 6
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .unspecified
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unspecified
+    case 1: self = .none
+    case 2: self = .limitedWalking
+    case 3: self = .walkingAid
+    case 4: self = .manualWheelchair
+    case 5: self = .powerWheelchair
+    case 6: self = .mobilityScooter
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .unspecified: return 0
+    case .none: return 1
+    case .limitedWalking: return 2
+    case .walkingAid: return 3
+    case .manualWheelchair: return 4
+    case .powerWheelchair: return 5
+    case .mobilityScooter: return 6
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static let allCases: [Loci_Profile_MobilityLevel] = [
+    .unspecified,
+    .none,
+    .limitedWalking,
+    .walkingAid,
+    .manualWheelchair,
+    .powerWheelchair,
+    .mobilityScooter,
+  ]
+
+}
+
+/// MaxIncline is the steepest slope the traveller can manage. The values map
+/// onto OpenRouteService's wheelchair `maximum_incline` restriction.
+public enum Loci_Profile_MaxIncline: SwiftProtobuf.Enum, Swift.CaseIterable {
+  public typealias RawValue = Int
+  case unspecified // = 0
+  case any // = 1
+  case pct3 // = 2
+  case pct6 // = 3
+  case pct10 // = 4
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .unspecified
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unspecified
+    case 1: self = .any
+    case 2: self = .pct3
+    case 3: self = .pct6
+    case 4: self = .pct10
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .unspecified: return 0
+    case .any: return 1
+    case .pct3: return 2
+    case .pct6: return 3
+    case .pct10: return 4
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static let allCases: [Loci_Profile_MaxIncline] = [
+    .unspecified,
+    .any,
+    .pct3,
+    .pct6,
+    .pct10,
+  ]
+
+}
+
 /// AccommodationPreferences represents accommodation-specific filters
 public struct Loci_Profile_AccommodationPreferences: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
@@ -573,6 +683,146 @@ public struct Loci_Profile_ItineraryPreferences: Sendable {
   fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
+/// AccessibilityNeeds are the traveller's self-described access needs, which
+/// Loci uses to shape itineraries, walking legs and answers.
+///
+/// This is special-category (health) data under GDPR Article 9. The server
+/// stores it only after explicit consent (see `accessibility_consent_given` on
+/// the create/update requests), never logs it, and drops it entirely on
+/// `clear_accessibility_needs`.
+public struct Loci_Profile_AccessibilityNeeds: @unchecked Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var mobility: Loci_Profile_MobilityLevel {
+    get {return _storage._mobility}
+    set {_uniqueStorage()._mobility = newValue}
+  }
+
+  /// Longest walk/roll between two stops, in minutes. 0 means no limit.
+  public var maxWalkMinutesPerLeg: Int32 {
+    get {return _storage._maxWalkMinutesPerLeg}
+    set {_uniqueStorage()._maxWalkMinutesPerLeg = newValue}
+  }
+
+  /// Total walking/rolling across a day, in minutes. 0 means no limit.
+  public var maxWalkMinutesPerDay: Int32 {
+    get {return _storage._maxWalkMinutesPerDay}
+    set {_uniqueStorage()._maxWalkMinutesPerDay = newValue}
+  }
+
+  /// Avoid any stairs or steps, on routes and at entrances.
+  public var stepFreeOnly: Bool {
+    get {return _storage._stepFreeOnly}
+    set {_uniqueStorage()._stepFreeOnly = newValue}
+  }
+
+  public var maxIncline: Loci_Profile_MaxIncline {
+    get {return _storage._maxIncline}
+    set {_uniqueStorage()._maxIncline = newValue}
+  }
+
+  /// Wants a seated rest at least this often, in minutes. 0 means no rule.
+  public var restEveryMinutes: Int32 {
+    get {return _storage._restEveryMinutes}
+    set {_uniqueStorage()._restEveryMinutes = newValue}
+  }
+
+  public var needsSeatingAtStops: Bool {
+    get {return _storage._needsSeatingAtStops}
+    set {_uniqueStorage()._needsSeatingAtStops = newValue}
+  }
+
+  public var needsAccessibleToilet: Bool {
+    get {return _storage._needsAccessibleToilet}
+    set {_uniqueStorage()._needsAccessibleToilet = newValue}
+  }
+
+  /// Avoid cobblestones and rough surfaces.
+  public var avoidCobbles: Bool {
+    get {return _storage._avoidCobbles}
+    set {_uniqueStorage()._avoidCobbles = newValue}
+  }
+
+  public var lowVision: Bool {
+    get {return _storage._lowVision}
+    set {_uniqueStorage()._lowVision = newValue}
+  }
+
+  public var blind: Bool {
+    get {return _storage._blind}
+    set {_uniqueStorage()._blind = newValue}
+  }
+
+  public var deafOrHardOfHearing: Bool {
+    get {return _storage._deafOrHardOfHearing}
+    set {_uniqueStorage()._deafOrHardOfHearing = newValue}
+  }
+
+  /// Noise, crowds or bright light are hard to cope with.
+  public var sensorySensitive: Bool {
+    get {return _storage._sensorySensitive}
+    set {_uniqueStorage()._sensorySensitive = newValue}
+  }
+
+  /// Prefers quiet hours and off-peak visits.
+  public var prefersQuietTimes: Bool {
+    get {return _storage._prefersQuietTimes}
+    set {_uniqueStorage()._prefersQuietTimes = newValue}
+  }
+
+  /// Benefits from a predictable, detailed plan with fewer surprises.
+  public var needsPredictablePlan: Bool {
+    get {return _storage._needsPredictablePlan}
+    set {_uniqueStorage()._needsPredictablePlan = newValue}
+  }
+
+  /// Tires quickly or lives with chronic pain; plan shorter, slower days.
+  public var fatigueOrChronicPain: Bool {
+    get {return _storage._fatigueOrChronicPain}
+    set {_uniqueStorage()._fatigueOrChronicPain = newValue}
+  }
+
+  public var serviceAnimal: Bool {
+    get {return _storage._serviceAnimal}
+    set {_uniqueStorage()._serviceAnimal = newValue}
+  }
+
+  public var stroller: Bool {
+    get {return _storage._stroller}
+    set {_uniqueStorage()._stroller = newValue}
+  }
+
+  public var travellingWithCompanion: Bool {
+    get {return _storage._travellingWithCompanion}
+    set {_uniqueStorage()._travellingWithCompanion = newValue}
+  }
+
+  /// Anything else, in the traveller's own words.
+  public var notes: String {
+    get {return _storage._notes}
+    set {_uniqueStorage()._notes = newValue}
+  }
+
+  /// When the traveller consented to Loci storing these needs. Set by the
+  /// server; ignored on requests.
+  public var consentAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _storage._consentAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_uniqueStorage()._consentAt = newValue}
+  }
+  /// Returns true if `consentAt` has been explicitly set.
+  public var hasConsentAt: Bool {return _storage._consentAt != nil}
+  /// Clears the value of `consentAt`. Subsequent reads from it will return its default value.
+  public mutating func clearConsentAt() {_uniqueStorage()._consentAt = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _storage = _StorageClass.defaultInstance
+}
+
 /// UserPreferenceProfile represents a user's preference profile
 public struct Loci_Profile_UserPreferenceProfile: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
@@ -731,6 +981,16 @@ public struct Loci_Profile_UserPreferenceProfile: @unchecked Sendable {
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   public mutating func clearUpdatedAt() {_uniqueStorage()._updatedAt = nil}
 
+  /// Absent until the traveller has set needs and consented to storing them.
+  public var accessibilityNeeds: Loci_Profile_AccessibilityNeeds {
+    get {return _storage._accessibilityNeeds ?? Loci_Profile_AccessibilityNeeds()}
+    set {_uniqueStorage()._accessibilityNeeds = newValue}
+  }
+  /// Returns true if `accessibilityNeeds` has been explicitly set.
+  public var hasAccessibilityNeeds: Bool {return _storage._accessibilityNeeds != nil}
+  /// Clears the value of `accessibilityNeeds`. Subsequent reads from it will return its default value.
+  public mutating func clearAccessibilityNeeds() {_uniqueStorage()._accessibilityNeeds = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -885,6 +1145,27 @@ public struct Loci_Profile_CreateUserPreferenceProfileRequest: @unchecked Sendab
   public var hasItineraryPreferences: Bool {return _storage._itineraryPreferences != nil}
   /// Clears the value of `itineraryPreferences`. Subsequent reads from it will return its default value.
   public mutating func clearItineraryPreferences() {_uniqueStorage()._itineraryPreferences = nil}
+
+  /// Requires accessibility_consent_given = true; rejected otherwise.
+  public var accessibilityNeeds: Loci_Profile_AccessibilityNeeds {
+    get {return _storage._accessibilityNeeds ?? Loci_Profile_AccessibilityNeeds()}
+    set {_uniqueStorage()._accessibilityNeeds = newValue}
+  }
+  /// Returns true if `accessibilityNeeds` has been explicitly set.
+  public var hasAccessibilityNeeds: Bool {return _storage._accessibilityNeeds != nil}
+  /// Clears the value of `accessibilityNeeds`. Subsequent reads from it will return its default value.
+  public mutating func clearAccessibilityNeeds() {_uniqueStorage()._accessibilityNeeds = nil}
+
+  /// The traveller explicitly agreed to Loci storing their accessibility
+  /// needs. Must be a separate, unticked-by-default choice in the client.
+  public var accessibilityConsentGiven: Bool {
+    get {return _storage._accessibilityConsentGiven ?? false}
+    set {_uniqueStorage()._accessibilityConsentGiven = newValue}
+  }
+  /// Returns true if `accessibilityConsentGiven` has been explicitly set.
+  public var hasAccessibilityConsentGiven: Bool {return _storage._accessibilityConsentGiven != nil}
+  /// Clears the value of `accessibilityConsentGiven`. Subsequent reads from it will return its default value.
+  public mutating func clearAccessibilityConsentGiven() {_uniqueStorage()._accessibilityConsentGiven = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1049,6 +1330,37 @@ public struct Loci_Profile_UpdateUserPreferenceProfileRequest: @unchecked Sendab
   public var hasItineraryPreferences: Bool {return _storage._itineraryPreferences != nil}
   /// Clears the value of `itineraryPreferences`. Subsequent reads from it will return its default value.
   public mutating func clearItineraryPreferences() {_uniqueStorage()._itineraryPreferences = nil}
+
+  /// Replaces the stored needs wholesale. Requires accessibility_consent_given
+  /// = true unless the profile already holds consent.
+  public var accessibilityNeeds: Loci_Profile_AccessibilityNeeds {
+    get {return _storage._accessibilityNeeds ?? Loci_Profile_AccessibilityNeeds()}
+    set {_uniqueStorage()._accessibilityNeeds = newValue}
+  }
+  /// Returns true if `accessibilityNeeds` has been explicitly set.
+  public var hasAccessibilityNeeds: Bool {return _storage._accessibilityNeeds != nil}
+  /// Clears the value of `accessibilityNeeds`. Subsequent reads from it will return its default value.
+  public mutating func clearAccessibilityNeeds() {_uniqueStorage()._accessibilityNeeds = nil}
+
+  /// Deletes the stored needs and the consent record. Wins over
+  /// accessibility_needs when both are sent.
+  public var clearAccessibilityNeeds_p: Bool {
+    get {return _storage._clearAccessibilityNeeds_p ?? false}
+    set {_uniqueStorage()._clearAccessibilityNeeds_p = newValue}
+  }
+  /// Returns true if `clearAccessibilityNeeds_p` has been explicitly set.
+  public var hasClearAccessibilityNeeds_p: Bool {return _storage._clearAccessibilityNeeds_p != nil}
+  /// Clears the value of `clearAccessibilityNeeds_p`. Subsequent reads from it will return its default value.
+  public mutating func clearClearAccessibilityNeeds_p() {_uniqueStorage()._clearAccessibilityNeeds_p = nil}
+
+  public var accessibilityConsentGiven: Bool {
+    get {return _storage._accessibilityConsentGiven ?? false}
+    set {_uniqueStorage()._accessibilityConsentGiven = newValue}
+  }
+  /// Returns true if `accessibilityConsentGiven` has been explicitly set.
+  public var hasAccessibilityConsentGiven: Bool {return _storage._accessibilityConsentGiven != nil}
+  /// Clears the value of `accessibilityConsentGiven`. Subsequent reads from it will return its default value.
+  public mutating func clearAccessibilityConsentGiven() {_uniqueStorage()._accessibilityConsentGiven = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1405,6 +1717,28 @@ extension Loci_Profile_TransportPreference: SwiftProtobuf._ProtoNameProviding {
     2: .same(proto: "TRANSPORT_PREFERENCE_WALK"),
     3: .same(proto: "TRANSPORT_PREFERENCE_PUBLIC"),
     4: .same(proto: "TRANSPORT_PREFERENCE_CAR"),
+  ]
+}
+
+extension Loci_Profile_MobilityLevel: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "MOBILITY_LEVEL_UNSPECIFIED"),
+    1: .same(proto: "MOBILITY_LEVEL_NONE"),
+    2: .same(proto: "MOBILITY_LEVEL_LIMITED_WALKING"),
+    3: .same(proto: "MOBILITY_LEVEL_WALKING_AID"),
+    4: .same(proto: "MOBILITY_LEVEL_MANUAL_WHEELCHAIR"),
+    5: .same(proto: "MOBILITY_LEVEL_POWER_WHEELCHAIR"),
+    6: .same(proto: "MOBILITY_LEVEL_MOBILITY_SCOOTER"),
+  ]
+}
+
+extension Loci_Profile_MaxIncline: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "MAX_INCLINE_UNSPECIFIED"),
+    1: .same(proto: "MAX_INCLINE_ANY"),
+    2: .same(proto: "MAX_INCLINE_PCT_3"),
+    3: .same(proto: "MAX_INCLINE_PCT_6"),
+    4: .same(proto: "MAX_INCLINE_PCT_10"),
   ]
 }
 
@@ -1920,6 +2254,242 @@ extension Loci_Profile_ItineraryPreferences: SwiftProtobuf.Message, SwiftProtobu
   }
 }
 
+extension Loci_Profile_AccessibilityNeeds: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".AccessibilityNeeds"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "mobility"),
+    2: .standard(proto: "max_walk_minutes_per_leg"),
+    3: .standard(proto: "max_walk_minutes_per_day"),
+    4: .standard(proto: "step_free_only"),
+    5: .standard(proto: "max_incline"),
+    6: .standard(proto: "rest_every_minutes"),
+    7: .standard(proto: "needs_seating_at_stops"),
+    8: .standard(proto: "needs_accessible_toilet"),
+    9: .standard(proto: "avoid_cobbles"),
+    10: .standard(proto: "low_vision"),
+    11: .same(proto: "blind"),
+    12: .standard(proto: "deaf_or_hard_of_hearing"),
+    13: .standard(proto: "sensory_sensitive"),
+    14: .standard(proto: "prefers_quiet_times"),
+    15: .standard(proto: "needs_predictable_plan"),
+    16: .standard(proto: "fatigue_or_chronic_pain"),
+    17: .standard(proto: "service_animal"),
+    18: .same(proto: "stroller"),
+    19: .standard(proto: "travelling_with_companion"),
+    20: .same(proto: "notes"),
+    21: .standard(proto: "consent_at"),
+  ]
+
+  fileprivate class _StorageClass {
+    var _mobility: Loci_Profile_MobilityLevel = .unspecified
+    var _maxWalkMinutesPerLeg: Int32 = 0
+    var _maxWalkMinutesPerDay: Int32 = 0
+    var _stepFreeOnly: Bool = false
+    var _maxIncline: Loci_Profile_MaxIncline = .unspecified
+    var _restEveryMinutes: Int32 = 0
+    var _needsSeatingAtStops: Bool = false
+    var _needsAccessibleToilet: Bool = false
+    var _avoidCobbles: Bool = false
+    var _lowVision: Bool = false
+    var _blind: Bool = false
+    var _deafOrHardOfHearing: Bool = false
+    var _sensorySensitive: Bool = false
+    var _prefersQuietTimes: Bool = false
+    var _needsPredictablePlan: Bool = false
+    var _fatigueOrChronicPain: Bool = false
+    var _serviceAnimal: Bool = false
+    var _stroller: Bool = false
+    var _travellingWithCompanion: Bool = false
+    var _notes: String = String()
+    var _consentAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+
+    #if swift(>=5.10)
+      // This property is used as the initial default value for new instances of the type.
+      // The type itself is protecting the reference to its storage via CoW semantics.
+      // This will force a copy to be made of this reference when the first mutation occurs;
+      // hence, it is safe to mark this as `nonisolated(unsafe)`.
+      static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _mobility = source._mobility
+      _maxWalkMinutesPerLeg = source._maxWalkMinutesPerLeg
+      _maxWalkMinutesPerDay = source._maxWalkMinutesPerDay
+      _stepFreeOnly = source._stepFreeOnly
+      _maxIncline = source._maxIncline
+      _restEveryMinutes = source._restEveryMinutes
+      _needsSeatingAtStops = source._needsSeatingAtStops
+      _needsAccessibleToilet = source._needsAccessibleToilet
+      _avoidCobbles = source._avoidCobbles
+      _lowVision = source._lowVision
+      _blind = source._blind
+      _deafOrHardOfHearing = source._deafOrHardOfHearing
+      _sensorySensitive = source._sensorySensitive
+      _prefersQuietTimes = source._prefersQuietTimes
+      _needsPredictablePlan = source._needsPredictablePlan
+      _fatigueOrChronicPain = source._fatigueOrChronicPain
+      _serviceAnimal = source._serviceAnimal
+      _stroller = source._stroller
+      _travellingWithCompanion = source._travellingWithCompanion
+      _notes = source._notes
+      _consentAt = source._consentAt
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularEnumField(value: &_storage._mobility) }()
+        case 2: try { try decoder.decodeSingularInt32Field(value: &_storage._maxWalkMinutesPerLeg) }()
+        case 3: try { try decoder.decodeSingularInt32Field(value: &_storage._maxWalkMinutesPerDay) }()
+        case 4: try { try decoder.decodeSingularBoolField(value: &_storage._stepFreeOnly) }()
+        case 5: try { try decoder.decodeSingularEnumField(value: &_storage._maxIncline) }()
+        case 6: try { try decoder.decodeSingularInt32Field(value: &_storage._restEveryMinutes) }()
+        case 7: try { try decoder.decodeSingularBoolField(value: &_storage._needsSeatingAtStops) }()
+        case 8: try { try decoder.decodeSingularBoolField(value: &_storage._needsAccessibleToilet) }()
+        case 9: try { try decoder.decodeSingularBoolField(value: &_storage._avoidCobbles) }()
+        case 10: try { try decoder.decodeSingularBoolField(value: &_storage._lowVision) }()
+        case 11: try { try decoder.decodeSingularBoolField(value: &_storage._blind) }()
+        case 12: try { try decoder.decodeSingularBoolField(value: &_storage._deafOrHardOfHearing) }()
+        case 13: try { try decoder.decodeSingularBoolField(value: &_storage._sensorySensitive) }()
+        case 14: try { try decoder.decodeSingularBoolField(value: &_storage._prefersQuietTimes) }()
+        case 15: try { try decoder.decodeSingularBoolField(value: &_storage._needsPredictablePlan) }()
+        case 16: try { try decoder.decodeSingularBoolField(value: &_storage._fatigueOrChronicPain) }()
+        case 17: try { try decoder.decodeSingularBoolField(value: &_storage._serviceAnimal) }()
+        case 18: try { try decoder.decodeSingularBoolField(value: &_storage._stroller) }()
+        case 19: try { try decoder.decodeSingularBoolField(value: &_storage._travellingWithCompanion) }()
+        case 20: try { try decoder.decodeSingularStringField(value: &_storage._notes) }()
+        case 21: try { try decoder.decodeSingularMessageField(value: &_storage._consentAt) }()
+        default: break
+        }
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      if _storage._mobility != .unspecified {
+        try visitor.visitSingularEnumField(value: _storage._mobility, fieldNumber: 1)
+      }
+      if _storage._maxWalkMinutesPerLeg != 0 {
+        try visitor.visitSingularInt32Field(value: _storage._maxWalkMinutesPerLeg, fieldNumber: 2)
+      }
+      if _storage._maxWalkMinutesPerDay != 0 {
+        try visitor.visitSingularInt32Field(value: _storage._maxWalkMinutesPerDay, fieldNumber: 3)
+      }
+      if _storage._stepFreeOnly != false {
+        try visitor.visitSingularBoolField(value: _storage._stepFreeOnly, fieldNumber: 4)
+      }
+      if _storage._maxIncline != .unspecified {
+        try visitor.visitSingularEnumField(value: _storage._maxIncline, fieldNumber: 5)
+      }
+      if _storage._restEveryMinutes != 0 {
+        try visitor.visitSingularInt32Field(value: _storage._restEveryMinutes, fieldNumber: 6)
+      }
+      if _storage._needsSeatingAtStops != false {
+        try visitor.visitSingularBoolField(value: _storage._needsSeatingAtStops, fieldNumber: 7)
+      }
+      if _storage._needsAccessibleToilet != false {
+        try visitor.visitSingularBoolField(value: _storage._needsAccessibleToilet, fieldNumber: 8)
+      }
+      if _storage._avoidCobbles != false {
+        try visitor.visitSingularBoolField(value: _storage._avoidCobbles, fieldNumber: 9)
+      }
+      if _storage._lowVision != false {
+        try visitor.visitSingularBoolField(value: _storage._lowVision, fieldNumber: 10)
+      }
+      if _storage._blind != false {
+        try visitor.visitSingularBoolField(value: _storage._blind, fieldNumber: 11)
+      }
+      if _storage._deafOrHardOfHearing != false {
+        try visitor.visitSingularBoolField(value: _storage._deafOrHardOfHearing, fieldNumber: 12)
+      }
+      if _storage._sensorySensitive != false {
+        try visitor.visitSingularBoolField(value: _storage._sensorySensitive, fieldNumber: 13)
+      }
+      if _storage._prefersQuietTimes != false {
+        try visitor.visitSingularBoolField(value: _storage._prefersQuietTimes, fieldNumber: 14)
+      }
+      if _storage._needsPredictablePlan != false {
+        try visitor.visitSingularBoolField(value: _storage._needsPredictablePlan, fieldNumber: 15)
+      }
+      if _storage._fatigueOrChronicPain != false {
+        try visitor.visitSingularBoolField(value: _storage._fatigueOrChronicPain, fieldNumber: 16)
+      }
+      if _storage._serviceAnimal != false {
+        try visitor.visitSingularBoolField(value: _storage._serviceAnimal, fieldNumber: 17)
+      }
+      if _storage._stroller != false {
+        try visitor.visitSingularBoolField(value: _storage._stroller, fieldNumber: 18)
+      }
+      if _storage._travellingWithCompanion != false {
+        try visitor.visitSingularBoolField(value: _storage._travellingWithCompanion, fieldNumber: 19)
+      }
+      if !_storage._notes.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._notes, fieldNumber: 20)
+      }
+      try { if let v = _storage._consentAt {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 21)
+      } }()
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Profile_AccessibilityNeeds, rhs: Loci_Profile_AccessibilityNeeds) -> Bool {
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._mobility != rhs_storage._mobility {return false}
+        if _storage._maxWalkMinutesPerLeg != rhs_storage._maxWalkMinutesPerLeg {return false}
+        if _storage._maxWalkMinutesPerDay != rhs_storage._maxWalkMinutesPerDay {return false}
+        if _storage._stepFreeOnly != rhs_storage._stepFreeOnly {return false}
+        if _storage._maxIncline != rhs_storage._maxIncline {return false}
+        if _storage._restEveryMinutes != rhs_storage._restEveryMinutes {return false}
+        if _storage._needsSeatingAtStops != rhs_storage._needsSeatingAtStops {return false}
+        if _storage._needsAccessibleToilet != rhs_storage._needsAccessibleToilet {return false}
+        if _storage._avoidCobbles != rhs_storage._avoidCobbles {return false}
+        if _storage._lowVision != rhs_storage._lowVision {return false}
+        if _storage._blind != rhs_storage._blind {return false}
+        if _storage._deafOrHardOfHearing != rhs_storage._deafOrHardOfHearing {return false}
+        if _storage._sensorySensitive != rhs_storage._sensorySensitive {return false}
+        if _storage._prefersQuietTimes != rhs_storage._prefersQuietTimes {return false}
+        if _storage._needsPredictablePlan != rhs_storage._needsPredictablePlan {return false}
+        if _storage._fatigueOrChronicPain != rhs_storage._fatigueOrChronicPain {return false}
+        if _storage._serviceAnimal != rhs_storage._serviceAnimal {return false}
+        if _storage._stroller != rhs_storage._stroller {return false}
+        if _storage._travellingWithCompanion != rhs_storage._travellingWithCompanion {return false}
+        if _storage._notes != rhs_storage._notes {return false}
+        if _storage._consentAt != rhs_storage._consentAt {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension Loci_Profile_UserPreferenceProfile: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UserPreferenceProfile"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -1947,6 +2517,7 @@ extension Loci_Profile_UserPreferenceProfile: SwiftProtobuf.Message, SwiftProtob
     22: .standard(proto: "itinerary_preferences"),
     23: .standard(proto: "created_at"),
     24: .standard(proto: "updated_at"),
+    25: .standard(proto: "accessibility_needs"),
   ]
 
   fileprivate class _StorageClass {
@@ -1974,6 +2545,7 @@ extension Loci_Profile_UserPreferenceProfile: SwiftProtobuf.Message, SwiftProtob
     var _itineraryPreferences: Loci_Profile_ItineraryPreferences? = nil
     var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+    var _accessibilityNeeds: Loci_Profile_AccessibilityNeeds? = nil
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -2012,6 +2584,7 @@ extension Loci_Profile_UserPreferenceProfile: SwiftProtobuf.Message, SwiftProtob
       _itineraryPreferences = source._itineraryPreferences
       _createdAt = source._createdAt
       _updatedAt = source._updatedAt
+      _accessibilityNeeds = source._accessibilityNeeds
     }
   }
 
@@ -2054,6 +2627,7 @@ extension Loci_Profile_UserPreferenceProfile: SwiftProtobuf.Message, SwiftProtob
         case 22: try { try decoder.decodeSingularMessageField(value: &_storage._itineraryPreferences) }()
         case 23: try { try decoder.decodeSingularMessageField(value: &_storage._createdAt) }()
         case 24: try { try decoder.decodeSingularMessageField(value: &_storage._updatedAt) }()
+        case 25: try { try decoder.decodeSingularMessageField(value: &_storage._accessibilityNeeds) }()
         default: break
         }
       }
@@ -2138,6 +2712,9 @@ extension Loci_Profile_UserPreferenceProfile: SwiftProtobuf.Message, SwiftProtob
       try { if let v = _storage._updatedAt {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 24)
       } }()
+      try { if let v = _storage._accessibilityNeeds {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 25)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2171,6 +2748,7 @@ extension Loci_Profile_UserPreferenceProfile: SwiftProtobuf.Message, SwiftProtob
         if _storage._itineraryPreferences != rhs_storage._itineraryPreferences {return false}
         if _storage._createdAt != rhs_storage._createdAt {return false}
         if _storage._updatedAt != rhs_storage._updatedAt {return false}
+        if _storage._accessibilityNeeds != rhs_storage._accessibilityNeeds {return false}
         return true
       }
       if !storagesAreEqual {return false}
@@ -2201,6 +2779,8 @@ extension Loci_Profile_CreateUserPreferenceProfileRequest: SwiftProtobuf.Message
     16: .standard(proto: "dining_preferences"),
     17: .standard(proto: "activity_preferences"),
     18: .standard(proto: "itinerary_preferences"),
+    19: .standard(proto: "accessibility_needs"),
+    20: .standard(proto: "accessibility_consent_given"),
   ]
 
   fileprivate class _StorageClass {
@@ -2222,6 +2802,8 @@ extension Loci_Profile_CreateUserPreferenceProfileRequest: SwiftProtobuf.Message
     var _diningPreferences: Loci_Profile_DiningPreferences? = nil
     var _activityPreferences: Loci_Profile_ActivityPreferences? = nil
     var _itineraryPreferences: Loci_Profile_ItineraryPreferences? = nil
+    var _accessibilityNeeds: Loci_Profile_AccessibilityNeeds? = nil
+    var _accessibilityConsentGiven: Bool? = nil
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -2254,6 +2836,8 @@ extension Loci_Profile_CreateUserPreferenceProfileRequest: SwiftProtobuf.Message
       _diningPreferences = source._diningPreferences
       _activityPreferences = source._activityPreferences
       _itineraryPreferences = source._itineraryPreferences
+      _accessibilityNeeds = source._accessibilityNeeds
+      _accessibilityConsentGiven = source._accessibilityConsentGiven
     }
   }
 
@@ -2290,6 +2874,8 @@ extension Loci_Profile_CreateUserPreferenceProfileRequest: SwiftProtobuf.Message
         case 16: try { try decoder.decodeSingularMessageField(value: &_storage._diningPreferences) }()
         case 17: try { try decoder.decodeSingularMessageField(value: &_storage._activityPreferences) }()
         case 18: try { try decoder.decodeSingularMessageField(value: &_storage._itineraryPreferences) }()
+        case 19: try { try decoder.decodeSingularMessageField(value: &_storage._accessibilityNeeds) }()
+        case 20: try { try decoder.decodeSingularBoolField(value: &_storage._accessibilityConsentGiven) }()
         default: break
         }
       }
@@ -2356,6 +2942,12 @@ extension Loci_Profile_CreateUserPreferenceProfileRequest: SwiftProtobuf.Message
       try { if let v = _storage._itineraryPreferences {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 18)
       } }()
+      try { if let v = _storage._accessibilityNeeds {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 19)
+      } }()
+      try { if let v = _storage._accessibilityConsentGiven {
+        try visitor.visitSingularBoolField(value: v, fieldNumber: 20)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2383,6 +2975,8 @@ extension Loci_Profile_CreateUserPreferenceProfileRequest: SwiftProtobuf.Message
         if _storage._diningPreferences != rhs_storage._diningPreferences {return false}
         if _storage._activityPreferences != rhs_storage._activityPreferences {return false}
         if _storage._itineraryPreferences != rhs_storage._itineraryPreferences {return false}
+        if _storage._accessibilityNeeds != rhs_storage._accessibilityNeeds {return false}
+        if _storage._accessibilityConsentGiven != rhs_storage._accessibilityConsentGiven {return false}
         return true
       }
       if !storagesAreEqual {return false}
@@ -2414,6 +3008,9 @@ extension Loci_Profile_UpdateUserPreferenceProfileRequest: SwiftProtobuf.Message
     17: .standard(proto: "dining_preferences"),
     18: .standard(proto: "activity_preferences"),
     19: .standard(proto: "itinerary_preferences"),
+    20: .standard(proto: "accessibility_needs"),
+    21: .standard(proto: "clear_accessibility_needs"),
+    22: .standard(proto: "accessibility_consent_given"),
   ]
 
   fileprivate class _StorageClass {
@@ -2436,6 +3033,9 @@ extension Loci_Profile_UpdateUserPreferenceProfileRequest: SwiftProtobuf.Message
     var _diningPreferences: Loci_Profile_DiningPreferences? = nil
     var _activityPreferences: Loci_Profile_ActivityPreferences? = nil
     var _itineraryPreferences: Loci_Profile_ItineraryPreferences? = nil
+    var _accessibilityNeeds: Loci_Profile_AccessibilityNeeds? = nil
+    var _clearAccessibilityNeeds_p: Bool? = nil
+    var _accessibilityConsentGiven: Bool? = nil
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -2469,6 +3069,9 @@ extension Loci_Profile_UpdateUserPreferenceProfileRequest: SwiftProtobuf.Message
       _diningPreferences = source._diningPreferences
       _activityPreferences = source._activityPreferences
       _itineraryPreferences = source._itineraryPreferences
+      _accessibilityNeeds = source._accessibilityNeeds
+      _clearAccessibilityNeeds_p = source._clearAccessibilityNeeds_p
+      _accessibilityConsentGiven = source._accessibilityConsentGiven
     }
   }
 
@@ -2506,6 +3109,9 @@ extension Loci_Profile_UpdateUserPreferenceProfileRequest: SwiftProtobuf.Message
         case 17: try { try decoder.decodeSingularMessageField(value: &_storage._diningPreferences) }()
         case 18: try { try decoder.decodeSingularMessageField(value: &_storage._activityPreferences) }()
         case 19: try { try decoder.decodeSingularMessageField(value: &_storage._itineraryPreferences) }()
+        case 20: try { try decoder.decodeSingularMessageField(value: &_storage._accessibilityNeeds) }()
+        case 21: try { try decoder.decodeSingularBoolField(value: &_storage._clearAccessibilityNeeds_p) }()
+        case 22: try { try decoder.decodeSingularBoolField(value: &_storage._accessibilityConsentGiven) }()
         default: break
         }
       }
@@ -2575,6 +3181,15 @@ extension Loci_Profile_UpdateUserPreferenceProfileRequest: SwiftProtobuf.Message
       try { if let v = _storage._itineraryPreferences {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 19)
       } }()
+      try { if let v = _storage._accessibilityNeeds {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 20)
+      } }()
+      try { if let v = _storage._clearAccessibilityNeeds_p {
+        try visitor.visitSingularBoolField(value: v, fieldNumber: 21)
+      } }()
+      try { if let v = _storage._accessibilityConsentGiven {
+        try visitor.visitSingularBoolField(value: v, fieldNumber: 22)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2603,6 +3218,9 @@ extension Loci_Profile_UpdateUserPreferenceProfileRequest: SwiftProtobuf.Message
         if _storage._diningPreferences != rhs_storage._diningPreferences {return false}
         if _storage._activityPreferences != rhs_storage._activityPreferences {return false}
         if _storage._itineraryPreferences != rhs_storage._itineraryPreferences {return false}
+        if _storage._accessibilityNeeds != rhs_storage._accessibilityNeeds {return false}
+        if _storage._clearAccessibilityNeeds_p != rhs_storage._clearAccessibilityNeeds_p {return false}
+        if _storage._accessibilityConsentGiven != rhs_storage._accessibilityConsentGiven {return false}
         return true
       }
       if !storagesAreEqual {return false}

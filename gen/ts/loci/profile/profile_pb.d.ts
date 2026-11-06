@@ -376,6 +376,153 @@ export declare type ItineraryPreferences = Message<"loci.profile.ItineraryPrefer
 export declare const ItineraryPreferencesSchema: GenMessage<ItineraryPreferences>;
 
 /**
+ * AccessibilityNeeds are the traveller's self-described access needs, which
+ * Loci uses to shape itineraries, walking legs and answers.
+ *
+ * This is special-category (health) data under GDPR Article 9. The server
+ * stores it only after explicit consent (see `accessibility_consent_given` on
+ * the create/update requests), never logs it, and drops it entirely on
+ * `clear_accessibility_needs`.
+ *
+ * @generated from message loci.profile.AccessibilityNeeds
+ */
+export declare type AccessibilityNeeds = Message<"loci.profile.AccessibilityNeeds"> & {
+  /**
+   * @generated from field: loci.profile.MobilityLevel mobility = 1;
+   */
+  mobility: MobilityLevel;
+
+  /**
+   * Longest walk/roll between two stops, in minutes. 0 means no limit.
+   *
+   * @generated from field: int32 max_walk_minutes_per_leg = 2;
+   */
+  maxWalkMinutesPerLeg: number;
+
+  /**
+   * Total walking/rolling across a day, in minutes. 0 means no limit.
+   *
+   * @generated from field: int32 max_walk_minutes_per_day = 3;
+   */
+  maxWalkMinutesPerDay: number;
+
+  /**
+   * Avoid any stairs or steps, on routes and at entrances.
+   *
+   * @generated from field: bool step_free_only = 4;
+   */
+  stepFreeOnly: boolean;
+
+  /**
+   * @generated from field: loci.profile.MaxIncline max_incline = 5;
+   */
+  maxIncline: MaxIncline;
+
+  /**
+   * Wants a seated rest at least this often, in minutes. 0 means no rule.
+   *
+   * @generated from field: int32 rest_every_minutes = 6;
+   */
+  restEveryMinutes: number;
+
+  /**
+   * @generated from field: bool needs_seating_at_stops = 7;
+   */
+  needsSeatingAtStops: boolean;
+
+  /**
+   * @generated from field: bool needs_accessible_toilet = 8;
+   */
+  needsAccessibleToilet: boolean;
+
+  /**
+   * Avoid cobblestones and rough surfaces.
+   *
+   * @generated from field: bool avoid_cobbles = 9;
+   */
+  avoidCobbles: boolean;
+
+  /**
+   * @generated from field: bool low_vision = 10;
+   */
+  lowVision: boolean;
+
+  /**
+   * @generated from field: bool blind = 11;
+   */
+  blind: boolean;
+
+  /**
+   * @generated from field: bool deaf_or_hard_of_hearing = 12;
+   */
+  deafOrHardOfHearing: boolean;
+
+  /**
+   * Noise, crowds or bright light are hard to cope with.
+   *
+   * @generated from field: bool sensory_sensitive = 13;
+   */
+  sensorySensitive: boolean;
+
+  /**
+   * Prefers quiet hours and off-peak visits.
+   *
+   * @generated from field: bool prefers_quiet_times = 14;
+   */
+  prefersQuietTimes: boolean;
+
+  /**
+   * Benefits from a predictable, detailed plan with fewer surprises.
+   *
+   * @generated from field: bool needs_predictable_plan = 15;
+   */
+  needsPredictablePlan: boolean;
+
+  /**
+   * Tires quickly or lives with chronic pain; plan shorter, slower days.
+   *
+   * @generated from field: bool fatigue_or_chronic_pain = 16;
+   */
+  fatigueOrChronicPain: boolean;
+
+  /**
+   * @generated from field: bool service_animal = 17;
+   */
+  serviceAnimal: boolean;
+
+  /**
+   * @generated from field: bool stroller = 18;
+   */
+  stroller: boolean;
+
+  /**
+   * @generated from field: bool travelling_with_companion = 19;
+   */
+  travellingWithCompanion: boolean;
+
+  /**
+   * Anything else, in the traveller's own words.
+   *
+   * @generated from field: string notes = 20;
+   */
+  notes: string;
+
+  /**
+   * When the traveller consented to Loci storing these needs. Set by the
+   * server; ignored on requests.
+   *
+   * @generated from field: optional google.protobuf.Timestamp consent_at = 21;
+   */
+  consentAt?: Timestamp;
+};
+
+/**
+ * Describes the message loci.profile.AccessibilityNeeds.
+ * Use `create(AccessibilityNeedsSchema)` to create a new message.
+ */
+export declare const AccessibilityNeedsSchema: GenMessage<AccessibilityNeeds>;
+
+/**
  * UserPreferenceProfile represents a user's preference profile
  *
  * @generated from message loci.profile.UserPreferenceProfile
@@ -500,6 +647,13 @@ export declare type UserPreferenceProfile = Message<"loci.profile.UserPreference
    * @generated from field: google.protobuf.Timestamp updated_at = 24;
    */
   updatedAt?: Timestamp;
+
+  /**
+   * Absent until the traveller has set needs and consented to storing them.
+   *
+   * @generated from field: optional loci.profile.AccessibilityNeeds accessibility_needs = 25;
+   */
+  accessibilityNeeds?: AccessibilityNeeds;
 };
 
 /**
@@ -603,6 +757,21 @@ export declare type CreateUserPreferenceProfileRequest = Message<"loci.profile.C
    * @generated from field: optional loci.profile.ItineraryPreferences itinerary_preferences = 18;
    */
   itineraryPreferences?: ItineraryPreferences;
+
+  /**
+   * Requires accessibility_consent_given = true; rejected otherwise.
+   *
+   * @generated from field: optional loci.profile.AccessibilityNeeds accessibility_needs = 19;
+   */
+  accessibilityNeeds?: AccessibilityNeeds;
+
+  /**
+   * The traveller explicitly agreed to Loci storing their accessibility
+   * needs. Must be a separate, unticked-by-default choice in the client.
+   *
+   * @generated from field: optional bool accessibility_consent_given = 20;
+   */
+  accessibilityConsentGiven?: boolean;
 };
 
 /**
@@ -711,6 +880,27 @@ export declare type UpdateUserPreferenceProfileRequest = Message<"loci.profile.U
    * @generated from field: optional loci.profile.ItineraryPreferences itinerary_preferences = 19;
    */
   itineraryPreferences?: ItineraryPreferences;
+
+  /**
+   * Replaces the stored needs wholesale. Requires accessibility_consent_given
+   * = true unless the profile already holds consent.
+   *
+   * @generated from field: optional loci.profile.AccessibilityNeeds accessibility_needs = 20;
+   */
+  accessibilityNeeds?: AccessibilityNeeds;
+
+  /**
+   * Deletes the stored needs and the consent record. Wins over
+   * accessibility_needs when both are sent.
+   *
+   * @generated from field: optional bool clear_accessibility_needs = 21;
+   */
+  clearAccessibilityNeeds?: boolean;
+
+  /**
+   * @generated from field: optional bool accessibility_consent_given = 22;
+   */
+  accessibilityConsentGiven?: boolean;
 };
 
 /**
@@ -1119,6 +1309,98 @@ export enum TransportPreference {
  * Describes the enum loci.profile.TransportPreference.
  */
 export declare const TransportPreferenceSchema: GenEnum<TransportPreference>;
+
+/**
+ * MobilityLevel is how the traveller gets around on foot. It describes a
+ * functional need, not a diagnosis.
+ *
+ * @generated from enum loci.profile.MobilityLevel
+ */
+export enum MobilityLevel {
+  /**
+   * @generated from enum value: MOBILITY_LEVEL_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * No mobility constraint.
+   *
+   * @generated from enum value: MOBILITY_LEVEL_NONE = 1;
+   */
+  NONE = 1,
+
+  /**
+   * Walks unaided, but only short distances or slowly.
+   *
+   * @generated from enum value: MOBILITY_LEVEL_LIMITED_WALKING = 2;
+   */
+  LIMITED_WALKING = 2,
+
+  /**
+   * Walks with a cane, crutches, or a walker/rollator.
+   *
+   * @generated from enum value: MOBILITY_LEVEL_WALKING_AID = 3;
+   */
+  WALKING_AID = 3,
+
+  /**
+   * @generated from enum value: MOBILITY_LEVEL_MANUAL_WHEELCHAIR = 4;
+   */
+  MANUAL_WHEELCHAIR = 4,
+
+  /**
+   * @generated from enum value: MOBILITY_LEVEL_POWER_WHEELCHAIR = 5;
+   */
+  POWER_WHEELCHAIR = 5,
+
+  /**
+   * @generated from enum value: MOBILITY_LEVEL_MOBILITY_SCOOTER = 6;
+   */
+  MOBILITY_SCOOTER = 6,
+}
+
+/**
+ * Describes the enum loci.profile.MobilityLevel.
+ */
+export declare const MobilityLevelSchema: GenEnum<MobilityLevel>;
+
+/**
+ * MaxIncline is the steepest slope the traveller can manage. The values map
+ * onto OpenRouteService's wheelchair `maximum_incline` restriction.
+ *
+ * @generated from enum loci.profile.MaxIncline
+ */
+export enum MaxIncline {
+  /**
+   * @generated from enum value: MAX_INCLINE_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: MAX_INCLINE_ANY = 1;
+   */
+  ANY = 1,
+
+  /**
+   * @generated from enum value: MAX_INCLINE_PCT_3 = 2;
+   */
+  PCT_3 = 2,
+
+  /**
+   * @generated from enum value: MAX_INCLINE_PCT_6 = 3;
+   */
+  PCT_6 = 3,
+
+  /**
+   * @generated from enum value: MAX_INCLINE_PCT_10 = 4;
+   */
+  PCT_10 = 4,
+}
+
+/**
+ * Describes the enum loci.profile.MaxIncline.
+ */
+export declare const MaxInclineSchema: GenEnum<MaxIncline>;
 
 /**
  * ProfileService defines profile-related RPCs
