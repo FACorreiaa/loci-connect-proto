@@ -1,0 +1,11 @@
+{
+  "": {
+    "swift-dependencies": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/index-build/arm64-apple-macosx/debug/ConnectMocksPlugin.build/primary.swiftdeps"
+  },
+  "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/index-build/checkouts/connect-swift/Plugins/ConnectMocksPlugin/ConnectMockGenerator.swift": {
+    "dependencies": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/index-build/arm64-apple-macosx/debug/ConnectMocksPlugin.build/ConnectMockGenerator.d",
+    "object": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/index-build/arm64-apple-macosx/debug/ConnectMocksPlugin.build/ConnectMockGenerator.swift.o",
+    "swiftmodule": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/index-build/arm64-apple-macosx/debug/ConnectMocksPlugin.build/ConnectMockGenerator~partial.swiftmodule",
+    "swift-dependencies": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/index-build/arm64-apple-macosx/debug/ConnectMocksPlugin.build/ConnectMockGenerator.swiftdeps",
+    "diagnostics": "/Users/fernandocorreiachill/Work/production/apps/Loci/loci-connect-proto/.build/index-build/arm64-apple-macosx/debug/ConnectMocksPlugin.build/ConnectMockGenerator.dia"  }
+}
