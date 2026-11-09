@@ -410,6 +410,18 @@ public struct Loci_Poi_POIDetailedInfo: @unchecked Sendable {
     set {_uniqueStorage()._accessibilityNotes = newValue}
   }
 
+  /// price_tier is the place's price band, 1 ($) to 4 ($$$$), read from
+  /// price_level / price_range. Unset when unknown. Use it for filtering;
+  /// the free-text fields stay for display and older clients.
+  public var priceTier: Int32 {
+    get {return _storage._priceTier ?? 0}
+    set {_uniqueStorage()._priceTier = newValue}
+  }
+  /// Returns true if `priceTier` has been explicitly set.
+  public var hasPriceTier: Bool {return _storage._priceTier != nil}
+  /// Clears the value of `priceTier`. Subsequent reads from it will return its default value.
+  public mutating func clearPriceTier() {_uniqueStorage()._priceTier = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -1068,6 +1080,7 @@ extension Loci_Poi_POIDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._Messag
     36: .standard(proto: "taste_match"),
     34: .standard(proto: "image_credits"),
     37: .standard(proto: "accessibility_notes"),
+    38: .standard(proto: "price_tier"),
   ]
 
   fileprivate class _StorageClass {
@@ -1108,6 +1121,7 @@ extension Loci_Poi_POIDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._Messag
     var _tasteMatch: Loci_Poi_TasteMatch? = nil
     var _imageCredits: [Loci_Poi_POIImage] = []
     var _accessibilityNotes: [Loci_Poi_AccessibilityNote] = []
+    var _priceTier: Int32? = nil
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -1159,6 +1173,7 @@ extension Loci_Poi_POIDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._Messag
       _tasteMatch = source._tasteMatch
       _imageCredits = source._imageCredits
       _accessibilityNotes = source._accessibilityNotes
+      _priceTier = source._priceTier
     }
   }
 
@@ -1214,6 +1229,7 @@ extension Loci_Poi_POIDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._Messag
         case 35: try { try decoder.decodeSingularInt32Field(value: &_storage._day) }()
         case 36: try { try decoder.decodeSingularMessageField(value: &_storage._tasteMatch) }()
         case 37: try { try decoder.decodeRepeatedMessageField(value: &_storage._accessibilityNotes) }()
+        case 38: try { try decoder.decodeSingularInt32Field(value: &_storage._priceTier) }()
         default: break
         }
       }
@@ -1337,6 +1353,9 @@ extension Loci_Poi_POIDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._Messag
       if !_storage._accessibilityNotes.isEmpty {
         try visitor.visitRepeatedMessageField(value: _storage._accessibilityNotes, fieldNumber: 37)
       }
+      try { if let v = _storage._priceTier {
+        try visitor.visitSingularInt32Field(value: v, fieldNumber: 38)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1383,6 +1402,7 @@ extension Loci_Poi_POIDetailedInfo: SwiftProtobuf.Message, SwiftProtobuf._Messag
         if _storage._tasteMatch != rhs_storage._tasteMatch {return false}
         if _storage._imageCredits != rhs_storage._imageCredits {return false}
         if _storage._accessibilityNotes != rhs_storage._accessibilityNotes {return false}
+        if _storage._priceTier != rhs_storage._priceTier {return false}
         return true
       }
       if !storagesAreEqual {return false}

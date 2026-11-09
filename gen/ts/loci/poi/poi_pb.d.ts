@@ -247,6 +247,15 @@ export declare type POIDetailedInfo = Message<"loci.poi.POIDetailedInfo"> & {
    * @generated from field: repeated loci.poi.AccessibilityNote accessibility_notes = 37;
    */
   accessibilityNotes: AccessibilityNote[];
+
+  /**
+   * price_tier is the place's price band, 1 ($) to 4 ($$$$), read from
+   * price_level / price_range. Unset when unknown. Use it for filtering;
+   * the free-text fields stay for display and older clients.
+   *
+   * @generated from field: optional int32 price_tier = 38;
+   */
+  priceTier?: number;
 };
 
 /**

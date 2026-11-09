@@ -1,0 +1,104 @@
+syntax = "proto3";
+
+package loci.pricing.v1;
+
+import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/pricing/v1;pricingv1";
+
+// HotelRateStatus says whether a live price was found for a hotel.
+enum HotelRateStatus {
+  HOTEL_RATE_STATUS_UNSPECIFIED = 0;
+  // A bookable rate was found for the requested stay.
+  HOTEL_RATE_STATUS_PRICED = 1;
+  // The hotel was matched but has no availability for the stay.
+  HOTEL_RATE_STATUS_SOLD_OUT = 2;
+  // No provider hotel could be matched with confidence, or pricing is off.
+  HOTEL_RATE_STATUS_UNMATCHED = 3;
+}
+
+// HotelRateQuery identifies one hotel from a Loci result list. The server
+// matches it to a provider hotel by name and coordinates; it never guesses.
+message HotelRateQuery {
+  // The POI id the client keys its result list on; echoed back unchanged.
+  string poi_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
+  string name = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 300
+  }];
+  double latitude = 3 [(buf.validate.field).double = {
+    gte: -90
+    lte: 90
+  }];
+  double longitude = 4 [(buf.validate.field).double = {
+    gte: -180
+    lte: 180
+  }];
+  string city = 5 [(buf.validate.field).string = {max_len: 200}];
+  // ISO 3166-1 alpha-2, empty when unknown.
+  string country_code = 6 [(buf.validate.field).string = {pattern: "^([A-Za-z]{2})?$"}];
+}
+
+// GetHotelRatesRequest asks for live prices for a stay. Prices are fetched
+// live and never stored.
+message GetHotelRatesRequest {
+  repeated HotelRateQuery hotels = 1 [(buf.validate.field).repeated = {
+    min_items: 1
+    max_items: 30
+  }];
+  // YYYY-MM-DD.
+  string checkin = 2 [(buf.validate.field).string.pattern = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"];
+  // YYYY-MM-DD, after checkin.
+  string checkout = 3 [(buf.validate.field).string.pattern = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"];
+  int32 adults = 4 [(buf.validate.field).int32 = {
+    gte: 1
+    lte: 8
+  }];
+  // ISO 4217; empty means the user's preferred currency, else EUR.
+  string currency = 5 [(buf.validate.field).string = {pattern: "^([A-Z]{3})?$"}];
+
+  option (buf.validate.message).cel = {
+    id: "get_hotel_rates.checkout_after_checkin"
+    message: "checkout must be after checkin"
+    expression: "this.checkout > this.checkin"
+  };
+  option (buf.validate.message).cel = {
+    id: "get_hotel_rates.max_nights"
+    message: "a stay can be at most 30 nights"
+    expression: "timestamp(this.checkout + 'T00:00:00Z') - timestamp(this.checkin + 'T00:00:00Z') <= duration('720h')"
+  };
+}
+
+// HotelRate is the cheapest bookable rate for one queried hotel.
+message HotelRate {
+  string poi_id = 1;
+  HotelRateStatus status = 2;
+  // Average price per night in minor units (cents); 0 unless PRICED.
+  int64 nightly_amount_minor = 3;
+  // Price for the whole stay in minor units, taxes included where the
+  // provider says so; 0 unless PRICED.
+  int64 total_amount_minor = 4;
+  // ISO 4217 code of both amounts.
+  string currency = 5;
+  // Rate source, e.g. "liteapi".
+  string provider = 6;
+  // Where the user can book this stay; empty unless PRICED.
+  string booking_url = 7;
+  google.protobuf.Timestamp fetched_at = 8;
+}
+
+message GetHotelRatesResponse {
+  // One entry per queried hotel, in request order.
+  repeated HotelRate rates = 1;
+  // Number of nights the amounts cover.
+  int32 nights = 2;
+}
+
+// PricingService returns live partner prices for places Loci recommends.
+service PricingService {
+  rpc GetHotelRates(GetHotelRatesRequest) returns (GetHotelRatesResponse);
+}

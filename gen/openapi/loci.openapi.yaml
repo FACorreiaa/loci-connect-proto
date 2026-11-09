@@ -7297,6 +7297,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.poi.SearchPOIResponse'
+  /loci.pricing.v1.PricingService/GetHotelRates:
+    post:
+      tags:
+        - loci.pricing.v1.PricingService
+      summary: GetHotelRates
+      operationId: loci.pricing.v1.PricingService.GetHotelRates
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.pricing.v1.GetHotelRatesRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.pricing.v1.GetHotelRatesResponse'
   /loci.profile.ProfileService/CreateUserPreferenceProfile:
     post:
       tags:
@@ -26901,6 +26936,18 @@ components:
             What a traveller with access needs should know about this place. Set only
              when the request carried accessibility needs. Each note names its source,
              so clients can show how far to trust it.
+        priceTier:
+          type:
+            - integer
+            - "null"
+          title: price_tier
+          maximum: 4
+          minimum: 1
+          format: int32
+          description: |-
+            price_tier is the place's price band, 1 ($) to 4 ($$$$), read from
+             price_level / price_range. Unset when unknown. Use it for filtering;
+             the free-text fields stay for display and older clients.
       title: POIDetailedInfo
       required:
         - createdAt
@@ -27244,6 +27291,152 @@ components:
       title: TasteMatch
       additionalProperties: false
       description: TasteMatch explains why a place fits the traveller, not whether it is good.
+    loci.pricing.v1.GetHotelRatesRequest:
+      type: object
+      properties:
+        hotels:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.pricing.v1.HotelRateQuery'
+          title: hotels
+          maxItems: 30
+          minItems: 1
+        checkin:
+          type: string
+          title: checkin
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}$
+          description: YYYY-MM-DD.
+        checkout:
+          type: string
+          title: checkout
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}$
+          description: YYYY-MM-DD, after checkin.
+        adults:
+          type: integer
+          title: adults
+          maximum: 8
+          minimum: 1
+          format: int32
+        currency:
+          type: string
+          title: currency
+          pattern: ^([A-Z]{3})?$
+          description: ISO 4217; empty means the user's preferred currency, else EUR.
+      title: GetHotelRatesRequest
+      additionalProperties: false
+      description: |
+        GetHotelRatesRequest asks for live prices for a stay. Prices are fetched
+         live and never stored.
+        get_hotel_rates.checkout_after_checkin // checkout must be after checkin
+        get_hotel_rates.max_nights // a stay can be at most 30 nights
+    loci.pricing.v1.GetHotelRatesResponse:
+      type: object
+      properties:
+        rates:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.pricing.v1.HotelRate'
+          title: rates
+          description: One entry per queried hotel, in request order.
+        nights:
+          type: integer
+          title: nights
+          format: int32
+          description: Number of nights the amounts cover.
+      title: GetHotelRatesResponse
+      additionalProperties: false
+    loci.pricing.v1.HotelRate:
+      type: object
+      properties:
+        poiId:
+          type: string
+          title: poi_id
+        status:
+          title: status
+          $ref: '#/components/schemas/loci.pricing.v1.HotelRateStatus'
+        nightlyAmountMinor:
+          type:
+            - integer
+            - string
+          title: nightly_amount_minor
+          format: int64
+          description: Average price per night in minor units (cents); 0 unless PRICED.
+        totalAmountMinor:
+          type:
+            - integer
+            - string
+          title: total_amount_minor
+          format: int64
+          description: |-
+            Price for the whole stay in minor units, taxes included where the
+             provider says so; 0 unless PRICED.
+        currency:
+          type: string
+          title: currency
+          description: ISO 4217 code of both amounts.
+        provider:
+          type: string
+          title: provider
+          description: Rate source, e.g. "liteapi".
+        bookingUrl:
+          type: string
+          title: booking_url
+          description: Where the user can book this stay; empty unless PRICED.
+        fetchedAt:
+          title: fetched_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: HotelRate
+      additionalProperties: false
+      description: HotelRate is the cheapest bookable rate for one queried hotel.
+    loci.pricing.v1.HotelRateQuery:
+      type: object
+      properties:
+        poiId:
+          type: string
+          title: poi_id
+          maxLength: 200
+          minLength: 1
+          description: The POI id the client keys its result list on; echoed back unchanged.
+        name:
+          type: string
+          title: name
+          maxLength: 300
+          minLength: 1
+        latitude:
+          type: number
+          title: latitude
+          maximum: 90
+          minimum: -90
+          format: double
+        longitude:
+          type: number
+          title: longitude
+          maximum: 180
+          minimum: -180
+          format: double
+        city:
+          type: string
+          title: city
+          maxLength: 200
+        countryCode:
+          type: string
+          title: country_code
+          pattern: ^([A-Za-z]{2})?$
+          description: ISO 3166-1 alpha-2, empty when unknown.
+      title: HotelRateQuery
+      additionalProperties: false
+      description: |-
+        HotelRateQuery identifies one hotel from a Loci result list. The server
+         matches it to a provider hotel by name and coordinates; it never guesses.
+    loci.pricing.v1.HotelRateStatus:
+      type: string
+      title: HotelRateStatus
+      enum:
+        - HOTEL_RATE_STATUS_UNSPECIFIED
+        - HOTEL_RATE_STATUS_PRICED
+        - HOTEL_RATE_STATUS_SOLD_OUT
+        - HOTEL_RATE_STATUS_UNMATCHED
+      description: HotelRateStatus says whether a live price was found for a hotel.
     loci.profile.AccessibilityNeeds:
       type: object
       properties:
@@ -38278,6 +38471,8 @@ tags:
        Only the linking half lives here. Inbound messages arrive from the platform,
        not from this API, and the bot answers them there.
   - name: loci.payment.v1.PaymentService
+  - name: loci.pricing.v1.PricingService
+    description: PricingService returns live partner prices for places Loci recommends.
   - name: loci.recap.RecapService
     description: |-
       RecapService serves story-style recaps of what a traveller did: one per

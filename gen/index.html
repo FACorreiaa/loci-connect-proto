@@ -4125,6 +4125,41 @@
         
           
           <li>
+            <a href="#loci%2fpricing%2fv1%2fpricing.proto">loci/pricing/v1/pricing.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#loci.pricing.v1.GetHotelRatesRequest"><span class="badge">M</span>GetHotelRatesRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.pricing.v1.GetHotelRatesResponse"><span class="badge">M</span>GetHotelRatesResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.pricing.v1.HotelRate"><span class="badge">M</span>HotelRate</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.pricing.v1.HotelRateQuery"><span class="badge">M</span>HotelRateQuery</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#loci.pricing.v1.HotelRateStatus"><span class="badge">E</span>HotelRateStatus</a>
+                </li>
+              
+              
+              
+                <li>
+                  <a href="#loci.pricing.v1.PricingService"><span class="badge">S</span>PricingService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#loci%2frecap%2frecap.proto">loci/recap/recap.proto</a>
             <ul>
               
@@ -10534,6 +10569,15 @@ renders one renders the other. </p></td>
                   <td><p>What a traveller with access needs should know about this place. Set only
 when the request carried accessibility needs. Each note names its source,
 so clients can show how far to trust it. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>price_tier</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td>optional</td>
+                  <td><p>price_tier is the place&#39;s price band, 1 ($) to 4 ($$$$), read from
+price_level / price_range. Unset when unknown. Use it for filtering;
+the free-text fields stay for display and older clients. </p></td>
                 </tr>
               
             </tbody>
@@ -44448,6 +44492,290 @@ account; only the route to it is removed.</p></td>
                 <td>CreateCustomerPortalSession</td>
                 <td><a href="#loci.payment.v1.CreateCustomerPortalSessionRequest">CreateCustomerPortalSessionRequest</a></td>
                 <td><a href="#loci.payment.v1.CreateCustomerPortalSessionResponse">CreateCustomerPortalSessionResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="loci/pricing/v1/pricing.proto">loci/pricing/v1/pricing.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="loci.pricing.v1.GetHotelRatesRequest">GetHotelRatesRequest</h3>
+        <p>GetHotelRatesRequest asks for live prices for a stay. Prices are fetched</p><p>live and never stored.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>hotels</td>
+                  <td><a href="#loci.pricing.v1.HotelRateQuery">HotelRateQuery</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>checkin</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>YYYY-MM-DD. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>checkout</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>YYYY-MM-DD, after checkin. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>adults</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>currency</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ISO 4217; empty means the user&#39;s preferred currency, else EUR. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.pricing.v1.GetHotelRatesResponse">GetHotelRatesResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>rates</td>
+                  <td><a href="#loci.pricing.v1.HotelRate">HotelRate</a></td>
+                  <td>repeated</td>
+                  <td><p>One entry per queried hotel, in request order. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>nights</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Number of nights the amounts cover. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.pricing.v1.HotelRate">HotelRate</h3>
+        <p>HotelRate is the cheapest bookable rate for one queried hotel.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>poi_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#loci.pricing.v1.HotelRateStatus">HotelRateStatus</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>nightly_amount_minor</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>Average price per night in minor units (cents); 0 unless PRICED. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>total_amount_minor</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>Price for the whole stay in minor units, taxes included where the
+provider says so; 0 unless PRICED. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>currency</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ISO 4217 code of both amounts. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>provider</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Rate source, e.g. &#34;liteapi&#34;. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>booking_url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Where the user can book this stay; empty unless PRICED. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>fetched_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.pricing.v1.HotelRateQuery">HotelRateQuery</h3>
+        <p>HotelRateQuery identifies one hotel from a Loci result list. The server</p><p>matches it to a provider hotel by name and coordinates; it never guesses.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>poi_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The POI id the client keys its result list on; echoed back unchanged. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>latitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>longitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>country_code</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ISO 3166-1 alpha-2, empty when unknown. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+        <h3 id="loci.pricing.v1.HotelRateStatus">HotelRateStatus</h3>
+        <p>HotelRateStatus says whether a live price was found for a hotel.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>HOTEL_RATE_STATUS_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>HOTEL_RATE_STATUS_PRICED</td>
+                <td>1</td>
+                <td><p>A bookable rate was found for the requested stay.</p></td>
+              </tr>
+            
+              <tr>
+                <td>HOTEL_RATE_STATUS_SOLD_OUT</td>
+                <td>2</td>
+                <td><p>The hotel was matched but has no availability for the stay.</p></td>
+              </tr>
+            
+              <tr>
+                <td>HOTEL_RATE_STATUS_UNMATCHED</td>
+                <td>3</td>
+                <td><p>No provider hotel could be matched with confidence, or pricing is off.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+
+      
+
+      
+        <h3 id="loci.pricing.v1.PricingService">PricingService</h3>
+        <p>PricingService returns live partner prices for places Loci recommends.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>GetHotelRates</td>
+                <td><a href="#loci.pricing.v1.GetHotelRatesRequest">GetHotelRatesRequest</a></td>
+                <td><a href="#loci.pricing.v1.GetHotelRatesResponse">GetHotelRatesResponse</a></td>
                 <td><p></p></td>
               </tr>
             
