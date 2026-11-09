@@ -280,6 +280,29 @@ message FlightLink {
   string provider = 1;
   string label = 2;
   string url = 3;
+  // sponsored is true when the URL carries an affiliate tag. Clients add
+  // rel="sponsored" and may label the link; untagged links stay plain.
+  bool sponsored = 4;
+}
+
+// FlightPlaceKind says whether a place option is one airport or a metro code
+// that covers several (LON, NYC).
+enum FlightPlaceKind {
+  FLIGHT_PLACE_KIND_UNSPECIFIED = 0;
+  FLIGHT_PLACE_KIND_AIRPORT = 1;
+  FLIGHT_PLACE_KIND_METRO = 2;
+}
+
+// FlightPlaceOption is an airport (or metro code) a traveller can pick as one
+// end of a flight search.
+message FlightPlaceOption {
+  string iata = 1 [(buf.validate.field).string.pattern = "^[A-Z]{3}$"];
+  // Display name, e.g. "Humberto Delgado Airport" or "London (all airports)".
+  string name = 2 [(buf.validate.field).string.max_len = 200];
+  string city = 3 [(buf.validate.field).string.max_len = 200];
+  // ISO 3166-1 alpha-2.
+  string country_code = 4 [(buf.validate.field).string.max_len = 2];
+  FlightPlaceKind kind = 5;
 }
 
 // TripFlight is a flight the traveller chose. Loci never quotes a fare:
@@ -788,6 +811,48 @@ message BuildFlightLinksResponse {
   repeated FlightLink links = 1;
 }
 
+// SearchAirportsRequest is the flight form's "where from / to" autocomplete,
+// matched on IATA code, city or airport name, ignoring case and accents.
+message SearchAirportsRequest {
+  string query = 1 [(buf.validate.field).string = {
+    min_len: 2
+    max_len: 100
+  }];
+  // At most this many options; 0 means 8.
+  int32 limit = 2 [(buf.validate.field).int32 = {
+    gte: 0
+    lte: 20
+  }];
+}
+
+message SearchAirportsResponse {
+  repeated FlightPlaceOption options = 1;
+}
+
+// ResolveFlightDestinationRequest asks for the airport a city's flight search
+// should land at. Country and coordinates tell same-name cities apart.
+message ResolveFlightDestinationRequest {
+  string city = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
+  string country_code = 2 [(buf.validate.field).string.pattern = "^([A-Za-z]{2})?$"];
+  optional double latitude = 3 [(buf.validate.field).double = {
+    gte: -90
+    lte: 90
+  }];
+  optional double longitude = 4 [(buf.validate.field).double = {
+    gte: -180
+    lte: 180
+  }];
+}
+
+// ResolveFlightDestinationResponse leaves destination unset when no airport
+// matches; the client then searches by city name.
+message ResolveFlightDestinationResponse {
+  optional FlightPlaceOption destination = 1;
+}
+
 message AddStopRequest {
   string trip_id = 1 [(buf.validate.field).string = {
     min_len: 1
@@ -902,6 +967,10 @@ service TripService {
   rpc AddFlight(AddFlightRequest) returns (TripDraft);
   rpc RemoveFlight(RemoveFlightRequest) returns (TripDraft);
   rpc BuildFlightLinks(BuildFlightLinksRequest) returns (BuildFlightLinksResponse);
+  // SearchAirports is the flight form's airport autocomplete.
+  rpc SearchAirports(SearchAirportsRequest) returns (SearchAirportsResponse);
+  // ResolveFlightDestination picks the airport (or metro code) for a city.
+  rpc ResolveFlightDestination(ResolveFlightDestinationRequest) returns (ResolveFlightDestinationResponse);
   rpc ExportTrip(ExportTripRequest) returns (ExportTripResponse);
   // SuggestPacking derives a packing list from the trip: its length, its cities'
   // forecasts, the driving between them, and the traveller's stated interests.

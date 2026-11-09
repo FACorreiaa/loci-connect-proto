@@ -102,6 +102,14 @@ public protocol Loci_Trip_TripServiceClientInterface: Sendable {
     @available(iOS 13, *)
     func `buildFlightLinks`(request: Loci_Trip_BuildFlightLinksRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_BuildFlightLinksResponse>
 
+    /// SearchAirports is the flight form's airport autocomplete.
+    @available(iOS 13, *)
+    func `searchAirports`(request: Loci_Trip_SearchAirportsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_SearchAirportsResponse>
+
+    /// ResolveFlightDestination picks the airport (or metro code) for a city.
+    @available(iOS 13, *)
+    func `resolveFlightDestination`(request: Loci_Trip_ResolveFlightDestinationRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_ResolveFlightDestinationResponse>
+
     @available(iOS 13, *)
     func `exportTrip`(request: Loci_Trip_ExportTripRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_ExportTripResponse>
 
@@ -313,6 +321,16 @@ public final class Loci_Trip_TripServiceClient: Loci_Trip_TripServiceClientInter
     }
 
     @available(iOS 13, *)
+    public func `searchAirports`(request: Loci_Trip_SearchAirportsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_SearchAirportsResponse> {
+        return await self.client.unary(path: "/loci.trip.TripService/SearchAirports", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `resolveFlightDestination`(request: Loci_Trip_ResolveFlightDestinationRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_ResolveFlightDestinationResponse> {
+        return await self.client.unary(path: "/loci.trip.TripService/ResolveFlightDestination", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
     public func `exportTrip`(request: Loci_Trip_ExportTripRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_ExportTripResponse> {
         return await self.client.unary(path: "/loci.trip.TripService/ExportTrip", idempotencyLevel: .unknown, request: request, headers: headers)
     }
@@ -432,6 +450,8 @@ public final class Loci_Trip_TripServiceClient: Loci_Trip_TripServiceClientInter
             public static let addFlight = Connect.MethodSpec(name: "AddFlight", service: "loci.trip.TripService", type: .unary)
             public static let removeFlight = Connect.MethodSpec(name: "RemoveFlight", service: "loci.trip.TripService", type: .unary)
             public static let buildFlightLinks = Connect.MethodSpec(name: "BuildFlightLinks", service: "loci.trip.TripService", type: .unary)
+            public static let searchAirports = Connect.MethodSpec(name: "SearchAirports", service: "loci.trip.TripService", type: .unary)
+            public static let resolveFlightDestination = Connect.MethodSpec(name: "ResolveFlightDestination", service: "loci.trip.TripService", type: .unary)
             public static let exportTrip = Connect.MethodSpec(name: "ExportTrip", service: "loci.trip.TripService", type: .unary)
             public static let suggestPacking = Connect.MethodSpec(name: "SuggestPacking", service: "loci.trip.TripService", type: .unary)
             public static let getTripChecklist = Connect.MethodSpec(name: "GetTripChecklist", service: "loci.trip.TripService", type: .unary)

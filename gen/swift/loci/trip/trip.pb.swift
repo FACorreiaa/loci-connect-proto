@@ -208,6 +208,46 @@ public enum Loci_Trip_FlightCabin: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
+/// FlightPlaceKind says whether a place option is one airport or a metro code
+/// that covers several (LON, NYC).
+public enum Loci_Trip_FlightPlaceKind: SwiftProtobuf.Enum, Swift.CaseIterable {
+  public typealias RawValue = Int
+  case unspecified // = 0
+  case airport // = 1
+  case metro // = 2
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .unspecified
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unspecified
+    case 1: self = .airport
+    case 2: self = .metro
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .unspecified: return 0
+    case .airport: return 1
+    case .metro: return 2
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static let allCases: [Loci_Trip_FlightPlaceKind] = [
+    .unspecified,
+    .airport,
+    .metro,
+  ]
+
+}
+
 /// PackingCategory groups suggestions so a long list stays scannable.
 public enum Loci_Trip_PackingCategory: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
@@ -784,6 +824,34 @@ public struct Loci_Trip_FlightLink: Sendable {
   public var label: String = String()
 
   public var url: String = String()
+
+  /// sponsored is true when the URL carries an affiliate tag. Clients add
+  /// rel="sponsored" and may label the link; untagged links stay plain.
+  public var sponsored: Bool = false
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// FlightPlaceOption is an airport (or metro code) a traveller can pick as one
+/// end of a flight search.
+public struct Loci_Trip_FlightPlaceOption: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var iata: String = String()
+
+  /// Display name, e.g. "Humberto Delgado Airport" or "London (all airports)".
+  public var name: String = String()
+
+  public var city: String = String()
+
+  /// ISO 3166-1 alpha-2.
+  public var countryCode: String = String()
+
+  public var kind: Loci_Trip_FlightPlaceKind = .unspecified
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1838,6 +1906,95 @@ public struct Loci_Trip_BuildFlightLinksResponse: Sendable {
   public init() {}
 }
 
+/// SearchAirportsRequest is the flight form's "where from / to" autocomplete,
+/// matched on IATA code, city or airport name, ignoring case and accents.
+public struct Loci_Trip_SearchAirportsRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var query: String = String()
+
+  /// At most this many options; 0 means 8.
+  public var limit: Int32 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Loci_Trip_SearchAirportsResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var options: [Loci_Trip_FlightPlaceOption] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// ResolveFlightDestinationRequest asks for the airport a city's flight search
+/// should land at. Country and coordinates tell same-name cities apart.
+public struct Loci_Trip_ResolveFlightDestinationRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var city: String = String()
+
+  public var countryCode: String = String()
+
+  public var latitude: Double {
+    get {return _latitude ?? 0}
+    set {_latitude = newValue}
+  }
+  /// Returns true if `latitude` has been explicitly set.
+  public var hasLatitude: Bool {return self._latitude != nil}
+  /// Clears the value of `latitude`. Subsequent reads from it will return its default value.
+  public mutating func clearLatitude() {self._latitude = nil}
+
+  public var longitude: Double {
+    get {return _longitude ?? 0}
+    set {_longitude = newValue}
+  }
+  /// Returns true if `longitude` has been explicitly set.
+  public var hasLongitude: Bool {return self._longitude != nil}
+  /// Clears the value of `longitude`. Subsequent reads from it will return its default value.
+  public mutating func clearLongitude() {self._longitude = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _latitude: Double? = nil
+  fileprivate var _longitude: Double? = nil
+}
+
+/// ResolveFlightDestinationResponse leaves destination unset when no airport
+/// matches; the client then searches by city name.
+public struct Loci_Trip_ResolveFlightDestinationResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var destination: Loci_Trip_FlightPlaceOption {
+    get {return _destination ?? Loci_Trip_FlightPlaceOption()}
+    set {_destination = newValue}
+  }
+  /// Returns true if `destination` has been explicitly set.
+  public var hasDestination: Bool {return self._destination != nil}
+  /// Clears the value of `destination`. Subsequent reads from it will return its default value.
+  public mutating func clearDestination() {self._destination = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _destination: Loci_Trip_FlightPlaceOption? = nil
+}
+
 public struct Loci_Trip_AddStopRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1978,6 +2135,14 @@ extension Loci_Trip_FlightCabin: SwiftProtobuf._ProtoNameProviding {
     2: .same(proto: "FLIGHT_CABIN_PREMIUM_ECONOMY"),
     3: .same(proto: "FLIGHT_CABIN_BUSINESS"),
     4: .same(proto: "FLIGHT_CABIN_FIRST"),
+  ]
+}
+
+extension Loci_Trip_FlightPlaceKind: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "FLIGHT_PLACE_KIND_UNSPECIFIED"),
+    1: .same(proto: "FLIGHT_PLACE_KIND_AIRPORT"),
+    2: .same(proto: "FLIGHT_PLACE_KIND_METRO"),
   ]
 }
 
@@ -2623,6 +2788,7 @@ extension Loci_Trip_FlightLink: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     1: .same(proto: "provider"),
     2: .same(proto: "label"),
     3: .same(proto: "url"),
+    4: .same(proto: "sponsored"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2634,6 +2800,7 @@ extension Loci_Trip_FlightLink: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       case 1: try { try decoder.decodeSingularStringField(value: &self.provider) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.label) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.url) }()
+      case 4: try { try decoder.decodeSingularBoolField(value: &self.sponsored) }()
       default: break
       }
     }
@@ -2649,6 +2816,9 @@ extension Loci_Trip_FlightLink: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     if !self.url.isEmpty {
       try visitor.visitSingularStringField(value: self.url, fieldNumber: 3)
     }
+    if self.sponsored != false {
+      try visitor.visitSingularBoolField(value: self.sponsored, fieldNumber: 4)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2656,6 +2826,63 @@ extension Loci_Trip_FlightLink: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     if lhs.provider != rhs.provider {return false}
     if lhs.label != rhs.label {return false}
     if lhs.url != rhs.url {return false}
+    if lhs.sponsored != rhs.sponsored {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_FlightPlaceOption: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".FlightPlaceOption"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "iata"),
+    2: .same(proto: "name"),
+    3: .same(proto: "city"),
+    4: .standard(proto: "country_code"),
+    5: .same(proto: "kind"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.iata) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.name) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.city) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.countryCode) }()
+      case 5: try { try decoder.decodeSingularEnumField(value: &self.kind) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.iata.isEmpty {
+      try visitor.visitSingularStringField(value: self.iata, fieldNumber: 1)
+    }
+    if !self.name.isEmpty {
+      try visitor.visitSingularStringField(value: self.name, fieldNumber: 2)
+    }
+    if !self.city.isEmpty {
+      try visitor.visitSingularStringField(value: self.city, fieldNumber: 3)
+    }
+    if !self.countryCode.isEmpty {
+      try visitor.visitSingularStringField(value: self.countryCode, fieldNumber: 4)
+    }
+    if self.kind != .unspecified {
+      try visitor.visitSingularEnumField(value: self.kind, fieldNumber: 5)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_FlightPlaceOption, rhs: Loci_Trip_FlightPlaceOption) -> Bool {
+    if lhs.iata != rhs.iata {return false}
+    if lhs.name != rhs.name {return false}
+    if lhs.city != rhs.city {return false}
+    if lhs.countryCode != rhs.countryCode {return false}
+    if lhs.kind != rhs.kind {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -4604,6 +4831,166 @@ extension Loci_Trip_BuildFlightLinksResponse: SwiftProtobuf.Message, SwiftProtob
 
   public static func ==(lhs: Loci_Trip_BuildFlightLinksResponse, rhs: Loci_Trip_BuildFlightLinksResponse) -> Bool {
     if lhs.links != rhs.links {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_SearchAirportsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".SearchAirportsRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "query"),
+    2: .same(proto: "limit"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.query) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.limit) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.query.isEmpty {
+      try visitor.visitSingularStringField(value: self.query, fieldNumber: 1)
+    }
+    if self.limit != 0 {
+      try visitor.visitSingularInt32Field(value: self.limit, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_SearchAirportsRequest, rhs: Loci_Trip_SearchAirportsRequest) -> Bool {
+    if lhs.query != rhs.query {return false}
+    if lhs.limit != rhs.limit {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_SearchAirportsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".SearchAirportsResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "options"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.options) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.options.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.options, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_SearchAirportsResponse, rhs: Loci_Trip_SearchAirportsResponse) -> Bool {
+    if lhs.options != rhs.options {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_ResolveFlightDestinationRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ResolveFlightDestinationRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "city"),
+    2: .standard(proto: "country_code"),
+    3: .same(proto: "latitude"),
+    4: .same(proto: "longitude"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.city) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.countryCode) }()
+      case 3: try { try decoder.decodeSingularDoubleField(value: &self._latitude) }()
+      case 4: try { try decoder.decodeSingularDoubleField(value: &self._longitude) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.city.isEmpty {
+      try visitor.visitSingularStringField(value: self.city, fieldNumber: 1)
+    }
+    if !self.countryCode.isEmpty {
+      try visitor.visitSingularStringField(value: self.countryCode, fieldNumber: 2)
+    }
+    try { if let v = self._latitude {
+      try visitor.visitSingularDoubleField(value: v, fieldNumber: 3)
+    } }()
+    try { if let v = self._longitude {
+      try visitor.visitSingularDoubleField(value: v, fieldNumber: 4)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_ResolveFlightDestinationRequest, rhs: Loci_Trip_ResolveFlightDestinationRequest) -> Bool {
+    if lhs.city != rhs.city {return false}
+    if lhs.countryCode != rhs.countryCode {return false}
+    if lhs._latitude != rhs._latitude {return false}
+    if lhs._longitude != rhs._longitude {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_ResolveFlightDestinationResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ResolveFlightDestinationResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "destination"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._destination) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._destination {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_ResolveFlightDestinationResponse, rhs: Loci_Trip_ResolveFlightDestinationResponse) -> Bool {
+    if lhs._destination != rhs._destination {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

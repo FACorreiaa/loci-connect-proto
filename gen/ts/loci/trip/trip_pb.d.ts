@@ -468,6 +468,14 @@ export declare type FlightLink = Message<"loci.trip.FlightLink"> & {
    * @generated from field: string url = 3;
    */
   url: string;
+
+  /**
+   * sponsored is true when the URL carries an affiliate tag. Clients add
+   * rel="sponsored" and may label the link; untagged links stay plain.
+   *
+   * @generated from field: bool sponsored = 4;
+   */
+  sponsored: boolean;
 };
 
 /**
@@ -475,6 +483,49 @@ export declare type FlightLink = Message<"loci.trip.FlightLink"> & {
  * Use `create(FlightLinkSchema)` to create a new message.
  */
 export declare const FlightLinkSchema: GenMessage<FlightLink>;
+
+/**
+ * FlightPlaceOption is an airport (or metro code) a traveller can pick as one
+ * end of a flight search.
+ *
+ * @generated from message loci.trip.FlightPlaceOption
+ */
+export declare type FlightPlaceOption = Message<"loci.trip.FlightPlaceOption"> & {
+  /**
+   * @generated from field: string iata = 1;
+   */
+  iata: string;
+
+  /**
+   * Display name, e.g. "Humberto Delgado Airport" or "London (all airports)".
+   *
+   * @generated from field: string name = 2;
+   */
+  name: string;
+
+  /**
+   * @generated from field: string city = 3;
+   */
+  city: string;
+
+  /**
+   * ISO 3166-1 alpha-2.
+   *
+   * @generated from field: string country_code = 4;
+   */
+  countryCode: string;
+
+  /**
+   * @generated from field: loci.trip.FlightPlaceKind kind = 5;
+   */
+  kind: FlightPlaceKind;
+};
+
+/**
+ * Describes the message loci.trip.FlightPlaceOption.
+ * Use `create(FlightPlaceOptionSchema)` to create a new message.
+ */
+export declare const FlightPlaceOptionSchema: GenMessage<FlightPlaceOption>;
 
 /**
  * TripFlight is a flight the traveller chose. Loci never quotes a fare:
@@ -1678,6 +1729,101 @@ export declare type BuildFlightLinksResponse = Message<"loci.trip.BuildFlightLin
 export declare const BuildFlightLinksResponseSchema: GenMessage<BuildFlightLinksResponse>;
 
 /**
+ * SearchAirportsRequest is the flight form's "where from / to" autocomplete,
+ * matched on IATA code, city or airport name, ignoring case and accents.
+ *
+ * @generated from message loci.trip.SearchAirportsRequest
+ */
+export declare type SearchAirportsRequest = Message<"loci.trip.SearchAirportsRequest"> & {
+  /**
+   * @generated from field: string query = 1;
+   */
+  query: string;
+
+  /**
+   * At most this many options; 0 means 8.
+   *
+   * @generated from field: int32 limit = 2;
+   */
+  limit: number;
+};
+
+/**
+ * Describes the message loci.trip.SearchAirportsRequest.
+ * Use `create(SearchAirportsRequestSchema)` to create a new message.
+ */
+export declare const SearchAirportsRequestSchema: GenMessage<SearchAirportsRequest>;
+
+/**
+ * @generated from message loci.trip.SearchAirportsResponse
+ */
+export declare type SearchAirportsResponse = Message<"loci.trip.SearchAirportsResponse"> & {
+  /**
+   * @generated from field: repeated loci.trip.FlightPlaceOption options = 1;
+   */
+  options: FlightPlaceOption[];
+};
+
+/**
+ * Describes the message loci.trip.SearchAirportsResponse.
+ * Use `create(SearchAirportsResponseSchema)` to create a new message.
+ */
+export declare const SearchAirportsResponseSchema: GenMessage<SearchAirportsResponse>;
+
+/**
+ * ResolveFlightDestinationRequest asks for the airport a city's flight search
+ * should land at. Country and coordinates tell same-name cities apart.
+ *
+ * @generated from message loci.trip.ResolveFlightDestinationRequest
+ */
+export declare type ResolveFlightDestinationRequest = Message<"loci.trip.ResolveFlightDestinationRequest"> & {
+  /**
+   * @generated from field: string city = 1;
+   */
+  city: string;
+
+  /**
+   * @generated from field: string country_code = 2;
+   */
+  countryCode: string;
+
+  /**
+   * @generated from field: optional double latitude = 3;
+   */
+  latitude?: number;
+
+  /**
+   * @generated from field: optional double longitude = 4;
+   */
+  longitude?: number;
+};
+
+/**
+ * Describes the message loci.trip.ResolveFlightDestinationRequest.
+ * Use `create(ResolveFlightDestinationRequestSchema)` to create a new message.
+ */
+export declare const ResolveFlightDestinationRequestSchema: GenMessage<ResolveFlightDestinationRequest>;
+
+/**
+ * ResolveFlightDestinationResponse leaves destination unset when no airport
+ * matches; the client then searches by city name.
+ *
+ * @generated from message loci.trip.ResolveFlightDestinationResponse
+ */
+export declare type ResolveFlightDestinationResponse = Message<"loci.trip.ResolveFlightDestinationResponse"> & {
+  /**
+   * @generated from field: optional loci.trip.FlightPlaceOption destination = 1;
+   */
+  destination?: FlightPlaceOption;
+};
+
+/**
+ * Describes the message loci.trip.ResolveFlightDestinationResponse.
+ * Use `create(ResolveFlightDestinationResponseSchema)` to create a new message.
+ */
+export declare const ResolveFlightDestinationResponseSchema: GenMessage<ResolveFlightDestinationResponse>;
+
+/**
  * @generated from message loci.trip.AddStopRequest
  */
 export declare type AddStopRequest = Message<"loci.trip.AddStopRequest"> & {
@@ -1956,6 +2102,34 @@ export enum FlightCabin {
  * Describes the enum loci.trip.FlightCabin.
  */
 export declare const FlightCabinSchema: GenEnum<FlightCabin>;
+
+/**
+ * FlightPlaceKind says whether a place option is one airport or a metro code
+ * that covers several (LON, NYC).
+ *
+ * @generated from enum loci.trip.FlightPlaceKind
+ */
+export enum FlightPlaceKind {
+  /**
+   * @generated from enum value: FLIGHT_PLACE_KIND_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: FLIGHT_PLACE_KIND_AIRPORT = 1;
+   */
+  AIRPORT = 1,
+
+  /**
+   * @generated from enum value: FLIGHT_PLACE_KIND_METRO = 2;
+   */
+  METRO = 2,
+}
+
+/**
+ * Describes the enum loci.trip.FlightPlaceKind.
+ */
+export declare const FlightPlaceKindSchema: GenEnum<FlightPlaceKind>;
 
 /**
  * PackingCategory groups suggestions so a long list stays scannable.
@@ -2290,6 +2464,26 @@ export declare const TripService: GenService<{
     methodKind: "unary";
     input: typeof BuildFlightLinksRequestSchema;
     output: typeof BuildFlightLinksResponseSchema;
+  },
+  /**
+   * SearchAirports is the flight form's airport autocomplete.
+   *
+   * @generated from rpc loci.trip.TripService.SearchAirports
+   */
+  searchAirports: {
+    methodKind: "unary";
+    input: typeof SearchAirportsRequestSchema;
+    output: typeof SearchAirportsResponseSchema;
+  },
+  /**
+   * ResolveFlightDestination picks the airport (or metro code) for a city.
+   *
+   * @generated from rpc loci.trip.TripService.ResolveFlightDestination
+   */
+  resolveFlightDestination: {
+    methodKind: "unary";
+    input: typeof ResolveFlightDestinationRequestSchema;
+    output: typeof ResolveFlightDestinationResponseSchema;
   },
   /**
    * @generated from rpc loci.trip.TripService.ExportTrip
