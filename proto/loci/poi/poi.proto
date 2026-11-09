@@ -215,6 +215,13 @@ message POIDetailedInfo {
   // when the request carried accessibility needs. Each note names its source,
   // so clients can show how far to trust it.
   repeated AccessibilityNote accessibility_notes = 37 [(buf.validate.field).repeated = {max_items: 10}];
+  // price_tier is the place's price band, 1 ($) to 4 ($$$$), read from
+  // price_level / price_range. Unset when unknown. Use it for filtering;
+  // the free-text fields stay for display and older clients.
+  optional int32 price_tier = 38 [(buf.validate.field).int32 = {
+    gte: 1
+    lte: 4
+  }];
 }
 
 // AccessibilityNoteSeverity is how much a note affects the traveller's plan.
