@@ -1489,6 +1489,10 @@
                 </li>
               
                 <li>
+                  <a href="#loci.trip.FlightPlaceOption"><span class="badge">M</span>FlightPlaceOption</a>
+                </li>
+              
+                <li>
                   <a href="#loci.trip.GetFriendTripRequest"><span class="badge">M</span>GetFriendTripRequest</a>
                 </li>
               
@@ -1549,7 +1553,23 @@
                 </li>
               
                 <li>
+                  <a href="#loci.trip.ResolveFlightDestinationRequest"><span class="badge">M</span>ResolveFlightDestinationRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.ResolveFlightDestinationResponse"><span class="badge">M</span>ResolveFlightDestinationResponse</a>
+                </li>
+              
+                <li>
                   <a href="#loci.trip.SaveTripRequest"><span class="badge">M</span>SaveTripRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.SearchAirportsRequest"><span class="badge">M</span>SearchAirportsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.SearchAirportsResponse"><span class="badge">M</span>SearchAirportsResponse</a>
                 </li>
               
                 <li>
@@ -1639,6 +1659,10 @@
               
                 <li>
                   <a href="#loci.trip.FlightCabin"><span class="badge">E</span>FlightCabin</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.FlightPlaceKind"><span class="badge">E</span>FlightPlaceKind</a>
                 </li>
               
                 <li>
@@ -17409,6 +17433,14 @@ items; clients default expenses to the trip&#39;s or the user&#39;s currency. </
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>sponsored</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>sponsored is true when the URL carries an affiliate tag. Clients add
+rel=&#34;sponsored&#34; and may label the link; untagged links stay plain. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -17437,6 +17469,58 @@ items; clients default expenses to the trip&#39;s or the user&#39;s currency. </
                   <td>iata</td>
                   <td><a href="#string">string</a></td>
                   <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.FlightPlaceOption">FlightPlaceOption</h3>
+        <p>FlightPlaceOption is an airport (or metro code) a traveller can pick as one</p><p>end of a flight search.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>iata</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Display name, e.g. &#34;Humberto Delgado Airport&#34; or &#34;London (all airports)&#34;. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>city</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>country_code</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ISO 3166-1 alpha-2. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>kind</td>
+                  <td><a href="#loci.trip.FlightPlaceKind">FlightPlaceKind</a></td>
+                  <td></td>
                   <td><p> </p></td>
                 </tr>
               
@@ -17948,6 +18032,75 @@ can hide them from SuggestPacking&#39;s output. </p></td>
 
         
       
+        <h3 id="loci.trip.ResolveFlightDestinationRequest">ResolveFlightDestinationRequest</h3>
+        <p>ResolveFlightDestinationRequest asks for the airport a city's flight search</p><p>should land at. Country and coordinates tell same-name cities apart.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>city</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>country_code</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>latitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>longitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.ResolveFlightDestinationResponse">ResolveFlightDestinationResponse</h3>
+        <p>ResolveFlightDestinationResponse leaves destination unset when no airport</p><p>matches; the client then searches by city name.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>destination</td>
+                  <td><a href="#loci.trip.FlightPlaceOption">FlightPlaceOption</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.trip.SaveTripRequest">SaveTripRequest</h3>
         <p></p>
 
@@ -17971,6 +18124,61 @@ can hide them from SuggestPacking&#39;s output. </p></td>
                   <td></td>
                   <td><p>base_version is the version the client last read; the server rejects the
 write with FailedPrecondition if the stored version has moved past it. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.SearchAirportsRequest">SearchAirportsRequest</h3>
+        <p>SearchAirportsRequest is the flight form's "where from / to" autocomplete,</p><p>matched on IATA code, city or airport name, ignoring case and accents.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>query</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>limit</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>At most this many options; 0 means 8. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.SearchAirportsResponse">SearchAirportsResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>options</td>
+                  <td><a href="#loci.trip.FlightPlaceOption">FlightPlaceOption</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
                 </tr>
               
             </tbody>
@@ -19284,6 +19492,35 @@ GamificationService.MarkStop, ignored by SaveTrip). </p></td>
           </tbody>
         </table>
       
+        <h3 id="loci.trip.FlightPlaceKind">FlightPlaceKind</h3>
+        <p>FlightPlaceKind says whether a place option is one airport or a metro code</p><p>that covers several (LON, NYC).</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>FLIGHT_PLACE_KIND_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>FLIGHT_PLACE_KIND_AIRPORT</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>FLIGHT_PLACE_KIND_METRO</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
         <h3 id="loci.trip.PackingCategory">PackingCategory</h3>
         <p>PackingCategory groups suggestions so a long list stays scannable.</p>
         <table class="enum-table">
@@ -19636,6 +19873,20 @@ when it is stale, like the stop edits above.</p></td>
                 <td><a href="#loci.trip.BuildFlightLinksRequest">BuildFlightLinksRequest</a></td>
                 <td><a href="#loci.trip.BuildFlightLinksResponse">BuildFlightLinksResponse</a></td>
                 <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>SearchAirports</td>
+                <td><a href="#loci.trip.SearchAirportsRequest">SearchAirportsRequest</a></td>
+                <td><a href="#loci.trip.SearchAirportsResponse">SearchAirportsResponse</a></td>
+                <td><p>SearchAirports is the flight form&#39;s airport autocomplete.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ResolveFlightDestination</td>
+                <td><a href="#loci.trip.ResolveFlightDestinationRequest">ResolveFlightDestinationRequest</a></td>
+                <td><a href="#loci.trip.ResolveFlightDestinationResponse">ResolveFlightDestinationResponse</a></td>
+                <td><p>ResolveFlightDestination picks the airport (or metro code) for a city.</p></td>
               </tr>
             
               <tr>

@@ -12075,6 +12075,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.trip.ReportTripCommentResponse'
+  /loci.trip.TripService/ResolveFlightDestination:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: ResolveFlightDestination
+      description: ResolveFlightDestination picks the airport (or metro code) for a city.
+      operationId: loci.trip.TripService.ResolveFlightDestination
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.ResolveFlightDestinationRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.ResolveFlightDestinationResponse'
   /loci.trip.TripService/ResolveTripCommentReport:
     post:
       tags:
@@ -12181,6 +12217,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.trip.TripDraft'
+  /loci.trip.TripService/SearchAirports:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: SearchAirports
+      description: SearchAirports is the flight form's airport autocomplete.
+      operationId: loci.trip.TripService.SearchAirports
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.SearchAirportsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.SearchAirportsResponse'
   /loci.trip.TripService/SetConstraint:
     post:
       tags:
@@ -36021,6 +36093,12 @@ components:
         url:
           type: string
           title: url
+        sponsored:
+          type: boolean
+          title: sponsored
+          description: |-
+            sponsored is true when the URL carries an affiliate tag. Clients add
+             rel="sponsored" and may label the link; untagged links stay plain.
       title: FlightLink
       additionalProperties: false
       description: |-
@@ -36045,6 +36123,45 @@ components:
       description: |-
         FlightPlace is one end of a flight. iata is optional: Google Flights takes a
          city name, and Skyscanner links are only built when both ends have one.
+    loci.trip.FlightPlaceKind:
+      type: string
+      title: FlightPlaceKind
+      enum:
+        - FLIGHT_PLACE_KIND_UNSPECIFIED
+        - FLIGHT_PLACE_KIND_AIRPORT
+        - FLIGHT_PLACE_KIND_METRO
+      description: |-
+        FlightPlaceKind says whether a place option is one airport or a metro code
+         that covers several (LON, NYC).
+    loci.trip.FlightPlaceOption:
+      type: object
+      properties:
+        iata:
+          type: string
+          title: iata
+          pattern: ^[A-Z]{3}$
+        name:
+          type: string
+          title: name
+          maxLength: 200
+          description: Display name, e.g. "Humberto Delgado Airport" or "London (all airports)".
+        city:
+          type: string
+          title: city
+          maxLength: 200
+        countryCode:
+          type: string
+          title: country_code
+          maxLength: 2
+          description: ISO 3166-1 alpha-2.
+        kind:
+          title: kind
+          $ref: '#/components/schemas/loci.trip.FlightPlaceKind'
+      title: FlightPlaceOption
+      additionalProperties: false
+      description: |-
+        FlightPlaceOption is an airport (or metro code) a traveller can pick as one
+         end of a flight search.
     loci.trip.GetFriendTripRequest:
       type: object
       properties:
@@ -36496,6 +36613,52 @@ components:
           description: True when the comment is out of the trip because of its reports.
       title: ReportedTripComment
       additionalProperties: false
+    loci.trip.ResolveFlightDestinationRequest:
+      type: object
+      properties:
+        city:
+          type: string
+          title: city
+          maxLength: 200
+          minLength: 1
+        countryCode:
+          type: string
+          title: country_code
+          pattern: ^([A-Za-z]{2})?$
+        latitude:
+          type:
+            - number
+            - "null"
+          title: latitude
+          maximum: 90
+          minimum: -90
+          format: double
+        longitude:
+          type:
+            - number
+            - "null"
+          title: longitude
+          maximum: 180
+          minimum: -180
+          format: double
+      title: ResolveFlightDestinationRequest
+      additionalProperties: false
+      description: |-
+        ResolveFlightDestinationRequest asks for the airport a city's flight search
+         should land at. Country and coordinates tell same-name cities apart.
+    loci.trip.ResolveFlightDestinationResponse:
+      type: object
+      properties:
+        destination:
+          oneOf:
+            - $ref: '#/components/schemas/loci.trip.FlightPlaceOption'
+            - type: "null"
+          title: destination
+      title: ResolveFlightDestinationResponse
+      additionalProperties: false
+      description: |-
+        ResolveFlightDestinationResponse leaves destination unset when no airport
+         matches; the client then searches by city name.
     loci.trip.ResolveTripCommentReportRequest:
       type: object
       properties:
@@ -36553,6 +36716,36 @@ components:
       title: SaveTripRequest
       required:
         - trip
+      additionalProperties: false
+    loci.trip.SearchAirportsRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          title: query
+          maxLength: 100
+          minLength: 2
+        limit:
+          type: integer
+          title: limit
+          maximum: 20
+          minimum: 0
+          format: int32
+          description: At most this many options; 0 means 8.
+      title: SearchAirportsRequest
+      additionalProperties: false
+      description: |-
+        SearchAirportsRequest is the flight form's "where from / to" autocomplete,
+         matched on IATA code, city or airport name, ignoring case and accents.
+    loci.trip.SearchAirportsResponse:
+      type: object
+      properties:
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.trip.FlightPlaceOption'
+          title: options
+      title: SearchAirportsResponse
       additionalProperties: false
     loci.trip.SetConstraintRequest:
       type: object
