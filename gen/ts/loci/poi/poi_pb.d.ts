@@ -630,7 +630,8 @@ export declare type SearchPOIRequest = Message<"loci.poi.SearchPOIRequest"> & {
   /**
    * Optional. Empty asks for a nearby listing rather than a search: the places
    * around latitude/longitude, nearest first, at most 50, optionally narrowed
-   * to the category in search_tags[0]. An empty query with no location is
+   * to the categories in search_tags: a place is listed when its category
+   * equals any of them, ignoring case. An empty query with no location is
    * rejected with INVALID_ARGUMENT, since there is nothing to rank by.
    *
    * @generated from field: string query = 1;

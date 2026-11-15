@@ -126,6 +126,21 @@ message TripStop {
   TripStopStatus status = 12;
   // When status last changed; absent while the stop is open.
   google.protobuf.Timestamp status_at = 13;
+  // The stop's own pin. Persisted, and what places the stop on a map when it
+  // has no poi_id: a place pasted from a map link that Loci does not know yet.
+  // On read the server fills these from the linked POI when there is one, so a
+  // client reads a stop's position here whichever kind of stop it is. Set both
+  // or neither.
+  optional double latitude = 14 [(buf.validate.field).double = {
+    gte: -90
+    lte: 90
+  }];
+  optional double longitude = 15 [(buf.validate.field).double = {
+    gte: -180
+    lte: 180
+  }];
+  // Street address shown with the pin; same rules as latitude/longitude.
+  optional string address = 16 [(buf.validate.field).string = {max_len: 500}];
 }
 
 enum TripStopStatus {
@@ -864,6 +879,40 @@ message AddStopRequest {
   }];
   TripStop stop = 3 [(buf.validate.field).required = true];
   int64 base_version = 4 [(buf.validate.field).int64 = {gte: 0}];
+  // Insert the new stop directly after this one, which must be on day_id.
+  // Unset appends to the end of the day. stop.order_index is ignored either
+  // way: the server numbers the day.
+  optional string after_stop_id = 5 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+}
+
+// MoveStopRequest moves one stop to a position on any day of the same trip,
+// including the day it is already on.
+message MoveStopRequest {
+  string trip_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string stop_id = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string to_day_id = 3 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  // 0-based position on to_day_id after the move. A value past the end of the
+  // day puts the stop last.
+  int32 to_index = 4 [(buf.validate.field).int32 = {gte: 0}];
+  int64 base_version = 5 [(buf.validate.field).int64 = {gte: 0}];
+}
+
+// GetTripForSessionRequest asks for the trip that was built from a chat
+// session, so an itinerary opened by its session can be edited as that trip.
+message GetTripForSessionRequest {
+  string session_id = 1 [(buf.validate.field).string.uuid = true];
 }
 
 message RemoveStopRequest {
@@ -927,6 +976,11 @@ service TripService {
   // GetTrip opens one of the caller's trips, or a trip the caller is a
   // member of (with viewer_role and members set). Anything else is NotFound.
   rpc GetTrip(GetTripRequest) returns (TripDraft);
+  // The caller's own trip built from a chat session: the session itself, or a
+  // city of a multi-city trip. NOT_FOUND when the session has no trip of
+  // theirs. When a session has produced more than one, the most recently
+  // updated wins.
+  rpc GetTripForSession(GetTripForSessionRequest) returns (TripDraft);
   rpc ListTrips(ListTripsRequest) returns (ListTripsResponse);
   // ShareTrip is the old sharing call: is_public = true sets LINK visibility,
   // false sets PRIVATE. Use SetTripVisibility.
@@ -958,6 +1012,8 @@ service TripService {
   rpc SetConstraint(SetConstraintRequest) returns (TripDraft);
   rpc AddStop(AddStopRequest) returns (TripDraft);
   rpc RemoveStop(RemoveStopRequest) returns (TripDraft);
+  // Moves a stop within its day or to another day of the trip.
+  rpc MoveStop(MoveStopRequest) returns (TripDraft);
   rpc ReplaceStop(ReplaceStopRequest) returns (TripDraft);
   // The trip's plan. Each takes base_version and answers FailedPrecondition
   // when it is stale, like the stop edits above.

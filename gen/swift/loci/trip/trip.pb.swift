@@ -577,6 +577,39 @@ public struct Loci_Trip_TripStop: @unchecked Sendable {
   /// Clears the value of `statusAt`. Subsequent reads from it will return its default value.
   public mutating func clearStatusAt() {_uniqueStorage()._statusAt = nil}
 
+  /// The stop's own pin. Persisted, and what places the stop on a map when it
+  /// has no poi_id: a place pasted from a map link that Loci does not know yet.
+  /// On read the server fills these from the linked POI when there is one, so a
+  /// client reads a stop's position here whichever kind of stop it is. Set both
+  /// or neither.
+  public var latitude: Double {
+    get {return _storage._latitude ?? 0}
+    set {_uniqueStorage()._latitude = newValue}
+  }
+  /// Returns true if `latitude` has been explicitly set.
+  public var hasLatitude: Bool {return _storage._latitude != nil}
+  /// Clears the value of `latitude`. Subsequent reads from it will return its default value.
+  public mutating func clearLatitude() {_uniqueStorage()._latitude = nil}
+
+  public var longitude: Double {
+    get {return _storage._longitude ?? 0}
+    set {_uniqueStorage()._longitude = newValue}
+  }
+  /// Returns true if `longitude` has been explicitly set.
+  public var hasLongitude: Bool {return _storage._longitude != nil}
+  /// Clears the value of `longitude`. Subsequent reads from it will return its default value.
+  public mutating func clearLongitude() {_uniqueStorage()._longitude = nil}
+
+  /// Street address shown with the pin; same rules as latitude/longitude.
+  public var address: String {
+    get {return _storage._address ?? String()}
+    set {_uniqueStorage()._address = newValue}
+  }
+  /// Returns true if `address` has been explicitly set.
+  public var hasAddress: Bool {return _storage._address != nil}
+  /// Clears the value of `address`. Subsequent reads from it will return its default value.
+  public mutating func clearAddress() {_uniqueStorage()._address = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -2015,11 +2048,62 @@ public struct Loci_Trip_AddStopRequest: Sendable {
 
   public var baseVersion: Int64 = 0
 
+  /// Insert the new stop directly after this one, which must be on day_id.
+  /// Unset appends to the end of the day. stop.order_index is ignored either
+  /// way: the server numbers the day.
+  public var afterStopID: String {
+    get {return _afterStopID ?? String()}
+    set {_afterStopID = newValue}
+  }
+  /// Returns true if `afterStopID` has been explicitly set.
+  public var hasAfterStopID: Bool {return self._afterStopID != nil}
+  /// Clears the value of `afterStopID`. Subsequent reads from it will return its default value.
+  public mutating func clearAfterStopID() {self._afterStopID = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
   fileprivate var _stop: Loci_Trip_TripStop? = nil
+  fileprivate var _afterStopID: String? = nil
+}
+
+/// MoveStopRequest moves one stop to a position on any day of the same trip,
+/// including the day it is already on.
+public struct Loci_Trip_MoveStopRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var tripID: String = String()
+
+  public var stopID: String = String()
+
+  public var toDayID: String = String()
+
+  /// 0-based position on to_day_id after the move. A value past the end of the
+  /// day puts the stop last.
+  public var toIndex: Int32 = 0
+
+  public var baseVersion: Int64 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// GetTripForSessionRequest asks for the trip that was built from a chat
+/// session, so an itinerary opened by its session can be edited as that trip.
+public struct Loci_Trip_GetTripForSessionRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var sessionID: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
 }
 
 public struct Loci_Trip_RemoveStopRequest: Sendable {
@@ -2264,6 +2348,9 @@ extension Loci_Trip_TripStop: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     11: .same(proto: "image"),
     12: .same(proto: "status"),
     13: .standard(proto: "status_at"),
+    14: .same(proto: "latitude"),
+    15: .same(proto: "longitude"),
+    16: .same(proto: "address"),
   ]
 
   fileprivate class _StorageClass {
@@ -2280,6 +2367,9 @@ extension Loci_Trip_TripStop: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _image: Loci_Poi_POIImage? = nil
     var _status: Loci_Trip_TripStopStatus = .unspecified
     var _statusAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+    var _latitude: Double? = nil
+    var _longitude: Double? = nil
+    var _address: String? = nil
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -2307,6 +2397,9 @@ extension Loci_Trip_TripStop: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       _image = source._image
       _status = source._status
       _statusAt = source._statusAt
+      _latitude = source._latitude
+      _longitude = source._longitude
+      _address = source._address
     }
   }
 
@@ -2338,6 +2431,9 @@ extension Loci_Trip_TripStop: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         case 11: try { try decoder.decodeSingularMessageField(value: &_storage._image) }()
         case 12: try { try decoder.decodeSingularEnumField(value: &_storage._status) }()
         case 13: try { try decoder.decodeSingularMessageField(value: &_storage._statusAt) }()
+        case 14: try { try decoder.decodeSingularDoubleField(value: &_storage._latitude) }()
+        case 15: try { try decoder.decodeSingularDoubleField(value: &_storage._longitude) }()
+        case 16: try { try decoder.decodeSingularStringField(value: &_storage._address) }()
         default: break
         }
       }
@@ -2389,6 +2485,15 @@ extension Loci_Trip_TripStop: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       try { if let v = _storage._statusAt {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
       } }()
+      try { if let v = _storage._latitude {
+        try visitor.visitSingularDoubleField(value: v, fieldNumber: 14)
+      } }()
+      try { if let v = _storage._longitude {
+        try visitor.visitSingularDoubleField(value: v, fieldNumber: 15)
+      } }()
+      try { if let v = _storage._address {
+        try visitor.visitSingularStringField(value: v, fieldNumber: 16)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2411,6 +2516,9 @@ extension Loci_Trip_TripStop: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         if _storage._image != rhs_storage._image {return false}
         if _storage._status != rhs_storage._status {return false}
         if _storage._statusAt != rhs_storage._statusAt {return false}
+        if _storage._latitude != rhs_storage._latitude {return false}
+        if _storage._longitude != rhs_storage._longitude {return false}
+        if _storage._address != rhs_storage._address {return false}
         return true
       }
       if !storagesAreEqual {return false}
@@ -5003,6 +5111,7 @@ extension Loci_Trip_AddStopRequest: SwiftProtobuf.Message, SwiftProtobuf._Messag
     2: .standard(proto: "day_id"),
     3: .same(proto: "stop"),
     4: .standard(proto: "base_version"),
+    5: .standard(proto: "after_stop_id"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -5015,6 +5124,7 @@ extension Loci_Trip_AddStopRequest: SwiftProtobuf.Message, SwiftProtobuf._Messag
       case 2: try { try decoder.decodeSingularStringField(value: &self.dayID) }()
       case 3: try { try decoder.decodeSingularMessageField(value: &self._stop) }()
       case 4: try { try decoder.decodeSingularInt64Field(value: &self.baseVersion) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self._afterStopID) }()
       default: break
       }
     }
@@ -5037,6 +5147,9 @@ extension Loci_Trip_AddStopRequest: SwiftProtobuf.Message, SwiftProtobuf._Messag
     if self.baseVersion != 0 {
       try visitor.visitSingularInt64Field(value: self.baseVersion, fieldNumber: 4)
     }
+    try { if let v = self._afterStopID {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 5)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -5045,6 +5158,95 @@ extension Loci_Trip_AddStopRequest: SwiftProtobuf.Message, SwiftProtobuf._Messag
     if lhs.dayID != rhs.dayID {return false}
     if lhs._stop != rhs._stop {return false}
     if lhs.baseVersion != rhs.baseVersion {return false}
+    if lhs._afterStopID != rhs._afterStopID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_MoveStopRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".MoveStopRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "trip_id"),
+    2: .standard(proto: "stop_id"),
+    3: .standard(proto: "to_day_id"),
+    4: .standard(proto: "to_index"),
+    5: .standard(proto: "base_version"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.tripID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.stopID) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.toDayID) }()
+      case 4: try { try decoder.decodeSingularInt32Field(value: &self.toIndex) }()
+      case 5: try { try decoder.decodeSingularInt64Field(value: &self.baseVersion) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.tripID.isEmpty {
+      try visitor.visitSingularStringField(value: self.tripID, fieldNumber: 1)
+    }
+    if !self.stopID.isEmpty {
+      try visitor.visitSingularStringField(value: self.stopID, fieldNumber: 2)
+    }
+    if !self.toDayID.isEmpty {
+      try visitor.visitSingularStringField(value: self.toDayID, fieldNumber: 3)
+    }
+    if self.toIndex != 0 {
+      try visitor.visitSingularInt32Field(value: self.toIndex, fieldNumber: 4)
+    }
+    if self.baseVersion != 0 {
+      try visitor.visitSingularInt64Field(value: self.baseVersion, fieldNumber: 5)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_MoveStopRequest, rhs: Loci_Trip_MoveStopRequest) -> Bool {
+    if lhs.tripID != rhs.tripID {return false}
+    if lhs.stopID != rhs.stopID {return false}
+    if lhs.toDayID != rhs.toDayID {return false}
+    if lhs.toIndex != rhs.toIndex {return false}
+    if lhs.baseVersion != rhs.baseVersion {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_GetTripForSessionRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".GetTripForSessionRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "session_id"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.sessionID) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.sessionID.isEmpty {
+      try visitor.visitSingularStringField(value: self.sessionID, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_GetTripForSessionRequest, rhs: Loci_Trip_GetTripForSessionRequest) -> Bool {
+    if lhs.sessionID != rhs.sessionID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

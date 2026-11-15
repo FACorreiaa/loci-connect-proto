@@ -22,6 +22,13 @@ public protocol Loci_Trip_TripServiceClientInterface: Sendable {
     @available(iOS 13, *)
     func `getTrip`(request: Loci_Trip_GetTripRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripDraft>
 
+    /// The caller's own trip built from a chat session: the session itself, or a
+    /// city of a multi-city trip. NOT_FOUND when the session has no trip of
+    /// theirs. When a session has produced more than one, the most recently
+    /// updated wins.
+    @available(iOS 13, *)
+    func `getTripForSession`(request: Loci_Trip_GetTripForSessionRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripDraft>
+
     @available(iOS 13, *)
     func `listTrips`(request: Loci_Trip_ListTripsRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_ListTripsResponse>
 
@@ -78,6 +85,10 @@ public protocol Loci_Trip_TripServiceClientInterface: Sendable {
 
     @available(iOS 13, *)
     func `removeStop`(request: Loci_Trip_RemoveStopRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripDraft>
+
+    /// Moves a stop within its day or to another day of the trip.
+    @available(iOS 13, *)
+    func `moveStop`(request: Loci_Trip_MoveStopRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripDraft>
 
     @available(iOS 13, *)
     func `replaceStop`(request: Loci_Trip_ReplaceStopRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripDraft>
@@ -216,6 +227,11 @@ public final class Loci_Trip_TripServiceClient: Loci_Trip_TripServiceClientInter
     }
 
     @available(iOS 13, *)
+    public func `getTripForSession`(request: Loci_Trip_GetTripForSessionRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_TripDraft> {
+        return await self.client.unary(path: "/loci.trip.TripService/GetTripForSession", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
     public func `listTrips`(request: Loci_Trip_ListTripsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_ListTripsResponse> {
         return await self.client.unary(path: "/loci.trip.TripService/ListTrips", idempotencyLevel: .unknown, request: request, headers: headers)
     }
@@ -283,6 +299,11 @@ public final class Loci_Trip_TripServiceClient: Loci_Trip_TripServiceClientInter
     @available(iOS 13, *)
     public func `removeStop`(request: Loci_Trip_RemoveStopRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_TripDraft> {
         return await self.client.unary(path: "/loci.trip.TripService/RemoveStop", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
+    public func `moveStop`(request: Loci_Trip_MoveStopRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_TripDraft> {
+        return await self.client.unary(path: "/loci.trip.TripService/MoveStop", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @available(iOS 13, *)
@@ -429,6 +450,7 @@ public final class Loci_Trip_TripServiceClient: Loci_Trip_TripServiceClientInter
         public enum Methods {
             public static let saveTrip = Connect.MethodSpec(name: "SaveTrip", service: "loci.trip.TripService", type: .unary)
             public static let getTrip = Connect.MethodSpec(name: "GetTrip", service: "loci.trip.TripService", type: .unary)
+            public static let getTripForSession = Connect.MethodSpec(name: "GetTripForSession", service: "loci.trip.TripService", type: .unary)
             public static let listTrips = Connect.MethodSpec(name: "ListTrips", service: "loci.trip.TripService", type: .unary)
             public static let shareTrip = Connect.MethodSpec(name: "ShareTrip", service: "loci.trip.TripService", type: .unary)
             public static let setTripVisibility = Connect.MethodSpec(name: "SetTripVisibility", service: "loci.trip.TripService", type: .unary)
@@ -443,6 +465,7 @@ public final class Loci_Trip_TripServiceClient: Loci_Trip_TripServiceClientInter
             public static let setConstraint = Connect.MethodSpec(name: "SetConstraint", service: "loci.trip.TripService", type: .unary)
             public static let addStop = Connect.MethodSpec(name: "AddStop", service: "loci.trip.TripService", type: .unary)
             public static let removeStop = Connect.MethodSpec(name: "RemoveStop", service: "loci.trip.TripService", type: .unary)
+            public static let moveStop = Connect.MethodSpec(name: "MoveStop", service: "loci.trip.TripService", type: .unary)
             public static let replaceStop = Connect.MethodSpec(name: "ReplaceStop", service: "loci.trip.TripService", type: .unary)
             public static let setTripDates = Connect.MethodSpec(name: "SetTripDates", service: "loci.trip.TripService", type: .unary)
             public static let setStay = Connect.MethodSpec(name: "SetStay", service: "loci.trip.TripService", type: .unary)

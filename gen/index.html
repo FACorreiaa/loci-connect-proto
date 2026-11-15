@@ -1509,6 +1509,10 @@
                 </li>
               
                 <li>
+                  <a href="#loci.trip.GetTripForSessionRequest"><span class="badge">M</span>GetTripForSessionRequest</a>
+                </li>
+              
+                <li>
                   <a href="#loci.trip.GetTripRequest"><span class="badge">M</span>GetTripRequest</a>
                 </li>
               
@@ -1526,6 +1530,10 @@
               
                 <li>
                   <a href="#loci.trip.ListUserTripsRequest"><span class="badge">M</span>ListUserTripsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.MoveStopRequest"><span class="badge">M</span>MoveStopRequest</a>
                 </li>
               
                 <li>
@@ -10898,7 +10906,8 @@ the free-text fields stay for display and older clients. </p></td>
                   <td></td>
                   <td><p>Optional. Empty asks for a nearby listing rather than a search: the places
 around latitude/longitude, nearest first, at most 50, optionally narrowed
-to the category in search_tags[0]. An empty query with no location is
+to the categories in search_tags: a place is listed when its category
+equals any of them, ignoring case. An empty query with no location is
 rejected with INVALID_ARGUMENT, since there is nothing to rank by. </p></td>
                 </tr>
               
@@ -16948,6 +16957,15 @@ trip keeps its id here; clients show such comments with the trip&#39;s. </p></td
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>after_stop_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>Insert the new stop directly after this one, which must be on day_id.
+Unset appends to the end of the day. stop.order_index is ignored either
+way: the server numbers the day. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -17635,6 +17653,30 @@ can hide them from SuggestPacking&#39;s output. </p></td>
 
         
       
+        <h3 id="loci.trip.GetTripForSessionRequest">GetTripForSessionRequest</h3>
+        <p>GetTripForSessionRequest asks for the trip that was built from a chat</p><p>session, so an itinerary opened by its session can be edited as that trip.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>session_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.trip.GetTripRequest">GetTripRequest</h3>
         <p></p>
 
@@ -17765,6 +17807,59 @@ can hide them from SuggestPacking&#39;s output. </p></td>
                 <tr>
                   <td>pagination</td>
                   <td><a href="#loci.common.PaginationRequest">loci.common.PaginationRequest</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="loci.trip.MoveStopRequest">MoveStopRequest</h3>
+        <p>MoveStopRequest moves one stop to a position on any day of the same trip,</p><p>including the day it is already on.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>trip_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>stop_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>to_day_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>to_index</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>0-based position on to_day_id after the move. A value past the end of the
+day puts the stop last. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base_version</td>
+                  <td><a href="#int64">int64</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -19347,6 +19442,31 @@ GamificationService.MarkStop, ignored by SaveTrip). </p></td>
                   <td><p>When status last changed; absent while the stop is open. </p></td>
                 </tr>
               
+                <tr>
+                  <td>latitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td>optional</td>
+                  <td><p>The stop&#39;s own pin. Persisted, and what places the stop on a map when it
+has no poi_id: a place pasted from a map link that Loci does not know yet.
+On read the server fills these from the linked POI when there is one, so a
+client reads a stop&#39;s position here whichever kind of stop it is. Set both
+or neither. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>longitude</td>
+                  <td><a href="#double">double</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>address</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p>Street address shown with the pin; same rules as latitude/longitude. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -19720,6 +19840,16 @@ member of (with viewer_role and members set). Anything else is NotFound.</p></td
               </tr>
             
               <tr>
+                <td>GetTripForSession</td>
+                <td><a href="#loci.trip.GetTripForSessionRequest">GetTripForSessionRequest</a></td>
+                <td><a href="#loci.trip.TripDraft">TripDraft</a></td>
+                <td><p>The caller&#39;s own trip built from a chat session: the session itself, or a
+city of a multi-city trip. NOT_FOUND when the session has no trip of
+theirs. When a session has produced more than one, the most recently
+updated wins.</p></td>
+              </tr>
+            
+              <tr>
                 <td>ListTrips</td>
                 <td><a href="#loci.trip.ListTripsRequest">ListTripsRequest</a></td>
                 <td><a href="#loci.trip.ListTripsResponse">ListTripsResponse</a></td>
@@ -19823,6 +19953,13 @@ not touch the copy.</p></td>
                 <td><a href="#loci.trip.RemoveStopRequest">RemoveStopRequest</a></td>
                 <td><a href="#loci.trip.TripDraft">TripDraft</a></td>
                 <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>MoveStop</td>
+                <td><a href="#loci.trip.MoveStopRequest">MoveStopRequest</a></td>
+                <td><a href="#loci.trip.TripDraft">TripDraft</a></td>
+                <td><p>Moves a stop within its day or to another day of the trip.</p></td>
               </tr>
             
               <tr>
