@@ -168,6 +168,29 @@ export declare type TripStop = Message<"loci.trip.TripStop"> & {
    * @generated from field: google.protobuf.Timestamp status_at = 13;
    */
   statusAt?: Timestamp;
+
+  /**
+   * The stop's own pin. Persisted, and what places the stop on a map when it
+   * has no poi_id: a place pasted from a map link that Loci does not know yet.
+   * On read the server fills these from the linked POI when there is one, so a
+   * client reads a stop's position here whichever kind of stop it is. Set both
+   * or neither.
+   *
+   * @generated from field: optional double latitude = 14;
+   */
+  latitude?: number;
+
+  /**
+   * @generated from field: optional double longitude = 15;
+   */
+  longitude?: number;
+
+  /**
+   * Street address shown with the pin; same rules as latitude/longitude.
+   *
+   * @generated from field: optional string address = 16;
+   */
+  address?: string;
 };
 
 /**
@@ -1846,6 +1869,15 @@ export declare type AddStopRequest = Message<"loci.trip.AddStopRequest"> & {
    * @generated from field: int64 base_version = 4;
    */
   baseVersion: bigint;
+
+  /**
+   * Insert the new stop directly after this one, which must be on day_id.
+   * Unset appends to the end of the day. stop.order_index is ignored either
+   * way: the server numbers the day.
+   *
+   * @generated from field: optional string after_stop_id = 5;
+   */
+  afterStopId?: string;
 };
 
 /**
@@ -1853,6 +1885,67 @@ export declare type AddStopRequest = Message<"loci.trip.AddStopRequest"> & {
  * Use `create(AddStopRequestSchema)` to create a new message.
  */
 export declare const AddStopRequestSchema: GenMessage<AddStopRequest>;
+
+/**
+ * MoveStopRequest moves one stop to a position on any day of the same trip,
+ * including the day it is already on.
+ *
+ * @generated from message loci.trip.MoveStopRequest
+ */
+export declare type MoveStopRequest = Message<"loci.trip.MoveStopRequest"> & {
+  /**
+   * @generated from field: string trip_id = 1;
+   */
+  tripId: string;
+
+  /**
+   * @generated from field: string stop_id = 2;
+   */
+  stopId: string;
+
+  /**
+   * @generated from field: string to_day_id = 3;
+   */
+  toDayId: string;
+
+  /**
+   * 0-based position on to_day_id after the move. A value past the end of the
+   * day puts the stop last.
+   *
+   * @generated from field: int32 to_index = 4;
+   */
+  toIndex: number;
+
+  /**
+   * @generated from field: int64 base_version = 5;
+   */
+  baseVersion: bigint;
+};
+
+/**
+ * Describes the message loci.trip.MoveStopRequest.
+ * Use `create(MoveStopRequestSchema)` to create a new message.
+ */
+export declare const MoveStopRequestSchema: GenMessage<MoveStopRequest>;
+
+/**
+ * GetTripForSessionRequest asks for the trip that was built from a chat
+ * session, so an itinerary opened by its session can be edited as that trip.
+ *
+ * @generated from message loci.trip.GetTripForSessionRequest
+ */
+export declare type GetTripForSessionRequest = Message<"loci.trip.GetTripForSessionRequest"> & {
+  /**
+   * @generated from field: string session_id = 1;
+   */
+  sessionId: string;
+};
+
+/**
+ * Describes the message loci.trip.GetTripForSessionRequest.
+ * Use `create(GetTripForSessionRequestSchema)` to create a new message.
+ */
+export declare const GetTripForSessionRequestSchema: GenMessage<GetTripForSessionRequest>;
 
 /**
  * @generated from message loci.trip.RemoveStopRequest
@@ -2272,6 +2365,19 @@ export declare const TripService: GenService<{
     output: typeof TripDraftSchema;
   },
   /**
+   * The caller's own trip built from a chat session: the session itself, or a
+   * city of a multi-city trip. NOT_FOUND when the session has no trip of
+   * theirs. When a session has produced more than one, the most recently
+   * updated wins.
+   *
+   * @generated from rpc loci.trip.TripService.GetTripForSession
+   */
+  getTripForSession: {
+    methodKind: "unary";
+    input: typeof GetTripForSessionRequestSchema;
+    output: typeof TripDraftSchema;
+  },
+  /**
    * @generated from rpc loci.trip.TripService.ListTrips
    */
   listTrips: {
@@ -2404,6 +2510,16 @@ export declare const TripService: GenService<{
   removeStop: {
     methodKind: "unary";
     input: typeof RemoveStopRequestSchema;
+    output: typeof TripDraftSchema;
+  },
+  /**
+   * Moves a stop within its day or to another day of the trip.
+   *
+   * @generated from rpc loci.trip.TripService.MoveStop
+   */
+  moveStop: {
+    methodKind: "unary";
+    input: typeof MoveStopRequestSchema;
     output: typeof TripDraftSchema;
   },
   /**

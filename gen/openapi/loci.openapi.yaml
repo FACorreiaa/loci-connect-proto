@@ -11569,6 +11569,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.trip.GetTripChecklistResponse'
+  /loci.trip.TripService/GetTripForSession:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: GetTripForSession
+      description: |-
+        The caller's own trip built from a chat session: the session itself, or a
+         city of a multi-city trip. NOT_FOUND when the session has no trip of
+         theirs. When a session has produced more than one, the most recently
+         updated wins.
+      operationId: loci.trip.TripService.GetTripForSession
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.GetTripForSessionRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.TripDraft'
   /loci.trip.TripService/GetTripInvite:
     post:
       tags:
@@ -11823,6 +11863,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.trip.ListTripsResponse'
+  /loci.trip.TripService/MoveStop:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: MoveStop
+      description: Moves a stop within its day or to another day of the trip.
+      operationId: loci.trip.TripService.MoveStop
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.MoveStopRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.TripDraft'
   /loci.trip.TripService/RemoveFlight:
     post:
       tags:
@@ -27235,7 +27311,8 @@ components:
           description: |-
             Optional. Empty asks for a nearby listing rather than a search: the places
              around latitude/longitude, nearest first, at most 50, optionally narrowed
-             to the category in search_tags[0]. An empty query with no location is
+             to the categories in search_tags: a place is listed when its category
+             equals any of them, ignoring case. An empty query with no location is
              rejected with INVALID_ARGUMENT, since there is nothing to rank by.
         cityName:
           type: string
@@ -35743,6 +35820,17 @@ components:
           title: base_version
           minimum: 0
           format: int64
+        afterStopId:
+          type:
+            - string
+            - "null"
+          title: after_stop_id
+          maxLength: 100
+          minLength: 1
+          description: |-
+            Insert the new stop directly after this one, which must be on day_id.
+             Unset appends to the end of the day. stop.order_index is ignored either
+             way: the server numbers the day.
       title: AddStopRequest
       required:
         - stop
@@ -36209,6 +36297,18 @@ components:
              can hide them from SuggestPacking's output.
       title: GetTripChecklistResponse
       additionalProperties: false
+    loci.trip.GetTripForSessionRequest:
+      type: object
+      properties:
+        sessionId:
+          type: string
+          title: session_id
+          format: uuid
+      title: GetTripForSessionRequest
+      additionalProperties: false
+      description: |-
+        GetTripForSessionRequest asks for the trip that was built from a chat
+         session, so an itinerary opened by its session can be edited as that trip.
     loci.trip.GetTripInviteRequest:
       type: object
       properties:
@@ -36370,6 +36470,44 @@ components:
       required:
         - pagination
       additionalProperties: false
+    loci.trip.MoveStopRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+        stopId:
+          type: string
+          title: stop_id
+          maxLength: 100
+          minLength: 1
+        toDayId:
+          type: string
+          title: to_day_id
+          maxLength: 100
+          minLength: 1
+        toIndex:
+          type: integer
+          title: to_index
+          minimum: 0
+          format: int32
+          description: |-
+            0-based position on to_day_id after the move. A value past the end of the
+             day puts the stop last.
+        baseVersion:
+          type:
+            - integer
+            - string
+          title: base_version
+          minimum: 0
+          format: int64
+      title: MoveStopRequest
+      additionalProperties: false
+      description: |-
+        MoveStopRequest moves one stop to a position on any day of the same trip,
+         including the day it is already on.
     loci.trip.PackingCategory:
       type: string
       title: PackingCategory
@@ -37761,6 +37899,35 @@ components:
           title: status_at
           description: When status last changed; absent while the stop is open.
           $ref: '#/components/schemas/google.protobuf.Timestamp'
+        latitude:
+          type:
+            - number
+            - "null"
+          title: latitude
+          maximum: 90
+          minimum: -90
+          format: double
+          description: |-
+            The stop's own pin. Persisted, and what places the stop on a map when it
+             has no poi_id: a place pasted from a map link that Loci does not know yet.
+             On read the server fills these from the linked POI when there is one, so a
+             client reads a stop's position here whichever kind of stop it is. Set both
+             or neither.
+        longitude:
+          type:
+            - number
+            - "null"
+          title: longitude
+          maximum: 180
+          minimum: -180
+          format: double
+        address:
+          type:
+            - string
+            - "null"
+          title: address
+          maxLength: 500
+          description: Street address shown with the pin; same rules as latitude/longitude.
       title: TripStop
       additionalProperties: false
       description: TripStop is a single place on a day's timeline.
