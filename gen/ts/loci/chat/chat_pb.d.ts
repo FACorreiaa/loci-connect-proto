@@ -10,6 +10,7 @@ import type { AccessibilityNote, HotelDetailedInfo, POIDetailedInfo, RestaurantD
 import type { GeneralCityData } from "../city/city_pb";
 import type { CityGastronomy } from "../gastronomy/gastronomy_pb";
 import type { FlightCabin, FlightPlace, TripDraft, TripFlight, TripLeg, TripStay, TripStop } from "../trip/trip_pb";
+import type { HotelComparisonPayload } from "./hotel_report_pb";
 import type { PaginationMetadata, PaginationRequest, ResponseSchema } from "../common/common_pb";
 import type { PublicUser } from "../social/social_pb";
 
@@ -721,6 +722,15 @@ export declare type ChatRequest = Message<"loci.chat.ChatRequest"> & {
    * @generated from field: bool suggest_order = 10;
    */
   suggestOrder: boolean;
+
+  /**
+   * What this client can render beyond the original stream events. The
+   * server only sends a newer event to a client that lists it, so an older
+   * build keeps getting an answer it can show.
+   *
+   * @generated from field: repeated loci.chat.ClientCapability capabilities = 11;
+   */
+  capabilities: ClientCapability[];
 };
 
 /**
@@ -1458,6 +1468,14 @@ export declare type StreamEvent = Message<"loci.chat.StreamEvent"> & {
      */
     value: AccessibleRoutePayload;
     case: "accessibleRoute";
+  } | {
+    /**
+     * Only sent to a client that listed CLIENT_CAPABILITY_HOTEL_COMPARISON.
+     *
+     * @generated from field: loci.chat.HotelComparisonPayload hotel_comparison = 36;
+     */
+    value: HotelComparisonPayload;
+    case: "hotelComparison";
   } | { case: undefined; value?: undefined };
 };
 
@@ -2167,6 +2185,14 @@ export declare type TripAction = Message<"loci.chat.TripAction"> & {
      */
     value: MoveStopAction;
     case: "moveStop";
+  } | {
+    /**
+     * Pick one of the hotels a comparison report looked at as the stay.
+     *
+     * @generated from field: loci.chat.ChooseStayAction choose_stay = 9;
+     */
+    value: ChooseStayAction;
+    case: "chooseStay";
   } | { case: undefined; value?: undefined };
 };
 
@@ -2175,6 +2201,32 @@ export declare type TripAction = Message<"loci.chat.TripAction"> & {
  * Use `create(TripActionSchema)` to create a new message.
  */
 export declare const TripActionSchema: GenMessage<TripAction>;
+
+/**
+ * The proposal's options are the compared hotels, each a stay ready to save,
+ * in the report's order.
+ *
+ * @generated from message loci.chat.ChooseStayAction
+ */
+export declare type ChooseStayAction = Message<"loci.chat.ChooseStayAction"> & {
+  /**
+   * @generated from field: string city_name = 1;
+   */
+  cityName: string;
+
+  /**
+   * The HotelComparisonReport the hotels came from.
+   *
+   * @generated from field: string report_id = 2;
+   */
+  reportId: string;
+};
+
+/**
+ * Describes the message loci.chat.ChooseStayAction.
+ * Use `create(ChooseStayActionSchema)` to create a new message.
+ */
+export declare const ChooseStayActionSchema: GenMessage<ChooseStayAction>;
 
 /**
  * @generated from message loci.chat.AddStopAction
@@ -3309,6 +3361,11 @@ export enum StreamEventType {
    * @generated from enum value: STREAM_EVENT_TYPE_ACCESSIBLE_ROUTE = 16;
    */
   ACCESSIBLE_ROUTE = 16,
+
+  /**
+   * @generated from enum value: STREAM_EVENT_TYPE_HOTEL_COMPARISON = 17;
+   */
+  HOTEL_COMPARISON = 17,
 }
 
 /**
@@ -3343,6 +3400,28 @@ export enum MessageOrigin {
  * Describes the enum loci.chat.MessageOrigin.
  */
 export declare const MessageOriginSchema: GenEnum<MessageOrigin>;
+
+/**
+ * @generated from enum loci.chat.ClientCapability
+ */
+export enum ClientCapability {
+  /**
+   * @generated from enum value: CLIENT_CAPABILITY_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * Renders hotel_comparison events and the choose_stay action.
+   *
+   * @generated from enum value: CLIENT_CAPABILITY_HOTEL_COMPARISON = 1;
+   */
+  HOTEL_COMPARISON = 1,
+}
+
+/**
+ * Describes the enum loci.chat.ClientCapability.
+ */
+export declare const ClientCapabilitySchema: GenEnum<ClientCapability>;
 
 /**
  * Which list of a session's stored answer a page is read from.

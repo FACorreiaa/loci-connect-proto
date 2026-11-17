@@ -104,6 +104,13 @@ public protocol Loci_Trip_TripServiceClientInterface: Sendable {
     @available(iOS 13, *)
     func `clearStay`(request: Loci_Trip_ClearStayRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripDraft>
 
+    /// GetStayTransport is how to get around from the stay in one city: nearby
+    /// public transport stops, the walk to each day's first stop, and links
+    /// into a maps app. For anyone who may open the trip. A city with no stay
+    /// is NotFound.
+    @available(iOS 13, *)
+    func `getStayTransport`(request: Loci_Trip_GetStayTransportRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_GetStayTransportResponse>
+
     @available(iOS 13, *)
     func `addFlight`(request: Loci_Trip_AddFlightRequest, headers: Connect.Headers) async -> ResponseMessage<Loci_Trip_TripDraft>
 
@@ -327,6 +334,11 @@ public final class Loci_Trip_TripServiceClient: Loci_Trip_TripServiceClientInter
     }
 
     @available(iOS 13, *)
+    public func `getStayTransport`(request: Loci_Trip_GetStayTransportRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_GetStayTransportResponse> {
+        return await self.client.unary(path: "/loci.trip.TripService/GetStayTransport", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @available(iOS 13, *)
     public func `addFlight`(request: Loci_Trip_AddFlightRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Loci_Trip_TripDraft> {
         return await self.client.unary(path: "/loci.trip.TripService/AddFlight", idempotencyLevel: .unknown, request: request, headers: headers)
     }
@@ -470,6 +482,7 @@ public final class Loci_Trip_TripServiceClient: Loci_Trip_TripServiceClientInter
             public static let setTripDates = Connect.MethodSpec(name: "SetTripDates", service: "loci.trip.TripService", type: .unary)
             public static let setStay = Connect.MethodSpec(name: "SetStay", service: "loci.trip.TripService", type: .unary)
             public static let clearStay = Connect.MethodSpec(name: "ClearStay", service: "loci.trip.TripService", type: .unary)
+            public static let getStayTransport = Connect.MethodSpec(name: "GetStayTransport", service: "loci.trip.TripService", type: .unary)
             public static let addFlight = Connect.MethodSpec(name: "AddFlight", service: "loci.trip.TripService", type: .unary)
             public static let removeFlight = Connect.MethodSpec(name: "RemoveFlight", service: "loci.trip.TripService", type: .unary)
             public static let buildFlightLinks = Connect.MethodSpec(name: "BuildFlightLinks", service: "loci.trip.TripService", type: .unary)

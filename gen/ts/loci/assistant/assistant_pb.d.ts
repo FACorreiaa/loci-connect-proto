@@ -4,6 +4,7 @@
 
 import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv2";
 import type { Message } from "@bufbuild/protobuf";
+import type { HotelComparisonReport } from "../chat/hotel_report_pb";
 import type { ActionProposal } from "../chat/chat_pb";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
 import type { TripDraft } from "../trip/trip_pb";
@@ -172,6 +173,16 @@ export declare type AssistantEvent = Message<"loci.assistant.AssistantEvent"> & 
      */
     value: Done;
     case: "done";
+  } | {
+    /**
+     * A comparison of hotel links the caller pasted. When one of the caller's
+     * trips has the city, a trip Proposal with the same hotels as options
+     * follows it.
+     *
+     * @generated from field: loci.chat.HotelComparisonReport hotel_report = 6;
+     */
+    value: HotelComparisonReport;
+    case: "hotelReport";
   } | { case: undefined; value?: undefined };
 };
 

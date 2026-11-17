@@ -11493,6 +11493,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loci.trip.TripDraft'
+  /loci.trip.TripService/GetStayTransport:
+    post:
+      tags:
+        - loci.trip.TripService
+      summary: GetStayTransport
+      description: |-
+        GetStayTransport is how to get around from the stay in one city: nearby
+         public transport stops, the walk to each day's first stop, and links
+         into a maps app. For anyone who may open the trip. A city with no stay
+         is NotFound.
+      operationId: loci.trip.TripService.GetStayTransport
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loci.trip.GetStayTransportRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loci.trip.GetStayTransportResponse'
   /loci.trip.TripService/GetTrip:
     post:
       tags:
@@ -14093,6 +14133,17 @@ components:
           required:
             - handoff
         - properties:
+            hotelReport:
+              title: hotel_report
+              description: |-
+                A comparison of hotel links the caller pasted. When one of the caller's
+                 trips has the city, a trip Proposal with the same hotels as options
+                 follows it.
+              $ref: '#/components/schemas/loci.chat.HotelComparisonReport'
+          title: hotel_report
+          required:
+            - hotelReport
+        - properties:
             proposal:
               title: proposal
               $ref: '#/components/schemas/loci.assistant.Proposal'
@@ -16652,6 +16703,16 @@ components:
           type: boolean
           title: suggest_order
           description: Let the server reorder the stops into a sensible route.
+        capabilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.chat.ClientCapability'
+          title: capabilities
+          maxItems: 16
+          description: |-
+            What this client can render beyond the original stream events. The
+             server only sends a newer event to a client that lists it, so an older
+             build keeps getting an answer it can show.
       title: ChatRequest
       additionalProperties: false
     loci.chat.ChatResponse:
@@ -16754,6 +16815,21 @@ components:
         - expiresAt
       additionalProperties: false
       description: ChatSession represents a chat session
+    loci.chat.ChooseStayAction:
+      type: object
+      properties:
+        cityName:
+          type: string
+          title: city_name
+        reportId:
+          type: string
+          title: report_id
+          description: The HotelComparisonReport the hotels came from.
+      title: ChooseStayAction
+      additionalProperties: false
+      description: |-
+        The proposal's options are the compared hotels, each a stay ready to save,
+         in the report's order.
     loci.chat.CityDataPayload:
       type: object
       properties:
@@ -16827,6 +16903,85 @@ components:
         - lastActivity
       additionalProperties: false
       description: CityInteractions groups interactions for a specific city
+    loci.chat.ClientCapability:
+      type: string
+      title: ClientCapability
+      enum:
+        - CLIENT_CAPABILITY_UNSPECIFIED
+        - CLIENT_CAPABILITY_HOTEL_COMPARISON
+    loci.chat.ComparedHotel:
+      type: object
+      properties:
+        sourceUrl:
+          type: string
+          title: source_url
+          description: The link as pasted.
+        source:
+          type: string
+          title: source
+          description: The site it points at, e.g. "booking.com".
+        identified:
+          type: boolean
+          title: identified
+          description: |-
+            False when the listing could not be matched to a known hotel: the report
+             then rests on what the traveller wrote about it.
+        stay:
+          title: stay
+          description: Ready to save with TripService.SetStay.
+          $ref: '#/components/schemas/loci.trip.TripStay'
+        userNote:
+          type: string
+          title: user_note
+          description: What the traveller wrote next to the link, as written.
+        livePrice:
+          oneOf:
+            - $ref: '#/components/schemas/loci.chat.LivePrice'
+            - type: "null"
+          title: live_price
+        facilities:
+          type: array
+          items:
+            type: string
+          title: facilities
+        nearbyStops:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.trip.TransitStop'
+          title: nearby_stops
+        nearby:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.chat.NearbyHighlight'
+          title: nearby
+        neighbourhood:
+          type: string
+          title: neighbourhood
+        pros:
+          type: array
+          items:
+            type: string
+          title: pros
+        cons:
+          type: array
+          items:
+            type: string
+          title: cons
+      title: ComparedHotel
+      additionalProperties: false
+    loci.chat.ComparisonRow:
+      type: object
+      properties:
+        label:
+          type: string
+          title: label
+        values:
+          type: array
+          items:
+            type: string
+          title: values
+      title: ComparisonRow
+      additionalProperties: false
     loci.chat.CompletePayload:
       type: object
       properties:
@@ -17208,6 +17363,95 @@ components:
           format: int32
       title: GetSessionPOIsResponse
       additionalProperties: false
+    loci.chat.HotelComparisonPayload:
+      type: object
+      properties:
+        report:
+          title: report
+          $ref: '#/components/schemas/loci.chat.HotelComparisonReport'
+      title: HotelComparisonPayload
+      additionalProperties: false
+      description: HotelComparisonPayload carries the report on a chat stream.
+    loci.chat.HotelComparisonReport:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+        hotels:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.chat.ComparedHotel'
+          title: hotels
+          description: In the order the links were pasted. At most three.
+        verdict:
+          type: string
+          title: verdict
+          description: The answer in a few sentences. Empty when no verdict could be reached.
+        recommendedIndex:
+          type:
+            - integer
+            - "null"
+          title: recommended_index
+          format: int32
+          description: |-
+            Index into hotels of the one the verdict favours; absent when it favours
+             neither.
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.chat.ComparisonRow'
+          title: rows
+          description: The side-by-side table. Each row has one value per hotel, in order.
+        caveats:
+          type: array
+          items:
+            type: string
+          title: caveats
+          description: What the report could not check, said plainly.
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.chat.ReportSource'
+          title: sources
+          description: Pages the report drew on. Empty when the web was not searched.
+        webSearchUsed:
+          type: boolean
+          title: web_search_used
+        generatedAt:
+          title: generated_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        cityName:
+          type: string
+          title: city_name
+        checkIn:
+          type:
+            - string
+            - "null"
+          title: check_in
+        checkOut:
+          type:
+            - string
+            - "null"
+          title: check_out
+        stayProposalId:
+          type: string
+          title: stay_proposal_id
+          description: |-
+            The ActionProposal, sent right after this report, whose options are these
+             hotels in the same order. Empty when no trip of the traveller's has the
+             city: the client then offers its own trip picker and calls SetStay.
+        attribution:
+          type: string
+          title: attribution
+          description: Credit line for map data used in the report.
+      title: HotelComparisonReport
+      additionalProperties: false
+      description: |-
+        HotelComparisonReport answers "which of these should I book?" for hotel
+         links a traveller pasted into a chat. The server reads the links, never the
+         client. Every string is plain text: clients render it as text, because some
+         of it was written from web pages.
     loci.chat.HotelsPayload:
       type: object
       properties:
@@ -17310,6 +17554,38 @@ components:
           title: watches
       title: ListWatchesResponse
       additionalProperties: false
+    loci.chat.LivePrice:
+      type: object
+      properties:
+        nightlyMinor:
+          type:
+            - integer
+            - string
+          title: nightly_minor
+          format: int64
+        totalMinor:
+          type:
+            - integer
+            - string
+          title: total_minor
+          format: int64
+        currency:
+          type: string
+          title: currency
+        provider:
+          type: string
+          title: provider
+        fetchedAt:
+          title: fetched_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        bookingUrl:
+          type: string
+          title: booking_url
+      title: LivePrice
+      additionalProperties: false
+      description: |-
+        LivePrice is a rate read from a booking partner when the report was made.
+         It is shown, not stored.
     loci.chat.LlmInteraction:
       type: object
       properties:
@@ -17557,6 +17833,28 @@ components:
           title: value
       title: QueryParamsEntry
       additionalProperties: false
+    loci.chat.NearbyHighlight:
+      type: object
+      properties:
+        label:
+          type: string
+          title: label
+        count:
+          type: integer
+          title: count
+          format: int32
+        nearestName:
+          type: string
+          title: nearest_name
+        walkMinutes:
+          type: integer
+          title: walk_minutes
+          format: int32
+      title: NearbyHighlight
+      additionalProperties: false
+      description: |-
+        NearbyHighlight counts one kind of place around the hotel, e.g. 14
+         restaurants within a five-minute walk, the nearest two minutes away.
     loci.chat.ProgressPayload:
       type: object
       properties:
@@ -17757,6 +18055,21 @@ components:
       title: ReplaceStopAction
       required:
         - replacement
+      additionalProperties: false
+    loci.chat.ReportSource:
+      type: object
+      properties:
+        title:
+          type: string
+          title: title
+        url:
+          type: string
+          title: url
+          description: Always https.
+        publisher:
+          type: string
+          title: publisher
+      title: ReportSource
       additionalProperties: false
     loci.chat.RestaurantsPayload:
       type: object
@@ -18331,6 +18644,14 @@ components:
               required:
                 - generalPois
             - properties:
+                hotelComparison:
+                  title: hotel_comparison
+                  description: Only sent to a client that listed CLIENT_CAPABILITY_HOTEL_COMPARISON.
+                  $ref: '#/components/schemas/loci.chat.HotelComparisonPayload'
+              title: hotel_comparison
+              required:
+                - hotelComparison
+            - properties:
                 hotels:
                   title: hotels
                   $ref: '#/components/schemas/loci.chat.HotelsPayload'
@@ -18415,6 +18736,7 @@ components:
         - STREAM_EVENT_TYPE_GASTRONOMY
         - STREAM_EVENT_TYPE_ACTION_PROPOSAL
         - STREAM_EVENT_TYPE_ACCESSIBLE_ROUTE
+        - STREAM_EVENT_TYPE_HOTEL_COMPARISON
       description: |-
         StreamEventType is the typed discriminator for a StreamEvent. It replaces the
          old free-form string `type` field. The concrete payload (when present) is
@@ -18453,6 +18775,14 @@ components:
           title: add_stop
           required:
             - addStop
+        - properties:
+            chooseStay:
+              title: choose_stay
+              description: Pick one of the hotels a comparison report looked at as the stay.
+              $ref: '#/components/schemas/loci.chat.ChooseStayAction'
+          title: choose_stay
+          required:
+            - chooseStay
         - properties:
             moveStop:
               title: move_stop
@@ -35854,6 +36184,28 @@ components:
           minLength: 1
       title: AddTripCommentRequest
       additionalProperties: false
+    loci.trip.AirportConnection:
+      type: object
+      properties:
+        airportName:
+          type: string
+          title: airport_name
+        iata:
+          type: string
+          title: iata
+        distanceKm:
+          type: number
+          title: distance_km
+          format: double
+        googleDirectionsUrl:
+          type: string
+          title: google_directions_url
+        appleDirectionsUrl:
+          type: string
+          title: apple_directions_url
+      title: AirportConnection
+      additionalProperties: false
+      description: AirportConnection links the stay to the airport the trip flies into.
     loci.trip.BuildFlightLinksRequest:
       type: object
       properties:
@@ -36029,6 +36381,45 @@ components:
           $ref: '#/components/schemas/loci.trip.TripRole'
       title: CreateTripInviteRequest
       additionalProperties: false
+    loci.trip.DayStart:
+      type: object
+      properties:
+        dayId:
+          type: string
+          title: day_id
+        dayNumber:
+          type: integer
+          title: day_number
+          format: int32
+        firstStopName:
+          type: string
+          title: first_stop_name
+        distanceM:
+          type: integer
+          title: distance_m
+          format: int32
+        walkMinutes:
+          type: integer
+          title: walk_minutes
+          format: int32
+        routed:
+          type: boolean
+          title: routed
+        suggestedMode:
+          type: string
+          title: suggested_mode
+          description: '"walk" or "transit": which one the distance suggests.'
+        googleDirectionsUrl:
+          type: string
+          title: google_directions_url
+        appleDirectionsUrl:
+          type: string
+          title: apple_directions_url
+      title: DayStart
+      additionalProperties: false
+      description: |-
+        DayStart is how a day begins from the stay: the walk to its first stop and
+         links that open the journey in a maps app's public transport mode.
     loci.trip.DeleteChecklistItemRequest:
       type: object
       properties:
@@ -36268,6 +36659,29 @@ components:
           maxLength: 50
           minLength: 1
       title: GetSharedTripRequest
+      additionalProperties: false
+    loci.trip.GetStayTransportRequest:
+      type: object
+      properties:
+        tripId:
+          type: string
+          title: trip_id
+          maxLength: 100
+          minLength: 1
+        cityName:
+          type: string
+          title: city_name
+          maxLength: 200
+          minLength: 1
+      title: GetStayTransportRequest
+      additionalProperties: false
+    loci.trip.GetStayTransportResponse:
+      type: object
+      properties:
+        transport:
+          title: transport
+          $ref: '#/components/schemas/loci.trip.StayTransport'
+      title: GetStayTransportResponse
       additionalProperties: false
     loci.trip.GetTripChecklistRequest:
       type: object
@@ -37045,6 +37459,52 @@ components:
           minLength: 1
       title: ShareTripResponse
       additionalProperties: false
+    loci.trip.StayTransport:
+      type: object
+      properties:
+        cityName:
+          type: string
+          title: city_name
+        stayName:
+          type: string
+          title: stay_name
+        stops:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.trip.TransitStop'
+          title: stops
+        dayStarts:
+          type: array
+          items:
+            $ref: '#/components/schemas/loci.trip.DayStart'
+          title: day_starts
+        airport:
+          oneOf:
+            - $ref: '#/components/schemas/loci.trip.AirportConnection'
+            - type: "null"
+          title: airport
+        fetchedAt:
+          title: fetched_at
+          description: When the stops were read from the map.
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        attribution:
+          type: string
+          title: attribution
+          description: Credit line for the map data, shown under the section.
+        status:
+          title: status
+          $ref: '#/components/schemas/loci.trip.StayTransportStatus'
+      title: StayTransport
+      additionalProperties: false
+      description: StayTransport is how to get around from one stay.
+    loci.trip.StayTransportStatus:
+      type: string
+      title: StayTransportStatus
+      enum:
+        - STAY_TRANSPORT_STATUS_UNSPECIFIED
+        - STAY_TRANSPORT_STATUS_READY
+        - STAY_TRANSPORT_STATUS_NO_COORDINATES
+        - STAY_TRANSPORT_STATUS_UNAVAILABLE
     loci.trip.SuggestPackingRequest:
       type: object
       properties:
@@ -37079,6 +37539,59 @@ components:
       title: SuggestPackingResponse
       additionalProperties: false
       description: SuggestPackingResponse carries the suggestions and how they were derived.
+    loci.trip.TransitMode:
+      type: string
+      title: TransitMode
+      enum:
+        - TRANSIT_MODE_UNSPECIFIED
+        - TRANSIT_MODE_METRO
+        - TRANSIT_MODE_TRAIN
+        - TRANSIT_MODE_TRAM
+        - TRANSIT_MODE_BUS
+        - TRANSIT_MODE_FERRY
+      description: TransitMode is the kind of public transport a stop serves.
+    loci.trip.TransitStop:
+      type: object
+      properties:
+        name:
+          type: string
+          title: name
+          maxLength: 200
+        mode:
+          title: mode
+          $ref: '#/components/schemas/loci.trip.TransitMode'
+        lines:
+          type: array
+          items:
+            type: string
+          title: lines
+          maxItems: 12
+          description: Line names as mapped, e.g. "L3" or "V17". Empty when the map has none.
+        latitude:
+          type: number
+          title: latitude
+          format: double
+        longitude:
+          type: number
+          title: longitude
+          format: double
+        distanceM:
+          type: integer
+          title: distance_m
+          format: int32
+        walkMinutes:
+          type: integer
+          title: walk_minutes
+          format: int32
+        routed:
+          type: boolean
+          title: routed
+          description: False when walk_minutes is a straight-line estimate, not a routed walk.
+      title: TransitStop
+      additionalProperties: false
+      description: |-
+        TransitStop is a public transport stop near a stay, from OpenStreetMap. It
+         says what is there, not when it runs: Loci has no timetables.
     loci.trip.TripCity:
       type: object
       properties:
@@ -37806,6 +38319,38 @@ components:
           description: |
             Shown to friends only when the trip shares details, like a stop's link.
             string.prefix = "https://"
+        latitude:
+          type:
+            - number
+            - "null"
+          title: latitude
+          maximum: 90
+          minimum: -90
+          format: double
+          description: |-
+            Where the stay is. Set by the server from its own hotel or map data when
+             it knows the place; a stay without them has no transport section.
+        longitude:
+          type:
+            - number
+            - "null"
+          title: longitude
+          maximum: 180
+          minimum: -180
+          format: double
+        address:
+          type: string
+          title: address
+          maxLength: 300
+        priceNote:
+          type:
+            - string
+            - "null"
+          title: price_note
+          maxLength: 120
+          description: |-
+            What the traveller said they would pay, in their own words ("385 euros
+             with breakfast"). Loci never stores a quoted rate here.
       title: TripStay
       additionalProperties: false
       description: |-
@@ -38657,14 +39202,6 @@ tags:
     description: |-
       ApiKeyService manages long-lived API keys for programmatic access
        (MCP clients, integrations). Keys authenticate as the owning user.
-  - name: loci.city.CityService
-    description: CityService defines city-related RPCs
-  - name: loci.gastronomy.GastronomyService
-    description: |-
-      GastronomyService answers "what do people eat here, and where?" for a city.
-       The same CityGastronomy is appended to itinerary and discovery results on
-       ChatService.StreamChat; this service is the standalone lookup. Both read
-       one city-scoped cache entry, so a city is generated once for everyone.
   - name: loci.place.PlaceIntelligenceService
   - name: loci.recommendation.RecommendationService
     description: RecommendationService owns private learning controls and client-side exposure events.
@@ -38696,6 +39233,14 @@ tags:
       TripService persists and mutates editable day-by-day trips. All mutations that
        take base_version enforce optimistic concurrency and return the updated
        TripDraft (or affected sub-entity) with the bumped version.
+  - name: loci.city.CityService
+    description: CityService defines city-related RPCs
+  - name: loci.gastronomy.GastronomyService
+    description: |-
+      GastronomyService answers "what do people eat here, and where?" for a city.
+       The same CityGastronomy is appended to itinerary and discovery results on
+       ChatService.StreamChat; this service is the standalone lookup. Both read
+       one city-scoped cache entry, so a city is generated once for everyone.
   - name: loci.chat.ChatService
   - name: loci.chat.WatchService
   - name: loci.assistant.AssistantService

@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+package loci.chat;
+
+import "google/protobuf/timestamp.proto";
+import "loci/trip/trip.proto";
+
+option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/chat;chat";
+
+// HotelComparisonReport answers "which of these should I book?" for hotel
+// links a traveller pasted into a chat. The server reads the links, never the
+// client. Every string is plain text: clients render it as text, because some
+// of it was written from web pages.
+message HotelComparisonReport {
+  string id = 1;
+  // In the order the links were pasted. At most three.
+  repeated ComparedHotel hotels = 2;
+  // The answer in a few sentences. Empty when no verdict could be reached.
+  string verdict = 3;
+  // Index into hotels of the one the verdict favours; absent when it favours
+  // neither.
+  optional int32 recommended_index = 4;
+  // The side-by-side table. Each row has one value per hotel, in order.
+  repeated ComparisonRow rows = 5;
+  // What the report could not check, said plainly.
+  repeated string caveats = 6;
+  // Pages the report drew on. Empty when the web was not searched.
+  repeated ReportSource sources = 7;
+  bool web_search_used = 8;
+  google.protobuf.Timestamp generated_at = 9;
+  string city_name = 10;
+  optional string check_in = 11;
+  optional string check_out = 12;
+  // The ActionProposal, sent right after this report, whose options are these
+  // hotels in the same order. Empty when no trip of the traveller's has the
+  // city: the client then offers its own trip picker and calls SetStay.
+  string stay_proposal_id = 13;
+  // Credit line for map data used in the report.
+  string attribution = 14;
+}
+
+message ComparedHotel {
+  // The link as pasted.
+  string source_url = 1;
+  // The site it points at, e.g. "booking.com".
+  string source = 2;
+  // False when the listing could not be matched to a known hotel: the report
+  // then rests on what the traveller wrote about it.
+  bool identified = 3;
+  // Ready to save with TripService.SetStay.
+  loci.trip.TripStay stay = 4;
+  // What the traveller wrote next to the link, as written.
+  string user_note = 5;
+  optional LivePrice live_price = 6;
+  repeated string facilities = 7;
+  repeated loci.trip.TransitStop nearby_stops = 8;
+  repeated NearbyHighlight nearby = 9;
+  string neighbourhood = 10;
+  repeated string pros = 11;
+  repeated string cons = 12;
+}
+
+// LivePrice is a rate read from a booking partner when the report was made.
+// It is shown, not stored.
+message LivePrice {
+  int64 nightly_minor = 1;
+  int64 total_minor = 2;
+  string currency = 3;
+  string provider = 4;
+  google.protobuf.Timestamp fetched_at = 5;
+  string booking_url = 6;
+}
+
+// NearbyHighlight counts one kind of place around the hotel, e.g. 14
+// restaurants within a five-minute walk, the nearest two minutes away.
+message NearbyHighlight {
+  string label = 1;
+  int32 count = 2;
+  string nearest_name = 3;
+  int32 walk_minutes = 4;
+}
+
+message ComparisonRow {
+  string label = 1;
+  repeated string values = 2;
+}
+
+message ReportSource {
+  string title = 1;
+  // Always https.
+  string url = 2;
+  string publisher = 3;
+}
+
+// HotelComparisonPayload carries the report on a chat stream.
+message HotelComparisonPayload {
+  HotelComparisonReport report = 1;
+}

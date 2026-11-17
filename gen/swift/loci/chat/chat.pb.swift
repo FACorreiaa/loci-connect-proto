@@ -341,6 +341,7 @@ public enum Loci_Chat_StreamEventType: SwiftProtobuf.Enum, Swift.CaseIterable {
   case gastronomy // = 14
   case actionProposal // = 15
   case accessibleRoute // = 16
+  case hotelComparison // = 17
   case UNRECOGNIZED(Int)
 
   public init() {
@@ -366,6 +367,7 @@ public enum Loci_Chat_StreamEventType: SwiftProtobuf.Enum, Swift.CaseIterable {
     case 14: self = .gastronomy
     case 15: self = .actionProposal
     case 16: self = .accessibleRoute
+    case 17: self = .hotelComparison
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -389,6 +391,7 @@ public enum Loci_Chat_StreamEventType: SwiftProtobuf.Enum, Swift.CaseIterable {
     case .gastronomy: return 14
     case .actionProposal: return 15
     case .accessibleRoute: return 16
+    case .hotelComparison: return 17
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -412,6 +415,7 @@ public enum Loci_Chat_StreamEventType: SwiftProtobuf.Enum, Swift.CaseIterable {
     .gastronomy,
     .actionProposal,
     .accessibleRoute,
+    .hotelComparison,
   ]
 
 }
@@ -452,6 +456,42 @@ public enum Loci_Chat_MessageOrigin: SwiftProtobuf.Enum, Swift.CaseIterable {
     .unspecified,
     .reply,
     .proactive,
+  ]
+
+}
+
+public enum Loci_Chat_ClientCapability: SwiftProtobuf.Enum, Swift.CaseIterable {
+  public typealias RawValue = Int
+  case unspecified // = 0
+
+  /// Renders hotel_comparison events and the choose_stay action.
+  case hotelComparison // = 1
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .unspecified
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unspecified
+    case 1: self = .hotelComparison
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .unspecified: return 0
+    case .hotelComparison: return 1
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static let allCases: [Loci_Chat_ClientCapability] = [
+    .unspecified,
+    .hotelComparison,
   ]
 
 }
@@ -1326,6 +1366,11 @@ public struct Loci_Chat_ChatRequest: Sendable {
   /// Let the server reorder the stops into a sensible route.
   public var suggestOrder: Bool = false
 
+  /// What this client can render beyond the original stream events. The
+  /// server only sends a newer event to a client that lists it, so an older
+  /// build keeps getting an answer it can show.
+  public var capabilities: [Loci_Chat_ClientCapability] = []
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -2021,6 +2066,15 @@ public struct Loci_Chat_StreamEvent: @unchecked Sendable {
     set {_uniqueStorage()._payload = .accessibleRoute(newValue)}
   }
 
+  /// Only sent to a client that listed CLIENT_CAPABILITY_HOTEL_COMPARISON.
+  public var hotelComparison: Loci_Chat_HotelComparisonPayload {
+    get {
+      if case .hotelComparison(let v)? = _storage._payload {return v}
+      return Loci_Chat_HotelComparisonPayload()
+    }
+    set {_uniqueStorage()._payload = .hotelComparison(newValue)}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   /// payload is the typed body; its oneof case matches event_type. Absent for
@@ -2042,6 +2096,8 @@ public struct Loci_Chat_StreamEvent: @unchecked Sendable {
     case gastronomy(Loci_Chat_GastronomyPayload)
     case actionProposal(Loci_Chat_ActionProposalPayload)
     case accessibleRoute(Loci_Chat_AccessibleRoutePayload)
+    /// Only sent to a client that listed CLIENT_CAPABILITY_HOTEL_COMPARISON.
+    case hotelComparison(Loci_Chat_HotelComparisonPayload)
 
   }
 
@@ -2762,6 +2818,15 @@ public struct Loci_Chat_TripAction: Sendable {
     set {kind = .moveStop(newValue)}
   }
 
+  /// Pick one of the hotels a comparison report looked at as the stay.
+  public var chooseStay: Loci_Chat_ChooseStayAction {
+    get {
+      if case .chooseStay(let v)? = kind {return v}
+      return Loci_Chat_ChooseStayAction()
+    }
+    set {kind = .chooseStay(newValue)}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public enum OneOf_Kind: Equatable, Sendable {
@@ -2776,8 +2841,27 @@ public struct Loci_Chat_TripAction: Sendable {
     case removeStop(Loci_Chat_RemoveStopAction)
     case replaceStop(Loci_Chat_ReplaceStopAction)
     case moveStop(Loci_Chat_MoveStopAction)
+    /// Pick one of the hotels a comparison report looked at as the stay.
+    case chooseStay(Loci_Chat_ChooseStayAction)
 
   }
+
+  public init() {}
+}
+
+/// The proposal's options are the compared hotels, each a stay ready to save,
+/// in the report's order.
+public struct Loci_Chat_ChooseStayAction: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var cityName: String = String()
+
+  /// The HotelComparisonReport the hotels came from.
+  public var reportID: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 }
@@ -3587,6 +3671,7 @@ extension Loci_Chat_StreamEventType: SwiftProtobuf._ProtoNameProviding {
     14: .same(proto: "STREAM_EVENT_TYPE_GASTRONOMY"),
     15: .same(proto: "STREAM_EVENT_TYPE_ACTION_PROPOSAL"),
     16: .same(proto: "STREAM_EVENT_TYPE_ACCESSIBLE_ROUTE"),
+    17: .same(proto: "STREAM_EVENT_TYPE_HOTEL_COMPARISON"),
   ]
 }
 
@@ -3595,6 +3680,13 @@ extension Loci_Chat_MessageOrigin: SwiftProtobuf._ProtoNameProviding {
     0: .same(proto: "MESSAGE_ORIGIN_UNSPECIFIED"),
     1: .same(proto: "MESSAGE_ORIGIN_REPLY"),
     2: .same(proto: "MESSAGE_ORIGIN_PROACTIVE"),
+  ]
+}
+
+extension Loci_Chat_ClientCapability: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "CLIENT_CAPABILITY_UNSPECIFIED"),
+    1: .same(proto: "CLIENT_CAPABILITY_HOTEL_COMPARISON"),
   ]
 }
 
@@ -4736,6 +4828,7 @@ extension Loci_Chat_ChatRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     8: .standard(proto: "request_id"),
     9: .same(proto: "stops"),
     10: .standard(proto: "suggest_order"),
+    11: .same(proto: "capabilities"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -4754,6 +4847,7 @@ extension Loci_Chat_ChatRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       case 8: try { try decoder.decodeSingularStringField(value: &self._requestID) }()
       case 9: try { try decoder.decodeRepeatedMessageField(value: &self.stops) }()
       case 10: try { try decoder.decodeSingularBoolField(value: &self.suggestOrder) }()
+      case 11: try { try decoder.decodeRepeatedEnumField(value: &self.capabilities) }()
       default: break
       }
     }
@@ -4794,6 +4888,9 @@ extension Loci_Chat_ChatRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if self.suggestOrder != false {
       try visitor.visitSingularBoolField(value: self.suggestOrder, fieldNumber: 10)
     }
+    if !self.capabilities.isEmpty {
+      try visitor.visitPackedEnumField(value: self.capabilities, fieldNumber: 11)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -4808,6 +4905,7 @@ extension Loci_Chat_ChatRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if lhs._requestID != rhs._requestID {return false}
     if lhs.stops != rhs.stops {return false}
     if lhs.suggestOrder != rhs.suggestOrder {return false}
+    if lhs.capabilities != rhs.capabilities {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -5746,6 +5844,7 @@ extension Loci_Chat_StreamEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     33: .same(proto: "gastronomy"),
     34: .standard(proto: "action_proposal"),
     35: .standard(proto: "accessible_route"),
+    36: .standard(proto: "hotel_comparison"),
   ]
 
   fileprivate class _StorageClass {
@@ -6015,6 +6114,19 @@ extension Loci_Chat_StreamEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
             _storage._payload = .accessibleRoute(v)
           }
         }()
+        case 36: try {
+          var v: Loci_Chat_HotelComparisonPayload?
+          var hadOneofValue = false
+          if let current = _storage._payload {
+            hadOneofValue = true
+            if case .hotelComparison(let m) = current {v = m}
+          }
+          try decoder.decodeSingularMessageField(value: &v)
+          if let v = v {
+            if hadOneofValue {try decoder.handleConflictingOneOf()}
+            _storage._payload = .hotelComparison(v)
+          }
+        }()
         default: break
         }
       }
@@ -6115,6 +6227,10 @@ extension Loci_Chat_StreamEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       case .accessibleRoute?: try {
         guard case .accessibleRoute(let v)? = _storage._payload else { preconditionFailure() }
         try visitor.visitSingularMessageField(value: v, fieldNumber: 35)
+      }()
+      case .hotelComparison?: try {
+        guard case .hotelComparison(let v)? = _storage._payload else { preconditionFailure() }
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 36)
       }()
       case nil: break
       }
@@ -7192,6 +7308,7 @@ extension Loci_Chat_TripAction: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     6: .standard(proto: "remove_stop"),
     7: .standard(proto: "replace_stop"),
     8: .standard(proto: "move_stop"),
+    9: .standard(proto: "choose_stay"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -7304,6 +7421,19 @@ extension Loci_Chat_TripAction: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
           self.kind = .moveStop(v)
         }
       }()
+      case 9: try {
+        var v: Loci_Chat_ChooseStayAction?
+        var hadOneofValue = false
+        if let current = self.kind {
+          hadOneofValue = true
+          if case .chooseStay(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.kind = .chooseStay(v)
+        }
+      }()
       default: break
       }
     }
@@ -7347,6 +7477,10 @@ extension Loci_Chat_TripAction: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       guard case .moveStop(let v)? = self.kind else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
     }()
+    case .chooseStay?: try {
+      guard case .chooseStay(let v)? = self.kind else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
+    }()
     case nil: break
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -7354,6 +7488,44 @@ extension Loci_Chat_TripAction: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
 
   public static func ==(lhs: Loci_Chat_TripAction, rhs: Loci_Chat_TripAction) -> Bool {
     if lhs.kind != rhs.kind {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Chat_ChooseStayAction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ChooseStayAction"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "city_name"),
+    2: .standard(proto: "report_id"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.cityName) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.reportID) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.cityName.isEmpty {
+      try visitor.visitSingularStringField(value: self.cityName, fieldNumber: 1)
+    }
+    if !self.reportID.isEmpty {
+      try visitor.visitSingularStringField(value: self.reportID, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Chat_ChooseStayAction, rhs: Loci_Chat_ChooseStayAction) -> Bool {
+    if lhs.cityName != rhs.cityName {return false}
+    if lhs.reportID != rhs.reportID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

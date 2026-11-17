@@ -438,6 +438,32 @@ export declare type TripStay = Message<"loci.trip.TripStay"> & {
    * @generated from field: optional string booking_url = 7;
    */
   bookingUrl?: string;
+
+  /**
+   * Where the stay is. Set by the server from its own hotel or map data when
+   * it knows the place; a stay without them has no transport section.
+   *
+   * @generated from field: optional double latitude = 8;
+   */
+  latitude?: number;
+
+  /**
+   * @generated from field: optional double longitude = 9;
+   */
+  longitude?: number;
+
+  /**
+   * @generated from field: string address = 10;
+   */
+  address: string;
+
+  /**
+   * What the traveller said they would pay, in their own words ("385 euros
+   * with breakfast"). Loci never stores a quoted rate here.
+   *
+   * @generated from field: optional string price_note = 11;
+   */
+  priceNote?: string;
 };
 
 /**
@@ -445,6 +471,257 @@ export declare type TripStay = Message<"loci.trip.TripStay"> & {
  * Use `create(TripStaySchema)` to create a new message.
  */
 export declare const TripStaySchema: GenMessage<TripStay>;
+
+/**
+ * TransitStop is a public transport stop near a stay, from OpenStreetMap. It
+ * says what is there, not when it runs: Loci has no timetables.
+ *
+ * @generated from message loci.trip.TransitStop
+ */
+export declare type TransitStop = Message<"loci.trip.TransitStop"> & {
+  /**
+   * @generated from field: string name = 1;
+   */
+  name: string;
+
+  /**
+   * @generated from field: loci.trip.TransitMode mode = 2;
+   */
+  mode: TransitMode;
+
+  /**
+   * Line names as mapped, e.g. "L3" or "V17". Empty when the map has none.
+   *
+   * @generated from field: repeated string lines = 3;
+   */
+  lines: string[];
+
+  /**
+   * @generated from field: double latitude = 4;
+   */
+  latitude: number;
+
+  /**
+   * @generated from field: double longitude = 5;
+   */
+  longitude: number;
+
+  /**
+   * @generated from field: int32 distance_m = 6;
+   */
+  distanceM: number;
+
+  /**
+   * @generated from field: int32 walk_minutes = 7;
+   */
+  walkMinutes: number;
+
+  /**
+   * False when walk_minutes is a straight-line estimate, not a routed walk.
+   *
+   * @generated from field: bool routed = 8;
+   */
+  routed: boolean;
+};
+
+/**
+ * Describes the message loci.trip.TransitStop.
+ * Use `create(TransitStopSchema)` to create a new message.
+ */
+export declare const TransitStopSchema: GenMessage<TransitStop>;
+
+/**
+ * DayStart is how a day begins from the stay: the walk to its first stop and
+ * links that open the journey in a maps app's public transport mode.
+ *
+ * @generated from message loci.trip.DayStart
+ */
+export declare type DayStart = Message<"loci.trip.DayStart"> & {
+  /**
+   * @generated from field: string day_id = 1;
+   */
+  dayId: string;
+
+  /**
+   * @generated from field: int32 day_number = 2;
+   */
+  dayNumber: number;
+
+  /**
+   * @generated from field: string first_stop_name = 3;
+   */
+  firstStopName: string;
+
+  /**
+   * @generated from field: int32 distance_m = 4;
+   */
+  distanceM: number;
+
+  /**
+   * @generated from field: int32 walk_minutes = 5;
+   */
+  walkMinutes: number;
+
+  /**
+   * @generated from field: bool routed = 6;
+   */
+  routed: boolean;
+
+  /**
+   * "walk" or "transit": which one the distance suggests.
+   *
+   * @generated from field: string suggested_mode = 7;
+   */
+  suggestedMode: string;
+
+  /**
+   * @generated from field: string google_directions_url = 8;
+   */
+  googleDirectionsUrl: string;
+
+  /**
+   * @generated from field: string apple_directions_url = 9;
+   */
+  appleDirectionsUrl: string;
+};
+
+/**
+ * Describes the message loci.trip.DayStart.
+ * Use `create(DayStartSchema)` to create a new message.
+ */
+export declare const DayStartSchema: GenMessage<DayStart>;
+
+/**
+ * AirportConnection links the stay to the airport the trip flies into.
+ *
+ * @generated from message loci.trip.AirportConnection
+ */
+export declare type AirportConnection = Message<"loci.trip.AirportConnection"> & {
+  /**
+   * @generated from field: string airport_name = 1;
+   */
+  airportName: string;
+
+  /**
+   * @generated from field: string iata = 2;
+   */
+  iata: string;
+
+  /**
+   * @generated from field: double distance_km = 3;
+   */
+  distanceKm: number;
+
+  /**
+   * @generated from field: string google_directions_url = 4;
+   */
+  googleDirectionsUrl: string;
+
+  /**
+   * @generated from field: string apple_directions_url = 5;
+   */
+  appleDirectionsUrl: string;
+};
+
+/**
+ * Describes the message loci.trip.AirportConnection.
+ * Use `create(AirportConnectionSchema)` to create a new message.
+ */
+export declare const AirportConnectionSchema: GenMessage<AirportConnection>;
+
+/**
+ * StayTransport is how to get around from one stay.
+ *
+ * @generated from message loci.trip.StayTransport
+ */
+export declare type StayTransport = Message<"loci.trip.StayTransport"> & {
+  /**
+   * @generated from field: string city_name = 1;
+   */
+  cityName: string;
+
+  /**
+   * @generated from field: string stay_name = 2;
+   */
+  stayName: string;
+
+  /**
+   * @generated from field: repeated loci.trip.TransitStop stops = 3;
+   */
+  stops: TransitStop[];
+
+  /**
+   * @generated from field: repeated loci.trip.DayStart day_starts = 4;
+   */
+  dayStarts: DayStart[];
+
+  /**
+   * @generated from field: optional loci.trip.AirportConnection airport = 5;
+   */
+  airport?: AirportConnection;
+
+  /**
+   * When the stops were read from the map.
+   *
+   * @generated from field: google.protobuf.Timestamp fetched_at = 6;
+   */
+  fetchedAt?: Timestamp;
+
+  /**
+   * Credit line for the map data, shown under the section.
+   *
+   * @generated from field: string attribution = 7;
+   */
+  attribution: string;
+
+  /**
+   * @generated from field: loci.trip.StayTransportStatus status = 8;
+   */
+  status: StayTransportStatus;
+};
+
+/**
+ * Describes the message loci.trip.StayTransport.
+ * Use `create(StayTransportSchema)` to create a new message.
+ */
+export declare const StayTransportSchema: GenMessage<StayTransport>;
+
+/**
+ * @generated from message loci.trip.GetStayTransportRequest
+ */
+export declare type GetStayTransportRequest = Message<"loci.trip.GetStayTransportRequest"> & {
+  /**
+   * @generated from field: string trip_id = 1;
+   */
+  tripId: string;
+
+  /**
+   * @generated from field: string city_name = 2;
+   */
+  cityName: string;
+};
+
+/**
+ * Describes the message loci.trip.GetStayTransportRequest.
+ * Use `create(GetStayTransportRequestSchema)` to create a new message.
+ */
+export declare const GetStayTransportRequestSchema: GenMessage<GetStayTransportRequest>;
+
+/**
+ * @generated from message loci.trip.GetStayTransportResponse
+ */
+export declare type GetStayTransportResponse = Message<"loci.trip.GetStayTransportResponse"> & {
+  /**
+   * @generated from field: loci.trip.StayTransport transport = 1;
+   */
+  transport?: StayTransport;
+};
+
+/**
+ * Describes the message loci.trip.GetStayTransportResponse.
+ * Use `create(GetStayTransportResponseSchema)` to create a new message.
+ */
+export declare const GetStayTransportResponseSchema: GenMessage<GetStayTransportResponse>;
 
 /**
  * FlightPlace is one end of a flight. iata is optional: Google Flights takes a
@@ -2162,6 +2439,82 @@ export enum TripStopStatus {
 export declare const TripStopStatusSchema: GenEnum<TripStopStatus>;
 
 /**
+ * TransitMode is the kind of public transport a stop serves.
+ *
+ * @generated from enum loci.trip.TransitMode
+ */
+export enum TransitMode {
+  /**
+   * @generated from enum value: TRANSIT_MODE_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: TRANSIT_MODE_METRO = 1;
+   */
+  METRO = 1,
+
+  /**
+   * @generated from enum value: TRANSIT_MODE_TRAIN = 2;
+   */
+  TRAIN = 2,
+
+  /**
+   * @generated from enum value: TRANSIT_MODE_TRAM = 3;
+   */
+  TRAM = 3,
+
+  /**
+   * @generated from enum value: TRANSIT_MODE_BUS = 4;
+   */
+  BUS = 4,
+
+  /**
+   * @generated from enum value: TRANSIT_MODE_FERRY = 5;
+   */
+  FERRY = 5,
+}
+
+/**
+ * Describes the enum loci.trip.TransitMode.
+ */
+export declare const TransitModeSchema: GenEnum<TransitMode>;
+
+/**
+ * @generated from enum loci.trip.StayTransportStatus
+ */
+export enum StayTransportStatus {
+  /**
+   * @generated from enum value: STAY_TRANSPORT_STATUS_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: STAY_TRANSPORT_STATUS_READY = 1;
+   */
+  READY = 1,
+
+  /**
+   * The stay has no coordinates, so nothing can be measured from it.
+   *
+   * @generated from enum value: STAY_TRANSPORT_STATUS_NO_COORDINATES = 2;
+   */
+  NO_COORDINATES = 2,
+
+  /**
+   * The map data could not be reached; day_starts and links may still be set.
+   *
+   * @generated from enum value: STAY_TRANSPORT_STATUS_UNAVAILABLE = 3;
+   */
+  UNAVAILABLE = 3,
+}
+
+/**
+ * Describes the enum loci.trip.StayTransportStatus.
+ */
+export declare const StayTransportStatusSchema: GenEnum<StayTransportStatus>;
+
+/**
  * @generated from enum loci.trip.FlightCabin
  */
 export enum FlightCabin {
@@ -2556,6 +2909,19 @@ export declare const TripService: GenService<{
     methodKind: "unary";
     input: typeof ClearStayRequestSchema;
     output: typeof TripDraftSchema;
+  },
+  /**
+   * GetStayTransport is how to get around from the stay in one city: nearby
+   * public transport stops, the walk to each day's first stop, and links
+   * into a maps app. For anyone who may open the trip. A city with no stay
+   * is NotFound.
+   *
+   * @generated from rpc loci.trip.TripService.GetStayTransport
+   */
+  getStayTransport: {
+    methodKind: "unary";
+    input: typeof GetStayTransportRequestSchema;
+    output: typeof GetStayTransportResponseSchema;
   },
   /**
    * @generated from rpc loci.trip.TripService.AddFlight
