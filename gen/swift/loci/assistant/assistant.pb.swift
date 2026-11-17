@@ -404,6 +404,17 @@ public struct Loci_Assistant_AssistantEvent: Sendable {
     set {event = .done(newValue)}
   }
 
+  /// A comparison of hotel links the caller pasted. When one of the caller's
+  /// trips has the city, a trip Proposal with the same hotels as options
+  /// follows it.
+  public var hotelReport: Loci_Chat_HotelComparisonReport {
+    get {
+      if case .hotelReport(let v)? = event {return v}
+      return Loci_Chat_HotelComparisonReport()
+    }
+    set {event = .hotelReport(newValue)}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public enum OneOf_Event: Equatable, Sendable {
@@ -412,6 +423,10 @@ public struct Loci_Assistant_AssistantEvent: Sendable {
     case proposal(Loci_Assistant_Proposal)
     case handoff(Loci_Assistant_Handoff)
     case done(Loci_Assistant_Done)
+    /// A comparison of hotel links the caller pasted. When one of the caller's
+    /// trips has the city, a trip Proposal with the same hotels as options
+    /// follows it.
+    case hotelReport(Loci_Chat_HotelComparisonReport)
 
   }
 
@@ -886,6 +901,7 @@ extension Loci_Assistant_AssistantEvent: SwiftProtobuf.Message, SwiftProtobuf._M
     3: .same(proto: "proposal"),
     4: .same(proto: "handoff"),
     5: .same(proto: "done"),
+    6: .standard(proto: "hotel_report"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -959,6 +975,19 @@ extension Loci_Assistant_AssistantEvent: SwiftProtobuf.Message, SwiftProtobuf._M
           self.event = .done(v)
         }
       }()
+      case 6: try {
+        var v: Loci_Chat_HotelComparisonReport?
+        var hadOneofValue = false
+        if let current = self.event {
+          hadOneofValue = true
+          if case .hotelReport(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.event = .hotelReport(v)
+        }
+      }()
       default: break
       }
     }
@@ -989,6 +1018,10 @@ extension Loci_Assistant_AssistantEvent: SwiftProtobuf.Message, SwiftProtobuf._M
     case .done?: try {
       guard case .done(let v)? = self.event else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+    }()
+    case .hotelReport?: try {
+      guard case .hotelReport(let v)? = self.event else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
     }()
     case nil: break
     }

@@ -269,6 +269,107 @@ message TripStay {
     max_len: 2000
     prefix: "https://"
   }];
+  // Where the stay is. Set by the server from its own hotel or map data when
+  // it knows the place; a stay without them has no transport section.
+  optional double latitude = 8 [(buf.validate.field).double = {
+    gte: -90
+    lte: 90
+  }];
+  optional double longitude = 9 [(buf.validate.field).double = {
+    gte: -180
+    lte: 180
+  }];
+  string address = 10 [(buf.validate.field).string.max_len = 300];
+  // What the traveller said they would pay, in their own words ("385 euros
+  // with breakfast"). Loci never stores a quoted rate here.
+  optional string price_note = 11 [(buf.validate.field).string.max_len = 120];
+}
+
+// TransitMode is the kind of public transport a stop serves.
+enum TransitMode {
+  TRANSIT_MODE_UNSPECIFIED = 0;
+  TRANSIT_MODE_METRO = 1;
+  TRANSIT_MODE_TRAIN = 2;
+  TRANSIT_MODE_TRAM = 3;
+  TRANSIT_MODE_BUS = 4;
+  TRANSIT_MODE_FERRY = 5;
+}
+
+// TransitStop is a public transport stop near a stay, from OpenStreetMap. It
+// says what is there, not when it runs: Loci has no timetables.
+message TransitStop {
+  string name = 1 [(buf.validate.field).string.max_len = 200];
+  TransitMode mode = 2;
+  // Line names as mapped, e.g. "L3" or "V17". Empty when the map has none.
+  repeated string lines = 3 [(buf.validate.field).repeated = {max_items: 12}];
+  double latitude = 4;
+  double longitude = 5;
+  int32 distance_m = 6;
+  int32 walk_minutes = 7;
+  // False when walk_minutes is a straight-line estimate, not a routed walk.
+  bool routed = 8;
+}
+
+// DayStart is how a day begins from the stay: the walk to its first stop and
+// links that open the journey in a maps app's public transport mode.
+message DayStart {
+  string day_id = 1;
+  int32 day_number = 2;
+  string first_stop_name = 3;
+  int32 distance_m = 4;
+  int32 walk_minutes = 5;
+  bool routed = 6;
+  // "walk" or "transit": which one the distance suggests.
+  string suggested_mode = 7;
+  string google_directions_url = 8;
+  string apple_directions_url = 9;
+}
+
+// AirportConnection links the stay to the airport the trip flies into.
+message AirportConnection {
+  string airport_name = 1;
+  string iata = 2;
+  double distance_km = 3;
+  string google_directions_url = 4;
+  string apple_directions_url = 5;
+}
+
+enum StayTransportStatus {
+  STAY_TRANSPORT_STATUS_UNSPECIFIED = 0;
+  STAY_TRANSPORT_STATUS_READY = 1;
+  // The stay has no coordinates, so nothing can be measured from it.
+  STAY_TRANSPORT_STATUS_NO_COORDINATES = 2;
+  // The map data could not be reached; day_starts and links may still be set.
+  STAY_TRANSPORT_STATUS_UNAVAILABLE = 3;
+}
+
+// StayTransport is how to get around from one stay.
+message StayTransport {
+  string city_name = 1;
+  string stay_name = 2;
+  repeated TransitStop stops = 3;
+  repeated DayStart day_starts = 4;
+  optional AirportConnection airport = 5;
+  // When the stops were read from the map.
+  google.protobuf.Timestamp fetched_at = 6;
+  // Credit line for the map data, shown under the section.
+  string attribution = 7;
+  StayTransportStatus status = 8;
+}
+
+message GetStayTransportRequest {
+  string trip_id = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 100
+  }];
+  string city_name = 2 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 200
+  }];
+}
+
+message GetStayTransportResponse {
+  StayTransport transport = 1;
 }
 
 enum FlightCabin {
@@ -1020,6 +1121,11 @@ service TripService {
   rpc SetTripDates(SetTripDatesRequest) returns (TripDraft);
   rpc SetStay(SetStayRequest) returns (TripDraft);
   rpc ClearStay(ClearStayRequest) returns (TripDraft);
+  // GetStayTransport is how to get around from the stay in one city: nearby
+  // public transport stops, the walk to each day's first stop, and links
+  // into a maps app. For anyone who may open the trip. A city with no stay
+  // is NotFound.
+  rpc GetStayTransport(GetStayTransportRequest) returns (GetStayTransportResponse);
   rpc AddFlight(AddFlightRequest) returns (TripDraft);
   rpc RemoveFlight(RemoveFlightRequest) returns (TripDraft);
   rpc BuildFlightLinks(BuildFlightLinksRequest) returns (BuildFlightLinksResponse);

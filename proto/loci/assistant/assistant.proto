@@ -5,6 +5,7 @@ package loci.assistant;
 import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
 import "loci/chat/chat.proto";
+import "loci/chat/hotel_report.proto";
 import "loci/trip/trip.proto";
 
 option go_package = "github.com/FACorreiaa/loci-connect-proto/v5/gen/go/loci/assistant;assistant";
@@ -107,6 +108,10 @@ message AssistantEvent {
     Proposal proposal = 3;
     Handoff handoff = 4;
     Done done = 5;
+    // A comparison of hotel links the caller pasted. When one of the caller's
+    // trips has the city, a trip Proposal with the same hotels as options
+    // follows it.
+    loci.chat.HotelComparisonReport hotel_report = 6;
   }
 }
 

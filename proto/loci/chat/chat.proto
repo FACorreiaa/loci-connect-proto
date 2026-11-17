@@ -4,6 +4,7 @@ package loci.chat;
 
 import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
+import "loci/chat/hotel_report.proto";
 import "loci/city/city.proto";
 import "loci/common/common.proto";
 import "loci/gastronomy/gastronomy.proto";
@@ -93,6 +94,7 @@ enum StreamEventType {
   STREAM_EVENT_TYPE_GASTRONOMY = 14;
   STREAM_EVENT_TYPE_ACTION_PROPOSAL = 15;
   STREAM_EVENT_TYPE_ACCESSIBLE_ROUTE = 16;
+  STREAM_EVENT_TYPE_HOTEL_COMPARISON = 17;
 }
 
 // LlmInteraction represents an interaction with the LLM
@@ -460,6 +462,21 @@ message ChatRequest {
   repeated TripStopInput stops = 9 [(buf.validate.field).repeated = {max_items: 5}];
   // Let the server reorder the stops into a sensible route.
   bool suggest_order = 10;
+  // What this client can render beyond the original stream events. The
+  // server only sends a newer event to a client that lists it, so an older
+  // build keeps getting an answer it can show.
+  repeated ClientCapability capabilities = 11 [(buf.validate.field).repeated = {
+    max_items: 16
+    items: {
+      enum: {defined_only: true}
+    }
+  }];
+}
+
+enum ClientCapability {
+  CLIENT_CAPABILITY_UNSPECIFIED = 0;
+  // Renders hotel_comparison events and the choose_stay action.
+  CLIENT_CAPABILITY_HOTEL_COMPARISON = 1;
 }
 
 // ChatResponse for chat response
@@ -733,6 +750,13 @@ message StreamEvent {
     GastronomyPayload gastronomy = 33;
     ActionProposalPayload action_proposal = 34;
     AccessibleRoutePayload accessible_route = 35;
+    // Only sent to a client that listed CLIENT_CAPABILITY_HOTEL_COMPARISON.
+    // The turn runs: start (domain accommodation, a session of its own),
+    // progress, this, an action_proposal for choose_stay when one of the
+    // traveller's trips has the city, complete. No itinerary and no places
+    // follow. The session keeps the question and the verdict, not the
+    // report: a client that wants it later keeps the one it was sent.
+    HotelComparisonPayload hotel_comparison = 36;
   }
 }
 
@@ -1092,7 +1116,17 @@ message TripAction {
     RemoveStopAction remove_stop = 6;
     ReplaceStopAction replace_stop = 7;
     MoveStopAction move_stop = 8;
+    // Pick one of the hotels a comparison report looked at as the stay.
+    ChooseStayAction choose_stay = 9;
   }
+}
+
+// The proposal's options are the compared hotels, each a stay ready to save,
+// in the report's order.
+message ChooseStayAction {
+  string city_name = 1;
+  // The HotelComparisonReport the hotels came from.
+  string report_id = 2;
 }
 
 message AddStopAction {
