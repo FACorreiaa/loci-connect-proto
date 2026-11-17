@@ -3647,6 +3647,11 @@ type StreamEvent_AccessibleRoute struct {
 
 type StreamEvent_HotelComparison struct {
 	// Only sent to a client that listed CLIENT_CAPABILITY_HOTEL_COMPARISON.
+	// The turn runs: start (domain accommodation, a session of its own),
+	// progress, this, an action_proposal for choose_stay when one of the
+	// traveller's trips has the city, complete. No itinerary and no places
+	// follow. The session keeps the question and the verdict, not the
+	// report: a client that wants it later keeps the one it was sent.
 	HotelComparison *HotelComparisonPayload `protobuf:"bytes,36,opt,name=hotel_comparison,json=hotelComparison,proto3,oneof"`
 }
 

@@ -2067,6 +2067,11 @@ public struct Loci_Chat_StreamEvent: @unchecked Sendable {
   }
 
   /// Only sent to a client that listed CLIENT_CAPABILITY_HOTEL_COMPARISON.
+  /// The turn runs: start (domain accommodation, a session of its own),
+  /// progress, this, an action_proposal for choose_stay when one of the
+  /// traveller's trips has the city, complete. No itinerary and no places
+  /// follow. The session keeps the question and the verdict, not the
+  /// report: a client that wants it later keeps the one it was sent.
   public var hotelComparison: Loci_Chat_HotelComparisonPayload {
     get {
       if case .hotelComparison(let v)? = _storage._payload {return v}
@@ -2097,6 +2102,11 @@ public struct Loci_Chat_StreamEvent: @unchecked Sendable {
     case actionProposal(Loci_Chat_ActionProposalPayload)
     case accessibleRoute(Loci_Chat_AccessibleRoutePayload)
     /// Only sent to a client that listed CLIENT_CAPABILITY_HOTEL_COMPARISON.
+    /// The turn runs: start (domain accommodation, a session of its own),
+    /// progress, this, an action_proposal for choose_stay when one of the
+    /// traveller's trips has the city, complete. No itinerary and no places
+    /// follow. The session keeps the question and the verdict, not the
+    /// report: a client that wants it later keeps the one it was sent.
     case hotelComparison(Loci_Chat_HotelComparisonPayload)
 
   }

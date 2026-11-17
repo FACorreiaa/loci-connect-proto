@@ -20,7 +20,17 @@ message HotelComparisonReport {
   // Index into hotels of the one the verdict favours; absent when it favours
   // neither.
   optional int32 recommended_index = 4;
-  // The side-by-side table. Each row has one value per hotel, in order.
+  // The side-by-side table, complete and in display order: what the
+  // traveller said, stars, guest score, price now, address, nearest stops,
+  // what is within a short walk, facilities, getting around. Each row has one
+  // value per hotel, in hotel order; "Not known" fills a gap, and a row
+  // nobody has a value for is left out.
+  //
+  // A client draws these rows as they are and nothing else as table text:
+  // the fields on ComparedHotel that repeat them (user_note, facilities,
+  // nearby_stops, nearby, live_price amounts) are for a client that wants to
+  // act on a value (open a booking link, put a stop on a map), not to be
+  // written out a second time.
   repeated ComparisonRow rows = 5;
   // What the report could not check, said plainly.
   repeated string caveats = 6;
@@ -47,14 +57,23 @@ message ComparedHotel {
   // False when the listing could not be matched to a known hotel: the report
   // then rests on what the traveller wrote about it.
   bool identified = 3;
-  // Ready to save with TripService.SetStay.
+  // Ready to save with TripService.SetStay. name is always set (for a link
+  // that could not be followed it is a placeholder such as "Hotel from link
+  // 1"); city_name is the report's city_name and empty when that is. A stay
+  // with no city cannot be saved: offer no button for it.
   loci.trip.TripStay stay = 4;
   // What the traveller wrote next to the link, as written.
   string user_note = 5;
+  // Already in rows as "Price now"; here for its booking_url.
   optional LivePrice live_price = 6;
+  // Already in rows.
   repeated string facilities = 7;
+  // Already in rows (the nearest of each kind). walk_minutes are estimates
+  // from straight-line distance: routed is always false here.
   repeated loci.trip.TransitStop nearby_stops = 8;
+  // Already in rows.
   repeated NearbyHighlight nearby = 9;
+  // Not in rows: draw these three under each hotel.
   string neighbourhood = 10;
   repeated string pros = 11;
   repeated string cons = 12;
@@ -63,6 +82,7 @@ message ComparedHotel {
 // LivePrice is a rate read from a booking partner when the report was made.
 // It is shown, not stored.
 message LivePrice {
+  // In the currency's minor units: cents for EUR, whole yen for JPY.
   int64 nightly_minor = 1;
   int64 total_minor = 2;
   string currency = 3;
@@ -74,6 +94,7 @@ message LivePrice {
 // NearbyHighlight counts one kind of place around the hotel, e.g. 14
 // restaurants within a five-minute walk, the nearest two minutes away.
 message NearbyHighlight {
+  // A lower-case plural, e.g. "places to eat".
   string label = 1;
   int32 count = 2;
   string nearest_name = 3;

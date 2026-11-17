@@ -37,7 +37,17 @@ type HotelComparisonReport struct {
 	// Index into hotels of the one the verdict favours; absent when it favours
 	// neither.
 	RecommendedIndex *int32 `protobuf:"varint,4,opt,name=recommended_index,json=recommendedIndex,proto3,oneof" json:"recommended_index,omitempty"`
-	// The side-by-side table. Each row has one value per hotel, in order.
+	// The side-by-side table, complete and in display order: what the
+	// traveller said, stars, guest score, price now, address, nearest stops,
+	// what is within a short walk, facilities, getting around. Each row has one
+	// value per hotel, in hotel order; "Not known" fills a gap, and a row
+	// nobody has a value for is left out.
+	//
+	// A client draws these rows as they are and nothing else as table text:
+	// the fields on ComparedHotel that repeat them (user_note, facilities,
+	// nearby_stops, nearby, live_price amounts) are for a client that wants to
+	// act on a value (open a booking link, put a stop on a map), not to be
+	// written out a second time.
 	Rows []*ComparisonRow `protobuf:"bytes,5,rep,name=rows,proto3" json:"rows,omitempty"`
 	// What the report could not check, said plainly.
 	Caveats []string `protobuf:"bytes,6,rep,name=caveats,proto3" json:"caveats,omitempty"`
@@ -195,17 +205,26 @@ type ComparedHotel struct {
 	// False when the listing could not be matched to a known hotel: the report
 	// then rests on what the traveller wrote about it.
 	Identified bool `protobuf:"varint,3,opt,name=identified,proto3" json:"identified,omitempty"`
-	// Ready to save with TripService.SetStay.
+	// Ready to save with TripService.SetStay. name is always set (for a link
+	// that could not be followed it is a placeholder such as "Hotel from link
+	// 1"); city_name is the report's city_name and empty when that is. A stay
+	// with no city cannot be saved: offer no button for it.
 	Stay *trip.TripStay `protobuf:"bytes,4,opt,name=stay,proto3" json:"stay,omitempty"`
 	// What the traveller wrote next to the link, as written.
-	UserNote      string              `protobuf:"bytes,5,opt,name=user_note,json=userNote,proto3" json:"user_note,omitempty"`
-	LivePrice     *LivePrice          `protobuf:"bytes,6,opt,name=live_price,json=livePrice,proto3,oneof" json:"live_price,omitempty"`
-	Facilities    []string            `protobuf:"bytes,7,rep,name=facilities,proto3" json:"facilities,omitempty"`
-	NearbyStops   []*trip.TransitStop `protobuf:"bytes,8,rep,name=nearby_stops,json=nearbyStops,proto3" json:"nearby_stops,omitempty"`
-	Nearby        []*NearbyHighlight  `protobuf:"bytes,9,rep,name=nearby,proto3" json:"nearby,omitempty"`
-	Neighbourhood string              `protobuf:"bytes,10,opt,name=neighbourhood,proto3" json:"neighbourhood,omitempty"`
-	Pros          []string            `protobuf:"bytes,11,rep,name=pros,proto3" json:"pros,omitempty"`
-	Cons          []string            `protobuf:"bytes,12,rep,name=cons,proto3" json:"cons,omitempty"`
+	UserNote string `protobuf:"bytes,5,opt,name=user_note,json=userNote,proto3" json:"user_note,omitempty"`
+	// Already in rows as "Price now"; here for its booking_url.
+	LivePrice *LivePrice `protobuf:"bytes,6,opt,name=live_price,json=livePrice,proto3,oneof" json:"live_price,omitempty"`
+	// Already in rows.
+	Facilities []string `protobuf:"bytes,7,rep,name=facilities,proto3" json:"facilities,omitempty"`
+	// Already in rows (the nearest of each kind). walk_minutes are estimates
+	// from straight-line distance: routed is always false here.
+	NearbyStops []*trip.TransitStop `protobuf:"bytes,8,rep,name=nearby_stops,json=nearbyStops,proto3" json:"nearby_stops,omitempty"`
+	// Already in rows.
+	Nearby []*NearbyHighlight `protobuf:"bytes,9,rep,name=nearby,proto3" json:"nearby,omitempty"`
+	// Not in rows: draw these three under each hotel.
+	Neighbourhood string   `protobuf:"bytes,10,opt,name=neighbourhood,proto3" json:"neighbourhood,omitempty"`
+	Pros          []string `protobuf:"bytes,11,rep,name=pros,proto3" json:"pros,omitempty"`
+	Cons          []string `protobuf:"bytes,12,rep,name=cons,proto3" json:"cons,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -327,7 +346,8 @@ func (x *ComparedHotel) GetCons() []string {
 // LivePrice is a rate read from a booking partner when the report was made.
 // It is shown, not stored.
 type LivePrice struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// In the currency's minor units: cents for EUR, whole yen for JPY.
 	NightlyMinor  int64                  `protobuf:"varint,1,opt,name=nightly_minor,json=nightlyMinor,proto3" json:"nightly_minor,omitempty"`
 	TotalMinor    int64                  `protobuf:"varint,2,opt,name=total_minor,json=totalMinor,proto3" json:"total_minor,omitempty"`
 	Currency      string                 `protobuf:"bytes,3,opt,name=currency,proto3" json:"currency,omitempty"`
@@ -413,11 +433,12 @@ func (x *LivePrice) GetBookingUrl() string {
 // NearbyHighlight counts one kind of place around the hotel, e.g. 14
 // restaurants within a five-minute walk, the nearest two minutes away.
 type NearbyHighlight struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Label         string                 `protobuf:"bytes,1,opt,name=label,proto3" json:"label,omitempty"`
-	Count         int32                  `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
-	NearestName   string                 `protobuf:"bytes,3,opt,name=nearest_name,json=nearestName,proto3" json:"nearest_name,omitempty"`
-	WalkMinutes   int32                  `protobuf:"varint,4,opt,name=walk_minutes,json=walkMinutes,proto3" json:"walk_minutes,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// A lower-case plural, e.g. "places to eat".
+	Label         string `protobuf:"bytes,1,opt,name=label,proto3" json:"label,omitempty"`
+	Count         int32  `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
+	NearestName   string `protobuf:"bytes,3,opt,name=nearest_name,json=nearestName,proto3" json:"nearest_name,omitempty"`
+	WalkMinutes   int32  `protobuf:"varint,4,opt,name=walk_minutes,json=walkMinutes,proto3" json:"walk_minutes,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

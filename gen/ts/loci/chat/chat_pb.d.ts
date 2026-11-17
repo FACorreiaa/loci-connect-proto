@@ -1471,6 +1471,11 @@ export declare type StreamEvent = Message<"loci.chat.StreamEvent"> & {
   } | {
     /**
      * Only sent to a client that listed CLIENT_CAPABILITY_HOTEL_COMPARISON.
+     * The turn runs: start (domain accommodation, a session of its own),
+     * progress, this, an action_proposal for choose_stay when one of the
+     * traveller's trips has the city, complete. No itinerary and no places
+     * follow. The session keeps the question and the verdict, not the
+     * report: a client that wants it later keeps the one it was sent.
      *
      * @generated from field: loci.chat.HotelComparisonPayload hotel_comparison = 36;
      */

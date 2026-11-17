@@ -20106,7 +20106,10 @@ then rests on what the traveller wrote about it. </p></td>
                   <td>stay</td>
                   <td><a href="#loci.trip.TripStay">loci.trip.TripStay</a></td>
                   <td></td>
-                  <td><p>Ready to save with TripService.SetStay. </p></td>
+                  <td><p>Ready to save with TripService.SetStay. name is always set (for a link
+that could not be followed it is a placeholder such as &#34;Hotel from link
+1&#34;); city_name is the report&#39;s city_name and empty when that is. A stay
+with no city cannot be saved: offer no button for it. </p></td>
                 </tr>
               
                 <tr>
@@ -20120,35 +20123,36 @@ then rests on what the traveller wrote about it. </p></td>
                   <td>live_price</td>
                   <td><a href="#loci.chat.LivePrice">LivePrice</a></td>
                   <td>optional</td>
-                  <td><p> </p></td>
+                  <td><p>Already in rows as &#34;Price now&#34;; here for its booking_url. </p></td>
                 </tr>
               
                 <tr>
                   <td>facilities</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p> </p></td>
+                  <td><p>Already in rows. </p></td>
                 </tr>
               
                 <tr>
                   <td>nearby_stops</td>
                   <td><a href="#loci.trip.TransitStop">loci.trip.TransitStop</a></td>
                   <td>repeated</td>
-                  <td><p> </p></td>
+                  <td><p>Already in rows (the nearest of each kind). walk_minutes are estimates
+from straight-line distance: routed is always false here. </p></td>
                 </tr>
               
                 <tr>
                   <td>nearby</td>
                   <td><a href="#loci.chat.NearbyHighlight">NearbyHighlight</a></td>
                   <td>repeated</td>
-                  <td><p> </p></td>
+                  <td><p>Already in rows. </p></td>
                 </tr>
               
                 <tr>
                   <td>neighbourhood</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Not in rows: draw these three under each hotel. </p></td>
                 </tr>
               
                 <tr>
@@ -20270,7 +20274,17 @@ neither. </p></td>
                   <td>rows</td>
                   <td><a href="#loci.chat.ComparisonRow">ComparisonRow</a></td>
                   <td>repeated</td>
-                  <td><p>The side-by-side table. Each row has one value per hotel, in order. </p></td>
+                  <td><p>The side-by-side table, complete and in display order: what the
+traveller said, stars, guest score, price now, address, nearest stops,
+what is within a short walk, facilities, getting around. Each row has one
+value per hotel, in hotel order; &#34;Not known&#34; fills a gap, and a row
+nobody has a value for is left out.
+
+A client draws these rows as they are and nothing else as table text:
+the fields on ComparedHotel that repeat them (user_note, facilities,
+nearby_stops, nearby, live_price amounts) are for a client that wants to
+act on a value (open a booking link, put a stop on a map), not to be
+written out a second time. </p></td>
                 </tr>
               
                 <tr>
@@ -20359,7 +20373,7 @@ city: the client then offers its own trip picker and calls SetStay. </p></td>
                   <td>nightly_minor</td>
                   <td><a href="#int64">int64</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>In the currency&#39;s minor units: cents for EUR, whole yen for JPY. </p></td>
                 </tr>
               
                 <tr>
@@ -20418,7 +20432,7 @@ city: the client then offers its own trip picker and calls SetStay. </p></td>
                   <td>label</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>A lower-case plural, e.g. &#34;places to eat&#34;. </p></td>
                 </tr>
               
                 <tr>
@@ -24701,7 +24715,12 @@ belongs to. An ERROR carrying it failed that city only, not the stream. </p></td
                   <td>hotel_comparison</td>
                   <td><a href="#loci.chat.HotelComparisonPayload">HotelComparisonPayload</a></td>
                   <td></td>
-                  <td><p>Only sent to a client that listed CLIENT_CAPABILITY_HOTEL_COMPARISON. </p></td>
+                  <td><p>Only sent to a client that listed CLIENT_CAPABILITY_HOTEL_COMPARISON.
+The turn runs: start (domain accommodation, a session of its own),
+progress, this, an action_proposal for choose_stay when one of the
+traveller&#39;s trips has the city, complete. No itinerary and no places
+follow. The session keeps the question and the verdict, not the
+report: a client that wants it later keeps the one it was sent. </p></td>
                 </tr>
               
             </tbody>

@@ -48,7 +48,17 @@ public struct Loci_Chat_HotelComparisonReport: Sendable {
   /// Clears the value of `recommendedIndex`. Subsequent reads from it will return its default value.
   public mutating func clearRecommendedIndex() {self._recommendedIndex = nil}
 
-  /// The side-by-side table. Each row has one value per hotel, in order.
+  /// The side-by-side table, complete and in display order: what the
+  /// traveller said, stars, guest score, price now, address, nearest stops,
+  /// what is within a short walk, facilities, getting around. Each row has one
+  /// value per hotel, in hotel order; "Not known" fills a gap, and a row
+  /// nobody has a value for is left out.
+  ///
+  /// A client draws these rows as they are and nothing else as table text:
+  /// the fields on ComparedHotel that repeat them (user_note, facilities,
+  /// nearby_stops, nearby, live_price amounts) are for a client that wants to
+  /// act on a value (open a booking link, put a stop on a map), not to be
+  /// written out a second time.
   public var rows: [Loci_Chat_ComparisonRow] = []
 
   /// What the report could not check, said plainly.
@@ -130,7 +140,10 @@ public struct Loci_Chat_ComparedHotel: @unchecked Sendable {
     set {_uniqueStorage()._identified = newValue}
   }
 
-  /// Ready to save with TripService.SetStay.
+  /// Ready to save with TripService.SetStay. name is always set (for a link
+  /// that could not be followed it is a placeholder such as "Hotel from link
+  /// 1"); city_name is the report's city_name and empty when that is. A stay
+  /// with no city cannot be saved: offer no button for it.
   public var stay: Loci_Trip_TripStay {
     get {return _storage._stay ?? Loci_Trip_TripStay()}
     set {_uniqueStorage()._stay = newValue}
@@ -146,6 +159,7 @@ public struct Loci_Chat_ComparedHotel: @unchecked Sendable {
     set {_uniqueStorage()._userNote = newValue}
   }
 
+  /// Already in rows as "Price now"; here for its booking_url.
   public var livePrice: Loci_Chat_LivePrice {
     get {return _storage._livePrice ?? Loci_Chat_LivePrice()}
     set {_uniqueStorage()._livePrice = newValue}
@@ -155,21 +169,26 @@ public struct Loci_Chat_ComparedHotel: @unchecked Sendable {
   /// Clears the value of `livePrice`. Subsequent reads from it will return its default value.
   public mutating func clearLivePrice() {_uniqueStorage()._livePrice = nil}
 
+  /// Already in rows.
   public var facilities: [String] {
     get {return _storage._facilities}
     set {_uniqueStorage()._facilities = newValue}
   }
 
+  /// Already in rows (the nearest of each kind). walk_minutes are estimates
+  /// from straight-line distance: routed is always false here.
   public var nearbyStops: [Loci_Trip_TransitStop] {
     get {return _storage._nearbyStops}
     set {_uniqueStorage()._nearbyStops = newValue}
   }
 
+  /// Already in rows.
   public var nearby: [Loci_Chat_NearbyHighlight] {
     get {return _storage._nearby}
     set {_uniqueStorage()._nearby = newValue}
   }
 
+  /// Not in rows: draw these three under each hotel.
   public var neighbourhood: String {
     get {return _storage._neighbourhood}
     set {_uniqueStorage()._neighbourhood = newValue}
@@ -199,6 +218,7 @@ public struct Loci_Chat_LivePrice: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// In the currency's minor units: cents for EUR, whole yen for JPY.
   public var nightlyMinor: Int64 = 0
 
   public var totalMinor: Int64 = 0
@@ -232,6 +252,7 @@ public struct Loci_Chat_NearbyHighlight: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// A lower-case plural, e.g. "places to eat".
   public var label: String = String()
 
   public var count: Int32 = 0

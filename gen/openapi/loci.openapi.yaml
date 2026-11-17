@@ -16928,7 +16928,11 @@ components:
              then rests on what the traveller wrote about it.
         stay:
           title: stay
-          description: Ready to save with TripService.SetStay.
+          description: |-
+            Ready to save with TripService.SetStay. name is always set (for a link
+             that could not be followed it is a placeholder such as "Hotel from link
+             1"); city_name is the report's city_name and empty when that is. A stay
+             with no city cannot be saved: offer no button for it.
           $ref: '#/components/schemas/loci.trip.TripStay'
         userNote:
           type: string
@@ -16939,24 +16943,31 @@ components:
             - $ref: '#/components/schemas/loci.chat.LivePrice'
             - type: "null"
           title: live_price
+          description: Already in rows as "Price now"; here for its booking_url.
         facilities:
           type: array
           items:
             type: string
           title: facilities
+          description: Already in rows.
         nearbyStops:
           type: array
           items:
             $ref: '#/components/schemas/loci.trip.TransitStop'
           title: nearby_stops
+          description: |-
+            Already in rows (the nearest of each kind). walk_minutes are estimates
+             from straight-line distance: routed is always false here.
         nearby:
           type: array
           items:
             $ref: '#/components/schemas/loci.chat.NearbyHighlight'
           title: nearby
+          description: Already in rows.
         neighbourhood:
           type: string
           title: neighbourhood
+          description: 'Not in rows: draw these three under each hotel.'
         pros:
           type: array
           items:
@@ -17402,7 +17413,18 @@ components:
           items:
             $ref: '#/components/schemas/loci.chat.ComparisonRow'
           title: rows
-          description: The side-by-side table. Each row has one value per hotel, in order.
+          description: |-
+            The side-by-side table, complete and in display order: what the
+             traveller said, stars, guest score, price now, address, nearest stops,
+             what is within a short walk, facilities, getting around. Each row has one
+             value per hotel, in hotel order; "Not known" fills a gap, and a row
+             nobody has a value for is left out.
+
+             A client draws these rows as they are and nothing else as table text:
+             the fields on ComparedHotel that repeat them (user_note, facilities,
+             nearby_stops, nearby, live_price amounts) are for a client that wants to
+             act on a value (open a booking link, put a stop on a map), not to be
+             written out a second time.
         caveats:
           type: array
           items:
@@ -17563,6 +17585,7 @@ components:
             - string
           title: nightly_minor
           format: int64
+          description: 'In the currency''s minor units: cents for EUR, whole yen for JPY.'
         totalMinor:
           type:
             - integer
@@ -17839,6 +17862,7 @@ components:
         label:
           type: string
           title: label
+          description: A lower-case plural, e.g. "places to eat".
         count:
           type: integer
           title: count
@@ -18646,7 +18670,13 @@ components:
             - properties:
                 hotelComparison:
                   title: hotel_comparison
-                  description: Only sent to a client that listed CLIENT_CAPABILITY_HOTEL_COMPARISON.
+                  description: |-
+                    Only sent to a client that listed CLIENT_CAPABILITY_HOTEL_COMPARISON.
+                     The turn runs: start (domain accommodation, a session of its own),
+                     progress, this, an action_proposal for choose_stay when one of the
+                     traveller's trips has the city, complete. No itinerary and no places
+                     follow. The session keeps the question and the verdict, not the
+                     report: a client that wants it later keeps the one it was sent.
                   $ref: '#/components/schemas/loci.chat.HotelComparisonPayload'
               title: hotel_comparison
               required:

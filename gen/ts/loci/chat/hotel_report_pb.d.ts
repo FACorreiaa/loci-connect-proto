@@ -49,7 +49,17 @@ export declare type HotelComparisonReport = Message<"loci.chat.HotelComparisonRe
   recommendedIndex?: number;
 
   /**
-   * The side-by-side table. Each row has one value per hotel, in order.
+   * The side-by-side table, complete and in display order: what the
+   * traveller said, stars, guest score, price now, address, nearest stops,
+   * what is within a short walk, facilities, getting around. Each row has one
+   * value per hotel, in hotel order; "Not known" fills a gap, and a row
+   * nobody has a value for is left out.
+   *
+   * A client draws these rows as they are and nothing else as table text:
+   * the fields on ComparedHotel that repeat them (user_note, facilities,
+   * nearby_stops, nearby, live_price amounts) are for a client that wants to
+   * act on a value (open a booking link, put a stop on a map), not to be
+   * written out a second time.
    *
    * @generated from field: repeated loci.chat.ComparisonRow rows = 5;
    */
@@ -144,7 +154,10 @@ export declare type ComparedHotel = Message<"loci.chat.ComparedHotel"> & {
   identified: boolean;
 
   /**
-   * Ready to save with TripService.SetStay.
+   * Ready to save with TripService.SetStay. name is always set (for a link
+   * that could not be followed it is a placeholder such as "Hotel from link
+   * 1"); city_name is the report's city_name and empty when that is. A stay
+   * with no city cannot be saved: offer no button for it.
    *
    * @generated from field: loci.trip.TripStay stay = 4;
    */
@@ -158,26 +171,37 @@ export declare type ComparedHotel = Message<"loci.chat.ComparedHotel"> & {
   userNote: string;
 
   /**
+   * Already in rows as "Price now"; here for its booking_url.
+   *
    * @generated from field: optional loci.chat.LivePrice live_price = 6;
    */
   livePrice?: LivePrice;
 
   /**
+   * Already in rows.
+   *
    * @generated from field: repeated string facilities = 7;
    */
   facilities: string[];
 
   /**
+   * Already in rows (the nearest of each kind). walk_minutes are estimates
+   * from straight-line distance: routed is always false here.
+   *
    * @generated from field: repeated loci.trip.TransitStop nearby_stops = 8;
    */
   nearbyStops: TransitStop[];
 
   /**
+   * Already in rows.
+   *
    * @generated from field: repeated loci.chat.NearbyHighlight nearby = 9;
    */
   nearby: NearbyHighlight[];
 
   /**
+   * Not in rows: draw these three under each hotel.
+   *
    * @generated from field: string neighbourhood = 10;
    */
   neighbourhood: string;
@@ -207,6 +231,8 @@ export declare const ComparedHotelSchema: GenMessage<ComparedHotel>;
  */
 export declare type LivePrice = Message<"loci.chat.LivePrice"> & {
   /**
+   * In the currency's minor units: cents for EUR, whole yen for JPY.
+   *
    * @generated from field: int64 nightly_minor = 1;
    */
   nightlyMinor: bigint;
@@ -251,6 +277,8 @@ export declare const LivePriceSchema: GenMessage<LivePrice>;
  */
 export declare type NearbyHighlight = Message<"loci.chat.NearbyHighlight"> & {
   /**
+   * A lower-case plural, e.g. "places to eat".
+   *
    * @generated from field: string label = 1;
    */
   label: string;
