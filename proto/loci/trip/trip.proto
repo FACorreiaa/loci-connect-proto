@@ -141,6 +141,87 @@ message TripStop {
   }];
   // Street address shown with the pin; same rules as latitude/longitude.
   optional string address = 16 [(buf.validate.field).string = {max_len: 500}];
+  // What the map says about this stop (read side only; computed on every read
+  // and ignored by SaveTrip). Absent when the server has not looked the place
+  // up, or does not check places at all: render no stamp then.
+  optional StopCheck check = 17;
+}
+
+// StopCheck is the result of looking a stop's place up on a real map. It
+// holds two separate facts, and a client must not merge them: whether the
+// place exists (status), and what its listed opening hours say about the
+// planned visit (hours). A place can be found and still have no hours listed.
+message StopCheck {
+  StopCheckStatus status = 1;
+  // Only meaningful when status is CHECKED.
+  StopHoursState hours = 2;
+  // Minutes from midnight on the day of the visit. opens_minute is set for
+  // OPEN_THAT_DAY, OPEN, OPENS_LATER, CLOSES_EARLY and SHUT_BY_THEN when the
+  // place has hours that day; closes_minute likewise. A closing time after
+  // midnight is more than 1440.
+  optional int32 opens_minute = 3;
+  optional int32 closes_minute = 4;
+  // The public holiday the visit falls on, in the local language. Empty on an
+  // ordinary day.
+  string holiday_name = 5;
+  // True when the visit falls on a public holiday and the map lists no hours
+  // for holidays: the hours above are the ordinary weekday's and may be wrong
+  // that day. Say so next to them.
+  bool holiday_hours_unknown = 6;
+  // Where the answer came from; "osm" for OpenStreetMap. Show the credit
+  // "© OpenStreetMap contributors" wherever checks are shown.
+  string source = 7 [(buf.validate.field).string = {max_len: 40}];
+  // When the map was last asked about this place.
+  google.protobuf.Timestamp checked_at = 8;
+}
+
+enum StopCheckStatus {
+  // The place has not been looked up yet. Render it like an absent check.
+  STOP_CHECK_STATUS_UNSPECIFIED = 0;
+  // One place on the map carries this name near the city. Its position is
+  // the stop's latitude/longitude.
+  STOP_CHECK_STATUS_CHECKED = 1;
+  // Nothing on the map matched with confidence, or the city is outside the
+  // area the server has a map for. This does not mean the place is not real:
+  // word it "Couldn't check", never "doesn't exist".
+  STOP_CHECK_STATUS_NOT_FOUND = 2;
+}
+
+enum StopHoursState {
+  // The map lists no opening hours for the place.
+  STOP_HOURS_STATE_UNSPECIFIED = 0;
+  // Hours are listed in a form the server does not read (seasons, sunrise,
+  // by appointment). Treat as unknown; never guess.
+  STOP_HOURS_STATE_UNREADABLE = 1;
+  // Hours are listed, but the trip day has no calendar date to hold them to.
+  STOP_HOURS_STATE_LISTED = 2;
+  // Open at some point that day; the stop has no start time to compare.
+  STOP_HOURS_STATE_OPEN_THAT_DAY = 3;
+  // Open for the whole planned visit.
+  STOP_HOURS_STATE_OPEN = 4;
+  // Shut for the whole day of the visit.
+  STOP_HOURS_STATE_SHUT_THAT_DAY = 5;
+  // Not yet open at the planned start; opens at opens_minute.
+  STOP_HOURS_STATE_OPENS_LATER = 6;
+  // Open at the planned start but shuts, at closes_minute, before the visit
+  // ends.
+  STOP_HOURS_STATE_CLOSES_EARLY = 7;
+  // Already shut for the day by the planned start.
+  STOP_HOURS_STATE_SHUT_BY_THEN = 8;
+}
+
+// DayVerdict sums a day's stop checks. `checked` counts places found on the
+// map, not places confirmed open: "5 of 5 checked" says each exists.
+message DayVerdict {
+  // Stops whose place was found on the map.
+  int32 checked = 1;
+  // Stops the map has answered for, found or not. A stop with no poi_id, and
+  // one still waiting to be looked up, is not counted: the sum never reads
+  // "0 of 5" while the answers are on their way.
+  int32 total = 2;
+  // Found stops whose hours clash with the plan: shut that day, opens later,
+  // closes early, or shut by then.
+  int32 need_attention = 3;
 }
 
 enum TripStopStatus {
@@ -186,6 +267,9 @@ message TripDay {
   // When the traveller finished the day (read side only; ignored by
   // SaveTrip). Absent while unfinished.
   google.protobuf.Timestamp completed_at = 10;
+  // The day's stop checks summed (read side only; ignored by SaveTrip).
+  // Absent when no stop on the day carries a check.
+  optional DayVerdict verdict = 11;
 }
 
 // TripLeg is travel between two consecutive places in a multi-city trip.

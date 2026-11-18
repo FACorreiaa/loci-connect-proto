@@ -36450,6 +36450,34 @@ components:
       description: |-
         DayStart is how a day begins from the stay: the walk to its first stop and
          links that open the journey in a maps app's public transport mode.
+    loci.trip.DayVerdict:
+      type: object
+      properties:
+        checked:
+          type: integer
+          title: checked
+          format: int32
+          description: Stops whose place was found on the map.
+        total:
+          type: integer
+          title: total
+          format: int32
+          description: |-
+            Stops the map has answered for, found or not. A stop with no poi_id, and
+             one still waiting to be looked up, is not counted: the sum never reads
+             "0 of 5" while the answers are on their way.
+        needAttention:
+          type: integer
+          title: need_attention
+          format: int32
+          description: |-
+            Found stops whose hours clash with the plan: shut that day, opens later,
+             closes early, or shut by then.
+      title: DayVerdict
+      additionalProperties: false
+      description: |-
+        DayVerdict sums a day's stop checks. `checked` counts places found on the
+         map, not places confirmed open: "5 of 5 checked" says each exists.
     loci.trip.DeleteChecklistItemRequest:
       type: object
       properties:
@@ -37535,6 +37563,84 @@ components:
         - STAY_TRANSPORT_STATUS_READY
         - STAY_TRANSPORT_STATUS_NO_COORDINATES
         - STAY_TRANSPORT_STATUS_UNAVAILABLE
+    loci.trip.StopCheck:
+      type: object
+      properties:
+        status:
+          title: status
+          $ref: '#/components/schemas/loci.trip.StopCheckStatus'
+        hours:
+          title: hours
+          description: Only meaningful when status is CHECKED.
+          $ref: '#/components/schemas/loci.trip.StopHoursState'
+        opensMinute:
+          type:
+            - integer
+            - "null"
+          title: opens_minute
+          format: int32
+          description: |-
+            Minutes from midnight on the day of the visit. opens_minute is set for
+             OPEN_THAT_DAY, OPEN, OPENS_LATER, CLOSES_EARLY and SHUT_BY_THEN when the
+             place has hours that day; closes_minute likewise. A closing time after
+             midnight is more than 1440.
+        closesMinute:
+          type:
+            - integer
+            - "null"
+          title: closes_minute
+          format: int32
+        holidayName:
+          type: string
+          title: holiday_name
+          description: |-
+            The public holiday the visit falls on, in the local language. Empty on an
+             ordinary day.
+        holidayHoursUnknown:
+          type: boolean
+          title: holiday_hours_unknown
+          description: |-
+            True when the visit falls on a public holiday and the map lists no hours
+             for holidays: the hours above are the ordinary weekday's and may be wrong
+             that day. Say so next to them.
+        source:
+          type: string
+          title: source
+          maxLength: 40
+          description: |-
+            Where the answer came from; "osm" for OpenStreetMap. Show the credit
+             "© OpenStreetMap contributors" wherever checks are shown.
+        checkedAt:
+          title: checked_at
+          description: When the map was last asked about this place.
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: StopCheck
+      additionalProperties: false
+      description: |-
+        StopCheck is the result of looking a stop's place up on a real map. It
+         holds two separate facts, and a client must not merge them: whether the
+         place exists (status), and what its listed opening hours say about the
+         planned visit (hours). A place can be found and still have no hours listed.
+    loci.trip.StopCheckStatus:
+      type: string
+      title: StopCheckStatus
+      enum:
+        - STOP_CHECK_STATUS_UNSPECIFIED
+        - STOP_CHECK_STATUS_CHECKED
+        - STOP_CHECK_STATUS_NOT_FOUND
+    loci.trip.StopHoursState:
+      type: string
+      title: StopHoursState
+      enum:
+        - STOP_HOURS_STATE_UNSPECIFIED
+        - STOP_HOURS_STATE_UNREADABLE
+        - STOP_HOURS_STATE_LISTED
+        - STOP_HOURS_STATE_OPEN_THAT_DAY
+        - STOP_HOURS_STATE_OPEN
+        - STOP_HOURS_STATE_SHUT_THAT_DAY
+        - STOP_HOURS_STATE_OPENS_LATER
+        - STOP_HOURS_STATE_CLOSES_EARLY
+        - STOP_HOURS_STATE_SHUT_BY_THEN
     loci.trip.SuggestPackingRequest:
       type: object
       properties:
@@ -37847,6 +37953,14 @@ components:
             When the traveller finished the day (read side only; ignored by
              SaveTrip). Absent while unfinished.
           $ref: '#/components/schemas/google.protobuf.Timestamp'
+        verdict:
+          oneOf:
+            - $ref: '#/components/schemas/loci.trip.DayVerdict'
+            - type: "null"
+          title: verdict
+          description: |-
+            The day's stop checks summed (read side only; ignored by SaveTrip).
+             Absent when no stop on the day carries a check.
       title: TripDay
       additionalProperties: false
       description: TripDay is one day of a trip.
@@ -38503,6 +38617,15 @@ components:
           title: address
           maxLength: 500
           description: Street address shown with the pin; same rules as latitude/longitude.
+        check:
+          oneOf:
+            - $ref: '#/components/schemas/loci.trip.StopCheck'
+            - type: "null"
+          title: check
+          description: |-
+            What the map says about this stop (read side only; computed on every read
+             and ignored by SaveTrip). Absent when the server has not looked the place
+             up, or does not check places at all: render no stamp then.
       title: TripStop
       additionalProperties: false
       description: TripStop is a single place on a day's timeline.

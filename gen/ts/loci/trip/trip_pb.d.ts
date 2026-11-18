@@ -191,6 +191,15 @@ export declare type TripStop = Message<"loci.trip.TripStop"> & {
    * @generated from field: optional string address = 16;
    */
   address?: string;
+
+  /**
+   * What the map says about this stop (read side only; computed on every read
+   * and ignored by SaveTrip). Absent when the server has not looked the place
+   * up, or does not check places at all: render no stamp then.
+   *
+   * @generated from field: optional loci.trip.StopCheck check = 17;
+   */
+  check?: StopCheck;
 };
 
 /**
@@ -198,6 +207,119 @@ export declare type TripStop = Message<"loci.trip.TripStop"> & {
  * Use `create(TripStopSchema)` to create a new message.
  */
 export declare const TripStopSchema: GenMessage<TripStop>;
+
+/**
+ * StopCheck is the result of looking a stop's place up on a real map. It
+ * holds two separate facts, and a client must not merge them: whether the
+ * place exists (status), and what its listed opening hours say about the
+ * planned visit (hours). A place can be found and still have no hours listed.
+ *
+ * @generated from message loci.trip.StopCheck
+ */
+export declare type StopCheck = Message<"loci.trip.StopCheck"> & {
+  /**
+   * @generated from field: loci.trip.StopCheckStatus status = 1;
+   */
+  status: StopCheckStatus;
+
+  /**
+   * Only meaningful when status is CHECKED.
+   *
+   * @generated from field: loci.trip.StopHoursState hours = 2;
+   */
+  hours: StopHoursState;
+
+  /**
+   * Minutes from midnight on the day of the visit. opens_minute is set for
+   * OPEN_THAT_DAY, OPEN, OPENS_LATER, CLOSES_EARLY and SHUT_BY_THEN when the
+   * place has hours that day; closes_minute likewise. A closing time after
+   * midnight is more than 1440.
+   *
+   * @generated from field: optional int32 opens_minute = 3;
+   */
+  opensMinute?: number;
+
+  /**
+   * @generated from field: optional int32 closes_minute = 4;
+   */
+  closesMinute?: number;
+
+  /**
+   * The public holiday the visit falls on, in the local language. Empty on an
+   * ordinary day.
+   *
+   * @generated from field: string holiday_name = 5;
+   */
+  holidayName: string;
+
+  /**
+   * True when the visit falls on a public holiday and the map lists no hours
+   * for holidays: the hours above are the ordinary weekday's and may be wrong
+   * that day. Say so next to them.
+   *
+   * @generated from field: bool holiday_hours_unknown = 6;
+   */
+  holidayHoursUnknown: boolean;
+
+  /**
+   * Where the answer came from; "osm" for OpenStreetMap. Show the credit
+   * "© OpenStreetMap contributors" wherever checks are shown.
+   *
+   * @generated from field: string source = 7;
+   */
+  source: string;
+
+  /**
+   * When the map was last asked about this place.
+   *
+   * @generated from field: google.protobuf.Timestamp checked_at = 8;
+   */
+  checkedAt?: Timestamp;
+};
+
+/**
+ * Describes the message loci.trip.StopCheck.
+ * Use `create(StopCheckSchema)` to create a new message.
+ */
+export declare const StopCheckSchema: GenMessage<StopCheck>;
+
+/**
+ * DayVerdict sums a day's stop checks. `checked` counts places found on the
+ * map, not places confirmed open: "5 of 5 checked" says each exists.
+ *
+ * @generated from message loci.trip.DayVerdict
+ */
+export declare type DayVerdict = Message<"loci.trip.DayVerdict"> & {
+  /**
+   * Stops whose place was found on the map.
+   *
+   * @generated from field: int32 checked = 1;
+   */
+  checked: number;
+
+  /**
+   * Stops the map has answered for, found or not. A stop with no poi_id, and
+   * one still waiting to be looked up, is not counted: the sum never reads
+   * "0 of 5" while the answers are on their way.
+   *
+   * @generated from field: int32 total = 2;
+   */
+  total: number;
+
+  /**
+   * Found stops whose hours clash with the plan: shut that day, opens later,
+   * closes early, or shut by then.
+   *
+   * @generated from field: int32 need_attention = 3;
+   */
+  needAttention: number;
+};
+
+/**
+ * Describes the message loci.trip.DayVerdict.
+ * Use `create(DayVerdictSchema)` to create a new message.
+ */
+export declare const DayVerdictSchema: GenMessage<DayVerdict>;
 
 /**
  * TripDay is one day of a trip.
@@ -267,6 +389,14 @@ export declare type TripDay = Message<"loci.trip.TripDay"> & {
    * @generated from field: google.protobuf.Timestamp completed_at = 10;
    */
   completedAt?: Timestamp;
+
+  /**
+   * The day's stop checks summed (read side only; ignored by SaveTrip).
+   * Absent when no stop on the day carries a check.
+   *
+   * @generated from field: optional loci.trip.DayVerdict verdict = 11;
+   */
+  verdict?: DayVerdict;
 };
 
 /**
@@ -2407,6 +2537,115 @@ export enum TripPace {
  * Describes the enum loci.trip.TripPace.
  */
 export declare const TripPaceSchema: GenEnum<TripPace>;
+
+/**
+ * @generated from enum loci.trip.StopCheckStatus
+ */
+export enum StopCheckStatus {
+  /**
+   * The place has not been looked up yet. Render it like an absent check.
+   *
+   * @generated from enum value: STOP_CHECK_STATUS_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * One place on the map carries this name near the city. Its position is
+   * the stop's latitude/longitude.
+   *
+   * @generated from enum value: STOP_CHECK_STATUS_CHECKED = 1;
+   */
+  CHECKED = 1,
+
+  /**
+   * Nothing on the map matched with confidence, or the city is outside the
+   * area the server has a map for. This does not mean the place is not real:
+   * word it "Couldn't check", never "doesn't exist".
+   *
+   * @generated from enum value: STOP_CHECK_STATUS_NOT_FOUND = 2;
+   */
+  NOT_FOUND = 2,
+}
+
+/**
+ * Describes the enum loci.trip.StopCheckStatus.
+ */
+export declare const StopCheckStatusSchema: GenEnum<StopCheckStatus>;
+
+/**
+ * @generated from enum loci.trip.StopHoursState
+ */
+export enum StopHoursState {
+  /**
+   * The map lists no opening hours for the place.
+   *
+   * @generated from enum value: STOP_HOURS_STATE_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * Hours are listed in a form the server does not read (seasons, sunrise,
+   * by appointment). Treat as unknown; never guess.
+   *
+   * @generated from enum value: STOP_HOURS_STATE_UNREADABLE = 1;
+   */
+  UNREADABLE = 1,
+
+  /**
+   * Hours are listed, but the trip day has no calendar date to hold them to.
+   *
+   * @generated from enum value: STOP_HOURS_STATE_LISTED = 2;
+   */
+  LISTED = 2,
+
+  /**
+   * Open at some point that day; the stop has no start time to compare.
+   *
+   * @generated from enum value: STOP_HOURS_STATE_OPEN_THAT_DAY = 3;
+   */
+  OPEN_THAT_DAY = 3,
+
+  /**
+   * Open for the whole planned visit.
+   *
+   * @generated from enum value: STOP_HOURS_STATE_OPEN = 4;
+   */
+  OPEN = 4,
+
+  /**
+   * Shut for the whole day of the visit.
+   *
+   * @generated from enum value: STOP_HOURS_STATE_SHUT_THAT_DAY = 5;
+   */
+  SHUT_THAT_DAY = 5,
+
+  /**
+   * Not yet open at the planned start; opens at opens_minute.
+   *
+   * @generated from enum value: STOP_HOURS_STATE_OPENS_LATER = 6;
+   */
+  OPENS_LATER = 6,
+
+  /**
+   * Open at the planned start but shuts, at closes_minute, before the visit
+   * ends.
+   *
+   * @generated from enum value: STOP_HOURS_STATE_CLOSES_EARLY = 7;
+   */
+  CLOSES_EARLY = 7,
+
+  /**
+   * Already shut for the day by the planned start.
+   *
+   * @generated from enum value: STOP_HOURS_STATE_SHUT_BY_THEN = 8;
+   */
+  SHUT_BY_THEN = 8,
+}
+
+/**
+ * Describes the enum loci.trip.StopHoursState.
+ */
+export declare const StopHoursStateSchema: GenEnum<StopHoursState>;
 
 /**
  * @generated from enum loci.trip.TripStopStatus
