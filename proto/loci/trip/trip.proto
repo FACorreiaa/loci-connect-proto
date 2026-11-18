@@ -215,7 +215,9 @@ enum StopHoursState {
 message DayVerdict {
   // Stops whose place was found on the map.
   int32 checked = 1;
-  // Stops that name a place at all. Stops with no poi_id are not counted.
+  // Stops the map has answered for, found or not. A stop with no poi_id, and
+  // one still waiting to be looked up, is not counted: the sum never reads
+  // "0 of 5" while the answers are on their way.
   int32 total = 2;
   // Found stops whose hours clash with the plan: shut that day, opens later,
   // closes early, or shut by then.

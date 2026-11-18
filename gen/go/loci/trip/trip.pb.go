@@ -1133,7 +1133,9 @@ type DayVerdict struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Stops whose place was found on the map.
 	Checked int32 `protobuf:"varint,1,opt,name=checked,proto3" json:"checked,omitempty"`
-	// Stops that name a place at all. Stops with no poi_id are not counted.
+	// Stops the map has answered for, found or not. A stop with no poi_id, and
+	// one still waiting to be looked up, is not counted: the sum never reads
+	// "0 of 5" while the answers are on their way.
 	Total int32 `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
 	// Found stops whose hours clash with the plan: shut that day, opens later,
 	// closes early, or shut by then.

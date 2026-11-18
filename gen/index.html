@@ -16802,7 +16802,9 @@ items; clients default expenses to the trip&#39;s or the user&#39;s currency. </
                   <td>total</td>
                   <td><a href="#int32">int32</a></td>
                   <td></td>
-                  <td><p>Stops that name a place at all. Stops with no poi_id are not counted. </p></td>
+                  <td><p>Stops the map has answered for, found or not. A stop with no poi_id, and
+one still waiting to be looked up, is not counted: the sum never reads
+&#34;0 of 5&#34; while the answers are on their way. </p></td>
                 </tr>
               
                 <tr>

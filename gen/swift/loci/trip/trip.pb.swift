@@ -933,7 +933,9 @@ public struct Loci_Trip_DayVerdict: Sendable {
   /// Stops whose place was found on the map.
   public var checked: Int32 = 0
 
-  /// Stops that name a place at all. Stops with no poi_id are not counted.
+  /// Stops the map has answered for, found or not. A stop with no poi_id, and
+  /// one still waiting to be looked up, is not counted: the sum never reads
+  /// "0 of 5" while the answers are on their way.
   public var total: Int32 = 0
 
   /// Found stops whose hours clash with the plan: shut that day, opens later,

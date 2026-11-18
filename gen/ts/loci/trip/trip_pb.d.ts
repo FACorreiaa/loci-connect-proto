@@ -298,7 +298,9 @@ export declare type DayVerdict = Message<"loci.trip.DayVerdict"> & {
   checked: number;
 
   /**
-   * Stops that name a place at all. Stops with no poi_id are not counted.
+   * Stops the map has answered for, found or not. A stop with no poi_id, and
+   * one still waiting to be looked up, is not counted: the sum never reads
+   * "0 of 5" while the answers are on their way.
    *
    * @generated from field: int32 total = 2;
    */
