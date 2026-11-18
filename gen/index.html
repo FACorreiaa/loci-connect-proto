@@ -1383,6 +1383,10 @@
                 </li>
               
                 <li>
+                  <a href="#loci.trip.DayVerdict"><span class="badge">M</span>DayVerdict</a>
+                </li>
+              
+                <li>
                   <a href="#loci.trip.DeleteChecklistItemRequest"><span class="badge">M</span>DeleteChecklistItemRequest</a>
                 </li>
               
@@ -1551,6 +1555,10 @@
                 </li>
               
                 <li>
+                  <a href="#loci.trip.StopCheck"><span class="badge">M</span>StopCheck</a>
+                </li>
+              
+                <li>
                   <a href="#loci.trip.SuggestPackingRequest"><span class="badge">M</span>SuggestPackingRequest</a>
                 </li>
               
@@ -1625,6 +1633,14 @@
               
                 <li>
                   <a href="#loci.trip.StayTransportStatus"><span class="badge">E</span>StayTransportStatus</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.StopCheckStatus"><span class="badge">E</span>StopCheckStatus</a>
+                </li>
+              
+                <li>
+                  <a href="#loci.trip.StopHoursState"><span class="badge">E</span>StopHoursState</a>
                 </li>
               
                 <li>
@@ -16765,6 +16781,45 @@ items; clients default expenses to the trip&#39;s or the user&#39;s currency. </
 
         
       
+        <h3 id="loci.trip.DayVerdict">DayVerdict</h3>
+        <p>DayVerdict sums a day's stop checks. `checked` counts places found on the</p><p>map, not places confirmed open: "5 of 5 checked" says each exists.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>checked</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Stops whose place was found on the map. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>total</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Stops that name a place at all. Stops with no poi_id are not counted. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>need_attention</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Found stops whose hours clash with the plan: shut that day, opens later,
+closes early, or shut by then. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.trip.DeleteChecklistItemRequest">DeleteChecklistItemRequest</h3>
         <p></p>
 
@@ -18212,6 +18267,86 @@ write with FailedPrecondition if the stored version has moved past it. </p></td>
 
         
       
+        <h3 id="loci.trip.StopCheck">StopCheck</h3>
+        <p>StopCheck is the result of looking a stop's place up on a real map. It</p><p>holds two separate facts, and a client must not merge them: whether the</p><p>place exists (status), and what its listed opening hours say about the</p><p>planned visit (hours). A place can be found and still have no hours listed.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#loci.trip.StopCheckStatus">StopCheckStatus</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>hours</td>
+                  <td><a href="#loci.trip.StopHoursState">StopHoursState</a></td>
+                  <td></td>
+                  <td><p>Only meaningful when status is CHECKED. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>opens_minute</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td>optional</td>
+                  <td><p>Minutes from midnight on the day of the visit. opens_minute is set for
+OPEN_THAT_DAY, OPEN, OPENS_LATER, CLOSES_EARLY and SHUT_BY_THEN when the
+place has hours that day; closes_minute likewise. A closing time after
+midnight is more than 1440. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>closes_minute</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>holiday_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The public holiday the visit falls on, in the local language. Empty on an
+ordinary day. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>holiday_hours_unknown</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>True when the visit falls on a public holiday and the map lists no hours
+for holidays: the hours above are the ordinary weekday&#39;s and may be wrong
+that day. Say so next to them. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>source</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Where the answer came from; &#34;osm&#34; for OpenStreetMap. Show the credit
+&#34;© OpenStreetMap contributors&#34; wherever checks are shown. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>checked_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>When the map was last asked about this place. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="loci.trip.SuggestPackingRequest">SuggestPackingRequest</h3>
         <p>SuggestPackingRequest asks what to pack for a saved trip.</p>
 
@@ -18551,6 +18686,14 @@ sightseeing time is reduced. </p></td>
                   <td></td>
                   <td><p>When the traveller finished the day (read side only; ignored by
 SaveTrip). Absent while unfinished. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>verdict</td>
+                  <td><a href="#loci.trip.DayVerdict">DayVerdict</a></td>
+                  <td>optional</td>
+                  <td><p>The day&#39;s stop checks summed (read side only; ignored by SaveTrip).
+Absent when no stop on the day carries a check. </p></td>
                 </tr>
               
             </tbody>
@@ -19240,6 +19383,15 @@ or neither. </p></td>
                   <td><p>Street address shown with the pin; same rules as latitude/longitude. </p></td>
                 </tr>
               
+                <tr>
+                  <td>check</td>
+                  <td><a href="#loci.trip.StopCheck">StopCheck</a></td>
+                  <td>optional</td>
+                  <td><p>What the map says about this stop (read side only; computed on every read
+and ignored by SaveTrip). Absent when the server has not looked the place
+up, or does not check places at all: render no stamp then. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -19503,6 +19655,105 @@ or neither. </p></td>
                 <td>STAY_TRANSPORT_STATUS_UNAVAILABLE</td>
                 <td>3</td>
                 <td><p>The map data could not be reached; day_starts and links may still be set.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="loci.trip.StopCheckStatus">StopCheckStatus</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>STOP_CHECK_STATUS_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p>The place has not been looked up yet. Render it like an absent check.</p></td>
+              </tr>
+            
+              <tr>
+                <td>STOP_CHECK_STATUS_CHECKED</td>
+                <td>1</td>
+                <td><p>One place on the map carries this name near the city. Its position is
+the stop&#39;s latitude/longitude.</p></td>
+              </tr>
+            
+              <tr>
+                <td>STOP_CHECK_STATUS_NOT_FOUND</td>
+                <td>2</td>
+                <td><p>Nothing on the map matched with confidence, or the city is outside the
+area the server has a map for. This does not mean the place is not real:
+word it &#34;Couldn&#39;t check&#34;, never &#34;doesn&#39;t exist&#34;.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="loci.trip.StopHoursState">StopHoursState</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>STOP_HOURS_STATE_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p>The map lists no opening hours for the place.</p></td>
+              </tr>
+            
+              <tr>
+                <td>STOP_HOURS_STATE_UNREADABLE</td>
+                <td>1</td>
+                <td><p>Hours are listed in a form the server does not read (seasons, sunrise,
+by appointment). Treat as unknown; never guess.</p></td>
+              </tr>
+            
+              <tr>
+                <td>STOP_HOURS_STATE_LISTED</td>
+                <td>2</td>
+                <td><p>Hours are listed, but the trip day has no calendar date to hold them to.</p></td>
+              </tr>
+            
+              <tr>
+                <td>STOP_HOURS_STATE_OPEN_THAT_DAY</td>
+                <td>3</td>
+                <td><p>Open at some point that day; the stop has no start time to compare.</p></td>
+              </tr>
+            
+              <tr>
+                <td>STOP_HOURS_STATE_OPEN</td>
+                <td>4</td>
+                <td><p>Open for the whole planned visit.</p></td>
+              </tr>
+            
+              <tr>
+                <td>STOP_HOURS_STATE_SHUT_THAT_DAY</td>
+                <td>5</td>
+                <td><p>Shut for the whole day of the visit.</p></td>
+              </tr>
+            
+              <tr>
+                <td>STOP_HOURS_STATE_OPENS_LATER</td>
+                <td>6</td>
+                <td><p>Not yet open at the planned start; opens at opens_minute.</p></td>
+              </tr>
+            
+              <tr>
+                <td>STOP_HOURS_STATE_CLOSES_EARLY</td>
+                <td>7</td>
+                <td><p>Open at the planned start but shuts, at closes_minute, before the visit
+ends.</p></td>
+              </tr>
+            
+              <tr>
+                <td>STOP_HOURS_STATE_SHUT_BY_THEN</td>
+                <td>8</td>
+                <td><p>Already shut for the day by the planned start.</p></td>
               </tr>
             
           </tbody>

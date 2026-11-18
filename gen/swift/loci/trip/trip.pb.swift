@@ -120,6 +120,135 @@ public enum Loci_Trip_TripPace: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
+public enum Loci_Trip_StopCheckStatus: SwiftProtobuf.Enum, Swift.CaseIterable {
+  public typealias RawValue = Int
+
+  /// The place has not been looked up yet. Render it like an absent check.
+  case unspecified // = 0
+
+  /// One place on the map carries this name near the city. Its position is
+  /// the stop's latitude/longitude.
+  case checked // = 1
+
+  /// Nothing on the map matched with confidence, or the city is outside the
+  /// area the server has a map for. This does not mean the place is not real:
+  /// word it "Couldn't check", never "doesn't exist".
+  case notFound // = 2
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .unspecified
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unspecified
+    case 1: self = .checked
+    case 2: self = .notFound
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .unspecified: return 0
+    case .checked: return 1
+    case .notFound: return 2
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static let allCases: [Loci_Trip_StopCheckStatus] = [
+    .unspecified,
+    .checked,
+    .notFound,
+  ]
+
+}
+
+public enum Loci_Trip_StopHoursState: SwiftProtobuf.Enum, Swift.CaseIterable {
+  public typealias RawValue = Int
+
+  /// The map lists no opening hours for the place.
+  case unspecified // = 0
+
+  /// Hours are listed in a form the server does not read (seasons, sunrise,
+  /// by appointment). Treat as unknown; never guess.
+  case unreadable // = 1
+
+  /// Hours are listed, but the trip day has no calendar date to hold them to.
+  case listed // = 2
+
+  /// Open at some point that day; the stop has no start time to compare.
+  case openThatDay // = 3
+
+  /// Open for the whole planned visit.
+  case `open` // = 4
+
+  /// Shut for the whole day of the visit.
+  case shutThatDay // = 5
+
+  /// Not yet open at the planned start; opens at opens_minute.
+  case opensLater // = 6
+
+  /// Open at the planned start but shuts, at closes_minute, before the visit
+  /// ends.
+  case closesEarly // = 7
+
+  /// Already shut for the day by the planned start.
+  case shutByThen // = 8
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .unspecified
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unspecified
+    case 1: self = .unreadable
+    case 2: self = .listed
+    case 3: self = .openThatDay
+    case 4: self = .open
+    case 5: self = .shutThatDay
+    case 6: self = .opensLater
+    case 7: self = .closesEarly
+    case 8: self = .shutByThen
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .unspecified: return 0
+    case .unreadable: return 1
+    case .listed: return 2
+    case .openThatDay: return 3
+    case .open: return 4
+    case .shutThatDay: return 5
+    case .opensLater: return 6
+    case .closesEarly: return 7
+    case .shutByThen: return 8
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static let allCases: [Loci_Trip_StopHoursState] = [
+    .unspecified,
+    .unreadable,
+    .listed,
+    .openThatDay,
+    .open,
+    .shutThatDay,
+    .opensLater,
+    .closesEarly,
+    .shutByThen,
+  ]
+
+}
+
 public enum Loci_Trip_TripStopStatus: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case unspecified // = 0
@@ -707,11 +836,113 @@ public struct Loci_Trip_TripStop: @unchecked Sendable {
   /// Clears the value of `address`. Subsequent reads from it will return its default value.
   public mutating func clearAddress() {_uniqueStorage()._address = nil}
 
+  /// What the map says about this stop (read side only; computed on every read
+  /// and ignored by SaveTrip). Absent when the server has not looked the place
+  /// up, or does not check places at all: render no stamp then.
+  public var check: Loci_Trip_StopCheck {
+    get {return _storage._check ?? Loci_Trip_StopCheck()}
+    set {_uniqueStorage()._check = newValue}
+  }
+  /// Returns true if `check` has been explicitly set.
+  public var hasCheck: Bool {return _storage._check != nil}
+  /// Clears the value of `check`. Subsequent reads from it will return its default value.
+  public mutating func clearCheck() {_uniqueStorage()._check = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
   fileprivate var _storage = _StorageClass.defaultInstance
+}
+
+/// StopCheck is the result of looking a stop's place up on a real map. It
+/// holds two separate facts, and a client must not merge them: whether the
+/// place exists (status), and what its listed opening hours say about the
+/// planned visit (hours). A place can be found and still have no hours listed.
+public struct Loci_Trip_StopCheck: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var status: Loci_Trip_StopCheckStatus = .unspecified
+
+  /// Only meaningful when status is CHECKED.
+  public var hours: Loci_Trip_StopHoursState = .unspecified
+
+  /// Minutes from midnight on the day of the visit. opens_minute is set for
+  /// OPEN_THAT_DAY, OPEN, OPENS_LATER, CLOSES_EARLY and SHUT_BY_THEN when the
+  /// place has hours that day; closes_minute likewise. A closing time after
+  /// midnight is more than 1440.
+  public var opensMinute: Int32 {
+    get {return _opensMinute ?? 0}
+    set {_opensMinute = newValue}
+  }
+  /// Returns true if `opensMinute` has been explicitly set.
+  public var hasOpensMinute: Bool {return self._opensMinute != nil}
+  /// Clears the value of `opensMinute`. Subsequent reads from it will return its default value.
+  public mutating func clearOpensMinute() {self._opensMinute = nil}
+
+  public var closesMinute: Int32 {
+    get {return _closesMinute ?? 0}
+    set {_closesMinute = newValue}
+  }
+  /// Returns true if `closesMinute` has been explicitly set.
+  public var hasClosesMinute: Bool {return self._closesMinute != nil}
+  /// Clears the value of `closesMinute`. Subsequent reads from it will return its default value.
+  public mutating func clearClosesMinute() {self._closesMinute = nil}
+
+  /// The public holiday the visit falls on, in the local language. Empty on an
+  /// ordinary day.
+  public var holidayName: String = String()
+
+  /// True when the visit falls on a public holiday and the map lists no hours
+  /// for holidays: the hours above are the ordinary weekday's and may be wrong
+  /// that day. Say so next to them.
+  public var holidayHoursUnknown: Bool = false
+
+  /// Where the answer came from; "osm" for OpenStreetMap. Show the credit
+  /// "© OpenStreetMap contributors" wherever checks are shown.
+  public var source: String = String()
+
+  /// When the map was last asked about this place.
+  public var checkedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _checkedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_checkedAt = newValue}
+  }
+  /// Returns true if `checkedAt` has been explicitly set.
+  public var hasCheckedAt: Bool {return self._checkedAt != nil}
+  /// Clears the value of `checkedAt`. Subsequent reads from it will return its default value.
+  public mutating func clearCheckedAt() {self._checkedAt = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _opensMinute: Int32? = nil
+  fileprivate var _closesMinute: Int32? = nil
+  fileprivate var _checkedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+}
+
+/// DayVerdict sums a day's stop checks. `checked` counts places found on the
+/// map, not places confirmed open: "5 of 5 checked" says each exists.
+public struct Loci_Trip_DayVerdict: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// Stops whose place was found on the map.
+  public var checked: Int32 = 0
+
+  /// Stops that name a place at all. Stops with no poi_id are not counted.
+  public var total: Int32 = 0
+
+  /// Found stops whose hours clash with the plan: shut that day, opens later,
+  /// closes early, or shut by then.
+  public var needAttention: Int32 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
 }
 
 /// TripDay is one day of a trip.
@@ -783,6 +1014,17 @@ public struct Loci_Trip_TripDay: Sendable {
   /// Clears the value of `completedAt`. Subsequent reads from it will return its default value.
   public mutating func clearCompletedAt() {self._completedAt = nil}
 
+  /// The day's stop checks summed (read side only; ignored by SaveTrip).
+  /// Absent when no stop on the day carries a check.
+  public var verdict: Loci_Trip_DayVerdict {
+    get {return _verdict ?? Loci_Trip_DayVerdict()}
+    set {_verdict = newValue}
+  }
+  /// Returns true if `verdict` has been explicitly set.
+  public var hasVerdict: Bool {return self._verdict != nil}
+  /// Clears the value of `verdict`. Subsequent reads from it will return its default value.
+  public mutating func clearVerdict() {self._verdict = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -792,6 +1034,7 @@ public struct Loci_Trip_TripDay: Sendable {
   fileprivate var _cityLat: Double? = nil
   fileprivate var _cityLon: Double? = nil
   fileprivate var _completedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _verdict: Loci_Trip_DayVerdict? = nil
 }
 
 /// TripLeg is travel between two consecutive places in a multi-city trip.
@@ -2499,6 +2742,28 @@ extension Loci_Trip_TripPace: SwiftProtobuf._ProtoNameProviding {
   ]
 }
 
+extension Loci_Trip_StopCheckStatus: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "STOP_CHECK_STATUS_UNSPECIFIED"),
+    1: .same(proto: "STOP_CHECK_STATUS_CHECKED"),
+    2: .same(proto: "STOP_CHECK_STATUS_NOT_FOUND"),
+  ]
+}
+
+extension Loci_Trip_StopHoursState: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "STOP_HOURS_STATE_UNSPECIFIED"),
+    1: .same(proto: "STOP_HOURS_STATE_UNREADABLE"),
+    2: .same(proto: "STOP_HOURS_STATE_LISTED"),
+    3: .same(proto: "STOP_HOURS_STATE_OPEN_THAT_DAY"),
+    4: .same(proto: "STOP_HOURS_STATE_OPEN"),
+    5: .same(proto: "STOP_HOURS_STATE_SHUT_THAT_DAY"),
+    6: .same(proto: "STOP_HOURS_STATE_OPENS_LATER"),
+    7: .same(proto: "STOP_HOURS_STATE_CLOSES_EARLY"),
+    8: .same(proto: "STOP_HOURS_STATE_SHUT_BY_THEN"),
+  ]
+}
+
 extension Loci_Trip_TripStopStatus: SwiftProtobuf._ProtoNameProviding {
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "TRIP_STOP_STATUS_UNSPECIFIED"),
@@ -2667,6 +2932,7 @@ extension Loci_Trip_TripStop: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     14: .same(proto: "latitude"),
     15: .same(proto: "longitude"),
     16: .same(proto: "address"),
+    17: .same(proto: "check"),
   ]
 
   fileprivate class _StorageClass {
@@ -2686,6 +2952,7 @@ extension Loci_Trip_TripStop: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _latitude: Double? = nil
     var _longitude: Double? = nil
     var _address: String? = nil
+    var _check: Loci_Trip_StopCheck? = nil
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -2716,6 +2983,7 @@ extension Loci_Trip_TripStop: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       _latitude = source._latitude
       _longitude = source._longitude
       _address = source._address
+      _check = source._check
     }
   }
 
@@ -2750,6 +3018,7 @@ extension Loci_Trip_TripStop: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         case 14: try { try decoder.decodeSingularDoubleField(value: &_storage._latitude) }()
         case 15: try { try decoder.decodeSingularDoubleField(value: &_storage._longitude) }()
         case 16: try { try decoder.decodeSingularStringField(value: &_storage._address) }()
+        case 17: try { try decoder.decodeSingularMessageField(value: &_storage._check) }()
         default: break
         }
       }
@@ -2810,6 +3079,9 @@ extension Loci_Trip_TripStop: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       try { if let v = _storage._address {
         try visitor.visitSingularStringField(value: v, fieldNumber: 16)
       } }()
+      try { if let v = _storage._check {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 17)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2835,10 +3107,133 @@ extension Loci_Trip_TripStop: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         if _storage._latitude != rhs_storage._latitude {return false}
         if _storage._longitude != rhs_storage._longitude {return false}
         if _storage._address != rhs_storage._address {return false}
+        if _storage._check != rhs_storage._check {return false}
         return true
       }
       if !storagesAreEqual {return false}
     }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_StopCheck: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".StopCheck"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "status"),
+    2: .same(proto: "hours"),
+    3: .standard(proto: "opens_minute"),
+    4: .standard(proto: "closes_minute"),
+    5: .standard(proto: "holiday_name"),
+    6: .standard(proto: "holiday_hours_unknown"),
+    7: .same(proto: "source"),
+    8: .standard(proto: "checked_at"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.status) }()
+      case 2: try { try decoder.decodeSingularEnumField(value: &self.hours) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self._opensMinute) }()
+      case 4: try { try decoder.decodeSingularInt32Field(value: &self._closesMinute) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.holidayName) }()
+      case 6: try { try decoder.decodeSingularBoolField(value: &self.holidayHoursUnknown) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.source) }()
+      case 8: try { try decoder.decodeSingularMessageField(value: &self._checkedAt) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if self.status != .unspecified {
+      try visitor.visitSingularEnumField(value: self.status, fieldNumber: 1)
+    }
+    if self.hours != .unspecified {
+      try visitor.visitSingularEnumField(value: self.hours, fieldNumber: 2)
+    }
+    try { if let v = self._opensMinute {
+      try visitor.visitSingularInt32Field(value: v, fieldNumber: 3)
+    } }()
+    try { if let v = self._closesMinute {
+      try visitor.visitSingularInt32Field(value: v, fieldNumber: 4)
+    } }()
+    if !self.holidayName.isEmpty {
+      try visitor.visitSingularStringField(value: self.holidayName, fieldNumber: 5)
+    }
+    if self.holidayHoursUnknown != false {
+      try visitor.visitSingularBoolField(value: self.holidayHoursUnknown, fieldNumber: 6)
+    }
+    if !self.source.isEmpty {
+      try visitor.visitSingularStringField(value: self.source, fieldNumber: 7)
+    }
+    try { if let v = self._checkedAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_StopCheck, rhs: Loci_Trip_StopCheck) -> Bool {
+    if lhs.status != rhs.status {return false}
+    if lhs.hours != rhs.hours {return false}
+    if lhs._opensMinute != rhs._opensMinute {return false}
+    if lhs._closesMinute != rhs._closesMinute {return false}
+    if lhs.holidayName != rhs.holidayName {return false}
+    if lhs.holidayHoursUnknown != rhs.holidayHoursUnknown {return false}
+    if lhs.source != rhs.source {return false}
+    if lhs._checkedAt != rhs._checkedAt {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Loci_Trip_DayVerdict: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".DayVerdict"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "checked"),
+    2: .same(proto: "total"),
+    3: .standard(proto: "need_attention"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularInt32Field(value: &self.checked) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.total) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self.needAttention) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.checked != 0 {
+      try visitor.visitSingularInt32Field(value: self.checked, fieldNumber: 1)
+    }
+    if self.total != 0 {
+      try visitor.visitSingularInt32Field(value: self.total, fieldNumber: 2)
+    }
+    if self.needAttention != 0 {
+      try visitor.visitSingularInt32Field(value: self.needAttention, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Loci_Trip_DayVerdict, rhs: Loci_Trip_DayVerdict) -> Bool {
+    if lhs.checked != rhs.checked {return false}
+    if lhs.total != rhs.total {return false}
+    if lhs.needAttention != rhs.needAttention {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -2857,6 +3252,7 @@ extension Loci_Trip_TripDay: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
     8: .standard(proto: "city_lon"),
     9: .standard(proto: "travel_day"),
     10: .standard(proto: "completed_at"),
+    11: .same(proto: "verdict"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2875,6 +3271,7 @@ extension Loci_Trip_TripDay: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
       case 8: try { try decoder.decodeSingularDoubleField(value: &self._cityLon) }()
       case 9: try { try decoder.decodeSingularBoolField(value: &self.travelDay) }()
       case 10: try { try decoder.decodeSingularMessageField(value: &self._completedAt) }()
+      case 11: try { try decoder.decodeSingularMessageField(value: &self._verdict) }()
       default: break
       }
     }
@@ -2915,6 +3312,9 @@ extension Loci_Trip_TripDay: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
     try { if let v = self._completedAt {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
     } }()
+    try { if let v = self._verdict {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2929,6 +3329,7 @@ extension Loci_Trip_TripDay: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
     if lhs._cityLon != rhs._cityLon {return false}
     if lhs.travelDay != rhs.travelDay {return false}
     if lhs._completedAt != rhs._completedAt {return false}
+    if lhs._verdict != rhs._verdict {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
